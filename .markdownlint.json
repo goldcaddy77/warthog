@@ -1,0 +1,14 @@
+{
+  "MD009": {
+    "br_spaces": 2
+  },
+  "MD013": {
+    "code_blocks": false
+  },
+  "MD026": {
+    "punctuation": ".,;:"
+  },
+  "MD029": {
+    "style": "ordered"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "extends": ["typestrict", "tslint:latest", "tslint-config-prettier"],
+  "//": "See https://github.com/palantir/tslint/issues/512 for interface-name",
+  "///": "Note: no-var-keyword is currently broken, we should re-add when it's fixed",
+  "////": "class-name currently broken, but would like to turn it back on",
+  "/////": "max-classes-per-file currently broken, but would like to turn it back on",
+  "//////": "no-string-throw same ^^^",
+  "rules": {
+    "no-string-throw": false,
+    "class-name": false,
+    "interface-over-type-literal": false,
+    "interface-name": [false],
+    "jsx-no-multiline-js": false,
+    "max-classes-per-file": false,
+    "max-line-length": [true, 120],
+    "member-access": [false],
+    "no-submodule-imports": false,
+    "no-unused-variable": false,
+    "no-implicit-dependencies": [true, "dev"],
+    "no-var-keyword": false,
+    "no-floating-promises": false
+  },
+  "linterOptions": {
+    "exclude": ["node_modules/**/*", "*/**/*.js", "*/**/generated/*.ts", "src/migration/*"]
+  }
+}
