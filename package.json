@@ -1,0 +1,77 @@
+{
+  "name": "warthog",
+  "version": "0.0.0-development",
+  "description": "Opinionated set of tools for setting up GraphQL backed by TypeORM",
+  "main": "dist/index.js",
+  "typings": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "author": "Dan Caddigan",
+  "scripts": {
+    "build": "yarn tsc",
+    "precommit": "lint-staged && npm test",
+    "preversion": "lint-staged && npm test",
+    "semantic-release": "semantic-release",
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goldcaddy77/warthog.git"
+  },
+  "keywords": [
+    "graphql",
+    "typeorm",
+    "typescript"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goldcaddy77/warthog/issues"
+  },
+  "homepage": "https://github.com/goldcaddy77/warthog#readme",
+  "dependencies": {
+    "@types/jest": "^23.3.0",
+    "jest": "^23.4.1",
+    "ts-jest": "^23.0.1"
+  },
+  "devDependencies": {
+    "condition-circle": "^2.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.6.1",
+    "semantic-release": "^15.8.1",
+    "typescript": "^2.9.2"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
+  },
+  "release": {
+    "verifyConditions": "condition-circle"
+  },
+  "jest": {
+    "transform": {
+      ".ts": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.test\\.ts$"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.test.json"
+      }
+    }
+  }
+}
