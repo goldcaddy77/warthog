@@ -10,10 +10,14 @@
   "author": "Dan Caddigan",
   "scripts": {
     "build": "yarn tsc",
-    "precommit": "lint-staged && npm test",
-    "preversion": "lint-staged && npm test",
     "semantic-release": "semantic-release",
     "test": "jest --verbose"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn test",
+      "pre-version": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "repository": {
     "type": "git",
@@ -30,17 +34,55 @@
   },
   "homepage": "https://github.com/goldcaddy77/warthog#readme",
   "dependencies": {
-    "@types/jest": "^23.3.0",
-    "jest": "^23.4.1",
-    "ts-jest": "^23.0.1"
+    "@types/debug": "^0.0.31",
+    "@types/faker": "^4.1.4",
+    "@types/graphql": "^14.0.4",
+    "@types/graphql-iso-date": "^3.3.0",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/lodash": "^4.14.108",
+    "@types/node": "^10.12.18",
+    "@types/node-emoji": "^1.8.0",
+    "@types/pg": "^7.4.8",
+    "@types/prettier": "^1.15.2",
+    "@types/shortid": "^0.0.29",
+    "apollo-link-http": "^1.5.9",
+    "class-transformer": "^0.2.0",
+    "class-validator": "^0.9.1",
+    "dataloader": "^1.4.0",
+    "debug": "^4.1.1",
+    "faker": "^4.1.0",
+    "graphql": "^14.0.2",
+    "graphql-binding": "^2.3.8",
+    "graphql-iso-date": "^3.5.0",
+    "graphql-yoga": "^1.16.9",
+    "lodash": "^4.17.10",
+    "node-emoji": "^1.8.1",
+    "pg": "^7.3.0",
+    "reflect-metadata": "^0.1.12",
+    "shortid": "^2.2.14",
+    "ts-node": "^7.0.0",
+    "type-graphql": "^0.16.0",
+    "typedi": "^0.8.0",
+    "typeorm": "^0.2.11",
+    "typeorm-typedi-extensions": "^0.2.1",
+    "typescript": "^3.2.2",
+    "typestrict": "^1.0.2"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.0",
     "condition-circle": "^2.0.1",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.0",
-    "prettier": "^1.6.1",
+    "dotenv": "^6.0.0",
+    "dotenv-cli": "^1.4.0",
+    "dotenvi": "^0.5.1",
+    "husky": "^1.3.1",
+    "jest": "^23.4.1",
+    "lint-staged": "^8.1.0",
+    "nodemon": "^1.17.5",
+    "npm-run-all": "^4.1.3",
+    "prettier": "^1.15.3",
     "semantic-release": "^15.8.1",
-    "typescript": "^2.9.2"
+    "ts-jest": "^23.0.1",
+    "tslint": "^5.11.0"
   },
   "lint-staged": {
     "*.{js,json}": [
@@ -48,12 +90,16 @@
       "git add"
     ]
   },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true
-  },
   "release": {
     "verifyConditions": "condition-circle"
+  },
+  "resolutions": {
+    "@types/graphql": "^14",
+    "graphql": "^14",
+    "graphql-yoga/**/graphql": "^14",
+    "graphql-yoga/**/@types/graphql": "^14",
+    "@indigo-ag/server/**/graphql": "^14",
+    "@indigo-ag/server/**/@types/graphql": "^14"
   },
   "jest": {
     "transform": {
