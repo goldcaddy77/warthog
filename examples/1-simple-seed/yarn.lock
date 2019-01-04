@@ -2,6 +2,26 @@
 # yarn lockfile v1
 
 
+"@types/faker@^4.1.4":
+  version "4.1.4"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/faker/-/faker-4.1.4.tgz#5e5bcd81a6ecf85fb6150f7eb857e755a09fd91f"
+  integrity sha1-XlvNgabs+F+2FQ9+uFfnVaCf2R8=
+
+"@types/isomorphic-fetch@^0.0.34":
+  version "0.0.34"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.34.tgz#3c3483e606c041378438e951464f00e4e60706d6"
+  integrity sha1-PDSD5gbAQTeEOOlRRk8A5OYHBtY=
+
+"@types/jest@^23.3.11":
+  version "23.3.11"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/jest/-/jest-23.3.11.tgz#d3a936ae753d9e484965f5cbd19027c2b8af2551"
+  integrity sha1-06k2rnU9nkhJZfXL0ZAnwrivJVE=
+
+"@types/node@^10.12.18":
+  version "10.12.18"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
+  integrity sha1-HTynZHGJFVhPzZ9jRGIbdnJmXGc=
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -155,6 +175,11 @@ escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+faker@^4.1.0:
+  version "4.1.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
+  integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
 
 function-bind@^1.0.2, function-bind@^1.1.1:
   version "1.1.1"
