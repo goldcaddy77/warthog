@@ -11,6 +11,7 @@ import {
   UserWhereInput,
   UserWhereUniqueInput
 } from '../../../generated';
+
 import { User } from './user.entity';
 
 // Note: we have to specify `User` here instead of (of => User) because for some reason this
@@ -19,6 +20,7 @@ import { User } from './user.entity';
 export class UserResolver extends BaseResolver<User> {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
     super(User, userRepository);
+
     // or else it complains about userRepository not being used
     console.log.call(null, typeof this.userRepository);
   }

@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql';
 
 import { App } from '../../src/core/app';
-import { Binding, getRemoteBinding } from '../../tools/binding/remoteBinding';
+import { Binding, getRemoteBinding } from '../../src/core/binding';
 
 import { User } from './modules/user/user.entity';
 
@@ -15,7 +15,7 @@ beforeAll(async done => {
   app = new App({ port: process.env.APP_PORT! }, { logging: false });
   await app.start();
 
-  binding = await getRemoteBinding(`http://${process.env.TYPEORM_HOST}:${process.env.APP_PORT}/graphql`, {
+  binding = await getRemoteBinding(`http://${process.env.APP_HOST}:${process.env.APP_PORT}/graphql`, {
     origin: 'seed-script',
     token: 'testtoken'
   });

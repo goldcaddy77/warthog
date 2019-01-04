@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "outDir": "./dist",
     "lib": ["dom", "es5", "es6", "es7", "esnext"],
     "target": "es5",
     "module": "commonjs",
@@ -9,7 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "keyofStringsOnly": true, // Fixes issue with TS2.9
+    "keyofStringsOnly": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
