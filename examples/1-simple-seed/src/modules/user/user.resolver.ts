@@ -3,7 +3,7 @@ import { Arg, Args, Authorized, Ctx, Mutation, Query, Resolver } from 'type-grap
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseResolver, Context, StandardDeleteResponse } from '../../../../src';
+import { BaseResolver, Context, StandardDeleteResponse } from '../../../../../src';
 import {
   UserCreateInput,
   UserUpdateArgs,

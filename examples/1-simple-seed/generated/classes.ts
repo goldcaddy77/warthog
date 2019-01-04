@@ -4,8 +4,7 @@
 // Do not update directly, please update models
 import { ArgsType, Field, InputType } from "type-graphql";
 import { registerEnumType } from "type-graphql";
-// TODO: THIS SHOULD REFERENCE warthog
-import { BaseWhereInput, PaginationArgs } from "../../src";
+import { BaseWhereInput, PaginationArgs } from "../../../src";
 
 export enum UserOrderByEnum {
   createdAt_ASC = "createdAt_ASC",

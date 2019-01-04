@@ -17,13 +17,13 @@ import {
 // tslint:disable-next-line:no-empty-interface
 export interface SchemaGeneratorOptions {}
 
-export function buildSchemaSync(entities: EntityMetadata[], destinationFolder: string): string {
-  return SchemaGenerator.generateFromMetadataSync(entities, destinationFolder);
-}
-
-export abstract class SchemaGenerator {
-  static generateFromMetadataSync(entities: EntityMetadata[], destinationFolder: string): string {
-    // tslint:disable-next-line:prefer-const
+export class SchemaGenerator {
+  static generateFromMetadataSync(
+    entities: EntityMetadata[],
+    destinationFolder: string,
+    // This will reference 'warthog in the deployed module, but we need to do a relative import in the examples library
+    warthogImportPath: string = 'warthog'
+  ): string {
     let template = `
       // tslint:disable:variable-name
 
@@ -31,8 +31,7 @@ export abstract class SchemaGenerator {
       // Do not update directly, please update models
       import { ArgsType, Field, InputType } from 'type-graphql';
       import { registerEnumType } from 'type-graphql';
-      // TODO: THIS SHOULD REFERENCE warthog
-      import { BaseWhereInput, PaginationArgs } from '../../src';
+      import { BaseWhereInput, PaginationArgs } from '${warthogImportPath}';
     `;
 
     entities.forEach((entity: EntityMetadata) => {

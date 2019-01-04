@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== 'development') {
 const NUM_USERS = 100;
 
 async function seedDatabase() {
+  await app.generateTypes();
   await app.start();
   const binding = await app.getBinding();
 

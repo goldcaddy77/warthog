@@ -7,13 +7,14 @@ import { Binding } from 'graphql-binding';
 import { GraphQLServer, Options } from 'graphql-yoga';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
+import * as path from 'path';
 import { Container } from 'typedi';
 import { buildSchema, formatArgumentValidationError, useContainer as TypeGraphQLUseContainer } from 'type-graphql';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
 import { getRemoteBinding, logger } from './';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-import { buildSchemaSync } from '../schema/';
+import { SchemaGenerator } from '../schema/';
 import { authChecker, Context } from '../tgql';
 import { createDBConnection } from '../torm';
 
@@ -21,6 +22,7 @@ export interface AppOptions {
   host?: string;
   generatedFolder?: string;
   port?: string | number;
+  warthogImportPath?: string;
 }
 export class App {
   // create TypeORM connection
@@ -38,7 +40,7 @@ export class App {
 
     this.appHost = this.appOptions.host || process.env.APP_HOST || 'localhost';
     this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
-    this.generatedFolder = this.appOptions.generatedFolder || process.cwd();
+    this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
   }
 
   async getBinding(): Promise<Binding> {
@@ -51,7 +53,11 @@ export class App {
   async generateTypes() {
     this.connection = this.connection || (await createDBConnection(this.dbOptions));
 
-    return buildSchemaSync(this.connection.entityMetadatas, this.generatedFolder);
+    return SchemaGenerator.generateFromMetadataSync(
+      this.connection.entityMetadatas,
+      this.generatedFolder,
+      this.appOptions.warthogImportPath
+    );
   }
 
   async start() {

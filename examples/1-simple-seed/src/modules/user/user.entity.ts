@@ -1,6 +1,6 @@
 import { Authorized } from 'type-graphql';
 
-import { BaseObject, EmailField, EntityObject, StringField } from '../../../../src';
+import { BaseObject, EmailField, EntityObject, StringField } from '../../../../../src';
 
 @EntityObject()
 export class User extends BaseObject {
