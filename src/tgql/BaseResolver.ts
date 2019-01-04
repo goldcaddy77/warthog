@@ -18,7 +18,8 @@ import { BaseObject, WhereInput } from '../core';
 import { StandardDeleteResponse } from './DeleteResponse';
 
 export class BaseResolver<E extends BaseObject> {
-  constructor(protected entityClass: any, protected repository: Repository<E>) {}
+  // TODO: need to figure out why we couldn't type this as Repository<E>
+  constructor(protected entityClass: any, protected repository: Repository<any>) {}
 
   async find<W extends WhereInput>(
     where?: any,

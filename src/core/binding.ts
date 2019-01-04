@@ -5,7 +5,7 @@ import { printSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 
-import { StringMap } from '../../src';
+import { StringMap } from '..';
 
 const debug = Debug('binding');
 

@@ -25,9 +25,9 @@ export abstract class SchemaGenerator {
   static generateFromMetadataSync(entities: EntityMetadata[], destinationFolder: string): string {
     // tslint:disable-next-line:prefer-const
     let template = `
-    // tslint:disable:variable-name
+      // tslint:disable:variable-name
 
-    // This is an auto-generated file
+      // This is an auto-generated file
       // Do not update directly, please update models
       import { ArgsType, Field, InputType } from 'type-graphql';
       import { registerEnumType } from 'type-graphql';

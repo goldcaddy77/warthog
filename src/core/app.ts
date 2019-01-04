@@ -1,33 +1,34 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
-import 'reflect-metadata';
 
 import { writeFileSync } from 'fs';
 import { printSchema, GraphQLSchema } from 'graphql';
+import { Binding } from 'graphql-binding';
 import { GraphQLServer, Options } from 'graphql-yoga';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
-import 'reflect-metadata';
 import { Container } from 'typedi';
 import { buildSchema, formatArgumentValidationError, useContainer as TypeGraphQLUseContainer } from 'type-graphql';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
-import { logger } from './';
+import { getRemoteBinding, logger } from './';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-// import { buildSchemaSync } from '../schema/';
+import { buildSchemaSync } from '../schema/';
 import { authChecker, Context } from '../tgql';
 import { createDBConnection } from '../torm';
 
 export interface AppOptions {
-  port: string | number;
+  host?: string;
   generatedFolder?: string;
+  port?: string | number;
 }
 export class App {
   // create TypeORM connection
   connection!: Connection;
   httpServer!: HttpServer | HttpsServer;
   graphQLServer!: GraphQLServer;
-  port: number;
+  appHost: string;
+  appPort: number;
   generatedFolder: string;
 
   constructor(private appOptions: AppOptions, private dbOptions: Partial<ConnectionOptions> = {}) {
@@ -35,16 +36,26 @@ export class App {
     TypeGraphQLUseContainer(Container);
     TypeORMUseContainer(Container);
 
-    this.port = parseInt(String(this.appOptions.port), 10) || 3000;
+    this.appHost = this.appOptions.host || process.env.APP_HOST || 'localhost';
+    this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
     this.generatedFolder = this.appOptions.generatedFolder || process.cwd();
   }
 
-  async start() {
-    this.connection = await createDBConnection(this.dbOptions);
+  async getBinding(): Promise<Binding> {
+    return getRemoteBinding(`http://${this.appHost}:${this.appPort}/graphql`, {
+      origin: 'seed-script', // TODO: allow this to be passed in
+      token: 'faketoken' // TODO: allow this to be passed in
+    });
+  }
 
-    // TODO: should this be pulled out an always done outside of server run? (probably yes)
-    // auto-generate inputs and args for models
-    // buildSchemaSync(this.connection.entityMetadatas, this.generatedFolder);
+  async generateTypes() {
+    this.connection = this.connection || (await createDBConnection(this.dbOptions));
+
+    return buildSchemaSync(this.connection.entityMetadatas, this.generatedFolder);
+  }
+
+  async start() {
+    this.connection = this.connection || (await createDBConnection(this.dbOptions));
 
     const schema = await buildSchema({
       authChecker,
@@ -60,12 +71,6 @@ export class App {
       flag: 'w'
     });
 
-    // TODO: delete this
-    // Close and re-create connection to pull in dynamic tables
-    // await this.connection.close();
-    // await this.connection.connect();
-
-    // Create GraphQL server
     this.graphQLServer = new GraphQLServer({
       context: ({ request }) => {
         const context: Context = {
@@ -91,7 +96,7 @@ export class App {
       endpoint: '/graphql',
       formatError: formatArgumentValidationError,
       playground: '/playground',
-      port: this.port
+      port: this.appPort
     };
 
     // Set up health check endpoint
