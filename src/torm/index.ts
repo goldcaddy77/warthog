@@ -1,3 +1,3 @@
 export * from './createConnection';
-export * from './everything.subscriber';
+export * from './EverythingSubscriber';
 export * from './SnakeNamingStrategy';

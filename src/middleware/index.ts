@@ -1,3 +1,3 @@
-export * from './dataLoaderMiddleware';
-export * from './errorMiddleware';
-export * from './healthMiddleware';
+export * from './DataLoaderMiddleware';
+export * from './ErrorMiddleware';
+export * from './HealthMiddleware';

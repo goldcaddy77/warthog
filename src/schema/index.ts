@@ -1,2 +1,1 @@
-export * from './schema-generator';
-export * from './typeorm-converter';
+export * from './SchemaGenerator';

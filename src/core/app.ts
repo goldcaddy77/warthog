@@ -55,7 +55,7 @@ export class App {
   async generateTypes() {
     this.connection = this.connection || (await createDBConnection(this.dbOptions));
 
-    return SchemaGenerator.generateFromMetadataSync(
+    return SchemaGenerator.generate(
       this.connection.entityMetadatas,
       this.generatedFolder,
       this.appOptions.warthogImportPath

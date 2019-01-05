@@ -1,7 +1,7 @@
 import { ArgumentValidationError, MiddlewareInterface, NextFn, ResolverData } from 'type-graphql';
 import { Service } from 'typedi';
 
-import { Context } from '../tgql';
+import { Context } from '../core';
 
 @Service()
 export class ErrorLoggerMiddleware implements MiddlewareInterface<Context> {

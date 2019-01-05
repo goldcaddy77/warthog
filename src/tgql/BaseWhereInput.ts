@@ -1,5 +1,3 @@
-// TODO: auto-generate these fields?
-// TODO: add the ____ById fields
 // tslint:disable:variable-name
 
 import { Field, InputType } from 'type-graphql';
