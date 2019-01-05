@@ -106,6 +106,10 @@
     "@indigo-ag/server/**/graphql": "^14",
     "@indigo-ag/server/**/@types/graphql": "^14"
   },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true
+  },
   "jest": {
     "transform": {
       ".ts": "ts-jest"
@@ -124,7 +128,7 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "tsconfig.test.json"
+        "tsConfig": "tsconfig.test.json"
       }
     }
   }

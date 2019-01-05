@@ -11,8 +11,8 @@ const NUM_USERS = 100;
 
 async function seedDatabase() {
   let app = getApp();
-  await app.generateTypes();
   await app.start();
+
   const binding = await app.getBinding();
 
   for (let index = 0; index < NUM_USERS; index++) {
@@ -48,7 +48,9 @@ async function seedDatabase() {
 seedDatabase()
   .then(result => {
     console.log(result);
+    return process.exit(0);
   })
   .catch(err => {
     console.error(err);
+    return process.exit(1);
   });

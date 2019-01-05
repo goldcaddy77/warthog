@@ -65,7 +65,6 @@ export function entityToCreateInput(entity: EntityMetadata): string {
       !column.isVersion &&
       !SYSTEM_FIELDS.includes(column.propertyName)
     ) {
-      // TODO: do nullable shiznit and decide if we need ? or ! below
       const tsType = columnToTypeScriptType(column);
       const nullable = column.isNullable ? '{ nullable: true }' : '';
       const tsRequired = column.isNullable ? '?' : '!';
@@ -140,7 +139,6 @@ export function entityToWhereInput(entity: EntityMetadata): string {
 
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
-
     if (column.isPrimary) {
       fieldTemplates += `
         @Field({ nullable: true })

@@ -65,6 +65,8 @@ export class App {
   async start() {
     this.connection = this.connection || (await createDBConnection(this.dbOptions));
 
+    await this.generateTypes();
+
     const schema = await buildSchema({
       authChecker,
       globalMiddlewares: [DataLoaderMiddleware], // ErrorLoggerMiddleware
@@ -104,7 +106,7 @@ export class App {
 
     this.graphQLServer.applyMiddleware({ app, path: '/graphql' });
 
-    app.listen({ port: this.appPort }, () =>
+    this.httpServer = app.listen({ port: this.appPort }, () =>
       console.log(`🚀 Server ready at http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`)
     );
 
@@ -115,11 +117,6 @@ export class App {
     //   playground: '/playground',
     //   port: this.appPort
     // };
-
-    // // Start the server
-    // this.httpServer = await this.graphQLServer.start(serverOptions, ({ port, playground }) => {
-    //   logger.info(`Server is running, GraphQL Playground available at http://localhost:${port}${playground}`);
-    // });
 
     return this;
   }

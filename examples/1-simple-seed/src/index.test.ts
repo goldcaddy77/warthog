@@ -1,10 +1,9 @@
 import 'reflect-metadata';
-
 import { GraphQLError } from 'graphql';
-import { Binding } from 'graphql-binding';
+
+import { Binding } from '../generated/binding';
 
 import { getApp } from './app';
-
 import { User } from './modules/user/user.entity';
 
 let app = getApp({}, { logging: false });
@@ -15,7 +14,7 @@ beforeAll(async done => {
   console.error = jest.fn();
 
   await app.start();
-  binding = await app.getBinding();
+  binding = ((await app.getBinding()) as unknown) as Binding; // TODO: clean this up
 
   const key = new Date().getTime();
 

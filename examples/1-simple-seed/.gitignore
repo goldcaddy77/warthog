@@ -1,2 +1,3 @@
 generated/*
 !generated/index.ts
+!generated/schema.ts
