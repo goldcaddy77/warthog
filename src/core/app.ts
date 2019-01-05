@@ -123,3 +123,5 @@ export class App {
     await this.connection.close();
   }
 }
+
+export { ConnectionOptions };

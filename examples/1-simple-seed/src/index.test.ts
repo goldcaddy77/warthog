@@ -1,24 +1,21 @@
-import { GraphQLError } from 'graphql';
+import 'reflect-metadata';
 
-import { App } from '../../src/core/app';
-import { Binding, getRemoteBinding } from '../../src/core/binding';
+import { GraphQLError } from 'graphql';
+import { Binding } from 'graphql-binding';
+
+import { getApp } from './app';
 
 import { User } from './modules/user/user.entity';
 
+let app = getApp({}, { logging: false });
 let binding: Binding;
-let app: any;
 let testUser: User;
 
 beforeAll(async done => {
   console.error = jest.fn();
 
-  app = new App({ port: process.env.APP_PORT! }, { logging: false });
   await app.start();
-
-  binding = await getRemoteBinding(`http://${process.env.APP_HOST}:${process.env.APP_PORT}/graphql`, {
-    origin: 'seed-script',
-    token: 'testtoken'
-  });
+  binding = await app.getBinding();
 
   const key = new Date().getTime();
 
@@ -44,7 +41,7 @@ afterAll(done => {
 
 describe('Users', () => {
   test('find user by id', async done => {
-    const user = await binding.query.user({ where: { id: testUser.id } }, `{ id }`);
+    const user = await binding.query.user({ where: { id: String(testUser.id) } }, `{ id }`);
 
     // If user tries to access a private field, it will throw a console error.
     // We should make sure we always fail tests console errors are encountered

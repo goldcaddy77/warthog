@@ -1,8 +1,10 @@
 import 'reflect-metadata';
 
-import { app } from './app';
+import { getApp } from './app';
 
 async function bootstrap() {
+  const app = getApp();
+
   await app.generateTypes();
   await app.start();
 }

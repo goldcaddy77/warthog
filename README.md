@@ -9,6 +9,8 @@
 
 Opinionated set of tools for setting up GraphQL backed by TypeORM
 
+Note: requires use of Postgres currently
+
 ## Table of Contents
 
 - [Install](#install)

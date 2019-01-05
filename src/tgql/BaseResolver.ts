@@ -138,7 +138,7 @@ export class BaseResolver<E extends BaseObject> {
       if (key === 'AND' || key === 'OR' || key === 'not') {
         throw new Error('Boolean logic not yet supported');
       }
-      const [attr, operator] = getFindOperator(key, where[key]);
+      const [attr, operator] = getFindOperator(String(key), where[key]);
       whereOptions[attr] = operator;
     });
     return whereOptions;

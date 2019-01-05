@@ -1,6 +1,6 @@
 import * as Faker from 'faker';
 
-import { app } from '../src/app';
+import { getApp } from '../src/app';
 
 if (process.env.NODE_ENV !== 'development') {
   throw 'Seeding only available in development environment';
@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== 'development') {
 const NUM_USERS = 100;
 
 async function seedDatabase() {
+  let app = getApp();
   await app.generateTypes();
   await app.start();
   const binding = await app.getBinding();
