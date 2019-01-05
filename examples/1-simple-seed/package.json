@@ -16,14 +16,15 @@
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
-    "@types/faker": "^4.1.4",
-    "@types/isomorphic-fetch": "^0.0.34",
-    "@types/jest": "^23.3.11",
-    "@types/node": "^10.12.18",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.2.2"
   },
   "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/faker": "^4.1.4",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/jest": "^23.3.11",
+    "@types/node": "^10.12.18",
     "dotenv-cli": "^1.4.0",
     "faker": "^4.1.0",
     "jest": "^23.6.0",

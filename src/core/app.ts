@@ -1,18 +1,20 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
+import { ApolloServer } from 'apollo-server-express';
+import express = require('express');
+import { Request } from 'express';
 import { writeFileSync } from 'fs';
 import { printSchema, GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
-import { GraphQLServer, Options } from 'graphql-yoga';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 import * as path from 'path';
 import { Container } from 'typedi';
-import { buildSchema, formatArgumentValidationError, useContainer as TypeGraphQLUseContainer } from 'type-graphql';
+import { buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
-import { getRemoteBinding, logger } from './';
+import { getRemoteBinding } from './'; // logger
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { SchemaGenerator } from '../schema/';
 import { authChecker, Context } from '../tgql';
@@ -28,7 +30,7 @@ export class App {
   // create TypeORM connection
   connection!: Connection;
   httpServer!: HttpServer | HttpsServer;
-  graphQLServer!: GraphQLServer;
+  graphQLServer!: ApolloServer;
   appHost: string;
   appPort: number;
   generatedFolder: string;
@@ -77,15 +79,15 @@ export class App {
       flag: 'w'
     });
 
-    this.graphQLServer = new GraphQLServer({
-      context: ({ request }) => {
+    this.graphQLServer = new ApolloServer({
+      context: (options: { request: Request }) => {
         const context: Context = {
           connection: this.connection,
           dataLoader: {
             initialized: false,
             loaders: {}
           },
-          request,
+          request: options.request,
           user: {
             email: 'admin@test.com',
             id: 'abc12345',
@@ -97,21 +99,27 @@ export class App {
       schema
     });
 
-    // Configure server options
-    const serverOptions: Options = {
-      endpoint: '/graphql',
-      formatError: formatArgumentValidationError,
-      playground: '/playground',
-      port: this.appPort
-    };
+    const app = express();
+    app.use('/health', healthCheckMiddleware);
 
-    // Set up health check endpoint
-    this.graphQLServer.express.use('/health', healthCheckMiddleware);
+    this.graphQLServer.applyMiddleware({ app, path: '/graphql' });
 
-    // Start the server
-    this.httpServer = await this.graphQLServer.start(serverOptions, ({ port, playground }) => {
-      logger.info(`Server is running, GraphQL Playground available at http://localhost:${port}${playground}`);
-    });
+    app.listen({ port: this.appPort }, () =>
+      console.log(`🚀 Server ready at http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`)
+    );
+
+    // // Configure server options
+    // const serverOptions: Options = {
+    //   endpoint: '/graphql',
+    //   formatError: formatArgumentValidationError,
+    //   playground: '/playground',
+    //   port: this.appPort
+    // };
+
+    // // Start the server
+    // this.httpServer = await this.graphQLServer.start(serverOptions, ({ port, playground }) => {
+    //   logger.info(`Server is running, GraphQL Playground available at http://localhost:${port}${playground}`);
+    // });
 
     return this;
   }

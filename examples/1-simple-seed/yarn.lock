@@ -18,6 +18,44 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@types/body-parser@*":
+  version "1.17.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/body-parser/-/body-parser-1.17.0.tgz#9f5c9d9bd04bb54be32d5eb9fc0d8c974e6cf58c"
+  integrity sha1-n1ydm9BLtUvjLV65/A2Ml05s9Yw=
+  dependencies:
+    "@types/connect" "*"
+    "@types/node" "*"
+
+"@types/connect@*":
+  version "3.4.32"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
+  integrity sha1-qg6WFrlDXMrQK8UrW0VP/Cxwuig=
+  dependencies:
+    "@types/node" "*"
+
+"@types/events@*":
+  version "1.2.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
+  integrity sha1-gaZzHOTfQ2GeXIyUU4Oz5iqJ6oY=
+
+"@types/express-serve-static-core@*":
+  version "4.16.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/express-serve-static-core/-/express-serve-static-core-4.16.0.tgz#fdfe777594ddc1fe8eb8eccce52e261b496e43e7"
+  integrity sha1-/f53dZTdwf6OuOzM5S4mG0luQ+c=
+  dependencies:
+    "@types/events" "*"
+    "@types/node" "*"
+    "@types/range-parser" "*"
+
+"@types/express@^4.16.0":
+  version "4.16.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/express/-/express-4.16.0.tgz#6d8bc42ccaa6f35cf29a2b7c3333cb47b5a32a19"
+  integrity sha1-bYvELMqm81zymit8MzPLR7WjKhk=
+  dependencies:
+    "@types/body-parser" "*"
+    "@types/express-serve-static-core" "*"
+    "@types/serve-static" "*"
+
 "@types/faker@^4.1.4":
   version "4.1.4"
   resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/faker/-/faker-4.1.4.tgz#5e5bcd81a6ecf85fb6150f7eb857e755a09fd91f"
@@ -33,10 +71,28 @@
   resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/jest/-/jest-23.3.11.tgz#d3a936ae753d9e484965f5cbd19027c2b8af2551"
   integrity sha1-06k2rnU9nkhJZfXL0ZAnwrivJVE=
 
-"@types/node@^10.12.18":
+"@types/mime@*":
+  version "2.0.0"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
+  integrity sha1-WnMG42fFObn2VDSZ3o3VGfrDeos=
+
+"@types/node@*", "@types/node@^10.12.18":
   version "10.12.18"
   resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha1-HTynZHGJFVhPzZ9jRGIbdnJmXGc=
+
+"@types/range-parser@*":
+  version "1.2.3"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
+  integrity sha1-fuMwunyq+5gJC+zoal7kQRWQTCw=
+
+"@types/serve-static@*":
+  version "1.13.2"
+  resolved "https://indigoag.jfrog.io/indigoag/api/npm/npm/@types/serve-static/-/serve-static-1.13.2.tgz#f5ac4d7a6420a99a6a45af4719f4dcd8cd907a48"
+  integrity sha1-9axNemQgqZpqRa9HGfTc2M2Qekg=
+  dependencies:
+    "@types/express-serve-static-core" "*"
+    "@types/mime" "*"
 
 abab@^2.0.0:
   version "2.0.0"
