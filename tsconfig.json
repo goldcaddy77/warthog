@@ -2,9 +2,10 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
+    "declaration": true,
     "outDir": "./dist",
     "lib": ["dom", "es5", "es6", "es7", "esnext", "esnext.asynciterable"],
-    "target": "es5",
+    "target": "es2016",
     "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

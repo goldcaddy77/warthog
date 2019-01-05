@@ -6,13 +6,10 @@ const SnakeNamingStrategy = require('./SnakeNamingStrategy');
 dotenv.config();
 
 // If there is only one option, it should be passed as string, not array
-let logging = String(process.env.TYPEORM_LOGGING).split(',');
+let logging: string[] | string = String(process.env.TYPEORM_LOGGING).split(',');
 if (logging.length === 1) {
   logging = logging[0];
 }
-
-// TODO: don't synchronize in Prod!
-const synchronize = typeof process.env.TYPEORM_SYNCHRONIZE !== 'undefined' ? process.env.TYPEORM_SYNCHRONIZE : true;
 
 module.exports = {
   cli: {
@@ -29,7 +26,10 @@ module.exports = {
   namingStrategy: new SnakeNamingStrategy(),
   port: parseInt(process.env.TYPEORM_PORT || '', 10),
   subscribers: ['src/**/*.entity.ts'],
-  synchronize,
+  synchronize:
+    typeof process.env.TYPEORM_SYNCHRONIZE !== 'undefined'
+      ? process.env.TYPEORM_SYNCHRONIZE
+      : process.env.NODE_ENV === 'development',
   type: 'postgres',
   username: process.env.TYPEORM_USERNAME,
   password: process.env.TYPEORM_PASSWORD

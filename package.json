@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "description": "Opinionated set of tools for setting up GraphQL backed by TypeORM",
   "main": "dist/index.js",
-  "typings": "dist/types/index.d.ts",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "yarn tsc",
     "semantic-release": "semantic-release",
-    "test": "jest --verbose"
+    "test": "jest --verbose --coverage",
+    "test:ci": "jest --coverage --ci --forceExit --detectOpenHandles --runInBand"
   },
   "husky": {
     "hooks": {
@@ -36,6 +37,7 @@
   "//": "TODO: figure out which of these are dependencies, devDeps or peerDeps",
   "dependencies": {
     "@types/debug": "^0.0.31",
+    "@types/express": "^4.16.0",
     "@types/faker": "^4.1.4",
     "@types/graphql": "^14.0.4",
     "@types/graphql-iso-date": "^3.3.0",
@@ -46,6 +48,7 @@
     "@types/pg": "^7.4.8",
     "@types/prettier": "^1.15.2",
     "@types/shortid": "^0.0.29",
+    "@types/ws": "^6.0.1",
     "apollo-link-http": "^1.5.9",
     "apollo-server": "^2.3.1",
     "class-transformer": "^0.2.0",

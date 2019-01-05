@@ -14,10 +14,10 @@ import { Container } from 'typedi';
 import { buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
-import { getRemoteBinding } from './'; // logger
+import { getRemoteBinding, Context } from './'; // logger
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { SchemaGenerator } from '../schema/';
-import { authChecker, Context } from '../tgql';
+import { authChecker } from '../tgql';
 import { createDBConnection } from '../torm';
 
 export interface AppOptions {
