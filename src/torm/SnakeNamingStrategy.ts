@@ -40,5 +40,3 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy implements Naming
     return snakeCase(`${parentTableName}_${parentTableIdPropertyName}`);
   }
 }
-
-module.exports = SnakeNamingStrategy;

@@ -66,9 +66,9 @@ describe('Users', () => {
       await binding.mutation.createUser(
         {
           data: {
-            email: testUser.email,
-            firstName: testUser.firstName,
-            lastName: testUser.lastName
+            email: testUser.email!,
+            firstName: testUser.firstName!,
+            lastName: testUser.lastName!
           }
         },
         `{ id email createdAt createdById }`

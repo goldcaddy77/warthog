@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "//": "make sure to install top-level packages, too",
-    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn db:seed:dev",
-    "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>/dev/null || :",
-    "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>/dev/null || :",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn generate:binding && yarn db:seed:dev",
+    "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
+    "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:seed:dev": "dotenv -- ts-node tools/seed.ts",
     "generate:binding": "yarn graphql-binding --input generated/schema.ts --language typescript --outputBinding generated/binding.ts",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
@@ -17,6 +17,7 @@
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
+    "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.2.2"
   },

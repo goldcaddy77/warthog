@@ -10,7 +10,6 @@ import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 import * as path from 'path';
-import { Container } from 'typedi';
 import { buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
@@ -21,6 +20,8 @@ import { authChecker } from '../tgql';
 import { createDBConnection } from '../torm';
 
 export interface AppOptions {
+  container?: any; // TODO: fix types - Container from typeDI
+
   host?: string;
   generatedFolder?: string;
   port?: string | number;
@@ -36,13 +37,23 @@ export class App {
   generatedFolder: string;
 
   constructor(private appOptions: AppOptions, private dbOptions: Partial<ConnectionOptions> = {}) {
-    // register 3rd party IOC container
-    TypeGraphQLUseContainer(Container);
-    TypeORMUseContainer(Container);
+    if (this.appOptions.container) {
+      // register 3rd party IOC container
+      TypeGraphQLUseContainer(this.appOptions.container);
+      TypeORMUseContainer(this.appOptions.container);
+    }
 
     this.appHost = this.appOptions.host || process.env.APP_HOST || 'localhost';
     this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
     this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
+  }
+
+  async establishDBConnection(): Promise<Connection> {
+    if (!this.connection) {
+      this.connection = await createDBConnection(this.dbOptions);
+    }
+
+    return this.connection;
   }
 
   async getBinding(): Promise<Binding> {
@@ -53,7 +64,7 @@ export class App {
   }
 
   async generateTypes() {
-    this.connection = this.connection || (await createDBConnection(this.dbOptions));
+    await this.establishDBConnection();
 
     return SchemaGenerator.generate(
       this.connection.entityMetadatas,
@@ -63,8 +74,7 @@ export class App {
   }
 
   async start() {
-    this.connection = this.connection || (await createDBConnection(this.dbOptions));
-
+    await this.establishDBConnection();
     await this.generateTypes();
 
     const schema = await buildSchema({

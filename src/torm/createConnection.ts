@@ -1,12 +1,13 @@
 import { createConnection, ConnectionOptions } from 'typeorm';
 
 // tslint:disable-next-line
-const baseOrmConfig = require('./ormconfig');
+import { getBaseConfig } from './ormconfig';
 
 export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) => {
-  // 'src/**/*.subscriber.ts',
+  const baseConfig = getBaseConfig();
+
   return createConnection({
-    ...baseOrmConfig,
+    ...baseConfig,
     ...dbOptions
   });
 };
