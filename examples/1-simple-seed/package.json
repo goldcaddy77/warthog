@@ -1,0 +1,52 @@
+{
+  "name": "example1",
+  "version": "0.0.0",
+  "scripts": {
+    "//": "make sure to install top-level packages, too",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn generate:binding && yarn db:seed:dev",
+    "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
+    "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
+    "db:seed:dev": "dotenv -- ts-node tools/seed.ts",
+    "generate:binding": "yarn graphql-binding --input generated/schema.ts --language typescript --outputBinding generated/binding.ts",
+    "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
+    "start": "npm-run-all --parallel start:ts playground:open",
+    "start:debug": "yarn start:ts --inspect",
+    "start:ts": "ts-node --type-check src/index.ts",
+    "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f ./ormconfig",
+    "test": "dotenv -- jest",
+    "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
+  },
+  "dependencies": {
+    "pgtools": "^0.3.0",
+    "reflect-metadata": "^0.1.12",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/faker": "^4.1.4",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/jest": "^23.3.11",
+    "@types/node": "^10.12.18",
+    "dotenv-cli": "^1.4.0",
+    "faker": "^4.1.0",
+    "graphql-binding": "^2.3.8",
+    "jest": "^23.6.0",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1"
+  },
+  "jest": {
+    "transform": {
+      ".ts": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.test\\.ts$"
+    ]
+  }
+}

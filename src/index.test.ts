@@ -1,5 +1,5 @@
-describe('Logger test', () => {
-  it('works if true is truthy', () => {
+describe('Testing Placeholder', () => {
+  it('shows that the test harness is in place', () => {
     expect(true).toBeTruthy();
   });
 });

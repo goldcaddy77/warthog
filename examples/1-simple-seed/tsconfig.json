@@ -2,16 +2,14 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
-    "declaration": true,
-    "outDir": "./dist",
     "lib": ["dom", "es5", "es6", "es7", "esnext", "esnext.asynciterable"],
-    "target": "es6",
+    "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "keyofStringsOnly": true, // Fixes issue with TS2.9
+    "keyofStringsOnly": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

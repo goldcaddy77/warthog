@@ -7,15 +7,26 @@
 
 ## Warthog
 
-Opinionated set of tools for setting up GraphQL backed by TypeORM
+Opinionated set of tools for setting up GraphQL backed by TypeORM. Built on the 
+shoulder of giants.
+
+- Apollo Server 2 (running express)
+- TypeORM
+- TypeGraphQL
+- GraphQL Bindings
+
+Note: requires use of Postgres currently
 
 ## Table of Contents
 
-- [Install](#install)
-- [Usage](#usage)
-- [API](#api)
-- [Contribute](#contribute)
-- [License](#license)
+- [warthog](#warthog)
+  - [Warthog](#warthog)
+  - [Table of Contents](#table-of-contents)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [API](#api)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## Install
 
