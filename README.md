@@ -30,6 +30,100 @@ Check out the [examples folder](https://github.com/goldcaddy77/warthog/tree/v1/e
 to see how to use Warthog in a project or check out the 
 [warthog example](https://github.com/goldcaddy77/warthog-example) repo.
 
+Create an entity:
+
+```typescript
+import { BaseObject, EntityObject, StringField } from 'warthog';
+
+@EntityObject()
+export class User extends BaseObject {
+  @StringField()
+  name?: string;
+}
+```
+
+Now, when you start your server, the following will be generated:
+
+```graphql
+type User implements BaseGraphQLObject {
+  id: String!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  name: String!
+}
+
+input UserCreateInput {
+  name: String!
+}
+
+enum UserOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+input UserUpdateInput {
+  name: String
+}
+
+input UserWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}
+```
+
+## Limitations
+
+Since Warthog relies heavily on conventions, it only supports postgres currently
+for DBs.
+
+## Thanks
+
+Special thanks to the authors of:
+
+- [TypeORM](https://github.com/typeorm/typeorm)
+- [type-graphql](https://github.com/19majkel94/type-graphql)
+- [Prisma](https://github.com/prisma/prisma)
+
+Ultimately, Warthog is a really opinionated, but flexible composition of these libraries
 
 ## Contribute
 
@@ -39,9 +133,4 @@ PRs accepted, fire away!  Or add issues if you have use cases Warthog doesn't co
 
 MIT © Dan Caddigan
 
-- Apollo Server 2 (running express)
-- TypeORM
-- TypeGraphQL
-- GraphQL Bindings
 
-Note: requires use of Postgres currently
