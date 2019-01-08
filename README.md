@@ -15,6 +15,7 @@ Warthog, set up your data models and the following are automatically generated:
     inspired by [Prisma](https://github.com/prisma/prisma)'s conventions
 - A [graphql-binding](https://github.com/graphql-binding/graphql-binding) for
   type-safe programmatic access to your APIs.
+- TypeScript classes for the generated GraphQL schema for type-safety while developing.
 
 ## Warning
 
