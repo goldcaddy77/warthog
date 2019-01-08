@@ -1,6 +1,6 @@
 # Example 1 - User
 
-## TLDR
+## Setup
 
 Run `yarn bootstrap && yarn start`
 

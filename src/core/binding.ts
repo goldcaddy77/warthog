@@ -1,9 +1,13 @@
 import { HttpLink } from 'apollo-link-http';
 import * as fetch from 'cross-fetch';
+import * as fs from 'fs';
 import * as Debug from 'debug';
-import { printSchema } from 'graphql';
-import { Binding } from 'graphql-binding';
+import { buildSchema, printSchema } from 'graphql';
+import { Binding, TypescriptGenerator } from 'graphql-binding';
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
+import * as path from 'path';
+
+// require('ts-node').register();
 
 import { StringMap } from '..';
 
@@ -34,7 +38,6 @@ export class Link extends HttpLink {
   }
 }
 
-export { Binding };
 export class RemoteBinding extends Binding {
   constructor(link: HttpLink, typeDefs: string) {
     const schema = makeRemoteExecutableSchema({ link, schema: typeDefs });
@@ -59,3 +62,22 @@ export async function getRemoteBinding(endpoint: string, options: LinkOptions) {
 
   return new RemoteBinding(link, printSchema(introspectionResult));
 }
+
+export async function generateBindingFile(inputSchemaPath: string, outputBindingFile: string) {
+  const sdl = fs.readFileSync(path.resolve(inputSchemaPath), 'utf-8');
+  const schema = buildSchema(sdl);
+
+  const generatorOptions = {
+    schema,
+    isDefaultExport: false,
+    inputSchemaPath: path.resolve(inputSchemaPath),
+    outputBindingPath: path.resolve(outputBindingFile)
+  };
+
+  const generatorInstance = new TypescriptGenerator(generatorOptions);
+  const code = generatorInstance.render();
+
+  fs.writeFileSync(outputBindingFile, code);
+}
+
+export { Binding };

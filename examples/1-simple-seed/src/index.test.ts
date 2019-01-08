@@ -77,6 +77,7 @@ describe('Users', () => {
       error = e;
     }
 
+    // Note: this test can also surface if you have 2 separate versions of GraphQL installed (which is bad)
     expect(error).toBeInstanceOf(GraphQLError);
     expect(error.message).toContain('duplicate');
     done();

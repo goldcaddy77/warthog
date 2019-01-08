@@ -18,6 +18,7 @@ import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { SchemaGenerator } from '../schema/';
 import { authChecker } from '../tgql';
 import { createDBConnection } from '../torm';
+import { generateBindingFile } from './binding';
 
 export interface AppOptions {
   container?: any; // TODO: fix types - Container from typeDI
@@ -35,6 +36,7 @@ export class App {
   appHost: string;
   appPort: number;
   generatedFolder: string;
+  schema?: GraphQLSchema;
 
   constructor(private appOptions: AppOptions, private dbOptions: Partial<ConnectionOptions> = {}) {
     if (this.appOptions.container) {
@@ -63,6 +65,13 @@ export class App {
     });
   }
 
+  async generateBinding() {
+    const schemaFilePath = path.join(this.generatedFolder, 'schema.graphql');
+    const outputBindingPath = path.join(this.generatedFolder, 'binding.ts');
+
+    return generateBindingFile(schemaFilePath, outputBindingPath);
+  }
+
   async generateTypes() {
     await this.establishDBConnection();
 
@@ -73,23 +82,38 @@ export class App {
     );
   }
 
-  async start() {
-    await this.establishDBConnection();
-    await this.generateTypes();
+  async buildGraphQLSchema(): Promise<GraphQLSchema> {
+    console.log('buildGraphQLSchema start ');
+    if (!this.schema) {
+      this.schema = await buildSchema({
+        authChecker,
+        globalMiddlewares: [DataLoaderMiddleware], // ErrorLoggerMiddleware
+        resolvers: [process.cwd() + '/**/*.resolver.ts']
+        // TODO
+        // scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
+      });
+    }
 
-    const schema = await buildSchema({
-      authChecker,
-      globalMiddlewares: [DataLoaderMiddleware], // ErrorLoggerMiddleware
-      resolvers: [process.cwd() + '/**/*.resolver.ts']
-      // TODO
-      // scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
-    });
+    console.log('this.schema', this.schema);
 
+    return this.schema;
+  }
+
+  async writeSchemaFile() {
+    console.log('got to writeSchemaFile', this.schema);
     // Write schema to dist folder so that it's available in package
-    writeFileSync(`${this.generatedFolder}/schema.graphql`, printSchema(schema as GraphQLSchema), {
+    return writeFileSync(path.join(this.generatedFolder, 'schema.graphql'), printSchema(this.schema as GraphQLSchema), {
       encoding: 'utf8',
       flag: 'w'
     });
+  }
+
+  async start() {
+    await this.establishDBConnection();
+    await this.generateTypes();
+    await this.buildGraphQLSchema();
+    await this.writeSchemaFile();
+    await this.generateBinding();
 
     this.graphQLServer = new ApolloServer({
       context: (options: { request: Request }) => {
@@ -108,7 +132,7 @@ export class App {
         };
         return context;
       },
-      schema,
+      schema: this.schema,
       formatError: (error: Error) => {
         console.log(error);
         return error;
