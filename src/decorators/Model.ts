@@ -3,11 +3,11 @@ import { Entity } from 'typeorm';
 
 import { composeClassDecorators, ClassDecoratorFactory } from '../utils/';
 
-interface EntityObjectOptions {
+interface ModelOptions {
   auditTableName?: string;
 }
 
-export function EntityObject(this: any, args: EntityObjectOptions = {}): any {
+export function Model(this: any, args: ModelOptions = {}): any {
   const factories = [Entity() as ClassDecoratorFactory, ObjectType() as ClassDecoratorFactory];
 
   return composeClassDecorators(...factories);

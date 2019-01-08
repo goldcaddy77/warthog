@@ -15,10 +15,10 @@ import {
   Repository
 } from 'typeorm';
 
-import { BaseObject, WhereInput } from '../core';
+import { BaseModel, WhereInput } from '../core';
 import { StandardDeleteResponse } from './DeleteResponse';
 
-export class BaseResolver<E extends BaseObject> {
+export class BaseResolver<E extends BaseModel> {
   // TODO: need to figure out why we couldn't type this as Repository<E>
   constructor(protected entityClass: any, protected repository: Repository<any>) {
     if (!entityClass) {

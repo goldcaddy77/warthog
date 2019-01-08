@@ -31,7 +31,7 @@ export abstract class BaseGraphQLObject {
 
 // This class adds all of the TypeORM decorators needed to create the DB table
 @ObjectType({ implements: BaseGraphQLObject })
-export abstract class BaseObject implements BaseGraphQLObject {
+export abstract class BaseModel implements BaseGraphQLObject {
   @PrimaryColumn({ type: String })
   id!: ID;
 

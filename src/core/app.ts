@@ -83,7 +83,6 @@ export class App {
   }
 
   async buildGraphQLSchema(): Promise<GraphQLSchema> {
-    console.log('buildGraphQLSchema start ');
     if (!this.schema) {
       this.schema = await buildSchema({
         authChecker,
@@ -94,13 +93,10 @@ export class App {
       });
     }
 
-    console.log('this.schema', this.schema);
-
     return this.schema;
   }
 
   async writeSchemaFile() {
-    console.log('got to writeSchemaFile', this.schema);
     // Write schema to dist folder so that it's available in package
     return writeFileSync(path.join(this.generatedFolder, 'schema.graphql'), printSchema(this.schema as GraphQLSchema), {
       encoding: 'utf8',

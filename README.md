@@ -33,10 +33,10 @@ to see how to use Warthog in a project or check out the
 Create an entity:
 
 ```typescript
-import { BaseObject, EntityObject, StringField } from 'warthog';
+import { BaseModel, Model, StringField } from 'warthog';
 
-@EntityObject()
-export class User extends BaseObject {
+@Model()
+export class User extends BaseModel {
   @StringField()
   name?: string;
 }

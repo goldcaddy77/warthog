@@ -1,4 +1,4 @@
 export * from './EmailField';
-export * from './EntityObject';
+export * from './Model';
 export * from './StringField';
 export * from './ForeignKeyField';

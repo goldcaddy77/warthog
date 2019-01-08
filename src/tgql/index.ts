@@ -1,5 +1,5 @@
 export { authChecker } from './authChecker';
-export { BaseObject } from '../core/BaseObject';
+export { BaseModel } from '../core/BaseModel';
 export * from './BaseResolver';
 export * from './BaseWhereInput';
 export * from './DeleteResponse';

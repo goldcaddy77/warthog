@@ -1,9 +1,9 @@
 import { Authorized } from 'type-graphql';
 
-import { BaseObject, EmailField, EntityObject, StringField } from '../../../../../src';
+import { BaseModel, EmailField, Model, StringField } from '../../../../../src';
 
-@EntityObject()
-export class User extends BaseObject {
+@Model()
+export class User extends BaseModel {
   @StringField({ maxLength: 30 })
   firstName?: string;
 
