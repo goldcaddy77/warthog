@@ -123,7 +123,7 @@ Special thanks to the authors of:
 - [type-graphql](https://github.com/19majkel94/type-graphql)
 - [Prisma](https://github.com/prisma/prisma)
 
-Ultimately, Warthog is a really opinionated, but flexible composition of these libraries
+Ultimately, Warthog is a really opinionated, yet flexible composition of these libraries
 
 ## Contribute
 
