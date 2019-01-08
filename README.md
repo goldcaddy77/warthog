@@ -1,11 +1,9 @@
-# warthog
+# Warthog - Auto-generated GraphQL APIs
 
 [![npm version](https://img.shields.io/npm/v/warthog.svg)](https://www.npmjs.org/package/warthog)
 [![CircleCI](https://circleci.com/gh/goldcaddy77/warthog/tree/master.svg?style=shield)](https://circleci.com/gh/goldcaddy77/warthog/tree/master)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](#badge)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-
-## Warthog
 
 Opinionated framework for building GraphQL APIs with strong conventions.  With 
 Warthog, set up your data models and the following are automatically generated:
@@ -17,6 +15,11 @@ Warthog, set up your data models and the following are automatically generated:
     inspired by [Prisma](https://github.com/prisma/prisma)'s conventions
 - A [graphql-binding](https://github.com/graphql-binding/graphql-binding) for
   type-safe programmatic access to your APIs.
+
+## Warning
+
+The API for this library is very much a moving target.  It will likely shift
+until version 2, at which time it will become stable.
 
 ## Install
 
