@@ -33,7 +33,7 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
   entity.columns.forEach((column: ColumnMetadata) => {
     if (uniques.includes(column.propertyName) || column.isPrimary) {
       const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
-      const graphQLDataType = columnTypeToGraphQLDateType(column.type);
+      const graphQLDataType = columnTypeToGraphQLDataType(column.type);
       const tsType = columnToTypeScriptType(column);
 
       fieldsTemplate += `
@@ -254,7 +254,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
   if (column.isPrimary) {
     return 'string'; // TODO: should this be ID_TYPE?
   } else {
-    const graphqlType = columnTypeToGraphQLDateType(column.type);
+    const graphqlType = columnTypeToGraphQLDataType(column.type);
     const typeMap: any = {
       DateTime: 'string',
       String: 'string',
@@ -265,7 +265,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
   }
 }
 
-export function columnTypeToGraphQLDateType(type: ColumnType): string {
+export function columnTypeToGraphQLDataType(type: ColumnType): string {
   return convertToGraphQLType(type).name;
 }
 export function convertToGraphQLType(type: ColumnType): GraphQLScalarType {
@@ -280,6 +280,7 @@ export function convertToGraphQLType(type: ColumnType): GraphQLScalarType {
     case String:
     case 'String':
     case 'text':
+    case 'enum': // TODO: Hack for now, need to teach this about enums
       return GraphQLString;
     case Boolean:
     case 'Boolean':
