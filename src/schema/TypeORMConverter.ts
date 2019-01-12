@@ -16,21 +16,28 @@ function uniquesForEntity(entity: EntityMetadata): string[] {
   );
 }
 
-export function entityListToEnumImports(entities: EntityMetadata[]): string[] {
-  let enums: string[] = [];
+export function entityListToImports(entities: EntityMetadata[]): string[] {
+  let imports: string[] = [];
   let enumMap = getMetadataStorage().enumMap;
 
   Object.keys(enumMap).forEach((tableName: string) => {
     Object.keys(enumMap[tableName]).forEach((columnName: string) => {
       const enumColumn = enumMap[tableName][columnName];
       const filename = enumColumn.filename.replace(/\.(j|t)s$/, '');
-      enums.push(`
-        import { ${enumColumn.name} } from '${filename}'
-      `);
+      imports.push(`import { ${enumColumn.name} } from '${filename}'
+`);
     });
   });
 
-  return enums;
+  let classMap = getMetadataStorage().classMap;
+  Object.keys(classMap).forEach((tableName: string) => {
+    const classObj = classMap[tableName];
+    const filename = classObj.filename.replace(/\.(j|t)s$/, '');
+    imports.push(`import { ${classObj.name} } from '${filename}'
+`);
+  });
+
+  return imports;
 }
 
 export function entityToWhereUniqueInput(entity: EntityMetadata): string {
@@ -90,11 +97,13 @@ export function entityToCreateInput(entity: EntityMetadata): string {
 
       if (column.enum) {
         fieldTemplates += `
-         @Field(type => ${graphQLType}, ${nullable}) ${column.propertyName}${tsRequired}: ${graphQLType};
+          @Field(type => ${graphQLType}, ${nullable})
+          ${column.propertyName}${tsRequired}: ${graphQLType};
        `;
       } else {
         fieldTemplates += `
-          @Field(${nullable}) ${column.propertyName}${tsRequired}: ${tsType};
+          @Field(${nullable})
+          ${column.propertyName}${tsRequired}: ${tsType};
         `;
       }
     }
@@ -333,8 +342,8 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
   switch (type) {
     case String:
     case 'String':
+    case 'varchar':
     case 'text':
-    case 'enum': // TODO: Hack for now, need to teach this about enums
       return GraphQLString;
     case Boolean:
     case 'Boolean':
