@@ -104,11 +104,21 @@ export class App {
     });
   }
 
+  async writeGeneratedIndexFile() {
+    // Write schema to dist folder so that it's available in package
+    const contents = `export * from './classes';`;
+    return writeFileSync(path.join(this.generatedFolder, 'index.ts'), contents, {
+      encoding: 'utf8',
+      flag: 'w'
+    });
+  }
+
   async start() {
     await this.establishDBConnection();
     await this.generateTypes();
     await this.buildGraphQLSchema();
     await this.writeSchemaFile();
+    await this.writeGeneratedIndexFile();
     await this.generateBinding();
 
     this.graphQLServer = new ApolloServer({
