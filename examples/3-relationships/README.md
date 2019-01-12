@@ -10,7 +10,6 @@ Running `yarn bootstrap` will do the following:
 
 - Install packages
 - Create the example DB
-- Seed the database
 
 ## Running the App
 

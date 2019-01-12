@@ -7,17 +7,10 @@ dotenv.config();
 import { App } from '../../../src/';
 
 async function bootstrap() {
-  const app = new App(
-    // Path written in generated classes
-    {
-      container: Container,
-      warthogImportPath: '../../../src'
-    },
-    {
-      cache: true,
-      synchronize: true
-    }
-  );
+  const app = new App({
+    container: Container,
+    warthogImportPath: '../../../src' // Path written in generated classes
+  });
 
   await app.start();
 }
