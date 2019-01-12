@@ -1,8 +1,9 @@
+import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
 import * as fetch from 'cross-fetch';
 import * as fs from 'fs';
 import * as Debug from 'debug';
-import { buildSchema, printSchema } from 'graphql';
+import { buildSchema, GraphQLError, printSchema } from 'graphql';
 import { Binding, TypescriptGenerator } from 'graphql-binding';
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 import * as path from 'path';
@@ -39,8 +40,16 @@ export class Link extends HttpLink {
 }
 
 export class RemoteBinding extends Binding {
-  constructor(link: HttpLink, typeDefs: string) {
-    const schema = makeRemoteExecutableSchema({ link, schema: typeDefs });
+  constructor(httpLink: HttpLink, typeDefs: string) {
+    // Workaround for issue with graphql-tools
+    // See https://github.com/graphql-binding/graphql-binding/issues/173#issuecomment-446366548
+    const errorLink = onError((args: any) => {
+      if (args.graphQLErrors && args.graphQLErrors.length === 1) {
+        args.response.errors = args.graphQLErrors.concat(new GraphQLError(''));
+      }
+    });
+
+    const schema = makeRemoteExecutableSchema({ link: errorLink.concat(httpLink), schema: typeDefs });
     debug('schema', JSON.stringify(schema));
     super({ schema });
   }

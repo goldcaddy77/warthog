@@ -61,7 +61,7 @@ describe('Users', () => {
   });
 
   test('uniqueness failure', async done => {
-    let error;
+    let error: GraphQLError = new GraphQLError('');
     try {
       await binding.mutation.createUser(
         {
@@ -74,9 +74,8 @@ describe('Users', () => {
         `{ id email createdAt createdById }`
       );
     } catch (e) {
-      error = e;
+      error = e as GraphQLError;
     }
-
     // Note: this test can also surface if you have 2 separate versions of GraphQL installed (which is bad)
     expect(error).toBeInstanceOf(GraphQLError);
     expect(error.message).toContain('duplicate');

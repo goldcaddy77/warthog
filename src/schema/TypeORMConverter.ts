@@ -1,8 +1,9 @@
-import { GraphQLInt, GraphQLScalarType, GraphQLString, GraphQLBoolean, GraphQLFloat } from 'graphql';
-import { EntityMetadata, ColumnType } from 'typeorm';
+import { GraphQLInt, GraphQLScalarType, GraphQLString, GraphQLBoolean, GraphQLFloat, GraphQLEnumType } from 'graphql';
+import { EntityMetadata } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
 import { GraphQLISODateTime } from 'type-graphql';
+import { getMetadataStorage } from '../metadata';
 
 const SYSTEM_FIELDS = ['createdAt', 'createdById', 'updatedAt', 'updatedById', 'deletedAt', 'deletedById'];
 
@@ -13,6 +14,23 @@ function uniquesForEntity(entity: EntityMetadata): string[] {
     },
     [] as string[]
   );
+}
+
+export function entityListToEnumImports(entities: EntityMetadata[]): string[] {
+  let enums: string[] = [];
+  let enumMap = getMetadataStorage().enumMap;
+
+  Object.keys(enumMap).forEach((tableName: string) => {
+    Object.keys(enumMap[tableName]).forEach((columnName: string) => {
+      const enumColumn = enumMap[tableName][columnName];
+      const filename = enumColumn.filename.replace(/\.(j|t)s$/, '');
+      enums.push(`
+        import { ${enumColumn.name} } from '${filename}'
+      `);
+    });
+  });
+
+  return enums;
 }
 
 export function entityToWhereUniqueInput(entity: EntityMetadata): string {
@@ -33,7 +51,7 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
   entity.columns.forEach((column: ColumnMetadata) => {
     if (uniques.includes(column.propertyName) || column.isPrimary) {
       const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
-      const graphQLDataType = columnTypeToGraphQLDateType(column.type);
+      const graphQLDataType = columnTypeToGraphQLDataType(column);
       const tsType = columnToTypeScriptType(column);
 
       fieldsTemplate += `
@@ -65,13 +83,20 @@ export function entityToCreateInput(entity: EntityMetadata): string {
       !column.isVersion &&
       !SYSTEM_FIELDS.includes(column.propertyName)
     ) {
-      const tsType = columnToTypeScriptType(column);
+      const graphQLType = columnToGraphQLType(column);
       const nullable = column.isNullable ? '{ nullable: true }' : '';
       const tsRequired = column.isNullable ? '?' : '!';
+      const tsType = columnToTypeScriptType(column);
 
-      fieldTemplates += `
-        @Field(${nullable}) ${column.propertyName}${tsRequired}: ${tsType};
-      `;
+      if (column.enum) {
+        fieldTemplates += `
+         @Field(type => ${graphQLType}, ${nullable}) ${column.propertyName}${tsRequired}: ${graphQLType};
+       `;
+      } else {
+        fieldTemplates += `
+          @Field(${nullable}) ${column.propertyName}${tsRequired}: ${tsType};
+        `;
+      }
     }
   });
 
@@ -97,12 +122,20 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
     ) {
       // TODO: also don't allow updated foreign key fields
       // Example: photo.userId: String
+      const graphQLType = columnToGraphQLType(column);
       const tsType = columnToTypeScriptType(column);
 
-      fieldTemplates += `
+      if (column.enum) {
+        fieldTemplates += `
+        @Field(type => ${graphQLType}, { nullable: true })
+        ${column.propertyName}?: ${graphQLType};
+      `;
+      } else {
+        fieldTemplates += `
         @Field({ nullable: true })
         ${column.propertyName}?: ${tsType};
       `;
+      }
     }
   });
 
@@ -125,6 +158,13 @@ export function entityToUpdateInputArgs(entity: EntityMetadata): string {
   `;
 }
 
+function columnToTypes(column: ColumnMetadata) {
+  const graphqlType = columnToGraphQLType(column);
+  const tsType = columnToTypeScriptType(column);
+
+  return { graphqlType, tsType };
+}
+
 export function entityToWhereInput(entity: EntityMetadata): string {
   let fieldTemplates = '';
 
@@ -134,8 +174,7 @@ export function entityToWhereInput(entity: EntityMetadata): string {
       return;
     }
 
-    const graphqlType: GraphQLScalarType = convertToGraphQLType(column.type);
-    const tsType = columnToTypeScriptType(column);
+    const { graphqlType, tsType } = columnToTypes(column);
 
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
@@ -200,6 +239,15 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @Field({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
       `;
+    } else {
+      // Enums will fall through here
+      fieldTemplates += `
+        @Field(type => ${graphqlType}, { nullable: true })
+        ${column.propertyName}_eq?: ${graphqlType};
+
+        @Field(type => [${graphqlType}], { nullable: true })
+        ${column.propertyName}_in?: ${graphqlType}[];
+      `;
     }
   });
 
@@ -254,7 +302,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
   if (column.isPrimary) {
     return 'string'; // TODO: should this be ID_TYPE?
   } else {
-    const graphqlType = columnTypeToGraphQLDateType(column.type);
+    const graphqlType = columnTypeToGraphQLDataType(column);
     const typeMap: any = {
       DateTime: 'string',
       String: 'string',
@@ -265,12 +313,18 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
   }
 }
 
-export function columnTypeToGraphQLDateType(type: ColumnType): string {
-  return convertToGraphQLType(type).name;
+export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
+  return columnToGraphQLType(column).name;
 }
-export function convertToGraphQLType(type: ColumnType): GraphQLScalarType {
+export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
+  // Check to see if this column is an enum and return that
+  const enumObject = getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
+  if (enumObject) {
+    return enumObject.name;
+  }
+
   // Some types have a name attribute
-  type = (type as any).name ? (type as any).name : type;
+  const type = (column.type as any).name ? (column.type as any).name : column.type;
 
   if (type instanceof GraphQLScalarType) {
     return type;
@@ -280,6 +334,7 @@ export function convertToGraphQLType(type: ColumnType): GraphQLScalarType {
     case String:
     case 'String':
     case 'text':
+    case 'enum': // TODO: Hack for now, need to teach this about enums
       return GraphQLString;
     case Boolean:
     case 'Boolean':

@@ -128,11 +128,7 @@ export class App {
         };
         return context;
       },
-      schema: this.schema,
-      formatError: (error: Error) => {
-        console.log(error);
-        return error;
-      }
+      schema: this.schema
     });
 
     const app = express();

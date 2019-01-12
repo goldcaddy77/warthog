@@ -262,6 +262,11 @@
     "@types/connect" "*"
     "@types/node" "*"
 
+"@types/caller@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@types/caller/-/caller-1.0.0.tgz#21044c8254e95e57c86a2079bd99430d5f892c62"
+  integrity sha512-zbyHsdYFn5gCQFn+fF7Ad9En1fJdj3o0YP7DPTD9J3at4M9auNfoLrVYH4hFdLfFDhnB0kTZw3RAKp4iD516uw==
+
 "@types/connect@*":
   version "3.4.32"
   resolved "https://registry.npmjs.org/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
@@ -622,6 +627,14 @@ apollo-env@0.2.5:
   dependencies:
     core-js "^3.0.0-beta.3"
     node-fetch "^2.2.0"
+
+apollo-link-error@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.npmjs.org/apollo-link-error/-/apollo-link-error-1.1.5.tgz#1d600dfa75c4e4bf017f50d60da7b375b53047ab"
+  integrity sha512-gE0P711K+rI3QcTzfYhzRI9axXaiuq/emu8x8Y5NHK9jl9wxh7qmEc3ZTyGpnGFDDTXfhalmX17X5lp3RCVHDQ==
+  dependencies:
+    apollo-link "^1.2.6"
+    apollo-link-http-common "^0.2.8"
 
 apollo-link-http-common@^0.2.8:
   version "0.2.8"
@@ -1427,6 +1440,11 @@ caller-path@^2.0.0:
   integrity sha1-Ro+DBE42mrIBD6xfBs7uFbsssfQ=
   dependencies:
     caller-callsite "^2.0.0"
+
+caller@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/caller/-/caller-1.0.1.tgz#b851860f70e195db3d277395aa1a7e23ea30ecf5"
+  integrity sha1-uFGGD3Dhlds9J3OVqhp+I+ow7PU=
 
 callsites@^2.0.0:
   version "2.0.0"

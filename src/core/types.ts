@@ -18,3 +18,7 @@ export type WhereInput = {
 export type DeleteReponse = {
   id: ID;
 };
+
+export interface ClassType<T = any> {
+  new (...args: any[]): T;
+}
