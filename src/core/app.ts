@@ -114,11 +114,11 @@ export class App {
   }
 
   async start() {
+    await this.writeGeneratedIndexFile();
     await this.establishDBConnection();
     await this.generateTypes();
     await this.buildGraphQLSchema();
     await this.writeSchemaFile();
-    await this.writeGeneratedIndexFile();
     await this.generateBinding();
 
     this.graphQLServer = new ApolloServer({

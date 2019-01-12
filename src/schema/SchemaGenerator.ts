@@ -4,7 +4,7 @@ import * as prettier from 'prettier';
 import { EntityMetadata } from 'typeorm';
 
 import {
-  entityListToEnumImports,
+  entityListToImports,
   entityToOrderByEnum,
   entityToWhereArgs,
   entityToWhereInput,
@@ -28,7 +28,7 @@ export class SchemaGenerator {
       import { ArgsType, Field, InputType } from 'type-graphql';
       import { registerEnumType } from 'type-graphql';
       import { BaseWhereInput, PaginationArgs } from '${warthogImportPath}';
-      ${entityListToEnumImports(entities).join('')}
+      ${entityListToImports(entities).join('')}
     `;
 
     entities.forEach((entity: EntityMetadata) => {

@@ -15,10 +15,10 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
 
   // In order to use the enums in the generated classes file, we need to
   // save their locations and import them in the generated file
-  const entityFileName = caller();
+  const enumFileName = caller();
 
   const registerEnumWithWarthog = (target: any, propertyKey: string, descriptor: PropertyDescriptor): any => {
-    getMetadataStorage().addEnum(target.constructor.name, propertyKey, name, enumeration, entityFileName);
+    getMetadataStorage().addEnum(target.constructor.name, propertyKey, name, enumeration, enumFileName);
   };
 
   const factories = [

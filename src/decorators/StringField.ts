@@ -18,17 +18,19 @@ export function StringField(args: StringFieldOptions = {}): any {
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    Field({ ...nullableOption }),
+    // We explicitly say string here because when we're metaprogramming without
+    // TS types, Field does not know that this should be a String
+    Field(type => String, {
+      ...nullableOption
+    }),
     Column({
+      type: 'varchar',
       ...maxLenOption,
       ...nullableOption,
       ...uniqueOption
     }) as MethodDecoratorFactory
   ];
 
-  // if (!args.nullable) {
-  //   factories.push(IsDefined());
-  // }
   if (args.minLength) {
     factories.push(MinLength(args.minLength));
   }
