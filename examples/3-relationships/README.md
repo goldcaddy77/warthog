@@ -1,4 +1,4 @@
-# Example 2 - Complex Example
+# Example 3 - Relationships
 
 ## Setup
 
@@ -10,7 +10,7 @@ Running `yarn bootstrap` will do the following:
 
 - Install packages
 - Create the example DB
-- Seed the database with test data
+- Seed the database
 
 ## Running the App
 
@@ -18,3 +18,7 @@ To run the project, run `yarn start`.  This will:
 
 - Run the API server
 - Open GraphQL Playground
+
+## Example Queries/Mutations
+
+You can find some examples in [examples.gql](./examples.gql)
