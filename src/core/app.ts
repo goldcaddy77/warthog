@@ -39,6 +39,10 @@ export class App {
   schema?: GraphQLSchema;
 
   constructor(private appOptions: AppOptions, private dbOptions: Partial<ConnectionOptions> = {}) {
+    if (!process.env.NODE_ENV) {
+      throw new Error("NODE_ENV must be set - use 'development' locally");
+    }
+
     if (this.appOptions.container) {
       // register 3rd party IOC container
       TypeGraphQLUseContainer(this.appOptions.container);
@@ -52,6 +56,9 @@ export class App {
 
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
+      if (typeof this.dbOptions.synchronize === 'undefined') {
+        this.dbOptions = { ...this.dbOptions, synchronize: process.env.NODE_ENV === 'development' };
+      }
       this.connection = await createDBConnection(this.dbOptions);
     }
 
@@ -149,14 +156,6 @@ export class App {
     this.httpServer = app.listen({ port: this.appPort }, () =>
       console.log(`🚀 Server ready at http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`)
     );
-
-    // // Configure server options
-    // const serverOptions: Options = {
-    //   endpoint: '/graphql',
-    //   formatError: formatArgumentValidationError,
-    //   playground: '/playground',
-    //   port: this.appPort
-    // };
 
     return this;
   }

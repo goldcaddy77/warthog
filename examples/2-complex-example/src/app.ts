@@ -7,17 +7,11 @@ import { App, AppOptions } from '../../../src/';
 
 export function getApp(appOptions: Partial<AppOptions> = {}, dbOptions: any = {}) {
   return new App(
-    // Path written in generated classes
     {
       container: Container,
-      warthogImportPath: '../../../src',
+      warthogImportPath: '../../../src', // Path written in generated classes
       ...appOptions
     },
-    {
-      cache: true,
-      synchronize: true,
-      // dropSchema: true,
-      ...dbOptions
-    }
+    dbOptions
   );
 }

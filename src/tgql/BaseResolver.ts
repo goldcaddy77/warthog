@@ -143,15 +143,11 @@ export class BaseResolver<E extends BaseModel> {
     return { id: where.id };
   }
 
-  // TODO: boolean logic - AND, OR, NOT
   // extends WhereInput
   processWhereOptions<W extends any>(where: W) {
     const whereOptions: { [key: string]: FindOperator<any> } = {};
     Object.keys(where).forEach(k => {
       const key = k as keyof W;
-      if (key === 'AND' || key === 'OR' || key === 'not') {
-        throw new Error('Boolean logic not yet supported');
-      }
       const [attr, operator] = getFindOperator(String(key), where[key]);
       whereOptions[attr] = operator;
     });

@@ -1,4 +1,12 @@
-import { GraphQLInt, GraphQLScalarType, GraphQLString, GraphQLBoolean, GraphQLFloat, GraphQLEnumType } from 'graphql';
+import {
+  GraphQLInt,
+  GraphQLScalarType,
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLFloat,
+  GraphQLEnumType,
+  GraphQLID
+} from 'graphql';
 import { EntityMetadata } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
@@ -187,13 +195,13 @@ export function entityToWhereInput(entity: EntityMetadata): string {
 
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
-    if (column.isPrimary) {
+    if (column.isPrimary || graphqlType === GraphQLID) {
       fieldTemplates += `
-        @Field({ nullable: true })
-        ${column.propertyName}_eq?: ${tsType};
+        @Field(type => ${graphqlType},{ nullable: true })
+        ${column.propertyName}_eq?: string;
 
         @Field(type => [${graphqlType}], { nullable: true })
-        ${column.propertyName}_in?: ${tsType}[];
+        ${column.propertyName}_in?: string[];
       `;
     } else if (graphqlType === GraphQLString) {
       // TODO: do we need NOT?
@@ -330,6 +338,8 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
   const enumObject = getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
   if (enumObject) {
     return enumObject.name;
+  } else if (column.propertyName.match(/Id$/)) {
+    return GraphQLID;
   }
 
   // Some types have a name attribute

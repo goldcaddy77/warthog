@@ -1,29 +1,29 @@
 import * as shortid from 'shortid';
-import { Field, Int, InterfaceType, ObjectType } from 'type-graphql';
+import { Field, ID, Int, InterfaceType, ObjectType } from 'type-graphql';
 import { BeforeInsert, Column, CreateDateColumn, PrimaryColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 
-import { ID } from '.';
+import { IDType } from './types';
 
 // tslint:disable:max-classes-per-file
 
 // This interface adds all of the base type-graphql fields to our BaseClass
 @InterfaceType()
 export abstract class BaseGraphQLObject {
-  @Field(type => String)
-  id!: ID;
+  @Field(type => ID)
+  id!: IDType;
 
   @Field() createdAt!: Date;
-  @Field() createdById?: ID;
+  @Field() createdById?: IDType;
 
   @Field({ nullable: true })
   updatedAt?: Date;
   @Field({ nullable: true })
-  updatedById?: ID;
+  updatedById?: IDType;
 
   @Field({ nullable: true })
   deletedAt?: Date;
   @Field({ nullable: true })
-  deletedById?: ID;
+  deletedById?: IDType;
 
   @Field(type => Int)
   version!: number;
@@ -33,20 +33,20 @@ export abstract class BaseGraphQLObject {
 @ObjectType({ implements: BaseGraphQLObject })
 export abstract class BaseModel implements BaseGraphQLObject {
   @PrimaryColumn({ type: String })
-  id!: ID;
+  id!: IDType;
 
   @CreateDateColumn() createdAt!: Date;
-  @Column() createdById!: ID;
+  @Column() createdById!: IDType;
 
   @UpdateDateColumn({ nullable: true })
   updatedAt?: Date;
   @Column({ nullable: true })
-  updatedById?: ID;
+  updatedById?: IDType;
 
   @Column({ nullable: true })
   deletedAt?: Date;
   @Column({ nullable: true })
-  deletedById?: ID;
+  deletedById?: IDType;
 
   @VersionColumn() version!: number;
 
