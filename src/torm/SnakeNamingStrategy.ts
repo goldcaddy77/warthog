@@ -7,7 +7,7 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy implements Naming
   }
 
   tableName(className: string, customName: string): string {
-    return customName ? customName : snakeCase(className);
+    return customName ? customName : `${snakeCase(className)}s`;
   }
 
   columnName(propertyName: string, customName: string, embeddedPrefixes: string[]): string {
