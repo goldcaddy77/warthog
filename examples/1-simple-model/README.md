@@ -1,4 +1,4 @@
-# Example 1 - User
+# Example 1 - User Model
 
 ## Setup
 
