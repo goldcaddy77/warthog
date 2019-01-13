@@ -10,18 +10,18 @@ import * as path from 'path';
 
 // require('ts-node').register();
 
-import { StringMap } from '..';
+import { StringMapOptional } from '..';
 
 const debug = Debug('binding');
 
-interface LinkOptions {
-  token: string;
+interface LinkOptions extends StringMapOptional {
+  token?: string;
   origin: string;
 }
 
 export class Link extends HttpLink {
   constructor(uri: string, options: LinkOptions) {
-    let headers: StringMap = { ...options };
+    let headers = { ...options };
     if (headers.token) {
       headers['Authorization'] = `Bearer ${headers.token}`;
       delete headers.token;

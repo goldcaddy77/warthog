@@ -1,6 +1,7 @@
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type StringMap = { [key: string]: string };
+export type StringMapOptional = { [key: string]: string | undefined };
 
 export type DateTime = string;
 export type IDType = string;
