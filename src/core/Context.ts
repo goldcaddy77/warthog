@@ -5,11 +5,7 @@ import { Connection } from 'typeorm';
 export interface Context {
   connection: Connection;
   request: Request;
-  user: {
-    email: string;
-    id: string;
-    permissions: string[];
-  };
+  user?: any;
   dataLoader: {
     initialized: boolean;
     loaders: { [key: string]: { [key: string]: any } };

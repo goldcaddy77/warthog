@@ -9,6 +9,7 @@ import { printSchema, GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
+import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import { buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
@@ -22,9 +23,9 @@ import { generateBindingFile } from './binding';
 
 export interface AppOptions {
   container?: any; // TODO: fix types - Container from typeDI
-
   host?: string;
   generatedFolder?: string;
+  middlewares?: any[]; // TODO: fix
   port?: string | number;
   warthogImportPath?: string;
 }
@@ -49,9 +50,16 @@ export class App {
       TypeORMUseContainer(this.appOptions.container);
     }
 
-    this.appHost = this.appOptions.host || process.env.APP_HOST || 'localhost';
+    const host: string | undefined = this.appOptions.host || process.env.APP_HOST;
+    if (!host) {
+      throw new Error('`host` is required');
+    }
+
+    this.appHost = host;
     this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
     this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
+
+    mkdirp.sync(this.generatedFolder);
   }
 
   async establishDBConnection(): Promise<Connection> {
@@ -65,10 +73,10 @@ export class App {
     return this.connection;
   }
 
-  async getBinding(): Promise<Binding> {
+  async getBinding(options: { origin?: string; token?: string } = {}): Promise<Binding> {
     return getRemoteBinding(`http://${this.appHost}:${this.appPort}/graphql`, {
-      origin: 'seed-script', // TODO: allow this to be passed in
-      token: 'faketoken' // TODO: allow this to be passed in
+      origin: 'warthog',
+      ...options
     });
   }
 
@@ -93,10 +101,10 @@ export class App {
     if (!this.schema) {
       this.schema = await buildSchema({
         authChecker,
-        globalMiddlewares: [DataLoaderMiddleware], // ErrorLoggerMiddleware
+        // TODO: ErrorLoggerMiddleware
+        globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
         resolvers: [process.cwd() + '/**/*.resolver.ts']
-        // TODO
-        // scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
+        // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
       });
     }
 
@@ -129,21 +137,16 @@ export class App {
     await this.generateBinding();
 
     this.graphQLServer = new ApolloServer({
-      context: (options: { request: Request }) => {
+      context: (options: { request: Request; context?: any }) => {
         const context: Context = {
           connection: this.connection,
           dataLoader: {
             initialized: false,
             loaders: {}
           },
-          request: options.request,
-          user: {
-            email: 'admin@test.com',
-            id: 'abc12345',
-            permissions: ['user:read', 'user:update', 'user:create', 'user:delete', 'photo:delete']
-          }
+          request: options.request
         };
-        return context;
+        return { ...context, ...(options.context || {}) };
       },
       schema: this.schema
     });
