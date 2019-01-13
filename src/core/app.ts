@@ -144,7 +144,12 @@ export class App {
             initialized: false,
             loaders: {}
           },
-          request: options.request
+          request: options.request,
+          user: {
+            email: 'admin@test.com',
+            id: 'abc12345',
+            permissions: ['user:read', 'user:update', 'user:create', 'user:delete', 'photo:delete']
+          }
         };
         return { ...context, ...(options.context || {}) };
       },
