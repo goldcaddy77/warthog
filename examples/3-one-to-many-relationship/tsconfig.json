@@ -16,6 +16,7 @@
     "noUnusedLocals": false, // Avoid noise in our resolvers when we use DI
     "strict": true,
     "strictNullChecks": true,
+    "strictPropertyInitialization": false,
     "types": ["jest", "isomorphic-fetch", "node"]
   },
   "include": ["src/**/*"],

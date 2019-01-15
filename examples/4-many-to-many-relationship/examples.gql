@@ -1,0 +1,27 @@
+query {
+  users(orderBy: createdAt_DESC) {
+    id
+    firstName
+    createdAt
+    userRoles {
+      createdAt
+      userId
+      roleId
+      role {
+        id
+        name
+        createdAt
+      }
+    }
+  }
+}
+
+mutation {
+  createManyUserRoles(
+    data: [{ userId: "XJfBX9ybj", roleId: "I7C9xK7vH" }, { userId: "XJfBX9ybj", roleId: "I7C9xK7vH" }]
+  ) {
+    id
+    userId
+    roleId
+  }
+}

@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "keyofStringsOnly": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false, // Avoid noise in our resolvers when we use DI
