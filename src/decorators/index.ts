@@ -1,5 +1,7 @@
 export * from './EmailField';
 export * from './EnumField';
+export * from './ManyToMany';
+export * from './ManyToManyJoin';
 export * from './Model';
 export * from './StringField';
 export * from './ForeignKeyField';
