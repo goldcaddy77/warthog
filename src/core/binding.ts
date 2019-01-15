@@ -8,8 +8,6 @@ import { Binding, TypescriptGenerator } from 'graphql-binding';
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 import * as path from 'path';
 
-// require('ts-node').register();
-
 import { StringMapOptional } from '..';
 
 const debug = Debug('binding');
@@ -58,9 +56,6 @@ export class RemoteBinding extends Binding {
 export async function getRemoteBinding(endpoint: string, options: LinkOptions) {
   if (!endpoint) {
     throw new Error('getRemoteBinding: endpoint is required');
-  }
-  if (!options.token) {
-    throw new Error('getRemoteBinding: token is required');
   }
 
   debug('getRemoteBinding', endpoint, options);
