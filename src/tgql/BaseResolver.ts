@@ -102,6 +102,28 @@ export class BaseResolver<E extends BaseModel> {
     return this.repository.save(obj as any, { reload: true });
   }
 
+  async createMany(data: Array<DeepPartial<E>>, userId: string): Promise<E[]> {
+    data = data.map(item => {
+      return { ...item, createdById: userId };
+    });
+
+    const results = this.repository.create(data);
+
+    // Validate against the the data model
+    // Without `skipMissingProperties`, some of the class-validator validations (like MinLength)
+    // will fail if you don't specify the property
+    results.forEach(async obj => {
+      const errors = await validate(obj, { skipMissingProperties: true });
+      if (errors.length) {
+        // TODO: create our own error format that matches Mike B's format
+        throw new ArgumentValidationError(errors);
+      }
+    });
+
+    // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
+    return this.repository.save(results as any, { reload: true });
+  }
+
   // TODO: There must be a more succinct way to:
   //   - Test the item exists
   //   - Update

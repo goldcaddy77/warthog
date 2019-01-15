@@ -7,6 +7,7 @@ import {
   entityListToImports,
   entityToOrderByEnum,
   entityToWhereArgs,
+  entityToCreateManyArgs,
   entityToWhereInput,
   entityToWhereUniqueInput,
   entityToCreateInput,
@@ -36,6 +37,7 @@ export class SchemaGenerator {
         ${entityToOrderByEnum(entity)}
         ${entityToWhereInput(entity)}
         ${entityToWhereArgs(entity)}
+        ${entityToCreateManyArgs(entity)}
         ${entityToWhereUniqueInput(entity)}
         ${entityToCreateInput(entity)}
         ${entityToUpdateInput(entity)}

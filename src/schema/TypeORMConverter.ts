@@ -289,6 +289,18 @@ export function entityToWhereArgs(entity: EntityMetadata): string {
   `;
 }
 
+// Note: it would be great to inject a single `Arg` with the [entity.nameCreateInput] array arg,
+// but that is not allowed by TypeGraphQL
+export function entityToCreateManyArgs(entity: EntityMetadata): string {
+  return `
+    @ArgsType()
+    export class ${entity.name}CreateManyArgs {
+      @Field(type => [${entity.name}CreateInput])
+      data: ${entity.name}CreateInput[];
+    }
+  `;
+}
+
 export function entityToOrderByEnum(entity: EntityMetadata): string {
   const ORDER_BY_BLACKLIST = ['createdById', 'updatedById', 'deletedById'];
 
