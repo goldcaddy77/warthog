@@ -1,7 +1,7 @@
 import { BaseModel, ManyToOne, Model, StringField } from '../../../../src';
 
-import { Role } from './role.entity';
-import { User } from './user.entity';
+import { Role } from './role.model';
+import { User } from './user.model';
 
 // This is a modified many-to-many table that also allows
 // for additional metadata as a typical many-to-many is just

@@ -1,12 +1,12 @@
-import 'reflect-metadata';
 import { GraphQLError } from 'graphql';
+import 'reflect-metadata';
 
 import { Binding } from '../generated/binding';
 
 import { getApp } from './app';
-import { User } from './modules/user/user.entity';
+import { User } from './modules/user/user.model';
 
-let app = getApp({}, { logging: false });
+const app = getApp({}, { logging: false });
 let binding: Binding;
 let testUser: User;
 
@@ -32,9 +32,9 @@ beforeAll(async done => {
   done();
 });
 
-afterAll(done => {
+afterAll(async done => {
   (console.error as any).mockRestore();
-  app.stop();
+  await app.stop();
   done();
 });
 
@@ -51,7 +51,7 @@ describe('Users', () => {
   });
 
   test('createdAt sort', async done => {
-    let users = await binding.query.users({ limit: 1, orderBy: 'createdAt_DESC' }, `{ id firstName}`);
+    const users = await binding.query.users({ limit: 1, orderBy: 'createdAt_DESC' }, `{ id firstName}`);
 
     expect(console.error).not.toHaveBeenCalled();
     expect(users).toBeDefined();

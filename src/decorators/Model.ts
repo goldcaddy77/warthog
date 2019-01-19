@@ -1,9 +1,9 @@
-const caller = require('caller');
+const caller = require('caller'); // tslint:disable-line:no-var-requires
 import { ObjectType } from 'type-graphql';
 import { Entity } from 'typeorm';
 
 import { getMetadataStorage } from '../metadata';
-import { composeClassDecorators, ClassDecoratorFactory } from '../utils/';
+import { ClassDecoratorFactory, composeClassDecorators } from '../utils/';
 
 interface ModelOptions {
   auditTableName?: string;

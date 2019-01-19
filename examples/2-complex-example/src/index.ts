@@ -1,8 +1,10 @@
 import 'reflect-metadata';
+
 import * as dotenv from 'dotenv';
-dotenv.config();
 
 import { getApp } from './app';
+
+dotenv.config();
 
 async function bootstrap() {
   const app = getApp();
@@ -12,7 +14,7 @@ async function bootstrap() {
 bootstrap().catch((error: Error) => {
   console.error(error);
   if (error.stack) {
-    console.error(error.stack!.split('\n'));
+    console.error(error.stack.split('\n'));
   }
   process.exit(1);
 });

@@ -1,4 +1,4 @@
-const caller = require('caller');
+const caller = require('caller'); // tslint:disable-line:no-var-requires
 import { Field, registerEnumType } from 'type-graphql';
 import { Column } from 'typeorm';
 

@@ -1,14 +1,14 @@
 import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
 import * as fetch from 'cross-fetch';
-import * as fs from 'fs';
 import * as Debug from 'debug';
+import * as fs from 'fs';
 import { buildSchema, GraphQLError, printSchema } from 'graphql';
 import { Binding, TypescriptGenerator } from 'graphql-binding';
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 import * as path from 'path';
 
-import { StringMapOptional } from '..';
+import { StringMapOptional } from '../core/types';
 
 const debug = Debug('binding');
 
@@ -19,20 +19,20 @@ interface LinkOptions extends StringMapOptional {
 
 export class Link extends HttpLink {
   constructor(uri: string, options: LinkOptions) {
-    let headers = { ...options };
+    const headers: StringMapOptional = { ...options };
     if (headers.token) {
-      headers['Authorization'] = `Bearer ${headers.token}`;
+      headers.Authorization = `Bearer ${headers.token}`;
       delete headers.token;
     }
 
     debug('headers', headers);
 
     super({
-      uri,
-      headers,
-      // cross-fetch library is not a huge fan of TS
+      // TODO: cross-fetch library does not play nicely with TS
       // tslint:disable-next-line:no-any
-      fetch: (fetch as any) as (input: RequestInfo, init?: RequestInit) => Promise<Response>
+      fetch: (fetch as any) as (input: RequestInfo, init?: RequestInit) => Promise<Response>,
+      headers,
+      uri
     });
   }
 }
@@ -72,10 +72,10 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
   const schema = buildSchema(sdl);
 
   const generatorOptions = {
-    schema,
-    isDefaultExport: false,
     inputSchemaPath: path.resolve(inputSchemaPath),
-    outputBindingPath: path.resolve(outputBindingFile)
+    isDefaultExport: false,
+    outputBindingPath: path.resolve(outputBindingFile),
+    schema
   };
 
   const generatorInstance = new TypescriptGenerator(generatorOptions);

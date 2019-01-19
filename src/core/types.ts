@@ -20,6 +20,6 @@ export type DeleteReponse = {
   id: IDType;
 };
 
-export interface ClassType<T = any> {
-  new (...args: any[]): T;
-}
+export type ClassType<T = any> = new (...args: any[]) => T;
+
+export type Maybe<T> = T | void;

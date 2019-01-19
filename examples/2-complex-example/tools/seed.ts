@@ -1,3 +1,4 @@
+import * as Debug from 'debug';
 import * as Faker from 'faker';
 
 import { getApp } from '../src/app';
@@ -6,11 +7,12 @@ if (process.env.NODE_ENV !== 'development') {
   throw 'Seeding only available in development environment';
   process.exit(1);
 }
+const logger = Debug('warthog:seed');
 
-const NUM_USERS = 100;
+const NUM_USERS = 10;
 
 async function seedDatabase() {
-  let app = getApp();
+  const app = getApp();
   await app.start();
 
   const binding = await app.getBinding();
@@ -35,8 +37,7 @@ async function seedDatabase() {
         },
         `{ id email createdAt createdById }`
       );
-
-      console.log(user.email);
+      logger(user.email);
     } catch (error) {
       console.error(email, error);
     }
@@ -47,10 +48,10 @@ async function seedDatabase() {
 
 seedDatabase()
   .then(result => {
-    console.log(result);
+    logger(result);
     return process.exit(0);
   })
   .catch(err => {
-    console.error(err);
+    logger(err);
     return process.exit(1);
   });

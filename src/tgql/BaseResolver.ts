@@ -1,11 +1,11 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
 import {
-  getRepository,
   DeepPartial,
   Equal,
   FindManyOptions,
   FindOperator,
+  getRepository,
   In,
   IsNull,
   LessThan,
@@ -99,7 +99,7 @@ export class BaseResolver<E extends BaseModel> {
     }
 
     // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
-    return this.repository.save(obj as any, { reload: true });
+    return this.repository.save(obj, { reload: true });
   }
 
   async createMany(data: Array<DeepPartial<E>>, userId: string): Promise<E[]> {
@@ -145,7 +145,7 @@ export class BaseResolver<E extends BaseModel> {
     }
 
     // TODO: remove `any` - getting issue here
-    const result = await this.repository.save(merged as any);
+    const result = await this.repository.save(merged);
     return this.repository.findOneOrFail({ where: { id: result.id } });
   }
 
@@ -159,8 +159,7 @@ export class BaseResolver<E extends BaseModel> {
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
     const merged = this.repository.merge(new this.entityClass(), data as any, idData);
 
-    // TODO: remove `any` - getting issue here
-    await this.repository.save(merged as any);
+    await this.repository.save(merged);
 
     return { id: where.id };
   }

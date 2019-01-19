@@ -1,9 +1,9 @@
 import { AuthChecker } from 'type-graphql';
 
-import { Context } from '../core/Context';
+import { BaseContext } from '../core/Context';
 
 // This authChecker is used by type-graphql's @Authorized decorator
-export const authChecker: AuthChecker<Context> = ({ context: { user } }, permissions) => {
+export const authChecker: AuthChecker<BaseContext> = ({ context: { user } }, permissions) => {
   if (!user) {
     return false;
   }
