@@ -7,6 +7,7 @@
     "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:seed:dev": "dotenv -- ts-node tools/seed.ts",
+    "lint": "tslint",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
     "start": "npm-run-all --parallel start:ts playground:open",
     "start:debug": "yarn start:ts --inspect",
@@ -33,7 +34,8 @@
     "nodemon": "^1.18.9",
     "npm-run-all": "^4.1.5",
     "ts-jest": "^23.10.5",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.1"
   },
   "jest": {
     "transform": {

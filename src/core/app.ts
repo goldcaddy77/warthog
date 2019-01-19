@@ -7,14 +7,15 @@ import { Request } from 'express';
 import { writeFileSync } from 'fs';
 import { printSchema, GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
-import { Server as HttpServer } from 'http';
+import { Server as HttpServer, request } from 'http';
 import { Server as HttpsServer } from 'https';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
+import { Container } from 'typedi';
 import { buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
-import { getRemoteBinding, Context } from './'; // logger
+import { getRemoteBinding } from './';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { SchemaGenerator } from '../schema/';
 import { authChecker } from '../tgql';
@@ -22,15 +23,17 @@ import { createDBConnection } from '../torm';
 import { generateBindingFile } from './binding';
 
 export interface AppOptions {
-  container?: any; // TODO: fix types - Container from typeDI
+  container?: Container;
   host?: string;
   generatedFolder?: string;
   middlewares?: any[]; // TODO: fix
   port?: string | number;
   warthogImportPath?: string;
 }
-export class App {
-  // create TypeORM connection
+
+type Maybe<T> = T | void;
+
+export class App<Context> {
   connection!: Connection;
   httpServer!: HttpServer | HttpsServer;
   graphQLServer!: ApolloServer;
@@ -46,11 +49,11 @@ export class App {
 
     if (this.appOptions.container) {
       // register 3rd party IOC container
-      TypeGraphQLUseContainer(this.appOptions.container);
-      TypeORMUseContainer(this.appOptions.container);
+      TypeGraphQLUseContainer(this.appOptions.container as any); // TODO: fix any
+      TypeORMUseContainer(this.appOptions.container as any); // TODO: fix any
     }
 
-    const host: string | undefined = this.appOptions.host || process.env.APP_HOST;
+    const host: Maybe<string> = this.appOptions.host || process.env.APP_HOST;
     if (!host) {
       throw new Error('`host` is required');
     }
@@ -111,34 +114,37 @@ export class App {
     return this.schema;
   }
 
-  async writeSchemaFile() {
-    // Write schema to dist folder so that it's available in package
-    return writeFileSync(path.join(this.generatedFolder, 'schema.graphql'), printSchema(this.schema as GraphQLSchema), {
+  private async writeToGeneratedFolder(filename: string, contents: string) {
+    return writeFileSync(path.join(this.generatedFolder, filename), contents, {
       encoding: 'utf8',
       flag: 'w'
     });
   }
 
+  async writeSchemaFile() {
+    this.buildGraphQLSchema();
+
+    return this.writeToGeneratedFolder('schema.graphql', printSchema(this.schema as GraphQLSchema));
+  }
+
+  // Write an index file that loads `classes` so that you can just import `../../generated`
   async writeGeneratedIndexFile() {
-    // Write schema to dist folder so that it's available in package
-    const contents = `export * from './classes';`;
-    return writeFileSync(path.join(this.generatedFolder, 'index.ts'), contents, {
-      encoding: 'utf8',
-      flag: 'w'
-    });
+    return this.writeToGeneratedFolder('index.ts', `export * from './classes';`);
   }
 
   async start() {
     await this.writeGeneratedIndexFile();
     await this.establishDBConnection();
     await this.generateTypes();
-    await this.buildGraphQLSchema();
     await this.writeSchemaFile();
     await this.generateBinding();
 
     this.graphQLServer = new ApolloServer({
       context: (options: { request: Request; context?: any }) => {
-        const context: Context = {
+        console.log('request', request);
+
+        // TODO: FIX THIS
+        const context: any = {
           connection: this.connection,
           dataLoader: {
             initialized: false,

@@ -115,6 +115,13 @@ input UserWhereUniqueInput {
 }
 ```
 
+## Config
+
+### Environment Variables
+
+- `APP_HOST`
+
+
 ## Limitations
 
 Since Warthog relies heavily on conventions, it only supports postgres currently
@@ -137,5 +144,3 @@ PRs accepted, fire away!  Or add issues if you have use cases Warthog doesn't co
 ## License
 
 MIT © Dan Caddigan
-
-

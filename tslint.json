@@ -18,7 +18,7 @@
     "no-unused-variable": false,
     "no-implicit-dependencies": [true, "dev"],
     "no-var-keyword": false,
-    "no-floating-promises": false
+    "no-floating-promises": true
   },
   "linterOptions": {
     "exclude": ["node_modules/**/*", "*/**/*.js", "*/**/generated/*.ts", "src/migration/*"]
