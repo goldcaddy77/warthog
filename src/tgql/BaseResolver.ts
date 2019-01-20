@@ -78,9 +78,14 @@ export class BaseResolver<E extends BaseModel> {
 
   // TODO: fix - W extends Partial<E>
   async findOne<W extends { [key: string]: any }>(where: W): Promise<E> {
-    where.deletedAt_eq = null; // Filter out soft-deleted items
+    const items = await this.find<W>({ id: where.id });
+    if (!items.length) {
+      throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
+    } else if (items.length > 1) {
+      throw new Error(`Found ${items.length} ${this.entityClass.name}s where ${JSON.stringify(where)}`);
+    }
 
-    return this.repository.findOneOrFail(where);
+    return items[0];
   }
 
   async create(data: DeepPartial<E>, userId: string): Promise<E> {
@@ -134,7 +139,7 @@ export class BaseResolver<E extends BaseModel> {
     (data as any).updatedById = userId; // TODO: fix any
 
     // const whereOptions = this.pullParamsFromClass(where);
-    const found = await this.repository.findOneOrFail(where);
+    const found = await this.findOne(where);
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
     const merged = this.repository.merge(new this.entityClass(), data, idData);
 
