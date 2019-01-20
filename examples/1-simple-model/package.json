@@ -7,8 +7,9 @@
     "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/graphql",
-    "start": "DEBUG=warthog* run-p start:ts playground:open",
-    "start:ts": "ts-node-dev --type-check src/index.ts",
+    "start": "yarn start:ts",
+    "start:ts": "DEBUG=warthog* ts-node-dev --type-check src/index.ts",
+    "start:prod": "ts-node src/index.ts",
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {

@@ -10,6 +10,7 @@ import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 import * as mkdirp from 'mkdirp';
+import opn = require('opn');
 import * as path from 'path';
 import { AuthChecker, buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
@@ -32,6 +33,7 @@ export interface AppOptions<T> {
   host?: string;
   generatedFolder?: string;
   middlewares?: any[]; // TODO: fix
+  openPlayground?: boolean;
   port?: string | number;
   warthogImportPath?: string;
 }
@@ -46,6 +48,7 @@ export class App<C extends BaseContext> {
   graphQLServer!: ApolloServer;
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
+  openPlayground: boolean;
   schema?: GraphQLSchema;
 
   constructor(private appOptions: AppOptions<C>, private dbOptions: Partial<ConnectionOptions> = {}) {
@@ -77,6 +80,10 @@ export class App<C extends BaseContext> {
       return {};
     };
     this.context = this.appOptions.context || returnEmpty;
+    this.openPlayground =
+      typeof this.appOptions.openPlayground !== 'undefined'
+        ? this.appOptions.openPlayground
+        : !!(process.env.NODE_ENV === 'development');
 
     this.createGeneratedFolder();
   }
@@ -152,9 +159,14 @@ export class App<C extends BaseContext> {
 
     this.graphQLServer.applyMiddleware({ app, path: '/graphql' });
 
-    this.httpServer = app.listen({ port: this.appPort }, () =>
-      this.logger.info(`🚀 Server ready at http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`)
-    );
+    const url = `http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`;
+
+    this.httpServer = app.listen({ port: this.appPort }, () => this.logger.info(`🚀 Server ready at ${url}`));
+
+    // Open playground in the browser
+    if (this.openPlayground) {
+      opn(url);
+    }
 
     return this;
   }

@@ -14,19 +14,24 @@ interface Context extends BaseContext {
   };
 }
 
-export function getApp() {
-  return new App<Context>({
-    container: Container,
-    // Inject a fake user.  In a real app you'd parse a JWT to add the user
-    context: request => {
-      return {
-        user: {
-          email: 'admin@test.com',
-          id: 'abc12345',
-          permissions: ['user:read', 'user:update', 'user:create', 'user:delete', 'photo:delete']
-        }
-      };
+export function getApp(AppOptions = {}, dbOptions = {}) {
+  return new App<Context>(
+    {
+      container: Container,
+      // Inject a fake user.  In a real app you'd parse a JWT to add the user
+      context: request => {
+        return {
+          user: {
+            email: 'admin@test.com',
+            id: 'abc12345',
+            permissions: ['user:read', 'user:update', 'user:create', 'user:delete', 'photo:delete']
+          }
+        };
+      },
+      // Path written in generated classes (only needed because we're in same repo)
+      warthogImportPath: '../../../src',
+      ...AppOptions
     },
-    warthogImportPath: '../../../src' // Path written in generated classes
-  });
+    dbOptions
+  );
 }
