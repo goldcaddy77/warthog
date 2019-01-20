@@ -9,7 +9,7 @@
     "db:seed:dev": "dotenv -- ts-node tools/seed.ts",
     "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
-    "start": "npm-run-all --parallel start:ts playground:open",
+    "start": "yarn start:ts",
     "start:debug": "yarn start:ts --inspect",
     "start:ts": "ts-node --type-check src/index.ts",
     "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f ./ormconfig",
