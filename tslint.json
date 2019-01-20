@@ -10,15 +10,13 @@
     "class-name": false,
     "interface-over-type-literal": false,
     "interface-name": [false],
-    "jsx-no-multiline-js": false,
     "max-classes-per-file": false,
-    "max-line-length": [true, 120],
     "member-access": [false],
     "no-submodule-imports": false,
     "no-unused-variable": false,
     "no-implicit-dependencies": [true, "dev"],
     "no-var-keyword": false,
-    "no-floating-promises": false
+    "no-floating-promises": true
   },
   "linterOptions": {
     "exclude": ["node_modules/**/*", "*/**/*.js", "*/**/generated/*.ts", "src/migration/*"]

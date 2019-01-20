@@ -7,6 +7,7 @@
     "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:seed:dev": "dotenv -- ts-node tools/seed.ts",
+    "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
     "start": "npm-run-all --parallel start:ts playground:open",
     "start:debug": "yarn start:ts --inspect",
@@ -17,6 +18,7 @@
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.2.2"
@@ -33,7 +35,8 @@
     "nodemon": "^1.18.9",
     "npm-run-all": "^4.1.5",
     "ts-jest": "^23.10.5",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.1"
   },
   "jest": {
     "transform": {

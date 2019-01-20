@@ -2,64 +2,87 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { ApolloServer } from 'apollo-server-express';
-import express = require('express');
 import { Request } from 'express';
+import express = require('express');
 import { writeFileSync } from 'fs';
-import { printSchema, GraphQLSchema } from 'graphql';
+import { GraphQLSchema, printSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
-import { buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
+import { AuthChecker, buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
+import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
-import { getRemoteBinding, Context } from './'; // logger
+import { logger, Logger } from '../core/logger';
+import { generateBindingFile, getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { SchemaGenerator } from '../schema/';
 import { authChecker } from '../tgql';
 import { createDBConnection } from '../torm';
-import { generateBindingFile } from './binding';
 
-export interface AppOptions {
-  container?: any; // TODO: fix types - Container from typeDI
+import { BaseContext } from './Context';
+import { Maybe } from './types';
+
+export interface AppOptions<T> {
+  authChecker?: AuthChecker<T>;
+  container?: Container;
+  context?: (request: Request) => object;
   host?: string;
   generatedFolder?: string;
   middlewares?: any[]; // TODO: fix
   port?: string | number;
   warthogImportPath?: string;
 }
-export class App {
-  // create TypeORM connection
-  connection!: Connection;
-  httpServer!: HttpServer | HttpsServer;
-  graphQLServer!: ApolloServer;
+
+export class App<C extends BaseContext> {
   appHost: string;
   appPort: number;
+  authChecker: AuthChecker<C>;
+  connection!: Connection;
+  context: (request: Request) => object;
   generatedFolder: string;
+  graphQLServer!: ApolloServer;
+  httpServer!: HttpServer | HttpsServer;
+  logger: Logger;
   schema?: GraphQLSchema;
 
-  constructor(private appOptions: AppOptions, private dbOptions: Partial<ConnectionOptions> = {}) {
+  constructor(private appOptions: AppOptions<C>, private dbOptions: Partial<ConnectionOptions> = {}) {
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }
 
+    // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
     if (this.appOptions.container) {
-      // register 3rd party IOC container
-      TypeGraphQLUseContainer(this.appOptions.container);
-      TypeORMUseContainer(this.appOptions.container);
+      TypeGraphQLUseContainer(this.appOptions.container as any); // TODO: fix any
+      TypeORMUseContainer(this.appOptions.container as any); // TODO: fix any
     }
 
-    const host: string | undefined = this.appOptions.host || process.env.APP_HOST;
+    const host: Maybe<string> = this.appOptions.host || process.env.APP_HOST;
     if (!host) {
       throw new Error('`host` is required');
     }
-
     this.appHost = host;
-    this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
-    this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
 
-    mkdirp.sync(this.generatedFolder);
+    this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
+
+    this.authChecker = this.appOptions.authChecker || authChecker;
+
+    // Use https://github.com/inxilpro/node-app-root-path to find project root
+    this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
+    this.logger = Container.has('LOGGER') ? Container.get('LOGGER') : logger;
+
+    const returnEmpty = () => {
+      return {};
+    };
+    this.context = this.appOptions.context || returnEmpty;
+
+    this.createGeneratedFolder();
+  }
+
+  createGeneratedFolder() {
+    return mkdirp.sync(this.generatedFolder);
   }
 
   async establishDBConnection(): Promise<Connection> {
@@ -87,20 +110,10 @@ export class App {
     return generateBindingFile(schemaFilePath, outputBindingPath);
   }
 
-  async generateTypes() {
-    await this.establishDBConnection();
-
-    return SchemaGenerator.generate(
-      this.connection.entityMetadatas,
-      this.generatedFolder,
-      this.appOptions.warthogImportPath
-    );
-  }
-
   async buildGraphQLSchema(): Promise<GraphQLSchema> {
     if (!this.schema) {
       this.schema = await buildSchema({
-        authChecker,
+        authChecker: this.authChecker,
         // TODO: ErrorLoggerMiddleware
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
         resolvers: [process.cwd() + '/**/*.resolver.ts']
@@ -111,47 +124,25 @@ export class App {
     return this.schema;
   }
 
-  async writeSchemaFile() {
-    // Write schema to dist folder so that it's available in package
-    return writeFileSync(path.join(this.generatedFolder, 'schema.graphql'), printSchema(this.schema as GraphQLSchema), {
-      encoding: 'utf8',
-      flag: 'w'
-    });
-  }
-
-  async writeGeneratedIndexFile() {
-    // Write schema to dist folder so that it's available in package
-    const contents = `export * from './classes';`;
-    return writeFileSync(path.join(this.generatedFolder, 'index.ts'), contents, {
-      encoding: 'utf8',
-      flag: 'w'
-    });
-  }
-
   async start() {
     await this.writeGeneratedIndexFile();
     await this.establishDBConnection();
-    await this.generateTypes();
-    await this.buildGraphQLSchema();
+    await this.writeGeneratedTSTypes();
     await this.writeSchemaFile();
     await this.generateBinding();
 
     this.graphQLServer = new ApolloServer({
-      context: (options: { request: Request; context?: any }) => {
-        const context: Context = {
+      context: (options: { req: Request }) => {
+        return {
           connection: this.connection,
           dataLoader: {
             initialized: false,
             loaders: {}
           },
-          request: options.request,
-          user: {
-            email: 'admin@test.com',
-            id: 'abc12345',
-            permissions: ['user:read', 'user:update', 'user:create', 'user:delete', 'photo:delete']
-          }
+          request: options.req,
+          // Allows consumer to add to the context object - ex. context.user
+          ...this.context(options.req)
         };
-        return { ...context, ...(options.context || {}) };
       },
       schema: this.schema
     });
@@ -162,18 +153,47 @@ export class App {
     this.graphQLServer.applyMiddleware({ app, path: '/graphql' });
 
     this.httpServer = app.listen({ port: this.appPort }, () =>
-      console.log(`🚀 Server ready at http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`)
+      this.logger.info(`🚀 Server ready at http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`)
     );
 
     return this;
   }
 
   async stop() {
-    console.log('Stopping HTTP Server');
-    await this.httpServer.close();
-    console.log('Closing DB Connection');
+    this.logger.info('Stopping HTTP Server');
+    this.httpServer.close();
+    this.logger.info('Closing DB Connection');
     await this.connection.close();
   }
-}
 
-export { ConnectionOptions };
+  private async writeGeneratedTSTypes() {
+    const generatedTSTypes = await this.getGeneratedTypes();
+
+    return this.writeToGeneratedFolder('classes.ts', generatedTSTypes);
+  }
+
+  private async getGeneratedTypes() {
+    await this.establishDBConnection();
+
+    return SchemaGenerator.generate(this.connection.entityMetadatas, this.appOptions.warthogImportPath);
+  }
+
+  private async writeSchemaFile() {
+    await this.buildGraphQLSchema();
+
+    return this.writeToGeneratedFolder('schema.graphql', printSchema(this.schema as GraphQLSchema));
+  }
+
+  // Write an index file that loads `classes` so that you can just import `../../generated`
+  // in your resolvers
+  private async writeGeneratedIndexFile() {
+    return this.writeToGeneratedFolder('index.ts', `export * from './classes';`);
+  }
+
+  private async writeToGeneratedFolder(filename: string, contents: string) {
+    return writeFileSync(path.join(this.generatedFolder, filename), contents, {
+      encoding: 'utf8',
+      flag: 'w'
+    });
+  }
+}

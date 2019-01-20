@@ -2,18 +2,18 @@ import DataLoader = require('dataloader');
 import { MiddlewareInterface, NextFn, ResolverData } from 'type-graphql';
 import { Service } from 'typedi';
 
-import { Context } from '../core';
+import { BaseContext } from '../core';
 
 @Service()
-export class DataLoaderMiddleware implements MiddlewareInterface<Context> {
-  async use({ root, args, context, info }: ResolverData<Context>, next: NextFn) {
+export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
+  async use({ root, args, context, info }: ResolverData<BaseContext>, next: NextFn) {
     if (!context.dataLoader.initialized) {
       context.dataLoader = {
         initialized: true,
         loaders: {}
       };
 
-      const loaders = context.dataLoader.loaders!;
+      const loaders = context.dataLoader.loaders;
 
       context.connection.entityMetadatas.forEach(entityMetadata => {
         const resolverName = entityMetadata.targetName;

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { IntrospectionSchema, IntrospectionEnumType } from 'graphql';
+import { IntrospectionEnumType, IntrospectionSchema } from 'graphql';
 import { ObjectType, Query, Resolver } from 'type-graphql';
 
 import { getSchemaInfo } from '../schema';

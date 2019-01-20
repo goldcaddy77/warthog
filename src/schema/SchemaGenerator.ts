@@ -1,24 +1,25 @@
-import { writeFileSync } from 'fs';
-import * as path from 'path';
 import * as prettier from 'prettier';
+import { Container } from 'typedi';
 import { EntityMetadata } from 'typeorm';
 
+import { logger, Logger } from '../core/logger';
 import {
   entityListToImports,
-  entityToOrderByEnum,
-  entityToWhereArgs,
-  entityToCreateManyArgs,
-  entityToWhereInput,
-  entityToWhereUniqueInput,
   entityToCreateInput,
+  entityToCreateManyArgs,
+  entityToOrderByEnum,
   entityToUpdateInput,
-  entityToUpdateInputArgs
+  entityToUpdateInputArgs,
+  entityToWhereArgs,
+  entityToWhereInput,
+  entityToWhereUniqueInput
 } from './TypeORMConverter';
 
 export class SchemaGenerator {
+  static logger: Logger = Container.has('LOGGER') ? Container.get('LOGGER') : logger;
+
   static generate(
     entities: EntityMetadata[],
-    destinationFolder: string,
     // This will reference 'warthog in the deployed module, but we need to do a relative import in the examples library
     warthogImportPath: string = 'warthog'
   ): string {
@@ -45,24 +46,21 @@ export class SchemaGenerator {
       `;
     });
 
-    writeFileSync(path.join(destinationFolder, 'classes.ts'), format(template), {
-      encoding: 'utf8',
-      flag: 'w'
-    });
-
-    return template;
+    return this.format(template);
   }
-}
 
-function format(code: string, options: prettier.Options = {}) {
-  try {
-    // TODO: grab our prettier options (single quote, etc...)
-    return prettier.format(code, {
-      ...options,
-      parser: 'typescript'
-    });
-  } catch (e) {
-    console.log(`There is a syntax error in generated code, unformatted code printed, error: ${JSON.stringify(e)}`);
-    return code;
+  static format(code: string, options: prettier.Options = {}) {
+    try {
+      // TODO: grab our prettier options (single quote, etc...)
+      return prettier.format(code, {
+        ...options,
+        parser: 'typescript'
+      });
+    } catch (e) {
+      this.logger.log(
+        `There is a syntax error in generated code, unformatted code printed, error: ${JSON.stringify(e)}`
+      );
+      return code;
+    }
   }
 }

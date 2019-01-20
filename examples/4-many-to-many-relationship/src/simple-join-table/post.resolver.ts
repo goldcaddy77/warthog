@@ -3,11 +3,11 @@ import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from '
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseResolver, Context } from '../../../../src';
+import { BaseContext, BaseResolver } from '../../../../src';
 import { PostCreateInput, PostWhereArgs, PostWhereInput } from '../../generated';
 
-import { Author } from './author.entity';
-import { Post } from './post.entity';
+import { Author } from './author.model';
+import { Post } from './post.model';
 
 @Resolver(Post)
 export class PostResolver extends BaseResolver<Post> {
@@ -16,23 +16,21 @@ export class PostResolver extends BaseResolver<Post> {
   }
 
   @FieldResolver(returns => [Post])
-  posts(@Root() author: Author, @Ctx() ctx: Context): Promise<Post[]> {
-    console.log('author: ', author);
-
+  posts(@Root() author: Author, @Ctx() ctx: BaseContext): Promise<Post[]> {
     return ctx.dataLoader.loaders.Author.posts.load(author);
   }
 
   @Query(returns => [Post])
   async roles(
     @Args() { where, orderBy, limit, offset }: PostWhereArgs,
-    @Ctx() ctx: Context,
+    @Ctx() ctx: BaseContext,
     info: GraphQLResolveInfo
   ): Promise<Post[]> {
     return this.find<PostWhereInput>(where, orderBy, limit, offset);
   }
 
   @Mutation(returns => Post)
-  async createPost(@Arg('data') data: PostCreateInput, @Ctx() ctx: Context): Promise<Post> {
+  async createPost(@Arg('data') data: PostCreateInput, @Ctx() ctx: BaseContext): Promise<Post> {
     return this.create(data, ctx.user.id);
   }
 }

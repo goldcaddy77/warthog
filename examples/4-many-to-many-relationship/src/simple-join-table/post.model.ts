@@ -1,6 +1,6 @@
 import { BaseModel, Model, OneToMany, StringField } from '../../../../src';
 
-import { Author } from './author.entity';
+import { Author } from './author.model';
 
 @Model()
 export class Post extends BaseModel {

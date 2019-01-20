@@ -1,5 +1,5 @@
-import 'reflect-metadata';
 import * as dotenv from 'dotenv';
+import 'reflect-metadata';
 import { Container } from 'typedi';
 
 dotenv.config();
@@ -12,7 +12,7 @@ async function bootstrap() {
     warthogImportPath: '../../../src' // Path written in generated classes
   });
 
-  await app.start();
+  return app.start();
 }
 
 bootstrap().catch((error: Error) => {

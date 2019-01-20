@@ -1,16 +1,16 @@
 import {
+  GraphQLBoolean,
+  GraphQLEnumType,
+  GraphQLFloat,
+  GraphQLID,
   GraphQLInt,
   GraphQLScalarType,
-  GraphQLString,
-  GraphQLBoolean,
-  GraphQLFloat,
-  GraphQLEnumType,
-  GraphQLID
+  GraphQLString
 } from 'graphql';
+import { GraphQLISODateTime } from 'type-graphql';
 import { EntityMetadata } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
-import { GraphQLISODateTime } from 'type-graphql';
 import { getMetadataStorage } from '../metadata';
 
 const SYSTEM_FIELDS = ['createdAt', 'createdById', 'updatedAt', 'updatedById', 'deletedAt', 'deletedById'];
@@ -25,8 +25,8 @@ function uniquesForEntity(entity: EntityMetadata): string[] {
 }
 
 export function entityListToImports(entities: EntityMetadata[]): string[] {
-  let imports: string[] = [];
-  let enumMap = getMetadataStorage().enumMap;
+  const imports: string[] = [];
+  const enumMap = getMetadataStorage().enumMap;
 
   Object.keys(enumMap).forEach((tableName: string) => {
     Object.keys(enumMap[tableName]).forEach((columnName: string) => {
@@ -37,7 +37,7 @@ export function entityListToImports(entities: EntityMetadata[]): string[] {
     });
   });
 
-  let classMap = getMetadataStorage().classMap;
+  const classMap = getMetadataStorage().classMap;
   Object.keys(classMap).forEach((tableName: string) => {
     const classObj = classMap[tableName];
     const filename = classObj.filename.replace(/\.(j|t)s$/, '');
@@ -334,8 +334,8 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
     const graphqlType = columnTypeToGraphQLDataType(column);
     const typeMap: any = {
       DateTime: 'string',
-      String: 'string',
-      ID: 'string' // TODO: should this be ID_TYPE?
+      ID: 'string', // TODO: should this be ID_TYPE?
+      String: 'string'
     };
 
     return typeMap[graphqlType] || 'string';

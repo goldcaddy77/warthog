@@ -1,16 +1,16 @@
 import { ArgumentValidationError, MiddlewareInterface, NextFn, ResolverData } from 'type-graphql';
 import { Service } from 'typedi';
 
-import { Context } from '../core';
+import { BaseContext } from '../core';
 
 @Service()
-export class ErrorLoggerMiddleware implements MiddlewareInterface<Context> {
+export class ErrorLoggerMiddleware implements MiddlewareInterface<BaseContext> {
   // constructor(private readonly logger: Logger) {}
   constructor() {
     //
   }
 
-  async use({ context, info }: ResolverData<Context>, next: NextFn) {
+  async use({ context, info }: ResolverData<BaseContext>, next: NextFn) {
     try {
       return await next();
     } catch (err) {

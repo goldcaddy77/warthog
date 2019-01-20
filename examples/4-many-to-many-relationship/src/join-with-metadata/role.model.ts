@@ -1,6 +1,6 @@
 import { BaseModel, Model, OneToMany, StringField } from '../../../../src';
 
-import { UserRole } from './user-role.entity';
+import { UserRole } from './user-role.model';
 
 @Model()
 export class Role extends BaseModel {

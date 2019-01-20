@@ -7,9 +7,13 @@
   "files": [
     "dist"
   ],
-  "author": "Dan Caddigan",
+  "author": {
+    "name": "Dan Caddigan",
+    "url": "https://github.com/goldcaddy77"
+  },
   "scripts": {
     "build": "yarn tsc",
+    "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
     "test:watch": "jest --verbose --watch",
@@ -68,7 +72,9 @@
     "graphql": "^14.0.2",
     "graphql-binding": "^2.4.0",
     "graphql-iso-date": "^3.6.1",
+    "graphql-tools": "^4.0.3",
     "lodash": "^4.17.11",
+    "mkdirp": "^0.5.1",
     "node-emoji": "^1.8.1",
     "pg": "^7.7.1",
     "reflect-metadata": "^0.1.12",
@@ -96,9 +102,15 @@
     "prettier": "^1.15.3",
     "semantic-release": "^15.13.2",
     "ts-jest": "^23.10.5",
-    "tslint": "^5.12.0"
+    "tslint": "^5.12.0",
+    "tslint-config-prettier": "^1.17.0"
   },
   "lint-staged": {
+    "*.ts": [
+      "tslint --fix",
+      "prettier --write",
+      "git add"
+    ],
     "*.{js,json}": [
       "prettier --write",
       "git add"

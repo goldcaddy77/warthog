@@ -12,17 +12,17 @@ export class MetadataStorage {
   addEnum(tableName: string, columnName: string, enumName: string, enumValues: any, filename: string) {
     this.enumMap[tableName] = this.enumMap[tableName] || {};
     this.enumMap[tableName][columnName] = {
-      name: enumName,
       enumeration: enumValues,
-      filename
+      filename,
+      name: enumName
     };
   }
 
   addModel(name: string, klass: any, filename: string) {
     this.classMap[name] = {
-      name,
+      filename,
       klass,
-      filename
+      name
     };
   }
 
