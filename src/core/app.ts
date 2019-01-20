@@ -127,7 +127,7 @@ export class App<C extends BaseContext> {
   async start() {
     await this.writeGeneratedIndexFile();
     await this.establishDBConnection();
-    await this.writeGeneratedClasses();
+    await this.writeGeneratedTSTypes();
     await this.writeSchemaFile();
     await this.generateBinding();
 
@@ -166,10 +166,10 @@ export class App<C extends BaseContext> {
     await this.connection.close();
   }
 
-  private async writeGeneratedClasses() {
-    const generatedClasses = await this.getGeneratedTypes();
+  private async writeGeneratedTSTypes() {
+    const generatedTSTypes = await this.getGeneratedTypes();
 
-    return this.writeToGeneratedFolder('classes.ts', generatedClasses);
+    return this.writeToGeneratedFolder('classes.ts', generatedTSTypes);
   }
 
   private async getGeneratedTypes() {

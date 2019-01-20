@@ -7,7 +7,10 @@
   "files": [
     "dist"
   ],
-  "author": "Dan Caddigan",
+  "author": {
+    "name": "Dan Caddigan",
+    "url": "https://github.com/goldcaddy77"
+  },
   "scripts": {
     "build": "yarn tsc",
     "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
@@ -103,6 +106,11 @@
     "tslint-config-prettier": "^1.17.0"
   },
   "lint-staged": {
+    "*.ts": [
+      "tslint --fix",
+      "prettier --write",
+      "git add"
+    ],
     "*.{js,json}": [
       "prettier --write",
       "git add"

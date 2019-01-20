@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 const logger = Debug('warthog:seed');
 
-const NUM_USERS = 10;
+const NUM_USERS = 100;
 
 async function seedDatabase() {
   const app = getApp();

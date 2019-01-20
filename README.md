@@ -33,7 +33,7 @@ Check out the [warthog-example](https://github.com/goldcaddy77/warthog-example) 
 
 ### 1. Create a Model
 
-The model will auto-generate your database table and graphql types.
+The model will auto-generate your database table and graphql types.  Warthog will find all models that match the following glob - `'/**/*.model.ts'`.  So for this file, you would name it `user.model.ts`
 
 ```typescript
 import { BaseModel, Model, StringField } from 'warthog';

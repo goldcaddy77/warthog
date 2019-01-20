@@ -1,2 +1,2 @@
 export * from './decoratorComposer';
-export * from './EntityCreator';
+export * from './object-to-model';
