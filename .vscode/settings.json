@@ -1,6 +1,4 @@
 {
-  "prettier.printWidth": 120,
-  "prettier.singleQuote": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
   "search.exclude": {
     "dist/": true,
