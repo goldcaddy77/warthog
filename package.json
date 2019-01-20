@@ -125,7 +125,7 @@
     "graphql-yoga/**/@types/graphql": "^14"
   },
   "prettier": {
-    "printWidth": 120,
+    "printWidth": 100,
     "singleQuote": true
   },
   "jest": {
