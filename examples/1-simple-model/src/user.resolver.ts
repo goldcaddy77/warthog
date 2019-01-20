@@ -32,12 +32,12 @@ export class UserResolver extends BaseResolver<User> {
 
   @Mutation(returns => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
-    return this.create(data, ctx.user.id);
+    return this.create(data, 'fakeid1');
   }
 
   @Mutation(returns => User)
   async updateUser(@Args() { data, where }: UserUpdateArgs, @Ctx() ctx: BaseContext): Promise<User> {
-    return this.update(data, where, ctx.user.id);
+    return this.update(data, where, 'fakeid1');
   }
 
   @Mutation(returns => StandardDeleteResponse)
@@ -45,6 +45,6 @@ export class UserResolver extends BaseResolver<User> {
     @Arg('where') where: UserWhereUniqueInput,
     @Ctx() ctx: BaseContext
   ): Promise<StandardDeleteResponse> {
-    return this.delete(where, ctx.user.id);
+    return this.delete(where, 'fakeid1');
   }
 }

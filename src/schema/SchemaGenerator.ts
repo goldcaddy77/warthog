@@ -37,11 +37,11 @@ export class SchemaGenerator {
       template += `
         ${entityToOrderByEnum(entity)}
         ${entityToWhereInput(entity)}
-        ${entityToWhereArgs(entity)}
-        ${entityToCreateManyArgs(entity)}
         ${entityToWhereUniqueInput(entity)}
         ${entityToCreateInput(entity)}
         ${entityToUpdateInput(entity)}
+        ${entityToWhereArgs(entity)}
+        ${entityToCreateManyArgs(entity)}
         ${entityToUpdateInputArgs(entity)}
       `;
     });

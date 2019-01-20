@@ -296,7 +296,7 @@ export function entityToCreateManyArgs(entity: EntityMetadata): string {
     @ArgsType()
     export class ${entity.name}CreateManyArgs {
       @Field(type => [${entity.name}CreateInput])
-      data: ${entity.name}CreateInput[];
+      data!: ${entity.name}CreateInput[];
     }
   `;
 }
