@@ -47,7 +47,10 @@ export class RemoteBinding extends Binding {
       }
     });
 
-    const schema = makeRemoteExecutableSchema({ link: errorLink.concat(httpLink), schema: typeDefs });
+    const schema = makeRemoteExecutableSchema({
+      link: errorLink.concat(httpLink),
+      schema: typeDefs
+    });
     debug('schema', JSON.stringify(schema));
     super({ schema });
   }

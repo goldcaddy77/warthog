@@ -1,6 +1,13 @@
 import * as shortid from 'shortid';
 import { Field, ID, Int, InterfaceType, ObjectType } from 'type-graphql';
-import { BeforeInsert, Column, CreateDateColumn, PrimaryColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  PrimaryColumn,
+  UpdateDateColumn,
+  VersionColumn
+} from 'typeorm';
 
 import { IDType } from './types';
 

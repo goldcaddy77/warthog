@@ -17,8 +17,18 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
   // save their locations and import them in the generated file
   const enumFileName = caller();
 
-  const registerEnumWithWarthog = (target: any, propertyKey: string, descriptor: PropertyDescriptor): any => {
-    getMetadataStorage().addEnum(target.constructor.name, propertyKey, name, enumeration, enumFileName);
+  const registerEnumWithWarthog = (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ): any => {
+    getMetadataStorage().addEnum(
+      target.constructor.name,
+      propertyKey,
+      name,
+      enumeration,
+      enumFileName
+    );
   };
 
   const factories = [
