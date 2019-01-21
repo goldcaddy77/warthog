@@ -11,7 +11,9 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy implements Naming
   }
 
   columnName(propertyName: string, customName: string, embeddedPrefixes: string[]): string {
-    return snakeCase(embeddedPrefixes.join('_')) + (customName ? customName : snakeCase(propertyName));
+    return (
+      snakeCase(embeddedPrefixes.join('_')) + (customName ? customName : snakeCase(propertyName))
+    );
   }
 
   relationName(propertyName: string): string {
@@ -36,7 +38,10 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy implements Naming
     return snakeCase(`${tableName}_${columnName ? columnName : propertyName}`);
   }
 
-  classTableInheritanceParentColumnName(parentTableName: any, parentTableIdPropertyName: any): string {
+  classTableInheritanceParentColumnName(
+    parentTableName: any,
+    parentTableIdPropertyName: any
+  ): string {
     return snakeCase(`${parentTableName}_${parentTableIdPropertyName}`);
   }
 }

@@ -9,7 +9,13 @@ export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
   classMap: { [table: string]: any } = {};
 
-  addEnum(tableName: string, columnName: string, enumName: string, enumValues: any, filename: string) {
+  addEnum(
+    tableName: string,
+    columnName: string,
+    enumName: string,
+    enumValues: any,
+    filename: string
+  ) {
     this.enumMap[tableName] = this.enumMap[tableName] || {};
     this.enumMap[tableName][columnName] = {
       enumeration: enumValues,

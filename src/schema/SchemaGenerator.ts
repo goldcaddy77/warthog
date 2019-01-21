@@ -58,7 +58,9 @@ export class SchemaGenerator {
       });
     } catch (e) {
       this.logger.log(
-        `There is a syntax error in generated code, unformatted code printed, error: ${JSON.stringify(e)}`
+        `There is a syntax error in generated code, unformatted code printed, error: ${JSON.stringify(
+          e
+        )}`
       );
       return code;
     }

@@ -51,7 +51,10 @@ export class App<C extends BaseContext> {
   openPlayground: boolean;
   schema?: GraphQLSchema;
 
-  constructor(private appOptions: AppOptions<C>, private dbOptions: Partial<ConnectionOptions> = {}) {
+  constructor(
+    private appOptions: AppOptions<C>,
+    private dbOptions: Partial<ConnectionOptions> = {}
+  ) {
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }
@@ -161,7 +164,9 @@ export class App<C extends BaseContext> {
 
     const url = `http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`;
 
-    this.httpServer = app.listen({ port: this.appPort }, () => this.logger.info(`🚀 Server ready at ${url}`));
+    this.httpServer = app.listen({ port: this.appPort }, () =>
+      this.logger.info(`🚀 Server ready at ${url}`)
+    );
 
     // Open playground in the browser
     if (this.openPlayground) {
@@ -187,7 +192,10 @@ export class App<C extends BaseContext> {
   private async getGeneratedTypes() {
     await this.establishDBConnection();
 
-    return SchemaGenerator.generate(this.connection.entityMetadatas, this.appOptions.warthogImportPath);
+    return SchemaGenerator.generate(
+      this.connection.entityMetadatas,
+      this.appOptions.warthogImportPath
+    );
   }
 
   private async writeSchemaFile() {

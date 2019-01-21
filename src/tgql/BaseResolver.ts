@@ -82,7 +82,9 @@ export class BaseResolver<E extends BaseModel> {
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
     } else if (items.length > 1) {
-      throw new Error(`Found ${items.length} ${this.entityClass.name}s where ${JSON.stringify(where)}`);
+      throw new Error(
+        `Found ${items.length} ${this.entityClass.name}s where ${JSON.stringify(where)}`
+      );
     }
 
     return items[0];

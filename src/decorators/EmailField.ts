@@ -14,7 +14,11 @@ export function EmailField(args: EmailFieldOptions = {}): any {
   const nullableOption = args.nullable === true ? { nullable: true } : {};
 
   // These are the 2 required decorators to get type-graphql and typeorm working
-  const factories = [IsEmail(), Field(), Column({ ...uniqueOption, ...nullableOption }) as MethodDecoratorFactory];
+  const factories = [
+    IsEmail(),
+    Field(),
+    Column({ ...uniqueOption, ...nullableOption }) as MethodDecoratorFactory
+  ];
 
   return composeMethodDecorators(...factories);
 }

@@ -1,5 +1,11 @@
 // This subscriber will log all CUD operations (left off "read" as it would be too noisy)
-import { EntitySubscriberInterface, EventSubscriber, InsertEvent, RemoveEvent, UpdateEvent } from 'typeorm';
+import {
+  EntitySubscriberInterface,
+  EventSubscriber,
+  InsertEvent,
+  RemoveEvent,
+  UpdateEvent
+} from 'typeorm';
 
 import { logger } from './../core/logger';
 

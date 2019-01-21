@@ -14,6 +14,7 @@
   "scripts": {
     "build": "yarn tsc",
     "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
+    "prettier": "prettier ./{src,test,tools}/**/*.ts --write",
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
     "test:watch": "jest --verbose --watch",
