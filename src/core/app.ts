@@ -48,7 +48,6 @@ export class App<C extends BaseContext> {
   graphQLServer!: ApolloServer;
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
-  openPlayground: boolean;
   schema?: GraphQLSchema;
 
   constructor(
@@ -82,11 +81,8 @@ export class App<C extends BaseContext> {
     const returnEmpty = () => {
       return {};
     };
+
     this.context = this.appOptions.context || returnEmpty;
-    this.openPlayground =
-      typeof this.appOptions.openPlayground !== 'undefined'
-        ? this.appOptions.openPlayground
-        : !!(process.env.NODE_ENV === 'development');
 
     this.createGeneratedFolder();
   }
@@ -169,8 +165,8 @@ export class App<C extends BaseContext> {
     );
 
     // Open playground in the browser
-    if (this.openPlayground) {
-      opn(url);
+    if (this.shouldOpenPlayground()) {
+      opn(url, { wait: false });
     }
 
     return this;
@@ -181,6 +177,21 @@ export class App<C extends BaseContext> {
     this.httpServer.close();
     this.logger.info('Closing DB Connection');
     await this.connection.close();
+  }
+
+  private shouldOpenPlayground(): boolean {
+    // If an explicit value is passed in, always use it
+    if (typeof this.appOptions.openPlayground !== 'undefined') {
+      return this.appOptions.openPlayground;
+    }
+
+    // If Jest is running, be smart and don't open playground
+    if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
+      return false;
+    }
+
+    // Otherwise, only open in development
+    return process.env.NODE_ENV === 'development';
   }
 
   private async writeGeneratedTSTypes() {

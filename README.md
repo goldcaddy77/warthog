@@ -16,6 +16,7 @@ Opinionated framework for building GraphQL APIs with strong conventions.  With W
 - A [graphql-binding](https://github.com/graphql-binding/graphql-binding) for
   type-safe programmatic access to your APIs.
 - TypeScript classes for the generated GraphQL schema for type-safety while developing.
+- Automatic validation before data is saved using any of the decorators available in the [class-validator](https://github.com/typestack/class-validator#validation-decorators) library.
 
 ## Warning
 
@@ -168,9 +169,10 @@ Notice how we've only added a single field on the model and you get pagination, 
 
 ## Intentionally Opinionated
 
-Warthog is intentionally opinionated
+Warthog is intentionally opinionated to accelerate development and make use of technology-specific features:
 
-- Database - currently only supports Postgres.  This could be easily changed, but I don't have the need currently
+- Postgres - currently the only database supported.  This could be changed, but choosing Postgres allows adding a docker container and other goodies easily.
+- Jest - other harnesses will work, but if you use Jest, we will not open the GraphQL playground when the server starts, for example.
 - Soft deletes - no records are ever deleted, only "soft deleted".  The base service used in resolvers filters out the deleted records by default.
 
 ## Thanks

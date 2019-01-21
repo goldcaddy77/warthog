@@ -51,7 +51,10 @@ describe('Users', () => {
   });
 
   test('createdAt sort', async done => {
-    const users = await binding.query.users({ limit: 1, orderBy: 'createdAt_DESC' }, `{ id firstName}`);
+    const users = await binding.query.users(
+      { limit: 1, orderBy: 'createdAt_DESC' },
+      `{ id firstName}`
+    );
 
     expect(console.error).not.toHaveBeenCalled();
     expect(users).toBeDefined();
