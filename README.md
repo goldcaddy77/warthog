@@ -30,7 +30,7 @@ yarn add warthog
 
 ## Usage
 
-Check out the [warthog-example](https://github.com/goldcaddy77/warthog-example) repo to see how to use Warthog in a project. There are also a bunch of examples in the [examples](./examples/README.md) folder.  Note that these use relative import paths to call into Warthog instead of pulling from NPM.
+Check out the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo to see how to use Warthog in a project. There are also a bunch of examples in the [examples](./examples/README.md) folder.  Note that these use relative import paths to call into Warthog instead of pulling from NPM.
 
 ### 1. Create a Model
 
