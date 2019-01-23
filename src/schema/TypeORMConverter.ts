@@ -77,14 +77,14 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
       const tsType = columnToTypeScriptType(column);
 
       fieldsTemplate += `
-        @Field(type => ${graphQLDataType}${nullable})
+        @TypeGraphQLField(type => ${graphQLDataType}${nullable})
         ${column.propertyName}?: ${tsType};
       `;
     }
   });
 
   const template = `
-    @InputType()
+    @TypeGraphQLInputType()
     export class ${entity.name}WhereUniqueInput {
       ${fieldsTemplate}
     }
@@ -112,12 +112,12 @@ export function entityToCreateInput(entity: EntityMetadata): string {
 
       if (column.enum) {
         fieldTemplates += `
-          @Field(type => ${graphQLType}, ${nullable})
+          @TypeGraphQLField(type => ${graphQLType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${graphQLType};
        `;
       } else {
         fieldTemplates += `
-          @Field(${nullable})
+          @TypeGraphQLField(${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
         `;
       }
@@ -125,7 +125,7 @@ export function entityToCreateInput(entity: EntityMetadata): string {
   });
 
   return `
-    @InputType()
+    @TypeGraphQLInputType()
     export class ${entity.name}CreateInput {
       ${fieldTemplates}
     }
@@ -151,12 +151,12 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
 
       if (column.enum) {
         fieldTemplates += `
-        @Field(type => ${graphQLType}, { nullable: true })
+        @TypeGraphQLField(type => ${graphQLType}, { nullable: true })
         ${column.propertyName}?: ${graphQLType};
       `;
       } else {
         fieldTemplates += `
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}?: ${tsType};
       `;
       }
@@ -164,7 +164,7 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
   });
 
   return `
-    @InputType()
+    @TypeGraphQLInputType()
     export class ${entity.name}UpdateInput {
       ${fieldTemplates}
     }
@@ -176,8 +176,8 @@ export function entityToUpdateInputArgs(entity: EntityMetadata): string {
   return `
     @ArgsType()
     export class ${entity.name}UpdateArgs {
-      @Field() data!: ${entity.name}UpdateInput;
-      @Field() where!: ${entity.name}WhereUniqueInput;
+      @TypeGraphQLField() data!: ${entity.name}UpdateInput;
+      @TypeGraphQLField() where!: ${entity.name}WhereUniqueInput;
     }
   `;
 }
@@ -204,79 +204,79 @@ export function entityToWhereInput(entity: EntityMetadata): string {
     // Example: photo.userId: String
     if (column.isPrimary || graphqlType === GraphQLID) {
       fieldTemplates += `
-        @Field(type => ${graphqlType},{ nullable: true })
+        @TypeGraphQLField(type => ${graphqlType},{ nullable: true })
         ${column.propertyName}_eq?: string;
 
-        @Field(type => [${graphqlType}], { nullable: true })
+        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
         ${column.propertyName}_in?: string[];
       `;
     } else if (graphqlType === GraphQLString) {
       // TODO: do we need NOT?
       // `${column.propertyName}_not`
       fieldTemplates += `
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_eq?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_contains?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_startsWith?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_endsWith?: ${tsType};
 
-        @Field(type => [${graphqlType}], { nullable: true })
+        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
     } else if (graphqlType === GraphQLFloat || graphqlType === GraphQLInt) {
       fieldTemplates += `
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_eq?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_gt?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_gte?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lt?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
 
-        @Field(type => [${graphqlType}], { nullable: true })
+        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
     } else if (graphqlType === GraphQLISODateTime) {
       fieldTemplates += `
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_gt?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_gte?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lt?: ${tsType};
 
-        @Field({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
       `;
     } else {
       // Enums will fall through here
       fieldTemplates += `
-        @Field(type => ${graphqlType}, { nullable: true })
+        @TypeGraphQLField(type => ${graphqlType}, { nullable: true })
         ${column.propertyName}_eq?: ${graphqlType};
 
-        @Field(type => [${graphqlType}], { nullable: true })
+        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
         ${column.propertyName}_in?: ${graphqlType}[];
       `;
     }
   });
 
   return `
-    @InputType()
+    @TypeGraphQLInputType()
     export class ${entity.name}WhereInput extends BaseWhereInput {
       ${fieldTemplates}
     }
@@ -287,10 +287,10 @@ export function entityToWhereArgs(entity: EntityMetadata): string {
   return `
     @ArgsType()
     export class ${entity.name}WhereArgs extends PaginationArgs {
-      @Field(type => ${entity.name}WhereInput, { nullable: true })
+      @TypeGraphQLField(type => ${entity.name}WhereInput, { nullable: true })
       where?: ${entity.name}WhereInput;
 
-      @Field(type => ${entity.name}OrderByEnum, { nullable: true })
+      @TypeGraphQLField(type => ${entity.name}OrderByEnum, { nullable: true })
       orderBy?: ${entity.name}OrderByEnum;
     }
   `;
@@ -302,7 +302,7 @@ export function entityToCreateManyArgs(entity: EntityMetadata): string {
   return `
     @ArgsType()
     export class ${entity.name}CreateManyArgs {
-      @Field(type => [${entity.name}CreateInput])
+      @TypeGraphQLField(type => [${entity.name}CreateInput])
       data!: ${entity.name}CreateInput[];
     }
   `;
