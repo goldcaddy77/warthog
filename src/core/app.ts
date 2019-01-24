@@ -28,7 +28,7 @@ import { Maybe } from './types';
 
 export interface AppOptions<T> {
   authChecker?: AuthChecker<T>;
-  container?: Container;
+  container: Container;
   context?: (request: Request) => object;
   host?: string;
   generatedFolder?: string;
@@ -43,6 +43,7 @@ export class App<C extends BaseContext> {
   appPort: number;
   authChecker: AuthChecker<C>;
   connection!: Connection;
+  container: Container;
   context: (request: Request) => object;
   generatedFolder: string;
   graphQLServer!: ApolloServer;
@@ -59,10 +60,10 @@ export class App<C extends BaseContext> {
     }
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
-    if (this.appOptions.container) {
-      TypeGraphQLUseContainer(this.appOptions.container as any); // TODO: fix any
-      TypeORMUseContainer(this.appOptions.container as any); // TODO: fix any
-    }
+
+    this.container = this.appOptions.container;
+    TypeGraphQLUseContainer(this.container as any); // TODO: fix any
+    TypeORMUseContainer(this.container as any); // TODO: fix any
 
     const host: Maybe<string> = this.appOptions.host || process.env.APP_HOST;
     if (!host) {
@@ -76,6 +77,9 @@ export class App<C extends BaseContext> {
 
     // Use https://github.com/inxilpro/node-app-root-path to find project root
     this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
+    // Set this so that we can pull in decorators later
+    Container.set('warthog:generatedFolder', this.generatedFolder);
+
     this.logger = Container.has('LOGGER') ? Container.get('LOGGER') : logger;
 
     const returnEmpty = () => {
