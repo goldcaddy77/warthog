@@ -4,12 +4,10 @@
 import { ApolloServer } from 'apollo-server-express';
 import { Request } from 'express';
 import express = require('express');
-import { writeFileSync } from 'fs';
-import { GraphQLSchema, printSchema } from 'graphql';
+import { GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
-import * as mkdirp from 'mkdirp';
 import opn = require('opn');
 import * as path from 'path';
 import { AuthChecker, buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
@@ -17,11 +15,11 @@ import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
 import { logger, Logger } from '../core/logger';
-import { generateBindingFile, getRemoteBinding } from '../gql';
+import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-import { SchemaGenerator } from '../schema/';
 import { authChecker } from '../tgql';
-import { createDBConnection } from '../torm';
+import { createDBConnection, mockDBConnection } from '../torm';
+import { CodeGenerator } from './code-generator';
 
 import { BaseContext } from './Context';
 import { Maybe } from './types';
@@ -33,8 +31,10 @@ export interface AppOptions<T> {
   host?: string;
   generatedFolder?: string;
   middlewares?: any[]; // TODO: fix
+  mockDBConnection?: boolean;
   openPlayground?: boolean;
   port?: string | number;
+  resolversPath: string[];
   warthogImportPath?: string;
 }
 
@@ -44,11 +44,11 @@ export class App<C extends BaseContext> {
   authChecker: AuthChecker<C>;
   connection!: Connection;
   container: Container;
-  context: (request: Request) => object;
   generatedFolder: string;
   graphQLServer!: ApolloServer;
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
+  mockDBConnection: boolean = false;
   schema?: GraphQLSchema;
 
   constructor(
@@ -70,9 +70,7 @@ export class App<C extends BaseContext> {
       throw new Error('`host` is required');
     }
     this.appHost = host;
-
     this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
-
     this.authChecker = this.appOptions.authChecker || authChecker;
 
     // Use https://github.com/inxilpro/node-app-root-path to find project root
@@ -81,26 +79,15 @@ export class App<C extends BaseContext> {
     Container.set('warthog:generatedFolder', this.generatedFolder);
 
     this.logger = Container.has('LOGGER') ? Container.get('LOGGER') : logger;
-
-    const returnEmpty = () => {
-      return {};
-    };
-
-    this.context = this.appOptions.context || returnEmpty;
-
-    this.createGeneratedFolder();
-  }
-
-  createGeneratedFolder() {
-    return mkdirp.sync(this.generatedFolder);
   }
 
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
-      if (typeof this.dbOptions.synchronize === 'undefined') {
-        this.dbOptions = { ...this.dbOptions, synchronize: process.env.NODE_ENV === 'development' };
-      }
-      this.connection = await createDBConnection(this.dbOptions);
+      // Asking for a mock connection will not connect to your preferred DB and will instead
+      // connect to sqlite so that you can still access all metadata
+      const connectionFn = this.appOptions.mockDBConnection ? mockDBConnection : createDBConnection;
+
+      this.connection = await connectionFn(this.dbOptions);
     }
 
     return this.connection;
@@ -111,13 +98,6 @@ export class App<C extends BaseContext> {
       origin: 'warthog',
       ...options
     });
-  }
-
-  async generateBinding() {
-    const schemaFilePath = path.join(this.generatedFolder, 'schema.graphql');
-    const outputBindingPath = path.join(this.generatedFolder, 'binding.ts');
-
-    return generateBindingFile(schemaFilePath, outputBindingPath);
   }
 
   async buildGraphQLSchema(): Promise<GraphQLSchema> {
@@ -134,12 +114,24 @@ export class App<C extends BaseContext> {
     return this.schema;
   }
 
-  async start() {
-    await this.writeGeneratedIndexFile();
+  async generateFiles(): Promise<void> {
     await this.establishDBConnection();
-    await this.writeGeneratedTSTypes();
-    await this.writeSchemaFile();
-    await this.generateBinding();
+
+    await new CodeGenerator(this.connection, this.generatedFolder, {
+      resolversPath: this.appOptions.resolversPath,
+      warthogImportPath: this.appOptions.warthogImportPath
+    }).generate();
+  }
+
+  async start() {
+    await this.establishDBConnection();
+    await this.generateFiles();
+
+    const contextGetter =
+      this.appOptions.context ||
+      (() => {
+        return {};
+      });
 
     this.graphQLServer = new ApolloServer({
       context: (options: { req: Request }) => {
@@ -151,7 +143,7 @@ export class App<C extends BaseContext> {
           },
           request: options.req,
           // Allows consumer to add to the context object - ex. context.user
-          ...this.context(options.req)
+          ...contextGetter(options.req)
         };
       },
       schema: this.schema
@@ -196,39 +188,5 @@ export class App<C extends BaseContext> {
 
     // Otherwise, only open in development
     return process.env.NODE_ENV === 'development';
-  }
-
-  private async writeGeneratedTSTypes() {
-    const generatedTSTypes = await this.getGeneratedTypes();
-
-    return this.writeToGeneratedFolder('classes.ts', generatedTSTypes);
-  }
-
-  private async getGeneratedTypes() {
-    await this.establishDBConnection();
-
-    return SchemaGenerator.generate(
-      this.connection.entityMetadatas,
-      this.appOptions.warthogImportPath
-    );
-  }
-
-  private async writeSchemaFile() {
-    await this.buildGraphQLSchema();
-
-    return this.writeToGeneratedFolder('schema.graphql', printSchema(this.schema as GraphQLSchema));
-  }
-
-  // Write an index file that loads `classes` so that you can just import `../../generated`
-  // in your resolvers
-  private async writeGeneratedIndexFile() {
-    return this.writeToGeneratedFolder('index.ts', `export * from './classes';`);
-  }
-
-  private async writeToGeneratedFolder(filename: string, contents: string) {
-    return writeFileSync(path.join(this.generatedFolder, filename), contents, {
-      encoding: 'utf8',
-      flag: 'w'
-    });
   }
 }
