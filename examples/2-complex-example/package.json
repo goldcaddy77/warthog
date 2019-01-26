@@ -1,5 +1,5 @@
 {
-  "name": "example1",
+  "name": "example2",
   "version": "0.0.0",
   "scripts": {
     "//": "make sure to install top-level packages, too",
@@ -13,7 +13,6 @@
     "start": "yarn start:ts",
     "start:debug": "yarn start:ts --inspect",
     "start:ts": "ts-node --type-check src/index.ts",
-    "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f ./ormconfig",
     "test": "dotenv -- jest --detectOpenHandles --verbose --coverage",
     "test:watch": "dotenv -- jest --watch",
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"

@@ -41,6 +41,7 @@
   "homepage": "https://github.com/goldcaddy77/warthog#readme",
   "//": "TODO: figure out which of these are dependencies, devDeps or peerDeps",
   "dependencies": {
+    "@types/app-root-path": "^1.2.4",
     "@types/caller": "^1.0.0",
     "@types/debug": "^0.0.31",
     "@types/dotenv": "^6.1.0",
@@ -62,6 +63,7 @@
     "apollo-link-http": "^1.5.9",
     "apollo-server": "^2.3.1",
     "apollo-server-express": "^2.3.1",
+    "app-root-path": "^2.1.0",
     "caller": "^1.0.1",
     "class-transformer": "^0.2.0",
     "class-validator": "^0.9.1",
@@ -85,7 +87,7 @@
     "ts-node": "^7.0.1",
     "type-graphql": "^0.16.0",
     "typedi": "^0.8.0",
-    "typeorm": "^0.2.11",
+    "typeorm": "^0.2.12",
     "typeorm-typedi-extensions": "^0.2.1",
     "typescript": "^3.2.2",
     "typestrict": "^1.0.2"
