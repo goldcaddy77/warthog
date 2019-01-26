@@ -2,6 +2,7 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { ApolloServer } from 'apollo-server-express';
+import * as dotenv from 'dotenv';
 import { Request } from 'express';
 import express = require('express');
 import { GraphQLSchema } from 'graphql';
@@ -59,6 +60,7 @@ export class Server<C extends BaseContext> {
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }
+    dotenv.config();
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
 
@@ -126,6 +128,7 @@ export class Server<C extends BaseContext> {
 
   async start() {
     await this.establishDBConnection();
+    await this.buildGraphQLSchema();
     await this.generateFiles();
 
     const contextGetter =

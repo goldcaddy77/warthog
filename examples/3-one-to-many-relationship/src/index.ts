@@ -1,8 +1,5 @@
-import * as dotenv from 'dotenv';
 import 'reflect-metadata';
 import { Container } from 'typedi';
-
-dotenv.config();
 
 import { Server } from '../../../src/';
 

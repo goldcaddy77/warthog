@@ -1,10 +1,6 @@
 import 'reflect-metadata';
 
-import * as dotenv from 'dotenv';
-
 import { getServer } from './server';
-
-dotenv.config();
 
 async function bootstrap() {
   const server = getServer();
