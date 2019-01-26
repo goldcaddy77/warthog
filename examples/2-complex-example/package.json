@@ -7,7 +7,6 @@
     "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:seed:dev": "dotenv -- ts-node tools/seed.ts",
-    "generate:code": "dotenv -- ts-node tools/generate.ts",
     "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
     "start": "yarn start:ts",

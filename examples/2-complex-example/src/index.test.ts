@@ -3,10 +3,10 @@ import 'reflect-metadata';
 
 import { Binding } from '../generated/binding';
 
-import { getServer } from './app';
+import { getApp } from './app';
 import { User } from './modules/user/user.model';
 
-const app = getServer({}, { logging: false });
+const app = getApp({}, { logging: false });
 let binding: Binding;
 let testUser: User;
 
