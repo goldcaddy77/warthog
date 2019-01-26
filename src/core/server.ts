@@ -24,9 +24,10 @@ import { CodeGenerator } from './code-generator';
 import { BaseContext } from './Context';
 import { Maybe } from './types';
 
-export interface AppOptions<T> {
-  authChecker?: AuthChecker<T>;
+export interface ServerOptions<T> {
   container: Container;
+
+  authChecker?: AuthChecker<T>;
   context?: (request: Request) => object;
   host?: string;
   generatedFolder?: string;
@@ -34,11 +35,11 @@ export interface AppOptions<T> {
   mockDBConnection?: boolean;
   openPlayground?: boolean;
   port?: string | number;
-  resolversPath: string[];
+  resolversPath?: string[];
   warthogImportPath?: string;
 }
 
-export class App<C extends BaseContext> {
+export class Server<C extends BaseContext> {
   appHost: string;
   appPort: number;
   authChecker: AuthChecker<C>;
@@ -52,7 +53,7 @@ export class App<C extends BaseContext> {
   schema?: GraphQLSchema;
 
   constructor(
-    private appOptions: AppOptions<C>,
+    private appOptions: ServerOptions<C>,
     private dbOptions: Partial<ConnectionOptions> = {}
   ) {
     if (!process.env.NODE_ENV) {
@@ -190,3 +191,6 @@ export class App<C extends BaseContext> {
     return process.env.NODE_ENV === 'development';
   }
 }
+
+// Backwards compatability.  This was renamed.
+export const App = Server;
