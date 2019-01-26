@@ -14,7 +14,7 @@ interface Context extends BaseContext {
   };
 }
 
-export function getApp(AppOptions = {}, dbOptions = {}) {
+export function getServer(AppOptions = {}, dbOptions = {}) {
   return new App<Context>(
     {
       container: Container,
