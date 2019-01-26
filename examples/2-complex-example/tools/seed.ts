@@ -1,7 +1,7 @@
 import * as Debug from 'debug';
 import * as Faker from 'faker';
 
-import { getServer } from '../src/app';
+import { getServer } from '../src/server';
 
 if (process.env.NODE_ENV !== 'development') {
   throw 'Seeding only available in development environment';
@@ -12,10 +12,10 @@ const logger = Debug('warthog:seed');
 const NUM_USERS = 100;
 
 async function seedDatabase() {
-  const app = getServer();
-  await app.start();
+  const server = getServer();
+  await server.start();
 
-  const binding = await app.getBinding();
+  const binding = await server.getBinding();
 
   for (let index = 0; index < NUM_USERS; index++) {
     const random = new Date()
@@ -45,7 +45,7 @@ async function seedDatabase() {
     }
   }
 
-  return app.stop();
+  return server.stop();
 }
 
 seedDatabase()
