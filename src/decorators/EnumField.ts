@@ -1,5 +1,7 @@
 const caller = require('caller'); // tslint:disable-line:no-var-requires
+import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
+import { Container } from 'typedi';
 import { Column } from 'typeorm';
 
 import { getMetadataStorage } from '../metadata';
@@ -15,7 +17,13 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
 
   // In order to use the enums in the generated classes file, we need to
   // save their locations and import them in the generated file
-  const enumFileName = caller();
+  const decoratorSourceFile = caller();
+
+  // Use relative paths in the source files so that they can be used on different machines
+  const relativeFilePath = path.relative(
+    Container.get('warthog:generatedFolder'),
+    decoratorSourceFile
+  );
 
   const registerEnumWithWarthog = (
     target: any,
@@ -27,7 +35,7 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
       propertyKey,
       name,
       enumeration,
-      enumFileName
+      relativeFilePath
     );
   };
 

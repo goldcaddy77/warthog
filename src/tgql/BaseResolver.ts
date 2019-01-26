@@ -128,7 +128,7 @@ export class BaseResolver<E extends BaseModel> {
     });
 
     // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
-    return this.repository.save(results as any, { reload: true });
+    return this.repository.save(results, { reload: true });
   }
 
   // TODO: There must be a more succinct way to:
