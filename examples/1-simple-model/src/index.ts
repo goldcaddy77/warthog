@@ -4,15 +4,15 @@ import { Container } from 'typedi';
 
 dotenv.config();
 
-import { App } from '../../../src/';
+import { Server } from '../../../src/';
 
 async function bootstrap() {
-  const app = new App({
+  const server = new Server({
     container: Container,
     warthogImportPath: '../../../src' // Path written in generated classes
   });
 
-  return app.start();
+  return server.start();
 }
 
 bootstrap().catch((error: Error) => {
