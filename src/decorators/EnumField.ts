@@ -1,11 +1,10 @@
 const caller = require('caller'); // tslint:disable-line:no-var-requires
 import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
-import { Container } from 'typedi';
 import { Column } from 'typeorm';
 
 import { getMetadataStorage } from '../metadata';
-import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 
 interface EnumFieldOptions {
   nullable?: boolean;
@@ -20,10 +19,7 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
   const decoratorSourceFile = caller();
 
   // Use relative paths in the source files so that they can be used on different machines
-  const relativeFilePath = path.relative(
-    Container.get('warthog:generatedFolder'),
-    decoratorSourceFile
-  );
+  const relativeFilePath = path.relative(generatedFolderPath(), decoratorSourceFile);
 
   const registerEnumWithWarthog = (
     target: any,

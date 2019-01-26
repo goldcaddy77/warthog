@@ -1,24 +1,26 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { writeFileSync } from 'fs';
+import { writeFile } from 'fs';
 import { GraphQLSchema, printSchema } from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import { buildSchema } from 'type-graphql';
 import { Connection } from 'typeorm';
+import * as util from 'util';
 
 import { generateBindingFile } from '../gql';
 import { SchemaGenerator } from '../schema';
 import { authChecker } from '../tgql';
 
+const writeFilePromise = util.promisify(writeFile);
+
 interface CodeGeneratorOptions {
+  resolversPath: string[];
   warthogImportPath?: string;
-  resolversPath?: string[];
 }
 
 export class CodeGenerator {
-  resolversPath: string[];
   schema?: GraphQLSchema;
 
   constructor(
@@ -30,9 +32,6 @@ export class CodeGenerator {
       throw new Error('FileGenerator: connection is required');
     }
 
-    // Use https://github.com/inxilpro/node-app-root-path to find project root
-    this.generatedFolder = this.generatedFolder || path.join(process.cwd(), 'generated');
-    this.resolversPath = this.options.resolversPath || [process.cwd() + '/**/*.resolver.ts'];
     this.createGeneratedFolder();
   }
 
@@ -43,6 +42,7 @@ export class CodeGenerator {
   async generate() {
     await this.writeGeneratedIndexFile();
     await this.writeGeneratedTSTypes();
+    await this.writeOrmConfig();
     await this.writeSchemaFile();
     await this.generateBinding();
   }
@@ -60,7 +60,7 @@ export class CodeGenerator {
         // Note: using the base authChecker here just to generated the .graphql file
         // it's not actually being utilized here
         authChecker,
-        resolvers: this.resolversPath
+        resolvers: this.options.resolversPath
       });
     }
 
@@ -92,8 +92,39 @@ export class CodeGenerator {
     return this.writeToGeneratedFolder('index.ts', `export * from './classes';`);
   }
 
+  private async writeOrmConfig() {
+    const contents = `
+import { SnakeNamingStrategy } from '${this.options.warthogImportPath}';
+
+module.exports = {
+  cli: {
+    entitiesDir: 'src/models',
+    migrationsDir: 'db/migrations',
+    subscribersDir: 'src/subscribers'
+  },
+  database: process.env.TYPEORM_DATABASE,
+  entities: process.env.TYPEORM_ENTITIES || ['src/**/*.model.ts'],
+  host: process.env.TYPEORM_HOST || 'localhost',
+  logger: 'advanced-console',
+  logging: process.env.TYPEORM_LOGGING || 'all',
+  migrations: ['db/migrations/**/*.ts'],
+  namingStrategy: new SnakeNamingStrategy(),
+  password: process.env.TYPEORM_PASSWORD,
+  port: parseInt(process.env.TYPEORM_PORT || '', 10) || 5432,
+  subscribers: ['src/**/*.model.ts'],
+  synchronize:
+    typeof process.env.TYPEORM_SYNCHRONIZE !== 'undefined'
+      ? process.env.TYPEORM_SYNCHRONIZE
+      : process.env.NODE_ENV === 'development',
+  type: 'postgres',
+  username: process.env.TYPEORM_USERNAME
+};`;
+
+    return this.writeToGeneratedFolder('ormconfig.ts', contents);
+  }
+
   private async writeToGeneratedFolder(filename: string, contents: string) {
-    return writeFileSync(path.join(this.generatedFolder, filename), contents, {
+    return writeFilePromise(path.join(this.generatedFolder, filename), contents, {
       encoding: 'utf8',
       flag: 'w'
     });

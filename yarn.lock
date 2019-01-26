@@ -237,6 +237,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/app-root-path@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/@types/app-root-path/-/app-root-path-1.2.4.tgz#a78b703282b32ac54de768f5512ecc3569919dc7"
+  integrity sha1-p4twMoKzKsVN52j1US7MNWmRncc=
+
 "@types/argparse@^1.0.33":
   version "1.0.35"
   resolved "https://registry.npmjs.org/@types/argparse/-/argparse-1.0.35.tgz#b3acbd331a82854cca16d6015599d267b7272ec9"
@@ -768,7 +773,7 @@ apollo-utilities@^1.0.0, apollo-utilities@^1.0.1:
   dependencies:
     fast-json-stable-stringify "^2.0.0"
 
-app-root-path@^2.0.1:
+app-root-path@^2.0.1, app-root-path@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/app-root-path/-/app-root-path-2.1.0.tgz#98bf6599327ecea199309866e8140368fd2e646a"
   integrity sha1-mL9lmTJ+zqGZMJhm6BQDaP0uZGo=
@@ -8025,10 +8030,10 @@ typeorm-typedi-extensions@^0.2.1:
   resolved "https://registry.npmjs.org/typeorm-typedi-extensions/-/typeorm-typedi-extensions-0.2.1.tgz#11d47528cb2986f57f32ad70c50b00690c7d3ba2"
   integrity sha512-/wKoibL0VTRZMaU4mp7M4pipGwsSJUSKfip1O+RGQUsY18ZC+k5Ioi0dyKki0R/sSyOm1i6yFabfmPUgqVXCGg==
 
-typeorm@^0.2.11:
-  version "0.2.11"
-  resolved "https://registry.npmjs.org/typeorm/-/typeorm-0.2.11.tgz#d81a295ed822e05043f2920cd539f52a963896b0"
-  integrity sha512-B+lA/LUjIc2MbAElfOxIIx2s+fijdRp0I/4jFGiMVBe61AX9aFz7gI68kk6wdmYFg798c5Oa+76Q1X9WsnqVTQ==
+typeorm@^0.2.12:
+  version "0.2.12"
+  resolved "https://registry.npmjs.org/typeorm/-/typeorm-0.2.12.tgz#faa1bef1af185b682ad28d09aebeef3a7bbcf756"
+  integrity sha512-y9RWUfzE1rZ4WZM8B2Bj0l/V+EhA1yAyEVzHGD2zCM7YjVpqVg/L7HdSRO16VRaPvlz4rHH4Xt0yWfE+NXZLww==
   dependencies:
     app-root-path "^2.0.1"
     buffer "^5.1.0"
@@ -8040,6 +8045,7 @@ typeorm@^0.2.11:
     js-yaml "^3.11.0"
     mkdirp "^0.5.1"
     reflect-metadata "^0.1.12"
+    tslib "^1.9.0"
     xml2js "^0.4.17"
     yargonaut "^1.1.2"
     yargs "^12.0.5"

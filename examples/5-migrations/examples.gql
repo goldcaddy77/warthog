@@ -1,0 +1,16 @@
+query {
+  users(orderBy: createdAt_DESC) {
+    id
+    lastName
+    createdAt
+  }
+}
+
+mutation {
+  createUser(data: { firstName: "Test", email: "test@fakeemail.com" }) {
+    id
+    firstName
+    lastName
+    createdAt
+  }
+}

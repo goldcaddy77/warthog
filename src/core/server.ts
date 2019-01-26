@@ -26,7 +26,7 @@ import { BaseContext } from './Context';
 import { Maybe } from './types';
 
 export interface ServerOptions<T> {
-  container: Container;
+  container?: Container;
 
   authChecker?: AuthChecker<T>;
   context?: (request: Request) => object;
@@ -51,6 +51,7 @@ export class Server<C extends BaseContext> {
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
   mockDBConnection: boolean = false;
+  resolversPath: string[];
   schema?: GraphQLSchema;
 
   constructor(
@@ -64,7 +65,8 @@ export class Server<C extends BaseContext> {
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
 
-    this.container = this.appOptions.container;
+    this.container = this.appOptions.container || Container;
+
     TypeGraphQLUseContainer(this.container as any); // TODO: fix any
     TypeORMUseContainer(this.container as any); // TODO: fix any
 
@@ -82,6 +84,7 @@ export class Server<C extends BaseContext> {
     Container.set('warthog:generatedFolder', this.generatedFolder);
 
     this.logger = Container.has('LOGGER') ? Container.get('LOGGER') : logger;
+    this.resolversPath = this.appOptions.resolversPath || [process.cwd() + '/**/*.resolver.ts'];
   }
 
   async establishDBConnection(): Promise<Connection> {
@@ -109,7 +112,7 @@ export class Server<C extends BaseContext> {
         authChecker: this.authChecker,
         // TODO: ErrorLoggerMiddleware
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
-        resolvers: [process.cwd() + '/**/*.resolver.ts']
+        resolvers: this.resolversPath
         // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
       });
     }
@@ -121,15 +124,15 @@ export class Server<C extends BaseContext> {
     await this.establishDBConnection();
 
     await new CodeGenerator(this.connection, this.generatedFolder, {
-      resolversPath: this.appOptions.resolversPath,
+      resolversPath: this.resolversPath,
       warthogImportPath: this.appOptions.warthogImportPath
     }).generate();
   }
 
   async start() {
     await this.establishDBConnection();
-    await this.buildGraphQLSchema();
     await this.generateFiles();
+    await this.buildGraphQLSchema();
 
     const contextGetter =
       this.appOptions.context ||
