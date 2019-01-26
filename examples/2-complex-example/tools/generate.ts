@@ -1,6 +1,6 @@
 import * as Debug from 'debug';
 
-import { getServer } from '../src/server';
+import { getServer } from '../src/app';
 
 const logger = Debug('warthog:generate');
 

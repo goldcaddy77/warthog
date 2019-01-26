@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Container } from 'typedi';
 
-import { BaseContext, Server } from '../../../src/';
+import { App, BaseContext } from '../../../src/';
 
 // import { User } from './modules/user/user.model';
 
@@ -15,7 +15,7 @@ interface Context extends BaseContext {
 }
 
 export function getServer(AppOptions = {}, dbOptions = {}) {
-  return new Server<Context>(
+  return new App<Context>(
     {
       container: Container,
       // Inject a fake user.  In a real app you'd parse a JWT to add the user
