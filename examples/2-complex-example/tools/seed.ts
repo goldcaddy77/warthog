@@ -1,7 +1,7 @@
 import * as Debug from 'debug';
 import * as Faker from 'faker';
 
-import { getApp } from '../src/app';
+import { getServer } from '../src/app';
 
 if (process.env.NODE_ENV !== 'development') {
   throw 'Seeding only available in development environment';
@@ -12,7 +12,7 @@ const logger = Debug('warthog:seed');
 const NUM_USERS = 100;
 
 async function seedDatabase() {
-  const app = getApp();
+  const app = getServer();
   await app.start();
 
   const binding = await app.getBinding();
@@ -24,7 +24,9 @@ async function seedDatabase() {
       .substring(8, 13);
     const firstName = Faker.name.firstName();
     const lastName = Faker.name.lastName();
-    const email = `${firstName.substr(0, 1).toLowerCase()}${lastName.toLowerCase()}-${random}@fakeemail.com`;
+    const email = `${firstName
+      .substr(0, 1)
+      .toLowerCase()}${lastName.toLowerCase()}-${random}@fakeemail.com`;
 
     try {
       const user = await binding.mutation.createUser(
@@ -52,6 +54,6 @@ seedDatabase()
     return process.exit(0);
   })
   .catch(err => {
-    logger(err);
+    console.log(err);
     return process.exit(1);
   });
