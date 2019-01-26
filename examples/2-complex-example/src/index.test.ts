@@ -3,18 +3,18 @@ import 'reflect-metadata';
 
 import { Binding } from '../generated/binding';
 
+import { getApp } from './app';
 import { User } from './modules/user/user.model';
-import { getServer } from './server';
 
-const server = getServer({}, { logging: false });
+const app = getApp({}, { logging: false });
 let binding: Binding;
 let testUser: User;
 
 beforeAll(async done => {
   console.error = jest.fn();
 
-  await server.start();
-  binding = ((await server.getBinding()) as unknown) as Binding; // TODO: clean this up
+  await app.start();
+  binding = ((await app.getBinding()) as unknown) as Binding; // TODO: clean this up
 
   const key = new Date().getTime();
 
@@ -34,7 +34,7 @@ beforeAll(async done => {
 
 afterAll(async done => {
   (console.error as any).mockRestore();
-  await server.stop();
+  await app.stop();
   done();
 });
 

@@ -79,11 +79,11 @@ export class UserResolver extends BaseResolver<User> {
 
 import 'reflect-metadata';
 import { Container } from 'typedi';
-import { Server } from 'warthog';
+import { App } from 'warthog';
 
 async function bootstrap() {
-  const server = new Server({ container: Container });
-  return server.start();
+  const app = new App({ container: Container });
+  return app.start();
 }
 
 bootstrap()

@@ -1,18 +1,18 @@
-import * as dotenv from 'dotenv';
 import 'reflect-metadata';
+import * as dotenv from 'dotenv';
 import { Container } from 'typedi';
 
 dotenv.config();
 
-import { Server } from '../../../src/';
+import { App } from '../../../src/';
 
 async function bootstrap() {
-  const server = new Server({
+  const app = new App({
     container: Container,
     warthogImportPath: '../../../src' // Path written in generated classes
   });
 
-  await server.start();
+  await app.start();
 }
 
 bootstrap().catch((error: Error) => {
