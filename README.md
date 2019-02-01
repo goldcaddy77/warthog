@@ -22,17 +22,27 @@ Opinionated framework for building GraphQL APIs with strong conventions.  With W
 
 The API for this library is still subject to change.  It will likely shift until version 2, at which time it will become stable.  I'd love early adopters, but please know that there might be some breaking changes for a few more weeks.
 
-## Install
+## Prerequisites
+
+You must have Postgresql installed to use Warthog.  If you're on OSX have have [Homebrew](https://brew.sh/) installed, you can simply run:
+
+```bash
+brew install postgresql
+```
+
+Otherwise, you can use install [Postgres.app](https://postgresapp.com/) or use the Google machine to figure out how to install on your OS.
+
+## Usage
+
+The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo.  This has a simple example in place to get you started.  There are also a bunch of examples in the [examples](./examples/README.md) folder for more advanced use cases.
+
+Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog.  In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM.  In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
+
+### Installing in Existing Project
 
 ```bash
 yarn add warthog
 ```
-
-## Usage
-
-Check out the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo to see how to use Warthog in a project. There are also a bunch of examples in the [examples](./examples/README.md) folder.  
-
-Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog.  In your projects, you won't need to set this config value.  See [warthog-starter](https://github.com/goldcaddy77/warthog-starter/blob/master/src/app.ts) for how you should set this up.
 
 ### 1. Create a Model
 
@@ -76,8 +86,6 @@ export class UserResolver extends BaseResolver<User> {
 ```
 
 ### 3. Add config to .env file
-
-
 
 ```env
 APP_HOST=localhost
