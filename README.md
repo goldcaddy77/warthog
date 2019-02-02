@@ -90,7 +90,7 @@ export class UserResolver extends BaseResolver<User> {
 ```env
 APP_HOST=localhost
 APP_PORT=4100
-TYPEORM_DATABASE=example2
+TYPEORM_DATABASE=warthog
 TYPEORM_USERNAME=postgres
 TYPEORM_PASSWORD=
 ```
