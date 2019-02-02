@@ -30,7 +30,7 @@ You must have Postgresql installed to use Warthog.  If you're on OSX have have [
 brew install postgresql
 ```
 
-Otherwise, you can use install [Postgres.app](https://postgresapp.com/) or use the Google machine to figure out how to install on your OS.
+Otherwise, you can install [Postgres.app](https://postgresapp.com/) or use the Google machine to figure out how to install on your OS.
 
 ## Usage
 
