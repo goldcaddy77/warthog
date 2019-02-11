@@ -1,4 +1,4 @@
-import { BaseModel, EmailField, Model, StringField } from '../../../src';
+import { BaseModel, EmailField, IntField, Model, StringField } from '../../../src';
 
 @Model()
 export class User extends BaseModel {
@@ -10,4 +10,7 @@ export class User extends BaseModel {
 
   @EmailField()
   email?: string;
+
+  @IntField()
+  age?: number;
 }
