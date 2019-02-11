@@ -5,12 +5,10 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface IntFieldOptions {
   nullable?: boolean;
-  unique?: boolean;
 }
 
 export function IntField(args: IntFieldOptions = {}): any {
   const nullableOption = args.nullable === true ? { nullable: true } : {};
-  const uniqueOption = args.unique ? { unique: true } : {};
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
@@ -21,8 +19,7 @@ export function IntField(args: IntFieldOptions = {}): any {
     }),
     Column({
       type: 'int',
-      ...nullableOption,
-      ...uniqueOption
+      ...nullableOption
     }) as MethodDecoratorFactory
   ];
 
