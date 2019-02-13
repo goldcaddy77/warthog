@@ -346,6 +346,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
     const typeMap: any = {
       DateTime: 'string',
       ID: 'string', // TODO: should this be ID_TYPE?
+      Int: 'number',
       String: 'string'
     };
 
