@@ -344,6 +344,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
   } else {
     const graphqlType = columnTypeToGraphQLDataType(column);
     const typeMap: any = {
+      Boolean: 'boolean',
       DateTime: 'string',
       ID: 'string', // TODO: should this be ID_TYPE?
       Int: 'number',

@@ -1,24 +1,25 @@
-import { Field, Int } from 'type-graphql';
+import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
+import { GraphQLBoolean } from 'graphql';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
-interface IntFieldOptions {
+interface BooleanFieldOptions {
   nullable?: boolean;
 }
 
-export function IntField(args: IntFieldOptions = {}): any {
+export function BooleanField(args: BooleanFieldOptions = {}): any {
   const nullableOption = args.nullable === true ? { nullable: true } : {};
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
     // We explicitly say string here because when we're metaprogramming without
     // TS types, Field does not know that this should be a String
-    Field(type => Int, {
+    Field(type => GraphQLBoolean, {
       ...nullableOption
     }),
     Column({
-      type: 'int',
+      type: 'boolean',
       ...nullableOption
     }) as MethodDecoratorFactory
   ];
