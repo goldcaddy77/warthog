@@ -8,3 +8,4 @@ export * from './ForeignKeyField';
 export * from './ManyToOne';
 export * from './OneToMany';
 export * from './IntField';
+export * from './BooleanField';
