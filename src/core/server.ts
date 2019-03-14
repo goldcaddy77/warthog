@@ -32,6 +32,7 @@ export interface ServerOptions<T> {
   context?: (request: Request) => object;
   host?: string;
   generatedFolder?: string;
+  logger?: Logger;
   middlewares?: any[]; // TODO: fix
   mockDBConnection?: boolean;
   openPlayground?: boolean;
@@ -81,10 +82,21 @@ export class Server<C extends BaseContext> {
     // Use https://github.com/inxilpro/node-app-root-path to find project root
     this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
     // Set this so that we can pull in decorators later
-    Container.set('warthog:generatedFolder', this.generatedFolder);
+    Container.set('warthog.generated-folder', this.generatedFolder);
 
-    this.logger = Container.has('LOGGER') ? Container.get('LOGGER') : logger;
+    this.logger = this.getLogger();
+    Container.set('warthog.logger', this.logger); // Save for later so we can pull globally
+
     this.resolversPath = this.appOptions.resolversPath || [process.cwd() + '/**/*.resolver.ts'];
+  }
+
+  getLogger(): Logger {
+    if (this.appOptions.logger) {
+      return this.appOptions.logger;
+    } else if (Container.has('warthog.logger')) {
+      return Container.get('warthog.logger');
+    }
+    return logger;
   }
 
   async establishDBConnection(): Promise<Connection> {
