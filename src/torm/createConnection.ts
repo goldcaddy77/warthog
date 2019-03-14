@@ -47,10 +47,7 @@ function getBaseConfig() {
     password: process.env.TYPEORM_PASSWORD,
     port: parseInt(process.env.TYPEORM_PORT || '', 10) || 5432,
     subscribers: ['src/**/*.model.ts'],
-    synchronize:
-      typeof process.env.TYPEORM_SYNCHRONIZE !== 'undefined'
-        ? process.env.TYPEORM_SYNCHRONIZE
-        : process.env.NODE_ENV === 'development',
+    synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
     type: 'postgres',
     username: process.env.TYPEORM_USERNAME
   };
