@@ -2,6 +2,8 @@ import 'reflect-metadata';
 
 import { BaseContext, Server } from '../../../src/';
 
+import { customLogger } from './logger';
+
 interface Context extends BaseContext {
   user: {
     email: string;
@@ -23,6 +25,7 @@ export function getServer(AppOptions = {}, dbOptions = {}) {
           }
         };
       },
+      logger: customLogger,
       // Path written in generated classes (only needed because we're in same repo)
       warthogImportPath: '../../../src',
       ...AppOptions
