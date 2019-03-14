@@ -25,6 +25,10 @@ import { CodeGenerator } from './code-generator';
 import { BaseContext } from './Context';
 import { Maybe } from './types';
 
+import * as Debug from 'debug';
+
+const debug = Debug('warthog:server');
+
 export interface ServerOptions<T> {
   container?: Container;
 
@@ -101,11 +105,13 @@ export class Server<C extends BaseContext> {
 
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
+      debug('establishDBConnection:start');
       // Asking for a mock connection will not connect to your preferred DB and will instead
       // connect to sqlite so that you can still access all metadata
       const connectionFn = this.appOptions.mockDBConnection ? mockDBConnection : createDBConnection;
 
       this.connection = await connectionFn(this.dbOptions);
+      debug('establishDBConnection:end');
     }
 
     return this.connection;
@@ -120,6 +126,7 @@ export class Server<C extends BaseContext> {
 
   async buildGraphQLSchema(): Promise<GraphQLSchema> {
     if (!this.schema) {
+      debug('buildGraphQLSchema:start');
       this.schema = await buildSchema({
         authChecker: this.authChecker,
         // TODO: ErrorLoggerMiddleware
@@ -127,21 +134,26 @@ export class Server<C extends BaseContext> {
         resolvers: this.resolversPath
         // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
       });
+      debug('buildGraphQLSchema:end');
     }
 
     return this.schema;
   }
 
   async generateFiles(): Promise<void> {
+    debug('start:generateFiles:start');
     await this.establishDBConnection();
 
     await new CodeGenerator(this.connection, this.generatedFolder, {
       resolversPath: this.resolversPath,
       warthogImportPath: this.appOptions.warthogImportPath
     }).generate();
+
+    debug('start:generateFiles:end');
   }
 
   async start() {
+    debug('start:start');
     await this.establishDBConnection();
     await this.generateFiles();
     await this.buildGraphQLSchema();
@@ -152,6 +164,7 @@ export class Server<C extends BaseContext> {
         return {};
       });
 
+    debug('start:ApolloServerAllocation:start');
     this.graphQLServer = new ApolloServer({
       context: (options: { req: Request }) => {
         return {
@@ -168,10 +181,14 @@ export class Server<C extends BaseContext> {
       schema: this.schema
     });
 
+    debug('start:ApolloServerAllocation:end');
+
     const app = express();
     app.use('/health', healthCheckMiddleware);
 
+    debug('start:applyMiddleware:start');
     this.graphQLServer.applyMiddleware({ app, path: '/graphql' });
+    debug('start:applyMiddleware:end');
 
     const url = `http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`;
 
@@ -184,6 +201,7 @@ export class Server<C extends BaseContext> {
       opn(url, { wait: false });
     }
 
+    debug('start:end');
     return this;
   }
 
