@@ -10,7 +10,7 @@ import * as path from 'path';
 
 import { StringMapOptional } from '../core/types';
 
-const debug = Debug('binding');
+const debug = Debug('warthog:binding');
 
 interface LinkOptions extends StringMapOptional {
   token?: string;
@@ -71,6 +71,7 @@ export async function getRemoteBinding(endpoint: string, options: LinkOptions) {
 }
 
 export async function generateBindingFile(inputSchemaPath: string, outputBindingFile: string) {
+  debug('generateBindingFile:start');
   const sdl = fs.readFileSync(path.resolve(inputSchemaPath), 'utf-8');
   const schema = buildSchema(sdl);
 
@@ -85,6 +86,7 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
   const code = generatorInstance.render();
 
   fs.writeFileSync(outputBindingFile, code);
+  debug('generateBindingFile:end');
 }
 
 export { Binding };

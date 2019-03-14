@@ -13,6 +13,10 @@ import { generateBindingFile } from '../gql';
 import { SchemaGenerator } from '../schema';
 import { authChecker } from '../tgql';
 
+import * as Debug from 'debug';
+
+const debug = Debug('warthog:code-generators');
+
 const writeFilePromise = util.promisify(writeFile);
 
 interface CodeGeneratorOptions {
@@ -40,50 +44,70 @@ export class CodeGenerator {
   }
 
   async generate() {
+    debug('generate:start');
     await this.writeGeneratedIndexFile();
     await this.writeGeneratedTSTypes();
     await this.writeOrmConfig();
     await this.writeSchemaFile();
     await this.generateBinding();
+    debug('generate:end');
   }
 
   private async generateBinding() {
+    debug('generateBinding:start');
     const schemaFilePath = path.join(this.generatedFolder, 'schema.graphql');
     const outputBindingPath = path.join(this.generatedFolder, 'binding.ts');
 
-    return generateBindingFile(schemaFilePath, outputBindingPath);
+    const x = generateBindingFile(schemaFilePath, outputBindingPath);
+    debug('generateBinding:end');
+    return x;
   }
 
   private async buildGraphQLSchema(): Promise<GraphQLSchema> {
     if (!this.schema) {
+      debug('buildGraphQLSchema:start');
       this.schema = await buildSchema({
         // Note: using the base authChecker here just to generated the .graphql file
         // it's not actually being utilized here
         authChecker,
         resolvers: this.options.resolversPath
       });
+      debug('buildGraphQLSchema:end');
     }
 
     return this.schema;
   }
 
   private async writeGeneratedTSTypes() {
+    debug('writeGeneratedTSTypes:start');
     const generatedTSTypes = await this.getGeneratedTypes();
 
-    return this.writeToGeneratedFolder('classes.ts', generatedTSTypes);
+    const x = this.writeToGeneratedFolder('classes.ts', generatedTSTypes);
+    debug('writeGeneratedTSTypes:end');
+    return x;
   }
 
   private async getGeneratedTypes() {
-    return SchemaGenerator.generate(
+    debug('getGeneratedTypes:start');
+    const x = SchemaGenerator.generate(
       this.connection.entityMetadatas,
       this.options.warthogImportPath
     );
+    debug('getGeneratedTypes:end');
+    return x;
   }
 
   private async writeSchemaFile() {
+    debug('writeSchemaFile:start');
     await this.buildGraphQLSchema();
 
-    return this.writeToGeneratedFolder('schema.graphql', printSchema(this.schema as GraphQLSchema));
+    const x = this.writeToGeneratedFolder(
+      'schema.graphql',
+      printSchema(this.schema as GraphQLSchema)
+    );
+
+    debug('writeSchemaFile:end');
+    return x;
   }
 
   // Write an index file that loads `classes` so that you can just import `../../generated`
@@ -121,9 +145,12 @@ module.exports = {
   }
 
   private async writeToGeneratedFolder(filename: string, contents: string) {
-    return writeFilePromise(path.join(this.generatedFolder, filename), contents, {
+    debug('writeToGeneratedFolder:' + filename + ':start');
+    const x = writeFilePromise(path.join(this.generatedFolder, filename), contents, {
       encoding: 'utf8',
       flag: 'w'
     });
+    debug('writeToGeneratedFolder:' + filename + ':end');
+    return x;
   }
 }
