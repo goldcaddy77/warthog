@@ -16,7 +16,9 @@ import {
 } from './TypeORMConverter';
 
 export class SchemaGenerator {
-  static logger: Logger = Container.has('LOGGER') ? Container.get('LOGGER') : logger;
+  static logger: Logger = Container.has('warthog.logger')
+    ? Container.get('warthog.logger')
+    : logger;
 
   static generate(
     entities: EntityMetadata[],

@@ -24,7 +24,7 @@ The API for this library is still subject to change.  It will likely shift until
 
 ## Prerequisites
 
-You must have Postgresql installed to use Warthog.  If you're on OSX have have [Homebrew](https://brew.sh/) installed, you can simply run:
+You must have Postgresql installed to use Warthog.  If you're on OSX and have [Homebrew](https://brew.sh/) installed, you can simply run:
 
 ```bash
 brew install postgresql

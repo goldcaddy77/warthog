@@ -4,7 +4,7 @@ import { Container } from 'typedi';
 
 export const generatedFolderPath = (): string => {
   try {
-    return Container.get('warthog:generatedFolder');
+    return Container.get('warthog.generated-folder');
   } catch (error) {
     return path.join(appRoot.path, 'generated');
   }

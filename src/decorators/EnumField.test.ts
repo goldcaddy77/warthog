@@ -13,7 +13,7 @@ describe('Enums', () => {
 
   beforeAll(async () => {
     // TODO: should we set this up as part of the test harness?
-    Container.set('warthog:generatedFolder', process.cwd());
+    Container.set('warthog.generated-folder', process.cwd());
 
     enum StringEnum {
       Foo = 'FOO',
