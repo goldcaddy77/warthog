@@ -33,6 +33,7 @@ export interface ServerOptions<T> {
   container?: Container;
 
   authChecker?: AuthChecker<T>;
+  autoGenerateFiles?: boolean;
   context?: (request: Request) => object;
   host?: string;
   generatedFolder?: string;
@@ -49,6 +50,7 @@ export class Server<C extends BaseContext> {
   appHost: string;
   appPort: number;
   authChecker: AuthChecker<C>;
+  autoGenerateFiles: boolean;
   connection!: Connection;
   container: Container;
   generatedFolder: string;
@@ -90,6 +92,11 @@ export class Server<C extends BaseContext> {
 
     this.logger = this.getLogger();
     Container.set('warthog.logger', this.logger); // Save for later so we can pull globally
+
+    this.autoGenerateFiles =
+      typeof this.appOptions.autoGenerateFiles !== 'undefined'
+        ? this.appOptions.autoGenerateFiles
+        : process.env.NODE_ENV === 'development';
 
     this.resolversPath = this.appOptions.resolversPath || [process.cwd() + '/**/*.resolver.ts'];
   }
@@ -155,7 +162,9 @@ export class Server<C extends BaseContext> {
   async start() {
     debug('start:start');
     await this.establishDBConnection();
-    await this.generateFiles();
+    if (this.autoGenerateFiles) {
+      await this.generateFiles();
+    }
     await this.buildGraphQLSchema();
 
     const contextGetter =
