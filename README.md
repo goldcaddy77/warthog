@@ -180,6 +180,24 @@ input UserWhereUniqueInput {
 
 Notice how we've only added a single field on the model and you get pagination, filtering and tracking of who created, updated and deleted records automatically.
 
+## Server API
+
+### App Options (appOptions)
+
+| attribute | description | default |
+| --- | --- | --- |
+| container | TypeDI container. Warthog uses dependency injection under the hood. | empty container |
+| authChecker | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers. |  |
+| autoGenerateFiles | Should the server auto-generate your schema, typings, etc... | `true` when NODE_ENV=development. `false` otherwise |
+| context | Context getter of form `(request: Request) => object` | empty |
+| generatedFolder | Folder where generated content is created | `process.cwd()` + 'generated' |
+| logger | Logger | [debug](https://github.com/visionmedia/debug) |
+| middlewares | Express middlewares to add to your server | none |
+| mockDBConnection | Opens a sqlite connection instead of Postgres.  Helpful if you just need to generate the schema | `false` |
+| openPlayground | Should server open GraphQL Playground after starting? | `false` if running tests, `true` if in development mode |
+| port | App Server Port | 4000 |
+| resolversPath | Glob path to find your resolvers | `process.cwd()` + '/**/*.resolver.ts' |
+
 ## Config
 
 All config is driven by environment variables.  Most options can also be set by setting the value when creating your `Server` instance.
