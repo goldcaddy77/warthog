@@ -135,7 +135,7 @@ module.exports = {
   namingStrategy: new SnakeNamingStrategy(),
   password: process.env.TYPEORM_PASSWORD,
   port: parseInt(process.env.TYPEORM_PORT || '', 10) || 5432,
-  subscribers: ['src/**/*.model.ts'],
+  subscribers: process.env.TYPEORM_SUBSCRIBERS || ['src/**/*.model.ts'],
   synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
   type: 'postgres',
   username: process.env.TYPEORM_USERNAME
