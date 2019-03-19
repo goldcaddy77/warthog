@@ -44,7 +44,9 @@ function getBaseConfig() {
     host: process.env.TYPEORM_HOST || 'localhost',
     logger: 'advanced-console',
     logging: process.env.TYPEORM_LOGGING || 'all',
-    migrations: ['src/migration/**/*.ts'],
+    migrations: process.env.TYPEORM_MIGRATIONS
+      ? process.env.TYPEORM_MIGRATIONS.split(',')
+      : ['src/migration/**/*.ts'],
     namingStrategy: new SnakeNamingStrategy(),
     password: process.env.TYPEORM_PASSWORD,
     port: parseInt(process.env.TYPEORM_PORT || '', 10) || 5432,
