@@ -127,7 +127,7 @@ module.exports = {
     subscribersDir: 'src/subscribers'
   },
   database: process.env.TYPEORM_DATABASE,
-  entities: process.env.TYPEORM_ENTITIES || ['src/**/*.model.ts'],
+  entities: process.env.TYPEORM_ENTITIES ? process.env.TYPEORM_ENTITIES.split(',') : ['src/**/*.model.ts'],
   host: process.env.TYPEORM_HOST || 'localhost',
   logger: 'advanced-console',
   logging: process.env.TYPEORM_LOGGING || 'all',
@@ -135,7 +135,7 @@ module.exports = {
   namingStrategy: new SnakeNamingStrategy(),
   password: process.env.TYPEORM_PASSWORD,
   port: parseInt(process.env.TYPEORM_PORT || '', 10) || 5432,
-  subscribers: process.env.TYPEORM_SUBSCRIBERS || ['src/**/*.model.ts'],
+  subscribers: process.env.TYPEORM_SUBSCRIBERS ? process.env.TYPEORM_SUBSCRIBERS.split(',') : ['src/**/*.model.ts'],
   synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
   type: 'postgres',
   username: process.env.TYPEORM_USERNAME
