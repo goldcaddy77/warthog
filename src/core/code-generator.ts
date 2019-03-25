@@ -119,6 +119,19 @@ export class CodeGenerator {
   private async writeOrmConfig() {
     const contents = `
 import { SnakeNamingStrategy } from '${this.options.warthogImportPath}';
+import {
+  getDatabaseName,
+  getDatabaseEntityPaths,
+  getDatabaseHost,
+  getDatabaseLoggingLevel,
+  getDatabaseMigrationPaths,
+  getDatabaseSubscriberPaths,
+  getDatabasePassword,
+  getDatabasePort,
+  shouldSchronizeDatabaseSchema,
+  getDatabaseType,
+  getDatabaseUsername
+} from '../utils/configurationManager'
 
 module.exports = {
   cli: {
@@ -126,19 +139,19 @@ module.exports = {
     migrationsDir: 'db/migrations',
     subscribersDir: 'src/subscribers'
   },
-  database: process.env.TYPEORM_DATABASE,
-  entities: process.env.TYPEORM_ENTITIES ? process.env.TYPEORM_ENTITIES.split(',') : ['src/**/*.model.ts'],
-  host: process.env.TYPEORM_HOST || 'localhost',
+  database: getDatabaseName(),
+  entities: getDatabaseEntityPaths(),
+  host: getDatabaseHost(),
   logger: 'advanced-console',
-  logging: process.env.TYPEORM_LOGGING || 'all',
-  migrations: process.env.TYPEORM_MIGRATIONS ? process.env.TYPEORM_MIGRATIONS.split(',') : ['src/migration/**/*.ts'],
+  logging: getDatabaseLoggingLevel(),
+  migrations: getDatabaseMigrationPaths(),
   namingStrategy: new SnakeNamingStrategy(),
-  password: process.env.TYPEORM_PASSWORD,
-  port: parseInt(process.env.TYPEORM_PORT || '', 10) || 5432,
-  subscribers: process.env.TYPEORM_SUBSCRIBERS ? process.env.TYPEORM_SUBSCRIBERS.split(',') : ['src/**/*.model.ts'],
-  synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
-  type: 'postgres',
-  username: process.env.TYPEORM_USERNAME
+  password: getDatabasePassword(),
+  port: getDatabasePort(),
+  subscribers: getDatabaseSubscriberPaths(),
+  synchronize: shouldSchronizeDatabaseSchema(),
+  type: getDatabaseType(),
+  username: getDatabaseUsername()
 };`;
 
     return this.writeToGeneratedFolder('ormconfig.ts', contents);
