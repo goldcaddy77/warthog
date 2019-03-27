@@ -118,7 +118,6 @@ export class CodeGenerator {
 
   private async writeOrmConfig() {
     const contents = `
-import { SnakeNamingStrategy } from '${this.options.warthogImportPath}';
 import {
   getDatabaseName,
   getDatabaseEntityPaths,
@@ -130,8 +129,8 @@ import {
   getDatabasePort,
   shouldSchronizeDatabaseSchema,
   getDatabaseType,
-  getDatabaseUsername
-} from '../utils/configurationManager'
+  getDatabaseUsername,
+  SnakeNamingStrategy } from '${this.options.warthogImportPath}';
 
 module.exports = {
   cli: {
