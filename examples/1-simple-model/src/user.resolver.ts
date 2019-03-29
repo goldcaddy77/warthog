@@ -4,7 +4,13 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseResolver, StandardDeleteResponse } from '../../../src';
-import { UserCreateInput, UserUpdateArgs, UserWhereArgs, UserWhereInput, UserWhereUniqueInput } from '../generated';
+import {
+  UserCreateInput,
+  UserUpdateArgs,
+  UserWhereArgs,
+  UserWhereInput,
+  UserWhereUniqueInput
+} from '../generated/classes';
 
 import { User } from './user.model';
 
@@ -32,12 +38,15 @@ export class UserResolver extends BaseResolver<User> {
 
   @Mutation(returns => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
-    return this.create(data, 'fakeid1');
+    return this.create(data as any, 'fakeid1');
   }
 
   @Mutation(returns => User)
-  async updateUser(@Args() { data, where }: UserUpdateArgs, @Ctx() ctx: BaseContext): Promise<User> {
-    return this.update(data, where, 'fakeid1');
+  async updateUser(
+    @Args() { data, where }: UserUpdateArgs,
+    @Ctx() ctx: BaseContext
+  ): Promise<User> {
+    return this.update(data as any, where, 'fakeid1');
   }
 
   @Mutation(returns => StandardDeleteResponse)
