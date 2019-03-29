@@ -1,4 +1,12 @@
-import { BaseModel, BooleanField, EmailField, IntField, Model, StringField } from '../../../src';
+import {
+  BaseModel,
+  BooleanField,
+  EmailField,
+  FloatField,
+  IntField,
+  Model,
+  StringField
+} from '../../../src';
 
 @Model()
 export class User extends BaseModel {
@@ -16,4 +24,7 @@ export class User extends BaseModel {
 
   @BooleanField()
   isRequired?: boolean;
+
+  @FloatField()
+  rating?: number;
 }
