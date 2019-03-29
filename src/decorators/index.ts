@@ -9,3 +9,4 @@ export * from './ManyToOne';
 export * from './OneToMany';
 export * from './IntField';
 export * from './BooleanField';
+export * from './FloatField';
