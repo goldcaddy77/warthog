@@ -1,3 +1,5 @@
+![img](https://github.com/richardbmx/warthog/blob/master/github.png?raw=true)
+
 # Warthog - GraphQL API Framework
 
 [![npm version](https://img.shields.io/npm/v/warthog.svg)](https://www.npmjs.org/package/warthog)
