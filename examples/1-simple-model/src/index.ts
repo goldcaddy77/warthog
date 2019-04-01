@@ -4,6 +4,7 @@ import { Server } from '../../../src/';
 
 async function bootstrap() {
   const server = new Server({
+    introspection: true,
     warthogImportPath: '../../../src' // Path written in generated classes
   });
 

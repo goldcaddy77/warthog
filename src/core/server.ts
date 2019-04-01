@@ -44,6 +44,7 @@ export interface ServerOptions<T> {
   port?: string | number;
   resolversPath?: string[];
   warthogImportPath?: string;
+  introspection?: boolean;
 }
 
 export class Server<C extends BaseContext> {
@@ -60,6 +61,7 @@ export class Server<C extends BaseContext> {
   mockDBConnection: boolean = false;
   resolversPath: string[];
   schema?: GraphQLSchema;
+  introspection: boolean = true;
 
   constructor(
     private appOptions: ServerOptions<C>,
@@ -99,6 +101,8 @@ export class Server<C extends BaseContext> {
         : process.env.NODE_ENV === 'development';
 
     this.resolversPath = this.appOptions.resolversPath || [process.cwd() + '/**/*.resolver.ts'];
+
+    this.introspection = !!this.appOptions.introspection;
   }
 
   getLogger(): Logger {
@@ -187,6 +191,7 @@ export class Server<C extends BaseContext> {
           ...contextGetter(options.req)
         };
       },
+      introspection: this.introspection,
       schema: this.schema
     });
 
