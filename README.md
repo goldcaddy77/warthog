@@ -227,6 +227,7 @@ Special thanks to the authors of:
 - [TypeORM](https://github.com/typeorm/typeorm)
 - [TypeGraphQL](https://github.com/19majkel94/type-graphql)
 - [Prisma](https://github.com/prisma/prisma)
+- [Logo design Richardbmx](https://github.com/richardbmx)
 
 Warthog is essentially a really opinionated composition of TypeORM and TypeGraphQL that uses similar GraphQL conventions to the Prisma project.
 
