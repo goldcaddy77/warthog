@@ -179,7 +179,8 @@ export class Server<C extends BaseContext> {
 
     debug('start:ApolloServerAllocation:start');
     this.graphQLServer = new ApolloServer({
-      context: (options: { req: Request }) => {
+      context: async (options: { req: Request }) => {
+        const consumerCtx = await contextGetter(options.req);
         return {
           connection: this.connection,
           dataLoader: {
@@ -188,7 +189,7 @@ export class Server<C extends BaseContext> {
           },
           request: options.req,
           // Allows consumer to add to the context object - ex. context.user
-          ...contextGetter(options.req)
+          ...consumerCtx,
         };
       },
       introspection: this.introspection,
