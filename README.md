@@ -1,4 +1,4 @@
-![img](https://github.com/richardbmx/warthog/blob/master/github.png?raw=true)
+![img](./img/github.png?raw=true)
 
 # Warthog - GraphQL API Framework
 
