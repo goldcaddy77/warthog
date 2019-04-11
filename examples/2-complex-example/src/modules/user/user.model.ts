@@ -1,5 +1,6 @@
 import { Authorized } from 'type-graphql';
 
+import { Unique } from 'typeorm';
 import { BaseModel, EmailField, EnumField, Model, StringField } from '../../../../../src';
 
 // Note: this must be exported and in the same file where it's attached with @EnumField
@@ -10,6 +11,7 @@ export enum StringEnum {
 }
 
 @Model()
+@Unique(['firstName', 'stringEnumField'])
 export class User extends BaseModel {
   @StringField({ maxLength: 30 })
   firstName?: string;
@@ -17,7 +19,7 @@ export class User extends BaseModel {
   @StringField({ maxLength: 50, minLength: 2 })
   lastName?: string;
 
-  @EnumField('StringEnum', StringEnum, { nullable: true })
+  @EnumField('StringEnum', StringEnum)
   stringEnumField?: StringEnum;
 
   @EmailField()
