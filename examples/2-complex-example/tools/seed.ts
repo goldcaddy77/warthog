@@ -12,10 +12,16 @@ const logger = Debug('warthog:seed');
 const NUM_USERS = 100;
 
 async function seedDatabase() {
-  const server = getServer();
+  const server = getServer({ introspection: true });
   await server.start();
 
-  const binding = await server.getBinding();
+  let binding;
+  try {
+    binding = await server.getBinding();
+  } catch (error) {
+    console.error(error);
+    return process.exit(1);
+  }
 
   for (let index = 0; index < NUM_USERS; index++) {
     const random = new Date()
@@ -34,7 +40,8 @@ async function seedDatabase() {
           data: {
             email,
             firstName,
-            lastName
+            lastName,
+            stringEnumField: 'FOO'
           }
         },
         `{ id email createdAt createdById }`
