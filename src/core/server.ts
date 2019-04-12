@@ -129,10 +129,20 @@ export class Server<C extends BaseContext> {
   }
 
   async getBinding(options: { origin?: string; token?: string } = {}): Promise<Binding> {
-    return getRemoteBinding(`http://${this.appHost}:${this.appPort}/graphql`, {
-      origin: 'warthog',
-      ...options
-    });
+    let binding;
+    try {
+      binding = await getRemoteBinding(`http://${this.appHost}:${this.appPort}/graphql`, {
+        origin: 'warthog',
+        ...options
+      });
+      return binding;
+    } catch (error) {
+      if (error.result && error.result.errors) {
+        const messages = error.result.errors.map((item: any) => item.message);
+        throw new Error(JSON.stringify(messages));
+      }
+      throw error;
+    }
   }
 
   async buildGraphQLSchema(): Promise<GraphQLSchema> {
@@ -189,7 +199,7 @@ export class Server<C extends BaseContext> {
           },
           request: options.req,
           // Allows consumer to add to the context object - ex. context.user
-          ...consumerCtx,
+          ...consumerCtx
         };
       },
       introspection: this.introspection,
@@ -206,6 +216,7 @@ export class Server<C extends BaseContext> {
     debug('start:applyMiddleware:end');
 
     const url = `http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`;
+    debug(`url: ${url}`);
 
     this.httpServer = app.listen({ port: this.appPort }, () =>
       this.logger.info(`🚀 Server ready at ${url}`)

@@ -105,15 +105,15 @@ export function entityToCreateInput(entity: EntityMetadata): string {
       !column.isVersion &&
       !SYSTEM_FIELDS.includes(column.propertyName)
     ) {
-      const graphQLType = columnToGraphQLType(column);
+      const graphQLDataType = columnTypeToGraphQLDataType(column);
       const nullable = column.isNullable ? '{ nullable: true }' : '';
       const tsRequired = column.isNullable ? '?' : '!';
       const tsType = columnToTypeScriptType(column);
 
       if (column.enum) {
         fieldTemplates += `
-          @TypeGraphQLField(type => ${graphQLType}, ${nullable})
-          ${column.propertyName}${tsRequired}: ${graphQLType};
+          @TypeGraphQLField(type => ${graphQLDataType}, ${nullable})
+          ${column.propertyName}${tsRequired}: ${graphQLDataType};
        `;
       } else {
         fieldTemplates += `
@@ -146,13 +146,13 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
     ) {
       // TODO: also don't allow updated foreign key fields
       // Example: photo.userId: String
-      const graphQLType = columnToGraphQLType(column);
+      const graphQLDataType = columnTypeToGraphQLDataType(column);
       const tsType = columnToTypeScriptType(column);
 
       if (column.enum) {
         fieldTemplates += `
-        @TypeGraphQLField(type => ${graphQLType}, { nullable: true })
-        ${column.propertyName}?: ${graphQLType};
+        @TypeGraphQLField(type => ${graphQLDataType}, { nullable: true })
+        ${column.propertyName}?: ${graphQLDataType};
       `;
       } else {
         fieldTemplates += `
@@ -200,14 +200,16 @@ export function entityToWhereInput(entity: EntityMetadata): string {
 
     const { graphqlType, tsType } = columnToTypes(column);
 
+    const graphQLDataType = columnTypeToGraphQLDataType(column);
+
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
     if (column.isPrimary || graphqlType === GraphQLID) {
       fieldTemplates += `
-        @TypeGraphQLField(type => ${graphqlType},{ nullable: true })
+        @TypeGraphQLField(type => ${graphQLDataType},{ nullable: true })
         ${column.propertyName}_eq?: string;
 
-        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
+        @TypeGraphQLField(type => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: string[];
       `;
     } else if (graphqlType === GraphQLString) {
@@ -226,7 +228,7 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_endsWith?: ${tsType};
 
-        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
+        @TypeGraphQLField(type => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
     } else if (graphqlType === GraphQLFloat || graphqlType === GraphQLInt) {
@@ -246,7 +248,7 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
 
-        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
+        @TypeGraphQLField(type => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
     } else if (graphqlType === GraphQLISODateTime) {
@@ -266,11 +268,11 @@ export function entityToWhereInput(entity: EntityMetadata): string {
     } else {
       // Enums will fall through here
       fieldTemplates += `
-        @TypeGraphQLField(type => ${graphqlType}, { nullable: true })
-        ${column.propertyName}_eq?: ${graphqlType};
+        @TypeGraphQLField(type => ${graphQLDataType}, { nullable: true })
+        ${column.propertyName}_eq?: ${graphQLDataType};
 
-        @TypeGraphQLField(type => [${graphqlType}], { nullable: true })
-        ${column.propertyName}_in?: ${graphqlType}[];
+        @TypeGraphQLField(type => [${graphQLDataType}], { nullable: true })
+        ${column.propertyName}_in?: ${graphQLDataType}[];
       `;
     }
   });
@@ -363,7 +365,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
   // Check to see if this column is an enum and return that
   const enumObject = getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
   if (enumObject) {
-    return enumObject.name;
+    return enumObject;
   } else if (column.propertyName.match(/Id$/)) {
     return GraphQLID;
   }
