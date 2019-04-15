@@ -10,3 +10,4 @@ export * from './OneToMany';
 export * from './IntField';
 export * from './BooleanField';
 export * from './FloatField';
+export * from './JSONField';
