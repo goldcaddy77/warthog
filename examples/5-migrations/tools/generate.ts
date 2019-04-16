@@ -5,7 +5,7 @@ import { getServer } from '../src/server';
 const logger = Debug('warthog:generate');
 
 async function generate() {
-  return getServer({ mockDBConnection: true }).generateFiles();
+  return getServer({}).generateFiles();
 }
 
 generate()

@@ -5,6 +5,7 @@ import { Server } from '../../../src/';
 export function getServer(AppOptions = {}) {
   return new Server(
     {
+      introspection: true,
       warthogImportPath: '../../../src',
       ...AppOptions
     },

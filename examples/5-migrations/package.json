@@ -6,7 +6,7 @@
     "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn generate:code",
     "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
-    "generate:code": "dotenv -- ts-node tools/generate.ts && rm *.sqlite.tmp",
+    "generate:code": "dotenv -- ts-node tools/generate.ts",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/graphql",
     "start": "yarn start:ts",
     "start:ts": "DEBUG=warthog* ts-node-dev --type-check src/index.ts",
