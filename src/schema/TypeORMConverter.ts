@@ -13,6 +13,8 @@ import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
 import { getMetadataStorage } from '../metadata';
 
+import GraphQLJSONObject from 'graphql-type-json';
+
 const SYSTEM_FIELDS = [
   'createdAt',
   'createdById',
@@ -110,10 +112,13 @@ export function entityToCreateInput(entity: EntityMetadata): string {
       const tsRequired = column.isNullable ? '?' : '!';
       const tsType = columnToTypeScriptType(column);
 
-      if (column.enum) {
+      // we need to know what the graphql type is and what the tsType is
+      // for enums
+
+      if (column.enum || column.type === 'json') {
         fieldTemplates += `
           @TypeGraphQLField(type => ${graphQLDataType}, ${nullable})
-          ${column.propertyName}${tsRequired}: ${graphQLDataType};
+          ${column.propertyName}${tsRequired}: ${tsType};
        `;
       } else {
         fieldTemplates += `
@@ -149,10 +154,10 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
       const graphQLDataType = columnTypeToGraphQLDataType(column);
       const tsType = columnToTypeScriptType(column);
 
-      if (column.enum) {
+      if (column.enum || column.type === 'json') {
         fieldTemplates += `
         @TypeGraphQLField(type => ${graphQLDataType}, { nullable: true })
-        ${column.propertyName}?: ${graphQLDataType};
+        ${column.propertyName}?: ${tsType};
       `;
       } else {
         fieldTemplates += `
@@ -265,7 +270,10 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
       `;
-    } else {
+    } else if (column.type !== 'json') {
+      // @@@ dcaddigan not sure what it means to search by JSONObjects
+      // future release?
+
       // Enums will fall through here
       fieldTemplates += `
         @TypeGraphQLField(type => ${graphQLDataType}, { nullable: true })
@@ -339,16 +347,23 @@ export function entityToOrderByEnum(entity: EntityMetadata): string {
   `;
 }
 
+export function extractEnumObject(column: ColumnMetadata): GraphQLEnumType {
+  return getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
+}
+
 // const ID_TYPE = 'ID';
 export function columnToTypeScriptType(column: ColumnMetadata): string {
   if (column.isPrimary) {
     return 'string'; // TODO: should this be ID_TYPE?
+  } else if (column.enum) {
+    return extractEnumObject(column).name;
   } else {
     const graphqlType = columnTypeToGraphQLDataType(column);
     const typeMap: any = {
       Boolean: 'boolean',
       DateTime: 'string',
       Float: 'number',
+      GraphQLJSONObject: 'JSON',
       ID: 'string', // TODO: should this be ID_TYPE?
       Int: 'number',
       String: 'string'
@@ -359,13 +374,17 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
 }
 
 export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
-  return columnToGraphQLType(column).name;
+  const graphQLType = columnToGraphQLType(column);
+  const typeMap: any = {
+    JSON: 'GraphQLJSONObject'
+  };
+
+  return typeMap[graphQLType.name] || graphQLType.name;
 }
 export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
   // Check to see if this column is an enum and return that
-  const enumObject = getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
-  if (enumObject) {
-    return enumObject;
+  if (column.enum) {
+    return extractEnumObject(column);
   } else if (column.propertyName.match(/Id$/)) {
     return GraphQLID;
   }
@@ -416,6 +435,8 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
     case 'Date':
     case 'timestamp':
       return GraphQLISODateTime;
+    case 'json':
+      return GraphQLJSONObject;
     default:
       throw new Error(`convertToGraphQLType: Unexpected type: ${type}`);
   }

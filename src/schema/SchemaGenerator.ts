@@ -30,7 +30,8 @@ export class SchemaGenerator {
       // will be re-written.  If you need to change this file, update models or add
       // new TypeGraphQL objects
       import { ArgsType, Field as TypeGraphQLField, Float, ID, InputType as TypeGraphQLInputType, Int } from 'type-graphql';
-      import { registerEnumType } from 'type-graphql';
+      import { registerEnumType } from 'type-graphql';      
+      import GraphQLJSONObject from 'graphql-type-json';
       import { BaseWhereInput, PaginationArgs } from '${warthogImportPath}';
       ${entityListToImports(entities).join('')}
     `;
