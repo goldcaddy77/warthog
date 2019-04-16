@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn
 } from 'typeorm';
@@ -65,6 +66,28 @@ export abstract class BaseModel implements BaseGraphQLObject {
   setId() {
     this.id = this.getId();
   }
+}
+
+// This class adds all of the TypeORM decorators needed to create the DB table
+@ObjectType({ implements: BaseGraphQLObject })
+export abstract class BaseModelUUID implements BaseGraphQLObject {
+  @PrimaryGeneratedColumn('uuid')
+  id!: IDType;
+
+  @CreateDateColumn() createdAt!: Date;
+  @Column() createdById!: IDType;
+
+  @UpdateDateColumn({ nullable: true })
+  updatedAt?: Date;
+  @Column({ nullable: true })
+  updatedById?: IDType;
+
+  @Column({ nullable: true })
+  deletedAt?: Date;
+  @Column({ nullable: true })
+  deletedById?: IDType;
+
+  @VersionColumn() version!: number;
 }
 
 // tslint:enable:max-classes-per-file

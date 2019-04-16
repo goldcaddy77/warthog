@@ -401,6 +401,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
     case 'String':
     case 'varchar':
     case 'text':
+    case 'uuid':
       return GraphQLString;
     case Boolean:
     case 'Boolean':
