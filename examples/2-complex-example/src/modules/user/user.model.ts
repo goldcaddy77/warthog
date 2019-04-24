@@ -18,7 +18,7 @@ export enum StringEnum {
 
 @Model()
 @Unique(['firstName', 'stringEnumField'])
-export class User extends BaseModelUUID {
+export class User extends BaseModel {
   @StringField({ maxLength: 30 })
   firstName?: string;
 

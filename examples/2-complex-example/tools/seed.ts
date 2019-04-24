@@ -33,6 +33,12 @@ async function seedDatabase() {
     const email = `${firstName
       .substr(0, 1)
       .toLowerCase()}${lastName.toLowerCase()}-${random}@fakeemail.com`;
+    const jsonField = {
+      bar: 'hello',
+      baz: [{}, { one: 3 }],
+      bool: false,
+      foo: 1
+    };
 
     try {
       const user = await binding.mutation.createUser(
@@ -40,6 +46,7 @@ async function seedDatabase() {
           data: {
             email,
             firstName,
+            jsonField,
             lastName,
             stringEnumField: 'FOO'
           }
