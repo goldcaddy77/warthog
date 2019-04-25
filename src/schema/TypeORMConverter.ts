@@ -13,7 +13,8 @@ import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
 import { getMetadataStorage } from '../metadata';
 
-import GraphQLJSONObject from 'graphql-type-json';
+// tslint:disable-next-line:no-var-requires
+const { GraphQLJSONObject } = require('graphql-type-json');
 
 const SYSTEM_FIELDS = [
   'createdAt',
@@ -115,7 +116,7 @@ export function entityToCreateInput(entity: EntityMetadata): string {
       // we need to know what the graphql type is and what the tsType is
       // for enums
 
-      if (column.enum || column.type === 'json') {
+      if (column.enum || column.type === 'json' || column.type === 'jsonb') {
         fieldTemplates += `
           @TypeGraphQLField(type => ${graphQLDataType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
@@ -154,7 +155,7 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
       const graphQLDataType = columnTypeToGraphQLDataType(column);
       const tsType = columnToTypeScriptType(column);
 
-      if (column.enum || column.type === 'json') {
+      if (column.enum || column.type === 'json' || column.type === 'jsonb') {
         fieldTemplates += `
         @TypeGraphQLField(type => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}?: ${tsType};
@@ -270,7 +271,7 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
       `;
-    } else if (column.type !== 'json') {
+    } else if (column.type !== 'json' && column.type !== 'jsonb') {
       // @@@ dcaddigan not sure what it means to search by JSONObjects
       // future release?
 
@@ -375,11 +376,17 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
 
 export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
   const graphQLType = columnToGraphQLType(column);
-  const typeMap: any = {
-    JSON: 'GraphQLJSONObject'
-  };
 
-  return typeMap[graphQLType.name] || graphQLType.name;
+  // Sometimes we want to return the full blow GraphQL data type, but sometimes we want to return
+  // the more readable name.  Ex:
+  // GraphQLInt -> Int
+  // GraphQLJSONObject -> GraphQLJSONObject
+  switch (graphQLType) {
+    case GraphQLJSONObject:
+      return 'GraphQLJSONObject';
+    default:
+      return graphQLType.name;
+  }
 }
 export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
   // Check to see if this column is an enum and return that
@@ -391,10 +398,6 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
 
   // Some types have a name attribute
   const type = (column.type as any).name ? (column.type as any).name : column.type;
-
-  if (type instanceof GraphQLScalarType) {
-    return type;
-  }
 
   switch (type) {
     case String:
@@ -436,8 +439,13 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
     case 'timestamp':
       return GraphQLISODateTime;
     case 'json':
+    case 'jsonb':
       return GraphQLJSONObject;
     default:
+      if (type instanceof GraphQLScalarType) {
+        return type;
+      }
+
       throw new Error(`convertToGraphQLType: Unexpected type: ${type}`);
   }
 }

@@ -1,4 +1,6 @@
-import GraphQLJSONObject from 'graphql-type-json';
+// tslint:disable-next-line:no-var-requires
+const { GraphQLJSONObject } = require('graphql-type-json');
+
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
@@ -17,7 +19,7 @@ export function JSONField(args: JSONFieldOptions = {}): any {
       ...nullableOption
     }),
     Column({
-      type: 'json',
+      type: 'jsonb',
       ...nullableOption
     }) as MethodDecoratorFactory
   ];
