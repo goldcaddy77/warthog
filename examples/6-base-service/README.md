@@ -18,10 +18,3 @@ To run the project, run `yarn start`.  This will:
 
 - Run the API server
 - Open GraphQL Playground
-
-## Features in this example
-
-- Custom logger
-- Enums
-- Authorization
-- Validations
