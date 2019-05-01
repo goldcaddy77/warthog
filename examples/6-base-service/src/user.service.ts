@@ -6,7 +6,7 @@ import { BaseService } from '../../../src';
 
 import { User } from './user.model';
 
-@Service()
+@Service('UserService')
 export class UserService extends BaseService<User> {
   constructor(@InjectRepository(User) protected readonly repository: Repository<User>) {
     super(User, repository);

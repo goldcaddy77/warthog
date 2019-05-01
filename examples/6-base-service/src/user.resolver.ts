@@ -23,7 +23,7 @@ export class UserResolver {
 
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @Inject() readonly injectedService: UserService
+    @Inject('UserService') readonly injectedService: UserService
   ) {
     // Option 1: Create service like this in the resolver
     this.localService = new BaseService<User>(User, userRepository);

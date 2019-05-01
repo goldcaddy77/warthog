@@ -1,4 +1,4 @@
-import { Equal, FindOperator, In, IsNull, LessThan, Like, MoreThan, Not } from 'typeorm';
+import { Equal, FindOperator, In, IsNull, LessThan, MoreThan, Not, Raw } from 'typeorm';
 
 export function getFindOperator(key: string, value: any): [string, FindOperator<any>] {
   const parts = key.toString().split('_');
@@ -24,11 +24,11 @@ export function getFindOperator(key: string, value: any): [string, FindOperator<
     case 'in':
       return [attr, In(value)];
     case 'contains':
-      return [attr, Like(`%${value}%`)];
+      return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('%${value}%')`)];
     case 'startsWith':
-      return [attr, Like(`${value}%`)];
+      return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('${value}%')`)];
     case 'endsWith':
-      return [attr, Like(`%${value}`)];
+      return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('%${value}')`)];
     default:
       throw new Error(`Can't find operator ${operator}`);
   }
