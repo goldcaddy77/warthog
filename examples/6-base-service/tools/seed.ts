@@ -1,6 +1,7 @@
 import * as Debug from 'debug';
 import * as Faker from 'faker';
 
+import { loadConfig } from '../src/config';
 import { getServer } from '../src/server';
 
 if (process.env.NODE_ENV !== 'development') {
@@ -12,6 +13,8 @@ const logger = Debug('warthog:seed');
 const NUM_USERS = 100;
 
 async function seedDatabase() {
+  loadConfig();
+
   const server = getServer({ introspection: true, openPlayground: false });
   await server.start();
 
@@ -28,34 +31,22 @@ async function seedDatabase() {
       .getTime()
       .toString()
       .substring(8, 13);
-    const firstName = Faker.name.firstName();
+    const firstName = `Faker.name.firstName() ${random}`;
     const lastName = Faker.name.lastName();
-    const email = `${firstName
-      .substr(0, 1)
-      .toLowerCase()}${lastName.toLowerCase()}-${random}@fakeemail.com`;
-    const jsonField = {
-      bar: 'hello',
-      baz: [{}, { one: 3 }],
-      bool: false,
-      foo: 1
-    };
 
     try {
       const user = await binding.mutation.createUser(
         {
           data: {
-            email,
             firstName,
-            jsonField,
-            lastName,
-            stringEnumField: 'FOO'
+            lastName
           }
         },
-        `{ id email createdAt createdById }`
+        `{ id firstName lastName createdAt createdById }`
       );
-      logger(user.email);
+      logger(user.firstName);
     } catch (error) {
-      console.error(email, error);
+      console.error(firstName, error);
     }
   }
 
