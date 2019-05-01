@@ -1,9 +1,10 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Container, Inject } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, StandardDeleteResponse, WarthogService } from '../../../src';
+import { BaseContext, BaseService, StandardDeleteResponse } from '../../../src';
 import {
   UserCreateInput,
   UserUpdateArgs,
@@ -13,13 +14,25 @@ import {
 } from '../generated';
 
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 @Resolver(User)
 export class UserResolver {
-  service: WarthogService<User>;
+  localService: BaseService<User>;
+  subclassedService: UserService;
 
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
-    this.service = new WarthogService<User>(User, userRepository);
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @Inject() readonly injectedService: UserService
+  ) {
+    // Option 1: Create service like this in the resolver
+    this.localService = new BaseService<User>(User, userRepository);
+
+    // Option 2: Create service like this in the resolver
+    this.subclassedService = Container.get(UserService);
+
+    // Option 3: Injected service
+    this.injectedService = injectedService;
   }
 
   @Query(returns => [User])
@@ -28,17 +41,17 @@ export class UserResolver {
     @Ctx() ctx: BaseContext,
     info: GraphQLResolveInfo
   ): Promise<User[]> {
-    return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.injectedService.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
   @Query(returns => User)
   async user(@Arg('where') where: UserWhereUniqueInput): Promise<User> {
-    return this.service.findOne<UserWhereUniqueInput>(where);
+    return this.localService.findOne<UserWhereUniqueInput>(where);
   }
 
   @Mutation(returns => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
-    return this.service.create(data, ctx.user.id);
+    return this.subclassedService.create(data, ctx.user.id);
   }
 
   @Mutation(returns => User)
@@ -46,7 +59,7 @@ export class UserResolver {
     @Args() { data, where }: UserUpdateArgs,
     @Ctx() ctx: BaseContext
   ): Promise<User> {
-    return this.service.update(data, where, ctx.user.id);
+    return this.localService.update(data, where, ctx.user.id);
   }
 
   @Mutation(returns => StandardDeleteResponse)
@@ -54,6 +67,6 @@ export class UserResolver {
     @Arg('where') where: UserWhereUniqueInput,
     @Ctx() ctx: BaseContext
   ): Promise<StandardDeleteResponse> {
-    return this.service.delete(where, ctx.user.id);
+    return this.localService.delete(where, ctx.user.id);
   }
 }

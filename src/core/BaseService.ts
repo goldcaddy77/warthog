@@ -7,11 +7,11 @@ import { getFindOperator } from '../torm';
 
 import { BaseModel, WhereInput } from '..';
 
-export class WarthogService<E extends BaseModel> {
+export class BaseService<E extends BaseModel> {
   // TODO: need to figure out why we couldn't type this as Repository<E>
   constructor(protected entityClass: any, protected repository: Repository<any>) {
     if (!entityClass) {
-      throw new Error('WarthogService requires an entity Class');
+      throw new Error('BaseService requires an entity Class');
     }
 
     // TODO: This handles an issue with typeorm-typedi-extensions where it is unable to
@@ -20,7 +20,7 @@ export class WarthogService<E extends BaseModel> {
       this.repository = getRepository(entityClass);
     }
     if (!repository) {
-      throw new Error(`WarthogService requires a valid repository, class ${entityClass}`);
+      throw new Error(`BaseService requires a valid repository, class ${entityClass}`);
     }
   }
 

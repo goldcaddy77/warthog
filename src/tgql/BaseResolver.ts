@@ -1,6 +1,6 @@
 import { DeepPartial, Repository } from 'typeorm';
 
-import { BaseModel, WarthogService, WhereInput } from '../core';
+import { BaseModel, BaseService, WhereInput } from '../core';
 
 import { StandardDeleteResponse } from './DeleteResponse';
 
@@ -9,7 +9,7 @@ export class BaseResolver<E extends BaseModel> {
 
   // TODO: need to figure out why we couldn't type this as Repository<E>
   constructor(protected entityClass: any, protected repository: Repository<any>) {
-    this.service = new WarthogService<E>(entityClass, this.repository);
+    this.service = new BaseService<E>(entityClass, this.repository);
   }
 
   async find<W extends WhereInput>(
