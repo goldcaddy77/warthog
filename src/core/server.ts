@@ -1,7 +1,7 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, OptionsJson } from 'apollo-server-express';
 import * as dotenv from 'dotenv';
 import { Request } from 'express';
 import express = require('express');
@@ -45,6 +45,7 @@ export interface ServerOptions<T> {
   resolversPath?: string[];
   warthogImportPath?: string;
   introspection?: boolean;
+  bodyParserConfig?: OptionsJson;
 }
 
 export class Server<C extends BaseContext> {
@@ -62,6 +63,7 @@ export class Server<C extends BaseContext> {
   resolversPath: string[];
   schema?: GraphQLSchema;
   introspection: boolean = true;
+  bodyParserConfig?: OptionsJson;
 
   constructor(
     private appOptions: ServerOptions<C>,
@@ -86,6 +88,7 @@ export class Server<C extends BaseContext> {
     this.appHost = host;
     this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
     this.authChecker = this.appOptions.authChecker || authChecker;
+    this.bodyParserConfig = this.appOptions.bodyParserConfig;
 
     // Use https://github.com/inxilpro/node-app-root-path to find project root
     this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
@@ -212,7 +215,11 @@ export class Server<C extends BaseContext> {
     app.use('/health', healthCheckMiddleware);
 
     debug('start:applyMiddleware:start');
-    this.graphQLServer.applyMiddleware({ app, path: '/graphql' });
+    this.graphQLServer.applyMiddleware({
+      app,
+      path: '/graphql',
+      bodyParserConfig: this.bodyParserConfig
+    });
     debug('start:applyMiddleware:end');
 
     const url = `http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`;
