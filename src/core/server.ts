@@ -9,7 +9,7 @@ import { GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
-import opn = require('opn');
+import open from 'open';
 import * as path from 'path';
 import { AuthChecker, buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
@@ -231,7 +231,7 @@ export class Server<C extends BaseContext> {
 
     // Open playground in the browser
     if (this.shouldOpenPlayground()) {
-      opn(url, { wait: false });
+      open(url, { wait: false });
     }
 
     debug('start:end');
