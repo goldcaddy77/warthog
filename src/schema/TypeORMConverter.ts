@@ -7,7 +7,6 @@ import {
   GraphQLScalarType,
   GraphQLString
 } from 'graphql';
-import { normalize } from 'path';
 import { GraphQLISODateTime } from 'type-graphql';
 import { EntityMetadata } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
@@ -42,7 +41,7 @@ export function entityListToImports(entities: EntityMetadata[]): string[] {
   Object.keys(enumMap).forEach((tableName: string) => {
     Object.keys(enumMap[tableName]).forEach((columnName: string) => {
       const enumColumn = enumMap[tableName][columnName];
-      const filename = normalize(enumColumn.filename.replace(/\.(j|t)s$/, '')).replace(/\\/g, '/');
+      const filename = enumColumn.filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
       imports.push(`import { ${enumColumn.name} } from '${filename}'
 `);
     });
@@ -51,7 +50,7 @@ export function entityListToImports(entities: EntityMetadata[]): string[] {
   const classMap = getMetadataStorage().classMap;
   Object.keys(classMap).forEach((tableName: string) => {
     const classObj = classMap[tableName];
-    const filename = normalize(classObj.filename.replace(/\.(j|t)s$/, '')).replace(/\\/g, '/');
+    const filename = classObj.filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
     imports.push(`import { ${classObj.name} } from '${filename}'
 `);
   });
