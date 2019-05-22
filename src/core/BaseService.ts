@@ -66,8 +66,8 @@ export class BaseService<E extends BaseModel> {
   }
 
   // TODO: fix - W extends Partial<E>
-  async findOne<W extends { [key: string]: any }>(where: W): Promise<E> {
-    const items = await this.find<W>({ id: where.id });
+  async findOne<W extends any>(where: W): Promise<E> {
+    const items = await this.find<W>(where);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
     } else if (items.length > 1) {
@@ -157,7 +157,7 @@ export class BaseService<E extends BaseModel> {
 
     await this.repository.save(merged);
 
-    return { id: where.id };
+    return { id: found.id };
   }
 
   // extends WhereInput
