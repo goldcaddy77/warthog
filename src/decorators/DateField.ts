@@ -15,7 +15,7 @@ export function DateField(args: DateFieldOptions = {}): any {
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
     // We explicitly say string here because when we're metaprogramming without
-    // TS types, Field does not know that this should be a String
+    // TS types, Field does not know that this should be a string
     Field(type => GraphQLISODateTime, {
       ...nullableOption
     }),
