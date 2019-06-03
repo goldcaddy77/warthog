@@ -2949,7 +2949,7 @@ fsevents@^1.2.2, fsevents@^1.2.3:
     node-pre-gyp "^0.10.0"
 
 fstream@^1.0.0, fstream@^1.0.2:
-  version "1.0.11"
+  version "1.0.12"
   resolved "https://registry.npmjs.org/fstream/-/fstream-1.0.11.tgz#5c1fb1f117477114f0632a0eb4b71b3cb0fd3171"
   integrity sha1-XB+x8RdHcRTwYyoOtLcbPLD9MXE=
   dependencies:
