@@ -41,7 +41,7 @@ export function entityListToImports(entities: EntityMetadata[]): string[] {
   Object.keys(enumMap).forEach((tableName: string) => {
     Object.keys(enumMap[tableName]).forEach((columnName: string) => {
       const enumColumn = enumMap[tableName][columnName];
-      const filename = enumColumn.filename.replace(/\.(j|t)s$/, '');
+      const filename = filenameToImportPath(enumColumn.filename);
       imports.push(`import { ${enumColumn.name} } from '${filename}'
 `);
     });
@@ -50,12 +50,16 @@ export function entityListToImports(entities: EntityMetadata[]): string[] {
   const classMap = getMetadataStorage().classMap;
   Object.keys(classMap).forEach((tableName: string) => {
     const classObj = classMap[tableName];
-    const filename = classObj.filename.replace(/\.(j|t)s$/, '');
+    const filename = filenameToImportPath(classObj.filename);
     imports.push(`import { ${classObj.name} } from '${filename}'
 `);
   });
 
   return imports;
+}
+
+export function filenameToImportPath(filename: string): string {
+  return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
 
 export function entityToWhereUniqueInput(entity: EntityMetadata): string {
