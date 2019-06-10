@@ -38,7 +38,8 @@ export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) =
 export const mockDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) => {
   return createDBConnection({
     ...dbOptions,
-    database: getDatabaseHost(),
+    database: getDatabaseName(),
+    host: getDatabaseHost(),
     synchronize: shouldSchronizeDatabaseSchema(),
     type: getDatabaseType()
   } as any);
