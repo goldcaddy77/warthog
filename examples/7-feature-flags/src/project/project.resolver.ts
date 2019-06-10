@@ -12,13 +12,15 @@ import {
 } from '../../generated';
 
 import { Environment } from '../environment/environment.model';
+import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
+import { FeatureFlag } from '../feature-flag/feature-flag.model';
 import { Segment } from '../segment/segment.model';
 
 import { Project } from './project.model';
 import { ProjectService } from './project.service';
 
 @Resolver(Project)
-export class FeatureFlagProjectResolver {
+export class ProjectResolver {
   constructor(@Inject('ProjectService') readonly service: ProjectService) {
     // no-empty
   }
@@ -31,6 +33,16 @@ export class FeatureFlagProjectResolver {
   @FieldResolver(returns => [Segment])
   segments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<Segment[]> {
     return ctx.dataLoader.loaders.Project.segments.load(project);
+  }
+
+  @FieldResolver(returns => [FeatureFlag])
+  featureFlags(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<FeatureFlag[]> {
+    return ctx.dataLoader.loaders.Project.featureFlags.load(project);
+  }
+
+  @FieldResolver(returns => [FeatureFlagUser])
+  featureFlagUsers(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<FeatureFlagUser[]> {
+    return ctx.dataLoader.loaders.Project.featureFlagUsers.load(project);
   }
 
   @Query(returns => [Project])

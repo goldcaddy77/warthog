@@ -1,16 +1,39 @@
-import { BaseModel, Model, StringField } from '../../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '../../../../src';
+
+import { Environment } from '../environment/environment.model';
+import { FeatureFlag } from '../feature-flag/feature-flag.model';
+import { Project } from '../project/project.model';
+import { User } from '../user/user.model';
 
 @Model()
 export class FeatureFlagUser extends BaseModel {
-  //
-  //
-  // Users are always scoped within a project and environment.
-  // In other words, each environment has its own set of user records.
-  //
-  //
-  @StringField({ maxLength: 30 })
-  firstName?: string;
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  featureKey: string;
 
-  @StringField({ maxLength: 50, minLength: 2 })
-  lastName?: string;
+  @ManyToOne(() => FeatureFlag, (featureFlag: FeatureFlag) => featureFlag.featureFlagUsers, {
+    nullable: true,
+    skipGraphQLField: true
+  })
+  featureFlag?: FeatureFlag;
+
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  userKey: string;
+
+  @ManyToOne(() => User, (user: User) => user.featureFlagUsers, { skipGraphQLField: true, nullable: true })
+  user?: Project;
+
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  projKey: string;
+
+  @ManyToOne(() => Project, (project: Project) => project.featureFlagUsers, { skipGraphQLField: true, nullable: true })
+  project?: Project;
+
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  envKey: string;
+
+  @ManyToOne(() => Environment, (environment: Environment) => environment.featureFlagUsers, {
+    nullable: true,
+    skipGraphQLField: true
+  })
+  environment?: Environment;
 }

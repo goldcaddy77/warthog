@@ -1,6 +1,12 @@
-import { BaseModel, Model } from '../../../../src';
+import { BaseModel, Model, OneToMany, StringField } from '../../../../src';
+
+import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 
 @Model()
 export class User extends BaseModel {
-  // This really just needs to be an empty class
+  @StringField({ maxLength: 20, minLength: 3, nullable: false, unique: true })
+  key: string;
+
+  @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.user)
+  featureFlagUsers?: FeatureFlagUser[];
 }

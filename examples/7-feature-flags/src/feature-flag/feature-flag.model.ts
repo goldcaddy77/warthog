@@ -1,34 +1,26 @@
-import { BaseModel, Model, StringField } from '../../../../src';
+import { BaseModel, ManyToOne, Model, OneToMany, StringField } from '../../../../src';
+
+import { Project } from '../project/project.model';
+
+import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 
 @Model()
 export class FeatureFlag extends BaseModel {
-  @StringField({ maxLength: 30 })
-  firstName?: string;
+  @StringField({ maxLength: 50, minLength: 2, nullable: false })
+  name?: string;
 
-  @StringField({ maxLength: 50, minLength: 2 })
-  lastName?: string;
+  @StringField({ maxLength: 50, minLength: 2, nullable: false })
+  key?: string;
 
-  // name*
-  // A human-friendly name for the feature flag {
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  projKey: string;
 
-  // key*
-  // A
-  // } unique key that will be used to reference the flag in your code
+  // TODO: this should not be nullable
+  // TODO: this should not be exposed through the GraphQL either
+  // TODO: should create "ManyToOneByKey" to join tables by a non-ID key
+  @ManyToOne(() => Project, (project: Project) => project.featureFlags, { skipGraphQLField: true, nullable: true })
+  project?: Project;
 
-  // NOTE: not doing variations
-
-  // temporary
-  // Whether or not the flag is a temporary flag
-
-  // tags
-  // Tags for the feature flag {
-
-  // includeInSnippet
-  // }
-  // Whether or not this flag should be made available to the client-side JavaScript SDK
-
-  // PATH PARAMS
-
-  // projKey*
-  // The project key
+  @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.featureFlag)
+  featureFlagUsers?: FeatureFlagUser[];
 }

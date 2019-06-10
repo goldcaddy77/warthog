@@ -54,6 +54,7 @@ type Environment implements BaseGraphQLObject {
   projKey: String!
   projectId: String
   segments: [Segment!]
+  featureFlagUsers: [FeatureFlagUser!]
   project: Project!
 }
 
@@ -142,13 +143,19 @@ type FeatureFlag implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
-  firstName: String!
-  lastName: String!
+  name: String!
+  key: String!
+  projKey: String!
+  projectId: String
+  featureFlagUsers: [FeatureFlagUser!]
+  project: Project!
 }
 
 input FeatureFlagCreateInput {
-  firstName: String!
-  lastName: String!
+  name: String!
+  key: String!
+  projKey: String!
+  projectId: String
 }
 
 enum FeatureFlagOrderByInput {
@@ -158,10 +165,14 @@ enum FeatureFlagOrderByInput {
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
+  name_ASC
+  name_DESC
+  key_ASC
+  key_DESC
+  projKey_ASC
+  projKey_DESC
+  projectId_ASC
+  projectId_DESC
 }
 
 type FeatureFlagSegment implements BaseGraphQLObject {
@@ -229,8 +240,10 @@ input FeatureFlagSegmentWhereUniqueInput {
 }
 
 input FeatureFlagUpdateInput {
-  firstName: String
-  lastName: String
+  name: String
+  key: String
+  projKey: String
+  projectId: String
 }
 
 type FeatureFlagUser implements BaseGraphQLObject {
@@ -242,13 +255,25 @@ type FeatureFlagUser implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
-  firstName: String!
-  lastName: String!
+  featureKey: String!
+  featureFlagId: String
+  userKey: String!
+  userId: String
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
 }
 
 input FeatureFlagUserCreateInput {
-  firstName: String!
-  lastName: String!
+  featureKey: String!
+  featureFlagId: String
+  userKey: String!
+  userId: String
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
 }
 
 enum FeatureFlagUserOrderByInput {
@@ -258,15 +283,33 @@ enum FeatureFlagUserOrderByInput {
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
+  featureKey_ASC
+  featureKey_DESC
+  featureFlagId_ASC
+  featureFlagId_DESC
+  userKey_ASC
+  userKey_DESC
+  userId_ASC
+  userId_DESC
+  projKey_ASC
+  projKey_DESC
+  projectId_ASC
+  projectId_DESC
+  envKey_ASC
+  envKey_DESC
+  environmentId_ASC
+  environmentId_DESC
 }
 
 input FeatureFlagUserUpdateInput {
-  firstName: String
-  lastName: String
+  featureKey: String
+  featureFlagId: String
+  userKey: String
+  userId: String
+  projKey: String
+  projectId: String
+  envKey: String
+  environmentId: String
 }
 
 input FeatureFlagUserWhereInput {
@@ -291,16 +334,34 @@ input FeatureFlagUserWhereInput {
   deletedAt_gt: String
   deletedAt_gte: String
   deletedById_eq: String
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
-  lastName_eq: String
-  lastName_contains: String
-  lastName_startsWith: String
-  lastName_endsWith: String
-  lastName_in: [String!]
+  featureKey_eq: String
+  featureKey_contains: String
+  featureKey_startsWith: String
+  featureKey_endsWith: String
+  featureKey_in: [String!]
+  featureFlagId_eq: ID
+  featureFlagId_in: [ID!]
+  userKey_eq: String
+  userKey_contains: String
+  userKey_startsWith: String
+  userKey_endsWith: String
+  userKey_in: [String!]
+  userId_eq: ID
+  userId_in: [ID!]
+  projKey_eq: String
+  projKey_contains: String
+  projKey_startsWith: String
+  projKey_endsWith: String
+  projKey_in: [String!]
+  projectId_eq: ID
+  projectId_in: [ID!]
+  envKey_eq: String
+  envKey_contains: String
+  envKey_startsWith: String
+  envKey_endsWith: String
+  envKey_in: [String!]
+  environmentId_eq: ID
+  environmentId_in: [ID!]
 }
 
 input FeatureFlagUserWhereUniqueInput {
@@ -329,16 +390,23 @@ input FeatureFlagWhereInput {
   deletedAt_gt: String
   deletedAt_gte: String
   deletedById_eq: String
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
-  lastName_eq: String
-  lastName_contains: String
-  lastName_startsWith: String
-  lastName_endsWith: String
-  lastName_in: [String!]
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+  key_eq: String
+  key_contains: String
+  key_startsWith: String
+  key_endsWith: String
+  key_in: [String!]
+  projKey_eq: String
+  projKey_contains: String
+  projKey_startsWith: String
+  projKey_endsWith: String
+  projKey_in: [String!]
+  projectId_eq: ID
+  projectId_in: [ID!]
 }
 
 input FeatureFlagWhereUniqueInput {
@@ -352,7 +420,7 @@ type Mutation {
   createFeatureFlagSegment(data: FeatureFlagSegmentCreateInput!): FeatureFlagSegment!
   updateFeatureFlagSegment(data: FeatureFlagSegmentUpdateInput!, where: FeatureFlagSegmentWhereUniqueInput!): FeatureFlagSegment!
   deleteFeatureFlagSegment(where: FeatureFlagSegmentWhereUniqueInput!): StandardDeleteResponse!
-  createFeatureFlagUsers(data: FeatureFlagUserCreateInput!): FeatureFlagUser!
+  createFeatureFlagUser(data: FeatureFlagUserCreateInput!): FeatureFlagUser!
   updateFeatureFlagUser(data: FeatureFlagUserUpdateInput!, where: FeatureFlagUserWhereUniqueInput!): FeatureFlagUser!
   deleteFeatureFlagUser(where: FeatureFlagUserWhereUniqueInput!): StandardDeleteResponse!
   createFeatureFlag(data: FeatureFlagCreateInput!): FeatureFlag!
@@ -382,6 +450,8 @@ type Project implements BaseGraphQLObject {
   key: String!
   environments: [Environment!]
   segments: [Segment!]
+  featureFlags: [FeatureFlag!]
+  featureFlagUsers: [FeatureFlagUser!]
 }
 
 input ProjectCreateInput {
@@ -597,6 +667,8 @@ type User implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
+  key: String!
+  featureFlagUsers: [FeatureFlagUser!]
 }
 
 type UserSegment implements BaseGraphQLObject {
@@ -674,5 +746,6 @@ input UserSegmentWhereUniqueInput {
 }
 
 input UserWhereUniqueInput {
-  id: String!
+  id: String
+  key: String
 }

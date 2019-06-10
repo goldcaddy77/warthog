@@ -10,12 +10,12 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 import { BaseWhereInput, PaginationArgs } from '../../../src';
 import { Segment } from '../src/segment/segment.model';
 import { Project } from '../src/project/project.model';
+import { FeatureFlag } from '../src/feature-flag/feature-flag.model';
+import { User } from '../src/user/user.model';
+import { FeatureFlagUser } from '../src/feature-flag-user/feature-flag-user.model';
 import { Environment } from '../src/environment/environment.model';
 import { FeatureFlagSegment } from '../src/feature-flag-segment/feature-flag-segment.model';
-import { FeatureFlagUser } from '../src/feature-flag-user/feature-flag-user.model';
-import { FeatureFlag } from '../src/feature-flag/feature-flag.model';
 import { UserSegment } from '../src/user-segment/user-segment.model';
-import { User } from '../src/user/user.model';
 
 export enum SegmentOrderByEnum {
   createdAt_ASC = 'createdAt_ASC',
@@ -320,6 +320,429 @@ export class ProjectUpdateArgs {
   @TypeGraphQLField() where!: ProjectWhereUniqueInput;
 }
 
+export enum FeatureFlagOrderByEnum {
+  createdAt_ASC = 'createdAt_ASC',
+  createdAt_DESC = 'createdAt_DESC',
+
+  updatedAt_ASC = 'updatedAt_ASC',
+  updatedAt_DESC = 'updatedAt_DESC',
+
+  deletedAt_ASC = 'deletedAt_ASC',
+  deletedAt_DESC = 'deletedAt_DESC',
+
+  name_ASC = 'name_ASC',
+  name_DESC = 'name_DESC',
+
+  key_ASC = 'key_ASC',
+  key_DESC = 'key_DESC',
+
+  projKey_ASC = 'projKey_ASC',
+  projKey_DESC = 'projKey_DESC',
+
+  projectId_ASC = 'projectId_ASC',
+  projectId_DESC = 'projectId_DESC'
+}
+
+registerEnumType(FeatureFlagOrderByEnum, {
+  name: 'FeatureFlagOrderByInput'
+});
+
+@TypeGraphQLInputType()
+export class FeatureFlagWhereInput extends BaseWhereInput {
+  @TypeGraphQLField({ nullable: true })
+  name_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  name_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  key_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  key_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  key_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  key_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  key_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  projKey_in?: string[];
+
+  @TypeGraphQLField(type => ID, { nullable: true })
+  projectId_eq?: string;
+
+  @TypeGraphQLField(type => [ID], { nullable: true })
+  projectId_in?: string[];
+}
+
+@TypeGraphQLInputType()
+export class FeatureFlagWhereUniqueInput {
+  @TypeGraphQLField(type => String)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class FeatureFlagCreateInput {
+  @TypeGraphQLField()
+  name!: string;
+
+  @TypeGraphQLField()
+  key!: string;
+
+  @TypeGraphQLField()
+  projKey!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projectId?: string;
+}
+
+@TypeGraphQLInputType()
+export class FeatureFlagUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  name?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  key?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projectId?: string;
+}
+
+@ArgsType()
+export class FeatureFlagWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(type => FeatureFlagWhereInput, { nullable: true })
+  where?: FeatureFlagWhereInput;
+
+  @TypeGraphQLField(type => FeatureFlagOrderByEnum, { nullable: true })
+  orderBy?: FeatureFlagOrderByEnum;
+}
+
+@ArgsType()
+export class FeatureFlagCreateManyArgs {
+  @TypeGraphQLField(type => [FeatureFlagCreateInput])
+  data!: FeatureFlagCreateInput[];
+}
+
+@ArgsType()
+export class FeatureFlagUpdateArgs {
+  @TypeGraphQLField() data!: FeatureFlagUpdateInput;
+  @TypeGraphQLField() where!: FeatureFlagWhereUniqueInput;
+}
+
+export enum UserOrderByEnum {
+  createdAt_ASC = 'createdAt_ASC',
+  createdAt_DESC = 'createdAt_DESC',
+
+  updatedAt_ASC = 'updatedAt_ASC',
+  updatedAt_DESC = 'updatedAt_DESC',
+
+  deletedAt_ASC = 'deletedAt_ASC',
+  deletedAt_DESC = 'deletedAt_DESC',
+
+  key_ASC = 'key_ASC',
+  key_DESC = 'key_DESC'
+}
+
+registerEnumType(UserOrderByEnum, {
+  name: 'UserOrderByInput'
+});
+
+@TypeGraphQLInputType()
+export class UserWhereInput extends BaseWhereInput {
+  @TypeGraphQLField({ nullable: true })
+  key_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  key_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  key_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  key_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  key_in?: string[];
+}
+
+@TypeGraphQLInputType()
+export class UserWhereUniqueInput {
+  @TypeGraphQLField(type => String, { nullable: true })
+  id?: string;
+
+  @TypeGraphQLField(type => String, { nullable: true })
+  key?: string;
+}
+
+@TypeGraphQLInputType()
+export class UserCreateInput {
+  @TypeGraphQLField()
+  key!: string;
+}
+
+@TypeGraphQLInputType()
+export class UserUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  key?: string;
+}
+
+@ArgsType()
+export class UserWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(type => UserWhereInput, { nullable: true })
+  where?: UserWhereInput;
+
+  @TypeGraphQLField(type => UserOrderByEnum, { nullable: true })
+  orderBy?: UserOrderByEnum;
+}
+
+@ArgsType()
+export class UserCreateManyArgs {
+  @TypeGraphQLField(type => [UserCreateInput])
+  data!: UserCreateInput[];
+}
+
+@ArgsType()
+export class UserUpdateArgs {
+  @TypeGraphQLField() data!: UserUpdateInput;
+  @TypeGraphQLField() where!: UserWhereUniqueInput;
+}
+
+export enum FeatureFlagUserOrderByEnum {
+  createdAt_ASC = 'createdAt_ASC',
+  createdAt_DESC = 'createdAt_DESC',
+
+  updatedAt_ASC = 'updatedAt_ASC',
+  updatedAt_DESC = 'updatedAt_DESC',
+
+  deletedAt_ASC = 'deletedAt_ASC',
+  deletedAt_DESC = 'deletedAt_DESC',
+
+  featureKey_ASC = 'featureKey_ASC',
+  featureKey_DESC = 'featureKey_DESC',
+
+  featureFlagId_ASC = 'featureFlagId_ASC',
+  featureFlagId_DESC = 'featureFlagId_DESC',
+
+  userKey_ASC = 'userKey_ASC',
+  userKey_DESC = 'userKey_DESC',
+
+  userId_ASC = 'userId_ASC',
+  userId_DESC = 'userId_DESC',
+
+  projKey_ASC = 'projKey_ASC',
+  projKey_DESC = 'projKey_DESC',
+
+  projectId_ASC = 'projectId_ASC',
+  projectId_DESC = 'projectId_DESC',
+
+  envKey_ASC = 'envKey_ASC',
+  envKey_DESC = 'envKey_DESC',
+
+  environmentId_ASC = 'environmentId_ASC',
+  environmentId_DESC = 'environmentId_DESC'
+}
+
+registerEnumType(FeatureFlagUserOrderByEnum, {
+  name: 'FeatureFlagUserOrderByInput'
+});
+
+@TypeGraphQLInputType()
+export class FeatureFlagUserWhereInput extends BaseWhereInput {
+  @TypeGraphQLField({ nullable: true })
+  featureKey_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  featureKey_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  featureKey_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  featureKey_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  featureKey_in?: string[];
+
+  @TypeGraphQLField(type => ID, { nullable: true })
+  featureFlagId_eq?: string;
+
+  @TypeGraphQLField(type => [ID], { nullable: true })
+  featureFlagId_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  userKey_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  userKey_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  userKey_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  userKey_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  userKey_in?: string[];
+
+  @TypeGraphQLField(type => ID, { nullable: true })
+  userId_eq?: string;
+
+  @TypeGraphQLField(type => [ID], { nullable: true })
+  userId_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  projKey_in?: string[];
+
+  @TypeGraphQLField(type => ID, { nullable: true })
+  projectId_eq?: string;
+
+  @TypeGraphQLField(type => [ID], { nullable: true })
+  projectId_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  envKey_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  envKey_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  envKey_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  envKey_endsWith?: string;
+
+  @TypeGraphQLField(type => [String], { nullable: true })
+  envKey_in?: string[];
+
+  @TypeGraphQLField(type => ID, { nullable: true })
+  environmentId_eq?: string;
+
+  @TypeGraphQLField(type => [ID], { nullable: true })
+  environmentId_in?: string[];
+}
+
+@TypeGraphQLInputType()
+export class FeatureFlagUserWhereUniqueInput {
+  @TypeGraphQLField(type => String)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class FeatureFlagUserCreateInput {
+  @TypeGraphQLField()
+  featureKey!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  featureFlagId?: string;
+
+  @TypeGraphQLField()
+  userKey!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  userId?: string;
+
+  @TypeGraphQLField()
+  projKey!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projectId?: string;
+
+  @TypeGraphQLField()
+  envKey!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  environmentId?: string;
+}
+
+@TypeGraphQLInputType()
+export class FeatureFlagUserUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  featureKey?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  featureFlagId?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  userKey?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  userId?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projKey?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  projectId?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  envKey?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  environmentId?: string;
+}
+
+@ArgsType()
+export class FeatureFlagUserWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(type => FeatureFlagUserWhereInput, { nullable: true })
+  where?: FeatureFlagUserWhereInput;
+
+  @TypeGraphQLField(type => FeatureFlagUserOrderByEnum, { nullable: true })
+  orderBy?: FeatureFlagUserOrderByEnum;
+}
+
+@ArgsType()
+export class FeatureFlagUserCreateManyArgs {
+  @TypeGraphQLField(type => [FeatureFlagUserCreateInput])
+  data!: FeatureFlagUserCreateInput[];
+}
+
+@ArgsType()
+export class FeatureFlagUserUpdateArgs {
+  @TypeGraphQLField() data!: FeatureFlagUserUpdateInput;
+  @TypeGraphQLField() where!: FeatureFlagUserWhereUniqueInput;
+}
+
 export enum EnvironmentOrderByEnum {
   createdAt_ASC = 'createdAt_ASC',
   createdAt_DESC = 'createdAt_DESC',
@@ -533,204 +956,6 @@ export class FeatureFlagSegmentUpdateArgs {
   @TypeGraphQLField() where!: FeatureFlagSegmentWhereUniqueInput;
 }
 
-export enum FeatureFlagUserOrderByEnum {
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC',
-
-  deletedAt_ASC = 'deletedAt_ASC',
-  deletedAt_DESC = 'deletedAt_DESC',
-
-  firstName_ASC = 'firstName_ASC',
-  firstName_DESC = 'firstName_DESC',
-
-  lastName_ASC = 'lastName_ASC',
-  lastName_DESC = 'lastName_DESC'
-}
-
-registerEnumType(FeatureFlagUserOrderByEnum, {
-  name: 'FeatureFlagUserOrderByInput'
-});
-
-@TypeGraphQLInputType()
-export class FeatureFlagUserWhereInput extends BaseWhereInput {
-  @TypeGraphQLField({ nullable: true })
-  firstName_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_endsWith?: string;
-
-  @TypeGraphQLField(type => [String], { nullable: true })
-  firstName_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_endsWith?: string;
-
-  @TypeGraphQLField(type => [String], { nullable: true })
-  lastName_in?: string[];
-}
-
-@TypeGraphQLInputType()
-export class FeatureFlagUserWhereUniqueInput {
-  @TypeGraphQLField(type => String)
-  id?: string;
-}
-
-@TypeGraphQLInputType()
-export class FeatureFlagUserCreateInput {
-  @TypeGraphQLField()
-  firstName!: string;
-
-  @TypeGraphQLField()
-  lastName!: string;
-}
-
-@TypeGraphQLInputType()
-export class FeatureFlagUserUpdateInput {
-  @TypeGraphQLField({ nullable: true })
-  firstName?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName?: string;
-}
-
-@ArgsType()
-export class FeatureFlagUserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => FeatureFlagUserWhereInput, { nullable: true })
-  where?: FeatureFlagUserWhereInput;
-
-  @TypeGraphQLField(type => FeatureFlagUserOrderByEnum, { nullable: true })
-  orderBy?: FeatureFlagUserOrderByEnum;
-}
-
-@ArgsType()
-export class FeatureFlagUserCreateManyArgs {
-  @TypeGraphQLField(type => [FeatureFlagUserCreateInput])
-  data!: FeatureFlagUserCreateInput[];
-}
-
-@ArgsType()
-export class FeatureFlagUserUpdateArgs {
-  @TypeGraphQLField() data!: FeatureFlagUserUpdateInput;
-  @TypeGraphQLField() where!: FeatureFlagUserWhereUniqueInput;
-}
-
-export enum FeatureFlagOrderByEnum {
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC',
-
-  deletedAt_ASC = 'deletedAt_ASC',
-  deletedAt_DESC = 'deletedAt_DESC',
-
-  firstName_ASC = 'firstName_ASC',
-  firstName_DESC = 'firstName_DESC',
-
-  lastName_ASC = 'lastName_ASC',
-  lastName_DESC = 'lastName_DESC'
-}
-
-registerEnumType(FeatureFlagOrderByEnum, {
-  name: 'FeatureFlagOrderByInput'
-});
-
-@TypeGraphQLInputType()
-export class FeatureFlagWhereInput extends BaseWhereInput {
-  @TypeGraphQLField({ nullable: true })
-  firstName_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_endsWith?: string;
-
-  @TypeGraphQLField(type => [String], { nullable: true })
-  firstName_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_endsWith?: string;
-
-  @TypeGraphQLField(type => [String], { nullable: true })
-  lastName_in?: string[];
-}
-
-@TypeGraphQLInputType()
-export class FeatureFlagWhereUniqueInput {
-  @TypeGraphQLField(type => String)
-  id?: string;
-}
-
-@TypeGraphQLInputType()
-export class FeatureFlagCreateInput {
-  @TypeGraphQLField()
-  firstName!: string;
-
-  @TypeGraphQLField()
-  lastName!: string;
-}
-
-@TypeGraphQLInputType()
-export class FeatureFlagUpdateInput {
-  @TypeGraphQLField({ nullable: true })
-  firstName?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName?: string;
-}
-
-@ArgsType()
-export class FeatureFlagWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => FeatureFlagWhereInput, { nullable: true })
-  where?: FeatureFlagWhereInput;
-
-  @TypeGraphQLField(type => FeatureFlagOrderByEnum, { nullable: true })
-  orderBy?: FeatureFlagOrderByEnum;
-}
-
-@ArgsType()
-export class FeatureFlagCreateManyArgs {
-  @TypeGraphQLField(type => [FeatureFlagCreateInput])
-  data!: FeatureFlagCreateInput[];
-}
-
-@ArgsType()
-export class FeatureFlagUpdateArgs {
-  @TypeGraphQLField() data!: FeatureFlagUpdateInput;
-  @TypeGraphQLField() where!: FeatureFlagWhereUniqueInput;
-}
-
 export enum UserSegmentOrderByEnum {
   createdAt_ASC = 'createdAt_ASC',
   createdAt_DESC = 'createdAt_DESC',
@@ -828,55 +1053,4 @@ export class UserSegmentCreateManyArgs {
 export class UserSegmentUpdateArgs {
   @TypeGraphQLField() data!: UserSegmentUpdateInput;
   @TypeGraphQLField() where!: UserSegmentWhereUniqueInput;
-}
-
-export enum UserOrderByEnum {
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC',
-
-  deletedAt_ASC = 'deletedAt_ASC',
-  deletedAt_DESC = 'deletedAt_DESC'
-}
-
-registerEnumType(UserOrderByEnum, {
-  name: 'UserOrderByInput'
-});
-
-@TypeGraphQLInputType()
-export class UserWhereInput extends BaseWhereInput {}
-
-@TypeGraphQLInputType()
-export class UserWhereUniqueInput {
-  @TypeGraphQLField(type => String)
-  id?: string;
-}
-
-@TypeGraphQLInputType()
-export class UserCreateInput {}
-
-@TypeGraphQLInputType()
-export class UserUpdateInput {}
-
-@ArgsType()
-export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserWhereInput, { nullable: true })
-  where?: UserWhereInput;
-
-  @TypeGraphQLField(type => UserOrderByEnum, { nullable: true })
-  orderBy?: UserOrderByEnum;
-}
-
-@ArgsType()
-export class UserCreateManyArgs {
-  @TypeGraphQLField(type => [UserCreateInput])
-  data!: UserCreateInput[];
-}
-
-@ArgsType()
-export class UserUpdateArgs {
-  @TypeGraphQLField() data!: UserUpdateInput;
-  @TypeGraphQLField() where!: UserWhereUniqueInput;
 }

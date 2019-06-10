@@ -18,7 +18,7 @@ import { Segment } from './segment.model';
 import { SegmentService } from './segment.service';
 
 @Resolver(Segment)
-export class FeatureFlagSegmentResolver {
+export class SegmentResolver {
   constructor(@Inject('SegmentService') readonly service: SegmentService) {
     // no-empty
   }

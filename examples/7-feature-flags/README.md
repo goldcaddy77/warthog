@@ -2,8 +2,11 @@
 
 ## TODO
 
-- Why is `yarn generate:code` not working?
-- Add environments to the project
+- Need to add `tags` as an array type that is searchable
+- FeatureFlagSegment
+- UserSegment
+- featureFlagsForUser (CUSTOM QUERY)
+- Question: how long should `key`s be?
 
 [LaunchDarkly](https://apidocs.launchdarkly.com/reference)
 

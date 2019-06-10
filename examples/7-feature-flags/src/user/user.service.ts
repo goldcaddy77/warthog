@@ -11,4 +11,13 @@ export class UserService extends BaseService<User> {
   constructor(@InjectRepository(User) protected readonly repository: Repository<User>) {
     super(User, repository);
   }
+
+  async findOrCreate(data: DeepPartial<User>, userId: string): Promise<User> {
+    const users = await this.find(data);
+    if (users && users.length > 0) {
+      return users[0];
+    }
+
+    return this.create(data, userId);
+  }
 }

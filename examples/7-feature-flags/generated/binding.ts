@@ -147,7 +147,7 @@ export interface Mutation {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  createFeatureFlagUsers: <T = FeatureFlagUser>(
+  createFeatureFlagUser: <T = FeatureFlagUser>(
     args: { data: FeatureFlagUserCreateInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
@@ -284,10 +284,14 @@ export type FeatureFlagOrderByInput =
   | 'updatedAt_DESC'
   | 'deletedAt_ASC'
   | 'deletedAt_DESC'
-  | 'firstName_ASC'
-  | 'firstName_DESC'
-  | 'lastName_ASC'
-  | 'lastName_DESC';
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'key_ASC'
+  | 'key_DESC'
+  | 'projKey_ASC'
+  | 'projKey_DESC'
+  | 'projectId_ASC'
+  | 'projectId_DESC';
 
 export type FeatureFlagSegmentOrderByInput =
   | 'createdAt_ASC'
@@ -306,10 +310,22 @@ export type FeatureFlagUserOrderByInput =
   | 'updatedAt_DESC'
   | 'deletedAt_ASC'
   | 'deletedAt_DESC'
-  | 'firstName_ASC'
-  | 'firstName_DESC'
-  | 'lastName_ASC'
-  | 'lastName_DESC';
+  | 'featureKey_ASC'
+  | 'featureKey_DESC'
+  | 'featureFlagId_ASC'
+  | 'featureFlagId_DESC'
+  | 'userKey_ASC'
+  | 'userKey_DESC'
+  | 'userId_ASC'
+  | 'userId_DESC'
+  | 'projKey_ASC'
+  | 'projKey_DESC'
+  | 'projectId_ASC'
+  | 'projectId_DESC'
+  | 'envKey_ASC'
+  | 'envKey_DESC'
+  | 'environmentId_ASC'
+  | 'environmentId_DESC';
 
 export type ProjectOrderByInput =
   | 'createdAt_ASC'
@@ -417,8 +433,10 @@ export interface EnvironmentWhereUniqueInput {
 }
 
 export interface FeatureFlagCreateInput {
-  firstName: String;
-  lastName: String;
+  name: String;
+  key: String;
+  projKey: String;
+  projectId?: String | null;
 }
 
 export interface FeatureFlagSegmentCreateInput {
@@ -463,18 +481,32 @@ export interface FeatureFlagSegmentWhereUniqueInput {
 }
 
 export interface FeatureFlagUpdateInput {
-  firstName?: String | null;
-  lastName?: String | null;
+  name?: String | null;
+  key?: String | null;
+  projKey?: String | null;
+  projectId?: String | null;
 }
 
 export interface FeatureFlagUserCreateInput {
-  firstName: String;
-  lastName: String;
+  featureKey: String;
+  featureFlagId?: String | null;
+  userKey: String;
+  userId?: String | null;
+  projKey: String;
+  projectId?: String | null;
+  envKey: String;
+  environmentId?: String | null;
 }
 
 export interface FeatureFlagUserUpdateInput {
-  firstName?: String | null;
-  lastName?: String | null;
+  featureKey?: String | null;
+  featureFlagId?: String | null;
+  userKey?: String | null;
+  userId?: String | null;
+  projKey?: String | null;
+  projectId?: String | null;
+  envKey?: String | null;
+  environmentId?: String | null;
 }
 
 export interface FeatureFlagUserWhereInput {
@@ -499,16 +531,34 @@ export interface FeatureFlagUserWhereInput {
   deletedAt_gt?: String | null;
   deletedAt_gte?: String | null;
   deletedById_eq?: String | null;
-  firstName_eq?: String | null;
-  firstName_contains?: String | null;
-  firstName_startsWith?: String | null;
-  firstName_endsWith?: String | null;
-  firstName_in?: String[] | String | null;
-  lastName_eq?: String | null;
-  lastName_contains?: String | null;
-  lastName_startsWith?: String | null;
-  lastName_endsWith?: String | null;
-  lastName_in?: String[] | String | null;
+  featureKey_eq?: String | null;
+  featureKey_contains?: String | null;
+  featureKey_startsWith?: String | null;
+  featureKey_endsWith?: String | null;
+  featureKey_in?: String[] | String | null;
+  featureFlagId_eq?: ID_Input | null;
+  featureFlagId_in?: ID_Output[] | ID_Output | null;
+  userKey_eq?: String | null;
+  userKey_contains?: String | null;
+  userKey_startsWith?: String | null;
+  userKey_endsWith?: String | null;
+  userKey_in?: String[] | String | null;
+  userId_eq?: ID_Input | null;
+  userId_in?: ID_Output[] | ID_Output | null;
+  projKey_eq?: String | null;
+  projKey_contains?: String | null;
+  projKey_startsWith?: String | null;
+  projKey_endsWith?: String | null;
+  projKey_in?: String[] | String | null;
+  projectId_eq?: ID_Input | null;
+  projectId_in?: ID_Output[] | ID_Output | null;
+  envKey_eq?: String | null;
+  envKey_contains?: String | null;
+  envKey_startsWith?: String | null;
+  envKey_endsWith?: String | null;
+  envKey_in?: String[] | String | null;
+  environmentId_eq?: ID_Input | null;
+  environmentId_in?: ID_Output[] | ID_Output | null;
 }
 
 export interface FeatureFlagUserWhereUniqueInput {
@@ -537,16 +587,23 @@ export interface FeatureFlagWhereInput {
   deletedAt_gt?: String | null;
   deletedAt_gte?: String | null;
   deletedById_eq?: String | null;
-  firstName_eq?: String | null;
-  firstName_contains?: String | null;
-  firstName_startsWith?: String | null;
-  firstName_endsWith?: String | null;
-  firstName_in?: String[] | String | null;
-  lastName_eq?: String | null;
-  lastName_contains?: String | null;
-  lastName_startsWith?: String | null;
-  lastName_endsWith?: String | null;
-  lastName_in?: String[] | String | null;
+  name_eq?: String | null;
+  name_contains?: String | null;
+  name_startsWith?: String | null;
+  name_endsWith?: String | null;
+  name_in?: String[] | String | null;
+  key_eq?: String | null;
+  key_contains?: String | null;
+  key_startsWith?: String | null;
+  key_endsWith?: String | null;
+  key_in?: String[] | String | null;
+  projKey_eq?: String | null;
+  projKey_contains?: String | null;
+  projKey_startsWith?: String | null;
+  projKey_endsWith?: String | null;
+  projKey_in?: String[] | String | null;
+  projectId_eq?: ID_Input | null;
+  projectId_in?: ID_Output[] | ID_Output | null;
 }
 
 export interface FeatureFlagWhereUniqueInput {
@@ -728,7 +785,8 @@ export interface UserSegmentWhereUniqueInput {
 }
 
 export interface UserWhereUniqueInput {
-  id: String;
+  id?: String | null;
+  key?: String | null;
 }
 
 export interface BaseGraphQLObject {
@@ -782,6 +840,7 @@ export interface Environment extends BaseGraphQLObject {
   projKey: String;
   projectId?: String | null;
   segments?: Array<Segment> | null;
+  featureFlagUsers?: Array<FeatureFlagUser> | null;
   project: Project;
 }
 
@@ -794,8 +853,12 @@ export interface FeatureFlag extends BaseGraphQLObject {
   deletedAt?: DateTime | null;
   deletedById?: String | null;
   version: Int;
-  firstName: String;
-  lastName: String;
+  name: String;
+  key: String;
+  projKey: String;
+  projectId?: String | null;
+  featureFlagUsers?: Array<FeatureFlagUser> | null;
+  project: Project;
 }
 
 export interface FeatureFlagSegment extends BaseGraphQLObject {
@@ -819,8 +882,14 @@ export interface FeatureFlagUser extends BaseGraphQLObject {
   deletedAt?: DateTime | null;
   deletedById?: String | null;
   version: Int;
-  firstName: String;
-  lastName: String;
+  featureKey: String;
+  featureFlagId?: String | null;
+  userKey: String;
+  userId?: String | null;
+  projKey: String;
+  projectId?: String | null;
+  envKey: String;
+  environmentId?: String | null;
 }
 
 export interface Project extends BaseGraphQLObject {
@@ -836,6 +905,8 @@ export interface Project extends BaseGraphQLObject {
   key: String;
   environments?: Array<Environment> | null;
   segments?: Array<Segment> | null;
+  featureFlags?: Array<FeatureFlag> | null;
+  featureFlagUsers?: Array<FeatureFlagUser> | null;
 }
 
 export interface Segment extends BaseGraphQLObject {
@@ -871,6 +942,8 @@ export interface User extends BaseGraphQLObject {
   deletedAt?: DateTime | null;
   deletedById?: String | null;
   version: Int;
+  key: String;
+  featureFlagUsers?: Array<FeatureFlagUser> | null;
 }
 
 export interface UserSegment extends BaseGraphQLObject {

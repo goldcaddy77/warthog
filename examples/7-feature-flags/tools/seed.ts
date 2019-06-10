@@ -34,16 +34,16 @@ async function seedDatabase() {
     const error = getBindingError(err);
     console.error(error);
   }
-  console.log('project', project);
+  // console.log('project', project);
 
   let environment;
   try {
     environment = await createEnvironment(binding as any, project.key, 'production');
-    console.log('environment', environment);
+    // console.log('environment', environment);
     environment = await createEnvironment(binding as any, project.key, 'staging');
-    console.log('environment', environment);
+    // console.log('environment', environment);
     environment = await createEnvironment(binding as any, project.key, 'development');
-    console.log('environment', environment);
+    // console.log('environment', environment);
   } catch (err) {
     const error = getBindingError(err);
     console.error(error);
@@ -52,11 +52,46 @@ async function seedDatabase() {
   let segment;
   try {
     segment = await createSegment(binding as any, project.key, environment.key, 'segment-a');
-    console.log('segment', segment);
+    // console.log('segment', segment);
     segment = await createSegment(binding as any, project.key, environment.key, 'segment-b');
-    console.log('segment', segment);
+    // console.log('segment', segment);
     segment = await createSegment(binding as any, project.key, environment.key, 'segment-c');
-    console.log('segment', segment);
+    // console.log('segment', segment);
+  } catch (err) {
+    const error = getBindingError(err);
+    console.error(error);
+  }
+
+  let featureFlag;
+  try {
+    featureFlag = await createFeatureFlag(binding as any, project.key, 'map-view');
+    console.log('featureFlag', featureFlag);
+    featureFlag = await createFeatureFlag(binding as any, project.key, 'enhanced-navigation');
+    console.log('featureFlag', featureFlag);
+  } catch (err) {
+    const error = getBindingError(err);
+    console.error(error);
+  }
+  console.log('featureFlag', featureFlag);
+
+  let featureFlagUser;
+  try {
+    featureFlagUser = await createFeatureFlagUser(
+      binding as any,
+      project.key,
+      environment.key,
+      featureFlag.key,
+      'user-a'
+    );
+    console.log('featureFlagUser', featureFlagUser);
+    featureFlagUser = await createFeatureFlagUser(
+      binding as any,
+      project.key,
+      environment.key,
+      featureFlag.key,
+      'user-b'
+    );
+    console.log('featureFlagUser', featureFlagUser);
   } catch (err) {
     const error = getBindingError(err);
     console.error(error);
@@ -74,6 +109,51 @@ async function seedDatabase() {
         name
         key
         createdAt
+        featureFlagUsers {
+          envKey
+          featureKey
+          userKey
+          projKey
+        }
+      }
+      featureFlags {
+        id
+        key
+        name
+        createdAt
+        featureFlagUsers {
+          envKey
+          featureKey
+          userKey
+          projKey
+        }
+      }
+      featureFlagUsers {
+        id
+        envKey
+        featureKey
+        userKey
+        projKey
+      }
+      segments {
+        id
+        key
+        name
+        createdAt
+        envKey
+        environmentId
+        environment {
+          id
+          key
+          createdAt
+        }
+        projKey
+        projectId
+        project {
+          id
+          key
+          createdAt
+        }
       }
     }`
     );
@@ -109,8 +189,6 @@ async function createProject(binding: Binding): Promise<Project> {
 }
 
 async function createEnvironment(binding: Binding, projKey: string, key: string) {
-  const name = `Development`;
-
   return binding.mutation.createEnvironment(
     {
       data: {
@@ -120,6 +198,39 @@ async function createEnvironment(binding: Binding, projKey: string, key: string)
       }
     },
     `{ id key name projKey createdAt project { id name key createdAt } }`
+  );
+}
+
+async function createFeatureFlag(binding: Binding, projKey: string, key: string) {
+  return binding.mutation.createFeatureFlag(
+    {
+      data: {
+        key,
+        name: `${key[0].toUpperCase()}${key.substring(1)}`,
+        projKey
+      }
+    },
+    `{ id key name projKey createdAt project { id name key createdAt } }`
+  );
+}
+
+async function createFeatureFlagUser(
+  binding: Binding,
+  projKey: string,
+  envKey: string,
+  featureKey: string,
+  userKey: string
+) {
+  return binding.mutation.createFeatureFlagUser(
+    {
+      data: {
+        envKey,
+        featureKey,
+        projKey,
+        userKey
+      }
+    },
+    `{ id projKey envKey userKey featureKey createdAt }`
   );
 }
 

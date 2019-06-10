@@ -15,8 +15,8 @@ import { FeatureFlagUser } from './feature-flag-user.model';
 import { FeatureFlagUserService } from './feature-flag-user.service';
 
 @Resolver(FeatureFlagUser)
-export class UserResolver {
-  constructor(@Inject('UserService') readonly service: FeatureFlagUserService) {
+export class FeatureFlagUserResolver {
+  constructor(@Inject('FeatureFlagUserService') readonly service: FeatureFlagUserService) {
     // no-empty
   }
 
@@ -30,14 +30,12 @@ export class UserResolver {
   }
 
   @Query(returns => FeatureFlagUser)
-  async featureFlagUser(
-    @Arg('where') where: FeatureFlagUserWhereUniqueInput
-  ): Promise<FeatureFlagUser> {
+  async featureFlagUser(@Arg('where') where: FeatureFlagUserWhereUniqueInput): Promise<FeatureFlagUser> {
     return this.service.findOne<FeatureFlagUserWhereUniqueInput>(where);
   }
 
   @Mutation(returns => FeatureFlagUser)
-  async createFeatureFlagUsers(
+  async createFeatureFlagUser(
     @Arg('data') data: FeatureFlagUserCreateInput,
     @Ctx() ctx: BaseContext
   ): Promise<FeatureFlagUser> {
