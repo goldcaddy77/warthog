@@ -11,7 +11,7 @@ import { Post } from './post.model';
 
 @Resolver(Post)
 export class PostResolver extends BaseResolver<Post> {
-  constructor(@InjectRepository(Post) private readonly postRepository: Repository<Post>) {
+  constructor(@InjectRepository(Post) public readonly postRepository: Repository<Post>) {
     super(Post, postRepository);
   }
 

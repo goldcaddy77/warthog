@@ -2,9 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
-    "paths": {
-      "warthog": ["../../../src"],
-    },
+    "baseUrl": "src",
     "lib": ["dom", "es5", "es6", "es7", "esnext", "esnext.asynciterable"],
     "target": "es5",
     "module": "commonjs",

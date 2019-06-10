@@ -9,7 +9,7 @@ import { Role } from './role.model';
 
 @Resolver(Role)
 export class RoleResolver extends BaseResolver<Role> {
-  constructor(@InjectRepository(Role) private readonly roleRepository: Repository<Role>) {
+  constructor(@InjectRepository(Role) public readonly roleRepository: Repository<Role>) {
     super(Role, roleRepository);
   }
 

@@ -21,7 +21,7 @@ beforeAll(async done => {
   testUser = await binding.mutation.createUser(
     {
       data: {
-        email: `asdf`,
+        email: `goldcaddy${key}@gmail.com`,
         firstName: `first ${key}`,
         lastName: `last ${key}`,
         stringEnumField: StringEnum.FOO

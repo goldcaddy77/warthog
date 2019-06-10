@@ -96,7 +96,7 @@ import { User } from './user.model';
 
 @Resolver(User)
 export class UserResolver extends BaseResolver<User> {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
+  constructor(@InjectRepository(User) public readonly userRepository: Repository<User>) {
     super(User, userRepository);
   }
 
@@ -129,7 +129,7 @@ TYPEORM_PASSWORD=
 ```typescript
 
 import 'reflect-metadata';
-import { Server } from 'warthog';
+import { Server } from '../../../src';
 
 async function bootstrap() {
   const server = new Server();

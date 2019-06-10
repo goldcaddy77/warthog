@@ -10,7 +10,7 @@ import { Post } from './post.model';
 
 @Resolver(Author)
 export class AuthorResolver extends BaseResolver<Author> {
-  constructor(@InjectRepository(Author) private readonly authorRepository: Repository<Author>) {
+  constructor(@InjectRepository(Author) public readonly authorRepository: Repository<Author>) {
     super(Author, authorRepository);
   }
 

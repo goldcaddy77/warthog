@@ -19,7 +19,7 @@ import { User } from './user.model';
 // changes the object reference when it's trying to add the FieldResolver and things break
 @Resolver(Post)
 export class PostResolver extends BaseResolver<Post> {
-  constructor(@InjectRepository(Post) private readonly postRepository: Repository<Post>) {
+  constructor(@InjectRepository(Post) public readonly postRepository: Repository<Post>) {
     super(Post, postRepository);
   }
 
