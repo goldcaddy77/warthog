@@ -6,7 +6,7 @@ import {
   IntField,
   Model,
   StringField
-} from 'warthog';
+} from '../../../src';
 
 @Model()
 export class User extends BaseModel {
