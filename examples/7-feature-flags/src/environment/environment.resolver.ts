@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse } from '../../../../src';
@@ -11,6 +11,9 @@ import {
   EnvironmentWhereUniqueInput
 } from '../../generated';
 
+import { Project } from '../project/project.model';
+import { Segment } from '../segment/segment.model';
+
 import { Environment } from './environment.model';
 import { EnvironmentService } from './environment.service';
 
@@ -18,6 +21,16 @@ import { EnvironmentService } from './environment.service';
 export class EnvironmentResolver {
   constructor(@Inject('EnvironmentService') readonly service: EnvironmentService) {
     // tslint
+  }
+
+  @FieldResolver(returns => Project)
+  project(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<Project> {
+    return ctx.dataLoader.loaders.Environment.project.load(environment);
+  }
+
+  @FieldResolver(returns => [Segment])
+  segments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<Segment[]> {
+    return ctx.dataLoader.loaders.Environment.segments.load(project);
   }
 
   @Query(returns => [Environment])
@@ -35,10 +48,7 @@ export class EnvironmentResolver {
   }
 
   @Mutation(returns => Environment)
-  async createEnvironment(
-    @Arg('data') data: EnvironmentCreateInput,
-    @Ctx() ctx: BaseContext
-  ): Promise<Environment> {
+  async createEnvironment(@Arg('data') data: EnvironmentCreateInput, @Ctx() ctx: BaseContext): Promise<Environment> {
     return this.service.create(data, ctx.user.id);
   }
 

@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse } from '../../../../src';
@@ -11,6 +11,9 @@ import {
   ProjectWhereUniqueInput
 } from '../../generated';
 
+import { Environment } from '../environment/environment.model';
+import { Segment } from '../segment/segment.model';
+
 import { Project } from './project.model';
 import { ProjectService } from './project.service';
 
@@ -18,6 +21,16 @@ import { ProjectService } from './project.service';
 export class FeatureFlagProjectResolver {
   constructor(@Inject('ProjectService') readonly service: ProjectService) {
     // no-empty
+  }
+
+  @FieldResolver(returns => [Environment])
+  environments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<Environment[]> {
+    return ctx.dataLoader.loaders.Project.environments.load(project);
+  }
+
+  @FieldResolver(returns => [Segment])
+  segments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<Segment[]> {
+    return ctx.dataLoader.loaders.Project.segments.load(project);
   }
 
   @Query(returns => [Project])
@@ -35,18 +48,12 @@ export class FeatureFlagProjectResolver {
   }
 
   @Mutation(returns => Project)
-  async createProject(
-    @Arg('data') data: ProjectCreateInput,
-    @Ctx() ctx: BaseContext
-  ): Promise<Project> {
+  async createProject(@Arg('data') data: ProjectCreateInput, @Ctx() ctx: BaseContext): Promise<Project> {
     return this.service.create(data, ctx.user.id);
   }
 
   @Mutation(returns => Project)
-  async updateProject(
-    @Args() { data, where }: ProjectUpdateArgs,
-    @Ctx() ctx: BaseContext
-  ): Promise<Project> {
+  async updateProject(@Args() { data, where }: ProjectUpdateArgs, @Ctx() ctx: BaseContext): Promise<Project> {
     return this.service.update(data, where, ctx.user.id);
   }
 

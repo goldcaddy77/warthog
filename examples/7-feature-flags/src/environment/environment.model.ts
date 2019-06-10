@@ -1,7 +1,7 @@
-// import { BaseModel, IDType, ManyToOne, Model, StringField } from '../../../../src';
-import { BaseModel, Model, StringField } from '../../../../src';
+import { BaseModel, ManyToOne, Model, OneToMany, StringField } from '../../../../src';
 
-// import { Project } from '../project/project.model';
+import { Project } from '../project/project.model';
+import { Segment } from '../segment/segment.model';
 
 @Model()
 // TODO: Unique key+projectKey
@@ -9,15 +9,18 @@ export class Environment extends BaseModel {
   @StringField({ maxLength: 50, minLength: 3, nullable: false })
   name: string;
 
-  @StringField({ maxLength: 20, minLength: 3, nullable: false, unique: true })
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
   key: string;
 
-  // @StringField({ maxLength: 20, minLength: 3, nullable: false })
-  // projectKey: IDType;
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  projKey: string;
 
-  // @ManyToOne(() => Project, (project: Project) => project.environments, { nullable: false })
-  // project?: Project;
+  // TODO: this should not be nullable
+  // TODO: this should not be exposed through the GraphQL either
+  // TODO: should create "ManyToOneByKey" to join tables by a non-ID key
+  @ManyToOne(() => Project, (project: Project) => project.environments, { skipGraphQLField: true, nullable: true })
+  project?: Project;
 
-  // color
-  // defaultTtl
+  @OneToMany(() => Segment, (segment: Segment) => segment.environment)
+  segments?: Environment[];
 }

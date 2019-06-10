@@ -18,7 +18,7 @@ async function seedDatabase() {
   const server = getServer({ introspection: true, openPlayground: false });
   await server.start();
 
-  let binding: any;
+  let binding: Binding;
   try {
     binding = ((await server.getBinding()) as unknown) as Binding;
   } catch (error) {
@@ -34,15 +34,54 @@ async function seedDatabase() {
     const error = getBindingError(err);
     console.error(error);
   }
+  console.log('project', project);
 
   let environment;
   try {
-    environment = await createEnvironment(binding as any, `Foo ${project.id}`, 'production');
+    environment = await createEnvironment(binding as any, project.key, 'production');
+    console.log('environment', environment);
+    environment = await createEnvironment(binding as any, project.key, 'staging');
+    console.log('environment', environment);
+    environment = await createEnvironment(binding as any, project.key, 'development');
+    console.log('environment', environment);
   } catch (err) {
     const error = getBindingError(err);
     console.error(error);
   }
-  console.log(environment);
+
+  let segment;
+  try {
+    segment = await createSegment(binding as any, project.key, environment.key, 'segment-a');
+    console.log('segment', segment);
+    segment = await createSegment(binding as any, project.key, environment.key, 'segment-b');
+    console.log('segment', segment);
+    segment = await createSegment(binding as any, project.key, environment.key, 'segment-c');
+    console.log('segment', segment);
+  } catch (err) {
+    const error = getBindingError(err);
+    console.error(error);
+  }
+
+  try {
+    project = await binding.query.project(
+      { where: { id: project.id } },
+      `{
+      id
+      name
+      createdAt
+      environments {
+        id
+        name
+        key
+        createdAt
+      }
+    }`
+    );
+  } catch (err) {
+    const error = getBindingError(err);
+    console.error(error);
+  }
+  console.log(project);
 
   return server.stop();
 }
@@ -61,7 +100,7 @@ async function createProject(binding: Binding): Promise<Project> {
   return binding.mutation.createProject(
     {
       data: {
-        key: `mkt-${new Date().getTime()}`,
+        key: `proj-${new Date().getTime()}`,
         name: `Marketplace ${new Date().getTime()}`
       }
     },
@@ -69,19 +108,51 @@ async function createProject(binding: Binding): Promise<Project> {
   );
 }
 
-async function createEnvironment(binding: Binding, project: string, strName: string) {
-  const key = `key-${project}`;
-  const name = `Development ${strName} ${new Date().getTime()}`;
-
-  console.log(key, name);
+async function createEnvironment(binding: Binding, projKey: string, key: string) {
+  const name = `Development`;
 
   return binding.mutation.createEnvironment(
     {
       data: {
         key,
-        name
+        name: `${key[0].toUpperCase()}${key.substring(1)}`,
+        projKey
       }
     },
-    `{ id key name createdAt }`
+    `{ id key name projKey createdAt project { id name key createdAt } }`
+  );
+}
+
+async function createSegment(binding: Binding, projKey: string, envKey: string, key: string) {
+  return binding.mutation.createSegment(
+    {
+      data: {
+        description: 'My First Segment',
+        envKey,
+        key,
+        name: `${key[0].toUpperCase()}${key.substring(1)}`,
+        projKey
+      }
+    },
+    `{
+      id
+      key
+      name
+      createdAt
+      envKey
+      environmentId
+      environment {
+        id
+        key
+        createdAt
+      }
+      projKey
+      projectId
+      project {
+        id
+        key
+        createdAt
+      }
+    }`
   );
 }

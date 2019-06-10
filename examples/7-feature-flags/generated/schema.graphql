@@ -51,11 +51,17 @@ type Environment implements BaseGraphQLObject {
   version: Int!
   name: String!
   key: String!
+  projKey: String!
+  projectId: String
+  segments: [Segment!]
+  project: Project!
 }
 
 input EnvironmentCreateInput {
   name: String!
   key: String!
+  projKey: String!
+  projectId: String
 }
 
 enum EnvironmentOrderByInput {
@@ -69,11 +75,17 @@ enum EnvironmentOrderByInput {
   name_DESC
   key_ASC
   key_DESC
+  projKey_ASC
+  projKey_DESC
+  projectId_ASC
+  projectId_DESC
 }
 
 input EnvironmentUpdateInput {
   name: String
   key: String
+  projKey: String
+  projectId: String
 }
 
 input EnvironmentWhereInput {
@@ -108,11 +120,17 @@ input EnvironmentWhereInput {
   key_startsWith: String
   key_endsWith: String
   key_in: [String!]
+  projKey_eq: String
+  projKey_contains: String
+  projKey_startsWith: String
+  projKey_endsWith: String
+  projKey_in: [String!]
+  projectId_eq: ID
+  projectId_in: [ID!]
 }
 
 input EnvironmentWhereUniqueInput {
-  id: String
-  key: String
+  id: String!
 }
 
 type FeatureFlag implements BaseGraphQLObject {
@@ -362,6 +380,8 @@ type Project implements BaseGraphQLObject {
   version: Int!
   name: String!
   key: String!
+  environments: [Environment!]
+  segments: [Segment!]
 }
 
 input ProjectCreateInput {
@@ -453,13 +473,25 @@ type Segment implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
-  firstName: String!
-  lastName: String!
+  name: String!
+  key: String!
+  description: String!
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
+  environment: Environment!
+  project: Project!
 }
 
 input SegmentCreateInput {
-  firstName: String!
-  lastName: String!
+  name: String!
+  key: String!
+  description: String!
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
 }
 
 enum SegmentOrderByInput {
@@ -469,15 +501,30 @@ enum SegmentOrderByInput {
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
+  name_ASC
+  name_DESC
+  key_ASC
+  key_DESC
+  description_ASC
+  description_DESC
+  projKey_ASC
+  projKey_DESC
+  projectId_ASC
+  projectId_DESC
+  envKey_ASC
+  envKey_DESC
+  environmentId_ASC
+  environmentId_DESC
 }
 
 input SegmentUpdateInput {
-  firstName: String
-  lastName: String
+  name: String
+  key: String
+  description: String
+  projKey: String
+  projectId: String
+  envKey: String
+  environmentId: String
 }
 
 input SegmentWhereInput {
@@ -502,16 +549,35 @@ input SegmentWhereInput {
   deletedAt_gt: String
   deletedAt_gte: String
   deletedById_eq: String
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
-  lastName_eq: String
-  lastName_contains: String
-  lastName_startsWith: String
-  lastName_endsWith: String
-  lastName_in: [String!]
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+  key_eq: String
+  key_contains: String
+  key_startsWith: String
+  key_endsWith: String
+  key_in: [String!]
+  description_eq: String
+  description_contains: String
+  description_startsWith: String
+  description_endsWith: String
+  description_in: [String!]
+  projKey_eq: String
+  projKey_contains: String
+  projKey_startsWith: String
+  projKey_endsWith: String
+  projKey_in: [String!]
+  projectId_eq: ID
+  projectId_in: [ID!]
+  envKey_eq: String
+  envKey_contains: String
+  envKey_startsWith: String
+  envKey_endsWith: String
+  envKey_in: [String!]
+  environmentId_eq: ID
+  environmentId_in: [ID!]
 }
 
 input SegmentWhereUniqueInput {

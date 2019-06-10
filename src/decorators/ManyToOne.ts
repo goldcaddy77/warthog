@@ -17,18 +17,19 @@ export function ManyToOne(parentType: any, joinFunc: any, options: any = {}): an
   // Doesn't need to hand roll this each time by doing somethign like:
   // @StringField()
   // userId?: ID;
-  const createForeignKeyField = (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ): any => {
+  const createForeignKeyField = (target: any, propertyKey: string, descriptor: PropertyDescriptor): any => {
     klass = target.constructor.name;
     Reflect.defineProperty(target, `${klass}Id`, {});
-    StringField()(target, `${propertyKey}Id`, descriptor);
+    StringField(options)(target, `${propertyKey}Id`, descriptor);
   };
 
+  // In some instances, we don't want to expose the foreign key ID through GraphQL
+  const graphQLdecorator = options.skipGraphQLField
+    ? []
+    : [Field(parentType, { nullable: true, ...options }) as MethodDecoratorFactory]; // TODO: This should not be nullable by default
+
   const factories: MethodDecoratorFactory[] = [
-    Field(parentType, { nullable: true, ...options }) as MethodDecoratorFactory,
+    ...graphQLdecorator,
     TypeORMManyToOne(parentType, joinFunc, options) as MethodDecoratorFactory,
     JoinColumn() as MethodDecoratorFactory,
     createForeignKeyField,

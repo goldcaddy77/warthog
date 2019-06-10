@@ -1,36 +1,40 @@
-import { BaseModel, Model, StringField } from '../../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '../../../../src';
+
+import { Environment } from '../environment/environment.model';
+import { Project } from '../project/project.model';
 
 @Model()
 export class Segment extends BaseModel {
-  // ########################### Segment
+  @StringField({ maxLength: 50, minLength: 3, nullable: false })
+  name: string;
 
-  // ######### Keys
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  key: string;
 
-  // projKey*
-  // The project key
-
-  // envKey*
-  // The environment key
-
-  // ######### Data
-
-  // name*
-  // A human-friendly name for the segment
-
-  // key*
-  // A unique key that will be used to reference the segment
-
-  // description
-  // A description of the segment's purpose
+  @StringField({ maxLength: 255 })
+  description: string;
 
   // tags
   // Tags for the segment
 
-  // PATH PARAMS
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  projKey: string;
 
-  @StringField({ maxLength: 30 })
-  firstName?: string;
+  // TODO: this should not be nullable
+  // TODO: this should not be exposed through the GraphQL either
+  // TODO: should create "ManyToOneByKey" to join tables by a non-ID key
+  @ManyToOne(() => Project, (project: Project) => project.segments, { skipGraphQLField: true, nullable: true })
+  project?: Project;
 
-  @StringField({ maxLength: 50, minLength: 2 })
-  lastName?: string;
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  envKey: string;
+
+  // TODO: this should not be nullable
+  // TODO: this should not be exposed through the GraphQL either
+  // TODO: should create "ManyToOneByKey" to join tables by a non-ID key
+  @ManyToOne(() => Environment, (environment: Environment) => environment.segments, {
+    nullable: true,
+    skipGraphQLField: true
+  })
+  environment?: Environment;
 }

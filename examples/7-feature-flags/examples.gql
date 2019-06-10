@@ -1,0 +1,71 @@
+query {
+  segments(orderBy: createdAt_DESC) {
+    id
+    key
+    name
+    createdAt
+    envKey
+    environmentId
+    environment {
+      id
+      key
+      createdAt
+    }
+    projKey
+    projectId
+    project {
+      id
+      key
+      createdAt
+    }
+  }
+
+  projects(orderBy: createdAt_DESC) {
+    id
+    key
+    name
+    createdAt
+    environments {
+      id
+      key
+      projKey
+      projectId
+      name
+      createdAt
+    }
+  }
+
+  environments(orderBy: createdAt_DESC, limit: 10) {
+    id
+    key
+    projKey
+    projectId
+    name
+    createdAt
+    project {
+      id
+      name
+      key
+      segments {
+        id
+        key
+        name
+        envKey
+        environmentId
+        projKey
+        projectId
+        createdAt
+      }
+    }
+    segments {
+      id
+      key
+      name
+      envKey
+      environmentId
+      projKey
+      projectId
+      createdAt
+    }
+  }
+}
