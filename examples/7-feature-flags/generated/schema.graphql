@@ -1,0 +1,612 @@
+interface BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModel implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModelUUID implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+interface DeleteResponse {
+  id: ID!
+}
+
+type Environment implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  name: String!
+  key: String!
+}
+
+input EnvironmentCreateInput {
+  name: String!
+  key: String!
+}
+
+enum EnvironmentOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  name_ASC
+  name_DESC
+  key_ASC
+  key_DESC
+}
+
+input EnvironmentUpdateInput {
+  name: String
+  key: String
+}
+
+input EnvironmentWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+  key_eq: String
+  key_contains: String
+  key_startsWith: String
+  key_endsWith: String
+  key_in: [String!]
+}
+
+input EnvironmentWhereUniqueInput {
+  id: String
+  key: String
+}
+
+type FeatureFlag implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  firstName: String!
+  lastName: String!
+}
+
+input FeatureFlagCreateInput {
+  firstName: String!
+  lastName: String!
+}
+
+enum FeatureFlagOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+type FeatureFlagSegment implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  firstName: String!
+}
+
+input FeatureFlagSegmentCreateInput {
+  firstName: String!
+}
+
+enum FeatureFlagSegmentOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  firstName_ASC
+  firstName_DESC
+}
+
+input FeatureFlagSegmentUpdateInput {
+  firstName: String
+}
+
+input FeatureFlagSegmentWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
+}
+
+input FeatureFlagSegmentWhereUniqueInput {
+  id: String!
+}
+
+input FeatureFlagUpdateInput {
+  firstName: String
+  lastName: String
+}
+
+type FeatureFlagUser implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  firstName: String!
+  lastName: String!
+}
+
+input FeatureFlagUserCreateInput {
+  firstName: String!
+  lastName: String!
+}
+
+enum FeatureFlagUserOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+input FeatureFlagUserUpdateInput {
+  firstName: String
+  lastName: String
+}
+
+input FeatureFlagUserWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
+  lastName_eq: String
+  lastName_contains: String
+  lastName_startsWith: String
+  lastName_endsWith: String
+  lastName_in: [String!]
+}
+
+input FeatureFlagUserWhereUniqueInput {
+  id: String!
+}
+
+input FeatureFlagWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
+  lastName_eq: String
+  lastName_contains: String
+  lastName_startsWith: String
+  lastName_endsWith: String
+  lastName_in: [String!]
+}
+
+input FeatureFlagWhereUniqueInput {
+  id: String!
+}
+
+type Mutation {
+  createEnvironment(data: EnvironmentCreateInput!): Environment!
+  updateEnvironment(data: EnvironmentUpdateInput!, where: EnvironmentWhereUniqueInput!): Environment!
+  deleteEnvironment(where: EnvironmentWhereUniqueInput!): StandardDeleteResponse!
+  createFeatureFlagSegment(data: FeatureFlagSegmentCreateInput!): FeatureFlagSegment!
+  updateFeatureFlagSegment(data: FeatureFlagSegmentUpdateInput!, where: FeatureFlagSegmentWhereUniqueInput!): FeatureFlagSegment!
+  deleteFeatureFlagSegment(where: FeatureFlagSegmentWhereUniqueInput!): StandardDeleteResponse!
+  createFeatureFlagUsers(data: FeatureFlagUserCreateInput!): FeatureFlagUser!
+  updateFeatureFlagUser(data: FeatureFlagUserUpdateInput!, where: FeatureFlagUserWhereUniqueInput!): FeatureFlagUser!
+  deleteFeatureFlagUser(where: FeatureFlagUserWhereUniqueInput!): StandardDeleteResponse!
+  createFeatureFlag(data: FeatureFlagCreateInput!): FeatureFlag!
+  updateFeatureFlag(data: FeatureFlagUpdateInput!, where: FeatureFlagWhereUniqueInput!): FeatureFlag!
+  deleteFeatureFlag(where: FeatureFlagWhereUniqueInput!): StandardDeleteResponse!
+  createProject(data: ProjectCreateInput!): Project!
+  updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project!
+  deleteProject(where: ProjectWhereUniqueInput!): StandardDeleteResponse!
+  createSegment(data: SegmentCreateInput!): Segment!
+  updateSegment(data: SegmentUpdateInput!, where: SegmentWhereUniqueInput!): Segment!
+  deleteSegment(where: SegmentWhereUniqueInput!): StandardDeleteResponse!
+  createUserSegment(data: UserSegmentCreateInput!): UserSegment!
+  updateUserSegment(data: UserSegmentUpdateInput!, where: UserSegmentWhereUniqueInput!): UserSegment!
+  deleteUserSegment(where: UserSegmentWhereUniqueInput!): StandardDeleteResponse!
+}
+
+type Project implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  name: String!
+  key: String!
+}
+
+input ProjectCreateInput {
+  name: String!
+  key: String!
+}
+
+enum ProjectOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  name_ASC
+  name_DESC
+  key_ASC
+  key_DESC
+}
+
+input ProjectUpdateInput {
+  name: String
+  key: String
+}
+
+input ProjectWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+  key_eq: String
+  key_contains: String
+  key_startsWith: String
+  key_endsWith: String
+  key_in: [String!]
+}
+
+input ProjectWhereUniqueInput {
+  id: String
+  key: String
+}
+
+type Query {
+  environments(offset: Int, limit: Int = 50, where: EnvironmentWhereInput, orderBy: EnvironmentOrderByInput): [Environment!]!
+  environment(where: EnvironmentWhereUniqueInput!): Environment!
+  featureFlagSegments(offset: Int, limit: Int = 50, where: FeatureFlagSegmentWhereInput, orderBy: FeatureFlagSegmentOrderByInput): [FeatureFlagSegment!]!
+  featureFlagSegment(where: FeatureFlagSegmentWhereUniqueInput!): FeatureFlagSegment!
+  featureFlagUsers(offset: Int, limit: Int = 50, where: FeatureFlagUserWhereInput, orderBy: FeatureFlagUserOrderByInput): [FeatureFlagUser!]!
+  featureFlagUser(where: FeatureFlagUserWhereUniqueInput!): FeatureFlagUser!
+  featureFlags(offset: Int, limit: Int = 50, where: FeatureFlagWhereInput, orderBy: FeatureFlagOrderByInput): [FeatureFlag!]!
+  featureFlag(where: FeatureFlagWhereUniqueInput!): FeatureFlag!
+  projects(offset: Int, limit: Int = 50, where: ProjectWhereInput, orderBy: ProjectOrderByInput): [Project!]!
+  project(where: ProjectWhereUniqueInput!): Project!
+  segments(offset: Int, limit: Int = 50, where: SegmentWhereInput, orderBy: SegmentOrderByInput): [Segment!]!
+  segment(where: SegmentWhereUniqueInput!): Segment!
+  userSegments(offset: Int, limit: Int = 50, where: UserSegmentWhereInput, orderBy: UserSegmentOrderByInput): [UserSegment!]!
+  userSegment(where: UserSegmentWhereUniqueInput!): UserSegment!
+  user(where: UserWhereUniqueInput!): User!
+}
+
+type Segment implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  firstName: String!
+  lastName: String!
+}
+
+input SegmentCreateInput {
+  firstName: String!
+  lastName: String!
+}
+
+enum SegmentOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+input SegmentUpdateInput {
+  firstName: String
+  lastName: String
+}
+
+input SegmentWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
+  lastName_eq: String
+  lastName_contains: String
+  lastName_startsWith: String
+  lastName_endsWith: String
+  lastName_in: [String!]
+}
+
+input SegmentWhereUniqueInput {
+  id: String!
+}
+
+type StandardDeleteResponse {
+  id: ID!
+}
+
+type User implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type UserSegment implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  firstName: String!
+  lastName: String!
+}
+
+input UserSegmentCreateInput {
+  firstName: String!
+  lastName: String!
+}
+
+enum UserSegmentOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+input UserSegmentUpdateInput {
+  firstName: String
+  lastName: String
+}
+
+input UserSegmentWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
+  lastName_eq: String
+  lastName_contains: String
+  lastName_startsWith: String
+  lastName_endsWith: String
+  lastName_in: [String!]
+}
+
+input UserSegmentWhereUniqueInput {
+  id: String!
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}

@@ -1,0 +1,64 @@
+{
+  "name": "example2",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "//": "make sure to install top-level packages, too",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn generate:code && yarn db:seed:dev",
+    "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
+    "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
+    "db:seed:dev": "ts-node tools/seed.ts",
+    "generate:code": "ts-node tools/generate.ts",
+    "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
+    "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
+    "start": "yarn start:ts",
+    "start:debug": "yarn start:ts --inspect",
+    "start:ts": "ts-node --type-check src/index.ts",
+    "test": "dotenv -- jest --detectOpenHandles --verbose --coverage",
+    "test:watch": "dotenv -- jest --watch",
+    "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "graphql-binding": "^2.5.1",
+    "graphql-tools": "^4.0.4",
+    "module-alias": "^2.2.0",
+    "pgtools": "^0.3.0",
+    "reflect-metadata": "^0.1.12",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/faker": "^4.1.4",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/jest": "^23.3.11",
+    "@types/node": "^10.12.18",
+    "dotenv-cli": "^1.4.0",
+    "faker": "^4.1.0",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.8.0",
+    "tslint": "^5.12.1"
+  },
+  "jest": {
+    "transform": {
+      ".ts": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.test\\.ts$"
+    ]
+  },
+  "_moduleAliases": {
+    "//": "This allows us to refer to `warthog` in the example and use local warthog lib and not hit npm",
+    "warthog": "../../src/"
+  }
+}
