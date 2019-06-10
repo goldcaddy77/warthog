@@ -129,7 +129,7 @@ TYPEORM_PASSWORD=
 ```typescript
 
 import 'reflect-metadata';
-import { Server } from '../../../src';
+import { Server } from 'warthog';
 
 async function bootstrap() {
   const server = new Server();

@@ -4,13 +4,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseResolver, StandardDeleteResponse } from '../../../src';
-import {
-  PostCreateInput,
-  PostUpdateArgs,
-  PostWhereArgs,
-  PostWhereInput,
-  PostWhereUniqueInput
-} from '../generated';
+import { PostCreateInput, PostUpdateArgs, PostWhereArgs, PostWhereInput, PostWhereUniqueInput } from '../generated';
 
 import { Post } from './post.model';
 import { User } from './user.model';
@@ -48,10 +42,7 @@ export class PostResolver extends BaseResolver<Post> {
   }
 
   @Mutation(returns => Post)
-  async updatePost(
-    @Args() { data, where }: PostUpdateArgs,
-    @Ctx() ctx: BaseContext
-  ): Promise<Post> {
+  async updatePost(@Args() { data, where }: PostUpdateArgs, @Ctx() ctx: BaseContext): Promise<Post> {
     return this.update(data, where, ctx.user.id);
   }
 

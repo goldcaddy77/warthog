@@ -1,35 +1,17 @@
 import { GraphQLResolveInfo } from 'graphql';
-import {
-  Arg,
-  Args,
-  ArgsType,
-  Ctx,
-  Field,
-  FieldResolver,
-  Mutation,
-  Query,
-  Resolver,
-  Root
-} from 'type-graphql';
+import { Arg, Args, ArgsType, Ctx, Field, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseResolver } from '../../../../src';
-import {
-  UserRoleCreateInput,
-  UserRoleCreateManyArgs,
-  UserRoleWhereArgs,
-  UserRoleWhereInput
-} from '../../generated';
+import { UserRoleCreateInput, UserRoleCreateManyArgs, UserRoleWhereArgs, UserRoleWhereInput } from '../../generated';
 import { Role } from './role.model';
 import { UserRole } from './user-role.model';
 import { User } from './user.model';
 
 @Resolver(UserRole)
 export class UserRoleResolver extends BaseResolver<UserRole> {
-  constructor(
-    @InjectRepository(UserRole) public readonly userRoleRepository: Repository<UserRole>
-  ) {
+  constructor(@InjectRepository(UserRole) public readonly userRoleRepository: Repository<UserRole>) {
     super(UserRole, userRoleRepository);
   }
 
@@ -53,18 +35,12 @@ export class UserRoleResolver extends BaseResolver<UserRole> {
   }
 
   @Mutation(returns => UserRole)
-  async createUserRole(
-    @Arg('data') data: UserRoleCreateInput,
-    @Ctx() ctx: BaseContext
-  ): Promise<UserRole> {
+  async createUserRole(@Arg('data') data: UserRoleCreateInput, @Ctx() ctx: BaseContext): Promise<UserRole> {
     return this.create(data, ctx.user.id);
   }
 
   @Mutation(returns => [UserRole])
-  async createManyUserRoles(
-    @Args() { data }: UserRoleCreateManyArgs,
-    @Ctx() ctx: BaseContext
-  ): Promise<UserRole[]> {
+  async createManyUserRoles(@Args() { data }: UserRoleCreateManyArgs, @Ctx() ctx: BaseContext): Promise<UserRole[]> {
     return this.createMany(data, ctx.user.id);
   }
 }

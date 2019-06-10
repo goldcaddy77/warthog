@@ -43,10 +43,7 @@ export class UserResolver extends BaseResolver<User> {
 
   @Authorized('user:update')
   @Mutation(returns => User)
-  async updateUser(
-    @Args() { data, where }: UserUpdateArgs,
-    @Ctx() ctx: BaseContext
-  ): Promise<User> {
+  async updateUser(@Args() { data, where }: UserUpdateArgs, @Ctx() ctx: BaseContext): Promise<User> {
     return this.update(data, where, ctx.user.id);
   }
 
