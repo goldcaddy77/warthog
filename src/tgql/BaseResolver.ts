@@ -1,4 +1,4 @@
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { BaseModel, BaseService, WhereInput } from '../core';
 

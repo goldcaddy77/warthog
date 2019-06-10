@@ -16,6 +16,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "types": ["jest", "isomorphic-fetch", "node"]

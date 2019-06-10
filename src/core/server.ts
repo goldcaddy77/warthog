@@ -186,14 +186,14 @@ export class Server<C extends BaseContext> {
 
     const contextGetter =
       this.appOptions.context ||
-      (() => {
+      (async () => {
         return {};
       });
 
     debug('start:ApolloServerAllocation:start');
     this.graphQLServer = new ApolloServer({
       context: async (options: { req: Request }) => {
-        const consumerCtx = await contextGetter(options.req);
+        const consumerCtx = contextGetter(options.req);
         return {
           connection: this.connection,
           dataLoader: {
@@ -231,7 +231,9 @@ export class Server<C extends BaseContext> {
 
     // Open playground in the browser
     if (this.shouldOpenPlayground()) {
-      open(url, { wait: false });
+      // Assigning to variable and logging to appease linter
+      const process = open(url, { wait: false });
+      debug('process', process);
     }
 
     debug('start:end');

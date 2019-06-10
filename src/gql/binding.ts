@@ -89,4 +89,30 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
   debug('generateBindingFile:end');
 }
 
+export function getBindingError(err: any) {
+  const error = getOriginalError(err);
+  if (
+    error &&
+    error.extensions &&
+    error.extensions.exception &&
+    error.extensions.exception.validationErrors
+  ) {
+    error.extensions.exception.validationErrors.forEach((item: any) => {
+      error.validationErrors = error.validationErrors || {};
+      error.validationErrors[item.property] = item.constraints;
+    });
+  }
+  return error;
+}
+
+export function getOriginalError(error: any): any {
+  if (error.originalError) {
+    return getOriginalError(error.originalError);
+  }
+  if (error.errors) {
+    return error.errors.map(getOriginalError)[0];
+  }
+  return error;
+}
+
 export { Binding };

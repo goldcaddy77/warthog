@@ -74,7 +74,7 @@
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "graphql": "^14.0.2",
-    "graphql-binding": "^2.4.0",
+    "graphql-binding": "^2.5.1",
     "graphql-iso-date": "^3.6.1",
     "graphql-tools": "^4.0.3",
     "graphql-type-json": "^0.3.0",
