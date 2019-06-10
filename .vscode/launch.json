@@ -25,14 +25,18 @@
       "protocol": "inspector"
     },
     {
-      "name": "TS-Node",
+      "name": "ts-node",
       "type": "node",
       "request": "launch",
       "args": ["${relativeFile}"],
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
-      "protocol": "inspector"
+      "protocol": "inspector",
+      "env": {
+        "TS_NODE_IGNORE": "false",
+        "DEBUG": "*"
+      }
     }
   ]
 }

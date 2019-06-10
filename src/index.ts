@@ -1,5 +1,6 @@
 export * from './core';
 export * from './decorators';
+export * from './gql';
 export * from './middleware';
 export * from './schema';
 export * from './tgql';
