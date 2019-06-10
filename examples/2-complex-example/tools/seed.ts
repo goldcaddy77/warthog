@@ -1,6 +1,8 @@
 import * as Debug from 'debug';
 import * as Faker from 'faker';
 
+import { getBindingError } from '../../../src';
+
 import { getServer } from '../src/server';
 
 if (process.env.NODE_ENV !== 'development') {
@@ -54,8 +56,10 @@ async function seedDatabase() {
         `{ id email createdAt createdById }`
       );
       logger(user.email);
-    } catch (error) {
-      console.error(email, error);
+    } catch (err) {
+      const error = getBindingError(err);
+      console.error(email);
+      console.error(error);
     }
   }
 

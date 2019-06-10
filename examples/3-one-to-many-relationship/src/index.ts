@@ -1,12 +1,9 @@
 import 'reflect-metadata';
 
-import { Server } from '../../../src/';
+import { getServer } from './server';
 
 async function bootstrap() {
-  const server = new Server({
-    warthogImportPath: '../../../src' // Path written in generated classes
-  });
-
+  const server = getServer();
   await server.start();
 }
 

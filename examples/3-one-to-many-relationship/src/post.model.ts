@@ -1,4 +1,4 @@
-import { BaseModel, ID, ManyToOne, Model, StringField } from '../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '../../../src';
 
 import { User } from './user.model';
 

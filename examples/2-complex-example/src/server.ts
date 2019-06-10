@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { BaseContext, Server } from '../../../src/';
+import { BaseContext, Server } from '../../../src';
 
 import { customLogger } from './logger';
 

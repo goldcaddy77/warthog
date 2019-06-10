@@ -1,11 +1,13 @@
 import * as Debug from 'debug';
 
+import { loadConfig } from '../src/config';
 import { getServer } from '../src/server';
 
 const logger = Debug('warthog:generate');
 
 async function generate() {
-  return getServer({}).generateFiles();
+  loadConfig();
+  return getServer({ mockDBConnection: true }).generateFiles();
 }
 
 generate()

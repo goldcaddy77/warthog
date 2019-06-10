@@ -11,7 +11,7 @@ import { User } from './user.model';
 
 @Resolver(UserRole)
 export class UserRoleResolver extends BaseResolver<UserRole> {
-  constructor(@InjectRepository(UserRole) private readonly userRoleRepository: Repository<UserRole>) {
+  constructor(@InjectRepository(UserRole) public readonly userRoleRepository: Repository<UserRole>) {
     super(UserRole, userRoleRepository);
   }
 
