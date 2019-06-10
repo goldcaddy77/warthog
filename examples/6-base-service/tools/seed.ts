@@ -1,6 +1,8 @@
 import * as Debug from 'debug';
 import * as Faker from 'faker';
 
+import { getBindingError } from '../../../src';
+
 import { loadConfig } from '../src/config';
 import { getServer } from '../src/server';
 
@@ -45,8 +47,10 @@ async function seedDatabase() {
         `{ id firstName lastName createdAt createdById }`
       );
       logger(user.firstName);
-    } catch (error) {
-      console.error(firstName, error);
+    } catch (err) {
+      const error = getBindingError(err);
+      console.error(error);
+      console.error(firstName);
     }
   }
 

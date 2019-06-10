@@ -1,6 +1,7 @@
+import 'module-alias/register'; // Needed so that we can refer to `warthog` as the import and use the src from this project instead of on NPM
 import 'reflect-metadata';
 
-import { BaseContext, Server } from '../../../src/';
+import { BaseContext, Server } from '../../../src';
 
 interface Context extends BaseContext {
   user: {

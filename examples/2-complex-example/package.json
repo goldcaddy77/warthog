@@ -4,11 +4,11 @@
   "license": "MIT",
   "scripts": {
     "//": "make sure to install top-level packages, too",
-    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn db:seed:dev",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn generate:code && yarn db:seed:dev",
     "db:create": "createdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:drop": "dropdbjs $(dotenv -p TYPEORM_DATABASE) 2>&1 || :",
     "db:seed:dev": "dotenv -- ts-node tools/seed.ts",
-    "generate:code": "dotenv -- ts-node tools/generate.ts",
+    "generate:code": "ts-node tools/generate.ts",
     "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
     "start": "yarn start:ts",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
+    "module-alias": "^2.2.0",
     "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.2.2"
@@ -52,5 +53,9 @@
       "/node_modules/",
       "\\.test\\.ts$"
     ]
+  },
+  "_moduleAliases": {
+    "//": "This allows us to refer to `warthog` in the example and use local warthog lib and not hit npm",
+    "warthog": "../../src/"
   }
 }

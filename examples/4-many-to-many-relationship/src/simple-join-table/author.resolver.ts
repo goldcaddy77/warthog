@@ -29,7 +29,10 @@ export class AuthorResolver extends BaseResolver<Author> {
   }
 
   @Mutation(returns => Author)
-  async createAuthor(@Arg('data') data: AuthorCreateInput, @Ctx() ctx: BaseContext): Promise<Author> {
+  async createAuthor(
+    @Arg('data') data: AuthorCreateInput,
+    @Ctx() ctx: BaseContext
+  ): Promise<Author> {
     return this.create(data, ctx.user.id);
   }
 }

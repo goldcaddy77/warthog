@@ -3,7 +3,7 @@ import 'reflect-metadata';
 
 import { Binding } from '../generated/binding';
 
-import { User } from './modules/user/user.model';
+import { StringEnum, User } from './modules/user/user.model';
 import { getServer } from './server';
 
 const server = getServer({}, { logging: false });
@@ -21,9 +21,10 @@ beforeAll(async done => {
   testUser = await binding.mutation.createUser(
     {
       data: {
-        email: `goldcaddy${key}@gmail.com`,
+        email: `asdf`,
         firstName: `first ${key}`,
-        lastName: `last ${key}`
+        lastName: `last ${key}`,
+        stringEnumField: StringEnum.FOO
       }
     },
     `{ id email firstName lastName }`
@@ -71,7 +72,8 @@ describe('Users', () => {
           data: {
             email: testUser.email!,
             firstName: testUser.firstName!,
-            lastName: testUser.lastName!
+            lastName: testUser.lastName!,
+            stringEnumField: StringEnum.FOO
           }
         },
         `{ id email createdAt createdById }`

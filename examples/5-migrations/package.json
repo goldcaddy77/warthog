@@ -18,6 +18,7 @@
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
+    "module-alias": "^2.2.0",
     "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
     "typeorm": "^0.2.12",
@@ -52,5 +53,9 @@
       "/node_modules/",
       "\\.test\\.ts$"
     ]
+  },
+  "_moduleAliases": {
+    "//": "This allows us to refer to `warthog` in the example and use local warthog lib and not hit npm",
+    "warthog": "../../src/"
   }
 }
