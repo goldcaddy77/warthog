@@ -30,9 +30,7 @@ export class FeatureFlagSegmentResolver {
   }
 
   @Query(returns => FeatureFlagSegment)
-  async featureFlagSegment(
-    @Arg('where') where: FeatureFlagSegmentWhereUniqueInput
-  ): Promise<FeatureFlagSegment> {
+  async featureFlagSegment(@Arg('where') where: FeatureFlagSegmentWhereUniqueInput): Promise<FeatureFlagSegment> {
     return this.service.findOne<FeatureFlagSegmentWhereUniqueInput>(where);
   }
 

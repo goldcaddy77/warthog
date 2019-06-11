@@ -56,9 +56,19 @@ async function seedDatabase() {
       const segments = await createSegmentsForEnvironment(binding as any, project.key, env.key);
 
       // tslint:disable-next-line:prefer-for-of
+      for (let l = 0; l < segments.length; l++) {
+        const segment = segments[l];
+
+        await createUserSegment(binding as any, project.key, env.key, 'user-a', segment.key);
+        await createUserSegment(binding as any, project.key, env.key, 'user-b', segment.key);
+      }
+
+      // tslint:disable-next-line:prefer-for-of
       for (let j = 0; j < featureFlags.length; j++) {
         const flag = featureFlags[j];
-        await createFeatureFlagUsersForEnv(binding as any, project.key, env.key, flag.key);
+
+        await createFeatureFlagUser(binding as any, project.key, env.key, flag.key, 'user-a');
+        await createFeatureFlagUser(binding as any, project.key, env.key, flag.key, 'user-b');
 
         // tslint:disable-next-line:prefer-for-of
         for (let k = 0; k < segments.length; k++) {
@@ -73,19 +83,67 @@ async function seedDatabase() {
     project = await binding.query.project(
       { where: { id: project.id } },
       `{
-      id
-      name
-      createdAt
-      environments {
         id
         name
-        key
         createdAt
+        environments {
+          id
+          name
+          key
+          createdAt
+          featureFlagUsers {
+            envKey
+            featureKey
+            userKey
+            projKey
+          }
+          featureFlagSegments {
+            projKey
+            envKey
+            featureKey
+            segmentKey
+          }
+          userSegments {
+            projKey
+            envKey
+            userKey
+            segmentKey
+          }
+        }
+        featureFlags {
+          id
+          key
+          name
+          createdAt
+          featureFlagUsers {
+            projKey
+            envKey
+            featureKey
+            userKey
+          }
+          featureFlagSegments {
+            projKey
+            envKey
+            featureKey
+            segmentKey
+          }
+        }
         featureFlagUsers {
+          id
+          projKey
           envKey
           featureKey
           userKey
-          projKey
+          user {
+            id
+            key
+            userSegments {
+              projKey
+              envKey
+              userKey
+              segmentKey
+            }
+          }
         }
         featureFlagSegments {
           projKey
@@ -93,65 +151,45 @@ async function seedDatabase() {
           featureKey
           segmentKey
         }
-      }
-      featureFlags {
-        id
-        key
-        name
-        createdAt
-        featureFlagUsers {
+        userSegments {
           projKey
           envKey
-          featureKey
           userKey
-        }
-        featureFlagSegments {
-          projKey
-          envKey
-          featureKey
           segmentKey
         }
-      }
-      featureFlagUsers {
-        id
-        projKey
-        envKey
-        featureKey
-        userKey
-      }
-      featureFlagSegments {
-        projKey
-        envKey
-        featureKey
-        segmentKey
-      }
-      segments {
-        id
-        key
-        name
-        createdAt
-        envKey
-        environmentId
-        environment {
+        segments {
           id
           key
+          name
           createdAt
-        }
-        projKey
-        projectId
-        project {
-          id
-          key
-          createdAt
-        }
-        featureFlagSegments {
-          projKey
           envKey
-          featureKey
-          segmentKey
+          environmentId
+          environment {
+            id
+            key
+            createdAt
+          }
+          projKey
+          projectId
+          project {
+            id
+            key
+            createdAt
+          }
+          featureFlagSegments {
+            projKey
+            envKey
+            featureKey
+            segmentKey
+          }
+          userSegments {
+            projKey
+            envKey
+            userKey
+            segmentKey
+          }
         }
-      }
-    }`
+      }`
     );
   } catch (err) {
     console.log('ERROR MOFO');
@@ -232,6 +270,26 @@ async function createFeatureFlagUser(
   );
 }
 
+async function createUserSegment(
+  binding: Binding,
+  projKey: string,
+  envKey: string,
+  userKey: string,
+  segmentKey: string
+): Promise<FeatureFlagUser> {
+  return binding.mutation.createUserSegment(
+    {
+      data: {
+        envKey,
+        projKey,
+        segmentKey,
+        userKey
+      }
+    },
+    `{ id projKey envKey userKey segmentKey createdAt }`
+  );
+}
+
 async function createFeatureFlagSegment(
   binding: Binding,
   projKey: string,
@@ -301,21 +359,4 @@ async function createSegmentsForEnvironment(binding: Binding, projKey: string, e
   segments.push(segment);
 
   return segments;
-}
-
-async function createFeatureFlagUsersForEnv(
-  binding: Binding,
-  projKey: string,
-  envKey: string,
-  flagKey: string
-): Promise<FeatureFlagUser[]> {
-  const featureFlagUsers: FeatureFlagUser[] = [];
-  let featureFlagUser: FeatureFlagUser;
-
-  featureFlagUser = await createFeatureFlagUser(binding as any, projKey, envKey, flagKey, 'user-a');
-  featureFlagUsers.push(featureFlagUser);
-  featureFlagUser = await createFeatureFlagUser(binding as any, projKey, envKey, flagKey, 'user-b');
-  featureFlagUsers.push(featureFlagUser);
-
-  return featureFlagUsers;
 }

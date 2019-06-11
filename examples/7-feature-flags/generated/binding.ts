@@ -382,10 +382,22 @@ export type UserSegmentOrderByInput =
   | 'updatedAt_DESC'
   | 'deletedAt_ASC'
   | 'deletedAt_DESC'
-  | 'firstName_ASC'
-  | 'firstName_DESC'
-  | 'lastName_ASC'
-  | 'lastName_DESC';
+  | 'projKey_ASC'
+  | 'projKey_DESC'
+  | 'projectId_ASC'
+  | 'projectId_DESC'
+  | 'envKey_ASC'
+  | 'envKey_DESC'
+  | 'environmentId_ASC'
+  | 'environmentId_DESC'
+  | 'userKey_ASC'
+  | 'userKey_DESC'
+  | 'userId_ASC'
+  | 'userId_DESC'
+  | 'segmentKey_ASC'
+  | 'segmentKey_DESC'
+  | 'segmentId_ASC'
+  | 'segmentId_DESC';
 
 export interface EnvironmentCreateInput {
   name: String;
@@ -788,13 +800,25 @@ export interface SegmentWhereUniqueInput {
 }
 
 export interface UserSegmentCreateInput {
-  firstName: String;
-  lastName: String;
+  projKey: String;
+  projectId?: String | null;
+  envKey: String;
+  environmentId?: String | null;
+  userKey: String;
+  userId?: String | null;
+  segmentKey: String;
+  segmentId?: String | null;
 }
 
 export interface UserSegmentUpdateInput {
-  firstName?: String | null;
-  lastName?: String | null;
+  projKey?: String | null;
+  projectId?: String | null;
+  envKey?: String | null;
+  environmentId?: String | null;
+  userKey?: String | null;
+  userId?: String | null;
+  segmentKey?: String | null;
+  segmentId?: String | null;
 }
 
 export interface UserSegmentWhereInput {
@@ -819,16 +843,34 @@ export interface UserSegmentWhereInput {
   deletedAt_gt?: String | null;
   deletedAt_gte?: String | null;
   deletedById_eq?: String | null;
-  firstName_eq?: String | null;
-  firstName_contains?: String | null;
-  firstName_startsWith?: String | null;
-  firstName_endsWith?: String | null;
-  firstName_in?: String[] | String | null;
-  lastName_eq?: String | null;
-  lastName_contains?: String | null;
-  lastName_startsWith?: String | null;
-  lastName_endsWith?: String | null;
-  lastName_in?: String[] | String | null;
+  projKey_eq?: String | null;
+  projKey_contains?: String | null;
+  projKey_startsWith?: String | null;
+  projKey_endsWith?: String | null;
+  projKey_in?: String[] | String | null;
+  projectId_eq?: ID_Input | null;
+  projectId_in?: ID_Output[] | ID_Output | null;
+  envKey_eq?: String | null;
+  envKey_contains?: String | null;
+  envKey_startsWith?: String | null;
+  envKey_endsWith?: String | null;
+  envKey_in?: String[] | String | null;
+  environmentId_eq?: ID_Input | null;
+  environmentId_in?: ID_Output[] | ID_Output | null;
+  userKey_eq?: String | null;
+  userKey_contains?: String | null;
+  userKey_startsWith?: String | null;
+  userKey_endsWith?: String | null;
+  userKey_in?: String[] | String | null;
+  userId_eq?: ID_Input | null;
+  userId_in?: ID_Output[] | ID_Output | null;
+  segmentKey_eq?: String | null;
+  segmentKey_contains?: String | null;
+  segmentKey_startsWith?: String | null;
+  segmentKey_endsWith?: String | null;
+  segmentKey_in?: String[] | String | null;
+  segmentId_eq?: ID_Input | null;
+  segmentId_in?: ID_Output[] | ID_Output | null;
 }
 
 export interface UserSegmentWhereUniqueInput {
@@ -893,6 +935,7 @@ export interface Environment extends BaseGraphQLObject {
   segments?: Array<Segment> | null;
   featureFlagUsers?: Array<FeatureFlagUser> | null;
   featureFlagSegments?: Array<FeatureFlagSegment> | null;
+  userSegments?: Array<UserSegment> | null;
   project: Project;
 }
 
@@ -950,6 +993,7 @@ export interface FeatureFlagUser extends BaseGraphQLObject {
   projectId?: String | null;
   envKey: String;
   environmentId?: String | null;
+  user: User;
 }
 
 export interface Project extends BaseGraphQLObject {
@@ -968,6 +1012,7 @@ export interface Project extends BaseGraphQLObject {
   featureFlags?: Array<FeatureFlag> | null;
   featureFlagUsers?: Array<FeatureFlagUser> | null;
   featureFlagSegments?: Array<FeatureFlagSegment> | null;
+  userSegments?: Array<UserSegment> | null;
 }
 
 export interface Segment extends BaseGraphQLObject {
@@ -987,6 +1032,7 @@ export interface Segment extends BaseGraphQLObject {
   envKey: String;
   environmentId?: String | null;
   featureFlagSegments?: Array<FeatureFlagSegment> | null;
+  userSegments?: Array<UserSegment> | null;
   environment: Environment;
   project: Project;
 }
@@ -1006,6 +1052,7 @@ export interface User extends BaseGraphQLObject {
   version: Int;
   key: String;
   featureFlagUsers?: Array<FeatureFlagUser> | null;
+  userSegments?: Array<UserSegment> | null;
 }
 
 export interface UserSegment extends BaseGraphQLObject {
@@ -1017,8 +1064,14 @@ export interface UserSegment extends BaseGraphQLObject {
   deletedAt?: DateTime | null;
   deletedById?: String | null;
   version: Int;
-  firstName: String;
-  lastName: String;
+  projKey: String;
+  projectId?: String | null;
+  envKey: String;
+  environmentId?: String | null;
+  userKey: String;
+  userId?: String | null;
+  segmentKey: String;
+  segmentId?: String | null;
 }
 
 /*

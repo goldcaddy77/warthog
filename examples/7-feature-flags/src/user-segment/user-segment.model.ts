@@ -1,15 +1,46 @@
-import { BaseModel, Model, StringField } from '../../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '../../../../src';
+
+// import {Environment, Project, Segment, User} from '../models'
+import { Environment } from '../environment/environment.model';
+import { Project } from '../project/project.model';
+import { Segment } from '../segment/segment.model';
+import { User } from '../user/user.model';
 
 @Model()
 export class UserSegment extends BaseModel {
-  // userId
-  // segmentId
-  // environment
-  // project
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  projKey: string;
 
-  @StringField({ maxLength: 30 })
-  firstName?: string;
+  @ManyToOne(() => Project, (project: Project) => project.userSegments, {
+    nullable: true,
+    skipGraphQLField: true
+  })
+  project?: Project;
 
-  @StringField({ maxLength: 50, minLength: 2 })
-  lastName?: string;
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  envKey: string;
+
+  @ManyToOne(() => Environment, (environment: Environment) => environment.userSegments, {
+    nullable: true,
+    skipGraphQLField: true
+  })
+  environment?: Environment;
+
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  userKey: string;
+
+  @ManyToOne(() => User, (user: User) => user.userSegments, {
+    nullable: true,
+    skipGraphQLField: true
+  })
+  user?: User;
+
+  @StringField({ maxLength: 20, minLength: 3, nullable: false })
+  segmentKey: string;
+
+  @ManyToOne(() => Segment, (segment: Segment) => segment.userSegments, {
+    nullable: true,
+    skipGraphQLField: true
+  })
+  segment?: Segment;
 }

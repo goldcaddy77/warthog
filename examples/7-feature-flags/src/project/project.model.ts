@@ -5,6 +5,7 @@ import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment
 import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 import { FeatureFlag } from '../feature-flag/feature-flag.model';
 import { Segment } from '../segment/segment.model';
+import { UserSegment } from '../user-segment/user-segment.model';
 
 @Model()
 export class Project extends BaseModel {
@@ -28,4 +29,7 @@ export class Project extends BaseModel {
 
   @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.project)
   featureFlagSegments?: FeatureFlagSegment[];
+
+  @OneToMany(() => UserSegment, (userSegment: UserSegment) => userSegment.project)
+  userSegments?: UserSegment[];
 }

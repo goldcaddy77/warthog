@@ -1,9 +1,11 @@
 import { BaseModel, ManyToOne, Model, OneToMany, StringField } from '../../../../src';
 
+// import { FeatureFlagSegment, FeatureFlagUser, Project, Segment, UserSegment } from '../models';
 import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';
 import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 import { Project } from '../project/project.model';
 import { Segment } from '../segment/segment.model';
+import { UserSegment } from '../user-segment/user-segment.model';
 
 @Model()
 // TODO: Unique key+projectKey
@@ -31,4 +33,7 @@ export class Environment extends BaseModel {
 
   @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.environment)
   featureFlagSegments?: FeatureFlagSegment[];
+
+  @OneToMany(() => UserSegment, (userSegments: UserSegment) => userSegments.environment)
+  userSegments?: UserSegment[];
 }

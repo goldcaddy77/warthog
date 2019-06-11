@@ -56,6 +56,7 @@ type Environment implements BaseGraphQLObject {
   segments: [Segment!]
   featureFlagUsers: [FeatureFlagUser!]
   featureFlagSegments: [FeatureFlagSegment!]
+  userSegments: [UserSegment!]
   project: Project!
 }
 
@@ -323,6 +324,7 @@ type FeatureFlagUser implements BaseGraphQLObject {
   projectId: String
   envKey: String!
   environmentId: String
+  user: User!
 }
 
 input FeatureFlagUserCreateInput {
@@ -513,6 +515,7 @@ type Project implements BaseGraphQLObject {
   featureFlags: [FeatureFlag!]
   featureFlagUsers: [FeatureFlagUser!]
   featureFlagSegments: [FeatureFlagSegment!]
+  userSegments: [UserSegment!]
 }
 
 input ProjectCreateInput {
@@ -612,6 +615,7 @@ type Segment implements BaseGraphQLObject {
   envKey: String!
   environmentId: String
   featureFlagSegments: [FeatureFlagSegment!]
+  userSegments: [UserSegment!]
   environment: Environment!
   project: Project!
 }
@@ -731,6 +735,7 @@ type User implements BaseGraphQLObject {
   version: Int!
   key: String!
   featureFlagUsers: [FeatureFlagUser!]
+  userSegments: [UserSegment!]
 }
 
 type UserSegment implements BaseGraphQLObject {
@@ -742,13 +747,25 @@ type UserSegment implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
-  firstName: String!
-  lastName: String!
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
+  userKey: String!
+  userId: String
+  segmentKey: String!
+  segmentId: String
 }
 
 input UserSegmentCreateInput {
-  firstName: String!
-  lastName: String!
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
+  userKey: String!
+  userId: String
+  segmentKey: String!
+  segmentId: String
 }
 
 enum UserSegmentOrderByInput {
@@ -758,15 +775,33 @@ enum UserSegmentOrderByInput {
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
+  projKey_ASC
+  projKey_DESC
+  projectId_ASC
+  projectId_DESC
+  envKey_ASC
+  envKey_DESC
+  environmentId_ASC
+  environmentId_DESC
+  userKey_ASC
+  userKey_DESC
+  userId_ASC
+  userId_DESC
+  segmentKey_ASC
+  segmentKey_DESC
+  segmentId_ASC
+  segmentId_DESC
 }
 
 input UserSegmentUpdateInput {
-  firstName: String
-  lastName: String
+  projKey: String
+  projectId: String
+  envKey: String
+  environmentId: String
+  userKey: String
+  userId: String
+  segmentKey: String
+  segmentId: String
 }
 
 input UserSegmentWhereInput {
@@ -791,16 +826,34 @@ input UserSegmentWhereInput {
   deletedAt_gt: String
   deletedAt_gte: String
   deletedById_eq: String
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
-  lastName_eq: String
-  lastName_contains: String
-  lastName_startsWith: String
-  lastName_endsWith: String
-  lastName_in: [String!]
+  projKey_eq: String
+  projKey_contains: String
+  projKey_startsWith: String
+  projKey_endsWith: String
+  projKey_in: [String!]
+  projectId_eq: ID
+  projectId_in: [ID!]
+  envKey_eq: String
+  envKey_contains: String
+  envKey_startsWith: String
+  envKey_endsWith: String
+  envKey_in: [String!]
+  environmentId_eq: ID
+  environmentId_in: [ID!]
+  userKey_eq: String
+  userKey_contains: String
+  userKey_startsWith: String
+  userKey_endsWith: String
+  userKey_in: [String!]
+  userId_eq: ID
+  userId_in: [ID!]
+  segmentKey_eq: String
+  segmentKey_contains: String
+  segmentKey_startsWith: String
+  segmentKey_endsWith: String
+  segmentKey_in: [String!]
+  segmentId_eq: ID
+  segmentId_in: [ID!]
 }
 
 input UserSegmentWhereUniqueInput {
