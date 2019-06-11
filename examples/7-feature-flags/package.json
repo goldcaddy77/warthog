@@ -56,9 +56,5 @@
       "/node_modules/",
       "\\.test\\.ts$"
     ]
-  },
-  "_moduleAliases": {
-    "//": "This allows us to refer to `warthog` in the example and use local warthog lib and not hit npm",
-    "warthog": "../../src/"
   }
 }

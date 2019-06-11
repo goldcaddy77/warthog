@@ -14,7 +14,7 @@
   "scripts": {
     "build": "yarn tsc",
     "lint": "tslint --fix -c ./tslint.json -p ./tsconfig.json",
-    "prettify": "prettier ./{src,test,tools}/**/*.ts --write",
+    "prettify": "prettier ./{src,test,tools,!generated}/**/*.ts --write",
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
     "test:watch": "jest --verbose --watch",
@@ -113,14 +113,19 @@
     "tslint-config-prettier": "^1.17.0"
   },
   "lint-staged": {
-    "*.ts": [
-      "tslint --fix",
-      "prettier --write",
-      "git add"
-    ],
-    "*.{js,json}": [
-      "prettier --write",
-      "git add"
+    "linters": {
+      "*.ts": [
+        "tslint --fix",
+        "prettier --write",
+        "git add"
+      ],
+      "*.{js,json}": [
+        "prettier --write",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "**/generated/*"
     ]
   },
   "release": {

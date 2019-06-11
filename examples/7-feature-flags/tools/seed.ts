@@ -42,41 +42,28 @@ async function seedDatabase() {
     environments.push(environment);
 
     // Create flags
-    let featureFlag: FeatureFlag;
-    const featureFlags: FeatureFlag[] = [];
-    featureFlag = await createFeatureFlag(binding as any, project.key, 'map-view');
-    featureFlags.push(featureFlag);
-    featureFlag = await createFeatureFlag(binding as any, project.key, 'enhanced-navigation');
-    featureFlags.push(featureFlag);
+    await createFeatureFlag(binding as any, project.key, 'alpha-map-view');
+    await createFeatureFlag(binding as any, project.key, 'beta-enhanced-nav');
+    await createFeatureFlag(binding as any, project.key, 'flag-user-a-specific');
+    await createFeatureFlag(binding as any, project.key, 'flag-user-b-specific');
 
     // Create per-environment items
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < environments.length; i++) {
       const env = environments[i];
-      const segments = await createSegmentsForEnvironment(binding as any, project.key, env.key);
 
-      // tslint:disable-next-line:prefer-for-of
-      for (let l = 0; l < segments.length; l++) {
-        const segment = segments[l];
+      await createSegment(binding, project.key, env.key, 'segment-alpha');
+      await createSegment(binding, project.key, env.key, 'segment-beta');
+      await createSegment(binding, project.key, env.key, 'segment-c');
 
-        await createUserSegment(binding as any, project.key, env.key, 'user-a', segment.key);
-        await createUserSegment(binding as any, project.key, env.key, 'user-b', segment.key);
-      }
+      await createUserSegment(binding as any, project.key, env.key, 'user-a', 'segment-alpha');
+      await createUserSegment(binding as any, project.key, env.key, 'user-b', 'segment-beta');
 
-      // tslint:disable-next-line:prefer-for-of
-      for (let j = 0; j < featureFlags.length; j++) {
-        const flag = featureFlags[j];
+      await createFeatureFlagSegment(binding as any, project.key, env.key, 'alpha-map-view', 'segment-alpha');
+      await createFeatureFlagSegment(binding as any, project.key, env.key, 'beta-enhanced-navigation', 'segment-beta');
 
-        await createFeatureFlagUser(binding as any, project.key, env.key, flag.key, 'user-a');
-        await createFeatureFlagUser(binding as any, project.key, env.key, flag.key, 'user-b');
-
-        // tslint:disable-next-line:prefer-for-of
-        for (let k = 0; k < segments.length; k++) {
-          const segment = segments[k];
-          await createFeatureFlagSegment(binding as any, project.key, env.key, flag.key, segment.key);
-        }
-      }
-      console.log('LOOP COMPLETE');
+      await createFeatureFlagUser(binding as any, project.key, env.key, 'flag-user-a-specific', 'user-a');
+      await createFeatureFlagUser(binding as any, project.key, env.key, 'flag-user-b-specific', 'user-b');
     }
 
     console.log('QUERYING PROJECT');
@@ -191,13 +178,18 @@ async function seedDatabase() {
         }
       }`
     );
+    console.dir(project, { depth: null });
+
+    const flags = await binding.query.featureFlagsForUser({
+      where: { projKey: project.key, envKey: 'production', userKey: 'user-a' }
+    });
+
+    console.dir(flags, { depth: null });
   } catch (err) {
     console.log('ERROR MOFO');
     const error = getBindingError(err);
     console.error(error);
   }
-
-  console.dir(project, { depth: null });
 
   return server.stop();
 }
@@ -342,21 +334,4 @@ async function createSegment(binding: Binding, projKey: string, envKey: string, 
       }
     }`
   );
-}
-
-async function createSegmentsForEnvironment(binding: Binding, projKey: string, envKey: string): Promise<Segment[]> {
-  const segments: Segment[] = [];
-  let segment: Segment;
-
-  segment = await createSegment(binding, projKey, envKey, 'segment-a');
-  // console.log('segment', segment);
-  segments.push(segment);
-  segment = await createSegment(binding, projKey, envKey, 'segment-b');
-  // console.log('segment', segment);
-  segments.push(segment);
-  segment = await createSegment(binding, projKey, envKey, 'segment-c');
-  // console.log('segment', segment);
-  segments.push(segment);
-
-  return segments;
 }
