@@ -60,7 +60,7 @@ async function seedDatabase() {
       await createUserSegment(binding as any, project.key, env.key, 'user-b', 'segment-beta');
 
       await createFeatureFlagSegment(binding as any, project.key, env.key, 'alpha-map-view', 'segment-alpha');
-      await createFeatureFlagSegment(binding as any, project.key, env.key, 'beta-enhanced-navigation', 'segment-beta');
+      await createFeatureFlagSegment(binding as any, project.key, env.key, 'beta-enhanced-nav', 'segment-beta');
 
       await createFeatureFlagUser(binding as any, project.key, env.key, 'flag-user-a-specific', 'user-a');
       await createFeatureFlagUser(binding as any, project.key, env.key, 'flag-user-b-specific', 'user-b');
@@ -71,6 +71,7 @@ async function seedDatabase() {
       { where: { id: project.id } },
       `{
         id
+        key
         name
         createdAt
         environments {
@@ -180,11 +181,17 @@ async function seedDatabase() {
     );
     console.dir(project, { depth: null });
 
-    const flags = await binding.query.featureFlagsForUser({
+    const flagsA = await binding.query.featureFlagsForUser({
       where: { projKey: project.key, envKey: 'production', userKey: 'user-a' }
     });
 
-    console.dir(flags, { depth: null });
+    console.dir(flagsA, { depth: null });
+
+    const flagsB = await binding.query.featureFlagsForUser({
+      where: { projKey: project.key, envKey: 'production', userKey: 'user-b' }
+    });
+
+    console.dir(flagsB, { depth: null });
   } catch (err) {
     console.log('ERROR MOFO');
     const error = getBindingError(err);

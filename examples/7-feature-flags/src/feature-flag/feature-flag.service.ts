@@ -43,7 +43,6 @@ export class FeatureFlagService extends BaseService<FeatureFlag> {
     `;
 
     const results = await this.repository.query(query);
-    console.log('results', results);
 
     return results.map(item => item.feature_key);
   }
