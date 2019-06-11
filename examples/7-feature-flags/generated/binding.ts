@@ -300,8 +300,22 @@ export type FeatureFlagSegmentOrderByInput =
   | 'updatedAt_DESC'
   | 'deletedAt_ASC'
   | 'deletedAt_DESC'
-  | 'firstName_ASC'
-  | 'firstName_DESC';
+  | 'projKey_ASC'
+  | 'projKey_DESC'
+  | 'projectId_ASC'
+  | 'projectId_DESC'
+  | 'envKey_ASC'
+  | 'envKey_DESC'
+  | 'environmentId_ASC'
+  | 'environmentId_DESC'
+  | 'featureKey_ASC'
+  | 'featureKey_DESC'
+  | 'featureFlagId_ASC'
+  | 'featureFlagId_DESC'
+  | 'segmentKey_ASC'
+  | 'segmentKey_DESC'
+  | 'segmentId_ASC'
+  | 'segmentId_DESC';
 
 export type FeatureFlagUserOrderByInput =
   | 'createdAt_ASC'
@@ -440,11 +454,25 @@ export interface FeatureFlagCreateInput {
 }
 
 export interface FeatureFlagSegmentCreateInput {
-  firstName: String;
+  projKey: String;
+  projectId?: String | null;
+  envKey: String;
+  environmentId?: String | null;
+  featureKey: String;
+  featureFlagId?: String | null;
+  segmentKey: String;
+  segmentId?: String | null;
 }
 
 export interface FeatureFlagSegmentUpdateInput {
-  firstName?: String | null;
+  projKey?: String | null;
+  projectId?: String | null;
+  envKey?: String | null;
+  environmentId?: String | null;
+  featureKey?: String | null;
+  featureFlagId?: String | null;
+  segmentKey?: String | null;
+  segmentId?: String | null;
 }
 
 export interface FeatureFlagSegmentWhereInput {
@@ -469,11 +497,34 @@ export interface FeatureFlagSegmentWhereInput {
   deletedAt_gt?: String | null;
   deletedAt_gte?: String | null;
   deletedById_eq?: String | null;
-  firstName_eq?: String | null;
-  firstName_contains?: String | null;
-  firstName_startsWith?: String | null;
-  firstName_endsWith?: String | null;
-  firstName_in?: String[] | String | null;
+  projKey_eq?: String | null;
+  projKey_contains?: String | null;
+  projKey_startsWith?: String | null;
+  projKey_endsWith?: String | null;
+  projKey_in?: String[] | String | null;
+  projectId_eq?: ID_Input | null;
+  projectId_in?: ID_Output[] | ID_Output | null;
+  envKey_eq?: String | null;
+  envKey_contains?: String | null;
+  envKey_startsWith?: String | null;
+  envKey_endsWith?: String | null;
+  envKey_in?: String[] | String | null;
+  environmentId_eq?: ID_Input | null;
+  environmentId_in?: ID_Output[] | ID_Output | null;
+  featureKey_eq?: String | null;
+  featureKey_contains?: String | null;
+  featureKey_startsWith?: String | null;
+  featureKey_endsWith?: String | null;
+  featureKey_in?: String[] | String | null;
+  featureFlagId_eq?: ID_Input | null;
+  featureFlagId_in?: ID_Output[] | ID_Output | null;
+  segmentKey_eq?: String | null;
+  segmentKey_contains?: String | null;
+  segmentKey_startsWith?: String | null;
+  segmentKey_endsWith?: String | null;
+  segmentKey_in?: String[] | String | null;
+  segmentId_eq?: ID_Input | null;
+  segmentId_in?: ID_Output[] | ID_Output | null;
 }
 
 export interface FeatureFlagSegmentWhereUniqueInput {
@@ -841,6 +892,7 @@ export interface Environment extends BaseGraphQLObject {
   projectId?: String | null;
   segments?: Array<Segment> | null;
   featureFlagUsers?: Array<FeatureFlagUser> | null;
+  featureFlagSegments?: Array<FeatureFlagSegment> | null;
   project: Project;
 }
 
@@ -858,6 +910,7 @@ export interface FeatureFlag extends BaseGraphQLObject {
   projKey: String;
   projectId?: String | null;
   featureFlagUsers?: Array<FeatureFlagUser> | null;
+  featureFlagSegments?: Array<FeatureFlagSegment> | null;
   project: Project;
 }
 
@@ -870,7 +923,14 @@ export interface FeatureFlagSegment extends BaseGraphQLObject {
   deletedAt?: DateTime | null;
   deletedById?: String | null;
   version: Int;
-  firstName: String;
+  projKey: String;
+  projectId?: String | null;
+  envKey: String;
+  environmentId?: String | null;
+  featureKey: String;
+  featureFlagId?: String | null;
+  segmentKey: String;
+  segmentId?: String | null;
 }
 
 export interface FeatureFlagUser extends BaseGraphQLObject {
@@ -907,6 +967,7 @@ export interface Project extends BaseGraphQLObject {
   segments?: Array<Segment> | null;
   featureFlags?: Array<FeatureFlag> | null;
   featureFlagUsers?: Array<FeatureFlagUser> | null;
+  featureFlagSegments?: Array<FeatureFlagSegment> | null;
 }
 
 export interface Segment extends BaseGraphQLObject {
@@ -925,6 +986,7 @@ export interface Segment extends BaseGraphQLObject {
   projectId?: String | null;
   envKey: String;
   environmentId?: String | null;
+  featureFlagSegments?: Array<FeatureFlagSegment> | null;
   environment: Environment;
   project: Project;
 }

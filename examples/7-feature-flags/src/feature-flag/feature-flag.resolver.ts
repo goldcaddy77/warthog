@@ -11,6 +11,7 @@ import {
   FeatureFlagWhereUniqueInput
 } from '../../generated';
 
+import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';
 import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 import { Project } from '../project/project.model';
 
@@ -26,6 +27,11 @@ export class FeatureFlagResolver {
   @FieldResolver(returns => Project)
   project(@Root() featureFlag: FeatureFlag, @Ctx() ctx: BaseContext): Promise<Project> {
     return ctx.dataLoader.loaders.FeatureFlag.project.load(featureFlag);
+  }
+
+  @FieldResolver(returns => [FeatureFlagSegment])
+  featureFlagSegments(@Root() featureFlag: FeatureFlag, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+    return ctx.dataLoader.loaders.FeatureFlag.featureFlagSegments.load(featureFlag);
   }
 
   @FieldResolver(returns => [FeatureFlagUser])

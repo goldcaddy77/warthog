@@ -20,7 +20,7 @@ export class FeatureFlagUser extends BaseModel {
   userKey: string;
 
   @ManyToOne(() => User, (user: User) => user.featureFlagUsers, { skipGraphQLField: true, nullable: true })
-  user?: Project;
+  user?: User;
 
   @StringField({ maxLength: 20, minLength: 3, nullable: false })
   projKey: string;

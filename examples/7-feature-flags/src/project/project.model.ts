@@ -1,6 +1,7 @@
 import { BaseModel, Model, OneToMany, StringField } from '../../../../src';
 
 import { Environment } from '../environment/environment.model';
+import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';
 import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 import { FeatureFlag } from '../feature-flag/feature-flag.model';
 import { Segment } from '../segment/segment.model';
@@ -24,4 +25,7 @@ export class Project extends BaseModel {
 
   @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.project)
   featureFlagUsers?: FeatureFlagUser[];
+
+  @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.project)
+  featureFlagSegments?: FeatureFlagSegment[];
 }

@@ -11,6 +11,7 @@ import {
   EnvironmentWhereUniqueInput
 } from '../../generated';
 
+import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';
 import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 import { Project } from '../project/project.model';
 import { Segment } from '../segment/segment.model';
@@ -37,6 +38,11 @@ export class EnvironmentResolver {
   @FieldResolver(returns => [FeatureFlagUser])
   featureFlagUsers(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<FeatureFlagUser[]> {
     return ctx.dataLoader.loaders.Environment.featureFlagUsers.load(environment);
+  }
+
+  @FieldResolver(returns => [FeatureFlagSegment])
+  featureFlagSegments(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+    return ctx.dataLoader.loaders.Environment.featureFlagSegments.load(environment);
   }
 
   @Query(returns => [Environment])

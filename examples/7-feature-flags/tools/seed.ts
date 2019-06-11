@@ -26,62 +26,50 @@ async function seedDatabase() {
     return process.exit(1);
   }
 
-  // Hmmm, not sure why I have to do this
-  let project: Project = (null as unknown) as Project;
-  try {
-    project = ((await createProject(binding as any)) as unknown) as Project;
-  } catch (err) {
-    const error = getBindingError(err);
-    console.error(error);
-  }
+  let project: Project;
+  // Not doing this in try/catch because the rest of the script complains that it's being used before beind declared otherwise
+  project = ((await createProject(binding as any)) as unknown) as Project;
 
-  let environment: Environment;
-  const environments: Environment[] = [];
   try {
+    // Create environment
+    let environment: Environment;
+    const environments: Environment[] = [];
     environment = await createEnvironment(binding as any, project.key, 'production');
     environments.push(environment);
     environment = await createEnvironment(binding as any, project.key, 'staging');
     environments.push(environment);
     environment = await createEnvironment(binding as any, project.key, 'development');
     environments.push(environment);
-  } catch (err) {
-    const error = getBindingError(err);
-    console.error(error);
-  }
 
-  try {
-    environments.forEach(async (env: Environment) => {
-      await createSegmentsForEnvironment(binding as any, project.key, env.key);
-    });
-  } catch (err) {
-    const error = getBindingError(err);
-    console.error(error);
-  }
-
-  let featureFlag: FeatureFlag;
-  const featureFlags: FeatureFlag[] = [];
-  try {
+    // Create flags
+    let featureFlag: FeatureFlag;
+    const featureFlags: FeatureFlag[] = [];
     featureFlag = await createFeatureFlag(binding as any, project.key, 'map-view');
     featureFlags.push(featureFlag);
     featureFlag = await createFeatureFlag(binding as any, project.key, 'enhanced-navigation');
     featureFlags.push(featureFlag);
-  } catch (err) {
-    const error = getBindingError(err);
-    console.error(error);
-  }
 
-  try {
-    for (const env of environments) {
-      for (const flag of featureFlags) {
+    // Create per-environment items
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < environments.length; i++) {
+      const env = environments[i];
+      const segments = await createSegmentsForEnvironment(binding as any, project.key, env.key);
+
+      // tslint:disable-next-line:prefer-for-of
+      for (let j = 0; j < featureFlags.length; j++) {
+        const flag = featureFlags[j];
         await createFeatureFlagUsersForEnv(binding as any, project.key, env.key, flag.key);
-      }
-    }
-  } catch (err) {
-    const error = getBindingError(err);
-    console.error(error);
-  }
 
-  try {
+        // tslint:disable-next-line:prefer-for-of
+        for (let k = 0; k < segments.length; k++) {
+          const segment = segments[k];
+          await createFeatureFlagSegment(binding as any, project.key, env.key, flag.key, segment.key);
+        }
+      }
+      console.log('LOOP COMPLETE');
+    }
+
+    console.log('QUERYING PROJECT');
     project = await binding.query.project(
       { where: { id: project.id } },
       `{
@@ -99,6 +87,12 @@ async function seedDatabase() {
           userKey
           projKey
         }
+        featureFlagSegments {
+          projKey
+          envKey
+          featureKey
+          segmentKey
+        }
       }
       featureFlags {
         id
@@ -106,18 +100,30 @@ async function seedDatabase() {
         name
         createdAt
         featureFlagUsers {
+          projKey
           envKey
           featureKey
           userKey
+        }
+        featureFlagSegments {
           projKey
+          envKey
+          featureKey
+          segmentKey
         }
       }
       featureFlagUsers {
         id
+        projKey
         envKey
         featureKey
         userKey
+      }
+      featureFlagSegments {
         projKey
+        envKey
+        featureKey
+        segmentKey
       }
       segments {
         id
@@ -138,10 +144,17 @@ async function seedDatabase() {
           key
           createdAt
         }
+        featureFlagSegments {
+          projKey
+          envKey
+          featureKey
+          segmentKey
+        }
       }
     }`
     );
   } catch (err) {
+    console.log('ERROR MOFO');
     const error = getBindingError(err);
     console.error(error);
   }
@@ -216,6 +229,26 @@ async function createFeatureFlagUser(
       }
     },
     `{ id projKey envKey userKey featureKey createdAt }`
+  );
+}
+
+async function createFeatureFlagSegment(
+  binding: Binding,
+  projKey: string,
+  envKey: string,
+  featureKey: string,
+  segmentKey: string
+): Promise<FeatureFlagUser> {
+  return binding.mutation.createFeatureFlagSegment(
+    {
+      data: {
+        envKey,
+        featureKey,
+        projKey,
+        segmentKey
+      }
+    },
+    `{ id projKey envKey segmentKey featureKey createdAt }`
   );
 }
 

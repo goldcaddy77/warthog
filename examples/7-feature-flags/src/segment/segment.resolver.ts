@@ -12,6 +12,7 @@ import {
 } from '../../generated';
 
 import { Environment } from '../environment/environment.model';
+import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';
 import { Project } from '../project/project.model';
 
 import { Segment } from './segment.model';
@@ -21,6 +22,11 @@ import { SegmentService } from './segment.service';
 export class SegmentResolver {
   constructor(@Inject('SegmentService') readonly service: SegmentService) {
     // no-empty
+  }
+
+  @FieldResolver(returns => [FeatureFlagSegment])
+  featureFlagSegments(@Root() segment: Segment, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+    return ctx.dataLoader.loaders.Segment.featureFlagSegments.load(segment);
   }
 
   @FieldResolver(returns => Environment)

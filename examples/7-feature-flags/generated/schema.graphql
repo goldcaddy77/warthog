@@ -55,6 +55,7 @@ type Environment implements BaseGraphQLObject {
   projectId: String
   segments: [Segment!]
   featureFlagUsers: [FeatureFlagUser!]
+  featureFlagSegments: [FeatureFlagSegment!]
   project: Project!
 }
 
@@ -148,6 +149,7 @@ type FeatureFlag implements BaseGraphQLObject {
   projKey: String!
   projectId: String
   featureFlagUsers: [FeatureFlagUser!]
+  featureFlagSegments: [FeatureFlagSegment!]
   project: Project!
 }
 
@@ -184,11 +186,25 @@ type FeatureFlagSegment implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
-  firstName: String!
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
+  featureKey: String!
+  featureFlagId: String
+  segmentKey: String!
+  segmentId: String
 }
 
 input FeatureFlagSegmentCreateInput {
-  firstName: String!
+  projKey: String!
+  projectId: String
+  envKey: String!
+  environmentId: String
+  featureKey: String!
+  featureFlagId: String
+  segmentKey: String!
+  segmentId: String
 }
 
 enum FeatureFlagSegmentOrderByInput {
@@ -198,12 +214,33 @@ enum FeatureFlagSegmentOrderByInput {
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  firstName_ASC
-  firstName_DESC
+  projKey_ASC
+  projKey_DESC
+  projectId_ASC
+  projectId_DESC
+  envKey_ASC
+  envKey_DESC
+  environmentId_ASC
+  environmentId_DESC
+  featureKey_ASC
+  featureKey_DESC
+  featureFlagId_ASC
+  featureFlagId_DESC
+  segmentKey_ASC
+  segmentKey_DESC
+  segmentId_ASC
+  segmentId_DESC
 }
 
 input FeatureFlagSegmentUpdateInput {
-  firstName: String
+  projKey: String
+  projectId: String
+  envKey: String
+  environmentId: String
+  featureKey: String
+  featureFlagId: String
+  segmentKey: String
+  segmentId: String
 }
 
 input FeatureFlagSegmentWhereInput {
@@ -228,11 +265,34 @@ input FeatureFlagSegmentWhereInput {
   deletedAt_gt: String
   deletedAt_gte: String
   deletedById_eq: String
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
+  projKey_eq: String
+  projKey_contains: String
+  projKey_startsWith: String
+  projKey_endsWith: String
+  projKey_in: [String!]
+  projectId_eq: ID
+  projectId_in: [ID!]
+  envKey_eq: String
+  envKey_contains: String
+  envKey_startsWith: String
+  envKey_endsWith: String
+  envKey_in: [String!]
+  environmentId_eq: ID
+  environmentId_in: [ID!]
+  featureKey_eq: String
+  featureKey_contains: String
+  featureKey_startsWith: String
+  featureKey_endsWith: String
+  featureKey_in: [String!]
+  featureFlagId_eq: ID
+  featureFlagId_in: [ID!]
+  segmentKey_eq: String
+  segmentKey_contains: String
+  segmentKey_startsWith: String
+  segmentKey_endsWith: String
+  segmentKey_in: [String!]
+  segmentId_eq: ID
+  segmentId_in: [ID!]
 }
 
 input FeatureFlagSegmentWhereUniqueInput {
@@ -452,6 +512,7 @@ type Project implements BaseGraphQLObject {
   segments: [Segment!]
   featureFlags: [FeatureFlag!]
   featureFlagUsers: [FeatureFlagUser!]
+  featureFlagSegments: [FeatureFlagSegment!]
 }
 
 input ProjectCreateInput {
@@ -550,6 +611,7 @@ type Segment implements BaseGraphQLObject {
   projectId: String
   envKey: String!
   environmentId: String
+  featureFlagSegments: [FeatureFlagSegment!]
   environment: Environment!
   project: Project!
 }

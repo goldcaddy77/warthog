@@ -12,6 +12,7 @@ import {
 } from '../../generated';
 
 import { Environment } from '../environment/environment.model';
+import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';
 import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 import { FeatureFlag } from '../feature-flag/feature-flag.model';
 import { Segment } from '../segment/segment.model';
@@ -43,6 +44,11 @@ export class ProjectResolver {
   @FieldResolver(returns => [FeatureFlagUser])
   featureFlagUsers(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<FeatureFlagUser[]> {
     return ctx.dataLoader.loaders.Project.featureFlagUsers.load(project);
+  }
+
+  @FieldResolver(returns => [FeatureFlagSegment])
+  featureFlagSegments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+    return ctx.dataLoader.loaders.Project.featureFlagSegments.load(project);
   }
 
   @Query(returns => [Project])

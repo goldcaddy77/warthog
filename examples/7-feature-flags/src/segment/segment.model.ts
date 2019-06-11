@@ -1,7 +1,9 @@
-import { BaseModel, ManyToOne, Model, StringField } from '../../../../src';
+import { BaseModel, ManyToOne, Model, OneToMany, StringField } from '../../../../src';
 
 import { Environment } from '../environment/environment.model';
 import { Project } from '../project/project.model';
+
+import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';
 
 @Model()
 export class Segment extends BaseModel {
@@ -37,4 +39,7 @@ export class Segment extends BaseModel {
     skipGraphQLField: true
   })
   environment?: Environment;
+
+  @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.segment)
+  featureFlagSegments?: FeatureFlagSegment[];
 }
