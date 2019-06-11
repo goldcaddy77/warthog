@@ -3,7 +3,7 @@ import { getBindingError } from '../../../src';
 
 import { Binding } from '../generated/binding';
 import { loadConfig } from '../src/config';
-import { Project } from '../src/project/project.model';
+import { Environment, FeatureFlag, FeatureFlagUser, Project, Segment } from '../src/models';
 import { getServer } from '../src/server';
 
 if (process.env.NODE_ENV !== 'development') {
@@ -34,64 +34,48 @@ async function seedDatabase() {
     const error = getBindingError(err);
     console.error(error);
   }
-  // console.log('project', project);
 
-  let environment;
+  let environment: Environment;
+  const environments: Environment[] = [];
   try {
     environment = await createEnvironment(binding as any, project.key, 'production');
-    // console.log('environment', environment);
+    environments.push(environment);
     environment = await createEnvironment(binding as any, project.key, 'staging');
-    // console.log('environment', environment);
+    environments.push(environment);
     environment = await createEnvironment(binding as any, project.key, 'development');
-    // console.log('environment', environment);
+    environments.push(environment);
   } catch (err) {
     const error = getBindingError(err);
     console.error(error);
   }
 
-  let segment;
   try {
-    segment = await createSegment(binding as any, project.key, environment.key, 'segment-a');
-    // console.log('segment', segment);
-    segment = await createSegment(binding as any, project.key, environment.key, 'segment-b');
-    // console.log('segment', segment);
-    segment = await createSegment(binding as any, project.key, environment.key, 'segment-c');
-    // console.log('segment', segment);
+    environments.forEach(async (env: Environment) => {
+      await createSegmentsForEnvironment(binding as any, project.key, env.key);
+    });
   } catch (err) {
     const error = getBindingError(err);
     console.error(error);
   }
 
-  let featureFlag;
+  let featureFlag: FeatureFlag;
+  const featureFlags: FeatureFlag[] = [];
   try {
     featureFlag = await createFeatureFlag(binding as any, project.key, 'map-view');
-    console.log('featureFlag', featureFlag);
+    featureFlags.push(featureFlag);
     featureFlag = await createFeatureFlag(binding as any, project.key, 'enhanced-navigation');
-    console.log('featureFlag', featureFlag);
+    featureFlags.push(featureFlag);
   } catch (err) {
     const error = getBindingError(err);
     console.error(error);
   }
-  console.log('featureFlag', featureFlag);
 
-  let featureFlagUser;
   try {
-    featureFlagUser = await createFeatureFlagUser(
-      binding as any,
-      project.key,
-      environment.key,
-      featureFlag.key,
-      'user-a'
-    );
-    console.log('featureFlagUser', featureFlagUser);
-    featureFlagUser = await createFeatureFlagUser(
-      binding as any,
-      project.key,
-      environment.key,
-      featureFlag.key,
-      'user-b'
-    );
-    console.log('featureFlagUser', featureFlagUser);
+    for (const env of environments) {
+      for (const flag of featureFlags) {
+        await createFeatureFlagUsersForEnv(binding as any, project.key, env.key, flag.key);
+      }
+    }
   } catch (err) {
     const error = getBindingError(err);
     console.error(error);
@@ -161,7 +145,8 @@ async function seedDatabase() {
     const error = getBindingError(err);
     console.error(error);
   }
-  console.log(project);
+
+  console.dir(project, { depth: null });
 
   return server.stop();
 }
@@ -188,7 +173,7 @@ async function createProject(binding: Binding): Promise<Project> {
   );
 }
 
-async function createEnvironment(binding: Binding, projKey: string, key: string) {
+async function createEnvironment(binding: Binding, projKey: string, key: string): Promise<Environment> {
   return binding.mutation.createEnvironment(
     {
       data: {
@@ -201,7 +186,7 @@ async function createEnvironment(binding: Binding, projKey: string, key: string)
   );
 }
 
-async function createFeatureFlag(binding: Binding, projKey: string, key: string) {
+async function createFeatureFlag(binding: Binding, projKey: string, key: string): Promise<FeatureFlag> {
   return binding.mutation.createFeatureFlag(
     {
       data: {
@@ -220,7 +205,7 @@ async function createFeatureFlagUser(
   envKey: string,
   featureKey: string,
   userKey: string
-) {
+): Promise<FeatureFlagUser> {
   return binding.mutation.createFeatureFlagUser(
     {
       data: {
@@ -234,7 +219,7 @@ async function createFeatureFlagUser(
   );
 }
 
-async function createSegment(binding: Binding, projKey: string, envKey: string, key: string) {
+async function createSegment(binding: Binding, projKey: string, envKey: string, key: string): Promise<Segment> {
   return binding.mutation.createSegment(
     {
       data: {
@@ -266,4 +251,38 @@ async function createSegment(binding: Binding, projKey: string, envKey: string, 
       }
     }`
   );
+}
+
+async function createSegmentsForEnvironment(binding: Binding, projKey: string, envKey: string): Promise<Segment[]> {
+  const segments: Segment[] = [];
+  let segment: Segment;
+
+  segment = await createSegment(binding, projKey, envKey, 'segment-a');
+  // console.log('segment', segment);
+  segments.push(segment);
+  segment = await createSegment(binding, projKey, envKey, 'segment-b');
+  // console.log('segment', segment);
+  segments.push(segment);
+  segment = await createSegment(binding, projKey, envKey, 'segment-c');
+  // console.log('segment', segment);
+  segments.push(segment);
+
+  return segments;
+}
+
+async function createFeatureFlagUsersForEnv(
+  binding: Binding,
+  projKey: string,
+  envKey: string,
+  flagKey: string
+): Promise<FeatureFlagUser[]> {
+  const featureFlagUsers: FeatureFlagUser[] = [];
+  let featureFlagUser: FeatureFlagUser;
+
+  featureFlagUser = await createFeatureFlagUser(binding as any, projKey, envKey, flagKey, 'user-a');
+  featureFlagUsers.push(featureFlagUser);
+  featureFlagUser = await createFeatureFlagUser(binding as any, projKey, envKey, flagKey, 'user-b');
+  featureFlagUsers.push(featureFlagUser);
+
+  return featureFlagUsers;
 }

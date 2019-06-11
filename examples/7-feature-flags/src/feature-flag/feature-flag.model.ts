@@ -7,10 +7,10 @@ import { FeatureFlagUser } from '../feature-flag-user/feature-flag-user.model';
 @Model()
 export class FeatureFlag extends BaseModel {
   @StringField({ maxLength: 50, minLength: 2, nullable: false })
-  name?: string;
+  name: string;
 
   @StringField({ maxLength: 50, minLength: 2, nullable: false })
-  key?: string;
+  key: string;
 
   @StringField({ maxLength: 20, minLength: 3, nullable: false })
   projKey: string;
