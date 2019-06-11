@@ -4,6 +4,10 @@ import { Service } from 'typedi';
 
 import { BaseContext } from '../core';
 
+interface Deleteable {
+  deletedAt?: string;
+}
+
 @Service()
 export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
   async use({ root, args, context, info }: ResolverData<BaseContext>, next: NextFn) {
@@ -34,7 +38,14 @@ export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
               }
               return context.connection.relationIdLoader
                 .loadManyToManyRelationIdsAndGroup(relation, entities)
-                .then(groups => groups.map(group => group.related));
+                .then(groups => {
+                  return groups.map(group => {
+                    if (Array.isArray(group.related)) {
+                      return group.related.filter((item: Deleteable) => !item.deletedAt);
+                    }
+                    return group.related;
+                  });
+                });
             });
           }
         });
