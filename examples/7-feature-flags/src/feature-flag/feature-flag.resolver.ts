@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Args, Ctx, Field, FieldResolver, InputType, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse } from '../../../../src';
@@ -17,6 +17,24 @@ import { Project } from '../project/project.model';
 
 import { FeatureFlag } from './feature-flag.model';
 import { FeatureFlagService } from './feature-flag.service';
+
+@InputType()
+export class FeatureFlagsForUserInput {
+  @Field(type => String)
+  projKey: string;
+
+  @Field(type => String)
+  envKey: string;
+
+  @Field(type => String)
+  userKey: string;
+}
+
+// @ObjectType()
+// export class FeatureFlagResponse {
+//   @Field(type => ID)
+//   id!: IDType;
+// }
 
 @Resolver(FeatureFlag)
 export class FeatureFlagResolver {
@@ -46,6 +64,11 @@ export class FeatureFlagResolver {
     info: GraphQLResolveInfo
   ): Promise<FeatureFlag[]> {
     return this.service.find<FeatureFlagWhereInput>(where, orderBy, limit, offset);
+  }
+
+  @Query(returns => [String])
+  async featureFlagsForUser(@Arg('where') where: FeatureFlagsForUserInput): Promise<string[]> {
+    return this.service.flagsForUser(where);
   }
 
   @Query(returns => FeatureFlag)

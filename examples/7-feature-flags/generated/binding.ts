@@ -59,6 +59,11 @@ export interface Query {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
+  featureFlagsForUser: <T = Array<String>>(
+    args: { where: FeatureFlagsForUserInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
   featureFlag: <T = FeatureFlag>(
     args: { where: FeatureFlagWhereUniqueInput },
     info?: GraphQLResolveInfo | string,
@@ -541,6 +546,12 @@ export interface FeatureFlagSegmentWhereInput {
 
 export interface FeatureFlagSegmentWhereUniqueInput {
   id: String;
+}
+
+export interface FeatureFlagsForUserInput {
+  projKey: String;
+  envKey: String;
+  userKey: String;
 }
 
 export interface FeatureFlagUpdateInput {

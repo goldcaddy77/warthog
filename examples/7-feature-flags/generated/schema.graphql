@@ -300,6 +300,12 @@ input FeatureFlagSegmentWhereUniqueInput {
   id: String!
 }
 
+input FeatureFlagsForUserInput {
+  projKey: String!
+  envKey: String!
+  userKey: String!
+}
+
 input FeatureFlagUpdateInput {
   name: String
   key: String
@@ -588,6 +594,7 @@ type Query {
   featureFlagUsers(offset: Int, limit: Int = 50, where: FeatureFlagUserWhereInput, orderBy: FeatureFlagUserOrderByInput): [FeatureFlagUser!]!
   featureFlagUser(where: FeatureFlagUserWhereUniqueInput!): FeatureFlagUser!
   featureFlags(offset: Int, limit: Int = 50, where: FeatureFlagWhereInput, orderBy: FeatureFlagOrderByInput): [FeatureFlag!]!
+  featureFlagsForUser(where: FeatureFlagsForUserInput!): [String!]!
   featureFlag(where: FeatureFlagWhereUniqueInput!): FeatureFlag!
   projects(offset: Int, limit: Int = 50, where: ProjectWhereInput, orderBy: ProjectOrderByInput): [Project!]!
   project(where: ProjectWhereUniqueInput!): Project!
