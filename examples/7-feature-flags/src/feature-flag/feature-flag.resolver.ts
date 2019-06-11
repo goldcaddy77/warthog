@@ -66,6 +66,7 @@ export class FeatureFlagResolver {
     return this.service.find<FeatureFlagWhereInput>(where, orderBy, limit, offset);
   }
 
+  // Custom resolver that has it's own InputType and calls into custom service method
   @Query(returns => [String])
   async featureFlagsForUser(@Arg('where') where: FeatureFlagsForUserInput): Promise<string[]> {
     return this.service.flagsForUser(where);
