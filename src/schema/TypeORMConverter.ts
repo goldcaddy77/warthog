@@ -16,14 +16,7 @@ import { getMetadataStorage } from '../metadata';
 // tslint:disable-next-line:no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
 
-const SYSTEM_FIELDS = [
-  'createdAt',
-  'createdById',
-  'updatedAt',
-  'updatedById',
-  'deletedAt',
-  'deletedById'
-];
+const SYSTEM_FIELDS = ['createdAt', 'createdById', 'updatedAt', 'updatedById', 'deletedAt', 'deletedById'];
 
 function uniquesForEntity(entity: EntityMetadata): string[] {
   return entity.uniques.reduce<string[]>(
@@ -329,11 +322,7 @@ export function entityToOrderByEnum(entity: EntityMetadata): string {
   let fieldsTemplate = '';
 
   entity.columns.forEach((column: ColumnMetadata) => {
-    if (
-      !column.isPrimary &&
-      !column.isVersion &&
-      !ORDER_BY_BLACKLIST.includes(column.propertyName)
-    ) {
+    if (!column.isPrimary && !column.isVersion && !ORDER_BY_BLACKLIST.includes(column.propertyName)) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',
