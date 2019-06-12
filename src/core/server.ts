@@ -193,7 +193,8 @@ export class Server<C extends BaseContext> {
     debug('start:ApolloServerAllocation:start');
     this.graphQLServer = new ApolloServer({
       context: async (options: { req: Request }) => {
-        const consumerCtx = contextGetter(options.req);
+        const consumerCtx = await contextGetter(options.req);
+
         return {
           connection: this.connection,
           dataLoader: {
