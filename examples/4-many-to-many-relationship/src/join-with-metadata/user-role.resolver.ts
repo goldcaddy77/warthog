@@ -11,7 +11,7 @@ import {
   Resolver,
   Root
 } from 'type-graphql';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseResolver } from '../../../../src';
