@@ -12,3 +12,4 @@ export * from './ManyToOne';
 export * from './Model';
 export * from './OneToMany';
 export * from './StringField';
+export * from './UserId';
