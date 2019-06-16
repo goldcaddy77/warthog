@@ -6,11 +6,11 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy implements Naming
     super();
   }
 
-  tableName(className: string, customName: string): string {
+  tableName(className: string, customName?: string): string {
     return customName ? customName : `${snakeCase(className)}s`;
   }
 
-  columnName(propertyName: string, customName: string, embeddedPrefixes: string[]): string {
+  columnName(propertyName: string, customName?: string, embeddedPrefixes: string[] = []): string {
     return (
       snakeCase(embeddedPrefixes.join('_')) + (customName ? customName : snakeCase(propertyName))
     );
