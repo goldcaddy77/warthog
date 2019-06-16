@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseResolver, StandardDeleteResponse } from '../../../src';

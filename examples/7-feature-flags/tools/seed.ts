@@ -1,4 +1,6 @@
 import * as Debug from 'debug';
+import * as Faker from 'faker';
+
 import { getBindingError } from '../../../src';
 
 import { Binding } from '../generated/binding';
@@ -59,11 +61,35 @@ async function seedDatabase() {
       await createUserSegment(binding as any, project.key, env.key, 'user-a', 'segment-alpha');
       await createUserSegment(binding as any, project.key, env.key, 'user-b', 'segment-beta');
 
-      await createFeatureFlagSegment(binding as any, project.key, env.key, 'alpha-map-view', 'segment-alpha');
-      await createFeatureFlagSegment(binding as any, project.key, env.key, 'beta-enhanced-nav', 'segment-beta');
+      await createFeatureFlagSegment(
+        binding as any,
+        project.key,
+        env.key,
+        'alpha-map-view',
+        'segment-alpha'
+      );
+      await createFeatureFlagSegment(
+        binding as any,
+        project.key,
+        env.key,
+        'beta-enhanced-nav',
+        'segment-beta'
+      );
 
-      await createFeatureFlagUser(binding as any, project.key, env.key, 'flag-user-a-specific', 'user-a');
-      await createFeatureFlagUser(binding as any, project.key, env.key, 'flag-user-b-specific', 'user-b');
+      await createFeatureFlagUser(
+        binding as any,
+        project.key,
+        env.key,
+        'flag-user-a-specific',
+        'user-a'
+      );
+      await createFeatureFlagUser(
+        binding as any,
+        project.key,
+        env.key,
+        'flag-user-b-specific',
+        'user-b'
+      );
     }
 
     console.log('QUERYING PROJECT');
@@ -223,7 +249,11 @@ async function createProject(binding: Binding): Promise<Project> {
   );
 }
 
-async function createEnvironment(binding: Binding, projKey: string, key: string): Promise<Environment> {
+async function createEnvironment(
+  binding: Binding,
+  projKey: string,
+  key: string
+): Promise<Environment> {
   return binding.mutation.createEnvironment(
     {
       data: {
@@ -236,7 +266,11 @@ async function createEnvironment(binding: Binding, projKey: string, key: string)
   );
 }
 
-async function createFeatureFlag(binding: Binding, projKey: string, key: string): Promise<FeatureFlag> {
+async function createFeatureFlag(
+  binding: Binding,
+  projKey: string,
+  key: string
+): Promise<FeatureFlag> {
   return binding.mutation.createFeatureFlag(
     {
       data: {
@@ -309,7 +343,12 @@ async function createFeatureFlagSegment(
   );
 }
 
-async function createSegment(binding: Binding, projKey: string, envKey: string, key: string): Promise<Segment> {
+async function createSegment(
+  binding: Binding,
+  projKey: string,
+  envKey: string,
+  key: string
+): Promise<Segment> {
   return binding.mutation.createSegment(
     {
       data: {

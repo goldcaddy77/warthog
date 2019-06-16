@@ -20,9 +20,6 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "graphql-binding": "^2.5.1",
-    "graphql-tools": "^4.0.4",
-    "module-alias": "^2.2.0",
     "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.2.2"

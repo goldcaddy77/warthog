@@ -1,5 +1,5 @@
 import { Inject, Service } from 'typedi';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseService } from '../../../../src';
@@ -21,7 +21,10 @@ export class SegmentService extends BaseService<Segment> {
 
   // Linking of Environment to Project happens via `projKey`
   async create(data: DeepPartial<Segment>, userId: string): Promise<Segment> {
-    const environment = await this.environmentService.findOne({ key: data.envKey, projKey: data.projKey });
+    const environment = await this.environmentService.findOne({
+      key: data.envKey,
+      projKey: data.projKey
+    });
     const project = await this.projectService.findOne({ key: data.projKey });
     const payload = {
       ...data,
