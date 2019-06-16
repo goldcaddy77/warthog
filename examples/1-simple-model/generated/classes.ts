@@ -14,7 +14,7 @@ import { registerEnumType } from "type-graphql";
 // tslint:disable-next-line:no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");
 
-import { BaseWhereInput, PaginationArgs } from "warthog";
+import { BaseWhereInput, PaginationArgs } from "../../../src";
 import { User } from "../src/user.model";
 
 export enum UserOrderByEnum {
