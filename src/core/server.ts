@@ -11,7 +11,7 @@ import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 const open = require('open'); // tslint:disable-line:no-var-requires
 import * as path from 'path';
-import { AuthChecker, buildSchema, useContainer as TypeGraphQLUseContainer } from 'type-graphql'; // formatArgumentValidationError
+import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
@@ -78,7 +78,6 @@ export class Server<C extends BaseContext> {
 
     this.container = this.appOptions.container || Container;
 
-    TypeGraphQLUseContainer(this.container as any); // TODO: fix any
     TypeORMUseContainer(this.container as any); // TODO: fix any
 
     const host: Maybe<string> = this.appOptions.host || process.env.APP_HOST;
@@ -153,6 +152,7 @@ export class Server<C extends BaseContext> {
       debug('buildGraphQLSchema:start');
       this.schema = await buildSchema({
         authChecker: this.authChecker,
+        container: this.container as any,
         // TODO: ErrorLoggerMiddleware
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
         resolvers: this.resolversPath
