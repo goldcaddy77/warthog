@@ -16,6 +16,29 @@ import {
   shouldSchronizeDatabaseSchema
 } from '../utils/configurationManager';
 
+function getBaseConfig() {
+  return {
+    cli: {
+      entitiesDir: 'src/models',
+      migrationsDir: 'src/migration',
+      subscribersDir: 'src/subscriber'
+    },
+    database: getDatabaseName(),
+    entities: getDatabaseEntityPaths(),
+    host: getDatabaseHost(),
+    logger: 'advanced-console',
+    logging: getDatabaseLoggingLevel(),
+    migrations: getDatabaseMigrationPaths(),
+    namingStrategy: new SnakeNamingStrategy(),
+    password: getDatabasePassword(),
+    port: getDatabasePort(),
+    subscribers: getDatabaseSubscriberPaths(),
+    synchronize: shouldSchronizeDatabaseSchema(),
+    type: getDatabaseType(),
+    username: getDatabaseUsername()
+  };
+}
+
 export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) => {
   const config = {
     ...getBaseConfig(),
@@ -44,26 +67,3 @@ export const mockDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) => 
     type: getDatabaseType()
   } as any);
 };
-
-function getBaseConfig() {
-  return {
-    cli: {
-      entitiesDir: 'src/models',
-      migrationsDir: 'src/migration',
-      subscribersDir: 'src/subscriber'
-    },
-    database: getDatabaseName(),
-    entities: getDatabaseEntityPaths(),
-    host: getDatabaseHost(),
-    logger: 'advanced-console',
-    logging: getDatabaseLoggingLevel(),
-    migrations: getDatabaseMigrationPaths(),
-    namingStrategy: new SnakeNamingStrategy(),
-    password: getDatabasePassword(),
-    port: getDatabasePort(),
-    subscribers: getDatabaseSubscriberPaths(),
-    synchronize: shouldSchronizeDatabaseSchema(),
-    type: getDatabaseType(),
-    username: getDatabaseUsername()
-  };
-}

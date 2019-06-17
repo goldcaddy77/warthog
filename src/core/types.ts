@@ -1,7 +1,11 @@
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export type StringMap = { [key: string]: string };
-export type StringMapOptional = { [key: string]: string | undefined };
+export interface StringMap {
+  [key: string]: string;
+}
+export interface StringMapOptional {
+  [key: string]: string | undefined;
+}
 
 export type DateTime = string;
 export type IDType = string;
@@ -11,14 +15,14 @@ export interface BaseEntity {
   [key: string]: any;
 }
 
-export type WhereInput = {
+export interface WhereInput {
   id_eq?: IDType;
   id_in?: IDType[];
-};
+}
 
-export type DeleteReponse = {
+export interface DeleteReponse {
   id: IDType;
-};
+}
 
 export type ClassType<T = any> = new (...args: any[]) => T;
 

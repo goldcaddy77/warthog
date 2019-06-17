@@ -1,10 +1,3 @@
-export function getMetadataStorage(): MetadataStorage {
-  if (!(global as any).WarthogMetadataStorage) {
-    (global as any).WarthogMetadataStorage = new MetadataStorage();
-  }
-  return (global as any).WarthogMetadataStorage;
-}
-
 export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
   classMap: { [table: string]: any } = {};
@@ -45,4 +38,11 @@ export class MetadataStorage {
     }
     return this.enumMap[tableName];
   }
+}
+
+export function getMetadataStorage(): MetadataStorage {
+  if (!(global as any).WarthogMetadataStorage) {
+    (global as any).WarthogMetadataStorage = new MetadataStorage();
+  }
+  return (global as any).WarthogMetadataStorage;
 }

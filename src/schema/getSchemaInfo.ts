@@ -15,7 +15,11 @@ export async function getSchemaInfo(options: BuildSchemaOptions) {
   const result = await graphql(schema, getIntrospectionQuery());
   expect(result.errors).toBeUndefined();
 
-  const schemaIntrospection = result.data!.__schema as IntrospectionSchema;
+  if (!result || !result.data) {
+    throw new Error('Unable to introspect schema');
+  }
+
+  const schemaIntrospection = result.data.__schema as IntrospectionSchema;
   expect(schemaIntrospection).toBeDefined();
 
   const queryType = schemaIntrospection.types.find(

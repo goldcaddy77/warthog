@@ -58,6 +58,7 @@ export class BaseService<E extends BaseModel> {
     where = where || {};
     // TODO: Bug: does not support deletedAt_gt: "2000-10-10" or deletedAt_not: null
     if (!where.deletedAt_all) {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
     }
 
@@ -103,7 +104,7 @@ export class BaseService<E extends BaseModel> {
     return this.repository.save(obj, { reload: true });
   }
 
-  async createMany(data: Array<DeepPartial<E>>, userId: string): Promise<E[]> {
+  async createMany(data: DeepPartial<E>[], userId: string): Promise<E[]> {
     data = data.map(item => {
       return { ...item, createdById: userId };
     });

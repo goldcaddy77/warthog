@@ -29,7 +29,6 @@ export class Link extends HttpLink {
 
     super({
       // TODO: cross-fetch library does not play nicely with TS
-      // tslint:disable-next-line:no-any
       fetch: (fetch as any) as (input: RequestInfo, init?: RequestInit) => Promise<Response>,
       headers,
       uri
@@ -89,6 +88,16 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
   debug('generateBindingFile:end');
 }
 
+export function getOriginalError(error: any): any {
+  if (error.originalError) {
+    return getOriginalError(error.originalError);
+  }
+  if (error.errors) {
+    return error.errors.map(getOriginalError)[0];
+  }
+  return error;
+}
+
 export function getBindingError(err: any) {
   const error = getOriginalError(err);
   if (
@@ -101,16 +110,6 @@ export function getBindingError(err: any) {
       error.validationErrors = error.validationErrors || {};
       error.validationErrors[item.property] = item.constraints;
     });
-  }
-  return error;
-}
-
-export function getOriginalError(error: any): any {
-  if (error.originalError) {
-    return getOriginalError(error.originalError);
-  }
-  if (error.errors) {
-    return error.errors.map(getOriginalError)[0];
   }
   return error;
 }

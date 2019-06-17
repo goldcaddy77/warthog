@@ -1,5 +1,3 @@
-// tslint:disable:variable-name
-
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
@@ -50,4 +48,3 @@ export class BaseWhereInput {
   @Field({ nullable: true })
   deletedById_eq?: string;
 }
-// tslint:enable:variable-name

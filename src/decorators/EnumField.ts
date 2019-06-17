@@ -1,4 +1,4 @@
-const caller = require('caller'); // tslint:disable-line:no-var-requires
+const caller = require('caller'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
 import { Column } from 'typeorm';

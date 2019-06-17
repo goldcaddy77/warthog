@@ -9,7 +9,7 @@ import { GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
-const open = require('open'); // tslint:disable-line:no-var-requires
+const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
 import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';

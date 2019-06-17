@@ -1,4 +1,4 @@
-import { Request } from 'express'; // tslint:disable-line
+import { Request } from 'express';
 import { Connection } from 'typeorm';
 
 // TODO-MVP: update with actual context we're getting from Auth0

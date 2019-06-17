@@ -1,16 +1,22 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": ["javascript", { "language": "typescript", "autoFix": true }],
   "search.exclude": {
     "dist/": true,
     "node_modules/": true
   },
+  "editor.formatOnSave": true,
   "[javascript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
-  "[json]": {
-    "editor.formatOnSave": true
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
   },
   "[typescript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
   }
 }

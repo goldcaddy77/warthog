@@ -1,4 +1,4 @@
-const caller = require('caller'); // tslint:disable-line:no-var-requires
+const caller = require('caller'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
 import { ObjectType } from 'type-graphql';
 import { Entity } from 'typeorm';

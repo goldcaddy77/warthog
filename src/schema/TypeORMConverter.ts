@@ -13,10 +13,17 @@ import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
 import { getMetadataStorage } from '../metadata';
 
-// tslint:disable-next-line:no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
 
-const SYSTEM_FIELDS = ['createdAt', 'createdById', 'updatedAt', 'updatedById', 'deletedAt', 'deletedById'];
+const SYSTEM_FIELDS = [
+  'createdAt',
+  'createdById',
+  'updatedAt',
+  'updatedById',
+  'deletedAt',
+  'deletedById'
+];
 
 function uniquesForEntity(entity: EntityMetadata): string[] {
   return entity.uniques.reduce<string[]>(
@@ -27,7 +34,114 @@ function uniquesForEntity(entity: EntityMetadata): string[] {
   );
 }
 
-export function entityListToImports(entities: EntityMetadata[]): string[] {
+export function filenameToImportPath(filename: string): string {
+  return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
+}
+
+export function extractEnumObject(column: ColumnMetadata): GraphQLEnumType {
+  return getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
+}
+
+export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
+  // Check to see if this column is an enum and return that
+  if (column.enum) {
+    return extractEnumObject(column);
+  } else if (column.propertyName.match(/Id$/)) {
+    return GraphQLID;
+  }
+
+  // Some types have a name attribute
+  const type = (column.type as any).name ? (column.type as any).name : column.type;
+
+  switch (type) {
+    case String:
+    case 'String':
+    case 'varchar':
+    case 'text':
+    case 'uuid':
+      return GraphQLString;
+    case Boolean:
+    case 'Boolean':
+    case 'boolean':
+    case 'bool':
+      return GraphQLBoolean;
+    case Number:
+    case 'Number':
+    case 'float4':
+    case 'float8':
+    case 'smallmoney':
+    case 'money':
+    case 'double':
+    case 'dec':
+    case 'decimal':
+    case 'fixed':
+    case 'numeric':
+    case 'real':
+    case 'double precision':
+      return GraphQLFloat;
+    case 'int':
+    case 'smallint':
+    case 'mediumint':
+    case 'bigint':
+    case 'integer':
+    case 'int2':
+    case 'int4':
+    case 'int8':
+      return GraphQLInt;
+    case Date:
+    case 'Date':
+    case 'timestamp':
+      return GraphQLISODateTime;
+    case 'json':
+    case 'jsonb':
+      return GraphQLJSONObject;
+    default:
+      if (type instanceof GraphQLScalarType) {
+        return type;
+      }
+
+      throw new Error(`convertToGraphQLType: Unexpected type: ${type}`);
+  }
+}
+
+export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
+  const graphQLType = columnToGraphQLType(column);
+
+  // Sometimes we want to return the full blow GraphQL data type, but sometimes we want to return
+  // the more readable name.  Ex:
+  // GraphQLInt -> Int
+  // GraphQLJSONObject -> GraphQLJSONObject
+  switch (graphQLType) {
+    case GraphQLJSONObject:
+      return 'GraphQLJSONObject';
+    default:
+      return graphQLType.name;
+  }
+}
+
+// const ID_TYPE = 'ID';
+export function columnToTypeScriptType(column: ColumnMetadata): string {
+  if (column.isPrimary) {
+    return 'string'; // TODO: should this be ID_TYPE?
+  } else if (column.enum) {
+    return extractEnumObject(column).name;
+  } else {
+    const graphqlType = columnTypeToGraphQLDataType(column);
+    const typeMap: any = {
+      Boolean: 'boolean',
+      DateTime: 'string',
+      Float: 'number',
+      GraphQLJSONObject: 'JSON',
+      ID: 'string', // TODO: should this be ID_TYPE?
+      Int: 'number',
+      String: 'string'
+    };
+
+    return typeMap[graphqlType] || 'string';
+  }
+}
+
+export function generateEnumMapImports(): string[] {
   const imports: string[] = [];
   const enumMap = getMetadataStorage().enumMap;
 
@@ -49,10 +163,6 @@ export function entityListToImports(entities: EntityMetadata[]): string[] {
   });
 
   return imports;
-}
-
-export function filenameToImportPath(filename: string): string {
-  return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
 
 export function entityToWhereUniqueInput(entity: EntityMetadata): string {
@@ -322,7 +432,11 @@ export function entityToOrderByEnum(entity: EntityMetadata): string {
   let fieldsTemplate = '';
 
   entity.columns.forEach((column: ColumnMetadata) => {
-    if (!column.isPrimary && !column.isVersion && !ORDER_BY_BLACKLIST.includes(column.propertyName)) {
+    if (
+      !column.isPrimary &&
+      !column.isVersion &&
+      !ORDER_BY_BLACKLIST.includes(column.propertyName)
+    ) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',
@@ -339,106 +453,4 @@ export function entityToOrderByEnum(entity: EntityMetadata): string {
       name: '${entity.name}OrderByInput'
     });
   `;
-}
-
-export function extractEnumObject(column: ColumnMetadata): GraphQLEnumType {
-  return getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
-}
-
-// const ID_TYPE = 'ID';
-export function columnToTypeScriptType(column: ColumnMetadata): string {
-  if (column.isPrimary) {
-    return 'string'; // TODO: should this be ID_TYPE?
-  } else if (column.enum) {
-    return extractEnumObject(column).name;
-  } else {
-    const graphqlType = columnTypeToGraphQLDataType(column);
-    const typeMap: any = {
-      Boolean: 'boolean',
-      DateTime: 'string',
-      Float: 'number',
-      GraphQLJSONObject: 'JSON',
-      ID: 'string', // TODO: should this be ID_TYPE?
-      Int: 'number',
-      String: 'string'
-    };
-
-    return typeMap[graphqlType] || 'string';
-  }
-}
-
-export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
-  const graphQLType = columnToGraphQLType(column);
-
-  // Sometimes we want to return the full blow GraphQL data type, but sometimes we want to return
-  // the more readable name.  Ex:
-  // GraphQLInt -> Int
-  // GraphQLJSONObject -> GraphQLJSONObject
-  switch (graphQLType) {
-    case GraphQLJSONObject:
-      return 'GraphQLJSONObject';
-    default:
-      return graphQLType.name;
-  }
-}
-export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
-  // Check to see if this column is an enum and return that
-  if (column.enum) {
-    return extractEnumObject(column);
-  } else if (column.propertyName.match(/Id$/)) {
-    return GraphQLID;
-  }
-
-  // Some types have a name attribute
-  const type = (column.type as any).name ? (column.type as any).name : column.type;
-
-  switch (type) {
-    case String:
-    case 'String':
-    case 'varchar':
-    case 'text':
-    case 'uuid':
-      return GraphQLString;
-    case Boolean:
-    case 'Boolean':
-    case 'boolean':
-    case 'bool':
-      return GraphQLBoolean;
-    case Number:
-    case 'Number':
-    case 'float4':
-    case 'float8':
-    case 'smallmoney':
-    case 'money':
-    case 'double':
-    case 'dec':
-    case 'decimal':
-    case 'fixed':
-    case 'numeric':
-    case 'real':
-    case 'double precision':
-      return GraphQLFloat;
-    case 'int':
-    case 'smallint':
-    case 'mediumint':
-    case 'bigint':
-    case 'integer':
-    case 'int2':
-    case 'int4':
-    case 'int8':
-      return GraphQLInt;
-    case Date:
-    case 'Date':
-    case 'timestamp':
-      return GraphQLISODateTime;
-    case 'json':
-    case 'jsonb':
-      return GraphQLJSONObject;
-    default:
-      if (type instanceof GraphQLScalarType) {
-        return type;
-      }
-
-      throw new Error(`convertToGraphQLType: Unexpected type: ${type}`);
-  }
 }
