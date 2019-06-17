@@ -28,14 +28,19 @@ export class BaseService<E extends BaseModel> {
     where?: any,
     orderBy?: any, // Fix this
     limit?: number,
-    offset?: number
+    offset?: number,
+    fields?: string[]
   ): Promise<E[]> {
     const findOptions: FindManyOptions = {};
+
     if (limit) {
       findOptions.take = limit;
     }
     if (offset) {
       findOptions.skip = offset;
+    }
+    if (fields) {
+      findOptions.select = fields;
     }
     if (orderBy) {
       // TODO: allow multiple sorts
