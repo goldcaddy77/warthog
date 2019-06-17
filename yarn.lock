@@ -344,6 +344,13 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/graphql-fields@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/@types/graphql-fields/-/graphql-fields-1.3.0.tgz#5c73baa96f41ae3d263d6bda744305cbface2ef3"
+  integrity sha1-XHO6qW9Brj0mPWvadEMFy/rOLvM=
+  dependencies:
+    "@types/graphql" "*"
+
 "@types/graphql-iso-date@^3.3.1":
   version "3.3.1"
   resolved "https://registry.npmjs.org/@types/graphql-iso-date/-/graphql-iso-date-3.3.1.tgz#dbb540ae62c68c00eba1d1feb4602d7209257e9d"
@@ -353,15 +360,15 @@
 
 "@types/graphql-type-json@^0.1.3":
   version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@types/graphql-type-json/-/graphql-type-json-0.1.3.tgz#c4e6c0caccd907bf22baa73e76584433d7a0469b"
+  resolved "https://registry.npmjs.org/@types/graphql-type-json/-/graphql-type-json-0.1.3.tgz#c4e6c0caccd907bf22baa73e76584433d7a0469b"
   integrity sha512-H/RVUQKL/W5+msmG/+DpYkljDgqE4ibzWm9B6RV/jHdE7dOU+fqmLHb8Ol9JFzbD+ZsIITPuNMYVmaw6FjuyDA==
   dependencies:
     "@types/graphql" "*"
 
-"@types/graphql@*":
-  version "14.0.4"
-  resolved "https://registry.npmjs.org/@types/graphql/-/graphql-14.0.4.tgz#d71a75967cd93c33eaea32b626b362ce0f2b2ae9"
-  integrity sha512-gI98ANelzzpq7lZzuYCUJg8LZDjQc7ekj7cxoWt8RezOKaVaAyK27U6AHa9LEqikP1NUhyi8blQQkHYHVRZ7Tg==
+"@types/graphql@*", "@types/graphql@^14.1.1":
+  version "14.2.1"
+  resolved "https://registry.npmjs.org/@types/graphql/-/graphql-14.2.1.tgz#02027ff799aa4dc5aa88ff2eed4058d29e7eb491"
+  integrity sha512-81YjgyCz+kYDXkPuk1j4+jCgFjM4DubzrI88tvpWOQp5eILa0A/KvtGAbXONPhD6vRa3neiFb/ES1IDQ82n5Rw==
 
 "@types/graphql@^14.1.1":
   version "14.2.1"
@@ -3214,6 +3221,11 @@ graphql-extensions@0.7.2:
   dependencies:
     "@apollographql/apollo-tools" "^0.3.6"
 
+graphql-fields@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/graphql-fields/-/graphql-fields-2.0.3.tgz#5e68dff7afbb202be4f4f40623e983b22c96ab8f"
+  integrity sha1-Xmjf96+7ICvk9PQGI+mDsiyWq48=
+
 graphql-import@^0.7.1:
   version "0.7.1"
   resolved "https://registry.npmjs.org/graphql-import/-/graphql-import-0.7.1.tgz#4add8d91a5f752d764b0a4a7a461fcd93136f223"
@@ -3277,7 +3289,7 @@ graphql-tools@^4.0.0, graphql-tools@^4.0.3:
 
 graphql-type-json@^0.3.0:
   version "0.3.0"
-  resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.3.0.tgz#bb32e1b74bf52ebc690f9df12b4067bc061f818a"
+  resolved "https://registry.npmjs.org/graphql-type-json/-/graphql-type-json-0.3.0.tgz#bb32e1b74bf52ebc690f9df12b4067bc061f818a"
   integrity sha512-lnxg5HiB95yxy+/5cDKtP6pZo0zgntsOmqsjeCBXFGJ4YoMF3+1YaSEKWJntNTu+VsAm3zf6lPxFpp1kxzofLA==
 
 graphql-upload@^8.0.2:

@@ -8,7 +8,7 @@ export class BaseResolver<E extends BaseModel> {
   service: any;
 
   // TODO: need to figure out why we couldn't type this as Repository<E>
-  constructor(protected entityClass: any, protected repository: Repository<any>) {
+  constructor(protected entityClass: any, protected repository: Repository<E>) {
     this.service = new BaseService<E>(entityClass, this.repository);
   }
 
@@ -16,13 +16,14 @@ export class BaseResolver<E extends BaseModel> {
     where?: any,
     orderBy?: any, // Fix this
     limit?: number,
-    offset?: number
+    offset?: number,
+    fields?: string[]
   ): Promise<E[]> {
-    return this.service.find(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset, fields);
   }
 
   // TODO: fix - W extends Partial<E>
-  async findOne<W extends { [key: string]: any }>(where: W): Promise<E> {
+  async findOne<W extends any>(where: W): Promise<E> {
     return this.service.findOne(where);
   }
 

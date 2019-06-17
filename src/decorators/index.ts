@@ -2,6 +2,7 @@ export * from './BooleanField';
 export * from './DateField';
 export * from './EmailField';
 export * from './EnumField';
+export * from './Fields';
 export * from './FloatField';
 export * from './ForeignKeyField';
 export * from './IntField';
