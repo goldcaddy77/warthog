@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
 import {
   ProjectCreateInput,
   ProjectUpdateArgs,
@@ -49,7 +49,10 @@ export class ProjectResolver {
   }
 
   @FieldResolver(returns => [FeatureFlagSegment])
-  featureFlagSegments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+  featureFlagSegments(
+    @Root() project: Project,
+    @Ctx() ctx: BaseContext
+  ): Promise<FeatureFlagSegment[]> {
     return ctx.dataLoader.loaders.Project.featureFlagSegments.load(project);
   }
 
@@ -73,20 +76,26 @@ export class ProjectResolver {
   }
 
   @Mutation(returns => Project)
-  async createProject(@Arg('data') data: ProjectCreateInput, @Ctx() ctx: BaseContext): Promise<Project> {
-    return this.service.create(data, ctx.user.id);
+  async createProject(
+    @Arg('data') data: ProjectCreateInput,
+    @UserId() userId: string
+  ): Promise<Project> {
+    return this.service.create(data, userId);
   }
 
   @Mutation(returns => Project)
-  async updateProject(@Args() { data, where }: ProjectUpdateArgs, @Ctx() ctx: BaseContext): Promise<Project> {
-    return this.service.update(data, where, ctx.user.id);
+  async updateProject(
+    @Args() { data, where }: ProjectUpdateArgs,
+    @UserId() userId: string
+  ): Promise<Project> {
+    return this.service.update(data, where, userId);
   }
 
   @Mutation(returns => StandardDeleteResponse)
   async deleteProject(
     @Arg('where') where: ProjectWhereUniqueInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<StandardDeleteResponse> {
-    return this.service.delete(where, ctx.user.id);
+    return this.service.delete(where, userId);
   }
 }

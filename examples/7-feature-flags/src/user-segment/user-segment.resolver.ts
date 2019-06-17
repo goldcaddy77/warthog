@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
 import {
   UserSegmentCreateInput,
   UserSegmentUpdateArgs,
@@ -37,24 +37,24 @@ export class UserSegmentResolver {
   @Mutation(returns => UserSegment)
   async createUserSegment(
     @Arg('data') data: UserSegmentCreateInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<UserSegment> {
-    return this.service.create(data, ctx.user.id);
+    return this.service.create(data, userId);
   }
 
   @Mutation(returns => UserSegment)
   async updateUserSegment(
     @Args() { data, where }: UserSegmentUpdateArgs,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<UserSegment> {
-    return this.service.update(data, where, ctx.user.id);
+    return this.service.update(data, where, userId);
   }
 
   @Mutation(returns => StandardDeleteResponse)
   async deleteUserSegment(
     @Arg('where') where: UserSegmentWhereUniqueInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<StandardDeleteResponse> {
-    return this.service.delete(where, ctx.user.id);
+    return this.service.delete(where, userId);
   }
 }
