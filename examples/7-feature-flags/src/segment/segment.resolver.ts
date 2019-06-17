@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
 import {
   SegmentCreateInput,
   SegmentUpdateArgs,
@@ -31,7 +31,10 @@ export class SegmentResolver {
   }
 
   @FieldResolver(returns => [FeatureFlagSegment])
-  featureFlagSegments(@Root() segment: Segment, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+  featureFlagSegments(
+    @Root() segment: Segment,
+    @Ctx() ctx: BaseContext
+  ): Promise<FeatureFlagSegment[]> {
     return ctx.dataLoader.loaders.Segment.featureFlagSegments.load(segment);
   }
 
@@ -60,20 +63,26 @@ export class SegmentResolver {
   }
 
   @Mutation(returns => Segment)
-  async createSegment(@Arg('data') data: SegmentCreateInput, @Ctx() ctx: BaseContext): Promise<Segment> {
-    return this.service.create(data, ctx.user.id);
+  async createSegment(
+    @Arg('data') data: SegmentCreateInput,
+    @UserId() userId: string
+  ): Promise<Segment> {
+    return this.service.create(data, userId);
   }
 
   @Mutation(returns => Segment)
-  async updateSegment(@Args() { data, where }: SegmentUpdateArgs, @Ctx() ctx: BaseContext): Promise<Segment> {
-    return this.service.update(data, where, ctx.user.id);
+  async updateSegment(
+    @Args() { data, where }: SegmentUpdateArgs,
+    @UserId() userId: string
+  ): Promise<Segment> {
+    return this.service.update(data, where, userId);
   }
 
   @Mutation(returns => StandardDeleteResponse)
   async deleteSegment(
     @Arg('where') where: SegmentWhereUniqueInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<StandardDeleteResponse> {
-    return this.service.delete(where, ctx.user.id);
+    return this.service.delete(where, userId);
   }
 }

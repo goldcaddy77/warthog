@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
 import {
   FeatureFlagUserCreateInput,
   FeatureFlagUserUpdateArgs,
@@ -28,40 +28,44 @@ export class FeatureFlagUserResolver {
   }
 
   @Query(returns => [FeatureFlagUser])
-  async featureFlagUsers(
-    @Args() { where, orderBy, limit, offset }: FeatureFlagUserWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<FeatureFlagUser[]> {
+  async featureFlagUsers(@Args()
+  {
+    where,
+    orderBy,
+    limit,
+    offset
+  }: FeatureFlagUserWhereArgs): Promise<FeatureFlagUser[]> {
     return this.service.find<FeatureFlagUserWhereInput>(where, orderBy, limit, offset);
   }
 
   @Query(returns => FeatureFlagUser)
-  async featureFlagUser(@Arg('where') where: FeatureFlagUserWhereUniqueInput): Promise<FeatureFlagUser> {
+  async featureFlagUser(
+    @Arg('where') where: FeatureFlagUserWhereUniqueInput
+  ): Promise<FeatureFlagUser> {
     return this.service.findOne<FeatureFlagUserWhereUniqueInput>(where);
   }
 
   @Mutation(returns => FeatureFlagUser)
   async createFeatureFlagUser(
     @Arg('data') data: FeatureFlagUserCreateInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<FeatureFlagUser> {
-    return this.service.create(data, ctx.user.id);
+    return this.service.create(data, userId);
   }
 
   @Mutation(returns => FeatureFlagUser)
   async updateFeatureFlagUser(
     @Args() { data, where }: FeatureFlagUserUpdateArgs,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<FeatureFlagUser> {
-    return this.service.update(data, where, ctx.user.id);
+    return this.service.update(data, where, userId);
   }
 
   @Mutation(returns => StandardDeleteResponse)
   async deleteFeatureFlagUser(
     @Arg('where') where: FeatureFlagUserWhereUniqueInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<StandardDeleteResponse> {
-    return this.service.delete(where, ctx.user.id);
+    return this.service.delete(where, userId);
   }
 }

@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
 import {
   EnvironmentCreateInput,
   EnvironmentUpdateArgs,
@@ -38,12 +38,18 @@ export class EnvironmentResolver {
   }
 
   @FieldResolver(returns => [FeatureFlagUser])
-  featureFlagUsers(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<FeatureFlagUser[]> {
+  featureFlagUsers(
+    @Root() environment: Environment,
+    @Ctx() ctx: BaseContext
+  ): Promise<FeatureFlagUser[]> {
     return ctx.dataLoader.loaders.Environment.featureFlagUsers.load(environment);
   }
 
   @FieldResolver(returns => [FeatureFlagSegment])
-  featureFlagSegments(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+  featureFlagSegments(
+    @Root() environment: Environment,
+    @Ctx() ctx: BaseContext
+  ): Promise<FeatureFlagSegment[]> {
     return ctx.dataLoader.loaders.Environment.featureFlagSegments.load(environment);
   }
 
@@ -53,11 +59,9 @@ export class EnvironmentResolver {
   }
 
   @Query(returns => [Environment])
-  async environments(
-    @Args() { where, orderBy, limit, offset }: EnvironmentWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<Environment[]> {
+  async environments(@Args() { where, orderBy, limit, offset }: EnvironmentWhereArgs): Promise<
+    Environment[]
+  > {
     return this.service.find<EnvironmentWhereInput>(where, orderBy, limit, offset);
   }
 
@@ -67,23 +71,26 @@ export class EnvironmentResolver {
   }
 
   @Mutation(returns => Environment)
-  async createEnvironment(@Arg('data') data: EnvironmentCreateInput, @Ctx() ctx: BaseContext): Promise<Environment> {
-    return this.service.create(data, ctx.user.id);
+  async createEnvironment(
+    @Arg('data') data: EnvironmentCreateInput,
+    @UserId() userId: string
+  ): Promise<Environment> {
+    return this.service.create(data, userId);
   }
 
   @Mutation(returns => Environment)
   async updateEnvironment(
     @Args() { data, where }: EnvironmentUpdateArgs,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<Environment> {
-    return this.service.update(data, where, ctx.user.id);
+    return this.service.update(data, where, userId);
   }
 
   @Mutation(returns => StandardDeleteResponse)
   async deleteEnvironment(
     @Arg('where') where: EnvironmentWhereUniqueInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<StandardDeleteResponse> {
-    return this.service.delete(where, ctx.user.id);
+    return this.service.delete(where, userId);
   }
 }

@@ -1,8 +1,19 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Arg, Args, Ctx, Field, FieldResolver, InputType, Mutation, Query, Resolver, Root } from 'type-graphql';
+import {
+  Arg,
+  Args,
+  Ctx,
+  Field,
+  FieldResolver,
+  InputType,
+  Mutation,
+  Query,
+  Resolver,
+  Root
+} from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
 import {
   FeatureFlagCreateInput,
   FeatureFlagUpdateArgs,
@@ -30,17 +41,9 @@ export class FeatureFlagsForUserInput {
   userKey: string;
 }
 
-// @ObjectType()
-// export class FeatureFlagResponse {
-//   @Field(type => ID)
-//   id!: IDType;
-// }
-
 @Resolver(FeatureFlag)
 export class FeatureFlagResolver {
-  constructor(@Inject('FeatureFlagService') readonly service: FeatureFlagService) {
-    // tslint
-  }
+  constructor(@Inject('FeatureFlagService') readonly service: FeatureFlagService) {}
 
   @FieldResolver(returns => Project)
   project(@Root() featureFlag: FeatureFlag, @Ctx() ctx: BaseContext): Promise<Project> {
@@ -48,21 +51,25 @@ export class FeatureFlagResolver {
   }
 
   @FieldResolver(returns => [FeatureFlagSegment])
-  featureFlagSegments(@Root() featureFlag: FeatureFlag, @Ctx() ctx: BaseContext): Promise<FeatureFlagSegment[]> {
+  featureFlagSegments(
+    @Root() featureFlag: FeatureFlag,
+    @Ctx() ctx: BaseContext
+  ): Promise<FeatureFlagSegment[]> {
     return ctx.dataLoader.loaders.FeatureFlag.featureFlagSegments.load(featureFlag);
   }
 
   @FieldResolver(returns => [FeatureFlagUser])
-  featureFlagUsers(@Root() featureFlag: FeatureFlag, @Ctx() ctx: BaseContext): Promise<FeatureFlagUser[]> {
+  featureFlagUsers(
+    @Root() featureFlag: FeatureFlag,
+    @Ctx() ctx: BaseContext
+  ): Promise<FeatureFlagUser[]> {
     return ctx.dataLoader.loaders.FeatureFlag.featureFlagUsers.load(featureFlag);
   }
 
   @Query(returns => [FeatureFlag])
-  async featureFlags(
-    @Args() { where, orderBy, limit, offset }: FeatureFlagWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<FeatureFlag[]> {
+  async featureFlags(@Args() { where, orderBy, limit, offset }: FeatureFlagWhereArgs): Promise<
+    FeatureFlag[]
+  > {
     return this.service.find<FeatureFlagWhereInput>(where, orderBy, limit, offset);
   }
 
@@ -78,24 +85,27 @@ export class FeatureFlagResolver {
   }
 
   @Mutation(returns => FeatureFlag)
-  async createFeatureFlag(@Arg('data') data: FeatureFlagCreateInput, @Ctx() ctx: BaseContext): Promise<FeatureFlag> {
-    return this.service.create(data, ctx.user.id);
+  async createFeatureFlag(
+    @Arg('data') data: FeatureFlagCreateInput,
+    @UserId() userId: string
+  ): Promise<FeatureFlag> {
+    return this.service.create(data, userId);
   }
 
   @Mutation(returns => FeatureFlag)
   async updateFeatureFlag(
     @Args() { data, where }: FeatureFlagUpdateArgs,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<FeatureFlag> {
-    return this.service.update(data, where, ctx.user.id);
+    return this.service.update(data, where, userId);
   }
 
   @Mutation(returns => StandardDeleteResponse)
   async deleteFeatureFlag(
     @Arg('where') where: FeatureFlagWhereUniqueInput,
-    @Ctx() ctx: BaseContext
+    @UserId() userId: string
   ): Promise<StandardDeleteResponse> {
     // TODO: deletes across all environments.  Just takes project key and flag key
-    return this.service.delete(where, ctx.user.id);
+    return this.service.delete(where, userId);
   }
 }
