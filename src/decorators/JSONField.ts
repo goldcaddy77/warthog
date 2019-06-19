@@ -15,7 +15,7 @@ export function JSONField(args: JSONFieldOptions = {}): any {
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    Field(type => GraphQLJSONObject, {
+    Field(() => GraphQLJSONObject, {
       ...nullableOption
     }),
     Column({

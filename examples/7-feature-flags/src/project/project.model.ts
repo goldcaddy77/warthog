@@ -27,7 +27,10 @@ export class Project extends BaseModel {
   @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.project)
   featureFlagUsers?: FeatureFlagUser[];
 
-  @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.project)
+  @OneToMany(
+    () => FeatureFlagSegment,
+    (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.project
+  )
   featureFlagSegments?: FeatureFlagSegment[];
 
   @OneToMany(() => UserSegment, (userSegment: UserSegment) => userSegment.project)

@@ -16,7 +16,7 @@ export function DateField(args: DateFieldOptions = {}): any {
   const factories = [
     // We explicitly say string here because when we're metaprogramming without
     // TS types, Field does not know that this should be a string
-    Field(type => GraphQLISODateTime, {
+    Field(() => GraphQLISODateTime, {
       ...nullableOption
     }),
     Column({

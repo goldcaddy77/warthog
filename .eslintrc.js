@@ -1,6 +1,8 @@
 module.exports = {
+  env: {
+    node: true
+  },
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
-
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -16,6 +18,18 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-parameter-properties': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off'
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    // 'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-use-before-define': [
+      'error',
+      {
+        // This is actual valid and allows functions to be listed at the bottom
+        // of the file and get hoisted
+        functions: false
+      }
+    ],
+    // Turn this off for now, but fix later
+    '@typescript-eslint/no-explicit-any': 'off'
   }
 };

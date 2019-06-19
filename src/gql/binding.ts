@@ -1,16 +1,13 @@
 import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
 import * as fetch from 'cross-fetch';
-import * as Debug from 'debug';
 import * as fs from 'fs';
 import { buildSchema, GraphQLError, printSchema } from 'graphql';
 import { Binding, TypescriptGenerator } from 'graphql-binding';
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 import * as path from 'path';
 
-import { StringMapOptional } from '../core/types';
-
-const debug = Debug('warthog:binding');
+import { StringMapOptional, logger } from '../core';
 
 interface LinkOptions extends StringMapOptional {
   token?: string;
@@ -25,7 +22,7 @@ export class Link extends HttpLink {
       delete headers.token;
     }
 
-    debug('headers', headers);
+    logger.info('headers', headers);
 
     super({
       // TODO: cross-fetch library does not play nicely with TS
@@ -50,7 +47,7 @@ export class RemoteBinding extends Binding {
       link: errorLink.concat(httpLink),
       schema: typeDefs
     });
-    debug('schema', JSON.stringify(schema));
+    logger.info('schema', JSON.stringify(schema));
     super({ schema });
   }
 }
@@ -60,17 +57,17 @@ export async function getRemoteBinding(endpoint: string, options: LinkOptions) {
     throw new Error('getRemoteBinding: endpoint is required');
   }
 
-  debug('getRemoteBinding', endpoint, options);
+  logger.info('getRemoteBinding', endpoint, options);
 
   const link = new Link(endpoint, options);
   const introspectionResult = await introspectSchema(link);
-  debug('introspectionResult', JSON.stringify(introspectionResult));
+  logger.info('introspectionResult', JSON.stringify(introspectionResult));
 
   return new RemoteBinding(link, printSchema(introspectionResult));
 }
 
 export async function generateBindingFile(inputSchemaPath: string, outputBindingFile: string) {
-  debug('generateBindingFile:start');
+  logger.info('generateBindingFile:start');
   const sdl = fs.readFileSync(path.resolve(inputSchemaPath), 'utf-8');
   const schema = buildSchema(sdl);
 
@@ -85,7 +82,7 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
   const code = generatorInstance.render();
 
   fs.writeFileSync(outputBindingFile, code);
-  debug('generateBindingFile:end');
+  logger.info('generateBindingFile:end');
 }
 
 export function getOriginalError(error: any): any {

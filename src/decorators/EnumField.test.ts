@@ -26,9 +26,9 @@ describe('Enums', () => {
       stringEnumField?: StringEnum;
     }
 
-    @Resolver(of => StringEnumInput)
+    @Resolver(() => StringEnumInput)
     class SampleResolver {
-      @Query(returns => StringEnum)
+      @Query(() => StringEnum)
       getStringEnumValue(): StringEnum {
         return StringEnum.Foo;
       }

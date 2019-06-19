@@ -59,6 +59,30 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'rating_ASC' |
   'rating_DESC'
 
+export interface BaseWhereInput {
+  id_eq?: String | null
+  id_in?: String[] | String | null
+  createdAt_eq?: String | null
+  createdAt_lt?: String | null
+  createdAt_lte?: String | null
+  createdAt_gt?: String | null
+  createdAt_gte?: String | null
+  createdById_eq?: String | null
+  updatedAt_eq?: String | null
+  updatedAt_lt?: String | null
+  updatedAt_lte?: String | null
+  updatedAt_gt?: String | null
+  updatedAt_gte?: String | null
+  updatedById_eq?: String | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: String | null
+  deletedAt_lt?: String | null
+  deletedAt_lte?: String | null
+  deletedAt_gt?: String | null
+  deletedAt_gte?: String | null
+  deletedById_eq?: String | null
+}
+
 export interface UserCreateInput {
   firstName: String
   lastName?: String | null
@@ -204,7 +228,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 export type DateTime = Date | string
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
 */
 export type Float = number
 

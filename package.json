@@ -13,9 +13,10 @@
   },
   "scripts": {
     "build": "yarn tsc",
-    "lint": "tsc --noEmit && eslint './+(src|test|tools)/**/*.{js,ts,tsx}' --quiet --fix",
+    "check": "tsc --noEmit && yarn lint && yarn prettify",
+    "lint": "eslint './+(examples|src|test|tools)/**/*.{js,ts}' --fix",
     "//prettier": "Note: ignores node_modules by default and 'generated' folder via .prettierignore",
-    "prettify": "yarn prettier './+(src|test|examples|tools)/**/*.ts' --write",
+    "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
     "test:watch": "jest --verbose --watch",
@@ -89,7 +90,6 @@
     "reflect-metadata": "^0.1.12",
     "shortid": "^2.2.14",
     "sqlite3": "^4.0.6",
-    "ts-node": "^7.0.1",
     "type-graphql": "^0.17.4",
     "typedi": "^0.8.0",
     "typeorm": "^0.2.12",
@@ -117,7 +117,7 @@
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.2",
     "ts-jest": "^23.10.5",
-    "tslint-config-prettier": "^1.17.0"
+    "ts-node": "^7.0.1"
   },
   "lint-staged": {
     "linters": {

@@ -15,7 +15,7 @@ import { IDType } from './types';
 // This interface adds all of the base type-graphql fields to our BaseClass
 @InterfaceType()
 export abstract class BaseGraphQLObject {
-  @Field(type => ID)
+  @Field(() => ID)
   id!: IDType;
 
   @Field() createdAt!: Date;
@@ -31,7 +31,7 @@ export abstract class BaseGraphQLObject {
   @Field({ nullable: true })
   deletedById?: IDType;
 
-  @Field(type => Int)
+  @Field(() => Int)
   version!: number;
 }
 

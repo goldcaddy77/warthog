@@ -17,7 +17,7 @@ export function BooleanField(args: BooleanFieldOptions = {}): any {
   const factories = [
     // We explicitly say string here because when we're metaprogramming without
     // TS types, Field does not know that this should be a String
-    Field(type => GraphQLBoolean, {
+    Field(() => GraphQLBoolean, {
       ...nullableOption,
       ...defaultOption
     }),

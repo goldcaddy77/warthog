@@ -14,7 +14,7 @@ export function getServer(AppOptions = {}, dbOptions = {}) {
   return new Server<Context>(
     {
       // Inject a fake user.  In a real app you'd parse a JWT to add the user
-      context: request => {
+      context: () => {
         return {
           user: {
             email: 'admin@test.com',

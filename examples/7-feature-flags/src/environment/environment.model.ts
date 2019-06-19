@@ -22,16 +22,25 @@ export class Environment extends BaseModel {
   // TODO: this should not be nullable
   // TODO: this should not be exposed through the GraphQL either
   // TODO: should create "ManyToOneByKey" to join tables by a non-ID key
-  @ManyToOne(() => Project, (project: Project) => project.environments, { skipGraphQLField: true, nullable: true })
+  @ManyToOne(() => Project, (project: Project) => project.environments, {
+    skipGraphQLField: true,
+    nullable: true
+  })
   project?: Project;
 
   @OneToMany(() => Segment, (segment: Segment) => segment.environment)
   segments?: Environment[];
 
-  @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.environment)
+  @OneToMany(
+    () => FeatureFlagUser,
+    (featureFlagUser: FeatureFlagUser) => featureFlagUser.environment
+  )
   featureFlagUsers?: FeatureFlagUser[];
 
-  @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.environment)
+  @OneToMany(
+    () => FeatureFlagSegment,
+    (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.environment
+  )
   featureFlagSegments?: FeatureFlagSegment[];
 
   @OneToMany(() => UserSegment, (userSegments: UserSegment) => userSegments.environment)

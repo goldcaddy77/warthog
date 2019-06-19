@@ -2,9 +2,9 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class BaseWhereInput {
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   id_eq?: string;
-  @Field(type => [String], { nullable: true })
+  @Field(() => [String], { nullable: true })
   id_in?: string[];
 
   @Field({ nullable: true })

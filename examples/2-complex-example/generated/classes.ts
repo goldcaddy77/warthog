@@ -68,7 +68,7 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   firstName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   firstName_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -83,13 +83,13 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   lastName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   lastName_in?: string[];
 
-  @TypeGraphQLField(type => StringEnum, { nullable: true })
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
   stringEnumField_eq?: StringEnum;
 
-  @TypeGraphQLField(type => [StringEnum], { nullable: true })
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
   stringEnumField_in?: StringEnum[];
 
   @TypeGraphQLField({ nullable: true })
@@ -104,7 +104,7 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   email_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   email_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -119,7 +119,7 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   nickName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   nickName_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -134,22 +134,22 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   privateField_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   privateField_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   id?: string;
 
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   firstName?: string;
 
-  @TypeGraphQLField(type => StringEnum, { nullable: true })
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
   stringEnumField?: StringEnum;
 
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   email?: string;
 }
 
@@ -161,7 +161,7 @@ export class UserCreateInput {
   @TypeGraphQLField()
   lastName!: string;
 
-  @TypeGraphQLField(type => StringEnum)
+  @TypeGraphQLField(() => StringEnum)
   stringEnumField!: StringEnum;
 
   @TypeGraphQLField()
@@ -173,7 +173,7 @@ export class UserCreateInput {
   @TypeGraphQLField({ nullable: true })
   privateField?: string;
 
-  @TypeGraphQLField(type => GraphQLJSONObject, { nullable: true })
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JSON;
 }
 
@@ -185,7 +185,7 @@ export class UserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   lastName?: string;
 
-  @TypeGraphQLField(type => StringEnum, { nullable: true })
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
   stringEnumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
@@ -197,22 +197,22 @@ export class UserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   privateField?: string;
 
-  @TypeGraphQLField(type => GraphQLJSONObject, { nullable: true })
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JSON;
 }
 
 @ArgsType()
 export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserWhereInput, { nullable: true })
+  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
   where?: UserWhereInput;
 
-  @TypeGraphQLField(type => UserOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
   orderBy?: UserOrderByEnum;
 }
 
 @ArgsType()
 export class UserCreateManyArgs {
-  @TypeGraphQLField(type => [UserCreateInput])
+  @TypeGraphQLField(() => [UserCreateInput])
   data!: UserCreateInput[];
 }
 

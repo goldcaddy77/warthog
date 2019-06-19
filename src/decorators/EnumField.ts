@@ -22,11 +22,7 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
   // Use relative paths in the source files so that they can be used on different machines
   const relativeFilePath = path.relative(generatedFolderPath(), decoratorSourceFile);
 
-  const registerEnumWithWarthog = (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor
-  ): any => {
+  const registerEnumWithWarthog = (target: any, propertyKey: string): any => {
     getMetadataStorage().addEnum(
       target.constructor.name,
       propertyKey,
@@ -37,7 +33,7 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
   };
 
   const factories = [
-    Field(type => enumeration, options),
+    Field(() => enumeration, options),
     Column({ enum: enumeration, ...options }) as MethodDecoratorFactory,
     registerEnumWithWarthog
   ];

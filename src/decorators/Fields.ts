@@ -1,4 +1,4 @@
-const graphqlFields = require('graphql-fields'); // tslint:disable-line
+import * as graphqlFields from 'graphql-fields';
 import { createParamDecorator } from 'type-graphql';
 
 export function Fields(): ParameterDecorator {

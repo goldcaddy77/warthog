@@ -14,7 +14,7 @@ import { registerEnumType } from "type-graphql";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");
 
-import { BaseWhereInput, PaginationArgs } from "warthog";
+import { BaseWhereInput, PaginationArgs } from "../../../src";
 import { User } from "../src/join-with-metadata/user.model";
 import { UserRole } from "../src/join-with-metadata/user-role.model";
 import { Role } from "../src/join-with-metadata/role.model";
@@ -53,13 +53,13 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   firstName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   firstName_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -77,16 +77,16 @@ export class UserUpdateInput {
 
 @ArgsType()
 export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserWhereInput, { nullable: true })
+  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
   where?: UserWhereInput;
 
-  @TypeGraphQLField(type => UserOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
   orderBy?: UserOrderByEnum;
 }
 
 @ArgsType()
 export class UserCreateManyArgs {
-  @TypeGraphQLField(type => [UserCreateInput])
+  @TypeGraphQLField(() => [UserCreateInput])
   data!: UserCreateInput[];
 }
 
@@ -122,16 +122,16 @@ registerEnumType(UserRoleOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class UserRoleWhereInput extends BaseWhereInput {
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   userId_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   roleId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   roleId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -146,13 +146,13 @@ export class UserRoleWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   otherMetadata_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   otherMetadata_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class UserRoleWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -182,16 +182,16 @@ export class UserRoleUpdateInput {
 
 @ArgsType()
 export class UserRoleWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserRoleWhereInput, { nullable: true })
+  @TypeGraphQLField(() => UserRoleWhereInput, { nullable: true })
   where?: UserRoleWhereInput;
 
-  @TypeGraphQLField(type => UserRoleOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => UserRoleOrderByEnum, { nullable: true })
   orderBy?: UserRoleOrderByEnum;
 }
 
 @ArgsType()
 export class UserRoleCreateManyArgs {
-  @TypeGraphQLField(type => [UserRoleCreateInput])
+  @TypeGraphQLField(() => [UserRoleCreateInput])
   data!: UserRoleCreateInput[];
 }
 
@@ -233,13 +233,13 @@ export class RoleWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   name_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   name_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class RoleWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -257,16 +257,16 @@ export class RoleUpdateInput {
 
 @ArgsType()
 export class RoleWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => RoleWhereInput, { nullable: true })
+  @TypeGraphQLField(() => RoleWhereInput, { nullable: true })
   where?: RoleWhereInput;
 
-  @TypeGraphQLField(type => RoleOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => RoleOrderByEnum, { nullable: true })
   orderBy?: RoleOrderByEnum;
 }
 
 @ArgsType()
 export class RoleCreateManyArgs {
-  @TypeGraphQLField(type => [RoleCreateInput])
+  @TypeGraphQLField(() => [RoleCreateInput])
   data!: RoleCreateInput[];
 }
 
@@ -308,13 +308,13 @@ export class PostWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   name_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   name_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class PostWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -332,16 +332,16 @@ export class PostUpdateInput {
 
 @ArgsType()
 export class PostWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => PostWhereInput, { nullable: true })
+  @TypeGraphQLField(() => PostWhereInput, { nullable: true })
   where?: PostWhereInput;
 
-  @TypeGraphQLField(type => PostOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => PostOrderByEnum, { nullable: true })
   orderBy?: PostOrderByEnum;
 }
 
 @ArgsType()
 export class PostCreateManyArgs {
-  @TypeGraphQLField(type => [PostCreateInput])
+  @TypeGraphQLField(() => [PostCreateInput])
   data!: PostCreateInput[];
 }
 
@@ -383,13 +383,13 @@ export class AuthorWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   firstName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   firstName_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class AuthorWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -407,16 +407,16 @@ export class AuthorUpdateInput {
 
 @ArgsType()
 export class AuthorWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => AuthorWhereInput, { nullable: true })
+  @TypeGraphQLField(() => AuthorWhereInput, { nullable: true })
   where?: AuthorWhereInput;
 
-  @TypeGraphQLField(type => AuthorOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => AuthorOrderByEnum, { nullable: true })
   orderBy?: AuthorOrderByEnum;
 }
 
 @ArgsType()
 export class AuthorCreateManyArgs {
-  @TypeGraphQLField(type => [AuthorCreateInput])
+  @TypeGraphQLField(() => [AuthorCreateInput])
   data!: AuthorCreateInput[];
 }
 

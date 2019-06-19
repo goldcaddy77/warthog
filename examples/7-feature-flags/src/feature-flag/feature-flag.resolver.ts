@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import {
   Arg,
   Args,
@@ -31,13 +30,13 @@ import { FeatureFlagService } from './feature-flag.service';
 
 @InputType()
 export class FeatureFlagsForUserInput {
-  @Field(type => String)
+  @Field(() => String)
   projKey: string;
 
-  @Field(type => String)
+  @Field(() => String)
   envKey: string;
 
-  @Field(type => String)
+  @Field(() => String)
   userKey: string;
 }
 
@@ -45,12 +44,12 @@ export class FeatureFlagsForUserInput {
 export class FeatureFlagResolver {
   constructor(@Inject('FeatureFlagService') readonly service: FeatureFlagService) {}
 
-  @FieldResolver(returns => Project)
+  @FieldResolver(() => Project)
   project(@Root() featureFlag: FeatureFlag, @Ctx() ctx: BaseContext): Promise<Project> {
     return ctx.dataLoader.loaders.FeatureFlag.project.load(featureFlag);
   }
 
-  @FieldResolver(returns => [FeatureFlagSegment])
+  @FieldResolver(() => [FeatureFlagSegment])
   featureFlagSegments(
     @Root() featureFlag: FeatureFlag,
     @Ctx() ctx: BaseContext
@@ -58,7 +57,7 @@ export class FeatureFlagResolver {
     return ctx.dataLoader.loaders.FeatureFlag.featureFlagSegments.load(featureFlag);
   }
 
-  @FieldResolver(returns => [FeatureFlagUser])
+  @FieldResolver(() => [FeatureFlagUser])
   featureFlagUsers(
     @Root() featureFlag: FeatureFlag,
     @Ctx() ctx: BaseContext
@@ -66,7 +65,7 @@ export class FeatureFlagResolver {
     return ctx.dataLoader.loaders.FeatureFlag.featureFlagUsers.load(featureFlag);
   }
 
-  @Query(returns => [FeatureFlag])
+  @Query(() => [FeatureFlag])
   async featureFlags(@Args() { where, orderBy, limit, offset }: FeatureFlagWhereArgs): Promise<
     FeatureFlag[]
   > {
@@ -74,17 +73,17 @@ export class FeatureFlagResolver {
   }
 
   // Custom resolver that has it's own InputType and calls into custom service method
-  @Query(returns => [String])
+  @Query(() => [String])
   async featureFlagsForUser(@Arg('where') where: FeatureFlagsForUserInput): Promise<string[]> {
     return this.service.flagsForUser(where);
   }
 
-  @Query(returns => FeatureFlag)
+  @Query(() => FeatureFlag)
   async featureFlag(@Arg('where') where: FeatureFlagWhereUniqueInput): Promise<FeatureFlag> {
     return this.service.findOne<FeatureFlagWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => FeatureFlag)
+  @Mutation(() => FeatureFlag)
   async createFeatureFlag(
     @Arg('data') data: FeatureFlagCreateInput,
     @UserId() userId: string
@@ -92,7 +91,7 @@ export class FeatureFlagResolver {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => FeatureFlag)
+  @Mutation(() => FeatureFlag)
   async updateFeatureFlag(
     @Args() { data, where }: FeatureFlagUpdateArgs,
     @UserId() userId: string
@@ -100,7 +99,7 @@ export class FeatureFlagResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteFeatureFlag(
     @Arg('where') where: FeatureFlagWhereUniqueInput,
     @UserId() userId: string

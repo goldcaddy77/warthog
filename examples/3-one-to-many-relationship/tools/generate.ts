@@ -1,9 +1,7 @@
-import * as Debug from 'debug';
-
 import { loadConfig } from '../src/config';
 import { getServer } from '../src/server';
 
-const logger = Debug('warthog:generate');
+import { logger } from '../../../src';
 
 async function generate() {
   loadConfig();
@@ -12,10 +10,10 @@ async function generate() {
 
 generate()
   .then(result => {
-    logger(result);
+    logger.info(result);
     return process.exit(0);
   })
   .catch(err => {
-    console.log(err);
+    logger.error(err);
     return process.exit(1);
   });

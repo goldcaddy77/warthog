@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { logger } from '../../../src';
+
 import { loadConfig } from '../src/config';
 import { getServer } from './server';
 
@@ -11,9 +13,9 @@ async function bootstrap() {
 }
 
 bootstrap().catch((error: Error) => {
-  console.error(error);
+  logger.error(error);
   if (error.stack) {
-    console.error(error.stack!.split('\n'));
+    logger.error(error.stack.split('\n'));
   }
   process.exit(1);
 });

@@ -19,12 +19,21 @@ export class FeatureFlag extends BaseModel {
   // TODO: this should not be nullable
   // TODO: this should not be exposed through the GraphQL either
   // TODO: should create "ManyToOneByKey" to join tables by a non-ID key
-  @ManyToOne(() => Project, (project: Project) => project.featureFlags, { skipGraphQLField: true, nullable: true })
+  @ManyToOne(() => Project, (project: Project) => project.featureFlags, {
+    skipGraphQLField: true,
+    nullable: true
+  })
   project?: Project;
 
-  @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.featureFlag)
+  @OneToMany(
+    () => FeatureFlagUser,
+    (featureFlagUser: FeatureFlagUser) => featureFlagUser.featureFlag
+  )
   featureFlagUsers?: FeatureFlagUser[];
 
-  @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.featureFlag)
+  @OneToMany(
+    () => FeatureFlagSegment,
+    (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.featureFlag
+  )
   featureFlagSegments?: FeatureFlagSegment[];
 }

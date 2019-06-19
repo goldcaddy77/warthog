@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
@@ -22,12 +21,12 @@ export class FeatureFlagUserResolver {
     // no-empty
   }
 
-  @FieldResolver(returns => User)
+  @FieldResolver(() => User)
   user(@Root() featureFlagUser: FeatureFlagUser, @Ctx() ctx: BaseContext): Promise<User> {
     return ctx.dataLoader.loaders.FeatureFlagUser.user.load(featureFlagUser);
   }
 
-  @Query(returns => [FeatureFlagUser])
+  @Query(() => [FeatureFlagUser])
   async featureFlagUsers(@Args()
   {
     where,
@@ -38,14 +37,14 @@ export class FeatureFlagUserResolver {
     return this.service.find<FeatureFlagUserWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => FeatureFlagUser)
+  @Query(() => FeatureFlagUser)
   async featureFlagUser(
     @Arg('where') where: FeatureFlagUserWhereUniqueInput
   ): Promise<FeatureFlagUser> {
     return this.service.findOne<FeatureFlagUserWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => FeatureFlagUser)
+  @Mutation(() => FeatureFlagUser)
   async createFeatureFlagUser(
     @Arg('data') data: FeatureFlagUserCreateInput,
     @UserId() userId: string
@@ -53,7 +52,7 @@ export class FeatureFlagUserResolver {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => FeatureFlagUser)
+  @Mutation(() => FeatureFlagUser)
   async updateFeatureFlagUser(
     @Args() { data, where }: FeatureFlagUserUpdateArgs,
     @UserId() userId: string
@@ -61,7 +60,7 @@ export class FeatureFlagUserResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteFeatureFlagUser(
     @Arg('where') where: FeatureFlagUserWhereUniqueInput,
     @UserId() userId: string

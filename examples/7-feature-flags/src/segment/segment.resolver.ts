@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
@@ -25,12 +24,12 @@ export class SegmentResolver {
     // no-empty
   }
 
-  @FieldResolver(returns => [UserSegment])
+  @FieldResolver(() => [UserSegment])
   userSegments(@Root() segment: Segment, @Ctx() ctx: BaseContext): Promise<UserSegment[]> {
     return ctx.dataLoader.loaders.Segment.userSegments.load(segment);
   }
 
-  @FieldResolver(returns => [FeatureFlagSegment])
+  @FieldResolver(() => [FeatureFlagSegment])
   featureFlagSegments(
     @Root() segment: Segment,
     @Ctx() ctx: BaseContext
@@ -38,31 +37,27 @@ export class SegmentResolver {
     return ctx.dataLoader.loaders.Segment.featureFlagSegments.load(segment);
   }
 
-  @FieldResolver(returns => Environment)
+  @FieldResolver(() => Environment)
   environment(@Root() segment: Segment, @Ctx() ctx: BaseContext): Promise<Environment> {
     return ctx.dataLoader.loaders.Segment.environment.load(segment);
   }
 
-  @FieldResolver(returns => Project)
+  @FieldResolver(() => Project)
   project(@Root() segment: Segment, @Ctx() ctx: BaseContext): Promise<Project> {
     return ctx.dataLoader.loaders.Segment.project.load(segment);
   }
 
-  @Query(returns => [Segment])
-  async segments(
-    @Args() { where, orderBy, limit, offset }: SegmentWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<Segment[]> {
+  @Query(() => [Segment])
+  async segments(@Args() { where, orderBy, limit, offset }: SegmentWhereArgs): Promise<Segment[]> {
     return this.service.find<SegmentWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => Segment)
+  @Query(() => Segment)
   async segment(@Arg('where') where: SegmentWhereUniqueInput): Promise<Segment> {
     return this.service.findOne<SegmentWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => Segment)
+  @Mutation(() => Segment)
   async createSegment(
     @Arg('data') data: SegmentCreateInput,
     @UserId() userId: string
@@ -70,7 +65,7 @@ export class SegmentResolver {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => Segment)
+  @Mutation(() => Segment)
   async updateSegment(
     @Args() { data, where }: SegmentUpdateArgs,
     @UserId() userId: string
@@ -78,7 +73,7 @@ export class SegmentResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteSegment(
     @Arg('where') where: SegmentWhereUniqueInput,
     @UserId() userId: string

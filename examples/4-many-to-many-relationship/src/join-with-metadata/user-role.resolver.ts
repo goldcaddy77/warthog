@@ -1,17 +1,5 @@
-import { GraphQLResolveInfo } from 'graphql';
-import {
-  Arg,
-  Args,
-  ArgsType,
-  Ctx,
-  Field,
-  FieldResolver,
-  Mutation,
-  Query,
-  Resolver,
-  Root
-} from 'type-graphql';
-import { DeepPartial, Repository } from 'typeorm';
+import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseResolver } from '../../../../src';
@@ -33,26 +21,24 @@ export class UserRoleResolver extends BaseResolver<UserRole> {
     super(UserRole, userRoleRepository);
   }
 
-  @FieldResolver(returns => User)
+  @FieldResolver(() => User)
   user(@Root() userRole: UserRole, @Ctx() ctx: BaseContext): Promise<User> {
     return ctx.dataLoader.loaders.UserRole.user.load(userRole);
   }
 
-  @FieldResolver(returns => Role)
+  @FieldResolver(() => Role)
   role(@Root() userRole: UserRole, @Ctx() ctx: BaseContext): Promise<Role> {
     return ctx.dataLoader.loaders.UserRole.role.load(userRole);
   }
 
-  @Query(returns => [UserRole])
-  async userRoles(
-    @Args() { where, orderBy, limit, offset }: UserRoleWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<UserRole[]> {
+  @Query(() => [UserRole])
+  async userRoles(@Args() { where, orderBy, limit, offset }: UserRoleWhereArgs): Promise<
+    UserRole[]
+  > {
     return this.find<UserRoleWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Mutation(returns => UserRole)
+  @Mutation(() => UserRole)
   async createUserRole(
     @Arg('data') data: UserRoleCreateInput,
     @Ctx() ctx: BaseContext
@@ -60,7 +46,7 @@ export class UserRoleResolver extends BaseResolver<UserRole> {
     return this.create(data, ctx.user.id);
   }
 
-  @Mutation(returns => [UserRole])
+  @Mutation(() => [UserRole])
   async createManyUserRoles(
     @Args() { data }: UserRoleCreateManyArgs,
     @Ctx() ctx: BaseContext

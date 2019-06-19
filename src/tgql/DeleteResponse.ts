@@ -4,12 +4,12 @@ import { IDType } from '../core';
 
 @InterfaceType()
 export abstract class DeleteResponse {
-  @Field(type => ID)
+  @Field(() => ID)
   id!: IDType;
 }
 
 @ObjectType()
 export class StandardDeleteResponse {
-  @Field(type => ID)
+  @Field(() => ID)
   id!: IDType;
 }

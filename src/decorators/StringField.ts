@@ -20,7 +20,7 @@ export function StringField(args: StringFieldOptions = {}): any {
   const factories = [
     // We explicitly say string here because when we're metaprogramming without
     // TS types, Field does not know that this should be a String
-    Field(type => String, {
+    Field(() => String, {
       ...nullableOption
     }),
     Column({

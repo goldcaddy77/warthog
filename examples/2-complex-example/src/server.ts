@@ -20,7 +20,7 @@ export function getServer(AppOptions = {}, dbOptions = {}) {
   return new Server<Context>(
     {
       // Inject a fake user.  In a real app you'd parse a JWT to add the user
-      context: async request => {
+      context: async () => {
         // allows asynchronous resolution of user (or other items you want to put in context)
         await sleep(500);
         return Promise.resolve({

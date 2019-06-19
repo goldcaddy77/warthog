@@ -64,7 +64,7 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   firstName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   firstName_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -79,7 +79,7 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   lastName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   lastName_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -94,7 +94,7 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   email_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   email_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -112,13 +112,13 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   age_lte?: number;
 
-  @TypeGraphQLField(type => [Int], { nullable: true })
+  @TypeGraphQLField(() => [Int], { nullable: true })
   age_in?: number[];
 
-  @TypeGraphQLField(type => Boolean, { nullable: true })
+  @TypeGraphQLField(() => Boolean, { nullable: true })
   isRequired_eq?: Boolean;
 
-  @TypeGraphQLField(type => [Boolean], { nullable: true })
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
   isRequired_in?: Boolean[];
 
   @TypeGraphQLField({ nullable: true })
@@ -136,16 +136,16 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   rating_lte?: number;
 
-  @TypeGraphQLField(type => [Float], { nullable: true })
+  @TypeGraphQLField(() => [Float], { nullable: true })
   rating_in?: number[];
 }
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   id?: string;
 
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   email?: string;
 }
 
@@ -193,16 +193,16 @@ export class UserUpdateInput {
 
 @ArgsType()
 export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserWhereInput, { nullable: true })
+  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
   where?: UserWhereInput;
 
-  @TypeGraphQLField(type => UserOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
   orderBy?: UserOrderByEnum;
 }
 
 @ArgsType()
 export class UserCreateManyArgs {
-  @TypeGraphQLField(type => [UserCreateInput])
+  @TypeGraphQLField(() => [UserCreateInput])
   data!: UserCreateInput[];
 }
 
