@@ -38,10 +38,9 @@ export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) =
 export const mockDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) => {
   return createDBConnection({
     ...dbOptions,
-    database: getDatabaseName(),
-    host: getDatabaseHost(),
-    synchronize: shouldSchronizeDatabaseSchema(),
-    type: getDatabaseType()
+    database: 'warthog.sqlite.tmp',
+    synchronize: 'true',
+    type: 'sqlite'
   } as any);
 };
 
