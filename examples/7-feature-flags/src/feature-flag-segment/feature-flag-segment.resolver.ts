@@ -1,8 +1,7 @@
-import { GraphQLResolveInfo } from 'graphql';
-import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
+import { StandardDeleteResponse, UserId } from '../../../../src';
 import {
   FeatureFlagSegmentCreateInput,
   FeatureFlagSegmentUpdateArgs,
@@ -20,7 +19,7 @@ export class FeatureFlagSegmentResolver {
     // no-empty
   }
 
-  @Query(returns => [FeatureFlagSegment])
+  @Query(() => [FeatureFlagSegment])
   async featureFlagSegments(@Args()
   {
     where,
@@ -31,14 +30,14 @@ export class FeatureFlagSegmentResolver {
     return this.service.find<FeatureFlagSegmentWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => FeatureFlagSegment)
+  @Query(() => FeatureFlagSegment)
   async featureFlagSegment(
     @Arg('where') where: FeatureFlagSegmentWhereUniqueInput
   ): Promise<FeatureFlagSegment> {
     return this.service.findOne<FeatureFlagSegmentWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => FeatureFlagSegment)
+  @Mutation(() => FeatureFlagSegment)
   async createFeatureFlagSegment(
     @Arg('data') data: FeatureFlagSegmentCreateInput,
     @UserId() userId: string
@@ -46,7 +45,7 @@ export class FeatureFlagSegmentResolver {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => FeatureFlagSegment)
+  @Mutation(() => FeatureFlagSegment)
   async updateFeatureFlagSegment(
     @Args() { data, where }: FeatureFlagSegmentUpdateArgs,
     @UserId() userId: string
@@ -54,7 +53,7 @@ export class FeatureFlagSegmentResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteFeatureFlagSegment(
     @Arg('where') where: FeatureFlagSegmentWhereUniqueInput,
     @UserId() userId: string

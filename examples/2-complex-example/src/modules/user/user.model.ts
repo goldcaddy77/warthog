@@ -20,16 +20,16 @@ export enum StringEnum {
 @Unique(['firstName', 'stringEnumField'])
 export class User extends BaseModel {
   @StringField({ maxLength: 30 })
-  firstName?: string;
+  firstName: string;
 
   @StringField({ maxLength: 50, minLength: 2 })
-  lastName?: string;
+  lastName: string;
 
   @EnumField('StringEnum', StringEnum)
-  stringEnumField?: StringEnum;
+  stringEnumField: StringEnum;
 
   @EmailField()
-  email?: string;
+  email: string;
 
   @StringField({ maxLength: 30, nullable: true })
   nickName?: string;

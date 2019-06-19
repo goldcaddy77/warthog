@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
@@ -23,21 +22,19 @@ import { EnvironmentService } from './environment.service';
 
 @Resolver(Environment)
 export class EnvironmentResolver {
-  constructor(@Inject('EnvironmentService') readonly service: EnvironmentService) {
-    // tslint
-  }
+  constructor(@Inject('EnvironmentService') readonly service: EnvironmentService) {}
 
-  @FieldResolver(returns => Project)
+  @FieldResolver(() => Project)
   project(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<Project> {
     return ctx.dataLoader.loaders.Environment.project.load(environment);
   }
 
-  @FieldResolver(returns => [Segment])
+  @FieldResolver(() => [Segment])
   segments(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<Segment[]> {
     return ctx.dataLoader.loaders.Environment.segments.load(environment);
   }
 
-  @FieldResolver(returns => [FeatureFlagUser])
+  @FieldResolver(() => [FeatureFlagUser])
   featureFlagUsers(
     @Root() environment: Environment,
     @Ctx() ctx: BaseContext
@@ -45,7 +42,7 @@ export class EnvironmentResolver {
     return ctx.dataLoader.loaders.Environment.featureFlagUsers.load(environment);
   }
 
-  @FieldResolver(returns => [FeatureFlagSegment])
+  @FieldResolver(() => [FeatureFlagSegment])
   featureFlagSegments(
     @Root() environment: Environment,
     @Ctx() ctx: BaseContext
@@ -53,24 +50,24 @@ export class EnvironmentResolver {
     return ctx.dataLoader.loaders.Environment.featureFlagSegments.load(environment);
   }
 
-  @FieldResolver(returns => [UserSegment])
+  @FieldResolver(() => [UserSegment])
   userSegments(@Root() environment: Environment, @Ctx() ctx: BaseContext): Promise<UserSegment[]> {
     return ctx.dataLoader.loaders.Environment.userSegments.load(environment);
   }
 
-  @Query(returns => [Environment])
+  @Query(() => [Environment])
   async environments(@Args() { where, orderBy, limit, offset }: EnvironmentWhereArgs): Promise<
     Environment[]
   > {
     return this.service.find<EnvironmentWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => Environment)
+  @Query(() => Environment)
   async environment(@Arg('where') where: EnvironmentWhereUniqueInput): Promise<Environment> {
     return this.service.findOne<EnvironmentWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => Environment)
+  @Mutation(() => Environment)
   async createEnvironment(
     @Arg('data') data: EnvironmentCreateInput,
     @UserId() userId: string
@@ -78,7 +75,7 @@ export class EnvironmentResolver {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => Environment)
+  @Mutation(() => Environment)
   async updateEnvironment(
     @Args() { data, where }: EnvironmentUpdateArgs,
     @UserId() userId: string
@@ -86,7 +83,7 @@ export class EnvironmentResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteEnvironment(
     @Arg('where') where: EnvironmentWhereUniqueInput,
     @UserId() userId: string

@@ -10,7 +10,7 @@ interface Deleteable {
 
 @Service()
 export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
-  async use({ root, args, context, info }: ResolverData<BaseContext>, next: NextFn) {
+  async use({ context }: ResolverData<BaseContext>, next: NextFn) {
     if (!context.dataLoader.initialized) {
       context.dataLoader = {
         initialized: true,

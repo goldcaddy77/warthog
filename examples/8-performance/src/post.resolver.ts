@@ -11,7 +11,6 @@ import {
   PostWhereUniqueInput
 } from '../generated';
 
-import { logger } from './logger';
 import { User } from './user.model';
 
 import { Post } from './post.model';
@@ -21,12 +20,12 @@ import { PostService } from './post.service';
 export class PostResolver {
   constructor(@Inject('PostService') public readonly service: PostService) {}
 
-  @FieldResolver(returns => User)
+  @FieldResolver(() => User)
   user(@Root() post: Post, @Ctx() ctx: BaseContext): Promise<User> {
     return ctx.dataLoader.loaders.Post.user.load(post);
   }
 
-  @Query(returns => [Post])
+  @Query(() => [Post])
   async posts(
     @Args() { where, orderBy, limit, offset }: PostWhereArgs,
     @Fields() fields: string[]
@@ -34,17 +33,17 @@ export class PostResolver {
     return this.service.find<PostWhereInput>(where, orderBy, limit, offset, fields);
   }
 
-  @Query(returns => Post)
+  @Query(() => Post)
   async post(@Arg('where') where: PostWhereUniqueInput): Promise<Post> {
     return this.service.findOne<PostWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => Post)
+  @Mutation(() => Post)
   async createPost(@Arg('data') data: PostCreateInput, @UserId() userId: string): Promise<Post> {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => Post)
+  @Mutation(() => Post)
   async updatePost(
     @Args() { data, where }: PostUpdateArgs,
     @UserId() userId: string
@@ -52,7 +51,7 @@ export class PostResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => [Post])
+  @Mutation(() => [Post])
   async createManyPosts(
     @Args() { data }: PostCreateManyArgs,
     @UserId() userId: string
@@ -60,7 +59,7 @@ export class PostResolver {
     return this.service.createMany(data, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deletePost(
     @Arg('where') where: PostWhereUniqueInput,
     @UserId() userId: string

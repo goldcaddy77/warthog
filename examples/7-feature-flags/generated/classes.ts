@@ -11,7 +11,7 @@ import {
 } from "type-graphql";
 import { registerEnumType } from "type-graphql";
 
-// tslint:disable-next-line:no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../../src";
@@ -74,7 +74,7 @@ export class SegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   name_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   name_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -89,7 +89,7 @@ export class SegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   key_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   key_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -104,7 +104,7 @@ export class SegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   description_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   description_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -119,13 +119,13 @@ export class SegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   projKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   projKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -140,19 +140,19 @@ export class SegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   envKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   envKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   environmentId_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class SegmentWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -206,16 +206,16 @@ export class SegmentUpdateInput {
 
 @ArgsType()
 export class SegmentWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => SegmentWhereInput, { nullable: true })
+  @TypeGraphQLField(() => SegmentWhereInput, { nullable: true })
   where?: SegmentWhereInput;
 
-  @TypeGraphQLField(type => SegmentOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => SegmentOrderByEnum, { nullable: true })
   orderBy?: SegmentOrderByEnum;
 }
 
 @ArgsType()
 export class SegmentCreateManyArgs {
-  @TypeGraphQLField(type => [SegmentCreateInput])
+  @TypeGraphQLField(() => [SegmentCreateInput])
   data!: SegmentCreateInput[];
 }
 
@@ -278,13 +278,13 @@ export class UserSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   projKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   projKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -299,13 +299,13 @@ export class UserSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   envKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   envKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   environmentId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -320,13 +320,13 @@ export class UserSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   userKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   userKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   userId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -341,19 +341,19 @@ export class UserSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   segmentKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   segmentKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   segmentId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   segmentId_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class UserSegmentWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -413,16 +413,16 @@ export class UserSegmentUpdateInput {
 
 @ArgsType()
 export class UserSegmentWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserSegmentWhereInput, { nullable: true })
+  @TypeGraphQLField(() => UserSegmentWhereInput, { nullable: true })
   where?: UserSegmentWhereInput;
 
-  @TypeGraphQLField(type => UserSegmentOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => UserSegmentOrderByEnum, { nullable: true })
   orderBy?: UserSegmentOrderByEnum;
 }
 
 @ArgsType()
 export class UserSegmentCreateManyArgs {
-  @TypeGraphQLField(type => [UserSegmentCreateInput])
+  @TypeGraphQLField(() => [UserSegmentCreateInput])
   data!: UserSegmentCreateInput[];
 }
 
@@ -464,16 +464,16 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   key_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   key_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   id?: string;
 
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   key?: string;
 }
 
@@ -491,16 +491,16 @@ export class UserUpdateInput {
 
 @ArgsType()
 export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserWhereInput, { nullable: true })
+  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
   where?: UserWhereInput;
 
-  @TypeGraphQLField(type => UserOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
   orderBy?: UserOrderByEnum;
 }
 
 @ArgsType()
 export class UserCreateManyArgs {
-  @TypeGraphQLField(type => [UserCreateInput])
+  @TypeGraphQLField(() => [UserCreateInput])
   data!: UserCreateInput[];
 }
 
@@ -563,13 +563,13 @@ export class FeatureFlagUserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   featureKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   featureKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   featureFlagId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   featureFlagId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -584,13 +584,13 @@ export class FeatureFlagUserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   userKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   userKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   userId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -605,13 +605,13 @@ export class FeatureFlagUserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   projKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   projKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -626,19 +626,19 @@ export class FeatureFlagUserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   envKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   envKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   environmentId_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class FeatureFlagUserWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -698,16 +698,16 @@ export class FeatureFlagUserUpdateInput {
 
 @ArgsType()
 export class FeatureFlagUserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => FeatureFlagUserWhereInput, { nullable: true })
+  @TypeGraphQLField(() => FeatureFlagUserWhereInput, { nullable: true })
   where?: FeatureFlagUserWhereInput;
 
-  @TypeGraphQLField(type => FeatureFlagUserOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => FeatureFlagUserOrderByEnum, { nullable: true })
   orderBy?: FeatureFlagUserOrderByEnum;
 }
 
 @ArgsType()
 export class FeatureFlagUserCreateManyArgs {
-  @TypeGraphQLField(type => [FeatureFlagUserCreateInput])
+  @TypeGraphQLField(() => [FeatureFlagUserCreateInput])
   data!: FeatureFlagUserCreateInput[];
 }
 
@@ -752,7 +752,7 @@ export class ProjectWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   name_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   name_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -767,16 +767,16 @@ export class ProjectWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   key_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   key_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class ProjectWhereUniqueInput {
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   id?: string;
 
-  @TypeGraphQLField(type => String, { nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   key?: string;
 }
 
@@ -800,16 +800,16 @@ export class ProjectUpdateInput {
 
 @ArgsType()
 export class ProjectWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => ProjectWhereInput, { nullable: true })
+  @TypeGraphQLField(() => ProjectWhereInput, { nullable: true })
   where?: ProjectWhereInput;
 
-  @TypeGraphQLField(type => ProjectOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => ProjectOrderByEnum, { nullable: true })
   orderBy?: ProjectOrderByEnum;
 }
 
 @ArgsType()
 export class ProjectCreateManyArgs {
-  @TypeGraphQLField(type => [ProjectCreateInput])
+  @TypeGraphQLField(() => [ProjectCreateInput])
   data!: ProjectCreateInput[];
 }
 
@@ -860,7 +860,7 @@ export class FeatureFlagWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   name_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   name_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -875,7 +875,7 @@ export class FeatureFlagWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   key_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   key_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -890,19 +890,19 @@ export class FeatureFlagWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   projKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   projKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class FeatureFlagWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -938,16 +938,16 @@ export class FeatureFlagUpdateInput {
 
 @ArgsType()
 export class FeatureFlagWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => FeatureFlagWhereInput, { nullable: true })
+  @TypeGraphQLField(() => FeatureFlagWhereInput, { nullable: true })
   where?: FeatureFlagWhereInput;
 
-  @TypeGraphQLField(type => FeatureFlagOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => FeatureFlagOrderByEnum, { nullable: true })
   orderBy?: FeatureFlagOrderByEnum;
 }
 
 @ArgsType()
 export class FeatureFlagCreateManyArgs {
-  @TypeGraphQLField(type => [FeatureFlagCreateInput])
+  @TypeGraphQLField(() => [FeatureFlagCreateInput])
   data!: FeatureFlagCreateInput[];
 }
 
@@ -1010,13 +1010,13 @@ export class FeatureFlagSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   projKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   projKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -1031,13 +1031,13 @@ export class FeatureFlagSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   envKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   envKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   environmentId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -1052,13 +1052,13 @@ export class FeatureFlagSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   featureKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   featureKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   featureFlagId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   featureFlagId_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -1073,19 +1073,19 @@ export class FeatureFlagSegmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   segmentKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   segmentKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   segmentId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   segmentId_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class FeatureFlagSegmentWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -1145,16 +1145,16 @@ export class FeatureFlagSegmentUpdateInput {
 
 @ArgsType()
 export class FeatureFlagSegmentWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => FeatureFlagSegmentWhereInput, { nullable: true })
+  @TypeGraphQLField(() => FeatureFlagSegmentWhereInput, { nullable: true })
   where?: FeatureFlagSegmentWhereInput;
 
-  @TypeGraphQLField(type => FeatureFlagSegmentOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => FeatureFlagSegmentOrderByEnum, { nullable: true })
   orderBy?: FeatureFlagSegmentOrderByEnum;
 }
 
 @ArgsType()
 export class FeatureFlagSegmentCreateManyArgs {
-  @TypeGraphQLField(type => [FeatureFlagSegmentCreateInput])
+  @TypeGraphQLField(() => [FeatureFlagSegmentCreateInput])
   data!: FeatureFlagSegmentCreateInput[];
 }
 
@@ -1205,7 +1205,7 @@ export class EnvironmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   name_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   name_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -1220,7 +1220,7 @@ export class EnvironmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   key_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   key_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -1235,19 +1235,19 @@ export class EnvironmentWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   projKey_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   projKey_in?: string[];
 
-  @TypeGraphQLField(type => ID, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId_eq?: string;
 
-  @TypeGraphQLField(type => [ID], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class EnvironmentWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -1283,16 +1283,16 @@ export class EnvironmentUpdateInput {
 
 @ArgsType()
 export class EnvironmentWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => EnvironmentWhereInput, { nullable: true })
+  @TypeGraphQLField(() => EnvironmentWhereInput, { nullable: true })
   where?: EnvironmentWhereInput;
 
-  @TypeGraphQLField(type => EnvironmentOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => EnvironmentOrderByEnum, { nullable: true })
   orderBy?: EnvironmentOrderByEnum;
 }
 
 @ArgsType()
 export class EnvironmentCreateManyArgs {
-  @TypeGraphQLField(type => [EnvironmentCreateInput])
+  @TypeGraphQLField(() => [EnvironmentCreateInput])
   data!: EnvironmentCreateInput[];
 }
 

@@ -1,16 +1,17 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    {
+      "language": "typescript",
+      "autoFix": true
+    }
+  ],
+  "prettier.eslintIntegration": true,
   "search.exclude": {
     "dist/": true,
     "node_modules/": true
-  },
-  "[javascript]": {
-    "editor.formatOnSave": true
-  },
-  "[json]": {
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true
   }
 }

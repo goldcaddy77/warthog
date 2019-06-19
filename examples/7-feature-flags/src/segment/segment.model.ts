@@ -26,7 +26,10 @@ export class Segment extends BaseModel {
   // TODO: this should not be nullable
   // TODO: this should not be exposed through the GraphQL either
   // TODO: should create "ManyToOneByKey" to join tables by a non-ID key
-  @ManyToOne(() => Project, (project: Project) => project.segments, { skipGraphQLField: true, nullable: true })
+  @ManyToOne(() => Project, (project: Project) => project.segments, {
+    skipGraphQLField: true,
+    nullable: true
+  })
   project?: Project;
 
   @StringField({ maxLength: 20, minLength: 3, nullable: false })
@@ -41,7 +44,10 @@ export class Segment extends BaseModel {
   })
   environment?: Environment;
 
-  @OneToMany(() => FeatureFlagSegment, (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.segment)
+  @OneToMany(
+    () => FeatureFlagSegment,
+    (featureFlagSegment: FeatureFlagSegment) => featureFlagSegment.segment
+  )
   featureFlagSegments?: FeatureFlagSegment[];
 
   @OneToMany(() => UserSegment, (userSegments: UserSegment) => userSegments.segment)

@@ -100,14 +100,14 @@ export class UserResolver extends BaseResolver<User> {
     super(User, userRepository);
   }
 
-  @Query(returns => [User])
+  @Query(() => [User])
   async users(
     @Args() { where, orderBy, limit, offset }: UserWhereArgs
   ): Promise<User[]> {
     return this.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
     return this.create(data, ctx.user.id);
   }
@@ -213,31 +213,31 @@ Notice how we've only added a single field on the model and you get pagination, 
 
 ### App Options (appOptions)
 
-| attribute | description | default |
-| --- | --- | --- |
-| container | TypeDI container. Warthog uses dependency injection under the hood. | empty container |
-| authChecker | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers. |  |
-| autoGenerateFiles | Should the server auto-generate your schema, typings, etc... | `true` when NODE_ENV=development. `false` otherwise |
-| context | Context getter of form `(request: Request) => object` | empty |
-| generatedFolder | Folder where generated content is created | `process.cwd()` + 'generated' |
-| logger | Logger | [debug](https://github.com/visionmedia/debug) |
-| middlewares | Express middlewares to add to your server | none |
-| mockDBConnection | Opens a sqlite connection instead of Postgres.  Helpful if you just need to generate the schema | `false` |
-| openPlayground | Should server open GraphQL Playground after starting? | `false` if running tests, `true` if in development mode |
-| port | App Server Port | 4000 |
-| resolversPath | Glob path to find your resolvers | `process.cwd()` + '/**/*.resolver.ts' |
+| attribute         | description                                                                                               | default                                                 |
+| ----------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| container         | TypeDI container. Warthog uses dependency injection under the hood.                                       | empty container                                         |
+| authChecker       | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers. |                                                         |
+| autoGenerateFiles | Should the server auto-generate your schema, typings, etc...                                              | `true` when NODE_ENV=development. `false` otherwise     |
+| context           | Context getter of form `(request: Request) => object`                                                     | empty                                                   |
+| generatedFolder   | Folder where generated content is created                                                                 | `process.cwd()` + 'generated'                           |
+| logger            | Logger                                                                                                    | [debug](https://github.com/visionmedia/debug)           |
+| middlewares       | Express middlewares to add to your server                                                                 | none                                                    |
+| mockDBConnection  | Opens a sqlite connection instead of Postgres.  Helpful if you just need to generate the schema           | `false`                                                 |
+| openPlayground    | Should server open GraphQL Playground after starting?                                                     | `false` if running tests, `true` if in development mode |
+| port              | App Server Port                                                                                           | 4000                                                    |
+| resolversPath     | Glob path to find your resolvers                                                                          | `process.cwd()` + '/**/*.resolver.ts'                   |
 
 ## Config
 
 All config is driven by environment variables.  Most options can also be set by setting the value when creating your `Server` instance.
 
-| variable | value | config option name | default |
-| --- | --- | --- | --- |
-| APP_HOST | App server host | appOptions.host | _none_ |
-| APP_PORT | App server port | appOptions.port | 4000 |
-| TYPEORM_DATABASE | DB name | _none_ | _none_ |
-| TYPEORM_USERNAME | DB username | _none_ | _none_ |
-| TYPEORM_PASSWORD | DB password | _none_ | _none_ |
+| variable         | value           | config option name | default |
+| ---------------- | --------------- | ------------------ | ------- |
+| APP_HOST         | App server host | appOptions.host    | _none_  |
+| APP_PORT         | App server port | appOptions.port    | 4000    |
+| TYPEORM_DATABASE | DB name         | _none_             | _none_  |
+| TYPEORM_USERNAME | DB username     | _none_             | _none_  |
+| TYPEORM_PASSWORD | DB password     | _none_             | _none_  |
 
 ## Field/Column Decorators
 

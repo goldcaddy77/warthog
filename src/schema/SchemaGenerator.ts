@@ -4,7 +4,7 @@ import { EntityMetadata } from 'typeorm';
 
 import { logger, Logger } from '../core/logger';
 import {
-  entityListToImports,
+  generateEnumMapImports,
   entityToCreateInput,
   entityToCreateManyArgs,
   entityToOrderByEnum,
@@ -32,11 +32,11 @@ export class SchemaGenerator {
       import { ArgsType, Field as TypeGraphQLField, Float, ID, InputType as TypeGraphQLInputType, Int } from 'type-graphql';
       import { registerEnumType } from 'type-graphql';
 
-      // tslint:disable-next-line:no-var-requires
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { GraphQLJSONObject } = require('graphql-type-json');
 
       import { BaseWhereInput, PaginationArgs } from '${warthogImportPath}';
-      ${entityListToImports(entities).join('')}
+      ${generateEnumMapImports().join('')}
     `;
 
     entities.forEach((entity: EntityMetadata) => {

@@ -1,7 +1,6 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Container, Inject } from 'typedi';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseService, StandardDeleteResponse } from '../../../src';
@@ -35,26 +34,22 @@ export class UserResolver {
     this.injectedService = injectedService;
   }
 
-  @Query(returns => [User])
-  async users(
-    @Args() { where, orderBy, limit, offset }: UserWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<User[]> {
+  @Query(() => [User])
+  async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
     return this.injectedService.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => User)
+  @Query(() => User)
   async user(@Arg('where') where: UserWhereUniqueInput): Promise<User> {
     return this.localService.findOne<UserWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
     return this.subclassedService.create(data, ctx.user.id);
   }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   async updateUser(
     @Args() { data, where }: UserUpdateArgs,
     @Ctx() ctx: BaseContext
@@ -62,7 +57,7 @@ export class UserResolver {
     return this.localService.update(data, where, ctx.user.id);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteUser(
     @Arg('where') where: UserWhereUniqueInput,
     @Ctx() ctx: BaseContext

@@ -31,7 +31,7 @@ export class BaseResolver<E extends BaseModel> {
     return this.service.create(data, userId);
   }
 
-  async createMany(data: Array<DeepPartial<E>>, userId: string): Promise<E[]> {
+  async createMany(data: DeepPartial<E>[], userId: string): Promise<E[]> {
     return this.service.createMany(data, userId);
   }
 

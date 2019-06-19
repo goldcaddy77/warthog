@@ -1,6 +1,5 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseResolver } from '../../../../src';
@@ -14,21 +13,17 @@ export class UserResolver extends BaseResolver<User> {
     super(User, userRepository);
   }
 
-  @FieldResolver(returns => [UserRole])
+  @FieldResolver(() => [UserRole])
   userRoles(@Root() user: User, @Ctx() ctx: BaseContext): Promise<UserRole[]> {
     return ctx.dataLoader.loaders.User.userRoles.load(user);
   }
 
-  @Query(returns => [User])
-  async users(
-    @Args() { where, orderBy, limit, offset }: UserWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<User[]> {
+  @Query(() => [User])
+  async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
     return this.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
     return this.create(data, ctx.user.id);
   }

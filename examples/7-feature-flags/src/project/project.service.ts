@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseService } from '../../../../src';

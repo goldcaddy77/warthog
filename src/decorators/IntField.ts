@@ -14,7 +14,7 @@ export function IntField(args: IntFieldOptions = {}): any {
   const factories = [
     // We explicitly say string here because when we're metaprogramming without
     // TS types, Field does not know that this should be a String
-    Field(type => Int, {
+    Field(() => Int, {
       ...nullableOption
     }),
     Column({

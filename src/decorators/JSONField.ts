@@ -1,4 +1,4 @@
-// tslint:disable-next-line:no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
 
 import { Field } from 'type-graphql';
@@ -15,7 +15,7 @@ export function JSONField(args: JSONFieldOptions = {}): any {
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    Field(type => GraphQLJSONObject, {
+    Field(() => GraphQLJSONObject, {
       ...nullableOption
     }),
     Column({

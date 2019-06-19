@@ -13,16 +13,14 @@ import { UserService } from './user.service';
 
 @Resolver(User)
 export class UserResolver {
-  constructor(@Inject('UserService') readonly service: UserService) {
-    // tslint
-  }
+  constructor(@Inject('UserService') readonly service: UserService) {}
 
-  @FieldResolver(returns => [UserSegment])
+  @FieldResolver(() => [UserSegment])
   userSegments(@Root() user: User, @Ctx() ctx: BaseContext): Promise<UserSegment[]> {
     return ctx.dataLoader.loaders.User.userSegments.load(user);
   }
 
-  @Query(returns => User)
+  @Query(() => User)
   async user(@Arg('where') where: UserWhereUniqueInput): Promise<User> {
     return this.service.findOne<UserWhereUniqueInput>(where);
   }

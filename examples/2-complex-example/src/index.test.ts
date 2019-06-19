@@ -1,5 +1,8 @@
-import { GraphQLError } from 'graphql';
+/* eslint-disable no-console */
+
 import 'reflect-metadata';
+
+import { GraphQLError } from 'graphql';
 
 import { Binding } from '../generated/binding';
 
@@ -45,6 +48,7 @@ describe('Users', () => {
 
     // If user tries to access a private field, it will throw a console error.
     // We should make sure we always fail tests console errors are encountered
+
     expect(console.error).not.toHaveBeenCalled();
     expect(user).toBeDefined();
     expect(user.id).toBe(testUser.id);
@@ -70,9 +74,9 @@ describe('Users', () => {
       await binding.mutation.createUser(
         {
           data: {
-            email: testUser.email!,
-            firstName: testUser.firstName!,
-            lastName: testUser.lastName!,
+            email: testUser.email,
+            firstName: testUser.firstName,
+            lastName: testUser.lastName,
             stringEnumField: StringEnum.FOO
           }
         },
@@ -87,3 +91,5 @@ describe('Users', () => {
     done();
   });
 });
+
+/* eslint-enable no-console */

@@ -89,6 +89,10 @@ export interface AuthorCreateInput {
   firstName: String
 }
 
+export interface AuthorUpdateInput {
+  firstName?: String | null
+}
+
 export interface AuthorWhereInput {
   id_eq?: String | null
   id_in?: String[] | String | null
@@ -118,8 +122,40 @@ export interface AuthorWhereInput {
   firstName_in?: String[] | String | null
 }
 
+export interface AuthorWhereUniqueInput {
+  id: String
+}
+
+export interface BaseWhereInput {
+  id_eq?: String | null
+  id_in?: String[] | String | null
+  createdAt_eq?: String | null
+  createdAt_lt?: String | null
+  createdAt_lte?: String | null
+  createdAt_gt?: String | null
+  createdAt_gte?: String | null
+  createdById_eq?: String | null
+  updatedAt_eq?: String | null
+  updatedAt_lt?: String | null
+  updatedAt_lte?: String | null
+  updatedAt_gt?: String | null
+  updatedAt_gte?: String | null
+  updatedById_eq?: String | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: String | null
+  deletedAt_lt?: String | null
+  deletedAt_lte?: String | null
+  deletedAt_gt?: String | null
+  deletedAt_gte?: String | null
+  deletedById_eq?: String | null
+}
+
 export interface PostCreateInput {
   name: String
+}
+
+export interface PostUpdateInput {
+  name?: String | null
 }
 
 export interface PostWhereInput {
@@ -151,8 +187,49 @@ export interface PostWhereInput {
   name_in?: String[] | String | null
 }
 
+export interface PostWhereUniqueInput {
+  id: String
+}
+
 export interface RoleCreateInput {
   name: String
+}
+
+export interface RoleUpdateInput {
+  name?: String | null
+}
+
+export interface RoleWhereInput {
+  id_eq?: String | null
+  id_in?: String[] | String | null
+  createdAt_eq?: String | null
+  createdAt_lt?: String | null
+  createdAt_lte?: String | null
+  createdAt_gt?: String | null
+  createdAt_gte?: String | null
+  createdById_eq?: String | null
+  updatedAt_eq?: String | null
+  updatedAt_lt?: String | null
+  updatedAt_lte?: String | null
+  updatedAt_gt?: String | null
+  updatedAt_gte?: String | null
+  updatedById_eq?: String | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: String | null
+  deletedAt_lt?: String | null
+  deletedAt_lte?: String | null
+  deletedAt_gt?: String | null
+  deletedAt_gte?: String | null
+  deletedById_eq?: String | null
+  name_eq?: String | null
+  name_contains?: String | null
+  name_startsWith?: String | null
+  name_endsWith?: String | null
+  name_in?: String[] | String | null
+}
+
+export interface RoleWhereUniqueInput {
+  id: String
 }
 
 export interface UserCreateInput {
@@ -162,6 +239,12 @@ export interface UserCreateInput {
 export interface UserRoleCreateInput {
   userId: String
   roleId: String
+  otherMetadata?: String | null
+}
+
+export interface UserRoleUpdateInput {
+  userId?: String | null
+  roleId?: String | null
   otherMetadata?: String | null
 }
 
@@ -198,6 +281,14 @@ export interface UserRoleWhereInput {
   otherMetadata_in?: String[] | String | null
 }
 
+export interface UserRoleWhereUniqueInput {
+  id: String
+}
+
+export interface UserUpdateInput {
+  firstName?: String | null
+}
+
 export interface UserWhereInput {
   id_eq?: String | null
   id_in?: String[] | String | null
@@ -225,6 +316,10 @@ export interface UserWhereInput {
   firstName_startsWith?: String | null
   firstName_endsWith?: String | null
   firstName_in?: String[] | String | null
+}
+
+export interface UserWhereUniqueInput {
+  id: String
 }
 
 export interface BaseGraphQLObject {

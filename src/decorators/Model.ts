@@ -1,4 +1,4 @@
-const caller = require('caller'); // tslint:disable-line:no-var-requires
+const caller = require('caller'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
 import { ObjectType } from 'type-graphql';
 import { Entity } from 'typeorm';
@@ -10,7 +10,7 @@ interface ModelOptions {
   auditTableName?: string;
 }
 
-export function Model(this: any, args: ModelOptions = {}): any {
+export function Model(this: any): any {
   // In order to use the enums in the generated classes file, we need to
   // save their locations and import them in the generated file
   const modelFileName = caller();

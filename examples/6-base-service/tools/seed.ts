@@ -1,16 +1,13 @@
-import * as Debug from 'debug';
 import * as Faker from 'faker';
 
-import { getBindingError } from '../../../src';
+import { getBindingError, logger } from '../../../src';
 
 import { loadConfig } from '../src/config';
 import { getServer } from '../src/server';
 
 if (process.env.NODE_ENV !== 'development') {
   throw 'Seeding only available in development environment';
-  process.exit(1);
 }
-const logger = Debug('warthog:seed');
 
 const NUM_USERS = 100;
 
@@ -24,7 +21,7 @@ async function seedDatabase() {
   try {
     binding = await server.getBinding();
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return process.exit(1);
   }
 
@@ -46,11 +43,11 @@ async function seedDatabase() {
         },
         `{ id firstName lastName createdAt createdById }`
       );
-      logger(user.firstName);
+      logger.info(user.firstName);
     } catch (err) {
       const error = getBindingError(err);
-      console.error(error);
-      console.error(firstName);
+      logger.error(error);
+      logger.error(firstName);
     }
   }
 
@@ -59,10 +56,10 @@ async function seedDatabase() {
 
 seedDatabase()
   .then(result => {
-    logger(result);
+    logger.info(result);
     return process.exit(0);
   })
   .catch(err => {
-    console.log(err);
+    logger.error(err);
     return process.exit(1);
   });

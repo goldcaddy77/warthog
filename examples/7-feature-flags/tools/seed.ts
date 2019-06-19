@@ -1,18 +1,14 @@
-import * as Debug from 'debug';
-import * as Faker from 'faker';
-
 import { getBindingError } from '../../../src';
 
 import { Binding } from '../generated/binding';
 import { loadConfig } from '../src/config';
+import { Logger } from '../src/logger';
 import { Environment, FeatureFlag, FeatureFlagUser, Project, Segment } from '../src/models';
 import { getServer } from '../src/server';
 
 if (process.env.NODE_ENV !== 'development') {
   throw 'Seeding only available in development environment';
-  process.exit(1);
 }
-const logger = Debug('warthog:seed');
 
 async function seedDatabase() {
   loadConfig();
@@ -24,7 +20,7 @@ async function seedDatabase() {
   try {
     binding = ((await server.getBinding()) as unknown) as Binding;
   } catch (error) {
-    console.error(error);
+    Logger.error(error);
     return process.exit(1);
   }
 
@@ -50,7 +46,6 @@ async function seedDatabase() {
     await createFeatureFlag(binding as any, project.key, 'flag-user-b-specific');
 
     // Create per-environment items
-    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < environments.length; i++) {
       const env = environments[i];
 
@@ -92,7 +87,7 @@ async function seedDatabase() {
       );
     }
 
-    console.log('QUERYING PROJECT');
+    Logger.info('QUERYING PROJECT');
     project = await binding.query.project(
       { where: { id: project.id } },
       `{
@@ -205,23 +200,22 @@ async function seedDatabase() {
         }
       }`
     );
-    console.dir(project, { depth: null });
+    Logger.info(project);
 
     const flagsA = await binding.query.featureFlagsForUser({
       where: { projKey: project.key, envKey: 'production', userKey: 'user-a' }
     });
 
-    console.dir(flagsA, { depth: null });
+    Logger.info(flagsA);
 
     const flagsB = await binding.query.featureFlagsForUser({
       where: { projKey: project.key, envKey: 'production', userKey: 'user-b' }
     });
 
-    console.dir(flagsB, { depth: null });
+    Logger.info(flagsB);
   } catch (err) {
-    console.log('ERROR MOFO');
     const error = getBindingError(err);
-    console.error(error);
+    Logger.error(error);
   }
 
   return server.stop();
@@ -229,11 +223,11 @@ async function seedDatabase() {
 
 seedDatabase()
   .then(result => {
-    logger(result);
+    Logger.info(result);
     return process.exit(0);
   })
   .catch(err => {
-    console.log(err);
+    Logger.error(err);
     return process.exit(1);
   });
 

@@ -12,12 +12,10 @@ import {
 
 import { IDType } from './types';
 
-// tslint:disable:max-classes-per-file
-
 // This interface adds all of the base type-graphql fields to our BaseClass
 @InterfaceType()
 export abstract class BaseGraphQLObject {
-  @Field(type => ID)
+  @Field(() => ID)
   id!: IDType;
 
   @Field() createdAt!: Date;
@@ -33,7 +31,7 @@ export abstract class BaseGraphQLObject {
   @Field({ nullable: true })
   deletedById?: IDType;
 
-  @Field(type => Int)
+  @Field(() => Int)
   version!: number;
 }
 
@@ -89,5 +87,3 @@ export abstract class BaseModelUUID implements BaseGraphQLObject {
 
   @VersionColumn() version!: number;
 }
-
-// tslint:enable:max-classes-per-file

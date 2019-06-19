@@ -1,4 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
@@ -28,27 +27,27 @@ export class ProjectResolver {
     // no-empty
   }
 
-  @FieldResolver(returns => [Environment])
+  @FieldResolver(() => [Environment])
   environments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<Environment[]> {
     return ctx.dataLoader.loaders.Project.environments.load(project);
   }
 
-  @FieldResolver(returns => [Segment])
+  @FieldResolver(() => [Segment])
   segments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<Segment[]> {
     return ctx.dataLoader.loaders.Project.segments.load(project);
   }
 
-  @FieldResolver(returns => [FeatureFlag])
+  @FieldResolver(() => [FeatureFlag])
   featureFlags(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<FeatureFlag[]> {
     return ctx.dataLoader.loaders.Project.featureFlags.load(project);
   }
 
-  @FieldResolver(returns => [FeatureFlagUser])
+  @FieldResolver(() => [FeatureFlagUser])
   featureFlagUsers(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<FeatureFlagUser[]> {
     return ctx.dataLoader.loaders.Project.featureFlagUsers.load(project);
   }
 
-  @FieldResolver(returns => [FeatureFlagSegment])
+  @FieldResolver(() => [FeatureFlagSegment])
   featureFlagSegments(
     @Root() project: Project,
     @Ctx() ctx: BaseContext
@@ -56,26 +55,22 @@ export class ProjectResolver {
     return ctx.dataLoader.loaders.Project.featureFlagSegments.load(project);
   }
 
-  @FieldResolver(returns => [UserSegment])
+  @FieldResolver(() => [UserSegment])
   userSegments(@Root() project: Project, @Ctx() ctx: BaseContext): Promise<UserSegment[]> {
     return ctx.dataLoader.loaders.Project.userSegments.load(project);
   }
 
-  @Query(returns => [Project])
-  async projects(
-    @Args() { where, orderBy, limit, offset }: ProjectWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<Project[]> {
+  @Query(() => [Project])
+  async projects(@Args() { where, orderBy, limit, offset }: ProjectWhereArgs): Promise<Project[]> {
     return this.service.find<ProjectWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => Project)
+  @Query(() => Project)
   async project(@Arg('where') where: ProjectWhereUniqueInput): Promise<Project> {
     return this.service.findOne<ProjectWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => Project)
+  @Mutation(() => Project)
   async createProject(
     @Arg('data') data: ProjectCreateInput,
     @UserId() userId: string
@@ -83,7 +78,7 @@ export class ProjectResolver {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => Project)
+  @Mutation(() => Project)
   async updateProject(
     @Args() { data, where }: ProjectUpdateArgs,
     @UserId() userId: string
@@ -91,7 +86,7 @@ export class ProjectResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteProject(
     @Arg('where') where: ProjectWhereUniqueInput,
     @UserId() userId: string

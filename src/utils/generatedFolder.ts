@@ -1,4 +1,4 @@
-const appRoot = require('app-root-path'); // tslint:disable-line:no-var-requires
+const appRoot = require('app-root-path'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
 import { Container } from 'typedi';
 

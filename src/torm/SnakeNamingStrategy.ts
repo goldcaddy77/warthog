@@ -24,13 +24,7 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy implements Naming
     return snakeCase(`${relationName}_${referencedColumnName}`);
   }
 
-  joinTableName(
-    firstTableName: string,
-    secondTableName: string,
-    firstPropertyName: string,
-    secondPropertyName: string
-  ): string {
-    // snakeCase(firstTableName + '_' + firstPropertyName.replace(/\./gi, '_') + '_' + secondTableName);
+  joinTableName(firstTableName: string, secondTableName: string): string {
     return snakeCase(`${firstTableName}_${secondTableName}`);
   }
 

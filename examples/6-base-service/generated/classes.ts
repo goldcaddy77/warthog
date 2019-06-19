@@ -11,7 +11,7 @@ import {
 } from "type-graphql";
 import { registerEnumType } from "type-graphql";
 
-// tslint:disable-next-line:no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../../src";
@@ -52,7 +52,7 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   firstName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   firstName_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
@@ -67,13 +67,13 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
   lastName_endsWith?: string;
 
-  @TypeGraphQLField(type => [String], { nullable: true })
+  @TypeGraphQLField(() => [String], { nullable: true })
   lastName_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(type => String)
+  @TypeGraphQLField(() => String)
   id?: string;
 }
 
@@ -97,16 +97,16 @@ export class UserUpdateInput {
 
 @ArgsType()
 export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(type => UserWhereInput, { nullable: true })
+  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
   where?: UserWhereInput;
 
-  @TypeGraphQLField(type => UserOrderByEnum, { nullable: true })
+  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
   orderBy?: UserOrderByEnum;
 }
 
 @ArgsType()
 export class UserCreateManyArgs {
-  @TypeGraphQLField(type => [UserCreateInput])
+  @TypeGraphQLField(() => [UserCreateInput])
   data!: UserCreateInput[];
 }
 

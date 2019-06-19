@@ -31,6 +31,30 @@ type BaseModelUUID implements BaseGraphQLObject {
   version: Int!
 }
 
+input BaseWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """

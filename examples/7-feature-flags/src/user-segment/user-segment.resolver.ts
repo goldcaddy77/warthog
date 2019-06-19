@@ -1,8 +1,7 @@
-import { GraphQLResolveInfo } from 'graphql';
-import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
+import { StandardDeleteResponse, UserId } from '../../../../src';
 import {
   UserSegmentCreateInput,
   UserSegmentUpdateArgs,
@@ -20,21 +19,19 @@ export class UserSegmentResolver {
     // no-empty
   }
 
-  @Query(returns => [UserSegment])
-  async userSegments(
-    @Args() { where, orderBy, limit, offset }: UserSegmentWhereArgs,
-    @Ctx() ctx: BaseContext,
-    info: GraphQLResolveInfo
-  ): Promise<UserSegment[]> {
+  @Query(() => [UserSegment])
+  async userSegments(@Args() { where, orderBy, limit, offset }: UserSegmentWhereArgs): Promise<
+    UserSegment[]
+  > {
     return this.service.find<UserSegmentWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => UserSegment)
+  @Query(() => UserSegment)
   async userSegment(@Arg('where') where: UserSegmentWhereUniqueInput): Promise<UserSegment> {
     return this.service.findOne<UserSegmentWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => UserSegment)
+  @Mutation(() => UserSegment)
   async createUserSegment(
     @Arg('data') data: UserSegmentCreateInput,
     @UserId() userId: string
@@ -42,7 +39,7 @@ export class UserSegmentResolver {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => UserSegment)
+  @Mutation(() => UserSegment)
   async updateUserSegment(
     @Args() { data, where }: UserSegmentUpdateArgs,
     @UserId() userId: string
@@ -50,7 +47,7 @@ export class UserSegmentResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteUserSegment(
     @Arg('where') where: UserSegmentWhereUniqueInput,
     @UserId() userId: string

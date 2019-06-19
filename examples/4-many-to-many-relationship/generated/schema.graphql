@@ -26,6 +26,10 @@ enum AuthorOrderByInput {
   firstName_DESC
 }
 
+input AuthorUpdateInput {
+  firstName: String
+}
+
 input AuthorWhereInput {
   id_eq: String
   id_in: [String!]
@@ -53,6 +57,10 @@ input AuthorWhereInput {
   firstName_startsWith: String
   firstName_endsWith: String
   firstName_in: [String!]
+}
+
+input AuthorWhereUniqueInput {
+  id: String!
 }
 
 interface BaseGraphQLObject {
@@ -86,6 +94,30 @@ type BaseModelUUID implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
+}
+
+input BaseWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
 }
 
 """
@@ -135,6 +167,10 @@ enum PostOrderByInput {
   name_DESC
 }
 
+input PostUpdateInput {
+  name: String
+}
+
 input PostWhereInput {
   id_eq: String
   id_in: [String!]
@@ -164,6 +200,10 @@ input PostWhereInput {
   name_in: [String!]
 }
 
+input PostWhereUniqueInput {
+  id: String!
+}
+
 type Query {
   roles(offset: Int, limit: Int = 50, where: PostWhereInput, orderBy: PostOrderByInput): [Post!]!
   userRoles(offset: Int, limit: Int = 50, where: UserRoleWhereInput, orderBy: UserRoleOrderByInput): [UserRole!]!
@@ -186,6 +226,43 @@ type Role implements BaseGraphQLObject {
 
 input RoleCreateInput {
   name: String!
+}
+
+input RoleUpdateInput {
+  name: String
+}
+
+input RoleWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+}
+
+input RoleWhereUniqueInput {
+  id: String!
 }
 
 type StandardDeleteResponse {
@@ -257,6 +334,12 @@ enum UserRoleOrderByInput {
   otherMetadata_DESC
 }
 
+input UserRoleUpdateInput {
+  userId: String
+  roleId: String
+  otherMetadata: String
+}
+
 input UserRoleWhereInput {
   id_eq: String
   id_in: [String!]
@@ -290,6 +373,14 @@ input UserRoleWhereInput {
   otherMetadata_in: [String!]
 }
 
+input UserRoleWhereUniqueInput {
+  id: String!
+}
+
+input UserUpdateInput {
+  firstName: String
+}
+
 input UserWhereInput {
   id_eq: String
   id_in: [String!]
@@ -317,4 +408,8 @@ input UserWhereInput {
   firstName_startsWith: String
   firstName_endsWith: String
   firstName_in: [String!]
+}
+
+input UserWhereUniqueInput {
+  id: String!
 }

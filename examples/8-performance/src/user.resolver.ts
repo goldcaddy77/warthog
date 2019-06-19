@@ -24,22 +24,22 @@ export class UserResolver {
     return ctx.dataLoader.loaders.User.posts.load(user);
   }
 
-  @Query(returns => [User])
+  @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
     return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
-  @Query(returns => User)
+  @Query(() => User)
   async user(@Arg('where') where: UserWhereUniqueInput): Promise<User> {
     return this.service.findOne<UserWhereUniqueInput>(where);
   }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   async createUser(@Arg('data') data: UserCreateInput, @UserId() userId: string): Promise<User> {
     return this.service.create(data, userId);
   }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   async updateUser(
     @Args() { data, where }: UserUpdateArgs,
     @UserId() userId: string
@@ -47,7 +47,7 @@ export class UserResolver {
     return this.service.update(data, where, userId);
   }
 
-  @Mutation(returns => StandardDeleteResponse)
+  @Mutation(() => StandardDeleteResponse)
   async deleteUser(
     @Arg('where') where: UserWhereUniqueInput,
     @UserId() userId: string
