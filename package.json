@@ -4,6 +4,9 @@
   "description": "Opinionated set of tools for setting up GraphQL backed by TypeORM",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "bin": {
+    "warthog": "bin/warthog"
+  },
   "files": [
     "dist"
   ],
@@ -76,6 +79,7 @@
     "debug": "^4.1.1",
     "express": "^4.16.4",
     "faker": "^4.1.0",
+    "gluegun": "^3.3.1",
     "graphql": "^14.1.1",
     "graphql-binding": "^2.5.1",
     "graphql-fields": "^2.0.3",

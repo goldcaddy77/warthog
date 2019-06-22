@@ -1,0 +1,9 @@
+import { BaseModel, Model, StringField } from '<%= props.warthogPath %>';
+
+@Model()
+export class <%= props.className %> extends BaseModel {
+<% props.fields.forEach(function(field){ %>
+  @StringField()
+  <%= field.name %>: string;
+<% }) %>
+}

@@ -1,7 +1,13 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
   "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
   "eslint.autoFixOnSave": true,
+  "prettier.printWidth": 100,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
   "eslint.validate": [
     "javascript",
     {
