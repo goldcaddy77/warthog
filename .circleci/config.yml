@@ -19,7 +19,7 @@ jobs:
           command: yarn build
       - run:
           name: test
-          command: yarn test:ci
+          command: yarn jest --coverage --ci --forceExit --detectOpenHandles --runInBand
       - run:
           name: deploy
           command: yarn run semantic-release || true

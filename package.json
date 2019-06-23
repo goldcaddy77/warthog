@@ -22,8 +22,7 @@
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
-    "test:watch": "jest --verbose --watch",
-    "test:ci": "CI=true jest --coverage --ci --forceExit --detectOpenHandles --runInBand"
+    "test:watch": "jest --verbose --watch"
   },
   "husky": {
     "hooks": {
