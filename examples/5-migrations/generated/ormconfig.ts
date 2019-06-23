@@ -11,7 +11,7 @@ import {
   shouldSchronizeDatabaseSchema,
   getDatabaseType,
   getDatabaseUsername,
-  SnakeNamingStrategy } from 'undefined';
+  SnakeNamingStrategy } from '../../../src';
 
 module.exports = {
   cli: {
