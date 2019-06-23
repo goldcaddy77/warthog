@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
     "declaration": true,
+    "declarationDir": "dist/types",
     "lib": ["es2016", "dom", "es5", "scripthost"],
     "module": "commonjs",
     "moduleResolution": "node",
