@@ -1,6 +1,6 @@
 import { WarthogGluegunToolbox } from '../types';
 
-module.exports = {
+export default {
   name: 'db:create',
   run: async (toolbox: WarthogGluegunToolbox) => {
     const { db } = toolbox;

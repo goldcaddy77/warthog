@@ -4,7 +4,7 @@ import * as path from 'path';
 
 const log = Debug('warthog:cli');
 
-module.exports = {
+export default {
   name: 'generate',
   alias: ['g'],
   run: async (toolbox: GluegunToolbox) => {
