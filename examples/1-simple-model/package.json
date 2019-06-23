@@ -2,10 +2,10 @@
   "name": "example1",
   "version": "0.0.0",
   "scripts": {
-    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn generate:code",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn codegen",
+    "codegen": "warthog codegen",
     "db:create": "warthog db:create",
     "db:drop": "warthog db:drop",
-    "generate:code": "ts-node tools/generate.ts",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/graphql",
     "start": "yarn start:ts",
     "start:ts": "DEBUG=warthog* ts-node-dev --type-check src/index.ts",

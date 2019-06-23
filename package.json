@@ -23,7 +23,7 @@
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
     "test:watch": "jest --verbose --watch",
-    "test:ci": "jest --coverage --ci --forceExit --detectOpenHandles --runInBand"
+    "test:ci": "CI=true jest --coverage --ci --forceExit --detectOpenHandles --runInBand"
   },
   "husky": {
     "hooks": {

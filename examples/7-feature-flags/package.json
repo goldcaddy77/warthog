@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn generate:code && yarn db:seed:dev",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn codegen && yarn db:seed:dev",
+    "codegen": "warthog codegen",
     "db:create": "warthog db:create",
     "db:drop": "warthog db:drop",
     "db:seed:dev": "ts-node tools/seed.ts",
-    "generate:code": "ts-node tools/generate.ts",
     "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/playground",
     "start": "yarn start:ts",
     "start:debug": "yarn start:ts --inspect",

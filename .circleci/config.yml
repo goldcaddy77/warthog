@@ -1,29 +1,28 @@
 version: 2
 references:
-  yarn_cache_key: &yarn_cache_key
-    yarn-v1-{{ checksum "yarn.lock" }}
+  yarn_cache_key: &yarn_cache_key yarn-v1-{{ checksum "yarn.lock" }}
 jobs:
-    build:
-      docker:
-        - image: circleci/node:10.7
-      steps:
-        - checkout
-        - restore_cache:
-            keys:
-              - *yarn_cache_key
-              - yarn-v1-
-        - run:
-            name: dependencies
-            command: yarn install --frozen-lockfile
-        - run:
-            name: build
-            command: yarn build
-        - run:
-            name: test
-            command: yarn test
-        - run:
-            name: deploy
-            command: yarn run semantic-release || true
-        - save_cache:
-            key: *yarn_cache_key
-            paths: ~/circleci/node_modules
+  build:
+    docker:
+      - image: circleci/node:10.7
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - *yarn_cache_key
+            - yarn-v1-
+      - run:
+          name: dependencies
+          command: yarn install --frozen-lockfile
+      - run:
+          name: build
+          command: yarn build
+      - run:
+          name: test
+          command: yarn test:ci
+      - run:
+          name: deploy
+          command: yarn run semantic-release || true
+      - save_cache:
+          key: *yarn_cache_key
+          paths: ~/circleci/node_modules

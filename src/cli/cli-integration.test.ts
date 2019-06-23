@@ -1,22 +1,25 @@
 import { system, filesystem } from 'gluegun';
 
-const root = filesystem.path(__dirname, '..');
+const root = filesystem.path(__dirname, '../../');
 
 const cli = async (cmd: string) =>
   system.run('node ' + filesystem.path(root, 'bin', 'warthog') + ` ${cmd}`);
 
-test('outputs version', async () => {
+// TODO: re-enable
+test('outputs version', async done => {
   // TODO: should we bother with this since we don't update the version in package.json?
   const output = await cli('--version');
   expect(output).toContain('0.0.0-development');
-});
+  done();
+}, 10000);
 
-test('outputs help', async () => {
+test('outputs help', async done => {
   const output = await cli('--help');
   expect(output).toContain('generate (g)');
-});
+  done();
+}, 10000);
 
-test('generates file', async () => {
+test('generates file', async done => {
   const output = await cli('generate --name FeatureFlag');
   let fileContents;
 
@@ -34,4 +37,5 @@ test('generates file', async () => {
 
   // cleanup artifact
   filesystem.remove('generated');
-});
+  done();
+}, 10000);
