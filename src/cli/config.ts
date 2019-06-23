@@ -1,5 +1,5 @@
 import * as cosmiconfig from 'cosmiconfig';
-import { getBaseConfig } from '../src';
+import { getBaseConfig } from '../../src';
 
 export async function getConfig() {
   const explorer = cosmiconfig('warthog');
