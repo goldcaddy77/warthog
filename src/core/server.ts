@@ -10,7 +10,6 @@ import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
-import * as path from 'path';
 import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
@@ -20,10 +19,11 @@ import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { authChecker } from '../tgql';
 import { createDBConnection, mockDBConnection } from '../torm';
+
 import { CodeGenerator } from './code-generator';
+import { Config } from './config';
 
 import { BaseContext } from './Context';
-import { Maybe } from './types';
 
 import * as Debug from 'debug';
 
@@ -49,18 +49,14 @@ export interface ServerOptions<T> {
 }
 
 export class Server<C extends BaseContext> {
-  appHost: string;
-  appPort: number;
+  config: Config;
   authChecker: AuthChecker<C>;
   autoGenerateFiles: boolean;
   connection!: Connection;
   container: Container;
-  generatedFolder: string;
   graphQLServer!: ApolloServer;
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
-  mockDBConnection: boolean = false;
-  resolversPath: string[];
   schema?: GraphQLSchema;
   introspection: boolean = true;
   bodyParserConfig?: OptionsJson;
@@ -69,42 +65,53 @@ export class Server<C extends BaseContext> {
     private appOptions: ServerOptions<C>,
     private dbOptions: Partial<ConnectionOptions> = {}
   ) {
+    dotenv.config();
+
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }
-    dotenv.config();
+
+    if (typeof this.appOptions.host !== 'undefined') {
+      process.env.WARTHOG_APP_HOST = this.appOptions.host;
+      // When we move to v2.0 we'll officially deprecate these config values in favor of ENV vars
+      // throw new Error(
+      //   '`host` option has been removed, please set `WARTHOG_APP_HOST` environment variable instead'
+      // );
+    }
+    if (typeof this.appOptions.port !== 'undefined') {
+      process.env.WARTHOG_APP_PORT = this.appOptions.port.toString();
+    }
+    if (typeof this.appOptions.generatedFolder !== 'undefined') {
+      process.env.WARTHOG_GENERATED_FOLDER = this.appOptions.generatedFolder;
+    }
+    if (typeof this.appOptions.introspection !== 'undefined') {
+      process.env.WARTHOG_INTROSPECTION = this.appOptions.introspection ? 'true' : 'false';
+    }
+    if (typeof this.appOptions.openPlayground !== 'undefined') {
+      process.env.WARTHOG_AUTO_OPEN_PLAYGROUND = this.appOptions.openPlayground ? 'true' : 'false';
+    }
+    if (typeof this.appOptions.autoGenerateFiles !== 'undefined') {
+      process.env.WARTHOG_AUTO_GENERATE_FILES = this.appOptions.autoGenerateFiles
+        ? 'true'
+        : 'false';
+    }
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
-
     this.container = this.appOptions.container || Container;
-
     TypeORMUseContainer(this.container as any); // TODO: fix any
 
-    const host: Maybe<string> = this.appOptions.host || process.env.APP_HOST;
-    if (!host) {
-      throw new Error('`host` is required');
-    }
-    this.appHost = host;
-    this.appPort = parseInt(String(this.appOptions.port || process.env.APP_PORT), 10) || 4000;
     this.authChecker = this.appOptions.authChecker || authChecker;
     this.bodyParserConfig = this.appOptions.bodyParserConfig;
-
-    // Use https://github.com/inxilpro/node-app-root-path to find project root
-    this.generatedFolder = this.appOptions.generatedFolder || path.join(process.cwd(), 'generated');
-    // Set this so that we can pull in decorators later
-    Container.set('warthog.generated-folder', this.generatedFolder);
 
     this.logger = this.getLogger();
     Container.set('warthog.logger', this.logger); // Save for later so we can pull globally
 
-    this.autoGenerateFiles =
-      typeof this.appOptions.autoGenerateFiles !== 'undefined'
-        ? this.appOptions.autoGenerateFiles
-        : process.env.NODE_ENV === 'development';
+    this.config = new Config().loadSync();
+    Container.set('warthog.config', this.config);
+    Container.set('warthog.generated-folder', this.config.get('GENERATED_FOLDER'));
 
-    this.resolversPath = this.appOptions.resolversPath || [process.cwd() + '/**/*.resolver.ts'];
-
-    this.introspection = !!this.appOptions.introspection;
+    this.autoGenerateFiles = this.config.get('AUTO_GENERATE_FILES') === 'true';
+    this.introspection = this.config.get('INTROSPECTION') === 'true';
   }
 
   getLogger(): Logger {
@@ -121,7 +128,7 @@ export class Server<C extends BaseContext> {
       debug('establishDBConnection:start');
       // Asking for a mock connection will not connect to your preferred DB and will instead
       // connect to sqlite so that you can still access all metadata
-      const connectionFn = this.appOptions.mockDBConnection ? mockDBConnection : createDBConnection;
+      const connectionFn = this.config.get('MOCK_DATABASE') ? mockDBConnection : createDBConnection;
 
       this.connection = await connectionFn(this.dbOptions);
       debug('establishDBConnection:end');
@@ -130,10 +137,16 @@ export class Server<C extends BaseContext> {
     return this.connection;
   }
 
+  getServerUrl() {
+    return `${this.config.get('APP_PROTOCOL')}://${this.config.get('APP_HOST')}:${this.config.get(
+      'APP_PORT'
+    )}`;
+  }
+
   async getBinding(options: { origin?: string; token?: string } = {}): Promise<Binding> {
     let binding;
     try {
-      binding = await getRemoteBinding(`http://${this.appHost}:${this.appPort}/graphql`, {
+      binding = await getRemoteBinding(`${this.getServerUrl()}/graphql`, {
         origin: 'warthog',
         ...options
       });
@@ -155,7 +168,7 @@ export class Server<C extends BaseContext> {
         container: this.container as any,
         // TODO: ErrorLoggerMiddleware
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
-        resolvers: this.resolversPath
+        resolvers: this.config.get('RESOLVERS_PATH')
         // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
       });
       debug('buildGraphQLSchema:end');
@@ -168,9 +181,9 @@ export class Server<C extends BaseContext> {
     debug('start:generateFiles:start');
     await this.establishDBConnection();
 
-    await new CodeGenerator(this.connection, this.generatedFolder, {
-      resolversPath: this.resolversPath,
-      warthogImportPath: this.appOptions.warthogImportPath
+    await new CodeGenerator(this.connection, this.config.get('GENERATED_FOLDER'), {
+      resolversPath: this.config.get('RESOLVERS_PATH'),
+      warthogImportPath: this.config.get('MODULE_IMPORT_PATH')
     }).generate();
 
     debug('start:generateFiles:end');
@@ -223,15 +236,16 @@ export class Server<C extends BaseContext> {
     });
     debug('start:applyMiddleware:end');
 
-    const url = `http://${this.appHost}:${this.appPort}${this.graphQLServer.graphqlPath}`;
-    debug(`url: ${url}`);
+    const url = `http://${this.config.get('APP_HOST')}:${this.config.get('APP_PORT')}${
+      this.graphQLServer.graphqlPath
+    }`;
 
-    this.httpServer = app.listen({ port: this.appPort }, () =>
+    this.httpServer = app.listen({ port: this.config.get('APP_PORT') }, () =>
       this.logger.info(`🚀 Server ready at ${url}`)
     );
 
     // Open playground in the browser
-    if (this.shouldOpenPlayground()) {
+    if (this.config.get('AUTO_OPEN_PLAYGROUND') === 'true') {
       // Assigning to variable and logging to appease linter
       const process = open(url, { wait: false });
       debug('process', process);
@@ -246,21 +260,6 @@ export class Server<C extends BaseContext> {
     this.httpServer.close();
     this.logger.info('Closing DB Connection');
     await this.connection.close();
-  }
-
-  private shouldOpenPlayground(): boolean {
-    // If an explicit value is passed in, always use it
-    if (typeof this.appOptions.openPlayground !== 'undefined') {
-      return this.appOptions.openPlayground;
-    }
-
-    // If Jest is running, be smart and don't open playground
-    if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
-      return false;
-    }
-
-    // Otherwise, only open in development
-    return process.env.NODE_ENV === 'development';
   }
 }
 

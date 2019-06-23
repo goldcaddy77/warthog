@@ -117,11 +117,11 @@ export class UserResolver extends BaseResolver<User> {
 ### 3. Add config to .env file
 
 ```env
-APP_HOST=localhost
-APP_PORT=4100
-TYPEORM_DATABASE=warthog
-TYPEORM_USERNAME=postgres
-TYPEORM_PASSWORD=
+WARTHOG_APP_HOST=localhost
+WARTHOG_APP_PORT=4100
+WARTHOG_DB_DATABASE=warthog
+WARTHOG_DB_USERNAME=postgres
+WARTHOG_DB_PASSWORD=
 ```
 
 ### 4. Run your server
@@ -231,13 +231,14 @@ Notice how we've only added a single field on the model and you get pagination, 
 
 All config is driven by environment variables.  Most options can also be set by setting the value when creating your `Server` instance.
 
-| variable         | value           | config option name | default |
-| ---------------- | --------------- | ------------------ | ------- |
-| APP_HOST         | App server host | appOptions.host    | _none_  |
-| APP_PORT         | App server port | appOptions.port    | 4000    |
-| TYPEORM_DATABASE | DB name         | _none_             | _none_  |
-| TYPEORM_USERNAME | DB username     | _none_             | _none_  |
-| TYPEORM_PASSWORD | DB password     | _none_             | _none_  |
+| variable         | value                         | config option name | default |
+| ---------------- | ----------------------------- | ------------------ | ------- |
+| APP_HOST         | App server host               | appOptions.host    | _none_  |
+| APP_PORT         | App server port               | appOptions.port    | 4000    |
+| TYPEORM_DATABASE | DB name                       | _none_             | _none_  |
+| TYPEORM_USERNAME | DB username                   | _none_             | _none_  |
+| TYPEORM_PASSWORD | DB password                   | _none_             | _none_  |
+| MOCK_DATABASE    | Should we use mock sqlite DB? | _none_             | false   |
 
 ## Field/Column Decorators
 

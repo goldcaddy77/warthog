@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'development') {
 const NUM_USERS = 10;
 
 async function seedDatabase() {
-  const server = getServer({ introspection: true, openPlayground: false });
+  const server = getServer({ openPlayground: false });
   await server.start();
 
   let binding;

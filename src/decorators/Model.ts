@@ -15,7 +15,8 @@ export function Model(this: any): any {
   // save their locations and import them in the generated file
   const modelFileName = caller();
 
-  // Use relative paths in the source files so that they can be used on different machines
+  // Use relative paths when linking source files so that we can check the generated code in
+  // and it will work in any directory structure
   const relativeFilePath = path.relative(generatedFolderPath(), modelFileName);
 
   const registerModelWithWarthog = (target: any): any => {
