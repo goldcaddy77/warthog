@@ -7,7 +7,7 @@ const cli = async (cmd: string) =>
 
 describe('Integration tests', () => {
   beforeEach(() => {
-    jest.setTimeout(10000);
+    jest.setTimeout(20000);
   });
 
   // TODO: re-enable

@@ -19,8 +19,6 @@ describe('Config', () => {
 
       const config = new Config({ configSearchPath: __dirname }).loadSync();
 
-      console.log('config', config);
-
       expect(config.get('DB_HOST')).toEqual('localhost');
     });
   });
