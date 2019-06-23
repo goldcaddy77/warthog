@@ -4,47 +4,50 @@ import { GluegunToolbox } from 'gluegun';
 import * as pgtools from 'pgtools';
 import * as util from 'util';
 
-import { getConfig } from '../config';
+import { Config } from '../../src/core';
 
 module.exports = (toolbox: GluegunToolbox) => {
   toolbox.db = {
     create: async function create() {
-      const config = await getConfig();
+      const config = new Config();
+      const database = config.get('DB_DATABASE');
       const createDb = util.promisify(pgtools.createdb) as Function;
 
       try {
-        await createDb(getPgConfig(), config.database);
+        await createDb(getPgConfig(config), database);
       } catch (error) {
         if (error.message.indexOf('duplicate') > 0) {
-          toolbox.print.error(`Database '${config.database}' already exists`);
+          toolbox.print.error(`Database '${database}' already exists`);
           return;
         }
       }
-      toolbox.print.info(`Database '${config.database}' created!`);
+      toolbox.print.info(`Database '${database}' created!`);
     },
     drop: async function create() {
-      const config = await getConfig();
+      const config = new Config();
+      const database = config.get('DB_DATABASE');
       const dropDb = util.promisify(pgtools.dropdb) as Function;
 
       try {
-        await dropDb(getPgConfig(), config.database);
+        await dropDb(getPgConfig(config), database);
       } catch (error) {
         if (error.name === 'invalid_catalog_name') {
-          toolbox.print.error(`Database '${config.database}' does not exist`);
+          toolbox.print.error(`Database '${database}' does not exist`);
           return;
         }
       }
-      toolbox.print.info(`Database '${config.database}' dropped!`);
+      toolbox.print.info(`Database '${database}' dropped!`);
     }
   };
 };
 
-async function getPgConfig() {
-  const config = await getConfig();
-  return {
-    host: config.host,
-    user: config.username,
-    password: config.password,
-    port: config.port
+async function getPgConfig(config: any) {
+  const cfg = {
+    host: config.get('DB_HOST'),
+    user: config.get('DB_USERNAME'),
+    password: config.get('DB_PASSWORD'),
+    port: config.get('DB_PORT')
   };
+
+  return cfg;
 }

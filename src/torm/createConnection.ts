@@ -39,6 +39,8 @@ export function getBaseConfig() {
   };
 }
 
+// Note: all DB options should be specified by environment variables
+// Either using TYPEORM_<variable> or WARTHOG_DB_<variable>
 export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) => {
   const config = {
     ...getBaseConfig(),

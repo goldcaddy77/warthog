@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "yarn tsc",
-    "check": "tsc --noEmit && yarn lint && yarn prettify",
+    "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "lint": "eslint './+(examples|src|test|tools)/**/*.{js,ts}' --fix",
     "//prettier": "Note: ignores node_modules by default and 'generated' folder via .prettierignore",
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",

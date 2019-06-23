@@ -231,13 +231,14 @@ Notice how we've only added a single field on the model and you get pagination, 
 
 All config is driven by environment variables.  Most options can also be set by setting the value when creating your `Server` instance.
 
-| variable         | value           | config option name | default |
-| ---------------- | --------------- | ------------------ | ------- |
-| APP_HOST         | App server host | appOptions.host    | _none_  |
-| APP_PORT         | App server port | appOptions.port    | 4000    |
-| TYPEORM_DATABASE | DB name         | _none_             | _none_  |
-| TYPEORM_USERNAME | DB username     | _none_             | _none_  |
-| TYPEORM_PASSWORD | DB password     | _none_             | _none_  |
+| variable         | value                         | config option name | default |
+| ---------------- | ----------------------------- | ------------------ | ------- |
+| APP_HOST         | App server host               | appOptions.host    | _none_  |
+| APP_PORT         | App server port               | appOptions.port    | 4000    |
+| TYPEORM_DATABASE | DB name                       | _none_             | _none_  |
+| TYPEORM_USERNAME | DB username                   | _none_             | _none_  |
+| TYPEORM_PASSWORD | DB password                   | _none_             | _none_  |
+| MOCK_DATABASE    | Should we use mock sqlite DB? | _none_             | false   |
 
 ## Field/Column Decorators
 
@@ -246,6 +247,9 @@ All of the auto-generation magic comes from the decorators added to the attribut
 If you need to add a column to the DB that does not need to be exposed via the API, you should just use [the TypeORM decorators](https://github.com/typeorm/typeorm/blob/master/docs/decorator-reference.md)
 
 If you need to add a field that is only exposed via the API that is not DB-backed, you should just use [the TypeGraphQL Field Decorator](https://github.com/19majkel94/type-graphql/blob/master/src/decorators/Field.ts)
+
+TODO: full list of variables
+https://github.com/typeorm/typeorm/blob/master/docs/using-ormconfig.md#using-environment-variables
 
 ## Intentionally Opinionated
 

@@ -15,8 +15,8 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../../src";
-import { User } from "../src/user.model";
-import { Post } from "../src/post.model";
+import { User } from "../examples/8-performance/src/user.model";
+import { Post } from "../examples/8-performance/src/post.model";
 
 export enum UserOrderByEnum {
   createdAt_ASC = "createdAt_ASC",

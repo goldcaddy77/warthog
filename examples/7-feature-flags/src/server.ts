@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { BaseContext, Server } from '../../../src';
+import { BaseContext, Server, ServerOptions } from '../../../src';
 
 interface Context extends BaseContext {
   user: {
@@ -10,7 +10,7 @@ interface Context extends BaseContext {
   };
 }
 
-export function getServer(AppOptions = {}, dbOptions = {}) {
+export function getServer(AppOptions: ServerOptions<Context> = {}, dbOptions = {}) {
   return new Server<Context>(
     {
       // Inject a fake user.  In a real app you'd parse a JWT to add the user

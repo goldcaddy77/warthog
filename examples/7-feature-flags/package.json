@@ -14,6 +14,7 @@
     "start:ts": "ts-node --type-check src/index.ts",
     "test": "dotenv -- jest --detectOpenHandles --verbose --coverage",
     "test:watch": "dotenv -- jest --watch",
+    "warthog": "warthog",
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
