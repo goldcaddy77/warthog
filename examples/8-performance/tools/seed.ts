@@ -70,7 +70,7 @@ async function seedDatabase() {
 
 seedDatabase()
   .then(result => {
-    Logger.log(result);
+    Logger.info(result);
     return process.exit(0);
   })
   .catch(err => {

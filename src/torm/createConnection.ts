@@ -16,7 +16,7 @@ import {
   shouldSchronizeDatabaseSchema
 } from '../utils/configurationManager';
 
-function getBaseConfig() {
+export function getBaseConfig() {
   return {
     cli: {
       entitiesDir: 'src/models',
@@ -44,8 +44,6 @@ export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) =
     ...getBaseConfig(),
     ...dbOptions
   };
-
-  // console.log('config: ', config);
 
   if (!config.database) {
     throw new Error("createConnection: 'database' is required");

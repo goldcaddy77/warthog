@@ -19,7 +19,8 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "types": ["jest", "isomorphic-fetch", "node"]
+    "types": ["jest", "isomorphic-fetch", "node"],
+    "typeRoots": ["node_modules/@types", "./typings", "./src/typings.d.ts"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/**/*"]
