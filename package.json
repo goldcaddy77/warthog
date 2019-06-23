@@ -8,7 +8,10 @@
     "warthog": "bin/warthog"
   },
   "files": [
-    "dist"
+    "dist",
+    "bin",
+    "LICENSE",
+    "README.md"
   ],
   "author": {
     "name": "Dan Caddigan",
