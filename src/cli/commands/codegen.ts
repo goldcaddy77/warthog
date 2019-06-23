@@ -1,6 +1,8 @@
 import { Server } from '../../../src';
 
-module.exports = {
+// BLOG: needed to switch from module.exports because it didn't compile correctly
+export default {
+  // module.exports = {
   name: 'codegen',
   run: async () => {
     const server = new Server({

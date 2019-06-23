@@ -2,7 +2,7 @@ const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-r
 
 import { Config } from '../../../src/core';
 
-module.exports = {
+export default {
   name: 'playground',
   run: async () => {
     const config: any = new Config().loadSync();
