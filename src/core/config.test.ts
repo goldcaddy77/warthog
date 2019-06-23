@@ -6,7 +6,7 @@ describe('Config', () => {
       process.env.NODE_ENV = 'production';
 
       try {
-        new Config({ configSearchPath: __dirname });
+        new Config({ configSearchPath: __dirname }).loadSync();
       } catch (error) {
         expect(error.message).toContain('WARTHOG_APP_HOST is required');
       }
@@ -17,10 +17,11 @@ describe('Config', () => {
     it('uses correct defaults', async () => {
       process.env.NODE_ENV = 'development';
 
-      const config = new Config({ configSearchPath: __dirname });
-      const vals = config.loadSync();
+      const config = new Config({ configSearchPath: __dirname }).loadSync();
 
-      expect(vals.WARTHOG_DB_HOST).toEqual('localhost');
+      console.log('config', config);
+
+      expect(config.get('DB_HOST')).toEqual('localhost');
     });
   });
 });

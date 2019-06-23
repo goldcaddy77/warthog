@@ -23,9 +23,6 @@ export function getServer(AppOptions = {}, dbOptions = {}) {
           }
         };
       },
-      introspection: true,
-      // Path written in generated classes (only needed because we're in same repo)
-      warthogImportPath: '../../../src',
       ...AppOptions
     },
     dbOptions

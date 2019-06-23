@@ -2,6 +2,7 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { ApolloServer, OptionsJson } from 'apollo-server-express';
+import * as dotenv from 'dotenv';
 import { Request } from 'express';
 import express = require('express');
 import { GraphQLSchema } from 'graphql';
@@ -64,6 +65,8 @@ export class Server<C extends BaseContext> {
     private appOptions: ServerOptions<C>,
     private dbOptions: Partial<ConnectionOptions> = {}
   ) {
+    dotenv.config();
+
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }
@@ -103,7 +106,7 @@ export class Server<C extends BaseContext> {
     this.logger = this.getLogger();
     Container.set('warthog.logger', this.logger); // Save for later so we can pull globally
 
-    this.config = new Config();
+    this.config = new Config().loadSync();
     Container.set('warthog.config', this.config);
     Container.set('warthog.generated-folder', this.config.get('GENERATED_FOLDER'));
 

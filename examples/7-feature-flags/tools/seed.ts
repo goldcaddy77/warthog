@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'development') {
 async function seedDatabase() {
   loadConfig();
 
-  const server = getServer({ introspection: true, openPlayground: false });
+  const server = getServer({ openPlayground: false });
   await server.start();
 
   let binding: Binding;

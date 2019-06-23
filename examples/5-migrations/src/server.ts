@@ -13,8 +13,6 @@ export function getServer(AppOptions = {}) {
         };
       },
       introspection: true,
-      // Path written in generated classes (only needed because we're in same repo)
-      warthogImportPath: '../../../src',
       ...AppOptions
     },
     // Make sure TypeORM does not auto-update the DB schema so that we know our CLI commands

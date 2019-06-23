@@ -23,8 +23,6 @@ export function getServer(AppOptions: ServerOptions<Context> = {}, dbOptions = {
           }
         };
       },
-      introspection: true,
-      warthogImportPath: '../../../src',
       ...AppOptions
     },
     dbOptions

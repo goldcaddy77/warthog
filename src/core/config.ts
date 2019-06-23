@@ -76,11 +76,10 @@ export class Config {
       WARTHOG_DB_SYNCHRONIZE: 'true'
     };
 
-    this.loadSync();
     return this;
   }
 
-  loadSync(): { [key: string]: unknown } {
+  loadSync(): Config {
     const devOptions = process.env.NODE_ENV === 'development' ? this.devDefaults : {};
     const configFile = this.loadStaticConfigSync();
 
@@ -111,7 +110,9 @@ export class Config {
       (combined as any).WARTHOG_AUTO_OPEN_PLAYGROUND = false;
     }
 
-    return (this.config = combined);
+    this.config = combined;
+
+    return this;
   }
 
   public warthogEnvVariables() {

@@ -4,12 +4,12 @@ import { GluegunToolbox } from 'gluegun';
 import * as pgtools from 'pgtools';
 import * as util from 'util';
 
-import { Config } from '../../src/core';
+import { Config } from '../../../src/core';
 
 module.exports = (toolbox: GluegunToolbox) => {
   toolbox.db = {
     create: async function create() {
-      const config = new Config();
+      const config: any = new Config().loadSync();
       const database = config.get('DB_DATABASE');
       const createDb = util.promisify(pgtools.createdb) as Function;
 
@@ -24,7 +24,7 @@ module.exports = (toolbox: GluegunToolbox) => {
       toolbox.print.info(`Database '${database}' created!`);
     },
     drop: async function create() {
-      const config = new Config();
+      const config: any = new Config().loadSync();
       const database = config.get('DB_DATABASE');
       const dropDb = util.promisify(pgtools.dropdb) as Function;
 
