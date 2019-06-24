@@ -4,6 +4,9 @@
   "[typescript]": {
     "editor.formatOnSave": true
   },
+  "[html]": {
+    "editor.formatOnSave": false
+  },
   "eslint.autoFixOnSave": true,
   "prettier.printWidth": 100,
   "prettier.singleQuote": true,

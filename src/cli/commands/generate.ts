@@ -1,50 +1,68 @@
-import * as Debug from 'debug';
-import { GluegunToolbox } from 'gluegun';
 import * as path from 'path';
 
-const log = Debug('warthog:cli');
+import { WarthogGluegunToolbox } from '../types';
 
 export default {
   name: 'generate',
   alias: ['g'],
-  run: async (toolbox: GluegunToolbox) => {
+  run: async (toolbox: WarthogGluegunToolbox) => {
     const {
-      parameters,
-      template: { generate },
-      print: { info }
+      config: { load },
+      parameters: { options },
+      print: { info },
+      string: { supplant },
+      template: { generate }
     } = toolbox;
 
-    // toolbox.filesystem.
-
-    const options = parameters.options;
+    const config: any = load();
 
     const name = options.name;
     if (!name) {
       throw new Error('name is required');
     }
 
-    const folder = options.folder || 'generated/';
-    const warthogPath = options.warthogPath || 'warthog';
+    const names = {
+      className: toolbox.strings.pascalCase(name),
+      camelName: toolbox.strings.camelCase(name),
+      kebabName: toolbox.strings.kebabCase(name)
+    };
 
-    const className = toolbox.strings.pascalCase(name);
-    const camelName = toolbox.strings.camelCase(name);
-    const kebabName = toolbox.strings.kebabCase(name);
+    // Allow folder to be passed in or pulled from config files
+    const cliGeneratePath =
+      options.folder ||
+      path.join(config.get('ROOT_FOLDER'), '/', config.get('CLI_GENERATE_PATH'), '/');
+
+    // TODO:DOCS
+    // Allow interpolation of the above names into the generate path like './src/${kebabName}'
+    const destFolder = supplant(cliGeneratePath, names);
+
+    const warthogPathInGeneratedFolder = config.get('MODULE_IMPORT_PATH');
+    const generatedPath = config.get('GENERATED_FOLDER');
+    const generatedFolderRelativePath = path.relative(destFolder, generatedPath);
+
+    let warthogPathInSourceFiles;
+    // If we're generating inside of an external project, we'll just import from 'warthog'
+    if (warthogPathInGeneratedFolder === 'warthog') {
+      warthogPathInSourceFiles = 'warthog';
+    } else {
+      // This ensures we use a relative path in the `examples` folders within the warthog repo
+      const warthogAbsolutePath = path.join(generatedPath, warthogPathInGeneratedFolder);
+      // console.log('warthogAbsolutePath: ', warthogAbsolutePath);
+      warthogPathInSourceFiles = path.relative(destFolder, warthogAbsolutePath);
+    }
+
     const props = {
-      camelName,
-      className,
+      ...names,
       fields: [
         {
           name: 'key'
         }
       ],
-      kebabName,
-      warthogPath
+      generatedFolderRelativePath,
+      warthogPathInSourceFiles
     };
 
-    log('props', props);
-
-    let target = path.join(folder, '/', `${kebabName}.model.ts`);
-    log('target', target);
+    let target = path.join(destFolder, '/', `${names.kebabName}.model.ts`);
     await generate({
       template: 'model.ts.ejs',
       target,
@@ -52,7 +70,7 @@ export default {
     });
     info(`Generated file at ${target}`);
 
-    target = path.join(folder, '/', `${kebabName}.service.ts`);
+    target = path.join(destFolder, '/', `${names.kebabName}.service.ts`);
     await generate({
       template: 'service.ts.ejs',
       target,
@@ -60,7 +78,7 @@ export default {
     });
     info(`Generated file at ${target}`);
 
-    target = path.join(folder, '/', `${kebabName}.resolver.ts`);
+    target = path.join(destFolder, '/', `${names.kebabName}.resolver.ts`);
     await generate({
       template: 'resolver.ts.ejs',
       target,

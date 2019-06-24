@@ -25,7 +25,9 @@ describe('Integration tests', () => {
   });
 
   test('generates file', async done => {
-    const output = await cli('generate --name FeatureFlag');
+    console.log(process.env);
+
+    const output = await cli('generate --name FeatureFlag --folder generated');
     let fileContents;
 
     expect(output).toContain('Generated file at generated/feature-flag.model.ts');
