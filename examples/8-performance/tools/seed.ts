@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 async function seedDatabase() {
   // Turn off logging to seed database
-  process.env.TYPEORM_LOGGING = 'none';
+  process.env.WARTHOG_DB_LOGGING = 'none';
 
   loadConfig();
 
