@@ -1,4 +1,4 @@
-import { Server } from '../../../src';
+import { Server } from '../../';
 
 // BLOG: needed to switch from module.exports because it didn't compile correctly
 export default {
@@ -7,8 +7,7 @@ export default {
   run: async () => {
     const server = new Server({
       introspection: false,
-      mockDBConnection: true,
-      warthogImportPath: '../../../src'
+      mockDBConnection: true
     });
 
     return server.generateFiles();

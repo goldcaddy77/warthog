@@ -1,9 +1,22 @@
+import * as dotenv from 'dotenv';
 import { system, filesystem } from 'gluegun';
+import * as path from 'path';
 
 const root = filesystem.path(__dirname, '../../');
 
-const cli = async (cmd: string) =>
-  system.run('node ' + filesystem.path(root, 'bin', 'warthog') + ` ${cmd}`);
+const cli = async (cmd: string) => {
+  // Construct the environment variables here so that they're passed into cli command
+  const config = dotenv.load({ path: path.join(__dirname, './.env.test') });
+
+  const env = {
+    ...process.env,
+    ...config.parsed
+  };
+
+  return system.run('node ' + filesystem.path(root, 'bin', 'warthog') + ` ${cmd}`, {
+    env
+  });
+};
 
 describe('Integration tests', () => {
   beforeEach(() => {
@@ -25,7 +38,7 @@ describe('Integration tests', () => {
   });
 
   test('generates file', async done => {
-    const output = await cli('generate --name FeatureFlag');
+    const output = await cli('generate --name FeatureFlag --folder generated');
     let fileContents;
 
     expect(output).toContain('Generated file at generated/feature-flag.model.ts');

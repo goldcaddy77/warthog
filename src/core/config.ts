@@ -5,6 +5,7 @@ import * as path from 'path';
 import { ObjectUtil } from '../utils';
 
 interface ConfigOptions {
+  dotenvPath?: string;
   configSearchPath?: string;
 }
 
@@ -44,15 +45,21 @@ export class Config {
   config: any;
 
   constructor(private options: ConfigOptions = {}) {
-    dotenv.config();
+    if (options.dotenvPath) {
+      dotenv.load({ path: options.dotenvPath });
+    } else {
+      dotenv.config();
+    }
 
     const PROJECT_ROOT = process.cwd();
 
     this.defaults = {
+      WARTHOG_ROOT_FOLDER: PROJECT_ROOT,
       WARTHOG_APP_PROTOCOL: 'https',
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
       WARTHOG_INTROSPECTION: 'true',
+      WARTHOG_CLI_GENERATE_PATH: './src',
       WARTHOG_DB_ENTITIES: [`/src/**/*.model.ts`],
       WARTHOG_DB_LOGGER: 'advanced-console',
       WARTHOG_DB_MIGRATIONS: ['src/migrations/**/*.ts'],
@@ -97,20 +104,21 @@ export class Config {
       ...this.lockedOptions
     };
 
-    this.validateEntryExists(combined, 'WARTHOG_APP_HOST');
-    this.validateEntryExists(combined, 'WARTHOG_APP_PORT');
-    this.validateEntryExists(combined, 'WARTHOG_GENERATED_FOLDER');
-    this.validateEntryExists(combined, 'WARTHOG_DB_CONNECTION');
-    this.validateEntryExists(combined, 'WARTHOG_DB_HOST');
-
-    this.writeTypeOrmEnvVars();
-
     // If Jest is running, be smart and don't open playground
     if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
       (combined as any).WARTHOG_AUTO_OPEN_PLAYGROUND = false;
     }
 
     this.config = combined;
+
+    // Must be after config is set above
+    this.validateEntryExists('WARTHOG_APP_HOST');
+    this.validateEntryExists('WARTHOG_APP_PORT');
+    this.validateEntryExists('WARTHOG_GENERATED_FOLDER');
+    this.validateEntryExists('WARTHOG_DB_CONNECTION');
+    this.validateEntryExists('WARTHOG_DB_HOST');
+
+    this.writeTypeOrmEnvVars();
 
     return this;
   }
@@ -141,9 +149,18 @@ export class Config {
     });
   }
 
-  public validateEntryExists(obj: { [key: string]: unknown }, key: string) {
-    if (!obj.hasOwnProperty(key) || !obj[key]) {
-      throw new Error(`Config: ${key} is required`);
+  public validateEntryExists(key: string) {
+    if (!this.config) {
+      throw new Error("Can't validate the base config until after it is generated");
+    }
+
+    const value = this.get(key);
+    if (!value) {
+      throw new Error(
+        `Config: ${key} is required: ${value}\n\n${JSON.stringify(this.config)}\n\n${JSON.stringify(
+          process.env
+        )}`
+      );
     }
   }
 

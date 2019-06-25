@@ -1,6 +1,6 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
-import { Fields, StandardDeleteResponse, UserId } from '<%= props.warthogPath %>';
+import { Fields, StandardDeleteResponse, UserId } from '<%= props.warthogPathInSourceFiles %>';
 
 import {
   <%= props.className %>CreateInput,
@@ -9,7 +9,7 @@ import {
   <%= props.className %>WhereArgs,
   <%= props.className %>WhereInput,
   <%= props.className %>WhereUniqueInput
-} from '../generated';
+} from '<%= props.generatedFolderRelativePath %>';
 
 import { <%= props.className %> } from './<%= props.kebabName %>.model';
 import { <%= props.className %>Service } from './<%= props.kebabName %>.service';

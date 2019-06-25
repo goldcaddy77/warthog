@@ -4,6 +4,10 @@
   "[typescript]": {
     "editor.formatOnSave": true
   },
+  // Don't auto-format ejs templates
+  "[html]": {
+    "editor.formatOnSave": false
+  },
   "eslint.autoFixOnSave": true,
   "prettier.printWidth": 100,
   "prettier.singleQuote": true,
