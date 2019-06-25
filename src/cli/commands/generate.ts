@@ -47,7 +47,6 @@ export default {
     } else {
       // This ensures we use a relative path in the `examples` folders within the warthog repo
       const warthogAbsolutePath = path.join(generatedPath, warthogPathInGeneratedFolder);
-      // console.log('warthogAbsolutePath: ', warthogAbsolutePath);
       warthogPathInSourceFiles = path.relative(destFolder, warthogAbsolutePath);
     }
 

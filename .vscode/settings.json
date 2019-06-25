@@ -4,6 +4,7 @@
   "[typescript]": {
     "editor.formatOnSave": true
   },
+  // Don't auto-format ejs templates
   "[html]": {
     "editor.formatOnSave": false
   },

@@ -5,6 +5,7 @@ import * as path from 'path';
 import { ObjectUtil } from '../utils';
 
 interface ConfigOptions {
+  dotenvPath?: string;
   configSearchPath?: string;
 }
 
@@ -44,7 +45,11 @@ export class Config {
   config: any;
 
   constructor(private options: ConfigOptions = {}) {
-    dotenv.config();
+    if (options.dotenvPath) {
+      dotenv.load({ path: options.dotenvPath });
+    } else {
+      dotenv.config();
+    }
 
     const PROJECT_ROOT = process.cwd();
 
@@ -106,15 +111,12 @@ export class Config {
 
     this.config = combined;
 
-    // Must be after config is set
-    this.validateEntryExists(combined, 'WARTHOG_APP_HOST');
-    this.validateEntryExists(combined, 'WARTHOG_APP_PORT');
-    this.validateEntryExists(combined, 'WARTHOG_GENERATED_FOLDER');
-    this.validateEntryExists(combined, 'WARTHOG_DB_CONNECTION');
-    this.validateEntryExists(combined, 'WARTHOG_DB_HOST');
-
-    // eslint-disable-next-line
-    console.log('combined config', combined);
+    // Must be after config is set above
+    this.validateEntryExists('WARTHOG_APP_HOST');
+    this.validateEntryExists('WARTHOG_APP_PORT');
+    this.validateEntryExists('WARTHOG_GENERATED_FOLDER');
+    this.validateEntryExists('WARTHOG_DB_CONNECTION');
+    this.validateEntryExists('WARTHOG_DB_HOST');
 
     this.writeTypeOrmEnvVars();
 
@@ -147,12 +149,18 @@ export class Config {
     });
   }
 
-  public validateEntryExists(obj: { [key: string]: unknown }, key: string) {
+  public validateEntryExists(key: string) {
+    if (!this.config) {
+      throw new Error("Can't validate the base config until after it is generated");
+    }
+
     const value = this.get(key);
-    // eslint-disable-next-line
-    console.log('this.validateEntryExists', key, value);
     if (!value) {
-      throw new Error(`Config: ${key} is required`);
+      throw new Error(
+        `Config: ${key} is required: ${value}\n\n${JSON.stringify(this.config)}\n\n${JSON.stringify(
+          process.env
+        )}`
+      );
     }
   }
 
