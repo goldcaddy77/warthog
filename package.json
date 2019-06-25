@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "description": "Opinionated set of tools for setting up GraphQL backed by TypeORM",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "bin": {
     "warthog": "bin/warthog"
   },
