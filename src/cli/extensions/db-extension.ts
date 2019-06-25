@@ -4,7 +4,7 @@ import { GluegunToolbox } from 'gluegun';
 import * as pgtools from 'pgtools';
 import * as util from 'util';
 
-import { Config } from '../../../src/core';
+import { Config } from '../../';
 
 module.exports = (toolbox: GluegunToolbox) => {
   toolbox.db = {
