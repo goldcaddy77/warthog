@@ -162,7 +162,7 @@ export class Server<C extends BaseContext> {
 
   async buildGraphQLSchema(): Promise<GraphQLSchema> {
     if (!this.schema) {
-      debug('buildGraphQLSchema:start');
+      debug('server:buildGraphQLSchema:start');
       this.schema = await buildSchema({
         authChecker: this.authChecker,
         container: this.container as any,
@@ -171,7 +171,7 @@ export class Server<C extends BaseContext> {
         resolvers: this.config.get('RESOLVERS_PATH')
         // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
       });
-      debug('buildGraphQLSchema:end');
+      debug('server:buildGraphQLSchema:end');
     }
 
     return this.schema;
