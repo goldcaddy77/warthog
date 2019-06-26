@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { BaseContext, Server } from '../../../src';
+import { authChecker, BaseContext, Server } from '../../../src/';
 
 import { customLogger } from './logger';
 
@@ -19,6 +19,7 @@ function sleep(ms: number) {
 export function getServer(AppOptions = {}, dbOptions = {}) {
   return new Server<Context>(
     {
+      authChecker,
       // Inject a fake user.  In a real app you'd parse a JWT to add the user
       context: async () => {
         // allows asynchronous resolution of user (or other items you want to put in context)

@@ -1,49 +1,49 @@
 export function getDatabaseName(): string {
-  return process.env.TYPEORM_DATABASE ? process.env.TYPEORM_DATABASE : '';
+  return process.env.WARTHOG_DB_DATABASE ? process.env.WARTHOG_DB_DATABASE : '';
 }
 
 export function getDatabaseType(): string {
-  return process.env.TYPEORM_DATABASE_TYPE ? process.env.TYPEORM_DATABASE_TYPE : 'postgres';
+  return process.env.WARTHOG_DB_DATABASE_TYPE || process.env.WARTHOG_DB_CONNECTION || 'postgres';
 }
 
 export function getDatabaseHost(): string {
-  return process.env.TYPEORM_HOST || 'localhost';
+  return process.env.WARTHOG_DB_HOST || 'localhost';
 }
 
 export function shouldSchronizeDatabaseSchema(): boolean {
-  return process.env.TYPEORM_SYNCHRONIZE === 'true';
+  return process.env.WARTHOG_DB_SYNCHRONIZE === 'true';
 }
 
 export function getDatabaseLoggingLevel() {
-  return process.env.TYPEORM_LOGGING || 'all';
+  return process.env.WARTHOG_DB_LOGGING || 'all';
 }
 
 export function getDatabaseEntityPaths(): string[] {
-  return process.env.TYPEORM_ENTITIES
-    ? process.env.TYPEORM_ENTITIES.split(',')
+  return process.env.WARTHOG_DB_ENTITIES
+    ? process.env.WARTHOG_DB_ENTITIES.split(',')
     : ['src/**/*.model.ts'];
 }
 
 export function getDatabaseMigrationPaths(): string[] {
-  return process.env.TYPEORM_MIGRATIONS
-    ? process.env.TYPEORM_MIGRATIONS.split(',')
+  return process.env.WARTHOG_DB_MIGRATIONS
+    ? process.env.WARTHOG_DB_MIGRATIONS.split(',')
     : ['src/migration/**/*.ts'];
 }
 
 export function getDatabaseSubscriberPaths(): string[] {
-  return process.env.TYPEORM_SUBSCRIBERS
-    ? process.env.TYPEORM_SUBSCRIBERS.split(',')
+  return process.env.WARTHOG_DB_SUBSCRIBERS
+    ? process.env.WARTHOG_DB_SUBSCRIBERS.split(',')
     : ['src/**/*.model.ts'];
 }
 
 export function getDatabaseUsername(): string | undefined {
-  return process.env.TYPEORM_USERNAME;
+  return process.env.WARTHOG_DB_USERNAME;
 }
 
 export function getDatabasePassword(): string | undefined {
-  return process.env.TYPEORM_PASSWORD;
+  return process.env.WARTHOG_DB_PASSWORD;
 }
 
 export function getDatabasePort(): number {
-  return parseInt(process.env.TYPEORM_PORT || '', 10) || 5432;
+  return parseInt(process.env.WARTHOG_DB_PORT || '', 10) || 5432;
 }

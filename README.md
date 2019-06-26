@@ -231,14 +231,14 @@ Notice how we've only added a single field on the model and you get pagination, 
 
 All config is driven by environment variables.  Most options can also be set by setting the value when creating your `Server` instance.
 
-| variable         | value                         | config option name | default |
-| ---------------- | ----------------------------- | ------------------ | ------- |
-| APP_HOST         | App server host               | appOptions.host    | _none_  |
-| APP_PORT         | App server port               | appOptions.port    | 4000    |
-| TYPEORM_DATABASE | DB name                       | _none_             | _none_  |
-| TYPEORM_USERNAME | DB username                   | _none_             | _none_  |
-| TYPEORM_PASSWORD | DB password                   | _none_             | _none_  |
-| MOCK_DATABASE    | Should we use mock sqlite DB? | _none_             | false   |
+| variable              | value                         | config option name | default |
+| --------------------- | ----------------------------- | ------------------ | ------- |
+| WARTHOG_APP_HOST      | App server host               | appOptions.host    | _none_  |
+| WARTHOG_APP_PORT      | App server port               | appOptions.port    | 4000    |
+| WARTHOG_DB_DATABASE   | DB name                       | _none_             | _none_  |
+| WARTHOG_DB_USERNAME   | DB username                   | _none_             | _none_  |
+| WARTHOG_DB_PASSWORD   | DB password                   | _none_             | _none_  |
+| WARTHOG_MOCK_DATABASE | Should we use mock sqlite DB? | _none_             | false   |
 
 ## Field/Column Decorators
 

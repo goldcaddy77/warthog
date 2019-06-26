@@ -11,6 +11,7 @@ import * as util from 'util';
 
 import { generateBindingFile } from '../gql';
 import { SchemaGenerator } from '../schema';
+import { authChecker } from '../tgql';
 
 import * as Debug from 'debug';
 
@@ -67,6 +68,10 @@ export class CodeGenerator {
       debug('code-generator:buildGraphQLSchema:start');
       debug(this.options.resolversPath);
       this.schema = await buildSchema({
+        // TODO: we should replace this with an empty authChecker
+        // Note: using the base authChecker here just to generated the .graphql file
+        // it's not actually being utilized here
+        authChecker,
         resolvers: this.options.resolversPath
       });
       debug('code-generator:buildGraphQLSchema:end');

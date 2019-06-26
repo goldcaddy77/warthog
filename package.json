@@ -25,6 +25,7 @@
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
+    "test:seed": "cd examples/1-simple-model && DEBUG=* NODE_ENV=development WARTHOG_MOCK_DATABASE=true yarn db:seed:dev && rm warthog.sqlite.tmp",
     "test:watch": "jest --verbose --watch"
   },
   "husky": {
