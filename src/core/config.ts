@@ -4,6 +4,8 @@ import * as path from 'path';
 
 import { ObjectUtil } from '../utils';
 
+import { logger } from './logger';
+
 interface ConfigOptions {
   dotenvPath?: string;
   configSearchPath?: string;
@@ -31,8 +33,9 @@ interface StaticConfigResponse {
 }
 
 export class Config {
-  readonly WARTHOG_PREFIX = 'WARTHOG_';
-  readonly DB_PREFIX = 'WARTHOG_DB_';
+  readonly WARTHOG_ENV_PREFIX = 'WARTHOG_';
+  readonly TYPEORM_ENV_PREFIX = 'TYPEORM_';
+  readonly WARTHOG_DB_ENV_PREFIX = 'WARTHOG_DB_';
 
   readonly lockedOptions = {
     WARTHOG_DB_CONNECTION: 'postgres'
@@ -100,16 +103,18 @@ export class Config {
       ...this.defaults,
       ...devOptions,
       ...configFile,
+      ...this.typeORMToWarthogEnvVariables(),
       ...this.warthogEnvVariables(),
       ...this.lockedOptions
     };
 
     // If Jest is running, be smart and don't open playground
     if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
-      (combined as any).WARTHOG_AUTO_OPEN_PLAYGROUND = false;
+      (combined as any).WARTHOG_AUTO_OPEN_PLAYGROUND = 'false';
     }
 
     this.config = combined;
+    logger.info('config', this.config);
 
     // Must be after config is set above
     this.validateEntryExists('WARTHOG_APP_HOST');
@@ -118,33 +123,65 @@ export class Config {
     this.validateEntryExists('WARTHOG_DB_CONNECTION');
     this.validateEntryExists('WARTHOG_DB_HOST');
 
-    this.writeTypeOrmEnvVars();
+    // Now that we've pulled all config in from the waterfall, write `WARTHOG_DB_` keys to `TYPEORM_`
+    // So that TypeORM will pick them up
+    this.writeWarthogConfigToTypeORMEnv();
 
     return this;
   }
 
+  public get(key?: string) {
+    if (!key) {
+      return this.config;
+    }
+
+    const lookup = key.startsWith(this.WARTHOG_ENV_PREFIX)
+      ? key
+      : `${this.WARTHOG_ENV_PREFIX}${key}`;
+
+    return this.config[lookup];
+  }
+
   public warthogEnvVariables() {
+    return this.envVarsByPrefix(this.WARTHOG_ENV_PREFIX);
+  }
+
+  public warthogDBEnvVariables() {
+    return this.envVarsByPrefix(this.WARTHOG_DB_ENV_PREFIX);
+  }
+
+  public typeORMEnvVariables() {
+    return this.envVarsByPrefix(this.TYPEORM_ENV_PREFIX);
+  }
+
+  public envVarsByPrefix(prefix: string) {
     const config: any = {};
-    Object.keys(process.env).map((key: string) => {
-      if (key.startsWith(this.WARTHOG_PREFIX)) {
+    Object.keys(process.env).forEach((key: string) => {
+      if (key.startsWith(prefix)) {
         config[key] = process.env[key];
       }
     });
     return config;
   }
 
-  public get(key: string) {
-    const lookup = key.startsWith(this.WARTHOG_PREFIX) ? key : `${this.WARTHOG_PREFIX}${key}`;
+  public typeORMToWarthogEnvVariables() {
+    const typeORMvars = this.typeORMEnvVariables();
+    const config: any = {};
 
-    return this.config[lookup];
+    Object.keys(typeORMvars).forEach((key: string) => {
+      const keySuffix = key.substring(this.TYPEORM_ENV_PREFIX.length);
+
+      config[`${this.WARTHOG_DB_ENV_PREFIX}${keySuffix}`] = typeORMvars[key];
+    });
+    return config;
   }
 
-  public writeTypeOrmEnvVars() {
-    Object.keys(process.env).forEach((key: string) => {
-      if (key.startsWith(this.DB_PREFIX)) {
-        const keySuffix = key.substring(this.DB_PREFIX.length);
+  public writeWarthogConfigToTypeORMEnv() {
+    Object.keys(this.config).forEach((key: string) => {
+      if (key.startsWith(this.WARTHOG_DB_ENV_PREFIX)) {
+        const keySuffix = key.substring(this.WARTHOG_DB_ENV_PREFIX.length);
 
-        process.env[`TYPEORM_${keySuffix}`] = process.env[key];
+        process.env[`TYPEORM_${keySuffix}`] = this.get(key);
       }
     });
   }
@@ -171,7 +208,7 @@ export class Config {
     }
     const constantized = ObjectUtil.constantizeKeys(response.config);
 
-    return ObjectUtil.prefixKeys(constantized, this.WARTHOG_PREFIX);
+    return ObjectUtil.prefixKeys(constantized, this.WARTHOG_ENV_PREFIX);
   }
 
   // Use cosmiconfig to load static config that has to be the same for all environments

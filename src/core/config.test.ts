@@ -22,4 +22,42 @@ describe('Config', () => {
       expect(config.get('DB_HOST')).toEqual('localhost');
     });
   });
+
+  describe('Test', () => {
+    it('will never open playground', async () => {
+      process.env = {
+        NODE_ENV: 'development',
+        WARTHOG_AUTO_OPEN_PLAYGROUND: 'true',
+        JEST_WORKER_ID: '12345'
+      };
+
+      const config = new Config({ configSearchPath: __dirname }).loadSync();
+
+      expect(config.get('WARTHOG_AUTO_OPEN_PLAYGROUND')).toEqual('false');
+    });
+  });
+
+  describe('All environments', () => {
+    it('translates WARTHOG_DB env vars to TYPEORM env vars', async () => {
+      process.env = {
+        NODE_ENV: 'development',
+        WARTHOG_DB_FOO: 'bar123'
+      };
+
+      new Config({ configSearchPath: __dirname }).loadSync();
+
+      expect(process.env.TYPEORM_FOO).toEqual('bar123');
+    });
+
+    it('translates TYPEORM env vars into warthog config', async () => {
+      process.env = {
+        NODE_ENV: 'development',
+        TYPEORM_FOO: 'baz456'
+      };
+
+      const config = new Config({ configSearchPath: __dirname }).loadSync();
+
+      expect(config.get('WARTHOG_DB_FOO')).toEqual('baz456');
+    });
+  });
 });

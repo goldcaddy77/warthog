@@ -11,7 +11,6 @@ import * as util from 'util';
 
 import { generateBindingFile } from '../gql';
 import { SchemaGenerator } from '../schema';
-import { authChecker } from '../tgql';
 
 import * as Debug from 'debug';
 
@@ -65,14 +64,12 @@ export class CodeGenerator {
 
   private async buildGraphQLSchema(): Promise<GraphQLSchema> {
     if (!this.schema) {
-      debug('buildGraphQLSchema:start');
+      debug('code-generator:buildGraphQLSchema:start');
+      debug(this.options.resolversPath);
       this.schema = await buildSchema({
-        // Note: using the base authChecker here just to generated the .graphql file
-        // it's not actually being utilized here
-        authChecker,
         resolvers: this.options.resolversPath
       });
-      debug('buildGraphQLSchema:end');
+      debug('code-generator:buildGraphQLSchema:end');
     }
 
     return this.schema;
@@ -89,6 +86,7 @@ export class CodeGenerator {
 
   private async getGeneratedTypes() {
     debug('getGeneratedTypes:start');
+    debug(this.connection.entityMetadatas);
     const x = SchemaGenerator.generate(
       this.connection.entityMetadatas,
       this.options.warthogImportPath
