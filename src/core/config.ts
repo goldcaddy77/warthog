@@ -60,7 +60,7 @@ export class Config {
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
       WARTHOG_INTROSPECTION: 'true',
       WARTHOG_CLI_GENERATE_PATH: './src',
-      WARTHOG_DB_ENTITIES: [`/src/**/*.model.ts`],
+      WARTHOG_DB_ENTITIES: [`src/**/*.model.ts`],
       WARTHOG_DB_LOGGER: 'advanced-console',
       WARTHOG_DB_MIGRATIONS: ['src/migrations/**/*.ts'],
       WARTHOG_DB_MIGRATIONS_DIR: 'src/migrations',
