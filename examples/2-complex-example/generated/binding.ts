@@ -203,6 +203,11 @@ export interface BaseModelUUID extends BaseGraphQLObject {
   version: Int
 }
 
+export interface MinimalModel {
+  id: ID_Output
+  deletedAt?: DateTime | null
+}
+
 export interface StandardDeleteResponse {
   id: ID_Output
 }

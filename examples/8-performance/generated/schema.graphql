@@ -64,6 +64,11 @@ interface DeleteResponse {
   id: ID!
 }
 
+type MinimalModel {
+  id: ID!
+  deletedAt: DateTime
+}
+
 type Mutation {
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post!

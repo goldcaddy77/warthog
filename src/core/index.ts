@@ -5,3 +5,4 @@ export * from './Context';
 export * from './logger';
 export * from './types';
 export * from './BaseService';
+export * from './MinimalService';

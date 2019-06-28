@@ -87,3 +87,23 @@ export abstract class BaseModelUUID implements BaseGraphQLObject {
 
   @VersionColumn() version!: number;
 }
+
+@ObjectType()
+export class MinimalModel {
+  @Field(() => ID)
+  @PrimaryColumn({ type: String })
+  id!: IDType;
+
+  getId() {
+    return shortid.generate();
+  }
+
+  @BeforeInsert()
+  setId() {
+    this.id = this.getId();
+  }
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  deletedAt?: Date;
+}

@@ -213,6 +213,11 @@ export interface BaseModelUUID extends BaseGraphQLObject {
   version: Int
 }
 
+export interface MinimalModel {
+  id: ID_Output
+  deletedAt?: DateTime | null
+}
+
 export interface Post extends BaseGraphQLObject {
   id: ID_Output
   createdAt: DateTime

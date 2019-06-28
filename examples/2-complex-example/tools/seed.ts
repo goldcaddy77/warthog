@@ -27,7 +27,7 @@ async function seedDatabase() {
       .getTime()
       .toString()
       .substring(8, 13);
-    const firstName = Faker.name.firstName();
+    const firstName = `${Faker.name.firstName()}${random}`;
     const lastName = Faker.name.lastName();
     const email = `${firstName
       .substr(0, 1)

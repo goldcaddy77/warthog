@@ -69,6 +69,11 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 """
 scalar JSONObject
 
+type MinimalModel {
+  id: ID!
+  deletedAt: DateTime
+}
+
 type Mutation {
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
