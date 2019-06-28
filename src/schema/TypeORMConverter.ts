@@ -67,6 +67,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
       return GraphQLBoolean;
     case Number:
     case 'Number':
+    case 'float':
     case 'float4':
     case 'float8':
     case 'smallmoney':
@@ -94,6 +95,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
       return GraphQLISODateTime;
     case 'json':
     case 'jsonb':
+    case 'varying character': // HACK: allows us to generate proper types for sqlite (mock db)
       return GraphQLJSONObject;
     default:
       if (type instanceof GraphQLScalarType) {
@@ -223,7 +225,12 @@ export function entityToCreateInput(entity: EntityMetadata): string {
       // we need to know what the graphql type is and what the tsType is
       // for enums
 
-      if (column.enum || column.type === 'json' || column.type === 'jsonb') {
+      if (
+        column.enum ||
+        column.type === 'json' ||
+        column.type === 'jsonb' ||
+        column.type === 'varying character'
+      ) {
         fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
@@ -262,7 +269,12 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
       const graphQLDataType = columnTypeToGraphQLDataType(column);
       const tsType = columnToTypeScriptType(column);
 
-      if (column.enum || column.type === 'json' || column.type === 'jsonb') {
+      if (
+        column.enum ||
+        column.type === 'json' ||
+        column.type === 'jsonb' ||
+        column.type === 'varying character'
+      ) {
         fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}?: ${tsType};
@@ -378,7 +390,11 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
       `;
-    } else if (column.type !== 'json' && column.type !== 'jsonb') {
+    } else if (
+      column.type !== 'json' &&
+      column.type !== 'jsonb' &&
+      column.type !== 'varying character'
+    ) {
       // @@@ dcaddigan not sure what it means to search by JSONObjects
       // future release?
 

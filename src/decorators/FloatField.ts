@@ -1,7 +1,9 @@
 import { Field, Float } from 'type-graphql';
+import { Container } from 'typedi';
 import { Column } from 'typeorm';
 
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+import { defaultColumnType } from '../torm';
 
 interface FloatFieldOptions {
   nullable?: boolean;
@@ -9,16 +11,17 @@ interface FloatFieldOptions {
 
 export function FloatField(args: FloatFieldOptions = {}): any {
   const nullableOption = args.nullable === true ? { nullable: true } : {};
+  const databaseConnection: string = Container.get('warthog.db-connection');
+  const type = defaultColumnType(databaseConnection, 'float');
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    // We explicitly say string here because when we're metaprogramming without
-    // TS types, Field does not know that this should be a String
     Field(() => Float, {
       ...nullableOption
     }),
     Column({
-      type: 'float8',
+      // This type will be different per database driver
+      type,
       ...nullableOption
     }) as MethodDecoratorFactory
   ];

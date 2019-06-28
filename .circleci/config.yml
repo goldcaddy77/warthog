@@ -21,6 +21,10 @@ jobs:
           name: test
           command: yarn jest --coverage --ci --forceExit --detectOpenHandles --runInBand
       - run:
+          name: test
+          # TODO: This should be an actual Jest test, but I figured it gives more coverage and already have it
+          command: yarn test:seed
+      - run:
           name: deploy
           command: yarn run semantic-release || true
       - save_cache:

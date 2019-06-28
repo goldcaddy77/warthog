@@ -15,6 +15,7 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../../src";
+import { StringEnum } from "../src/user.model";
 import { User } from "../src/user.model";
 
 export enum UserOrderByEnum {
@@ -41,6 +42,9 @@ export enum UserOrderByEnum {
 
   isRequired_ASC = "isRequired_ASC",
   isRequired_DESC = "isRequired_DESC",
+
+  stringEnumField_ASC = "stringEnumField_ASC",
+  stringEnumField_DESC = "stringEnumField_DESC",
 
   rating_ASC = "rating_ASC",
   rating_DESC = "rating_DESC"
@@ -121,6 +125,12 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField(() => [Boolean], { nullable: true })
   isRequired_in?: Boolean[];
 
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField_eq?: StringEnum;
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  stringEnumField_in?: StringEnum[];
+
   @TypeGraphQLField({ nullable: true })
   rating_eq?: number;
 
@@ -166,6 +176,9 @@ export class UserCreateInput {
   @TypeGraphQLField()
   isRequired!: boolean;
 
+  @TypeGraphQLField(() => StringEnum)
+  stringEnumField!: StringEnum;
+
   @TypeGraphQLField()
   rating!: number;
 }
@@ -186,6 +199,9 @@ export class UserUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   isRequired?: boolean;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
   rating?: number;

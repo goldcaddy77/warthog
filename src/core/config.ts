@@ -4,8 +4,6 @@ import * as path from 'path';
 
 import { ObjectUtil } from '../utils';
 
-import { logger } from './logger';
-
 interface ConfigOptions {
   dotenvPath?: string;
   configSearchPath?: string;
@@ -113,8 +111,14 @@ export class Config {
       (combined as any).WARTHOG_AUTO_OPEN_PLAYGROUND = 'false';
     }
 
+    // Make sure to set the DB connection if we're using a mock DB
+    if (combined['WARTHOG_MOCK_DATABASE'] === 'true') {
+      combined['WARTHOG_DB_CONNECTION'] = 'sqlite';
+      combined['WARTHOG_DB_DATABASE'] = 'warthog.sqlite.tmp';
+      combined['WARTHOG_DB_SYNCHRONIZE'] = 'true';
+    }
+
     this.config = combined;
-    logger.info('config', this.config);
 
     // Must be after config is set above
     this.validateEntryExists('WARTHOG_APP_HOST');
@@ -125,7 +129,11 @@ export class Config {
 
     // Now that we've pulled all config in from the waterfall, write `WARTHOG_DB_` keys to `TYPEORM_`
     // So that TypeORM will pick them up
-    this.writeWarthogConfigToTypeORMEnv();
+    this.writeWarthogConfigToTypeORMEnvVars();
+
+    // Once we've combined all of the Warthog ENV vars, write them to process.env so that they can be used elsewhere
+    // NOTE: this is likely a bad idea and we should use Containers
+    this.writeWarthogEnvVars();
 
     return this;
   }
@@ -176,12 +184,20 @@ export class Config {
     return config;
   }
 
-  public writeWarthogConfigToTypeORMEnv() {
+  public writeWarthogConfigToTypeORMEnvVars() {
     Object.keys(this.config).forEach((key: string) => {
       if (key.startsWith(this.WARTHOG_DB_ENV_PREFIX)) {
         const keySuffix = key.substring(this.WARTHOG_DB_ENV_PREFIX.length);
 
         process.env[`TYPEORM_${keySuffix}`] = this.get(key);
+      }
+    });
+  }
+
+  public writeWarthogEnvVars() {
+    Object.keys(this.config).forEach((key: string) => {
+      if (key.startsWith(this.WARTHOG_ENV_PREFIX)) {
+        process.env[key] = this.get(key);
       }
     });
   }

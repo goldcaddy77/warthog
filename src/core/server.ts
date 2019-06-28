@@ -18,7 +18,7 @@ import { logger, Logger } from '../core/logger';
 import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { authChecker } from '../tgql';
-import { createDBConnection, mockDBConnection } from '../torm';
+import { createDBConnection } from '../torm';
 
 import { CodeGenerator } from './code-generator';
 import { Config } from './config';
@@ -95,6 +95,9 @@ export class Server<C extends BaseContext> {
         ? 'true'
         : 'false';
     }
+    if (typeof this.appOptions.mockDBConnection !== 'undefined') {
+      process.env.WARTHOG_MOCK_DATABASE = this.appOptions.mockDBConnection ? 'true' : 'false';
+    }
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
     this.container = this.appOptions.container || Container;
@@ -107,8 +110,11 @@ export class Server<C extends BaseContext> {
     Container.set('warthog.logger', this.logger); // Save for later so we can pull globally
 
     this.config = new Config().loadSync();
+    logger.info('config', this.config);
+
     Container.set('warthog.config', this.config);
     Container.set('warthog.generated-folder', this.config.get('GENERATED_FOLDER'));
+    Container.set('warthog.db-connection', this.config.get('DB_CONNECTION'));
 
     this.autoGenerateFiles = this.config.get('AUTO_GENERATE_FILES') === 'true';
     this.introspection = this.config.get('INTROSPECTION') === 'true';
@@ -126,11 +132,7 @@ export class Server<C extends BaseContext> {
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
       debug('establishDBConnection:start');
-      // Asking for a mock connection will not connect to your preferred DB and will instead
-      // connect to sqlite so that you can still access all metadata
-      const connectionFn = this.config.get('MOCK_DATABASE') ? mockDBConnection : createDBConnection;
-
-      this.connection = await connectionFn(this.dbOptions);
+      this.connection = await createDBConnection(this.dbOptions);
       debug('establishDBConnection:end');
     }
 

@@ -14,6 +14,8 @@
     "start:ts": "ts-node --type-check src/index.ts",
     "test": "dotenv -- jest --detectOpenHandles --verbose --coverage",
     "test:watch": "dotenv -- jest --watch",
+    "//": "Allows us to use the local warthog CLI in commands above",
+    "warthog": "../../bin/warthog",
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
