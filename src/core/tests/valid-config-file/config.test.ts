@@ -35,6 +35,6 @@ describe('Config (valid file)', () => {
     const config = new Config({ configSearchPath: __dirname }).loadSync();
 
     expect(config.get('WARTHOG_DB_HOST')).toEqual('warthog/db/host');
-    expect(process.env.TYPEORM_HOST).toEqual('warthog/db/host');
+    expect(process.env.WARTHOG_DB_HOST).toEqual('warthog/db/host');
   });
 });

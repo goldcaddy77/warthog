@@ -3,20 +3,7 @@ import { ConnectionOptions, createConnection } from 'typeorm';
 import { SnakeNamingStrategy } from './SnakeNamingStrategy';
 import { logger } from '../core/logger';
 
-import {
-  getDatabaseEntityPaths,
-  getDatabaseHost,
-  getDatabaseLoggingLevel,
-  getDatabaseMigrationPaths,
-  getDatabaseName,
-  getDatabasePassword,
-  getDatabasePort,
-  getDatabaseSubscriberPaths,
-  getDatabaseType,
-  getDatabaseUsername,
-  shouldSchronizeDatabaseSchema
-} from '../utils/configurationManager';
-
+// TODO: Need to figure out a way for this and the generated ormconfig to be one and the same
 export function getBaseConfig() {
   return {
     cli: {
@@ -56,3 +43,53 @@ export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) =
 
   return createConnection(config as any); // TODO: fix any.  It is complaining about `type`
 };
+
+function getDatabaseName(): string {
+  return process.env.WARTHOG_DB_DATABASE!;
+}
+
+function getDatabaseType(): string {
+  return process.env.WARTHOG_DB_DATABASE_TYPE || process.env.WARTHOG_DB_CONNECTION!;
+}
+
+function getDatabaseHost(): string {
+  return process.env.WARTHOG_DB_HOST!;
+}
+
+function shouldSchronizeDatabaseSchema(): boolean {
+  return process.env.WARTHOG_DB_SYNCHRONIZE === 'true';
+}
+
+function getDatabaseLoggingLevel() {
+  return process.env.WARTHOG_DB_LOGGING!;
+}
+
+function getDatabaseEntityPaths(): string[] {
+  return process.env.WARTHOG_DB_ENTITIES
+    ? process.env.WARTHOG_DB_ENTITIES.split(',')
+    : ['src/**/*.model.ts'];
+}
+
+function getDatabaseMigrationPaths(): string[] {
+  return process.env.WARTHOG_DB_MIGRATIONS
+    ? process.env.WARTHOG_DB_MIGRATIONS.split(',')
+    : ['src/migration/**/*.ts'];
+}
+
+function getDatabaseSubscriberPaths(): string[] {
+  return process.env.WARTHOG_DB_SUBSCRIBERS
+    ? process.env.WARTHOG_DB_SUBSCRIBERS.split(',')
+    : ['src/**/*.model.ts'];
+}
+
+function getDatabaseUsername(): string | undefined {
+  return process.env.WARTHOG_DB_USERNAME;
+}
+
+function getDatabasePassword(): string | undefined {
+  return process.env.WARTHOG_DB_PASSWORD;
+}
+
+function getDatabasePort(): number {
+  return parseInt(process.env.WARTHOG_DB_PORT || '', 10);
+}
