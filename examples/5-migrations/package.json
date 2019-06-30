@@ -9,7 +9,7 @@
     "db:migration:generate": "yarn typeorm:cli migration:generate -n migration1",
     "db:migration:run": "yarn typeorm:cli migration:run",
     "db:query": "yarn typeorm:cli query 'select * from user;'",
-    "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/graphql",
+    "playground": "warthog playground",
     "start": "yarn start:ts",
     "start:ts": "DEBUG=warthog* ts-node-dev --type-check src/index.ts",
     "start:prod": "ts-node src/index.ts",
@@ -19,9 +19,7 @@
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
-    "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
-    "typeorm": "^0.2.12",
     "typescript": "^3.2.2",
     "warthog": "^1.10.0"
   },
@@ -31,7 +29,6 @@
     "@types/isomorphic-fetch": "^0.0.34",
     "@types/jest": "^23.3.11",
     "@types/node": "^10.12.18",
-    "dotenv-cli": "^1.4.0",
     "faker": "^4.1.0",
     "jest": "^23.6.0",
     "nodemon": "^1.18.9",

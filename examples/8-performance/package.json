@@ -7,7 +7,7 @@
     "db:create": "warthog db:create",
     "db:drop": "warthog db:drop",
     "db:seed:dev": "ts-node tools/seed.ts",
-    "playground:open": "open http://localhost:$(dotenv -p APP_PORT)/graphql",
+    "playground": "warthog playground",
     "start": "yarn start:ts",
     "start:ts": "ts-node --type-check src/index.ts",
     "//": "Allows us to use the local warthog CLI in commands above",
@@ -15,7 +15,6 @@
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
-    "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.2.2"
   },
@@ -25,7 +24,6 @@
     "@types/isomorphic-fetch": "^0.0.34",
     "@types/jest": "^23.3.11",
     "@types/node": "^10.12.18",
-    "dotenv-cli": "^1.4.0",
     "faker": "^4.1.0",
     "jest": "^23.6.0",
     "nodemon": "^1.18.9",
