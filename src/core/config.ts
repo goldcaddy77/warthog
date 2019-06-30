@@ -47,7 +47,7 @@ export class Config {
 
   constructor(private options: ConfigOptions = {}) {
     if (options.dotenvPath) {
-      dotenv.load({ path: options.dotenvPath });
+      dotenv.config({ path: options.dotenvPath });
     } else {
       dotenv.config();
     }

@@ -6,7 +6,7 @@ const root = filesystem.path(__dirname, '../../');
 
 const cli = async (cmd: string) => {
   // Construct the environment variables here so that they're passed into cli command
-  const config = dotenv.load({ path: path.join(__dirname, './.env.test') });
+  const config = dotenv.config({ path: path.join(__dirname, './.env.test') });
 
   const env = {
     ...process.env,
