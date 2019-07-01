@@ -2,7 +2,7 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { writeFile } from 'fs';
-import { GraphQLSchema, printSchema } from 'graphql';
+import { GraphQLID, GraphQLSchema, printSchema } from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import { buildSchema } from 'type-graphql';
@@ -72,6 +72,12 @@ export class CodeGenerator {
         // Note: using the base authChecker here just to generated the .graphql file
         // it's not actually being utilized here
         authChecker,
+        scalarsMap: [
+          {
+            type: 'ID' as any,
+            scalar: GraphQLID
+          }
+        ],
         resolvers: this.options.resolversPath
       });
       debug('code-generator:buildGraphQLSchema:end');
