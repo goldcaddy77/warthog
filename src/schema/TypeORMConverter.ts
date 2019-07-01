@@ -160,6 +160,9 @@ export function generateEnumMapImports(): string[] {
   Object.keys(classMap).forEach((tableName: string) => {
     const classObj = classMap[tableName];
     const filename = filenameToImportPath(classObj.filename);
+    // Need to ts-ignore here for when we export compiled code
+    // otherwise, it says we can't find a declaration file for this from the compiled code
+    imports.push('// @ts-ignore\n');
     imports.push(`import { ${classObj.name} } from '${filename}'
 `);
   });

@@ -5,7 +5,7 @@ import { ApolloServer, OptionsJson } from 'apollo-server-express';
 import * as dotenv from 'dotenv';
 import { Request } from 'express';
 import express = require('express');
-import { GraphQLSchema } from 'graphql';
+import { GraphQLID, GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
@@ -167,6 +167,12 @@ export class Server<C extends BaseContext> {
       debug('server:buildGraphQLSchema:start');
       this.schema = await buildSchema({
         authChecker: this.authChecker,
+        scalarsMap: [
+          {
+            type: 'ID' as any,
+            scalar: GraphQLID
+          }
+        ],
         container: this.container as any,
         // TODO: ErrorLoggerMiddleware
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],

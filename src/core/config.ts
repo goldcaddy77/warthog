@@ -41,6 +41,7 @@ export class Config {
 
   defaults: Record<string, any>;
   devDefaults: Record<string, any>;
+  PROJECT_ROOT: string;
 
   // The full config object
   config: any;
@@ -52,10 +53,10 @@ export class Config {
       dotenv.config();
     }
 
-    const PROJECT_ROOT = process.cwd();
+    this.PROJECT_ROOT = process.cwd();
 
     this.defaults = {
-      WARTHOG_ROOT_FOLDER: PROJECT_ROOT,
+      WARTHOG_ROOT_FOLDER: this.PROJECT_ROOT,
       WARTHOG_APP_PROTOCOL: 'https',
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
@@ -69,8 +70,8 @@ export class Config {
       WARTHOG_DB_SUBSCRIBERS: ['src/subscribers/**/*.ts'],
       WARTHOG_DB_SUBSCRIBERS_DIR: 'src/subscribers',
       WARTHOG_MODULE_IMPORT_PATH: 'warthog',
-      WARTHOG_GENERATED_FOLDER: path.join(PROJECT_ROOT, 'generated'),
-      WARTHOG_RESOLVERS_PATH: [path.join(PROJECT_ROOT, 'src/**/*.resolver.ts')]
+      WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
+      WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')]
     };
 
     this.devDefaults = {
@@ -161,12 +162,26 @@ export class Config {
   public typeORMEnvVariables() {
     return this.envVarsByPrefix(this.TYPEORM_ENV_PREFIX);
   }
+  public translateEnvVar(key: string, value: string) {
+    const arrayTypes = [
+      'WARTHOG_DB_ENTITIES',
+      'WARTHOG_DB_MIGRATIONS',
+      'WARTHOG_DB_SUBSCRIBERS',
+      'WARTHOG_RESOLVERS_PATH'
+    ];
+
+    const paths = value.split(',').map((item: string) => {
+      return path.join(this.PROJECT_ROOT, item);
+    });
+
+    return arrayTypes.indexOf(key) > -1 ? paths : value;
+  }
 
   public envVarsByPrefix(prefix: string) {
     const config: any = {};
     Object.keys(process.env).forEach((key: string) => {
       if (key.startsWith(prefix)) {
-        config[key] = process.env[key];
+        config[key] = this.translateEnvVar(key, process.env[key] || '');
       }
     });
     return config;
