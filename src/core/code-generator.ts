@@ -97,7 +97,6 @@ export class CodeGenerator {
 
   private async getGeneratedTypes() {
     debug('getGeneratedTypes:start');
-    debug(this.connection.entityMetadatas);
     const x = SchemaGenerator.generate(
       this.connection.entityMetadatas,
       this.options.warthogImportPath

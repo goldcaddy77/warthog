@@ -170,6 +170,10 @@ export class Config {
       'WARTHOG_RESOLVERS_PATH'
     ];
 
+    // Should be able to do this, but TypeGraphQL has an issue with relative requires
+    // https://github.com/19majkel94/type-graphql/blob/a212fd19f28d3095244c44381617f03e97ec4db3/src/helpers/loadResolversFromGlob.ts#L4
+    // const paths = value.split(',');
+
     const paths = value.split(',').map((item: string) => {
       return path.join(this.PROJECT_ROOT, item);
     });
