@@ -7,6 +7,8 @@ export interface WarthogGluegunToolbox extends GluegunToolbox {
   db: {
     create: Function;
     drop: Function;
+    migrate: Function;
+    generateMigration: Function;
   };
   string: {
     supplant: Function;

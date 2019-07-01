@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
 
-import { Container } from 'typedi';
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
@@ -15,7 +14,7 @@ interface JSONFieldOptions {
 
 export function JSONField(args: JSONFieldOptions = {}): any {
   const nullableOption = args.nullable === true ? { nullable: true } : {};
-  const databaseConnection: string = Container.get('warthog.db-connection');
+  const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
   const type = defaultColumnType(databaseConnection, 'json');
 
   // These are the 2 required decorators to get type-graphql and typeorm working
