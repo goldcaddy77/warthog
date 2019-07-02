@@ -41,6 +41,7 @@ async function seedDatabase() {
       bool: false,
       foo: 1
     };
+    const registeredAt = new Date().toISOString();
 
     try {
       const user = await binding.mutation.createUser(
@@ -50,6 +51,7 @@ async function seedDatabase() {
             firstName,
             jsonField,
             lastName,
+            registeredAt,
             stringEnumField: 'FOO'
           }
         },

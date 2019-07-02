@@ -2,6 +2,7 @@ import { Authorized } from 'type-graphql';
 import { Unique } from 'typeorm';
 import {
   BaseModel,
+  DateField,
   EmailField,
   EnumField,
   JSONField,
@@ -30,6 +31,9 @@ export class User extends BaseModel {
 
   @EmailField()
   email: string;
+
+  @DateField()
+  registeredAt: Date;
 
   @StringField({ maxLength: 30, nullable: true })
   nickName?: string;

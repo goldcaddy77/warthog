@@ -41,6 +41,9 @@ export enum UserOrderByEnum {
   email_ASC = "email_ASC",
   email_DESC = "email_DESC",
 
+  registeredAt_ASC = "registeredAt_ASC",
+  registeredAt_DESC = "registeredAt_DESC",
+
   nickName_ASC = "nickName_ASC",
   nickName_DESC = "nickName_DESC",
 
@@ -109,6 +112,18 @@ export class UserWhereInput extends BaseWhereInput {
   email_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
+  registeredAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  registeredAt_gte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  registeredAt_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  registeredAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
   nickName_eq?: string;
 
   @TypeGraphQLField({ nullable: true })
@@ -168,6 +183,9 @@ export class UserCreateInput {
   @TypeGraphQLField()
   email!: string;
 
+  @TypeGraphQLField()
+  registeredAt!: Date;
+
   @TypeGraphQLField({ nullable: true })
   nickName?: string;
 
@@ -191,6 +209,9 @@ export class UserUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   email?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  registeredAt?: Date;
 
   @TypeGraphQLField({ nullable: true })
   nickName?: string;

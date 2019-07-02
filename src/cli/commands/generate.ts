@@ -1,6 +1,9 @@
+import * as cosmiconfig from 'cosmiconfig';
 import * as path from 'path';
+import * as prettier from 'prettier';
 
 import { WarthogGluegunToolbox } from '../types';
+import { Toolbox } from 'gluegun/build/types/domain/toolbox';
 
 export default {
   name: 'generate',
@@ -8,17 +11,18 @@ export default {
   run: async (toolbox: WarthogGluegunToolbox) => {
     const {
       config: { load },
-      parameters: { options },
-      print: { info },
+      parameters: { options, first, array },
+      print: { info, error },
       string: { supplant },
       template: { generate }
     } = toolbox;
 
     const config: any = load();
 
-    const name = options.name;
+    const name = first;
     if (!name) {
-      throw new Error('name is required');
+      error('name is required');
+      return process.exit(1);
     }
 
     const names = {
@@ -52,24 +56,14 @@ export default {
 
     const props = {
       ...names,
-      fields: [
-        {
-          name: 'key'
-        }
-      ],
+      fields: array ? processFields(array.slice(1)) : [],
       generatedFolderRelativePath,
       warthogPathInSourceFiles
     };
 
-    let target = path.join(destFolder, '/', `${names.kebabName}.model.ts`);
-    await generate({
-      template: 'model.ts.ejs',
-      target,
-      props
-    });
-    info(`Generated file at ${target}`);
+    await generateFile(toolbox, props, 'model.ts.ejs', destFolder, `${names.kebabName}.model.ts`);
 
-    target = path.join(destFolder, '/', `${names.kebabName}.service.ts`);
+    let target = path.join(destFolder, '/', `${names.kebabName}.service.ts`);
     await generate({
       template: 'service.ts.ejs',
       target,
@@ -84,5 +78,97 @@ export default {
       props
     });
     info(`Generated file at ${target}`);
+
+    return;
   }
 };
+
+async function generateFile(
+  toolbox: Toolbox,
+  props: any,
+  template: string,
+  destFolder: string,
+  filename: string
+) {
+  const target = path.join(destFolder, '/', filename);
+  const explorer = cosmiconfig('prettier');
+  const config = await explorer.search();
+
+  let generated = await toolbox.template.generate({
+    template,
+    target,
+    props
+  });
+
+  generated = prettier.format(generated, {
+    ...(config ? config.config : {}),
+    parser: 'typescript'
+  });
+
+  toolbox.filesystem.write(target, generated);
+
+  toolbox.print.info(`Generated file at ${target}`);
+}
+
+function processFields(fields: string[]) {
+  // If user doesn't pass fields, generate a single placeholder
+  if (!fields.length) {
+    fields = ['fieldName'];
+  }
+
+  return fields.map((raw: string) => {
+    let field: any = {};
+    if (raw.endsWith('!')) {
+      field.required = true;
+      raw = raw.substring(0, raw.length - 1);
+    }
+    const parts = raw.split(':');
+    if (!parts.length) {
+      throw new Error('found an empty field');
+    }
+
+    // Make sure this is camel case
+    field.name = parts[0];
+
+    if (parts.length > 1) {
+      // validate this is a valid type
+      field.type = parts[1];
+    } else {
+      field.type = 'string';
+    }
+
+    const typeFields: { [key: string]: { [key: string]: string } } = {
+      bool: {
+        decorator: 'BooleanField',
+        tsType: 'boolean'
+      },
+      date: {
+        decorator: 'DateField',
+        tsType: 'Date'
+      },
+      int: {
+        decorator: 'IntField',
+        tsType: 'number'
+      },
+      float: {
+        decorator: 'FloatField',
+        tsType: 'number'
+      },
+      string: {
+        decorator: 'StringField',
+        tsType: 'string'
+      }
+    };
+
+    field = {
+      ...field,
+      ...typeFields[field.type]
+    };
+
+    if (parts.length > 2) {
+      field.filterable = true;
+    }
+
+    return field;
+  });
+}

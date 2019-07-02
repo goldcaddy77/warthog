@@ -78,8 +78,8 @@ module.exports = (toolbox: GluegunToolbox) => {
 };
 
 async function runTypeORMCommand(command: string, toolbox: Toolbox, additionalParams: string = '') {
-  const tsNodePath = path.join(__dirname, '../../../node_modules/.bin/ts-node');
-  const typeORMPath = path.join(__dirname, '../../../node_modules/.bin/typeorm');
+  const tsNodePath = path.join(process.cwd(), './node_modules/.bin/ts-node');
+  const typeORMPath = path.join(process.cwd(), './node_modules/.bin/typeorm');
   const ormconfigFile = './generated/ormconfig.ts';
   const ormConfigFullPath = path.join(process.cwd(), ormconfigFile);
 

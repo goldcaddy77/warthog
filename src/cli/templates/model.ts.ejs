@@ -3,7 +3,11 @@ import { BaseModel, Model, StringField } from '<%= props.warthogPathInSourceFile
 @Model()
 export class <%= props.className %> extends BaseModel {
 <% props.fields.forEach(function(field){ %>
-  @StringField()
-  <%= field.name %>: string;
+  <% locals.tmp = !field.required %>
+
+  @<%= field.decorator %>(<%= locals.tmp ? "{" : "" -%>
+    <%_ _%><%= field.required ? "" : "nullable: true," -%>
+    <%_ _%><%= locals.tmp ? "}" : "" -%>)
+  <%= field.name %><%= field.required ? "!" : "?" %>: <%= field.tsType %>;
 <% }) %>
 }
