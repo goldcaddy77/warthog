@@ -102,6 +102,7 @@ type User implements BaseGraphQLObject {
   lastName: String!
   stringEnumField: StringEnum!
   email: String!
+  registeredAt: DateTime!
   nickName: String
   privateField: String
   jsonField: JSONObject
@@ -112,6 +113,7 @@ input UserCreateInput {
   lastName: String!
   stringEnumField: StringEnum!
   email: String!
+  registeredAt: DateTime!
   nickName: String
   privateField: String
   jsonField: JSONObject
@@ -132,6 +134,8 @@ enum UserOrderByInput {
   stringEnumField_DESC
   email_ASC
   email_DESC
+  registeredAt_ASC
+  registeredAt_DESC
   nickName_ASC
   nickName_DESC
   privateField_ASC
@@ -145,6 +149,7 @@ input UserUpdateInput {
   lastName: String
   stringEnumField: StringEnum
   email: String
+  registeredAt: DateTime
   nickName: String
   privateField: String
   jsonField: JSONObject
@@ -189,6 +194,10 @@ input UserWhereInput {
   email_startsWith: String
   email_endsWith: String
   email_in: [String!]
+  registeredAt_gt: DateTime
+  registeredAt_gte: DateTime
+  registeredAt_lt: DateTime
+  registeredAt_lte: DateTime
   nickName_eq: String
   nickName_contains: String
   nickName_startsWith: String

@@ -57,6 +57,8 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'stringEnumField_DESC' |
   'email_ASC' |
   'email_DESC' |
+  'registeredAt_ASC' |
+  'registeredAt_DESC' |
   'nickName_ASC' |
   'nickName_DESC' |
   'privateField_ASC' |
@@ -93,6 +95,7 @@ export interface UserCreateInput {
   lastName: String
   stringEnumField: StringEnum
   email: String
+  registeredAt: DateTime
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
@@ -103,6 +106,7 @@ export interface UserUpdateInput {
   lastName?: String | null
   stringEnumField?: StringEnum | null
   email?: String | null
+  registeredAt?: DateTime | null
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
@@ -147,6 +151,10 @@ export interface UserWhereInput {
   email_startsWith?: String | null
   email_endsWith?: String | null
   email_in?: String[] | String | null
+  registeredAt_gt?: DateTime | null
+  registeredAt_gte?: DateTime | null
+  registeredAt_lt?: DateTime | null
+  registeredAt_lte?: DateTime | null
   nickName_eq?: String | null
   nickName_contains?: String | null
   nickName_startsWith?: String | null
@@ -220,6 +228,7 @@ export interface User extends BaseGraphQLObject {
   lastName: String
   stringEnumField: StringEnum
   email: String
+  registeredAt: DateTime
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null

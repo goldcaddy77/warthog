@@ -2,10 +2,12 @@
 export function defaultColumnType(databaseType: string, dataType: string) {
   const mapping: any = {
     postgres: {
+      date: 'timestamp',
       float: 'float8',
       json: 'jsonb'
     },
     sqlite: {
+      date: 'datetime',
       float: 'float',
       // NOTE: this is a hack for the current codegen.  This data type is only used by sqlite, so we've
       // overloaded it so that TypeORM doesn't blow up (thinks it's a string), but Warthog can properly

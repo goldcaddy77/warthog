@@ -92,6 +92,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
     case Date:
     case 'Date':
     case 'timestamp':
+    case 'datetime':
       return GraphQLISODateTime;
     case 'json':
     case 'jsonb':
@@ -131,7 +132,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
     const graphqlType = columnTypeToGraphQLDataType(column);
     const typeMap: any = {
       Boolean: 'boolean',
-      DateTime: 'string',
+      DateTime: 'Date',
       Float: 'number',
       GraphQLJSONObject: 'JSON',
       ID: 'string', // TODO: should this be ID_TYPE?

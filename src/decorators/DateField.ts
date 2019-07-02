@@ -3,6 +3,8 @@ import { Column } from 'typeorm';
 
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
+import { defaultColumnType } from '../torm';
+
 interface DateFieldOptions {
   nullable?: boolean;
   default?: Date;
@@ -11,16 +13,16 @@ interface DateFieldOptions {
 export function DateField(args: DateFieldOptions = {}): any {
   const nullableOption = args.nullable === true ? { nullable: true } : {};
   const defaultOption = args.default ? { default: args.default } : {};
+  const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
+  const type = defaultColumnType(databaseConnection, 'date');
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    // We explicitly say string here because when we're metaprogramming without
-    // TS types, Field does not know that this should be a string
     Field(() => GraphQLISODateTime, {
       ...nullableOption
     }),
     Column({
-      type: 'timestamp',
+      type,
       ...nullableOption,
       ...defaultOption
     }) as MethodDecoratorFactory

@@ -23,6 +23,11 @@ describe('Integration tests', () => {
     jest.setTimeout(20000);
   });
 
+  afterAll(() => {
+    // cleanup artifact
+    filesystem.remove('generated');
+  });
+
   // TODO: re-enable
   test('outputs version', async done => {
     // TODO: should we bother with this since we don't update the version in package.json?
@@ -38,23 +43,56 @@ describe('Integration tests', () => {
   });
 
   test('generates file', async done => {
-    const output = await cli('generate --name FeatureFlag --folder generated');
+    const output = await cli(
+      'generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! --folder generated'
+    );
     let fileContents;
 
-    expect(output).toContain('Generated file at generated/feature-flag.model.ts');
-    fileContents = filesystem.read('generated/feature-flag.model.ts');
-    expect(fileContents).toContain('export class FeatureFlag');
+    expect(output).toContain('Generated file at generated/user.model.ts');
+    fileContents = filesystem.read('generated/user.model.ts');
+    expect(fileContents).toContain('export class User');
 
-    expect(output).toContain('Generated file at generated/feature-flag.service.ts');
-    fileContents = filesystem.read('generated/feature-flag.service.ts');
-    expect(fileContents).toContain("@Service('FeatureFlagService')");
+    expect(fileContents).toContain('@StringField()');
+    expect(fileContents).toContain('name!: string;');
 
-    expect(output).toContain('Generated file at generated/feature-flag.resolver.ts');
-    fileContents = filesystem.read('generated/feature-flag.resolver.ts');
-    expect(fileContents).toContain('this.service.find<FeatureFlagWhereInput>');
+    // This also checks that prettier was run to remove trailing comma
+    expect(fileContents).toContain('@StringField({ nullable: true })');
+    expect(fileContents).toContain('nickname?: string;');
 
-    // cleanup artifact
-    filesystem.remove('generated');
+    expect(fileContents).toContain('@IntField()');
+    expect(fileContents).toContain('numLogins!: number;');
+
+    expect(fileContents).toContain('@BooleanField()');
+    expect(fileContents).toContain('verified!: boolean;');
+
+    // This also checks that prettier was run to remove trailing comma
+    expect(fileContents).toContain('@DateField({ nullable: true })');
+    expect(fileContents).toContain('registeredAt?: Date;');
+
+    expect(fileContents).toContain('@FloatField()');
+    expect(fileContents).toContain('balance!: number;');
+
+    expect(output).toContain('Generated file at generated/user.service.ts');
+    fileContents = filesystem.read('generated/user.service.ts');
+    expect(fileContents).toContain("@Service('UserService')");
+
+    expect(output).toContain('Generated file at generated/user.resolver.ts');
+    fileContents = filesystem.read('generated/user.resolver.ts');
+    expect(fileContents).toContain('this.service.find<UserWhereInput>');
+
+    done();
+  });
+
+  test('generates file', async done => {
+    const output = await cli('generate empty_class --folder generated');
+
+    expect(output).toContain('Generated file at generated/empty-class.model.ts');
+    const fileContents = filesystem.read('generated/empty-class.model.ts');
+
+    expect(fileContents).toContain('export class EmptyClass extends BaseModel');
+    expect(fileContents).toContain('@StringField({ nullable: true })');
+    expect(fileContents).toContain('fieldName?: string;');
+
     done();
   });
 });
