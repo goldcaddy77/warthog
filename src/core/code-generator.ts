@@ -125,41 +125,9 @@ export class CodeGenerator {
   }
 
   private async writeOrmConfig() {
-    const contents = `
-import {
-  getDatabaseName,
-  getDatabaseEntityPaths,
-  getDatabaseHost,
-  getDatabaseLoggingLevel,
-  getDatabaseMigrationPaths,
-  getDatabaseSubscriberPaths,
-  getDatabasePassword,
-  getDatabasePort,
-  shouldSchronizeDatabaseSchema,
-  getDatabaseType,
-  getDatabaseUsername,
-  SnakeNamingStrategy } from '${this.options.warthogImportPath}';
+    const contents = `import { getBaseConfig } from '${this.options.warthogImportPath}';
 
-module.exports = {
-  cli: {
-    entitiesDir: 'src/models',
-    migrationsDir: 'db/migrations',
-    subscribersDir: 'src/subscribers'
-  },
-  database: getDatabaseName(),
-  entities: getDatabaseEntityPaths(),
-  host: getDatabaseHost(),
-  logger: 'advanced-console',
-  logging: getDatabaseLoggingLevel(),
-  migrations: getDatabaseMigrationPaths(),
-  namingStrategy: new SnakeNamingStrategy(),
-  password: getDatabasePassword(),
-  port: getDatabasePort(),
-  subscribers: getDatabaseSubscriberPaths(),
-  synchronize: shouldSchronizeDatabaseSchema(),
-  type: getDatabaseType(),
-  username: getDatabaseUsername()
-};`;
+module.exports = getBaseConfig();`;
 
     return this.writeToGeneratedFolder('ormconfig.ts', contents);
   }

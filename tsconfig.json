@@ -22,7 +22,7 @@
     "strictNullChecks": true,
     "target": "es5",
     "types": ["jest", "isomorphic-fetch", "node"],
-    "typeRoots": ["node_modules/@types", "./typings", "./src/typings.d.ts"]
+    "typeRoots": ["node_modules/@types", "./typings", "./typings/typings.d.ts"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/**/*", "src/**/*.test.ts"]

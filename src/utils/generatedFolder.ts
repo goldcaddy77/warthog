@@ -1,10 +1,5 @@
 import * as path from 'path';
-import { Container } from 'typedi';
 
 export const generatedFolderPath = (): string => {
-  try {
-    return Container.get('warthog.generated-folder');
-  } catch (error) {
-    return path.join(process.cwd(), 'generated');
-  }
+  return process.env.WARTHOG_GENERATED_FOLDER || path.join(process.cwd(), 'generated');
 };

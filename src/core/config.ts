@@ -1,12 +1,16 @@
 import * as cosmiconfig from 'cosmiconfig';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import { Container } from 'typedi';
 
 import { ObjectUtil } from '../utils';
+import { Logger } from '../core';
 
 interface ConfigOptions {
   dotenvPath?: string;
   configSearchPath?: string;
+  container?: Container;
+  logger?: Logger;
 }
 
 const CONFIG_VALUE_VALID_KEYS = [
@@ -42,6 +46,8 @@ export class Config {
   defaults: Record<string, any>;
   devDefaults: Record<string, any>;
   PROJECT_ROOT: string;
+  container: Container;
+  logger?: Logger;
 
   // The full config object
   config: any;
@@ -54,6 +60,8 @@ export class Config {
     }
 
     this.PROJECT_ROOT = process.cwd();
+    this.container = options.container || Container;
+    this.logger = options.logger;
 
     this.defaults = {
       WARTHOG_ROOT_FOLDER: this.PROJECT_ROOT,
@@ -63,9 +71,10 @@ export class Config {
       WARTHOG_INTROSPECTION: 'true',
       WARTHOG_CLI_GENERATE_PATH: './src',
       WARTHOG_DB_ENTITIES: [`src/**/*.model.ts`],
+      WARTHOG_DB_ENTITIES_DIR: 'src/models',
       WARTHOG_DB_LOGGER: 'advanced-console',
-      WARTHOG_DB_MIGRATIONS: ['src/migrations/**/*.ts'],
-      WARTHOG_DB_MIGRATIONS_DIR: 'src/migrations',
+      WARTHOG_DB_MIGRATIONS: ['db/migrations/**/*.ts'],
+      WARTHOG_DB_MIGRATIONS_DIR: 'db/migrations',
       WARTHOG_DB_PORT: 5432,
       WARTHOG_DB_SUBSCRIBERS: ['src/subscribers/**/*.ts'],
       WARTHOG_DB_SUBSCRIBERS_DIR: 'src/subscribers',
@@ -135,6 +144,11 @@ export class Config {
     // Once we've combined all of the Warthog ENV vars, write them to process.env so that they can be used elsewhere
     // NOTE: this is likely a bad idea and we should use Containers
     this.writeWarthogEnvVars();
+
+    (this.container as any).set('warthog.config', this.get());
+    (this.container as any).set('warthog.db-connection', this.get('DB_CONNECTION'));
+    (this.container as any).set('warthog.generated-folder', this.get('GENERATED_FOLDER'));
+    (this.container as any).set('warthog.logger', this.logger); // Save for later so we can pull globally
 
     return this;
   }

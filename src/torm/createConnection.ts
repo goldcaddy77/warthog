@@ -7,23 +7,23 @@ import { logger } from '../core/logger';
 export function getBaseConfig() {
   return {
     cli: {
-      entitiesDir: 'src/models',
-      migrationsDir: 'src/migration',
-      subscribersDir: 'src/subscriber'
+      entitiesDir: process.env.WARTHOG_DB_ENTITIES_DIR,
+      migrationsDir: process.env.WARTHOG_DB_MIGRATIONS_DIR,
+      subscribersDir: process.env.WARTHOG_DB_SUBSCRIBERS_DIR
     },
-    database: getDatabaseName(),
+    database: process.env.WARTHOG_DB_DATABASE!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
     entities: getDatabaseEntityPaths(),
-    host: getDatabaseHost(),
-    logger: 'advanced-console',
-    logging: getDatabaseLoggingLevel(),
+    host: process.env.WARTHOG_DB_HOST!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    logger: process.env.WARTHOG_DB_LOGGER,
+    logging: process.env.WARTHOG_DB_LOGGING!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
     migrations: getDatabaseMigrationPaths(),
     namingStrategy: new SnakeNamingStrategy(),
-    password: getDatabasePassword(),
-    port: getDatabasePort(),
+    password: process.env.WARTHOG_DB_PASSWORD,
+    port: parseInt(process.env.WARTHOG_DB_PORT || '', 10),
     subscribers: getDatabaseSubscriberPaths(),
-    synchronize: shouldSchronizeDatabaseSchema(),
-    type: getDatabaseType(),
-    username: getDatabaseUsername()
+    synchronize: process.env.WARTHOG_DB_SYNCHRONIZE === 'true',
+    type: process.env.WARTHOG_DB_DATABASE_TYPE || process.env.WARTHOG_DB_CONNECTION!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    username: process.env.WARTHOG_DB_USERNAME
   };
 }
 
@@ -44,26 +44,6 @@ export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) =
   return createConnection(config as any); // TODO: fix any.  It is complaining about `type`
 };
 
-function getDatabaseName(): string {
-  return process.env.WARTHOG_DB_DATABASE!;
-}
-
-function getDatabaseType(): string {
-  return process.env.WARTHOG_DB_DATABASE_TYPE || process.env.WARTHOG_DB_CONNECTION!;
-}
-
-function getDatabaseHost(): string {
-  return process.env.WARTHOG_DB_HOST!;
-}
-
-function shouldSchronizeDatabaseSchema(): boolean {
-  return process.env.WARTHOG_DB_SYNCHRONIZE === 'true';
-}
-
-function getDatabaseLoggingLevel() {
-  return process.env.WARTHOG_DB_LOGGING!;
-}
-
 function getDatabaseEntityPaths(): string[] {
   return process.env.WARTHOG_DB_ENTITIES
     ? process.env.WARTHOG_DB_ENTITIES.split(',')
@@ -73,23 +53,11 @@ function getDatabaseEntityPaths(): string[] {
 function getDatabaseMigrationPaths(): string[] {
   return process.env.WARTHOG_DB_MIGRATIONS
     ? process.env.WARTHOG_DB_MIGRATIONS.split(',')
-    : ['src/migration/**/*.ts'];
+    : ['db/migration/**/*.ts'];
 }
 
 function getDatabaseSubscriberPaths(): string[] {
   return process.env.WARTHOG_DB_SUBSCRIBERS
     ? process.env.WARTHOG_DB_SUBSCRIBERS.split(',')
     : ['src/**/*.model.ts'];
-}
-
-function getDatabaseUsername(): string | undefined {
-  return process.env.WARTHOG_DB_USERNAME;
-}
-
-function getDatabasePassword(): string | undefined {
-  return process.env.WARTHOG_DB_PASSWORD;
-}
-
-function getDatabasePort(): number {
-  return parseInt(process.env.WARTHOG_DB_PORT || '', 10);
 }

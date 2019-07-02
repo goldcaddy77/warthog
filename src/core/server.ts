@@ -107,14 +107,9 @@ export class Server<C extends BaseContext> {
     this.bodyParserConfig = this.appOptions.bodyParserConfig;
 
     this.logger = this.getLogger();
-    Container.set('warthog.logger', this.logger); // Save for later so we can pull globally
 
-    this.config = new Config().loadSync();
+    this.config = new Config({ container: this.container, logger: this.logger }).loadSync();
     logger.info('config', this.config);
-
-    Container.set('warthog.config', this.config);
-    Container.set('warthog.generated-folder', this.config.get('GENERATED_FOLDER'));
-    Container.set('warthog.db-connection', this.config.get('DB_CONNECTION'));
 
     this.autoGenerateFiles = this.config.get('AUTO_GENERATE_FILES') === 'true';
     this.introspection = this.config.get('INTROSPECTION') === 'true';
