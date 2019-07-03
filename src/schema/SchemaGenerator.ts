@@ -64,7 +64,7 @@ export class SchemaGenerator {
         parser: 'typescript'
       });
     } catch (e) {
-      this.logger.log(
+      this.logger.error(
         `There is a syntax error in generated code, unformatted code printed, error: ${JSON.stringify(
           e
         )}`

@@ -22,7 +22,7 @@ export class Link extends HttpLink {
       delete headers.token;
     }
 
-    logger.info('headers', headers);
+    logger.debug('headers', headers);
 
     super({
       // TODO: cross-fetch library does not play nicely with TS
@@ -47,7 +47,7 @@ export class RemoteBinding extends Binding {
       link: errorLink.concat(httpLink),
       schema: typeDefs
     });
-    logger.info('schema', JSON.stringify(schema));
+    logger.debug('schema', JSON.stringify(schema));
     super({ schema });
   }
 }
@@ -57,17 +57,17 @@ export async function getRemoteBinding(endpoint: string, options: LinkOptions) {
     throw new Error('getRemoteBinding: endpoint is required');
   }
 
-  logger.info('getRemoteBinding', endpoint, options);
+  logger.debug('getRemoteBinding', endpoint, options);
 
   const link = new Link(endpoint, options);
   const introspectionResult = await introspectSchema(link);
-  logger.info('introspectionResult', JSON.stringify(introspectionResult));
+  logger.debug('introspectionResult', JSON.stringify(introspectionResult));
 
   return new RemoteBinding(link, printSchema(introspectionResult));
 }
 
 export async function generateBindingFile(inputSchemaPath: string, outputBindingFile: string) {
-  logger.info('generateBindingFile:start');
+  logger.debug('generateBindingFile:start');
   const sdl = fs.readFileSync(path.resolve(inputSchemaPath), 'utf-8');
   const schema = buildSchema(sdl);
 
@@ -82,7 +82,7 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
   const code = generatorInstance.render();
 
   fs.writeFileSync(outputBindingFile, code);
-  logger.info('generateBindingFile:end');
+  logger.debug('generateBindingFile:end');
 }
 
 export function getOriginalError(error: any): any {

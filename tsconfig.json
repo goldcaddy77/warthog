@@ -4,7 +4,7 @@
     "baseUrl": "src",
     "declaration": true,
     "declarationDir": "dist/types",
-    "lib": ["es2016", "dom", "es5", "scripthost"],
+    "lib": ["es2016", "dom", "es5", "scripthost", "esnext", "esnext.asynciterable"],
     "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -25,5 +25,5 @@
     "typeRoots": ["node_modules/@types", "./typings", "./typings/typings.d.ts"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules/**/*", "src/**/*.test.ts"]
+  "exclude": ["node_modules/**/*", "src/**/*.test.ts", "**/generated/*"]
 }

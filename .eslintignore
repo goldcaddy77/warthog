@@ -1,5 +1,5 @@
 /**/node_modules/**/*
 /examples/**/coverage/**/*
 /examples/**/node_modules/**/*
-/examples/**/generated/**/*
+/**/generated/**/*
 !.eslintrc.js

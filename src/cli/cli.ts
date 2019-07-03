@@ -11,7 +11,7 @@ async function run(argv: string[]) {
   const cli = build()
     .brand('warthog')
     .src(__dirname)
-    .plugins('./node_modules', { matching: 'warthog-*', hidden: true })
+    // .plugins('./node_modules', { matching: 'warthog-*', hidden: true })
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v
     .create();

@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "outDir": "build/dist",
     "module": "commonjs",
     "target": "es5",
-    "lib": ["dom", "es5", "es6", "es7", "esnext", "esnext.asynciterable"],
+    "lib": ["dom", "es5", "es6", "es7", "esnext", "esnext.asynciterable", "scripthost"],
     "sourceMap": true,
     "allowJs": true,
     "moduleResolution": "node",
@@ -14,11 +15,13 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
+    "noUnusedLocals": false, // Avoid noise in our resolvers when we use DI
     "strictNullChecks": true,
+    "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
     "types": ["jest", "isomorphic-fetch", "node"],
     "typeRoots": ["node_modules/@types", "./typings", "./src/typings.d.ts"]
   },
-  "exclude": ["node_modules", "examples"]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules", "**/node_modules/*", "examples"]
 }

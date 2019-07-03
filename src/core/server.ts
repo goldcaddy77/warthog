@@ -1,7 +1,7 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { ApolloServer, OptionsJson } from 'apollo-server-express';
+import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
 import * as dotenv from 'dotenv';
 import { Request } from 'express';
 import express = require('express');
@@ -32,6 +32,7 @@ const debug = Debug('warthog:server');
 export interface ServerOptions<T> {
   container?: Container;
 
+  apolloConfig?: ApolloServerExpressConfig;
   authChecker?: AuthChecker<T>;
   autoGenerateFiles?: boolean;
   context?: (request: Request) => object;
@@ -44,12 +45,13 @@ export interface ServerOptions<T> {
   port?: string | number;
   resolversPath?: string[];
   warthogImportPath?: string;
-  introspection?: boolean;
+  introspection?: boolean; // DEPRECATED
   bodyParserConfig?: OptionsJson;
 }
 
 export class Server<C extends BaseContext> {
   config: Config;
+  apolloConfig?: ApolloServerExpressConfig;
   authChecker: AuthChecker<C>;
   autoGenerateFiles: boolean;
   connection!: Connection;
@@ -58,13 +60,13 @@ export class Server<C extends BaseContext> {
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
   schema?: GraphQLSchema;
-  introspection: boolean = true;
   bodyParserConfig?: OptionsJson;
 
   constructor(
     private appOptions: ServerOptions<C>,
     private dbOptions: Partial<ConnectionOptions> = {}
   ) {
+    // TODO: we should delete this and make sure everything is being loaded directly from the Config module
     dotenv.config();
 
     if (!process.env.NODE_ENV) {
@@ -105,14 +107,15 @@ export class Server<C extends BaseContext> {
 
     this.authChecker = this.appOptions.authChecker || authChecker;
     this.bodyParserConfig = this.appOptions.bodyParserConfig;
+    this.apolloConfig = this.appOptions.apolloConfig || {};
 
     this.logger = this.getLogger();
 
+    // NOTE: this should be after we hard-code the WARTHOG_ env vars above because we want the config
+    // module to think they were set by the user
     this.config = new Config({ container: this.container, logger: this.logger }).loadSync();
-    logger.info('config', this.config);
 
     this.autoGenerateFiles = this.config.get('AUTO_GENERATE_FILES') === 'true';
-    this.introspection = this.config.get('INTROSPECTION') === 'true';
   }
 
   getLogger(): Logger {
@@ -140,10 +143,14 @@ export class Server<C extends BaseContext> {
     )}`;
   }
 
+  getGraphQLServerUrl() {
+    return `${this.getServerUrl()}/graphql`;
+  }
+
   async getBinding(options: { origin?: string; token?: string } = {}): Promise<Binding> {
     let binding;
     try {
-      binding = await getRemoteBinding(`${this.getServerUrl()}/graphql`, {
+      binding = await getRemoteBinding(this.getGraphQLServerUrl(), {
         origin: 'warthog',
         ...options
       });
@@ -207,6 +214,11 @@ export class Server<C extends BaseContext> {
       });
 
     debug('start:ApolloServerAllocation:start');
+    // See all options here: https://github.com/apollographql/apollo-server/blob/9ffb4a847e1503ea2ab1f3fcd47837daacf40870/packages/apollo-server-core/src/types.ts#L69
+    const playgroundOption = this.config.get('PLAYGROUND') === 'true' ? { playground: true } : {};
+    const introspectionOption =
+      this.config.get('INTROSPECTION') === 'true' ? { introspection: true } : {};
+
     this.graphQLServer = new ApolloServer({
       context: async (options: { req: Request }) => {
         const consumerCtx = await contextGetter(options.req);
@@ -222,8 +234,10 @@ export class Server<C extends BaseContext> {
           ...consumerCtx
         };
       },
-      introspection: this.introspection,
-      schema: this.schema
+      ...playgroundOption,
+      ...introspectionOption,
+      schema: this.schema,
+      ...this.apolloConfig
     });
 
     debug('start:ApolloServerAllocation:end');
@@ -239,9 +253,7 @@ export class Server<C extends BaseContext> {
     });
     debug('start:applyMiddleware:end');
 
-    const url = `http://${this.config.get('APP_HOST')}:${this.config.get('APP_PORT')}${
-      this.graphQLServer.graphqlPath
-    }`;
+    const url = this.getGraphQLServerUrl();
 
     this.httpServer = app.listen({ port: this.config.get('APP_PORT') }, () =>
       this.logger.info(`🚀 Server ready at ${url}`)
