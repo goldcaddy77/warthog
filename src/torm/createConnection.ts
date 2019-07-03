@@ -29,7 +29,7 @@ export function getBaseConfig() {
 
 // Note: all DB options should be specified by environment variables
 // Either using TYPEORM_<variable> or WARTHOG_DB_<variable>
-export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) => {
+export const createDBConnection = async (dbOptions: Partial<ConnectionOptions> = {}) => {
   const config = {
     ...getBaseConfig(),
     ...dbOptions
@@ -39,7 +39,7 @@ export const createDBConnection = (dbOptions: Partial<ConnectionOptions> = {}) =
     throw new Error("createConnection: 'database' is required");
   }
 
-  logger.info('config', config);
+  logger.debug('createDBConnection', config);
 
   return createConnection(config as any); // TODO: fix any.  It is complaining about `type`
 };

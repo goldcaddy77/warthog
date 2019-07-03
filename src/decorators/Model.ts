@@ -6,10 +6,6 @@ import { Entity } from 'typeorm';
 import { getMetadataStorage } from '../metadata';
 import { ClassDecoratorFactory, composeClassDecorators, generatedFolderPath } from '../utils/';
 
-interface ModelOptions {
-  auditTableName?: string;
-}
-
 export function Model(this: any): any {
   // In order to use the enums in the generated classes file, we need to
   // save their locations and import them in the generated file

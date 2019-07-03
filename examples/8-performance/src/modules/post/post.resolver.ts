@@ -1,7 +1,7 @@
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../src';
+import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../../../src';
 import {
   PostCreateInput,
   PostCreateManyArgs,
@@ -9,9 +9,9 @@ import {
   PostWhereArgs,
   PostWhereInput,
   PostWhereUniqueInput
-} from '../generated';
+} from '../../../generated';
 
-import { User } from './user.model';
+import { User } from '../user/user.model';
 
 import { Post } from './post.model';
 import { PostService } from './post.service';

@@ -1,16 +1,16 @@
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse, UserId } from '../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '../../../../../src';
 import {
   UserCreateInput,
   UserUpdateArgs,
   UserWhereArgs,
   UserWhereInput,
   UserWhereUniqueInput
-} from '../generated';
+} from '../../../generated';
 
-import { Post } from './post.model';
+import { Post } from '../post/post.model';
 
 import { User } from './user.model';
 import { UserService } from './user.service';

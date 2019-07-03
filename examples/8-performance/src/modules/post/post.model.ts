@@ -1,6 +1,6 @@
-import { BaseModel, ManyToOne, Model, StringField } from '../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '../../../../../src';
 
-import { User } from './user.model';
+import { User } from '../user/user.model';
 
 @Model()
 export class Post extends BaseModel {

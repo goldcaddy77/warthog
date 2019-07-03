@@ -70,7 +70,7 @@ export class Config {
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
       WARTHOG_INTROSPECTION: 'true',
       WARTHOG_CLI_GENERATE_PATH: './src',
-      WARTHOG_DB_ENTITIES: [`src/**/*.model.ts`],
+      WARTHOG_DB_ENTITIES: ['src/**/*.model.ts'],
       WARTHOG_DB_ENTITIES_DIR: 'src/models',
       WARTHOG_DB_LOGGER: 'advanced-console',
       WARTHOG_DB_MIGRATIONS: ['db/migrations/**/*.ts'],
@@ -79,6 +79,7 @@ export class Config {
       WARTHOG_DB_SUBSCRIBERS: ['src/subscribers/**/*.ts'],
       WARTHOG_DB_SUBSCRIBERS_DIR: 'src/subscribers',
       WARTHOG_MODULE_IMPORT_PATH: 'warthog',
+      // TODO: eventually we should do this path resolution when we ask for the variable with `get`
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')]
     };
@@ -150,6 +151,10 @@ export class Config {
     (this.container as any).set('warthog.generated-folder', this.get('GENERATED_FOLDER'));
     (this.container as any).set('warthog.logger', this.logger); // Save for later so we can pull globally
 
+    if (this.logger && this.logger.debug) {
+      this.logger.debug('loadSync complete', this.get());
+    }
+
     return this;
   }
 
@@ -184,15 +189,23 @@ export class Config {
       'WARTHOG_RESOLVERS_PATH'
     ];
 
+    const pathTypes = ['WARTHOG_GENERATED_FOLDER'];
+
     // Should be able to do this, but TypeGraphQL has an issue with relative requires
     // https://github.com/19majkel94/type-graphql/blob/a212fd19f28d3095244c44381617f03e97ec4db3/src/helpers/loadResolversFromGlob.ts#L4
     // const paths = value.split(',');
 
-    const paths = value.split(',').map((item: string) => {
-      return path.join(this.PROJECT_ROOT, item);
-    });
+    if (arrayTypes.indexOf(key) > -1) {
+      return value.split(',').map((item: string) => {
+        return path.join(this.PROJECT_ROOT, item);
+      });
+    }
 
-    return arrayTypes.indexOf(key) > -1 ? paths : value;
+    if (pathTypes.indexOf(key) > -1) {
+      return path.join(this.PROJECT_ROOT, value);
+    }
+
+    return value;
   }
 
   public envVarsByPrefix(prefix: string) {

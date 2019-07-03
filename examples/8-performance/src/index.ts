@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { logger } from '../../../src';
 
-import { loadConfig } from '../src/config';
+import { loadConfig } from './config';
 import { getServer } from './server';
 
 async function bootstrap() {
