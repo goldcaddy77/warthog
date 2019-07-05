@@ -16,7 +16,6 @@ import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } fr
 import { logger, Logger } from '../core/logger';
 import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-import { authChecker } from '../tgql';
 import { createDBConnection } from '../torm';
 
 import { CodeGenerator } from './code-generator';
@@ -51,7 +50,7 @@ export interface ServerOptions<T> {
 export class Server<C extends BaseContext> {
   config: Config;
   apolloConfig?: ApolloServerExpressConfig;
-  authChecker: AuthChecker<C>;
+  authChecker?: AuthChecker<C>;
   autoGenerateFiles: boolean;
   connection!: Connection;
   container: Container;
@@ -101,7 +100,7 @@ export class Server<C extends BaseContext> {
     this.container = this.appOptions.container || Container;
     TypeORMUseContainer(this.container as any); // TODO: fix any
 
-    this.authChecker = this.appOptions.authChecker || authChecker;
+    this.authChecker = this.appOptions.authChecker;
     this.bodyParserConfig = this.appOptions.bodyParserConfig;
     this.apolloConfig = this.appOptions.apolloConfig || {};
 
