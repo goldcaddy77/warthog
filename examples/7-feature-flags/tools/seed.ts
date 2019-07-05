@@ -1,7 +1,6 @@
 import { getBindingError } from '../../../src';
 
 import { Binding } from '../generated/binding';
-import { loadConfig } from '../src/config';
 import { Logger } from '../src/logger';
 import { Environment, FeatureFlag, FeatureFlagUser, Project, Segment } from '../src/models';
 import { getServer } from '../src/server';
@@ -11,8 +10,6 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 async function seedDatabase() {
-  loadConfig();
-
   const server = getServer({ openPlayground: false });
   await server.start();
 

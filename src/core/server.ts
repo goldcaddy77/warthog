@@ -2,7 +2,6 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
-import * as dotenv from 'dotenv';
 import { Request } from 'express';
 import express = require('express');
 import { GraphQLID, GraphQLSchema } from 'graphql';
@@ -66,9 +65,6 @@ export class Server<C extends BaseContext> {
     private appOptions: ServerOptions<C>,
     private dbOptions: Partial<ConnectionOptions> = {}
   ) {
-    // TODO: we should delete this and make sure everything is being loaded directly from the Config module
-    dotenv.config();
-
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }

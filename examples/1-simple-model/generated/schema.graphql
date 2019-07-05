@@ -79,11 +79,6 @@ type StandardDeleteResponse {
   id: ID!
 }
 
-enum StringEnum {
-  FOO
-  BAR
-}
-
 type User implements BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!
@@ -98,7 +93,6 @@ type User implements BaseGraphQLObject {
   email: String!
   age: Int!
   isRequired: Boolean!
-  stringEnumField: StringEnum!
   rating: Float!
 }
 
@@ -108,7 +102,6 @@ input UserCreateInput {
   email: String!
   age: Float!
   isRequired: Boolean!
-  stringEnumField: StringEnum!
   rating: Float!
 }
 
@@ -129,8 +122,6 @@ enum UserOrderByInput {
   age_DESC
   isRequired_ASC
   isRequired_DESC
-  stringEnumField_ASC
-  stringEnumField_DESC
   rating_ASC
   rating_DESC
 }
@@ -141,7 +132,6 @@ input UserUpdateInput {
   email: String
   age: Float
   isRequired: Boolean
-  stringEnumField: StringEnum
   rating: Float
 }
 
@@ -190,8 +180,6 @@ input UserWhereInput {
   age_in: [Int!]
   isRequired_eq: Boolean
   isRequired_in: [Boolean!]
-  stringEnumField_eq: StringEnum
-  stringEnumField_in: [StringEnum!]
   rating_eq: Float
   rating_gt: Float
   rating_gte: Float

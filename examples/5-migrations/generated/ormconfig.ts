@@ -1,4 +1,3 @@
+import { getBaseConfig } from '../../../src';
 
-    import { getBaseConfig } from '../../../src';
-
-    module.exports = getBaseConfig();
+module.exports = getBaseConfig();

@@ -17,6 +17,11 @@ module.exports = (toolbox: GluegunToolbox) => {
 
   toolbox.db = {
     create: async function create(database: string) {
+      if (process.env.NODE_ENV !== 'development' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
+        return error(
+          'Cannot create database without setting WARTHOG_DB_OVERRIDE environment variable to `true`'
+        );
+      }
       const config = load();
       const createDb = util.promisify(pgtools.createdb) as Function;
 
@@ -31,6 +36,11 @@ module.exports = (toolbox: GluegunToolbox) => {
       info(`Database '${database}' created!`);
     },
     drop: async function drop() {
+      if (process.env.NODE_ENV !== 'development' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
+        return error(
+          'Cannot drop database without setting WARTHOG_DB_OVERRIDE environment variable to `true`'
+        );
+      }
       const config = load();
       const database = config.get('DB_DATABASE');
       const dropDb = util.promisify(pgtools.dropdb) as Function;

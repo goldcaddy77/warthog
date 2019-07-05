@@ -2,7 +2,6 @@ import * as Faker from 'faker';
 
 import { getBindingError, logger } from '../../../src';
 
-import { loadConfig } from '../src/config';
 import { getServer } from '../src/server';
 
 if (process.env.NODE_ENV !== 'development') {
@@ -12,8 +11,6 @@ if (process.env.NODE_ENV !== 'development') {
 const NUM_USERS = 100;
 
 async function seedDatabase() {
-  loadConfig();
-
   const server = getServer({ introspection: true, openPlayground: false });
   await server.start();
 
