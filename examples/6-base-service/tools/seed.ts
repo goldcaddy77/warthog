@@ -4,14 +4,16 @@ import { getBindingError, logger } from '../../../src';
 
 import { getServer } from '../src/server';
 
-if (process.env.NODE_ENV !== 'development') {
-  throw 'Seeding only available in development environment';
-}
-
 const NUM_USERS = 100;
 
 async function seedDatabase() {
   const server = getServer({ introspection: true, openPlayground: false });
+
+  // NOTE: this has to be after we instantiate the server, because the server will actually load the environment variables from .env and set process.env.NODE_ENV
+  if (process.env.NODE_ENV !== 'development') {
+    throw 'Seeding only available in development environment';
+  }
+
   await server.start();
 
   let binding;

@@ -17,12 +17,9 @@ module.exports = (toolbox: GluegunToolbox) => {
 
   toolbox.db = {
     create: async function create(database: string) {
-      if (process.env.NODE_ENV !== 'development' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
-        return error(
-          'Cannot create database without setting WARTHOG_DB_OVERRIDE environment variable to `true`'
-        );
-      }
       const config = load();
+      validateNodeEnv(config['NODE_ENV'], toolbox, 'create');
+
       const createDb = util.promisify(pgtools.createdb) as Function;
 
       try {
@@ -36,12 +33,9 @@ module.exports = (toolbox: GluegunToolbox) => {
       info(`Database '${database}' created!`);
     },
     drop: async function drop() {
-      if (process.env.NODE_ENV !== 'development' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
-        return error(
-          'Cannot drop database without setting WARTHOG_DB_OVERRIDE environment variable to `true`'
-        );
-      }
       const config = load();
+      validateNodeEnv(config['NODE_ENV'], toolbox, 'drop, action: string');
+
       const database = config.get('DB_DATABASE');
       const dropDb = util.promisify(pgtools.dropdb) as Function;
 
@@ -131,4 +125,17 @@ async function getPgConfig(config: any) {
     password: config.get('DB_PASSWORD'),
     port: config.get('DB_PORT')
   };
+}
+
+function validateNodeEnv(env: string, toolbox: Toolbox, action: string) {
+  if (!env) {
+    toolbox.print.error('NODE_ENV must be set');
+    process.exit(1);
+  }
+  if (env !== 'development' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
+    toolbox.print.error(
+      `Cannot ${action} database without setting WARTHOG_DB_OVERRIDE environment variable to 'true'`
+    );
+    process.exit(1);
+  }
 }

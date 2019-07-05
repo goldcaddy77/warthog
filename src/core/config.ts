@@ -49,33 +49,13 @@ export class Config {
   PROJECT_ROOT: string;
   container: Container;
   logger?: Logger;
+  NODE_ENV?: string;
 
   // The full config object
   config: any;
 
   constructor(private options: ConfigOptions = {}) {
     this.PROJECT_ROOT = process.cwd();
-    const dotenvPath = options.dotenvPath || process.cwd();
-
-    // Load .env.local file for super secrets
-    // With dotenv, the first time an entry ends up in process.env, it stays, so local items should take precedence
-    let file = path.join(dotenvPath, '.env.local');
-    // console.log('file', file);
-    if (fs.existsSync(file)) {
-      // console.log('1', this.warthogEnvVariables());
-      dotenv.config({ path: file });
-      // console.log('2', this.warthogEnvVariables());
-    }
-
-    // Load .env file
-    file = path.join(dotenvPath, '.env');
-    // console.log('file', file);
-    if (fs.existsSync(file)) {
-      // console.log('3', this.warthogEnvVariables());
-      dotenv.config({ path: file });
-      // console.log('4', this.warthogEnvVariables());
-    }
-
     this.container = options.container || Container;
     this.logger = options.logger;
 
@@ -111,11 +91,45 @@ export class Config {
       WARTHOG_DB_SYNCHRONIZE: 'true'
     };
 
+    const dotenvPath = options.dotenvPath || this.PROJECT_ROOT;
+    this.NODE_ENV = this.determineNodeEnv(dotenvPath);
+    this.loadDotenvFiles(dotenvPath);
+
     return this;
   }
 
+  // Allow NODE_ENV to be set in the .env file.  Check for this first here and then fall back on
+  // the environment variable.  The reason we do this is because using dotenvi will allow us to switch
+  // between environments.  If we require an actual environment variable to be set then we'll have to set
+  // and unset the value in the current terminal buffer.
+  determineNodeEnv(dotenvPath: string) {
+    let nodeEnv = process.env.NODE_ENV;
+
+    const filepath = path.join(dotenvPath, '.env');
+    if (fs.existsSync(filepath)) {
+      const config = dotenv.parse(fs.readFileSync(filepath));
+      if (config.NODE_ENV) {
+        nodeEnv = config.NODE_ENV;
+      }
+    }
+
+    return (this.NODE_ENV = process.env.NODE_ENV = nodeEnv);
+  }
+
+  loadDotenvFiles(dotenvPath: string) {
+    // .local files are for secrets, load those first
+    const files = [`.env.local.${this.NODE_ENV}`, '.env.local', '.env'];
+
+    files.forEach((filename: string) => {
+      const filepath = path.join(dotenvPath, filename);
+      if (fs.existsSync(filepath)) {
+        dotenv.config({ path: filepath });
+      }
+    });
+  }
+
   loadSync(): Config {
-    const devOptions = process.env.NODE_ENV === 'development' ? this.devDefaults : {};
+    const devOptions = this.NODE_ENV === 'development' ? this.devDefaults : {};
     const configFile = this.loadStaticConfigSync();
 
     // Config is loaded as a waterfall.  Items at the top of the object are overwritten by those below, so the order is:

@@ -5,12 +5,14 @@ import { Logger } from '../src/logger';
 import { Environment, FeatureFlag, FeatureFlagUser, Project, Segment } from '../src/models';
 import { getServer } from '../src/server';
 
-if (process.env.NODE_ENV !== 'development') {
-  throw 'Seeding only available in development environment';
-}
-
 async function seedDatabase() {
   const server = getServer({ openPlayground: false });
+
+  // NOTE: this has to be after we instantiate the server, because the server will actually load the environment variables from .env and set process.env.NODE_ENV
+  if (process.env.NODE_ENV !== 'development') {
+    throw 'Seeding only available in development environment';
+  }
+
   await server.start();
 
   let binding: Binding;
