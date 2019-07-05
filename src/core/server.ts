@@ -51,7 +51,6 @@ export class Server<C extends BaseContext> {
   config: Config;
   apolloConfig?: ApolloServerExpressConfig;
   authChecker?: AuthChecker<C>;
-  autoGenerateFiles: boolean;
   connection!: Connection;
   container: Container;
   graphQLServer!: ApolloServer;
@@ -64,10 +63,6 @@ export class Server<C extends BaseContext> {
     private appOptions: ServerOptions<C>,
     private dbOptions: Partial<ConnectionOptions> = {}
   ) {
-    if (!process.env.NODE_ENV) {
-      throw new Error("NODE_ENV must be set - use 'development' locally");
-    }
-
     if (typeof this.appOptions.host !== 'undefined') {
       process.env.WARTHOG_APP_HOST = this.appOptions.host;
       // When we move to v2.0 we'll officially deprecate these config values in favor of ENV vars
@@ -110,7 +105,9 @@ export class Server<C extends BaseContext> {
     // module to think they were set by the user
     this.config = new Config({ container: this.container, logger: this.logger }).loadSync();
 
-    this.autoGenerateFiles = this.config.get('AUTO_GENERATE_FILES') === 'true';
+    if (!process.env.NODE_ENV) {
+      throw new Error("NODE_ENV must be set - use 'development' locally");
+    }
   }
 
   getLogger(): Logger {
@@ -197,7 +194,7 @@ export class Server<C extends BaseContext> {
   async start() {
     debug('start:start');
     await this.establishDBConnection();
-    if (this.autoGenerateFiles) {
+    if (this.config.get('AUTO_GENERATE_FILES') === 'true') {
       await this.generateFiles();
     }
     await this.buildGraphQLSchema();
