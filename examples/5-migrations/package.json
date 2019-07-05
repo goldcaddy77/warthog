@@ -20,8 +20,7 @@
   },
   "dependencies": {
     "reflect-metadata": "^0.1.12",
-    "typescript": "^3.2.2",
-    "warthog": "^1.10.0"
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@types/express": "^4.16.0",

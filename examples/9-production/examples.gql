@@ -1,0 +1,33 @@
+query {
+  users(orderBy: createdAt_DESC) {
+    id
+    firstName
+    posts {
+      id
+      title
+      createdAt
+    }
+    createdAt
+  }
+
+  posts(where: { userId_in: ["<fill in with user ID>"] }, orderBy: createdAt_DESC) {
+    id
+    title
+    userId
+    createdAt
+  }
+}
+
+mutation {
+  createUser(data: { firstName: "TestUser" }) {
+    id
+    firstName
+    createdAt
+  }
+
+  createPost(data: { title: "Hello World", userId: "<fill in with user ID>" }) {
+    id
+    title
+    createdAt
+  }
+}

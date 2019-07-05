@@ -3,7 +3,6 @@ import * as Faker from 'faker';
 import { getBindingError, logger } from '../../../src';
 
 import { getServer } from '../src/server';
-import { loadConfig } from '../src/config';
 
 if (process.env.NODE_ENV !== 'development') {
   throw 'Seeding only available in development environment';
@@ -12,8 +11,6 @@ if (process.env.NODE_ENV !== 'development') {
 const NUM_USERS = 10;
 
 async function seedDatabase() {
-  loadConfig();
-
   const server = getServer({ openPlayground: false });
   await server.start();
 

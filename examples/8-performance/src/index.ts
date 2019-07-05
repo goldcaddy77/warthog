@@ -2,12 +2,9 @@ import 'reflect-metadata';
 
 import { logger } from '../../../src';
 
-import { loadConfig } from './config';
 import { getServer } from './server';
 
 async function bootstrap() {
-  await loadConfig();
-
   const server = getServer();
   await server.start();
 }

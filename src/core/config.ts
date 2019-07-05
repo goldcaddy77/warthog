@@ -1,5 +1,6 @@
 import * as cosmiconfig from 'cosmiconfig';
 import * as dotenv from 'dotenv';
+import * as fs from 'fs';
 import * as path from 'path';
 import { Container } from 'typedi';
 
@@ -53,13 +54,28 @@ export class Config {
   config: any;
 
   constructor(private options: ConfigOptions = {}) {
-    if (options.dotenvPath) {
-      dotenv.config({ path: options.dotenvPath });
-    } else {
-      dotenv.config();
+    this.PROJECT_ROOT = process.cwd();
+    const dotenvPath = options.dotenvPath || process.cwd();
+
+    // Load .env.local file for super secrets
+    // With dotenv, the first time an entry ends up in process.env, it stays, so local items should take precedence
+    let file = path.join(dotenvPath, '.env.local');
+    // console.log('file', file);
+    if (fs.existsSync(file)) {
+      // console.log('1', this.warthogEnvVariables());
+      dotenv.config({ path: file });
+      // console.log('2', this.warthogEnvVariables());
     }
 
-    this.PROJECT_ROOT = process.cwd();
+    // Load .env file
+    file = path.join(dotenvPath, '.env');
+    // console.log('file', file);
+    if (fs.existsSync(file)) {
+      // console.log('3', this.warthogEnvVariables());
+      dotenv.config({ path: file });
+      // console.log('4', this.warthogEnvVariables());
+    }
+
     this.container = options.container || Container;
     this.logger = options.logger;
 
