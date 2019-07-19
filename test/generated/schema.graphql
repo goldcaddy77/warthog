@@ -1,0 +1,274 @@
+interface BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModel implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModelUUID implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+input BaseWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+interface DeleteResponse {
+  id: ID!
+}
+
+type Dish implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  name: String!
+  kitchenSink: KitchenSink!
+  kitchenSinkId: String!
+  user: KitchenSink!
+}
+
+input DishCreateInput {
+  name: String!
+  kitchenSinkId: String!
+}
+
+enum DishOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  name_ASC
+  name_DESC
+  kitchenSinkId_ASC
+  kitchenSinkId_DESC
+}
+
+input DishUpdateInput {
+  name: String
+  kitchenSinkId: String
+}
+
+input DishWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+  kitchenSinkId_eq: ID
+  kitchenSinkId_in: [ID!]
+}
+
+input DishWhereUniqueInput {
+  id: String!
+}
+
+type KitchenSink implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  stringField: String!
+  nullableStringField: String
+  emailField: String!
+  integerField: Int!
+  booleanField: Boolean!
+  floatField: Float!
+  dishes: [Dish!]
+}
+
+input KitchenSinkCreateInput {
+  stringField: String!
+  nullableStringField: String
+  emailField: String!
+  integerField: Float!
+  booleanField: Boolean!
+  floatField: Float!
+}
+
+enum KitchenSinkOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  stringField_ASC
+  stringField_DESC
+  nullableStringField_ASC
+  nullableStringField_DESC
+  emailField_ASC
+  emailField_DESC
+  integerField_ASC
+  integerField_DESC
+  booleanField_ASC
+  booleanField_DESC
+  floatField_ASC
+  floatField_DESC
+}
+
+input KitchenSinkUpdateInput {
+  stringField: String
+  nullableStringField: String
+  emailField: String
+  integerField: Float
+  booleanField: Boolean
+  floatField: Float
+}
+
+input KitchenSinkWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  stringField_eq: String
+  stringField_contains: String
+  stringField_startsWith: String
+  stringField_endsWith: String
+  stringField_in: [String!]
+  nullableStringField_eq: String
+  nullableStringField_contains: String
+  nullableStringField_startsWith: String
+  nullableStringField_endsWith: String
+  nullableStringField_in: [String!]
+  emailField_eq: String
+  emailField_contains: String
+  emailField_startsWith: String
+  emailField_endsWith: String
+  emailField_in: [String!]
+  integerField_eq: Float
+  integerField_gt: Float
+  integerField_gte: Float
+  integerField_lt: Float
+  integerField_lte: Float
+  integerField_in: [Int!]
+  booleanField_eq: Boolean
+  booleanField_in: [Boolean!]
+  floatField_eq: Float
+  floatField_gt: Float
+  floatField_gte: Float
+  floatField_lt: Float
+  floatField_lte: Float
+  floatField_in: [Float!]
+}
+
+input KitchenSinkWhereUniqueInput {
+  id: String
+  emailField: String
+}
+
+type Mutation {
+  createDish(data: DishCreateInput!): Dish!
+  updateDish(data: DishUpdateInput!, where: DishWhereUniqueInput!): Dish!
+  createManyDishs(data: [DishCreateInput!]!): [Dish!]!
+  deleteDish(where: DishWhereUniqueInput!): StandardDeleteResponse!
+  createKitchenSink(data: KitchenSinkCreateInput!): KitchenSink!
+  updateKitchenSink(data: KitchenSinkUpdateInput!, where: KitchenSinkWhereUniqueInput!): KitchenSink!
+  deleteKitchenSink(where: KitchenSinkWhereUniqueInput!): StandardDeleteResponse!
+}
+
+type Query {
+  posts(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
+  dish(where: DishWhereUniqueInput!): Dish!
+  kitchenSinks(offset: Int, limit: Int = 50, where: KitchenSinkWhereInput, orderBy: KitchenSinkOrderByInput): [KitchenSink!]!
+  kitchenSink(where: KitchenSinkWhereUniqueInput!): KitchenSink!
+}
+
+type StandardDeleteResponse {
+  id: ID!
+}

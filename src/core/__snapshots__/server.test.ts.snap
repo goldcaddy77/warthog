@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`server queries effectively 1`] = `
+Array [
+  Object {
+    "booleanField": true,
+    "createdById": "abc123",
+    "dishes": Array [
+      Object {
+        "name": "Dish 0",
+      },
+      Object {
+        "name": "Dish 1",
+      },
+      Object {
+        "name": "Dish 2",
+      },
+      Object {
+        "name": "Dish 3",
+      },
+      Object {
+        "name": "Dish 4",
+      },
+      Object {
+        "name": "Dish 5",
+      },
+      Object {
+        "name": "Dish 6",
+      },
+      Object {
+        "name": "Dish 7",
+      },
+      Object {
+        "name": "Dish 8",
+      },
+      Object {
+        "name": "Dish 9",
+      },
+      Object {
+        "name": "Dish 10",
+      },
+      Object {
+        "name": "Dish 11",
+      },
+      Object {
+        "name": "Dish 12",
+      },
+      Object {
+        "name": "Dish 13",
+      },
+      Object {
+        "name": "Dish 14",
+      },
+      Object {
+        "name": "Dish 15",
+      },
+      Object {
+        "name": "Dish 16",
+      },
+      Object {
+        "name": "Dish 17",
+      },
+      Object {
+        "name": "Dish 18",
+      },
+      Object {
+        "name": "Dish 19",
+      },
+    ],
+    "emailField": "hi@warthog.com",
+    "floatField": 123.456,
+    "integerField": 123,
+    "stringField": "My String",
+    "updatedById": null,
+    "version": 1,
+  },
+]
+`;
