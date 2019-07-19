@@ -16,9 +16,11 @@ const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../src";
 // @ts-ignore
-import { User } from "../modules/user/user.model";
+import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
+// @ts-ignore
+import { Dish } from "../modules/dish/dish.model";
 
-export enum UserOrderByEnum {
+export enum KitchenSinkOrderByEnum {
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -28,67 +30,277 @@ export enum UserOrderByEnum {
   deletedAt_ASC = "deletedAt_ASC",
   deletedAt_DESC = "deletedAt_DESC",
 
-  key_ASC = "key_ASC",
-  key_DESC = "key_DESC"
+  stringField_ASC = "stringField_ASC",
+  stringField_DESC = "stringField_DESC",
+
+  nullableStringField_ASC = "nullableStringField_ASC",
+  nullableStringField_DESC = "nullableStringField_DESC",
+
+  emailField_ASC = "emailField_ASC",
+  emailField_DESC = "emailField_DESC",
+
+  integerField_ASC = "integerField_ASC",
+  integerField_DESC = "integerField_DESC",
+
+  booleanField_ASC = "booleanField_ASC",
+  booleanField_DESC = "booleanField_DESC",
+
+  floatField_ASC = "floatField_ASC",
+  floatField_DESC = "floatField_DESC"
 }
 
-registerEnumType(UserOrderByEnum, {
-  name: "UserOrderByInput"
+registerEnumType(KitchenSinkOrderByEnum, {
+  name: "KitchenSinkOrderByInput"
 });
 
 @TypeGraphQLInputType()
-export class UserWhereInput extends BaseWhereInput {
+export class KitchenSinkWhereInput extends BaseWhereInput {
   @TypeGraphQLField({ nullable: true })
-  key_eq?: string;
+  stringField_eq?: string;
 
   @TypeGraphQLField({ nullable: true })
-  key_contains?: string;
+  stringField_contains?: string;
 
   @TypeGraphQLField({ nullable: true })
-  key_startsWith?: string;
+  stringField_startsWith?: string;
 
   @TypeGraphQLField({ nullable: true })
-  key_endsWith?: string;
+  stringField_endsWith?: string;
 
   @TypeGraphQLField(() => [String], { nullable: true })
-  key_in?: string[];
+  stringField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  nullableStringField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  nullableStringField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  nullableStringField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  nullableStringField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  nullableStringField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  emailField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  integerField_eq?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  integerField_gt?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  integerField_gte?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  integerField_lt?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  integerField_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  integerField_in?: number[];
+
+  @TypeGraphQLField(() => Boolean, { nullable: true })
+  booleanField_eq?: Boolean;
+
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
+  booleanField_in?: Boolean[];
+
+  @TypeGraphQLField({ nullable: true })
+  floatField_eq?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  floatField_gt?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  floatField_gte?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  floatField_lt?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  floatField_lte?: number;
+
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  floatField_in?: number[];
 }
 
 @TypeGraphQLInputType()
-export class UserWhereUniqueInput {
+export class KitchenSinkWhereUniqueInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id?: string;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  emailField?: string;
+}
+
+@TypeGraphQLInputType()
+export class KitchenSinkCreateInput {
+  @TypeGraphQLField()
+  stringField!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  nullableStringField?: string;
+
+  @TypeGraphQLField()
+  emailField!: string;
+
+  @TypeGraphQLField()
+  integerField!: number;
+
+  @TypeGraphQLField()
+  booleanField!: boolean;
+
+  @TypeGraphQLField()
+  floatField!: number;
+}
+
+@TypeGraphQLInputType()
+export class KitchenSinkUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  stringField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  nullableStringField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  integerField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  booleanField?: boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  floatField?: number;
+}
+
+@ArgsType()
+export class KitchenSinkWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => KitchenSinkWhereInput, { nullable: true })
+  where?: KitchenSinkWhereInput;
+
+  @TypeGraphQLField(() => KitchenSinkOrderByEnum, { nullable: true })
+  orderBy?: KitchenSinkOrderByEnum;
+}
+
+@ArgsType()
+export class KitchenSinkCreateManyArgs {
+  @TypeGraphQLField(() => [KitchenSinkCreateInput])
+  data!: KitchenSinkCreateInput[];
+}
+
+@ArgsType()
+export class KitchenSinkUpdateArgs {
+  @TypeGraphQLField() data!: KitchenSinkUpdateInput;
+  @TypeGraphQLField() where!: KitchenSinkWhereUniqueInput;
+}
+
+export enum DishOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  name_ASC = "name_ASC",
+  name_DESC = "name_DESC",
+
+  kitchenSinkId_ASC = "kitchenSinkId_ASC",
+  kitchenSinkId_DESC = "kitchenSinkId_DESC"
+}
+
+registerEnumType(DishOrderByEnum, {
+  name: "DishOrderByInput"
+});
+
+@TypeGraphQLInputType()
+export class DishWhereInput extends BaseWhereInput {
+  @TypeGraphQLField({ nullable: true })
+  name_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  name_in?: string[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  kitchenSinkId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  kitchenSinkId_in?: string[];
+}
+
+@TypeGraphQLInputType()
+export class DishWhereUniqueInput {
   @TypeGraphQLField(() => String)
   id?: string;
 }
 
 @TypeGraphQLInputType()
-export class UserCreateInput {
+export class DishCreateInput {
   @TypeGraphQLField()
-  key!: string;
+  name!: string;
+
+  @TypeGraphQLField()
+  kitchenSinkId!: string;
 }
 
 @TypeGraphQLInputType()
-export class UserUpdateInput {
+export class DishUpdateInput {
   @TypeGraphQLField({ nullable: true })
-  key?: string;
+  name?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  kitchenSinkId?: string;
 }
 
 @ArgsType()
-export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
-  where?: UserWhereInput;
+export class DishWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => DishWhereInput, { nullable: true })
+  where?: DishWhereInput;
 
-  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
-  orderBy?: UserOrderByEnum;
+  @TypeGraphQLField(() => DishOrderByEnum, { nullable: true })
+  orderBy?: DishOrderByEnum;
 }
 
 @ArgsType()
-export class UserCreateManyArgs {
-  @TypeGraphQLField(() => [UserCreateInput])
-  data!: UserCreateInput[];
+export class DishCreateManyArgs {
+  @TypeGraphQLField(() => [DishCreateInput])
+  data!: DishCreateInput[];
 }
 
 @ArgsType()
-export class UserUpdateArgs {
-  @TypeGraphQLField() data!: UserUpdateInput;
-  @TypeGraphQLField() where!: UserWhereUniqueInput;
+export class DishUpdateArgs {
+  @TypeGraphQLField() data!: DishUpdateInput;
+  @TypeGraphQLField() where!: DishWhereUniqueInput;
 }

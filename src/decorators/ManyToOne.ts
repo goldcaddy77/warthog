@@ -33,11 +33,11 @@ export function ManyToOne(parentType: any, joinFunc: any, options: any = {}): an
     : [Field(parentType, { nullable: true, ...options }) as MethodDecoratorFactory]; // TODO: This should not be nullable by default
 
   const factories: MethodDecoratorFactory[] = [
+    extractClassName,
     ...graphQLdecorator,
     TypeORMManyToOne(parentType, joinFunc, options) as MethodDecoratorFactory,
     JoinColumn() as MethodDecoratorFactory,
-    createForeignKeyField,
-    extractClassName // Note: this is actually run first because of now composeMethodDecorators works
+    createForeignKeyField
   ];
 
   return composeMethodDecorators(...factories);
