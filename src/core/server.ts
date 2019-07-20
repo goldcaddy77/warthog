@@ -113,8 +113,8 @@ export class Server<C extends BaseContext> {
   getLogger(): Logger {
     if (this.appOptions.logger) {
       return this.appOptions.logger;
-    } else if (Container.has('warthog.logger')) {
-      return Container.get('warthog.logger');
+      // } else if (Container.has('warthog.logger')) {
+      //   return Container.get('warthog.logger');
     }
     return logger;
   }

@@ -12,7 +12,10 @@
       "internalConsoleOptions": "openOnSessionStart",
       "runtimeArgs": ["--nolazy"],
       "sourceMaps": true,
-      "outFiles": ["${workspaceRoot}/dist/**/*.js"]
+      "outFiles": ["${workspaceRoot}/dist/**/*.js"],
+      "env": {
+        "DEBUG": "*"
+      }
     },
     {
       "name": "Run from index.ts",

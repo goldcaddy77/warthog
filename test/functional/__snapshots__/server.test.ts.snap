@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`server getBindingError pulls correct info from binding error 1`] = `
+Object {
+  "emailField": Object {
+    "isEmail": "emailField must be an email",
+  },
+}
+`;
+
 exports[`server queries deeply nested objects 1`] = `
 Array [
   Object {
@@ -250,6 +258,23 @@ exports[`server string query: exact match (Nakia) 1`] = `
 Array [
   Object {
     "stringField": "Nakia",
+  },
+]
+`;
+
+exports[`server string query: in list { devin, erling, KAELYN, raquel } 1`] = `
+Array [
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "raquel",
   },
 ]
 `;

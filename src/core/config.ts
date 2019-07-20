@@ -40,10 +40,6 @@ export class Config {
   readonly TYPEORM_ENV_PREFIX = 'TYPEORM_';
   readonly WARTHOG_DB_ENV_PREFIX = 'WARTHOG_DB_';
 
-  readonly lockedOptions = {
-    WARTHOG_DB_CONNECTION: 'postgres'
-  };
-
   defaults: Record<string, any>;
   devDefaults: Record<string, any>;
   PROJECT_ROOT: string;
@@ -60,6 +56,7 @@ export class Config {
     this.logger = options.logger;
 
     this.defaults = {
+      WARTHOG_DB_CONNECTION: 'postgres',
       WARTHOG_ROOT_FOLDER: this.PROJECT_ROOT,
       WARTHOG_APP_PROTOCOL: 'https',
       WARTHOG_AUTO_GENERATE_FILES: 'false',
@@ -143,8 +140,7 @@ export class Config {
       ...devOptions,
       ...configFile,
       ...this.typeORMToWarthogEnvVariables(),
-      ...this.warthogEnvVariables(),
-      ...this.lockedOptions
+      ...this.warthogEnvVariables()
     };
 
     // If Jest is running, be smart and don't open playground
@@ -224,11 +220,18 @@ export class Config {
 
     if (arrayTypes.indexOf(key) > -1) {
       return value.split(',').map((item: string) => {
+        if (path.isAbsolute(item)) {
+          return item;
+        }
         return path.join(this.PROJECT_ROOT, item);
       });
     }
 
     if (pathTypes.indexOf(key) > -1) {
+      if (path.isAbsolute(value)) {
+        return value;
+      }
+
       return path.join(this.PROJECT_ROOT, value);
     }
 

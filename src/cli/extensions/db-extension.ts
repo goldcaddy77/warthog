@@ -22,7 +22,10 @@ module.exports = (toolbox: GluegunToolbox) => {
       }
 
       const config = load();
-      validateDevNodeEnv(config['NODE_ENV'], toolbox, 'create');
+      const validationResult = validateDevNodeEnv(config['NODE_ENV'], 'create');
+      if (validationResult) {
+        return error(validationResult);
+      }
 
       const createDb = util.promisify(pgtools.createdb) as Function;
 
@@ -38,7 +41,11 @@ module.exports = (toolbox: GluegunToolbox) => {
     },
     drop: async function drop() {
       const config = load();
-      validateDevNodeEnv(config['NODE_ENV'], toolbox, 'drop, action: string');
+
+      const validationResult = validateDevNodeEnv(config['NODE_ENV'], 'drop, action: string');
+      if (validationResult) {
+        return error(validationResult);
+      }
 
       const database = config.get('DB_DATABASE');
       const dropDb = util.promisify(pgtools.dropdb) as Function;
@@ -47,8 +54,7 @@ module.exports = (toolbox: GluegunToolbox) => {
         await dropDb(getPgConfig(config), database);
       } catch (e) {
         if (e.name === 'invalid_catalog_name') {
-          error(`Database '${database}' does not exist`);
-          return;
+          return error(`Database '${database}' does not exist`);
         }
       }
       info(`Database '${database}' dropped!`);
@@ -58,10 +64,14 @@ module.exports = (toolbox: GluegunToolbox) => {
 
       const result = await runTypeORMCommand('migration:run', toolbox);
 
+      // If we don't run the command because of some other error, just return the error
+      if (typeof result === 'string') {
+        return error(result);
+      }
       if (result.stderr) {
-        error(result.stderr);
+        return error(result.stderr);
       } else {
-        info(result.stdout);
+        return info(result.stdout);
       }
     },
     generateMigration: async function generateMigration(name: string) {
@@ -76,10 +86,14 @@ module.exports = (toolbox: GluegunToolbox) => {
         `--dir ./${process.env.WARTHOG_DB_MIGRATIONS_DIR}`
       );
 
+      // If we don't run the command because of some other error, just return the error
+      if (typeof result === 'string') {
+        return error(result);
+      }
       if (result.stderr) {
-        error(result.stderr);
+        return error(result.stderr);
       } else {
-        info(result.stdout);
+        return info(result.stdout);
       }
     }
   };
@@ -88,12 +102,11 @@ module.exports = (toolbox: GluegunToolbox) => {
 async function runTypeORMCommand(command: string, toolbox: Toolbox, additionalParams: string = '') {
   const tsNodePath = path.join(process.cwd(), './node_modules/.bin/ts-node');
   const typeORMPath = path.join(process.cwd(), './node_modules/.bin/typeorm');
-  const ormconfigFile = './generated/ormconfig.ts';
-  const ormConfigFullPath = path.join(process.cwd(), ormconfigFile);
+  const ormConfigFullPath = path.join(String(process.env.WARTHOG_GENERATED_FOLDER), 'ormconfig.ts');
+  const relativeOrmConfigPath = path.relative(process.cwd(), ormConfigFullPath);
 
   if (toolbox.filesystem.isNotFile(ormConfigFullPath)) {
-    toolbox.print.error(`Cannot find ormconfig path: ${ormConfigFullPath}`);
-    process.exit(1);
+    return `Cannot find ormconfig path: ${ormConfigFullPath}`;
   }
 
   // Ok running this command from within the CLI is finicky
@@ -105,7 +118,8 @@ async function runTypeORMCommand(command: string, toolbox: Toolbox, additionalPa
   //
   // 2. We need to make sure that all TYPEORM_ environment variables are pulled out of process.env so that
   //    TypeORM doesn't skip loading the ormconfig file
-  const cmd = `${tsNodePath} ${typeORMPath} ${command}  --config ${ormconfigFile} ${additionalParams}`;
+  const cmd = `${tsNodePath} ${typeORMPath} ${command}  --config ${relativeOrmConfigPath} ${additionalParams}`;
+
   const filteredEnv = filteredProcessEnv();
   const result = await exec(cmd, { env: filteredEnv });
 
@@ -131,15 +145,12 @@ async function getPgConfig(config: any) {
   };
 }
 
-function validateDevNodeEnv(env: string, toolbox: Toolbox, action: string) {
+function validateDevNodeEnv(env: string, action: string) {
   if (!env) {
-    toolbox.print.error('NODE_ENV must be set');
-    process.exit(1);
+    return 'NODE_ENV must be set';
   }
   if (env !== 'development' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
-    toolbox.print.error(
-      `Cannot ${action} database without setting WARTHOG_DB_OVERRIDE environment variable to 'true'`
-    );
-    process.exit(1);
+    return `Cannot ${action} database without setting WARTHOG_DB_OVERRIDE environment variable to 'true'`;
   }
+  return '';
 }

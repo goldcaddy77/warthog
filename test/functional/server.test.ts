@@ -2,7 +2,6 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { isArray } from 'util';
 
 import { get, GetResponse } from '../../src/core/http';
 import { Server } from '../../src/core/server';
@@ -12,6 +11,8 @@ import { getBindingError, logger } from '../../src';
 import { getTestServer } from '../test-server';
 import { KitchenSink } from '../modules';
 import { KITCHEN_SINKS } from './fixtures';
+
+import { setTestServerEnvironmentVariables } from '../server-vars';
 
 let server: Server<any>;
 // let binding: Binding;
@@ -28,6 +29,8 @@ describe('server', () => {
     await cleanUpTestData();
 
     try {
+      setTestServerEnvironmentVariables();
+
       server = getTestServer({
         apolloConfig: { playground: false }
       });
@@ -62,7 +65,7 @@ describe('server', () => {
     expect(response.body).toContain('GET query missing');
   });
 
-  test.only('queries deeply nested objects', async () => {
+  test('queries deeply nested objects', async () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },
@@ -101,7 +104,8 @@ describe('server', () => {
   });
 
   test('getBindingError pulls correct info from binding error', async done => {
-    expect.assertions(6);
+    expect.assertions(4);
+
     let originalError;
     let improvedError;
     try {
@@ -117,14 +121,14 @@ describe('server', () => {
 
     // Note: this should likely not be an INTERNAL_SERVER_ERROR since it's based on bad user input
     expect(improvedError.message).toEqual('Argument Validation Error');
-    expect(improvedError.path).toEqual(['createKitchenSink']);
-    expect(improvedError.extensions.code).toEqual('INTERNAL_SERVER_ERROR');
-    expect(isArray(improvedError.extensions.exception.stacktrace)).toBeTruthy();
 
     // TODO: this should likely be cleaned up
     expect(improvedError.validationErrors.emailField.isEmail).toEqual(
       'emailField must be an email'
     );
+
+    expect(improvedError.validationErrors).toMatchSnapshot();
+
     done();
   });
 

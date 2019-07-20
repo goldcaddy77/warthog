@@ -1,8 +1,10 @@
-import * as dotenv from 'dotenv';
-import { system, filesystem } from 'gluegun';
+import * as fs from 'fs';
 import * as path from 'path';
+import { system, filesystem } from 'gluegun';
 
 import { spyOnStd, callWarthogCLI } from '../../test/helpers';
+import { setTestServerEnvironmentVariables } from '../server-vars';
+import { getTestServer } from '../test-server';
 
 const root = filesystem.path(__dirname, '../../');
 
@@ -13,13 +15,13 @@ const GENERATED_FOLDER = 'tmp/generated';
 describe('cli functional tests', () => {
   const spy = spyOnStd(); // Gives us access to whatever is written to stdout as part of the CLI command
 
-  afterAll(() => {
+  beforeAll(() => {
     filesystem.dirAsync(GENERATED_FOLDER); // cleanup test artifacts
   });
 
   beforeEach(() => {
-    clearConfig();
     jest.setTimeout(20000);
+    setTestServerEnvironmentVariables();
   });
 
   afterAll(() => {
@@ -30,11 +32,9 @@ describe('cli functional tests', () => {
   // but it's the most thorough way we can actually check to see if everything is wired up correctly
   test('spin up an actual process to test the full cli is wired up', async done => {
     // Construct the environment variables here so that they're passed into cli command
-    const dotenvConfig = dotenv.config({ path: path.join(__dirname, './.env.test') });
 
     const env = {
-      ...process.env,
-      ...dotenvConfig.parsed
+      ...process.env
     };
 
     const output = await system.run(
@@ -53,7 +53,7 @@ describe('cli functional tests', () => {
 
   test('outputs help', async done => {
     await callWarthogCLI('--help');
-    const stdout = spy.getStdOut();
+    const stdout = spy.getStdOutErr();
     expect(stdout).toContain('generate (g)');
     done();
   });
@@ -62,7 +62,7 @@ describe('cli functional tests', () => {
     await callWarthogCLI(
       `generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! --folder ${GENERATED_FOLDER}`
     );
-    const stdout = spy.getStdOut();
+    const stdout = spy.getStdOutErr();
 
     let fileContents;
 
@@ -103,7 +103,7 @@ describe('cli functional tests', () => {
 
   test('generates a shell of a file of no params specified', async done => {
     await callWarthogCLI(`generate empty_class --folder ${GENERATED_FOLDER}`);
-    const stdout = spy.getStdOut();
+    const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain(`Generated file at ${GENERATED_FOLDER}/empty-class.model.ts`);
     const fileContents = filesystem.read(`${GENERATED_FOLDER}/empty-class.model.ts`);
@@ -121,53 +121,92 @@ describe('cli functional tests', () => {
     delete process.env.WARTHOG_DB_DATABASE;
     await callWarthogCLI('db:create');
 
-    const stdout = spy.getStdOut();
+    const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain('Database name is required');
 
     done();
   });
 
-  test('successfully creates and drops DBs', async done => {
-    // TODO: clear out all existing warthog ENV vars
-    delete process.env.WARTHOG_DB_DATABASE;
-    dotenv.config({ path: path.join(__dirname, './.env.test') });
+  // TODO: these won't work in CircleCI because it doesn't have Postgres
+  // test('successfully creates and drops DBs', async done => {
+  //   let stdout;
+
+  //   // First drop the DB if it's already there
+  //   await callWarthogCLI('db:drop');
+  //   spy.clear();
+
+  //   await callWarthogCLI('db:create');
+  //   stdout = spy.getStdOutErr();
+  //   expect(stdout).toContain("Database 'warthog-test' created!");
+  //   spy.clear();
+
+  //   await callWarthogCLI('db:create');
+  //   stdout = spy.getStdOutErr();
+  //   expect(stdout).toContain("Database 'warthog-test' already exists");
+  //   spy.clear();
+
+  //   await callWarthogCLI('db:drop');
+  //   stdout = spy.getStdOutErr();
+  //   expect(stdout).toContain("Database 'warthog-test' dropped!");
+  //   spy.clear();
+
+  //   await callWarthogCLI('db:drop');
+  //   stdout = spy.getStdOutErr();
+  //   expect(stdout).toContain("Database 'warthog-test' does not exist");
+  //   spy.clear();
+
+  //   done();
+  // });
+
+  test('generates and runs migrations', async () => {
+    expect.assertions(7);
     let stdout;
 
-    // First drop the DB if it's already there
-    await callWarthogCLI('db:drop');
+    // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files
+    setTestServerEnvironmentVariables({
+      WARTHOG_DB_DATABASE: './tmp/db/warthog-test-migrations',
+      WARTHOG_DB_SYNCHRONIZE: 'false',
+      WARTHOG_DB_CONNECTION: 'sqlite'
+    });
+
+    const server = getTestServer({ mockDBConnection: false });
+    await server.start();
+    await server.stop();
+
+    await callWarthogCLI('db:migrate:generate');
+    stdout = spy.getStdOutErr();
+    expect(stdout).toContain('"name" option is required');
     spy.clear();
 
-    await callWarthogCLI('db:create');
-    stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' created!");
-    spy.clear();
+    // console.log('ormConfigPath', ormConfigPath);
 
-    await callWarthogCLI('db:create');
-    stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' already exists");
-    spy.clear();
+    await callWarthogCLI('db:migrate:generate --name cli_test_db_migration');
+    stdout = spy.getStdOutErr();
+    expect(stdout).toContain('-CliTestDbMigration.ts');
+    expect(stdout).toContain('has been generated successfully.');
 
-    await callWarthogCLI('db:drop');
-    stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' dropped!");
-    spy.clear();
+    const migrationDir = String(process.env.WARTHOG_DB_MIGRATIONS_DIR);
+    const migrationFileName = fs.readdirSync(migrationDir)[0];
+    const migrationContents = fs.readFileSync(path.join(migrationDir, migrationFileName), 'utf-8');
 
-    await callWarthogCLI('db:drop');
-    stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' does not exist");
-    spy.clear();
+    expect(migrationContents).toContain('CREATE TABLE "kitchen_sinks"');
+    expect(migrationContents).toContain('CREATE TABLE "dishs"');
+    expect(migrationContents).toContain('DROP TABLE "dishs"');
+    expect(migrationContents).toContain('DROP TABLE "kitchen_sinks"');
 
-    done();
+    // TODO: clean this up
+    // Clean up the test migration folder
+    // TODO
+    // TODO
+    // TODO
+    // TODO
+    // TODO
+
+    spy.clear();
+  });
+
+  test.skip('codegen creates correct files', async () => {
+    //
   });
 });
-
-function clearConfig() {
-  const WARTHOG_PREFIX = 'WARTHOG_';
-  const TYPEORM_PREFIX = 'TYPEORM_';
-  Object.keys(process.env).forEach(key => {
-    if (key.startsWith(WARTHOG_PREFIX) || key.startsWith(TYPEORM_PREFIX)) {
-      delete process.env[key];
-    }
-  });
-}
