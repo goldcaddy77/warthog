@@ -257,6 +257,7 @@ type Mutation {
   createManyDishs(data: [DishCreateInput!]!): [Dish!]!
   deleteDish(where: DishWhereUniqueInput!): StandardDeleteResponse!
   createKitchenSink(data: KitchenSinkCreateInput!): KitchenSink!
+  createManyKitchenSinks(data: [KitchenSinkCreateInput!]!): [KitchenSink!]!
   updateKitchenSink(data: KitchenSinkUpdateInput!, where: KitchenSinkWhereUniqueInput!): KitchenSink!
   deleteKitchenSink(where: KitchenSinkWhereUniqueInput!): StandardDeleteResponse!
 }

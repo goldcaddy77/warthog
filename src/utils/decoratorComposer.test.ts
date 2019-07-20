@@ -1,20 +1,20 @@
-import { ClassType } from '../core'
-import { composeMethodDecorators, composeClassDecorators } from './decoratorComposer'
+import { ClassType } from '../core';
+import { composeMethodDecorators, composeClassDecorators } from './decoratorComposer';
 
-const classDecoratorMock = jest.fn()
-const methodDecoratorMock = jest.fn()
+const classDecoratorMock = jest.fn();
+const methodDecoratorMock = jest.fn();
 
 function ComposedClassDecorator() {
   const classDecoratorOne = function classDecoratorOne(target: ClassType): void {
-    classDecoratorMock(target, 'classDecoratorOne')
-  }
+    classDecoratorMock(target, 'classDecoratorOne');
+  };
 
   const classDecoratorTwo = function classDecoratorTwo(target: ClassType): void {
-    classDecoratorMock(target, 'classDecoratorTwo')
-  }
+    classDecoratorMock(target, 'classDecoratorTwo');
+  };
 
-  const factories = [classDecoratorOne, classDecoratorTwo]
-  return composeClassDecorators(...factories)
+  const factories = [classDecoratorOne, classDecoratorTwo];
+  return composeClassDecorators(...factories);
 }
 
 function ComposedMethodDecorator() {
@@ -24,15 +24,15 @@ function ComposedMethodDecorator() {
     descriptor: PropertyDescriptor
   ): void => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { value, get, set, ...descriptorScalarParts } = descriptor
+    const { value, get, set, ...descriptorScalarParts } = descriptor;
     methodDecoratorMock(
       'methodDecoratorOne',
       target.constructor.name,
       propertyKey,
       descriptorScalarParts,
       typeof value
-    )
-  }
+    );
+  };
 
   const methodDecoratorTwo = (
     target: object,
@@ -40,18 +40,18 @@ function ComposedMethodDecorator() {
     descriptor: PropertyDescriptor
   ): void => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { value, get, set, ...descriptorScalarParts } = descriptor
+    const { value, get, set, ...descriptorScalarParts } = descriptor;
     methodDecoratorMock(
       'methodDecoratorTwo',
       target.constructor.name,
       propertyKey,
       descriptorScalarParts,
       typeof value
-    )
-  }
+    );
+  };
 
-  const factories = [methodDecoratorOne, methodDecoratorTwo]
-  return composeMethodDecorators(...factories)
+  const factories = [methodDecoratorOne, methodDecoratorTwo];
+  return composeMethodDecorators(...factories);
 }
 
 @ComposedClassDecorator()
@@ -66,18 +66,18 @@ class TestClass {
 
 describe('composeMethodDecorators', () => {
   test('calls all decorators properly', async () => {
-    new TestClass()
-    expect(classDecoratorMock).toHaveBeenCalledTimes(2)
-    expect(classDecoratorMock).toHaveBeenNthCalledWith(1, TestClass, 'classDecoratorOne')
-    expect(classDecoratorMock).toHaveBeenNthCalledWith(2, TestClass, 'classDecoratorTwo')
-  })
-})
+    new TestClass();
+    expect(classDecoratorMock).toHaveBeenCalledTimes(2);
+    expect(classDecoratorMock).toHaveBeenNthCalledWith(1, TestClass, 'classDecoratorOne');
+    expect(classDecoratorMock).toHaveBeenNthCalledWith(2, TestClass, 'classDecoratorTwo');
+  });
+});
 
 describe('composeClassDecorators', () => {
   test('calls all decorators properly', async () => {
-    new TestClass()
-    const expectedDescriptors = { configurable: true, enumerable: true, writable: true }
-    expect(methodDecoratorMock).toHaveBeenCalledTimes(2)
+    new TestClass();
+    const expectedDescriptors = { configurable: true, enumerable: true, writable: true };
+    expect(methodDecoratorMock).toHaveBeenCalledTimes(2);
     expect(methodDecoratorMock).toHaveBeenNthCalledWith(
       1,
       'methodDecoratorOne',
@@ -85,7 +85,7 @@ describe('composeClassDecorators', () => {
       'TestMethod',
       expectedDescriptors,
       'function'
-    )
+    );
     expect(methodDecoratorMock).toHaveBeenNthCalledWith(
       2,
       'methodDecoratorTwo',
@@ -93,6 +93,6 @@ describe('composeClassDecorators', () => {
       'TestMethod',
       expectedDescriptors,
       'function'
-    )
-  })
-})
+    );
+  });
+});
