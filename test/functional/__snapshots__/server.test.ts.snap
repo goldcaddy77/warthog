@@ -254,6 +254,23 @@ Array [
 ]
 `;
 
+exports[`server string query: in list { devin, erling, KAELYN, raquel } 1`] = `
+Array [
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+]
+`;
+
 exports[`server string query: starts with \`b\` (upper or lower) 1`] = `
 Array [
   Object {

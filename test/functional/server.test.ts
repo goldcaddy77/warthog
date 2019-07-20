@@ -13,6 +13,8 @@ import { getTestServer } from '../test-server';
 import { KitchenSink } from '../modules';
 import { KITCHEN_SINKS } from './fixtures';
 
+import { setTestServerEnvironmentVariables } from '../server-vars';
+
 let server: Server<any>;
 // let binding: Binding;
 let binding: any;
@@ -28,6 +30,8 @@ describe('server', () => {
     await cleanUpTestData();
 
     try {
+      setTestServerEnvironmentVariables();
+
       server = getTestServer({
         apolloConfig: { playground: false }
       });
@@ -62,7 +66,7 @@ describe('server', () => {
     expect(response.body).toContain('GET query missing');
   });
 
-  test.only('queries deeply nested objects', async () => {
+  test('queries deeply nested objects', async () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },

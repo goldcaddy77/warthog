@@ -1,8 +1,10 @@
-import * as dotenv from 'dotenv';
-import { system, filesystem } from 'gluegun';
+import * as fs from 'fs';
 import * as path from 'path';
+import { system, filesystem } from 'gluegun';
 
 import { spyOnStd, callWarthogCLI } from '../../test/helpers';
+import { setTestServerEnvironmentVariables } from '../server-vars';
+import { getTestServer } from '../test-server';
 
 const root = filesystem.path(__dirname, '../../');
 
@@ -18,8 +20,8 @@ describe('cli functional tests', () => {
   });
 
   beforeEach(() => {
-    clearConfig();
     jest.setTimeout(20000);
+    setTestServerEnvironmentVariables();
   });
 
   afterAll(() => {
@@ -30,11 +32,9 @@ describe('cli functional tests', () => {
   // but it's the most thorough way we can actually check to see if everything is wired up correctly
   test('spin up an actual process to test the full cli is wired up', async done => {
     // Construct the environment variables here so that they're passed into cli command
-    const dotenvConfig = dotenv.config({ path: path.join(__dirname, './.env.test') });
 
     const env = {
-      ...process.env,
-      ...dotenvConfig.parsed
+      ...process.env
     };
 
     const output = await system.run(
@@ -129,9 +129,6 @@ describe('cli functional tests', () => {
   });
 
   test('successfully creates and drops DBs', async done => {
-    // TODO: clear out all existing warthog ENV vars
-    delete process.env.WARTHOG_DB_DATABASE;
-    dotenv.config({ path: path.join(__dirname, './.env.test') });
     let stdout;
 
     // First drop the DB if it's already there
@@ -140,34 +137,71 @@ describe('cli functional tests', () => {
 
     await callWarthogCLI('db:create');
     stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' created!");
+    expect(stdout).toContain("Database 'warthog-test' created!");
     spy.clear();
 
     await callWarthogCLI('db:create');
     stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' already exists");
+    expect(stdout).toContain("Database 'warthog-test' already exists");
     spy.clear();
 
     await callWarthogCLI('db:drop');
     stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' dropped!");
+    expect(stdout).toContain("Database 'warthog-test' dropped!");
     spy.clear();
 
     await callWarthogCLI('db:drop');
     stdout = spy.getStdOut();
-    expect(stdout).toContain("Database 'warthog-starter' does not exist");
+    expect(stdout).toContain("Database 'warthog-test' does not exist");
     spy.clear();
 
     done();
   });
-});
 
-function clearConfig() {
-  const WARTHOG_PREFIX = 'WARTHOG_';
-  const TYPEORM_PREFIX = 'TYPEORM_';
-  Object.keys(process.env).forEach(key => {
-    if (key.startsWith(WARTHOG_PREFIX) || key.startsWith(TYPEORM_PREFIX)) {
-      delete process.env[key];
-    }
+  test('generates and runs migrations', async () => {
+    expect.assertions(7);
+    let stdout;
+
+    // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files
+    setTestServerEnvironmentVariables({
+      WARTHOG_DB_DATABASE: './tmp/db/warthog-test-migrations',
+      WARTHOG_DB_SYNCHRONIZE: 'false',
+      WARTHOG_DB_CONNECTION: 'sqlite'
+    });
+
+    const server = getTestServer({ mockDBConnection: false });
+    await server.start();
+    await server.stop();
+
+    await callWarthogCLI('db:migrate:generate');
+    stdout = spy.getStdOut();
+    expect(stdout).toContain('"name" option is required');
+    spy.clear();
+
+    // console.log('ormConfigPath', ormConfigPath);
+
+    await callWarthogCLI('db:migrate:generate --name cli_test_db_migration');
+    stdout = spy.getStdOut();
+    expect(stdout).toContain('-CliTestDbMigration.ts');
+    expect(stdout).toContain('has been generated successfully.');
+
+    const migrationDir = String(process.env.WARTHOG_DB_MIGRATIONS_DIR);
+    const migrationFileName = fs.readdirSync(migrationDir)[0];
+    const migrationContents = fs.readFileSync(path.join(migrationDir, migrationFileName), 'utf-8');
+
+    expect(migrationContents).toContain('CREATE TABLE "kitchen_sinks"');
+    expect(migrationContents).toContain('CREATE TABLE "dishs"');
+    expect(migrationContents).toContain('DROP TABLE "dishs"');
+    expect(migrationContents).toContain('DROP TABLE "kitchen_sinks"');
+
+    // TODO: clean this up
+    // Clean up the test migration folder
+    // TODO
+    // TODO
+    // TODO
+    // TODO
+    // TODO
+
+    spy.clear();
   });
-}
+});
