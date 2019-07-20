@@ -18,7 +18,7 @@ module.exports = (toolbox: GluegunToolbox) => {
   toolbox.db = {
     create: async function create(database: string) {
       const config = load();
-      validateNodeEnv(config['NODE_ENV'], toolbox, 'create');
+      validateDevNodeEnv(config['NODE_ENV'], toolbox, 'create');
 
       const createDb = util.promisify(pgtools.createdb) as Function;
 
@@ -34,7 +34,7 @@ module.exports = (toolbox: GluegunToolbox) => {
     },
     drop: async function drop() {
       const config = load();
-      validateNodeEnv(config['NODE_ENV'], toolbox, 'drop, action: string');
+      validateDevNodeEnv(config['NODE_ENV'], toolbox, 'drop, action: string');
 
       const database = config.get('DB_DATABASE');
       const dropDb = util.promisify(pgtools.dropdb) as Function;
@@ -127,7 +127,7 @@ async function getPgConfig(config: any) {
   };
 }
 
-function validateNodeEnv(env: string, toolbox: Toolbox, action: string) {
+function validateDevNodeEnv(env: string, toolbox: Toolbox, action: string) {
   if (!env) {
     toolbox.print.error('NODE_ENV must be set');
     process.exit(1);

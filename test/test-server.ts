@@ -1,4 +1,4 @@
-import { Server, ServerOptions } from '../src/core';
+import { authChecker, Server, ServerOptions } from '../src';
 
 // This spins up a mock Warthog server using the models and resolvers in the test/modules directory
 export function getTestServer(options: ServerOptions<any>) {
@@ -19,10 +19,20 @@ export function getTestServer(options: ServerOptions<any>) {
   process.env.WARTHOG_MODULE_IMPORT_PATH = '../../src';
 
   return new Server({
+    authChecker,
     context: () => {
       return {
         user: {
-          id: 'abc123'
+          id: 'abc123',
+          permissions: [
+            'kitchenSink:create',
+            'kitchenSink:read',
+            'kitchenSink:update',
+            'kitchenSink:delete',
+            'dish:create',
+            'dish:read',
+            'dish:update'
+          ]
         }
       };
     },

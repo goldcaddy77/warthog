@@ -55,7 +55,7 @@ function ComposedMethodDecorator() {
 }
 
 @ComposedClassDecorator()
-// @ts-ignore : TODO: shouldn't need this here
+// @ts-ignore : TODO: shouldn't need this here.  Need to teach vscode how to allow experimental decorators in test files
 class TestClass {
   constructor() {}
 

@@ -1,4 +1,14 @@
-import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import {
+  Arg,
+  Args,
+  Authorized,
+  Ctx,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root
+} from 'type-graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse, UserId } from '../../../src';
@@ -19,11 +29,13 @@ import { KitchenSinkService } from './kitchen-sink.service';
 export class KitchenSinkResolver {
   constructor(@Inject('KitchenSinkService') public readonly service: KitchenSinkService) {}
 
+  @Authorized('dish:read')
   @FieldResolver()
   dishes(@Root() kitchenSink: KitchenSink, @Ctx() ctx: BaseContext): Promise<Dish[]> {
     return ctx.dataLoader.loaders.KitchenSink.dishes.load(kitchenSink);
   }
 
+  @Authorized('kitchenSink:read')
   @Query(() => [KitchenSink])
   async kitchenSinks(@Args()
   {
@@ -37,11 +49,13 @@ export class KitchenSinkResolver {
     return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset);
   }
 
+  @Authorized('kitchenSink:read')
   @Query(() => KitchenSink)
   async kitchenSink(@Arg('where') where: KitchenSinkWhereUniqueInput): Promise<KitchenSink> {
     return this.service.findOne<KitchenSinkWhereUniqueInput>(where);
   }
 
+  @Authorized('kitchenSink:create')
   @Mutation(() => KitchenSink)
   async createKitchenSink(
     @Arg('data') data: KitchenSinkCreateInput,
@@ -50,6 +64,7 @@ export class KitchenSinkResolver {
     return this.service.create(data, userId);
   }
 
+  @Authorized('kitchenSink:update')
   @Mutation(() => KitchenSink)
   async updateKitchenSink(
     @Args() { data, where }: KitchenSinkUpdateArgs,
@@ -58,6 +73,7 @@ export class KitchenSinkResolver {
     return this.service.update(data, where, userId);
   }
 
+  @Authorized('kitchenSink:delete')
   @Mutation(() => StandardDeleteResponse)
   async deleteKitchenSink(
     @Arg('where') where: KitchenSinkWhereUniqueInput,

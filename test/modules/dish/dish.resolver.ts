@@ -1,4 +1,14 @@
-import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import {
+  Arg,
+  Args,
+  Authorized,
+  Ctx,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root
+} from 'type-graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../src';
@@ -20,29 +30,34 @@ import { DishService } from './dish.service';
 export class DishResolver {
   constructor(@Inject('DishService') public readonly service: DishService) {}
 
+  @Authorized('kitchenSink:read')
   @FieldResolver(() => KitchenSink)
-  user(@Root() dish: Dish, @Ctx() ctx: BaseContext): Promise<KitchenSink> {
-    return ctx.dataLoader.loaders.Dish.user.load(dish);
+  kitchenSink(@Root() dish: Dish, @Ctx() ctx: BaseContext): Promise<KitchenSink> {
+    return ctx.dataLoader.loaders.Dish.kichenSink.load(dish);
   }
 
+  @Authorized('dish:read')
   @Query(() => [Dish])
-  async posts(
+  async dishes(
     @Args() { where, orderBy, limit, offset }: DishWhereArgs,
     @Fields() fields: string[]
   ): Promise<Dish[]> {
     return this.service.find<DishWhereInput>(where, orderBy, limit, offset, fields);
   }
 
+  @Authorized('dish:read')
   @Query(() => Dish)
   async dish(@Arg('where') where: DishWhereUniqueInput): Promise<Dish> {
     return this.service.findOne<DishWhereUniqueInput>(where);
   }
 
+  @Authorized('dish:create')
   @Mutation(() => Dish)
   async createDish(@Arg('data') data: DishCreateInput, @UserId() userId: string): Promise<Dish> {
     return this.service.create(data, userId);
   }
 
+  @Authorized('dish:update')
   @Mutation(() => Dish)
   async updateDish(
     @Args() { data, where }: DishUpdateArgs,
@@ -51,6 +66,7 @@ export class DishResolver {
     return this.service.update(data, where, userId);
   }
 
+  @Authorized('dish:create')
   @Mutation(() => [Dish])
   async createManyDishs(
     @Args() { data }: DishCreateManyArgs,
@@ -59,6 +75,7 @@ export class DishResolver {
     return this.service.createMany(data, userId);
   }
 
+  @Authorized('dish:delete')
   @Mutation(() => StandardDeleteResponse)
   async deleteDish(
     @Arg('where') where: DishWhereUniqueInput,

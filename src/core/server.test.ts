@@ -59,7 +59,7 @@ describe('server', () => {
   it('queries effectively', async () => {
     expect(
       await binding.query.kitchenSinks(
-        {},
+        { skip: 0, orderBy: 'createdAt_DESC', limit: 5 },
         `{
           stringField
           emailField

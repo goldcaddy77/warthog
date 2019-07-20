@@ -2,19 +2,9 @@ import * as dotenv from 'dotenv';
 import { system, filesystem } from 'gluegun';
 import * as path from 'path';
 
-import { spyOnStdOut } from '../../test/helpers';
+import { spyOnStdOut, callWarthogCLI } from '../../test/helpers';
 
 const root = filesystem.path(__dirname, '../../');
-
-import { run } from './cli';
-
-const warthogCLI = async (cmd: string) => {
-  const oldArgv = process.argv;
-  // Gluegun requires the command come in as the 3rd argument
-  process.argv = ['/fake/path/to/node', '/fake/path/to/warthog', ...cmd.split(' ')];
-  await run(process.argv);
-  process.argv = oldArgv;
-};
 
 describe('Integration tests', () => {
   const spy = spyOnStdOut(); // Gives us access to whatever is written to stdout as part of the CLI command
@@ -28,7 +18,8 @@ describe('Integration tests', () => {
     filesystem.remove('generated');
   });
 
-  // TODO: should we bother with this since we don't update the version in package.json?
+  // This test actually calls the CLI via a system call.  This won't count towards test coverage
+  // but it's the most thorough way we can actually check to see if everything is wired up correctly
   test('spin up an actual process to test the full cli is wired up', async done => {
     // Construct the environment variables here so that they're passed into cli command
     const config = dotenv.config({ path: path.join(__dirname, './.env.test') });
@@ -45,21 +36,22 @@ describe('Integration tests', () => {
       }
     );
 
+    // TODO: should we bother with this since we don't update the version in package.json?
     expect(output).toContain('0.0.0-development');
-    // Make sure it's not outputting the help command
+    // This makes sure we're actually getting the version command and not the standard "help" command, which also includes the version
     expect(output).not.toContain('help');
     done();
   });
 
   test('outputs help', async done => {
-    await warthogCLI('--help');
+    await callWarthogCLI('--help');
     const stdout = spy.getStdOut();
     expect(stdout).toContain('generate (g)');
     done();
   });
 
   test('generates models', async done => {
-    await warthogCLI(
+    await callWarthogCLI(
       'generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! --folder generated'
     );
     const stdout = spy.getStdOut();
@@ -102,7 +94,7 @@ describe('Integration tests', () => {
   });
 
   test('generates a shell of a file of no params specified', async done => {
-    await warthogCLI('generate empty_class --folder generated');
+    await callWarthogCLI('generate empty_class --folder generated');
     const stdout = spy.getStdOut();
 
     expect(stdout).toContain('Generated file at generated/empty-class.model.ts');

@@ -4,7 +4,7 @@ import { IResolvers } from 'graphql-tools/dist/Interfaces'
 import * as schema from  './schema.graphql'
 
 export interface Query {
-    posts: <T = Array<Dish>>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    dishes: <T = Array<Dish>>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dish: <T = Dish>(args: { where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSinks: <T = Array<KitchenSink>>(args: { offset?: Int | null, limit?: Int | null, where?: KitchenSinkWhereInput | null, orderBy?: KitchenSinkOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSink: <T = KitchenSink>(args: { where: KitchenSinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
@@ -270,7 +270,6 @@ export interface Dish extends BaseGraphQLObject {
   name: String
   kitchenSink: KitchenSink
   kitchenSinkId: String
-  user: KitchenSink
 }
 
 export interface KitchenSink extends BaseGraphQLObject {
