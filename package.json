@@ -83,7 +83,6 @@
     "cross-fetch": "^3.0.0",
     "dataloader": "^1.4.0",
     "debug": "^4.1.1",
-    "ejs": "^2.6.2",
     "express": "^4.16.4",
     "gluegun": "^3.3.1",
     "graphql": "^14.1.1",

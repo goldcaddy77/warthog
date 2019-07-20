@@ -76,7 +76,6 @@ type Dish implements BaseGraphQLObject {
   name: String!
   kitchenSink: KitchenSink!
   kitchenSinkId: String!
-  user: KitchenSink!
 }
 
 input DishCreateInput {
@@ -263,7 +262,7 @@ type Mutation {
 }
 
 type Query {
-  posts(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
+  dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
   dish(where: DishWhereUniqueInput!): Dish!
   kitchenSinks(offset: Int, limit: Int = 50, where: KitchenSinkWhereInput, orderBy: KitchenSinkOrderByInput): [KitchenSink!]!
   kitchenSink(where: KitchenSinkWhereUniqueInput!): KitchenSink!
