@@ -17,6 +17,10 @@ module.exports = (toolbox: GluegunToolbox) => {
 
   toolbox.db = {
     create: async function create(database: string) {
+      if (!database) {
+        return error('Database name is required');
+      }
+
       const config = load();
       validateDevNodeEnv(config['NODE_ENV'], toolbox, 'create');
 

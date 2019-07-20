@@ -170,15 +170,12 @@ export class Config {
 
     // Now that we've pulled all config in from the waterfall, write `WARTHOG_DB_` keys to `TYPEORM_`
     // So that TypeORM will pick them up
-    this.writeWarthogConfigToTypeORMEnvVars();
+    // this.writeWarthogConfigToTypeORMEnvVars();
 
     // Once we've combined all of the Warthog ENV vars, write them to process.env so that they can be used elsewhere
     // NOTE: this is likely a bad idea and we should use Containers
     this.writeWarthogEnvVars();
 
-    (this.container as any).set('warthog.config', this.get());
-    (this.container as any).set('warthog.db-connection', this.get('DB_CONNECTION'));
-    (this.container as any).set('warthog.generated-folder', this.get('GENERATED_FOLDER'));
     (this.container as any).set('warthog.logger', this.logger); // Save for later so we can pull globally
 
     if (this.logger && this.logger.debug) {
@@ -260,15 +257,15 @@ export class Config {
     return config;
   }
 
-  public writeWarthogConfigToTypeORMEnvVars() {
-    Object.keys(this.config).forEach((key: string) => {
-      if (key.startsWith(this.WARTHOG_DB_ENV_PREFIX)) {
-        const keySuffix = key.substring(this.WARTHOG_DB_ENV_PREFIX.length);
+  // public writeWarthogConfigToTypeORMEnvVars() {
+  //   Object.keys(this.config).forEach((key: string) => {
+  //     if (key.startsWith(this.WARTHOG_DB_ENV_PREFIX)) {
+  //       const keySuffix = key.substring(this.WARTHOG_DB_ENV_PREFIX.length);
 
-        process.env[`TYPEORM_${keySuffix}`] = this.get(key);
-      }
-    });
-  }
+  //       process.env[`TYPEORM_${keySuffix}`] = this.get(key);
+  //     }
+  //   });
+  // }
 
   public writeWarthogEnvVars() {
     Object.keys(this.config).forEach((key: string) => {

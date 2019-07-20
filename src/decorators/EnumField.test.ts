@@ -2,7 +2,6 @@ import 'reflect-metadata';
 
 import { IntrospectionEnumType, IntrospectionSchema } from 'graphql';
 import { ObjectType, Query, Resolver } from 'type-graphql';
-import { Container } from 'typedi';
 
 import { getSchemaInfo } from '../schema';
 
@@ -13,7 +12,7 @@ describe('Enums', () => {
 
   beforeAll(async () => {
     // TODO: should we set this up as part of the test harness?
-    Container.set('warthog.generated-folder', process.cwd());
+    // Container.set('warthog.generated-folder', process.cwd());
 
     enum StringEnum {
       Foo = 'FOO',

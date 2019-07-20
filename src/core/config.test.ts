@@ -38,17 +38,6 @@ describe('Config', () => {
   });
 
   describe('All environments', () => {
-    it('translates WARTHOG_DB env vars to TYPEORM env vars', async () => {
-      process.env = {
-        NODE_ENV: 'development',
-        WARTHOG_DB_FOO: 'bar123'
-      };
-
-      new Config({ configSearchPath: __dirname }).loadSync();
-
-      expect(process.env.TYPEORM_FOO).toEqual('bar123');
-    });
-
     it('translates TYPEORM env vars into warthog config', async () => {
       process.env = {
         NODE_ENV: 'development',

@@ -1,22 +1,43 @@
 import { run } from '../src/cli/cli';
 
-export function spyOnStdOut() {
-  const spy: { stdout: jest.SpyInstance; getStdOut: Function } = {
+export function spyOnStd() {
+  const spy: {
+    // TODO: for some reason, cli commands are not writing to stderr
+    clear: () => void;
+    // stderr: jest.SpyInstance;
+    stdout: jest.SpyInstance;
+    // getStdErr: Function;
+    getStdOut: Function;
+  } = {
+    clear: undefined as any,
+    // stderr: undefined as any,
     stdout: undefined as any,
+    // getStdErr: undefined as any,
     getStdOut: undefined as any
   };
 
   beforeAll(() => {
+    // spy.stderr = jest.spyOn(process.stderr, 'write');
     spy.stdout = jest.spyOn(process.stdout, 'write');
   });
 
   beforeEach(() => {
+    // spy.stderr.mockClear();
     spy.stdout.mockClear();
   });
 
   afterAll(() => {
+    // spy.stderr.mockRestore();
     spy.stdout.mockRestore();
   });
+
+  // spy.getStdErr = () => {
+  //   return spy.stderr.mock.calls.join(' ');
+  // };
+
+  spy.clear = () => {
+    spy.stdout.mockClear();
+  };
 
   spy.getStdOut = () => {
     return spy.stdout.mock.calls.join(' ');
@@ -35,4 +56,5 @@ export async function callWarthogCLI(cmd: string) {
   process.argv = ['/fake/path/to/node', '/fake/path/to/warthog', ...cmd.split(' ')];
   await run(process.argv);
   process.argv = oldArgv;
+  return;
 }
