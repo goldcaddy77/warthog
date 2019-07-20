@@ -1,13 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-// import { Binding } from '../../test/generated/binding';
-import { getTestServer } from '../../test/test-server';
-import { KitchenSink } from '../../test/modules';
+import { get, GetResponse } from '../../src/core/http';
+import { Server } from '../../src/core/server';
+import { logger } from '../../src/core/logger';
 
-import { get, GetResponse } from './http';
-import { Server } from './server';
-import { logger } from './logger';
+// import { Binding } from '../../test/generated/binding';
+import { getTestServer } from '../test-server';
+import { KitchenSink } from '../modules';
 
 let server: Server<any>;
 // let binding: Binding;
