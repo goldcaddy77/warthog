@@ -3,7 +3,7 @@ import { ObjectUtil } from './object';
 
 describe('ObjectUtil', () => {
   describe('prefixKeys', () => {
-    it('prefixes correctly', async () => {
+    test('prefixes correctly', async () => {
       const original = {
         One: 1,
         Two: 2
@@ -17,7 +17,7 @@ describe('ObjectUtil', () => {
   });
 
   describe('constantizeKeys', () => {
-    it('constantizes correctly', async () => {
+    test('constantizes correctly', async () => {
       const original = {
         fourFive: 45,
         oneTwoThree: 123

@@ -40,7 +40,7 @@ describe('Enums', () => {
   });
 
   describe('EnumField', () => {
-    it('Puts an enum in the GraphQL schema', async () => {
+    test('Puts an enum in the GraphQL schema', async () => {
       const myEnum = schemaIntrospection.types.find((type: any) => {
         return type.kind === 'ENUM' && type.name === 'StringEnum';
       }) as IntrospectionEnumType;

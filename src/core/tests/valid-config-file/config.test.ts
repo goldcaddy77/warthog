@@ -4,7 +4,7 @@ import { Config } from '../../config';
 describe('Config (valid file)', () => {
   let config: Config;
 
-  it('loads static config', async () => {
+  test('loads static config', async () => {
     config = new Config({ configSearchPath: __dirname });
 
     const vals: any = await config.loadStaticConfigSync();
@@ -14,7 +14,7 @@ describe('Config (valid file)', () => {
     expect(vals.WARTHOG_RESOLVERS_PATH).toEqual('./r/e/s/o/l/v/e/r/s');
   });
 
-  it('TypeORM ENV vars beat config file', async () => {
+  test('TypeORM ENV vars beat config file', async () => {
     process.env = {
       NODE_ENV: 'development',
       WARTHOG_MODELS_PATH: 'env/models/path'
@@ -25,7 +25,7 @@ describe('Config (valid file)', () => {
     expect(config.get('WARTHOG_MODELS_PATH')).toEqual('env/models/path');
   });
 
-  it('Warthog ENV vars beat TypeORM', async () => {
+  test('Warthog ENV vars beat TypeORM', async () => {
     process.env = {
       NODE_ENV: 'development',
       WARTHOG_DB_HOST: 'warthog/db/host',

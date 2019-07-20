@@ -65,7 +65,7 @@ class TestClass {
 }
 
 describe('composeMethodDecorators', () => {
-  it('calls all decorators properly', async () => {
+  test('calls all decorators properly', async () => {
     new TestClass();
     expect(classDecoratorMock).toHaveBeenCalledTimes(2);
     expect(classDecoratorMock).toHaveBeenNthCalledWith(1, TestClass, 'classDecoratorOne');
@@ -74,7 +74,7 @@ describe('composeMethodDecorators', () => {
 });
 
 describe('composeClassDecorators', () => {
-  it('calls all decorators properly', async () => {
+  test('calls all decorators properly', async () => {
     new TestClass();
     const expectedDescriptors = { configurable: true, enumerable: true, writable: true };
     expect(methodDecoratorMock).toHaveBeenCalledTimes(2);

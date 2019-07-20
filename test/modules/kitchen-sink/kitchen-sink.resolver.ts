@@ -14,6 +14,7 @@ import { Inject } from 'typedi';
 import { BaseContext, StandardDeleteResponse, UserId } from '../../../src';
 import {
   KitchenSinkCreateInput,
+  KitchenSinkCreateManyArgs,
   KitchenSinkUpdateArgs,
   KitchenSinkWhereArgs,
   KitchenSinkWhereInput,
@@ -29,7 +30,7 @@ import { KitchenSinkService } from './kitchen-sink.service';
 export class KitchenSinkResolver {
   constructor(@Inject('KitchenSinkService') public readonly service: KitchenSinkService) {}
 
-  @Authorized('dish:read')
+  // @Authorized('dish:read')
   @FieldResolver()
   dishes(@Root() kitchenSink: KitchenSink, @Ctx() ctx: BaseContext): Promise<Dish[]> {
     return ctx.dataLoader.loaders.KitchenSink.dishes.load(kitchenSink);
@@ -62,6 +63,15 @@ export class KitchenSinkResolver {
     @UserId() userId: string
   ): Promise<KitchenSink> {
     return this.service.create(data, userId);
+  }
+
+  @Authorized('kitchenSink:create')
+  @Mutation(() => [KitchenSink])
+  async createManyKitchenSinks(
+    @Args() { data }: KitchenSinkCreateManyArgs,
+    @UserId() userId: string
+  ): Promise<KitchenSink[]> {
+    return this.service.createMany(data, userId);
   }
 
   @Authorized('kitchenSink:update')

@@ -10,7 +10,7 @@ export function getTestServer(options: ServerOptions<any>) {
   process.env.WARTHOG_DB_DATABASE = 'warthog-test';
   process.env.WARTHOG_DB_ENTITIES = 'test/modules/**/*.model.ts';
   process.env.WARTHOG_DB_HOST = 'localhost';
-  process.env.WARTHOG_DB_LOGGING = 'none';
+  process.env.WARTHOG_DB_LOGGING = 'all';
   process.env.WARTHOG_DB_USERNAME = 'foo';
   process.env.WARTHOG_DB_PASSWORD = '';
   process.env.WARTHOG_DB_SYNCHRONIZE = 'true';

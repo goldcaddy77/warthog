@@ -16,6 +16,7 @@ export interface Mutation {
     createManyDishs: <T = Array<Dish>>(args: { data: Array<DishCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteDish: <T = StandardDeleteResponse>(args: { where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createKitchenSink: <T = KitchenSink>(args: { data: KitchenSinkCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createManyKitchenSinks: <T = Array<KitchenSink>>(args: { data: Array<KitchenSinkCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateKitchenSink: <T = KitchenSink>(args: { data: KitchenSinkUpdateInput, where: KitchenSinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteKitchenSink: <T = StandardDeleteResponse>(args: { where: KitchenSinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
