@@ -19,6 +19,8 @@
     "watch:ts": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts"
   },
   "dependencies": {
+    "handlebars": "^4.0.14",
+    "lodash": "^4.17.13",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.2.2"
   },

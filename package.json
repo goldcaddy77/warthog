@@ -90,7 +90,7 @@
     "graphql-iso-date": "^3.6.1",
     "graphql-tools": "^4.0.3",
     "graphql-type-json": "^0.3.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "mkdirp": "^0.5.1",
     "node-emoji": "^1.8.1",
     "open": "^6.3.0",
