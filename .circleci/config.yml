@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.4
 references:
   yarn_cache_key: &yarn_cache_key yarn-v1-{{ checksum "yarn.lock" }}
 jobs:
@@ -20,6 +22,9 @@ jobs:
       - run:
           name: test
           command: yarn test:prod
+      - codecov/upload:
+          file: coverage/*.json
+          flags: backend
       - run:
           name: deploy
           command: yarn run semantic-release || true
