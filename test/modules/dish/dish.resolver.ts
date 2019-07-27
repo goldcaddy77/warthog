@@ -33,7 +33,7 @@ export class DishResolver {
   @Authorized('kitchenSink:read')
   @FieldResolver(() => KitchenSink)
   kitchenSink(@Root() dish: Dish, @Ctx() ctx: BaseContext): Promise<KitchenSink> {
-    return ctx.dataLoader.loaders.Dish.kichenSink.load(dish);
+    return ctx.dataLoader.loaders.Dish.kitchenSink.load(dish);
   }
 
   @Authorized('dish:read')
