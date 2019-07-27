@@ -2,9 +2,10 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "command": "source tools/environment_setup.sh",
+      "command": "yarn jest --verbose ${file}",
       "type": "shell",
-      "label": "setupEnvironment"
+      "label": "jest-current-file",
+      "problemMatcher": []
     },
     {
       "label": "build",

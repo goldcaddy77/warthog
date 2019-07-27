@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`server getBindingError pulls correct info from binding error 1`] = `
+Object {
+  "emailField": Object {
+    "isEmail": "emailField must be an email",
+  },
+}
+`;
+
+exports[`server queries deeply nested objects 1`] = `
+Array [
+  Object {
+    "booleanField": true,
+    "createdById": "abc123",
+    "dishes": Array [
+      Object {
+        "name": "Dish 0",
+      },
+      Object {
+        "name": "Dish 1",
+      },
+      Object {
+        "name": "Dish 2",
+      },
+      Object {
+        "name": "Dish 3",
+      },
+      Object {
+        "name": "Dish 4",
+      },
+      Object {
+        "name": "Dish 5",
+      },
+      Object {
+        "name": "Dish 6",
+      },
+      Object {
+        "name": "Dish 7",
+      },
+      Object {
+        "name": "Dish 8",
+      },
+      Object {
+        "name": "Dish 9",
+      },
+      Object {
+        "name": "Dish 10",
+      },
+      Object {
+        "name": "Dish 11",
+      },
+      Object {
+        "name": "Dish 12",
+      },
+      Object {
+        "name": "Dish 13",
+      },
+      Object {
+        "name": "Dish 14",
+      },
+      Object {
+        "name": "Dish 15",
+      },
+      Object {
+        "name": "Dish 16",
+      },
+      Object {
+        "name": "Dish 17",
+      },
+      Object {
+        "name": "Dish 18",
+      },
+      Object {
+        "name": "Dish 19",
+      },
+    ],
+    "emailField": "hi@warthog.com",
+    "floatField": 123.456,
+    "integerField": 123,
+    "stringField": "My String",
+    "updatedById": null,
+    "version": 1,
+  },
+]
+`;
+
+exports[`server string query: contains \`a\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+]
+`;
+
+exports[`server string query: ends with \`z\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+]
+`;
+
+exports[`server string query: exact match (Nakia) 1`] = `
+Array [
+  Object {
+    "stringField": "Nakia",
+  },
+]
+`;
+
+exports[`server string query: in list { devin, erling, KAELYN, raquel } 1`] = `
+Array [
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+]
+`;
+
+exports[`server string query: starts with \`b\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+]
+`;

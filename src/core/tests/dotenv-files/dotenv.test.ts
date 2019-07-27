@@ -1,7 +1,7 @@
 import { Config } from '../../config';
 
 describe('Dotenv files', () => {
-  it('Pulls config in correct order', async () => {
+  test('Pulls config in correct order', async () => {
     process.env = {
       NODE_ENV: 'development',
       WARTHOG_PROPER_ENV_VARIABLE: '12345'

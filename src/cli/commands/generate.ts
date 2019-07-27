@@ -21,8 +21,7 @@ export default {
 
     const name = first;
     if (!name) {
-      error('name is required');
-      return process.exit(1);
+      return error('name is required');
     }
 
     const names = {

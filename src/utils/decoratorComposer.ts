@@ -1,21 +1,21 @@
+import { ClassType } from '../core';
+
 export type MethodDecoratorFactory = (
-  target: object,
+  target: object, // TODO: why can't this be ClassType?
   propertyKey: string,
   descriptor: PropertyDescriptor
 ) => any;
 
 export function composeMethodDecorators(...factories: MethodDecoratorFactory[]) {
-  return (target: any, propertyKey: string, descriptor: PropertyDescriptor): any => {
-    // Reverse so that decorators are called in the order laid out at:
-    // https://www.typescriptlang.org/docs/handbook/decorators.html
-    factories.reverse().forEach(factory => factory(target, propertyKey, descriptor));
+  return (target: object, propertyKey: string, descriptor: PropertyDescriptor): any => {
+    factories.forEach(factory => factory(target, propertyKey, descriptor));
   };
 }
 
-export type ClassDecoratorFactory = (target: object) => any;
+export type ClassDecoratorFactory = (target: ClassType) => any;
 
 export function composeClassDecorators(...factories: ClassDecoratorFactory[]) {
-  return (target: any): any => {
+  return (target: ClassType): any => {
     // Do NOT return anything here or it will take over the class it's decorating
     // See: https://www.typescriptlang.org/docs/handbook/decorators.html
     factories.forEach(factory => {

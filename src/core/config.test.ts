@@ -2,7 +2,7 @@ import { Config } from './config';
 
 describe('Config', () => {
   describe('Production', () => {
-    it('throws if required values are not specified', async () => {
+    test('throws if required values are not specified', async () => {
       process.env.NODE_ENV = 'production';
 
       try {
@@ -14,7 +14,7 @@ describe('Config', () => {
   });
 
   describe('Development', () => {
-    it('uses correct defaults', async () => {
+    test('uses correct defaults', async () => {
       process.env.NODE_ENV = 'development';
 
       const config = new Config({ configSearchPath: __dirname }).loadSync();
@@ -24,7 +24,7 @@ describe('Config', () => {
   });
 
   describe('Test', () => {
-    it('will never open playground', async () => {
+    test('will never open playground', async () => {
       process.env = {
         NODE_ENV: 'development',
         WARTHOG_AUTO_OPEN_PLAYGROUND: 'true',
@@ -38,18 +38,7 @@ describe('Config', () => {
   });
 
   describe('All environments', () => {
-    it('translates WARTHOG_DB env vars to TYPEORM env vars', async () => {
-      process.env = {
-        NODE_ENV: 'development',
-        WARTHOG_DB_FOO: 'bar123'
-      };
-
-      new Config({ configSearchPath: __dirname }).loadSync();
-
-      expect(process.env.TYPEORM_FOO).toEqual('bar123');
-    });
-
-    it('translates TYPEORM env vars into warthog config', async () => {
+    test('translates TYPEORM env vars into warthog config', async () => {
       process.env = {
         NODE_ENV: 'development',
         TYPEORM_FOO: 'baz456'

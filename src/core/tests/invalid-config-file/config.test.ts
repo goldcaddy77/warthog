@@ -1,7 +1,7 @@
 import { Config } from '../../config';
 
 describe('Config (invalid file)', () => {
-  it('does not allow invalid config keys', async done => {
+  test('does not allow invalid config keys', async done => {
     expect.assertions(2);
     try {
       new Config({ configSearchPath: __dirname }).loadSync();

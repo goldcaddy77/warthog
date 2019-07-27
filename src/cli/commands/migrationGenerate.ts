@@ -13,8 +13,7 @@ export default {
     } = toolbox;
 
     if (!options.name) {
-      error('"name" option is required');
-      process.exit(1);
+      return error('"name" option is required');
     }
 
     try {

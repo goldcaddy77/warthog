@@ -26,7 +26,8 @@
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
     "test": "jest --verbose --coverage",
-    "test:seed": "cd examples/1-simple-model && DEBUG=* NODE_ENV=development WARTHOG_MOCK_DATABASE=true yarn db:seed:dev && rm warthog.sqlite.tmp",
+    "//verbose": "--verbose flag must be used to accurately test the CLI writing to stdout",
+    "test:prod": "yarn jest --coverage --ci --detectOpenHandles --runInBand --verbose",
     "test:watch": "jest --verbose --watch"
   },
   "husky": {
@@ -164,6 +165,13 @@
     ],
     "modulePathIgnorePatterns": [
       "/examples/"
+    ],
+    "watchPathIgnorePatterns": [
+      "tmp/",
+      "/generated/*"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",

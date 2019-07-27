@@ -235,7 +235,7 @@ async function createProject(binding: Binding): Promise<Project> {
     {
       data: {
         key: `proj-${new Date().getTime()}`,
-        name: `Marketplace ${new Date().getTime()}`
+        name: `My Project ${new Date().getTime()}`
       }
     },
     `{ id key name createdAt }`

@@ -3,7 +3,7 @@ import { build } from 'gluegun';
 /**
  * Create the cli and kick it off
  */
-async function run(argv: string[]) {
+export async function run(argv: string[]) {
   // create a CLI runtime
   const cli = build()
     .brand('warthog')
@@ -19,5 +19,3 @@ async function run(argv: string[]) {
   // send it back (for testing, mostly)
   return toolbox;
 }
-
-module.exports = { run };
