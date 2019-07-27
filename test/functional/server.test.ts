@@ -77,11 +77,9 @@ describe('server', () => {
           floatField
           dishes {
             name
-            # TODO: why can't we nest 2 levels deep - something broken
-            # kitchenSink {
-            #   id
-            #   stringField
-            #  }
+            kitchenSink {
+              stringField
+            }
           }
           createdById
           updatedById
