@@ -9,6 +9,7 @@
 <p align="center">
   <a href="https://www.npmjs.org/package/warthog"><img src="https://img.shields.io/npm/v/warthog.svg" alt="npm version"></a>
   <a href="https://circleci.com/gh/goldcaddy77/warthog/tree/master"><img src="https://circleci.com/gh/goldcaddy77/warthog/tree/master.svg?style=shield" alt="CircleCI"></a>
+  <a href="https://codecov.io/gh/goldcaddy77/warthog"><img src="https://codecov.io/gh/goldcaddy77/warthog/branch/master/graph/badge.svg" alt="styled with prettier"></a>
   <a href="#badge"><img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="styled with prettier"></a>
   <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a>
   <a href="https://gitter.im/warthog-graphql/community?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/warthog-graphql/community.svg" alt="Join the chat at https://gitter.im/warthog-graphql/community"></a>
