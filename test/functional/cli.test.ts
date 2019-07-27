@@ -31,6 +31,8 @@ describe('cli functional tests', () => {
   // This test actually calls the CLI via a system call.  This won't count towards test coverage
   // but it's the most thorough way we can actually check to see if everything is wired up correctly
   test('spin up an actual process to test the full cli is wired up', async done => {
+    expect.assertions(2);
+
     // Construct the environment variables here so that they're passed into cli command
 
     const env = {
@@ -59,6 +61,8 @@ describe('cli functional tests', () => {
   });
 
   test('generates models', async done => {
+    expect.assertions(18);
+
     await callWarthogCLI(
       `generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! --folder ${GENERATED_FOLDER}`
     );
@@ -102,6 +106,8 @@ describe('cli functional tests', () => {
   });
 
   test('generates a shell of a file of no params specified', async done => {
+    expect.assertions(4);
+
     await callWarthogCLI(`generate empty_class --folder ${GENERATED_FOLDER}`);
     const stdout = spy.getStdOutErr();
 
@@ -115,9 +121,27 @@ describe('cli functional tests', () => {
     done();
   });
 
-  test('requires name for db:create', async done => {
-    // Make sure there is no DB name
+  test('generates to a dynamic path', async done => {
+    expect.assertions(2);
 
+    await callWarthogCLI('generate empty_class --folder ' + GENERATED_FOLDER + '/${camelName}');
+    const stdout = spy.getStdOutErr();
+
+    // Note the camel cased "emptyClass below"
+    const file = `${GENERATED_FOLDER}/emptyClass/empty-class.model.ts`;
+
+    expect(stdout).toContain(`Generated file at ${file}`);
+
+    const fileContents = filesystem.read(file);
+    expect(fileContents).toContain('export class EmptyClass extends BaseModel');
+
+    done();
+  });
+
+  test('requires name for db:create', async done => {
+    expect.assertions(1);
+
+    // Make sure there is no DB name
     delete process.env.WARTHOG_DB_DATABASE;
     await callWarthogCLI('db:create');
 
@@ -194,14 +218,6 @@ describe('cli functional tests', () => {
     expect(migrationContents).toContain('CREATE TABLE "dishs"');
     expect(migrationContents).toContain('DROP TABLE "dishs"');
     expect(migrationContents).toContain('DROP TABLE "kitchen_sinks"');
-
-    // TODO: clean this up
-    // Clean up the test migration folder
-    // TODO
-    // TODO
-    // TODO
-    // TODO
-    // TODO
 
     spy.clear();
   });
