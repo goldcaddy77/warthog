@@ -130,7 +130,7 @@ describe('server', () => {
     done();
   });
 
-  test('string query: exact match (Nakia)', async () => {
+  test('find: string query: exact match (Nakia)', async () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
@@ -141,7 +141,7 @@ describe('server', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test('string query: contains `a` (upper or lower)', async () => {
+  test('find: string query: contains `a` (upper or lower)', async () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
@@ -152,7 +152,7 @@ describe('server', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test('string query: starts with `b` (upper or lower)', async () => {
+  test('find: string query: starts with `b` (upper or lower)', async () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
@@ -163,7 +163,7 @@ describe('server', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test('string query: ends with `z` (upper or lower)', async () => {
+  test('find: string query: ends with `z` (upper or lower)', async () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
@@ -174,7 +174,7 @@ describe('server', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test('string query: in list { devin, erling, KAELYN, raquel }', async () => {
+  test('find: string query: in list { devin, erling, KAELYN, raquel }', async () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
@@ -184,9 +184,116 @@ describe('server', () => {
     expect(result.length).toEqual(4);
     expect(result).toMatchSnapshot();
   });
+
+  test('findOne: consequuntur-94489@a.com', async () => {
+    expect.assertions(1);
+
+    let result;
+    try {
+      result = await binding.query.kitchenSink(
+        { where: { emailField: 'consequuntur-94489@a.com' } },
+        '{ stringField }'
+      );
+    } catch (error) {
+      throw new Error(error);
+    }
+    expect(result.stringField).toEqual('Trantow');
+  });
+
+  test('Update and Delete', async () => {
+    expect.assertions(6);
+
+    // First create a record for the scope of this test
+    const email = 'update@warthog.com';
+    const returnFields = '{ id, stringField, emailField, integerField, booleanField, floatField }';
+    let result;
+    try {
+      result = await createKitchenSink(binding, email, returnFields);
+    } catch (error) {
+      throw new Error(error);
+    }
+    expect(result.stringField).toEqual('My String');
+
+    // Update via unique email field
+    try {
+      result = await updateKitchenSink(
+        binding,
+        {
+          stringField: 'Updated via Email Field!',
+          integerField: 9876,
+          booleanField: false
+        },
+        {
+          emailField: email
+        }
+      );
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    const { id, ...expected } = result;
+    expect(expected).toEqual({
+      emailField: 'update@warthog.com',
+      stringField: 'Updated via Email Field!',
+      integerField: 9876,
+      booleanField: false,
+      floatField: 123.456
+    });
+
+    // Update via ID
+    try {
+      result = await updateKitchenSink(
+        binding,
+        {
+          stringField: 'Updated via ID!',
+          integerField: 9876,
+          booleanField: false
+        },
+        {
+          emailField: email
+        }
+      );
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    const { id: _, booleanField, floatField, integerField, ...expected2 } = result;
+    expect(expected2).toEqual({
+      emailField: 'update@warthog.com',
+      stringField: 'Updated via ID!'
+    });
+
+    // Delete
+    try {
+      result = await binding.mutation.deleteKitchenSink({
+        where: { emailField: email }
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    expect(result).toBeTruthy();
+    expect(result.id).toBeTruthy();
+
+    // Try to find the deleted record
+    let error = '';
+    try {
+      result = await binding.query.kitchenSink({ where: { id: result.id } }, '{ stringField }');
+    } catch (err) {
+      error = err.message;
+    }
+    expect(error).toContain('Unable to find KitchenSink where');
+  });
 });
 
-async function createKitchenSink(binding: any, email: string): Promise<KitchenSink> {
+// where - offset, fields
+// create many with a validation error
+
+async function createKitchenSink(
+  binding: any,
+  email: string,
+  returnFields: string = '{ id }'
+): Promise<KitchenSink> {
   return binding.mutation.createKitchenSink(
     {
       data: {
@@ -197,7 +304,22 @@ async function createKitchenSink(binding: any, email: string): Promise<KitchenSi
         floatField: 123.456
       }
     },
-    `{ id }`
+    returnFields
+  );
+}
+
+async function updateKitchenSink(
+  binding: any,
+  data: object,
+  where: object,
+  returnFields: string = '{ id, stringField, emailField, integerField, booleanField, floatField }'
+): Promise<KitchenSink> {
+  return binding.mutation.updateKitchenSink(
+    {
+      data,
+      where
+    },
+    returnFields
   );
 }
 
