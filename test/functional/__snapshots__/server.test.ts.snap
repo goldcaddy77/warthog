@@ -1,151 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`server getBindingError pulls correct info from binding error 1`] = `
-Object {
-  "emailField": Object {
-    "isEmail": "emailField must be an email",
-  },
-}
-`;
-
-exports[`server queries deeply nested objects 1`] = `
-Array [
-  Object {
-    "booleanField": true,
-    "createdById": "abc123",
-    "dishes": Array [
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 0",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 1",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 2",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 3",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 4",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 5",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 6",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 7",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 8",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 9",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 10",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 11",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 12",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 13",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 14",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 15",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 16",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 17",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 18",
-      },
-      Object {
-        "kitchenSink": Object {
-          "stringField": "My String",
-        },
-        "name": "Dish 19",
-      },
-    ],
-    "emailField": "hi@warthog.com",
-    "floatField": 123.456,
-    "integerField": 123,
-    "stringField": "My String",
-    "updatedById": null,
-    "version": 1,
-  },
-]
-`;
-
-exports[`server string query: contains \`a\` (upper or lower) 1`] = `
+exports[`server find: string query: contains \`a\` (upper or lower) 1`] = `
 Array [
   Object {
     "stringField": "Trantow",
@@ -300,7 +155,7 @@ Array [
 ]
 `;
 
-exports[`server string query: ends with \`z\` (upper or lower) 1`] = `
+exports[`server find: string query: ends with \`z\` (upper or lower) 1`] = `
 Array [
   Object {
     "stringField": "LUEILWITZ",
@@ -314,7 +169,7 @@ Array [
 ]
 `;
 
-exports[`server string query: exact match (Nakia) 1`] = `
+exports[`server find: string query: exact match (Nakia) 1`] = `
 Array [
   Object {
     "stringField": "Nakia",
@@ -322,7 +177,7 @@ Array [
 ]
 `;
 
-exports[`server string query: in list { devin, erling, KAELYN, raquel } 1`] = `
+exports[`server find: string query: in list { devin, erling, KAELYN, raquel } 1`] = `
 Array [
   Object {
     "stringField": "devin",
@@ -339,7 +194,7 @@ Array [
 ]
 `;
 
-exports[`server string query: starts with \`b\` (upper or lower) 1`] = `
+exports[`server find: string query: starts with \`b\` (upper or lower) 1`] = `
 Array [
   Object {
     "stringField": "BOSCO",
@@ -355,6 +210,151 @@ Array [
   },
   Object {
     "stringField": "BAUCH",
+  },
+]
+`;
+
+exports[`server getBindingError pulls correct info from binding error 1`] = `
+Object {
+  "emailField": Object {
+    "isEmail": "emailField must be an email",
+  },
+}
+`;
+
+exports[`server queries deeply nested objects 1`] = `
+Array [
+  Object {
+    "booleanField": true,
+    "createdById": "abc123",
+    "dishes": Array [
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 0",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 1",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 2",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 3",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 4",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 5",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 6",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 7",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 8",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 9",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 10",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 11",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 12",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 13",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 14",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 15",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 16",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 17",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 18",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 19",
+      },
+    ],
+    "emailField": "hi@warthog.com",
+    "floatField": 123.456,
+    "integerField": 123,
+    "stringField": "My String",
+    "updatedById": null,
+    "version": 1,
   },
 ]
 `;

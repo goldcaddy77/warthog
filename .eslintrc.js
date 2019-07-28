@@ -19,8 +19,11 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-parameter-properties': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    // 'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      // When pulling vars out via spread, they don't need to be used
+      { ignoreRestSiblings: true }
+    ],
     '@typescript-eslint/no-use-before-define': [
       'error',
       {
