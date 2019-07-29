@@ -32,9 +32,10 @@ module.exports = (toolbox: GluegunToolbox) => {
       try {
         await createDb(getPgConfig(config), database);
       } catch (e) {
-        if (e.message.indexOf('duplicate') > 0) {
-          error(`Database '${database}' already exists`);
-          return;
+        if (e.message.indexOf('duplicate') > -1) {
+          return error(`Error: Database '${database}' already exists`);
+        } else {
+          return error('Error: unknown error');
         }
       }
       info(`Database '${database}' created!`);
@@ -53,7 +54,7 @@ module.exports = (toolbox: GluegunToolbox) => {
       try {
         await dropDb(getPgConfig(config), database);
       } catch (e) {
-        if (e.name === 'invalid_catalog_name') {
+        if (e.name.indexOf('invalid_catalog_name') > -1) {
           return error(`Database '${database}' does not exist`);
         }
       }
