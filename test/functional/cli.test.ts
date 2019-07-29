@@ -12,22 +12,24 @@ const root = filesystem.path(__dirname, '../../');
 
 const GENERATED_FOLDER = 'tmp/generated';
 
-// import { Config } from '../../src/';
-
 describe('cli functional tests', () => {
   const spy = spyOnStd(); // Gives us access to whatever is written to stdout as part of the CLI command
+  const openMock = jest.fn();
 
   beforeAll(() => {
     filesystem.dirAsync(GENERATED_FOLDER); // cleanup test artifacts
+    jest.mock('open', () => openMock);
   });
 
   beforeEach(() => {
     jest.setTimeout(20000);
     setTestServerEnvironmentVariables();
+    spy.clear();
   });
 
   afterAll(() => {
     filesystem.remove(GENERATED_FOLDER); // cleanup test artifacts
+    openMock.mockReset();
   });
 
   // This test actually calls the CLI via a system call.  This won't count towards test coverage
@@ -163,8 +165,6 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' created!");
-    spy.clear();
-
     done();
   });
 
@@ -177,8 +177,6 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' already exists");
-    spy.clear();
-
     done();
   });
 
@@ -191,8 +189,6 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' does not exist");
-    spy.clear();
-
     done();
   });
 
@@ -205,8 +201,6 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' dropped!");
-    spy.clear();
-
     done();
   });
 
@@ -245,8 +239,19 @@ describe('cli functional tests', () => {
     expect(migrationContents).toContain('CREATE TABLE "dishs"');
     expect(migrationContents).toContain('DROP TABLE "dishs"');
     expect(migrationContents).toContain('DROP TABLE "kitchen_sinks"');
+  });
 
-    spy.clear();
+  test('warthog (with no command)', async done => {
+    await callWarthogCLI('');
+    const stdout = spy.getStdOutErr();
+    expect(stdout).toContain('Warthog: GraphQL API Framework');
+    done();
+  });
+
+  test('warthog playground', async done => {
+    await callWarthogCLI('playground');
+    expect(openMock).toBeCalledWith('http://localhost:4000/playground', { wait: false });
+    done();
   });
 
   test.skip('codegen creates correct files', async () => {
