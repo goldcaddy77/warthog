@@ -182,7 +182,7 @@ describe('cli functional tests', () => {
     done();
   });
 
-  test('throws an error if database does not exist', async done => {
+  test('db:drop: throws an error if database does not exist', async done => {
     pgtools.dropdb = jest.fn().mockImplementation((config: any, dbname: string, cb: Function) => {
       cb({ name: 'invalid_catalog_name' }, null);
     });
@@ -196,7 +196,7 @@ describe('cli functional tests', () => {
     done();
   });
 
-  test('drops databases', async done => {
+  test('db:drop success', async done => {
     pgtools.dropdb = jest.fn().mockImplementation((config: any, dbname: string, cb: Function) => {
       cb(null, { success: true });
     });
