@@ -1,5 +1,631 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`server find: integer query: greater than 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server find: integer query: greater than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server find: integer query: less than 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server find: integer query: less than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
 exports[`server find: string query: contains \`a\` (upper or lower) 1`] = `
 Array [
   Object {
@@ -151,6 +777,30 @@ Array [
   },
   Object {
     "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
   },
 ]
 `;

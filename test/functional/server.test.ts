@@ -146,10 +146,10 @@ describe('server', () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
-      { where: { stringField_contains: 'a' } },
+      { where: { stringField_contains: 'a' }, limit: 100 },
       '{ stringField }'
     );
-    expect(result.length).toEqual(50);
+    expect(result.length).toEqual(58);
     expect(result).toMatchSnapshot();
   });
 
@@ -183,6 +183,50 @@ describe('server', () => {
       '{ stringField }'
     );
     expect(result.length).toEqual(4);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: integer query: less than 21', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { integerField_lt: 21 }, limit: 100 },
+      '{ stringField }'
+    );
+    expect(result.length).toEqual(65);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: integer query: less than or equal to 21', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { integerField_lte: 21 }, limit: 100 },
+      '{ stringField }'
+    );
+    expect(result.length).toEqual(66);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: integer query: greater than 21', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { integerField_gt: 21 }, limit: 100 },
+      '{ stringField }'
+    );
+    expect(result.length).toEqual(35);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: integer query: greater than or equal to 21', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { integerField_gte: 21 }, limit: 100 },
+      '{ stringField }'
+    );
+    expect(result.length).toEqual(36);
     expect(result).toMatchSnapshot();
   });
 
