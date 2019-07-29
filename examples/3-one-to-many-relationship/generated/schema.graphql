@@ -83,8 +83,8 @@ type Post implements BaseGraphQLObject {
   deletedById: String
   version: Int!
   title: String!
-  userId: String!
   user: User!
+  userId: String!
 }
 
 input PostCreateInput {

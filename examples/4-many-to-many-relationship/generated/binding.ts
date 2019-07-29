@@ -425,10 +425,10 @@ export interface UserRole extends BaseGraphQLObject {
   deletedAt?: DateTime | null
   deletedById?: String | null
   version: Int
-  userId: String
   user?: User | null
-  roleId: String
+  userId: String
   role?: Role | null
+  roleId: String
   otherMetadata?: String | null
 }
 
