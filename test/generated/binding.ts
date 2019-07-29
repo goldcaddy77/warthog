@@ -68,6 +68,8 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'stringField_DESC' |
   'nullableStringField_ASC' |
   'nullableStringField_DESC' |
+  'dateField_ASC' |
+  'dateField_DESC' |
   'emailField_ASC' |
   'emailField_DESC' |
   'integerField_ASC' |
@@ -149,6 +151,7 @@ export interface DishWhereUniqueInput {
 export interface KitchenSinkCreateInput {
   stringField: String
   nullableStringField?: String | null
+  dateField?: DateTime | null
   emailField: String
   integerField: Float
   booleanField: Boolean
@@ -158,6 +161,7 @@ export interface KitchenSinkCreateInput {
 export interface KitchenSinkUpdateInput {
   stringField?: String | null
   nullableStringField?: String | null
+  dateField?: DateTime | null
   emailField?: String | null
   integerField?: Float | null
   booleanField?: Boolean | null
@@ -196,6 +200,10 @@ export interface KitchenSinkWhereInput {
   nullableStringField_startsWith?: String | null
   nullableStringField_endsWith?: String | null
   nullableStringField_in?: String[] | String | null
+  dateField_gt?: DateTime | null
+  dateField_gte?: DateTime | null
+  dateField_lt?: DateTime | null
+  dateField_lte?: DateTime | null
   emailField_eq?: String | null
   emailField_contains?: String | null
   emailField_startsWith?: String | null
@@ -284,6 +292,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   version: Int
   stringField: String
   nullableStringField?: String | null
+  dateField?: DateTime | null
   emailField: String
   integerField: Int
   booleanField: Boolean

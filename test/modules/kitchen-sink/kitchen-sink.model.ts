@@ -1,6 +1,7 @@
 import {
   BaseModel,
   BooleanField,
+  DateField,
   EmailField,
   // EnumField,
   FloatField,
@@ -26,6 +27,9 @@ export class KitchenSink extends BaseModel {
 
   @StringField({ nullable: true })
   nullableStringField?: string;
+
+  @DateField({ nullable: true })
+  dateField?: Date;
 
   @EmailField()
   emailField?: string;

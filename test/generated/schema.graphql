@@ -147,6 +147,7 @@ type KitchenSink implements BaseGraphQLObject {
   version: Int!
   stringField: String!
   nullableStringField: String
+  dateField: DateTime
   emailField: String!
   integerField: Int!
   booleanField: Boolean!
@@ -157,6 +158,7 @@ type KitchenSink implements BaseGraphQLObject {
 input KitchenSinkCreateInput {
   stringField: String!
   nullableStringField: String
+  dateField: DateTime
   emailField: String!
   integerField: Float!
   booleanField: Boolean!
@@ -174,6 +176,8 @@ enum KitchenSinkOrderByInput {
   stringField_DESC
   nullableStringField_ASC
   nullableStringField_DESC
+  dateField_ASC
+  dateField_DESC
   emailField_ASC
   emailField_DESC
   integerField_ASC
@@ -187,6 +191,7 @@ enum KitchenSinkOrderByInput {
 input KitchenSinkUpdateInput {
   stringField: String
   nullableStringField: String
+  dateField: DateTime
   emailField: String
   integerField: Float
   booleanField: Boolean
@@ -225,6 +230,10 @@ input KitchenSinkWhereInput {
   nullableStringField_startsWith: String
   nullableStringField_endsWith: String
   nullableStringField_in: [String!]
+  dateField_gt: DateTime
+  dateField_gte: DateTime
+  dateField_lt: DateTime
+  dateField_lte: DateTime
   emailField_eq: String
   emailField_contains: String
   emailField_startsWith: String
