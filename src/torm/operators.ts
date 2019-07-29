@@ -11,8 +11,9 @@ export function getFindOperator(key: string, value: any): [string, FindOperator<
         return [attr, IsNull()];
       }
       return [attr, Equal(value)];
-    case 'not':
-      return [attr, Not(value)];
+    // // Not using "not" yet
+    // case 'not':
+    //   return [attr, Not(value)];
     case 'lt':
       return [attr, LessThan(value)];
     case 'lte':
