@@ -70,6 +70,7 @@ describe('server', () => {
     const results = await binding.query.kitchenSinks(
       { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },
       `{
+          dateField
           stringField
           emailField
           integerField
@@ -298,6 +299,7 @@ async function createKitchenSink(
     {
       data: {
         stringField: 'My String',
+        dateField: '2019-10-15',
         emailField: email,
         integerField: 123,
         booleanField: true,

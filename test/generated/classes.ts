@@ -36,6 +36,9 @@ export enum KitchenSinkOrderByEnum {
   nullableStringField_ASC = "nullableStringField_ASC",
   nullableStringField_DESC = "nullableStringField_DESC",
 
+  dateField_ASC = "dateField_ASC",
+  dateField_DESC = "dateField_DESC",
+
   emailField_ASC = "emailField_ASC",
   emailField_DESC = "emailField_DESC",
 
@@ -84,6 +87,18 @@ export class KitchenSinkWhereInput extends BaseWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   nullableStringField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  dateField_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  dateField_gte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  dateField_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  dateField_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
   emailField_eq?: string;
@@ -160,6 +175,9 @@ export class KitchenSinkCreateInput {
   @TypeGraphQLField({ nullable: true })
   nullableStringField?: string;
 
+  @TypeGraphQLField({ nullable: true })
+  dateField?: Date;
+
   @TypeGraphQLField()
   emailField!: string;
 
@@ -180,6 +198,9 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   nullableStringField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  dateField?: Date;
 
   @TypeGraphQLField({ nullable: true })
   emailField?: string;
