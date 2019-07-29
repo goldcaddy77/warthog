@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn db:create && yarn codegen",
+    "clean": "rm -f ./warthog.sqlite.tmp",
     "codegen": "warthog codegen",
     "db:create": "warthog db:create",
     "db:drop": "warthog db:drop",

@@ -306,10 +306,10 @@ type UserRole implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
-  userId: String!
   user: User
-  roleId: String!
+  userId: String!
   role: Role
+  roleId: String!
   otherMetadata: String
 }
 

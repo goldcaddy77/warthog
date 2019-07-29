@@ -222,8 +222,8 @@ export interface Post extends BaseGraphQLObject {
   deletedById?: String | null
   version: Int
   title: String
-  userId: String
   user: User
+  userId: String
 }
 
 export interface StandardDeleteResponse {

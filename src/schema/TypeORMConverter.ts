@@ -54,19 +54,19 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
   const type = (column.type as any).name ? (column.type as any).name : column.type;
 
   switch (type) {
-    case String:
+    // case String:
     case 'String':
     case 'varchar':
     case 'text':
     case 'uuid':
       return GraphQLString;
-    case Boolean:
-    case 'Boolean':
+    // case Boolean:
+    // case 'Boolean':
     case 'boolean':
     case 'bool':
       return GraphQLBoolean;
-    case Number:
-    case 'Number':
+    // case Number:
+    // case 'Number':
     case 'float':
     case 'float4':
     case 'float8':
@@ -89,9 +89,9 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
     case 'int4':
     case 'int8':
       return GraphQLInt;
-    case Date:
-    case 'Date':
-    case 'timestamp':
+    // case Date:
+    // case 'Date':
+    // case 'timestamp':
     case 'datetime':
       return GraphQLISODateTime;
     case 'json':

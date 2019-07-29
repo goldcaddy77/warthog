@@ -32,12 +32,12 @@ export class MetadataStorage {
     return this.enumMap[tableName][columnName] || undefined;
   }
 
-  getModel(tableName: string) {
-    if (!this.enumMap[tableName]) {
-      return undefined;
-    }
-    return this.enumMap[tableName];
-  }
+  // getModel(tableName: string) {
+  //   if (!this.enumMap[tableName]) {
+  //     return undefined;
+  //   }
+  //   return this.enumMap[tableName];
+  // }
 }
 
 export function getMetadataStorage(): MetadataStorage {
