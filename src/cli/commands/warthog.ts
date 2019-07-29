@@ -5,6 +5,6 @@ export default {
   run: async (toolbox: GluegunToolbox) => {
     const { print } = toolbox;
 
-    print.info('Welcome to your CLI');
+    print.info('Warthog: GraphQL API Framework');
   }
 };
