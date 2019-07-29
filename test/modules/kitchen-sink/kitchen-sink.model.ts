@@ -6,6 +6,7 @@ import {
   // EnumField,
   FloatField,
   IntField,
+  JSONField,
   OneToMany,
   Model,
   StringField
@@ -42,6 +43,9 @@ export class KitchenSink extends BaseModel {
 
   @FloatField()
   floatField?: number;
+
+  @JSONField({ nullable: true })
+  jsonField?: JSON;
 
   @OneToMany(() => Dish, (dish: Dish) => dish.kitchenSink)
   dishes?: Dish[];

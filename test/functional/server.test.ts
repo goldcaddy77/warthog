@@ -71,6 +71,7 @@ describe('server', () => {
       { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },
       `{
           dateField
+          jsonField
           stringField
           emailField
           integerField
@@ -342,12 +343,14 @@ async function createKitchenSink(
   return binding.mutation.createKitchenSink(
     {
       data: {
-        stringField: 'My String',
+        booleanField: true,
         dateField: '2019-10-15',
         emailField: email,
+        floatField: 123.456,
         integerField: 123,
-        booleanField: true,
-        floatField: 123.456
+        // TODO: for some reason this is getting added as NULL
+        jsonField: { hello: 'world' },
+        stringField: 'My String'
       }
     },
     returnFields
@@ -370,12 +373,7 @@ async function updateKitchenSink(
 }
 
 async function createManyKitchenSinks(binding: any): Promise<KitchenSink> {
-  const data = KITCHEN_SINKS.map(item => {
-    const { dateField, ...fields } = item; // eslint-disable-line
-    return fields;
-  });
-
-  return binding.mutation.createManyKitchenSinks({ data }, `{ id }`);
+  return binding.mutation.createManyKitchenSinks({ data: KITCHEN_SINKS }, `{ id }`);
 }
 
 async function createManyDishes(binding: any, kitchenSinkId: string): Promise<KitchenSink> {

@@ -77,7 +77,9 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'booleanField_ASC' |
   'booleanField_DESC' |
   'floatField_ASC' |
-  'floatField_DESC'
+  'floatField_DESC' |
+  'jsonField_ASC' |
+  'jsonField_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -156,6 +158,7 @@ export interface KitchenSinkCreateInput {
   integerField: Float
   booleanField: Boolean
   floatField: Float
+  jsonField?: JSONObject | null
 }
 
 export interface KitchenSinkUpdateInput {
@@ -166,6 +169,7 @@ export interface KitchenSinkUpdateInput {
   integerField?: Float | null
   booleanField?: Boolean | null
   floatField?: Float | null
+  jsonField?: JSONObject | null
 }
 
 export interface KitchenSinkWhereInput {
@@ -297,6 +301,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   integerField: Int
   booleanField: Boolean
   floatField: Float
+  jsonField?: JSONObject | null
   dishes?: Array<Dish> | null
 }
 
@@ -329,6 +334,11 @@ export type ID_Output = string
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number
+
+/*
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+*/
+export type JSONObject = string
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
