@@ -1003,6 +1003,7 @@ Array [
     "emailField": "hi@warthog.com",
     "floatField": 123.456,
     "integerField": 123,
+    "jsonField": null,
     "stringField": "My String",
     "updatedById": null,
     "version": 1,

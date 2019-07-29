@@ -49,7 +49,10 @@ export enum KitchenSinkOrderByEnum {
   booleanField_DESC = "booleanField_DESC",
 
   floatField_ASC = "floatField_ASC",
-  floatField_DESC = "floatField_DESC"
+  floatField_DESC = "floatField_DESC",
+
+  jsonField_ASC = "jsonField_ASC",
+  jsonField_DESC = "jsonField_DESC"
 }
 
 registerEnumType(KitchenSinkOrderByEnum, {
@@ -189,6 +192,9 @@ export class KitchenSinkCreateInput {
 
   @TypeGraphQLField()
   floatField!: number;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonField?: JSON;
 }
 
 @TypeGraphQLInputType()
@@ -213,6 +219,9 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   floatField?: number;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonField?: JSON;
 }
 
 @ArgsType()
