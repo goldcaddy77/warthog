@@ -24,6 +24,6 @@
     "types": ["jest", "isomorphic-fetch", "node"],
     "typeRoots": ["node_modules/@types", "./typings", "./typings/typings.d.ts"]
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules/**/*", "src/**/*.test.ts", "**/generated/*"]
 }
