@@ -254,7 +254,30 @@ describe('cli functional tests', () => {
     done();
   });
 
-  test.skip('codegen creates correct files', async () => {
-    //
+  test('codegen creates correct files', async done => {
+    const folder = './tmp/codegen';
+    filesystem.remove(folder);
+    process.env.WARTHOG_GENERATED_FOLDER = folder;
+
+    await callWarthogCLI('codegen');
+
+    // TODO: how much file content validation should we do here?
+    const bindingContents = filesystem.read(`${folder}/binding.ts`);
+    expect(bindingContents).toContain('export interface Binding');
+
+    const classContents = filesystem.read(`${folder}/classes.ts`);
+    expect(classContents).toContain('export enum KitchenSinkOrderByEnum');
+
+    const indexContents = filesystem.read(`${folder}/index.ts`);
+    expect(indexContents).toContain("export * from './classes';");
+
+    const ormConfigContents = filesystem.read(`${folder}/ormconfig.ts`);
+    expect(ormConfigContents).toContain('module.exports = getBaseConfig();');
+
+    const schemaContents = filesystem.read(`${folder}/schema.graphql`);
+    expect(schemaContents).toContain('input KitchenSinkWhereInput');
+
+    filesystem.remove(folder);
+    done();
   });
 });
