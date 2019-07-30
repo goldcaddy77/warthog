@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import { get, GetResponse } from '../../core/http';
+import { Server } from '../../core/server';
+import { getBindingError, logger } from '../../';
 
-import { get, GetResponse } from '../../src/core/http';
-import { Server } from '../../src/core/server';
-import { getBindingError, logger } from '../../src';
-
-// import { Binding } from '../../test/generated/binding';
 import { getTestServer } from '../test-server';
 import { KitchenSink } from '../modules';
 import { KITCHEN_SINKS } from './fixtures';
 
+import { cleanUpTestData } from '../helpers';
 import { setTestServerEnvironmentVariables } from '../server-vars';
 
 let server: Server<any>;
@@ -40,7 +37,7 @@ describe('server', () => {
       binding = (await server.getBinding()) as unknown;
     } catch (error) {
       logger.error(error);
-      // process.exit(1);
+      throw new Error(error);
     }
 
     const kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
@@ -67,7 +64,7 @@ describe('server', () => {
 
   // Previously, dataloader bombed out if you didn't ask for id, because postgres didn't
   // return it and we couldn't batch IDs to query lower
-  test.only('queries deeply nested objects without asking for id', async () => {
+  test('queries deeply nested objects', async () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },
@@ -394,16 +391,6 @@ async function createManyDishes(binding: any, kitchenSinkId: string): Promise<Ki
   }
 
   return dishes;
-}
-
-async function cleanUpTestData() {
-  try {
-    fs.unlinkSync(path.join(__dirname, '../../warthog.sqlite.tmp'));
-  } catch (error) {
-    // console.error('Error cleaning up test data', error);
-  }
-
-  return;
 }
 
 /* eslint-enable @typescript-eslint/camelcase */

@@ -153,7 +153,7 @@
   },
   "jest": {
     "setupFilesAfterEnv": [
-      "./test/setupFilesAfterEnv.ts"
+      "./src/test/setupFilesAfterEnv.ts"
     ],
     "transform": {
       ".ts": "ts-jest"
@@ -175,6 +175,7 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
+      "src/test/*",
       "\\.test\\.ts$"
     ],
     "globals": {

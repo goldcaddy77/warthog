@@ -1,4 +1,4 @@
-import { StringMap } from '../src';
+import { StringMap } from '../';
 
 export function setTestServerEnvironmentVariables(overrides?: StringMap) {
   clearConfig();
@@ -25,7 +25,7 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_AUTO_GENERATE_FILES: 'true',
     WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
     WARTHOG_DB_DATABASE: 'warthog-test',
-    WARTHOG_DB_ENTITIES: 'test/modules/**/*.model.ts',
+    WARTHOG_DB_ENTITIES: 'src/test/modules/**/*.model.ts',
     WARTHOG_DB_HOST: 'localhost',
     WARTHOG_DB_LOGGING: 'none',
     WARTHOG_DB_MIGRATIONS_DIR: './tmp/test/migrations',
@@ -33,9 +33,9 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_DB_USERNAME: 'foo',
     WARTHOG_DB_PASSWORD: '',
     WARTHOG_DB_SYNCHRONIZE: 'true',
-    WARTHOG_GENERATED_FOLDER: './test/generated',
-    WARTHOG_RESOLVERS_PATH: './test/modules/**/*.resolver.ts',
-    WARTHOG_MODULE_IMPORT_PATH: '../../src'
+    WARTHOG_GENERATED_FOLDER: './src/test/generated',
+    WARTHOG_RESOLVERS_PATH: './src/test/modules/**/*.resolver.ts',
+    WARTHOG_MODULE_IMPORT_PATH: '../../'
   };
 }
 

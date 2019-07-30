@@ -1,4 +1,4 @@
-import { BaseModel, ManyToOne, Model, StringField } from '../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '../../../';
 
 import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 

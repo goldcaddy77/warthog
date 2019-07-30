@@ -2,7 +2,7 @@ import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseService } from '../../../src';
+import { BaseService } from '../../../';
 import { Dish } from './dish.model';
 
 @Service('DishService')

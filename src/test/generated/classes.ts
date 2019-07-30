@@ -14,7 +14,7 @@ import { registerEnumType } from "type-graphql";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");
 
-import { BaseWhereInput, PaginationArgs } from "../../src";
+import { BaseWhereInput, PaginationArgs } from "../../";
 // @ts-ignore
 import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
