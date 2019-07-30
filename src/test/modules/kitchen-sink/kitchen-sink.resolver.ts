@@ -11,7 +11,7 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse, UserId } from '../../../src';
+import { BaseContext, /* Fields, */ StandardDeleteResponse, UserId } from '../../../';
 import {
   KitchenSinkCreateInput,
   KitchenSinkCreateManyArgs,
@@ -44,10 +44,9 @@ export class KitchenSinkResolver {
     orderBy,
     limit,
     offset
-  }: KitchenSinkWhereArgs): // , @Fields() fields: string[]
-  Promise<KitchenSink[]> {
-    // TODO: bug in `Fields` - have it remove association records and only keep attributes
-    return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset);
+  }: KitchenSinkWhereArgs): Promise<KitchenSink[]> {
+    // ,@Fields() fields: string[]
+    return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset); // , fields
   }
 
   @Authorized('kitchenSink:read')

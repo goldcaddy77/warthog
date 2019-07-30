@@ -1,4 +1,7 @@
-import { run } from '../src/cli/cli';
+import * as fs from 'fs';
+import * as path from 'path';
+
+import { run } from '../cli/cli';
 
 export function spyOnStd() {
   const spy: {
@@ -65,5 +68,15 @@ export async function callWarthogCLI(cmd: string) {
   process.argv = ['/fake/path/to/node', '/fake/path/to/warthog', ...cmd.split(' ')];
   await run(process.argv);
   process.argv = oldArgv;
+  return;
+}
+
+export async function cleanUpTestData() {
+  try {
+    fs.unlinkSync(path.join(__dirname, '../../warthog.sqlite.tmp'));
+  } catch (error) {
+    // console.error('Error cleaning up test data', error);
+  }
+
   return;
 }

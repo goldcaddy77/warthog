@@ -10,7 +10,7 @@ import {
   OneToMany,
   Model,
   StringField
-} from '../../../src';
+} from '../../../';
 
 import { Dish } from '../dish/dish.model';
 

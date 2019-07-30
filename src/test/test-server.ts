@@ -1,4 +1,4 @@
-import { authChecker, Server, ServerOptions } from '../src';
+import { authChecker, Server, ServerOptions } from '../';
 
 // This spins up a mock Warthog server using the models and resolvers in the test/modules directory
 export function getTestServer(options: ServerOptions<any>) {

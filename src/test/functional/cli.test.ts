@@ -4,11 +4,11 @@ import { system, filesystem } from 'gluegun';
 // @ts-ignore
 import * as pgtools from 'pgtools';
 
-import { spyOnStd, callWarthogCLI } from '../../test/helpers';
+import { callWarthogCLI, cleanUpTestData, spyOnStd } from '../helpers';
 import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
-const root = filesystem.path(__dirname, '../../');
+const root = filesystem.path(__dirname, '../../../');
 
 const GENERATED_FOLDER = 'tmp/generated';
 
@@ -19,6 +19,7 @@ describe('cli functional tests', () => {
   beforeAll(() => {
     filesystem.dirAsync(GENERATED_FOLDER); // cleanup test artifacts
     jest.mock('open', () => openMock);
+    cleanUpTestData();
   });
 
   beforeEach(() => {
@@ -204,7 +205,7 @@ describe('cli functional tests', () => {
     done();
   });
 
-  test('generates and runs migrations', async () => {
+  test('generates and runs migrations', async done => {
     expect.assertions(7);
     let stdout;
 
@@ -239,6 +240,7 @@ describe('cli functional tests', () => {
     expect(migrationContents).toContain('CREATE TABLE "dishs"');
     expect(migrationContents).toContain('DROP TABLE "dishs"');
     expect(migrationContents).toContain('DROP TABLE "kitchen_sinks"');
+    done();
   });
 
   test('warthog (with no command)', async done => {
