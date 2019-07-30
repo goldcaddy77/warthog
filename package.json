@@ -2,8 +2,8 @@
   "name": "warthog",
   "version": "0.0.0-development",
   "description": "Opinionated set of tools for setting up GraphQL backed by TypeORM",
-  "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/types/src/index.d.ts",
   "bin": {
     "warthog": "bin/warthog"
   },
@@ -18,7 +18,7 @@
     "url": "https://github.com/goldcaddy77"
   },
   "scripts": {
-    "build": "yarn tsc",
+    "build": "rm -rf ./dist && yarn tsc",
     "bootstrap": "./tools/bootstrap-all.sh",
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "lint": "eslint './+(examples|src|test|tools)/**/*.{js,ts}' --fix",
