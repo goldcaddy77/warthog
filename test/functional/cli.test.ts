@@ -4,7 +4,7 @@ import { system, filesystem } from 'gluegun';
 // @ts-ignore
 import * as pgtools from 'pgtools';
 
-import { spyOnStd, callWarthogCLI } from '../../test/helpers';
+import { spyOnStd, callWarthogCLI } from '../helpers';
 import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 

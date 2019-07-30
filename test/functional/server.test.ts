@@ -40,7 +40,7 @@ describe('server', () => {
       binding = (await server.getBinding()) as unknown;
     } catch (error) {
       logger.error(error);
-      process.exit(1);
+      // process.exit(1);
     }
 
     const kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
@@ -65,7 +65,9 @@ describe('server', () => {
     expect(response.body).toContain('GET query missing');
   });
 
-  test('queries deeply nested objects', async () => {
+  // Previously, dataloader bombed out if you didn't ask for id, because postgres didn't
+  // return it and we couldn't batch IDs to query lower
+  test.only('queries deeply nested objects without asking for id', async () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },

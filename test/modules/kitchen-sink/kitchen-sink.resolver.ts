@@ -38,16 +38,12 @@ export class KitchenSinkResolver {
 
   @Authorized('kitchenSink:read')
   @Query(() => [KitchenSink])
-  async kitchenSinks(@Args()
-  {
-    where,
-    orderBy,
-    limit,
-    offset
-  }: KitchenSinkWhereArgs): // , @Fields() fields: string[]
-  Promise<KitchenSink[]> {
-    // TODO: bug in `Fields` - have it remove association records and only keep attributes
-    return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset);
+  async kitchenSinks(
+    @Args()
+    { where, orderBy, limit, offset }: KitchenSinkWhereArgs,
+    @Fields() fields: string[]
+  ): Promise<KitchenSink[]> {
+    return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset, fields);
   }
 
   @Authorized('kitchenSink:read')
