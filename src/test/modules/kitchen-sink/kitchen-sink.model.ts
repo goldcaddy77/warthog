@@ -33,7 +33,7 @@ export class KitchenSink extends BaseModel {
   dateField?: Date;
 
   @EmailField()
-  emailField?: string;
+  emailField!: string;
 
   @IntField()
   integerField?: number;
@@ -48,7 +48,7 @@ export class KitchenSink extends BaseModel {
   jsonField?: JSON;
 
   @OneToMany(() => Dish, (dish: Dish) => dish.kitchenSink)
-  dishes?: Dish[];
+  dishes!: Dish[];
 
   // @EnumField('StringEnum', StringEnum)
   // stringEnumField: StringEnum;

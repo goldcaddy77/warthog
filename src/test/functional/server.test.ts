@@ -64,7 +64,7 @@ describe('server', () => {
 
   // Previously, dataloader bombed out if you didn't ask for id, because postgres didn't
   // return it and we couldn't batch IDs to query lower
-  test('queries deeply nested objects', async () => {
+  test('queries deeply nested objects without an ID', async () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },

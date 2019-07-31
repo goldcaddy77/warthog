@@ -40,6 +40,10 @@ export class BaseService<E extends BaseModel> {
       findOptions.skip = offset;
     }
     if (fields) {
+      // We always need to select ID or dataloaders will not function properly
+      if (fields.indexOf('id') === -1) {
+        fields.push('id');
+      }
       findOptions.select = fields;
     }
     if (orderBy) {

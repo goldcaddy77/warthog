@@ -872,7 +872,7 @@ Object {
 }
 `;
 
-exports[`server queries deeply nested objects 1`] = `
+exports[`server queries deeply nested objects without an ID 1`] = `
 Array [
   Object {
     "booleanField": true,
