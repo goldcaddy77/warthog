@@ -56,6 +56,7 @@ If you're on OSX and have [Homebrew](https://brew.sh/) installed, you can simply
 
 ```bash
 brew install postgresql
+/usr/local/opt/postgres/bin/createuser -s postgres
 ```
 
 ### Postgres.app
