@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
+import { getBindingError, logger } from '../../';
 import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
-import { getBindingError, logger } from '../../';
+import { cleanUpTestData } from '../../db';
 
-import { getTestServer } from '../test-server';
 import { KitchenSink } from '../modules';
-import { KITCHEN_SINKS } from './fixtures';
-
-import { cleanUpTestData } from '../helpers';
 import { setTestServerEnvironmentVariables } from '../server-vars';
+import { getTestServer } from '../test-server';
+
+import { KITCHEN_SINKS } from './fixtures';
 
 let server: Server<any>;
 // let binding: Binding;

@@ -18,7 +18,6 @@ const CONFIG_VALUE_VALID_KEYS = [
   'generatedFolder',
   'cliGeneratePath',
   'moduleImportPath',
-  'modelsPath',
   'resolversPath'
 ];
 
@@ -26,7 +25,6 @@ interface StaticConfigFile {
   [key: string]: any;
 
   generatedFolder: string;
-  modelsPath: string | string[];
   resolversPath: string | string[];
 }
 
@@ -71,6 +69,7 @@ export class Config {
       WARTHOG_DB_PORT: 5432,
       WARTHOG_DB_SUBSCRIBERS: ['src/subscribers/**/*.ts'],
       WARTHOG_DB_SUBSCRIBERS_DIR: 'src/subscribers',
+      WARTHOG_DB_SYNCHRONIZE: 'false',
       WARTHOG_MODULE_IMPORT_PATH: 'warthog',
       // TODO: eventually we should do this path resolution when we ask for the variable with `get`
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
@@ -84,8 +83,7 @@ export class Config {
       WARTHOG_AUTO_GENERATE_FILES: 'true',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'true',
       WARTHOG_DB_HOST: 'localhost',
-      WARTHOG_DB_LOGGING: 'all',
-      WARTHOG_DB_SYNCHRONIZE: 'true'
+      WARTHOG_DB_LOGGING: 'all'
     };
 
     const dotenvPath = options.dotenvPath || this.PROJECT_ROOT;

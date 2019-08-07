@@ -10,7 +10,6 @@ describe('Config (valid file)', () => {
     const vals: any = await config.loadStaticConfigSync();
 
     expect(vals.WARTHOG_GENERATED_FOLDER).toEqual(path.join(__dirname, './foo'));
-    expect(vals.WARTHOG_MODELS_PATH).toEqual('./bar/baz');
     expect(vals.WARTHOG_RESOLVERS_PATH).toEqual('./r/e/s/o/l/v/e/r/s');
   });
 
