@@ -1,3 +1,4 @@
+import { cleanUpTestData } from '../../db';
 import { Server } from '../../';
 
 // BLOG: needed to switch from module.exports because it didn't compile correctly
@@ -10,6 +11,8 @@ export default {
       mockDBConnection: true
     });
 
-    return server.generateFiles();
+    await server.generateFiles();
+
+    cleanUpTestData();
   }
 };

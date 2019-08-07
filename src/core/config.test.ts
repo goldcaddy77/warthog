@@ -1,6 +1,12 @@
+import { clearConfig } from '../test/server-vars';
+
 import { Config } from './config';
 
 describe('Config', () => {
+  beforeEach(() => {
+    clearConfig();
+  });
+
   describe('Production', () => {
     test('throws if required values are not specified', async () => {
       process.env.NODE_ENV = 'production';
