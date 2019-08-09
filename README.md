@@ -17,7 +17,11 @@
 
 ## Summary
 
+<<<<<<< HEAD
 Warthog is a [Node.js](http://nodejs.org) GraphQL API framework for quickly building consistent GraphQL APIs that have sorting, filtering and pagination out of the box. It is written in [TypeScript](http://www.typescriptlang.org) and makes heavy use of decorators for concise, declarative code.
+=======
+Warthog is a [Node.js](http://nodejs.org) GraphQL API framework for quickly building consistent GraphQL APIs that have sorting, filtering and pagination out of the box. It is written in [TypeScript](http://www.typescriptlang.org) and makes heavy use of decorators for concise, declaritive code.
+>>>>>>> chore(readme): more readme updates
 
 ## Philosophy
 
@@ -38,9 +42,19 @@ Further, it covers the following concerns by hooking into best-in-class open sou
 
 - Validation: Automatic validation before data is saved using any of the decorators available in the [class-validator](https://github.com/typestack/class-validator#validation-decorators) library.
 
+<<<<<<< HEAD
 ## Prerequisites
 
 Warthog currently only supports PostgreSQL as a DB engine, so you must have Postgres installed before getting Warthog set up. (Note: Postgres 12 is not currently supported)
+=======
+## Warning
+
+The API for this library is still subject to change. It will likely shift until version 2, at which time it will become stable. I'd love early adopters, but please know that there might be some breaking changes until v2.
+
+## Prerequisites
+
+You must have Postgresql installed to use Warthog. If you already have it installed, you can skip this step, otherwise there are 3 options:
+>>>>>>> chore(readme): more readme updates
 
 <details>
 <summary>Expand for Postgres installation options</summary>
@@ -69,10 +83,16 @@ Otherwise, you can install [Postgres.app](https://postgresapp.com/) manually.
 
 See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/pull/6/files) project for how to use Docker to run Postgres.
 
+<<<<<<< HEAD
 </p>
 </details>
 
 ## Usage
+=======
+The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. This has a simple example in place to get you started. There are also a bunch of examples in the [examples](./examples/README.md) folder for more advanced use cases.
+
+Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog. In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM. In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
+>>>>>>> chore(readme): more readme updates
 
 Warthog comes with a CLI that makes it easy to get started.
 
@@ -85,8 +105,12 @@ yarn add warthog
 # Bootstrap a new application using Warthog CLI
 yarn warthog new
 
+<<<<<<< HEAD
 # Install dependencies from generated package.json
 yarn
+=======
+The model will auto-generate your database table and graphql types. Warthog will find all models that match the following glob - `'/**/*.model.ts'`. So for this file, you would name it `user.model.ts`
+>>>>>>> chore(readme): more readme updates
 
 # Generate a resource (model, resolver and service)
 yarn warthog generate user name! nickname age:int! verified:bool!
@@ -109,18 +133,28 @@ yarn start:dev
 
 Here's what this looks like in action:
 
+<<<<<<< HEAD
 ![warthog-quickstart](https://user-images.githubusercontent.com/573625/69854217-8967f380-1256-11ea-8492-dee07334501d.gif)
+=======
+The resolver auto-generates queries and mutations in your GraphQL schema. Warthog will find all resolvers that match the following glob - `'/**/*.resolver.ts'`. So for this file, you would name it `user.resolver.ts`
+>>>>>>> chore(readme): more readme updates
 
 This will open up GraphQL Playground, where you can execute queries and mutations against your API.
 
 First, add a user by entering the following in the window:
 
+<<<<<<< HEAD
 ```graphql
 mutation {
   createUser(data: { name: "Test User", age: 25, verified: false }) {
     id
     name
     createdAt
+=======
+  @Query(() => [User])
+  async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
+    return this.find<UserWhereInput>(where, orderBy, limit, offset);
+>>>>>>> chore(readme): more readme updates
   }
 }
 ```
@@ -168,10 +202,16 @@ yarn start
 
 This has a simple example in place to get you started. There are also a bunch of examples in the folder for more advanced use cases.
 
+<<<<<<< HEAD
 Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog. In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM. In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
 
 </p>
 </details>
+=======
+```typescript
+import 'reflect-metadata';
+import { Server } from 'warthog';
+>>>>>>> chore(readme): more readme updates
 
 ### Warthog Constructs Explained
 
@@ -181,6 +221,7 @@ A model represents both a GraphQL type and a DB table. Warthog exposes a [BaseMo
 
 Custom [TypeORM](https://github.com/typeorm/typeorm/blob/master/docs/decorator-reference.md#entity) and [TypeGraphQL](https://typegraphql.ml/docs/types-and-fields.html) options may be passed into the `Model` decorator using the following signature.
 
+<<<<<<< HEAD
 ```javascript
 @Model({ api: { description: 'Custom description' }, db: { name: 'customtablename' } })
 ```
@@ -243,6 +284,12 @@ Almost all config in Warthog is driven by environment variables. The following i
 | WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?                            | false                       |
 | WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers                  | src/\*\*\/\*.resolver.ts    |
 | WARTHOG_SUBSCRIPTIONS        | Should we enable subscriptions and open a websocket port | false                       |
+=======
+bootstrap();
+```
+
+When you start your server, there will be a new `generated` folder that has your GraphQL schema in `schema.graphql`. This contains:
+>>>>>>> chore(readme): more readme updates
 
 ## Field/Column Decorators
 
@@ -305,13 +352,30 @@ yarn warthog generate user name! nickname numLogins:int! verified:bool! register
 
 Warthog uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for config that shouldn't change between environments (so typically file paths). This means you can put any of the following config files in your project root:
 
+<<<<<<< HEAD
 - .warthogrc.json
 - .warthogrc.yaml
 - .warthogrc.js
 - warthog.config.js file (exporting a JS object)
+=======
+| attribute         | description                                                                                               | default                                                 |
+| ----------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| container         | TypeDI container. Warthog uses dependency injection under the hood.                                       | empty container                                         |
+| authChecker       | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers. |                                                         |
+| autoGenerateFiles | Should the server auto-generate your schema, typings, etc...                                              | `true` when NODE_ENV=development. `false` otherwise     |
+| context           | Context getter of form `(request: Request) => object`                                                     | empty                                                   |
+| generatedFolder   | Folder where generated content is created                                                                 | `process.cwd()` + 'generated'                           |
+| logger            | Logger                                                                                                    | [debug](https://github.com/visionmedia/debug)           |
+| middlewares       | Express middlewares to add to your server                                                                 | none                                                    |
+| mockDBConnection  | Opens a sqlite connection instead of Postgres. Helpful if you just need to generate the schema            | `false`                                                 |
+| openPlayground    | Should server open GraphQL Playground after starting?                                                     | `false` if running tests, `true` if in development mode |
+| port              | App Server Port                                                                                           | 4000                                                    |
+| resolversPath     | Glob path to find your resolvers                                                                          | `process.cwd()` + '/\*\*\/\*.resolver.ts'               |
+>>>>>>> chore(readme): more readme updates
 
 The following config options are currently available:
 
+<<<<<<< HEAD
 | Config Key      | Description                                                                  | Equivalent Environment Variable |
 | --------------- | ---------------------------------------------------------------------------- | ------------------------------- |
 | generatedFolder | Relative location to generated folder (relative path from the config file)   | WARTHOG_GENERATED_FOLDER        |
@@ -319,12 +383,28 @@ The following config options are currently available:
 | resolversPath   | Where should Warthog look for resolvers? (comma-delimited list of regexes)   | WARTHOG_RESOLVERS_PATH          |
 
 Note that for `cliGeneratePath`, you can interpolate in the following strings to generate dynamic paths:
+=======
+All config is driven by environment variables. Most options can also be set by setting the value when creating your `Server` instance.
+
+| variable              | value                         | default |
+| --------------------- | ----------------------------- | ------- |
+| WARTHOG_APP_HOST      | App server host               | _none_  |
+| WARTHOG_APP_PORT      | App server port               | 4000    |
+| WARTHOG_DB_DATABASE   | DB name                       | _none_  |
+| WARTHOG_DB_USERNAME   | DB username                   | _none_  |
+| WARTHOG_DB_PASSWORD   | DB password                   | _none_  |
+| WARTHOG_MOCK_DATABASE | Should we use mock sqlite DB? | false   |
+>>>>>>> chore(readme): more readme updates
 
 - `className` (pascal case)
 - `camelName` (camel case)
 - `kebabName` (kebab case)
 
+<<<<<<< HEAD
 Example:
+=======
+All of the auto-generation magic comes from the decorators added to the attributes on your models. Warthog decorators are convenient wrappers around TypeORM decorators (to create DB schema) and TypeGraphQL (to create GraphQL schema). You can find a list of decorators available in the [src/decorators](./src/decorators) folder. Most of these are also used in the [examples](./examples) folder in this project.
+>>>>>>> chore(readme): more readme updates
 
 ```json
 {
@@ -369,6 +449,13 @@ Special thanks to:
 
 Warthog is essentially a really opinionated composition of TypeORM and TypeGraphQL that uses similar GraphQL conventions to the Prisma project.
 
+<<<<<<< HEAD
+=======
+## Contribute
+
+PRs accepted, fire away! Or add issues if you have use cases Warthog doesn't cover.
+
+>>>>>>> chore(readme): more readme updates
 ## License
 
 MIT © Dan Caddigan
