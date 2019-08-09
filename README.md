@@ -17,11 +17,11 @@
 
 ## Summary
 
-Warthog is a [Node.js](http://nodejs.org) GraphQL API framework for quickly building consistent GraphQL APIs that have sorting, filtering and pagination out of the box.  It is written in [TypeScript](http://www.typescriptlang.org) and makes heavy use of decorators for concise, declaritive code.
+Warthog is a [Node.js](http://nodejs.org) GraphQL API framework for quickly building consistent GraphQL APIs that have sorting, filtering and pagination out of the box. It is written in [TypeScript](http://www.typescriptlang.org) and makes heavy use of decorators for concise, declaritive code.
 
 ## Philosophy
 
-This library is intentionally opinionated and generates as much code as possible.  When teams build products quickly, even if they have strong conventions and good linters, the GraphQL can quickly become inconsistent, making it difficult for clients to consume the APIs in a reusable way.
+This library is intentionally opinionated and generates as much code as possible. When teams build products quickly, even if they have strong conventions and good linters, the GraphQL can quickly become inconsistent, making it difficult for clients to consume the APIs in a reusable way.
 
 To do this, Warthog automatically generates the following:
 
@@ -40,7 +40,7 @@ Further, it covers the following concerns by hooking into best-in-class open sou
 
 ## Prerequisites
 
-You must have Postgresql installed to use Warthog.  If you already have it installed, you can skip this step, otherwise there are 3 options:
+You must have Postgresql installed to use Warthog. If you already have it installed, you can skip this step, otherwise there are 3 options:
 
 ### Docker
 
@@ -61,9 +61,9 @@ Otherwise, you can install [Postgres.app](https://postgresapp.com/) or use the G
 
 ## Usage
 
-The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo.  This has a simple example in place to get you started.  There are also a bunch of examples in the [examples](./examples/README.md) folder for more advanced use cases.
+The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. This has a simple example in place to get you started. There are also a bunch of examples in the [examples](./examples/README.md) folder for more advanced use cases.
 
-Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog.  In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM.  In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
+Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog. In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM. In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
 
 ### Installing in Existing Project
 
@@ -73,7 +73,7 @@ yarn add warthog
 
 ### 1. Create a Model
 
-The model will auto-generate your database table and graphql types.  Warthog will find all models that match the following glob - `'/**/*.model.ts'`.  So for this file, you would name it `user.model.ts`
+The model will auto-generate your database table and graphql types. Warthog will find all models that match the following glob - `'/**/*.model.ts'`. So for this file, you would name it `user.model.ts`
 
 ```typescript
 import { BaseModel, Model, StringField } from 'warthog';
@@ -87,7 +87,7 @@ export class User extends BaseModel {
 
 ### 2. Create a Resolver
 
-The resolver auto-generates queries and mutations in your GraphQL schema.  Warthog will find all resolvers that match the following glob - `'/**/*.resolver.ts'`.  So for this file, you would name it `user.resolver.ts`
+The resolver auto-generates queries and mutations in your GraphQL schema. Warthog will find all resolvers that match the following glob - `'/**/*.resolver.ts'`. So for this file, you would name it `user.resolver.ts`
 
 ```typescript
 import { User } from './user.model';
@@ -98,9 +98,7 @@ export class UserResolver {
   constructor(@Inject('UserService') readonly service: UserService) {}
 
   @Query(() => [User])
-  async users(
-    @Args() { where, orderBy, limit, offset }: UserWhereArgs
-  ): Promise<User[]> {
+  async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
     return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
@@ -137,7 +135,6 @@ WARTHOG_DB_PASSWORD=
 ### 5. Run your server
 
 ```typescript
-
 import 'reflect-metadata';
 import { Server } from 'warthog';
 
@@ -146,10 +143,10 @@ async function bootstrap() {
   return server.start();
 }
 
-bootstrap()
+bootstrap();
 ```
 
-When you start your server, there will be a new `generated` folder that has your GraphQL schema in `schema.graphql`.  This contains:
+When you start your server, there will be a new `generated` folder that has your GraphQL schema in `schema.graphql`. This contains:
 
 ```graphql
 type User implements BaseGraphQLObject {
@@ -219,14 +216,12 @@ input UserWhereUniqueInput {
 
 Notice how we've only added a single field on the model and you get pagination, filtering and tracking of who created, updated and deleted records automatically.
 
-## Server API
+## Server API (appOptions)
 
-### Server Options (appOptions)
-
-Most of the config in Warthog is done via environment variables (see `Config - Environment Variables` below).  However, more complex/dynamic objects should be passed via the server config.
+Most of the config in Warthog is done via environment variables (see `Config - Environment Variables` below). However, more complex/dynamic objects should be passed via the server config.
 
 | attribute   | description                                                                                               | default                                       |
-|-------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| ----------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
 | container   | TypeDI container. Warthog uses dependency injection under the hood.                                       | empty container                               |
 | authChecker | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers. |                                               |
 | context     | Context getter of form `(request: Request) => object`                                                     | empty                                         |
@@ -235,34 +230,34 @@ Most of the config in Warthog is done via environment variables (see `Config - E
 
 ## Config - Environment Variables
 
-Almost all config in Warthog is driven by environment variables.  The following items are available:
+Almost all config in Warthog is driven by environment variables. The following items are available:
 
-| variable                     | value                                       | config option name       | default                     |
-|------------------------------|---------------------------------------------|--------------------------|-----------------------------|
-| WARTHOG_APP_HOST             | App server host                             | appOptions.host          | _none_                      |
-| WARTHOG_APP_PORT             | App server port                             | appOptions.port          | 4000                        |
-| WARTHOG_APP_PROTOCOL         | App server protocol                         | _none_                   | http                        |
-| WARTHOG_AUTO_GENERATE_FILES  | Auto-generate files                         | _none_                   | false (true in development) |
-| WARTHOG_AUTO_OPEN_PLAYGROUND | Open playground on server start             | _none_                   | false (true in development) |
-| WARTHOG_CLI_GENERATE_PATH    | Where should CLI generate files             | _none_                   | ./src                       |
-| WARTHOG_DB_CONNECTION        | DB connection type                          | _none_                   | postgres                    |
-| WARTHOG_DB_DATABASE          | DB name                                     | _none_                   | _none_                      |
-| WARTHOG_DB_ENTITIES          | Where should warthog look for models        | _none_                   | src/**/*.model.ts           |
-| WARTHOG_DB_MIGRATIONS        | What DB migrations should TypeORM run       | _none_                   | db/migrations/**/*.ts       |
-| WARTHOG_DB_MIGRATIONS_DIR    | Where should generated migrations be placed | _none_                   | db/migrations               |
-| WARTHOG_DB_PORT              | DB port                                     | _none_                   | 5432                        |
-| WARTHOG_DB_USERNAME          | DB username                                 | _none_                   | _none_                      |
-| WARTHOG_DB_LOGGER            | TypeORM logger                              | _none_                   | advanced-console            |
-| WARTHOG_DB_PASSWORD          | DB password                                 | _none_                   | _none_                      |
-| WARTHOG_DB_SYNCHRONIZE       | DB automatically migrated                   | _none_                   | false                       |
-| WARTHOG_GENERATED_FOLDER     | Where should generated code be placed       | _none_                   | ./generated                 |
-| WARTHOG_INTROSPECTION        | Allow server to be introspected             | appOptions.introspection | true                        |
-| WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?               | _none_                   | false                       |
-| WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers     | _none_                   | src/**/*.resolver.ts        |
+| variable                     | value                                       | default                     |
+| ---------------------------- | ------------------------------------------- | --------------------------- |
+| WARTHOG_APP_HOST             | App server host                             | _none_                      |
+| WARTHOG_APP_PORT             | App server port                             | 4000                        |
+| WARTHOG_APP_PROTOCOL         | App server protocol                         | http                        |
+| WARTHOG_AUTO_GENERATE_FILES  | Auto-generate files                         | false (true in development) |
+| WARTHOG_AUTO_OPEN_PLAYGROUND | Open playground on server start             | false (true in development) |
+| WARTHOG_CLI_GENERATE_PATH    | Where should CLI generate files             | ./src                       |
+| WARTHOG_DB_CONNECTION        | DB connection type                          | postgres                    |
+| WARTHOG_DB_DATABASE          | DB name                                     | _none_                      |
+| WARTHOG_DB_ENTITIES          | Where should warthog look for models        | src\/\*\*\/\*.model.ts      |
+| WARTHOG_DB_MIGRATIONS        | What DB migrations should TypeORM run       | db/migrations/\*\*\/\*.ts   |
+| WARTHOG_DB_MIGRATIONS_DIR    | Where should generated migrations be placed | db/migrations               |
+| WARTHOG_DB_PORT              | DB port                                     | 5432                        |
+| WARTHOG_DB_USERNAME          | DB username                                 | _none_                      |
+| WARTHOG_DB_LOGGER            | TypeORM logger                              | advanced-console            |
+| WARTHOG_DB_PASSWORD          | DB password                                 | _none_                      |
+| WARTHOG_DB_SYNCHRONIZE       | DB automatically migrated                   | false                       |
+| WARTHOG_GENERATED_FOLDER     | Where should generated code be placed       | ./generated                 |
+| WARTHOG_INTROSPECTION        | Allow server to be introspected             | true                        |
+| WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?               | false                       |
+| WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers     | src/\*\*\/\*.resolver.ts    |
 
 ## Field/Column Decorators
 
-All of the auto-generation magic comes from the decorators added to the attributes on your models.  Warthog decorators are convenient wrappers around TypeORM decorators (to create DB schema) and TypeGraphQL (to create GraphQL schema).  You can find a list of decorators available in the [src/decorators](./src/decorators) folder.  Most of these are also used in the [examples](./examples) folder in this project.
+All of the auto-generation magic comes from the decorators added to the attributes on your models. Warthog decorators are convenient wrappers around TypeORM decorators (to create DB schema) and TypeGraphQL (to create GraphQL schema). You can find a list of decorators available in the [src/decorators](./src/decorators) folder. Most of these are also used in the [examples](./examples) folder in this project.
 
 ## Complex use cases/ejecting
 
@@ -278,7 +273,7 @@ If you need to add a field that is only exposed via the API that is not DB-backe
 
 ### Custom Query
 
-See the See [feature-flag example](./examples/7-feature-flags/) for an example of where we'd want to build something beyond the standard CRUD actions.  In this example we want to add a custom query that makes a complex DB call.
+See the See [feature-flag example](./examples/7-feature-flags/) for an example of where we'd want to build something beyond the standard CRUD actions. In this example we want to add a custom query that makes a complex DB call.
 
 - First add the query to the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.resolver.ts#L75-L79)
 - Then add the custom query input in the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.resolver.ts#L31-L41)
@@ -293,7 +288,7 @@ Warthog ships with the following commands that can be accessed by running `yarn 
 See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/blob/master/package.json) project's package.json for example usage.
 
 | Command           | Args      | Description                                                                             |
-|-------------------|-----------|-----------------------------------------------------------------------------------------|
+| ----------------- | --------- | --------------------------------------------------------------------------------------- |
 | codegen           | none      | autogenerates code from decorated models and resolvers and places in `generated` folder |
 | db:create         | none      | creates DB based on DB specified in config file                                         |
 | db:drop           | none      | drops DB based on DB specified in config file                                           |
@@ -303,7 +298,7 @@ See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/blob/ma
 
 ### `generate` Command in depth
 
-The `generate` command will create a new resolver, service and model for a given resource.  Let's start with a complex example and we'll break it down:
+The `generate` command will create a new resolver, service and model for a given resource. Let's start with a complex example and we'll break it down:
 
 ```bash
 yarn warthog generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! --folder my_generated_folder
@@ -311,15 +306,15 @@ yarn warthog generate user name! nickname numLogins:int! verified:bool! register
 
 - `user` - this is the name of the new resource (required)
 - ...args - each of the remaining args until `--folder` is a field on the resource
-- `name!` - the name field is of type string by default since no data type is specified.  The `!` states that it's required
+- `name!` - the name field is of type string by default since no data type is specified. The `!` states that it's required
 - `numLogins:int!` - numLogins states that it is of type int - also required
-- `registeredAt:date` - registeredAt is of type date (which correlates to an ISO8601 datetime).  The absence of the `!` means it is optional.
-- ...the rest of the args are self-explanatory.  Possible types are `bool`, `date`, `int`, `float` and `string`.  If you need to use other types, just add them as strings and update the models manually.
-- `--folder` - this allows you to explicitly set the folder where the generated files should go.  This is not recommended and instead you should use the .rc file (see below)
+- `registeredAt:date` - registeredAt is of type date (which correlates to an ISO8601 datetime). The absence of the `!` means it is optional.
+- ...the rest of the args are self-explanatory. Possible types are `bool`, `date`, `int`, `float` and `string`. If you need to use other types, just add them as strings and update the models manually.
+- `--folder` - this allows you to explicitly set the folder where the generated files should go. This is not recommended and instead you should use the .rc file (see below)
 
 ## `warthogrc` config file
 
-Warthog uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for config that shouldn't change between environments (so typically file paths).  This means you can put any of the following config files in your project root:
+Warthog uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for config that shouldn't change between environments (so typically file paths). This means you can put any of the following config files in your project root:
 
 - .warthogrc.json
 - .warthogrc.yaml
@@ -329,7 +324,7 @@ Warthog uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for con
 The following config options are currently available:
 
 | Config Key      | Description                                                                  | Equivalent Environment Variable |
-|-----------------|------------------------------------------------------------------------------|---------------------------------|
+| --------------- | ---------------------------------------------------------------------------- | ------------------------------- |
 | generatedFolder | Relative location to generated folder (relative path from the config file)   | WARTHOG_GENERATED_FOLDER        |
 | cliGeneratePath | Where should CLI place generated files? (relative path from the config file) | WARTHOG_CLI_GENERATE_PATH       |
 | resolversPath   | Where should Warthog look for resolvers? (comma-delimited list of regexes)   | WARTHOG_RESOLVERS_PATH          |
@@ -344,23 +339,23 @@ Example:
 
 ```json
 {
-  "cliGeneratePath": "./src/${kebabName}",
+  "cliGeneratePath": "./src/${kebabName}"
 }
 ```
 
-Running `yarn warthog generate featureFlag` would create 3 files in the `./src/feature-flag/` folder.  See [feature-flag example](./examples/7-feature-flags/warthog.config.js) for a live example.
+Running `yarn warthog generate featureFlag` would create 3 files in the `./src/feature-flag/` folder. See [feature-flag example](./examples/7-feature-flags/warthog.config.js) for a live example.
 
 ## Usage in Production
 
-It is recommended that you not run Warthog's TypeScript files via `ts-node` in Production as we do in development as `ts-node` has been known to cause issues in some smaller AWS instances.  Instead, compile down to JS and run in `node`.  For a full project example (using [dotenvi](https://github.com/b3ross/dotenvi) for config management), see [warthog-starter](https://github.com/goldcaddy77/warthog-starter)
+It is recommended that you not run Warthog's TypeScript files via `ts-node` in Production as we do in development as `ts-node` has been known to cause issues in some smaller AWS instances. Instead, compile down to JS and run in `node`. For a full project example (using [dotenvi](https://github.com/b3ross/dotenvi) for config management), see [warthog-starter](https://github.com/goldcaddy77/warthog-starter)
 
 ## Intentionally Opinionated
 
 Warthog is intentionally opinionated to accelerate development and make use of technology-specific features:
 
-- Postgres - currently the only database supported.  This could be changed, but choosing Postgres allows adding a docker container and other goodies easily.
+- Postgres - currently the only database supported. This could be changed, but choosing Postgres allows adding a docker container and other goodies easily.
 - Jest - other harnesses will work, but if you use Jest, we will not open the GraphQL playground when the server starts, for example.
-- Soft deletes - no records are ever deleted, only "soft deleted".  The base service used in resolvers filters out the deleted records by default.
+- Soft deletes - no records are ever deleted, only "soft deleted". The base service used in resolvers filters out the deleted records by default.
 
 ## Thanks
 
@@ -375,7 +370,7 @@ Warthog is essentially a really opinionated composition of TypeORM and TypeGraph
 
 ## Contribute
 
-PRs accepted, fire away!  Or add issues if you have use cases Warthog doesn't cover.
+PRs accepted, fire away! Or add issues if you have use cases Warthog doesn't cover.
 
 ## License
 
