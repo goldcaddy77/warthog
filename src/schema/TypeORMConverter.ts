@@ -210,7 +210,10 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
 }
 
 export function entityToCreateInput(entity: EntityMetadata): string {
-  let fieldTemplates = '';
+  let fieldTemplates = `
+        @TypeGraphQLField({ nullable: true })
+        id?: string;
+  `;
 
   entity.columns.forEach((column: ColumnMetadata) => {
     if (
