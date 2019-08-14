@@ -91,7 +91,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
       return GraphQLInt;
     // case Date:
     // case 'Date':
-    // case 'timestamp':
+    case 'timestamp':
     case 'datetime':
       return GraphQLISODateTime;
     case 'json':
