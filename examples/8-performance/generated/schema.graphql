@@ -89,6 +89,7 @@ type Post implements BaseGraphQLObject {
 }
 
 input PostCreateInput {
+  id: String
   title: String!
   userId: String!
 }
@@ -171,6 +172,7 @@ type User implements BaseGraphQLObject {
 }
 
 input UserCreateInput {
+  id: String
   firstName: String!
 }
 

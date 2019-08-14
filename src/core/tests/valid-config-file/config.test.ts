@@ -5,6 +5,10 @@ describe('Config (valid file)', () => {
   let config: Config;
 
   test('loads static config', async () => {
+    // Set some defaults or the constructor will blow up in CI
+    process.env.WARTHOG_APP_HOST = 'localhost';
+    process.env.WARTHOG_APP_PORT = '80';
+    process.env.WARTHOG_DB_HOST = 'localhost';
     config = new Config({ configSearchPath: __dirname });
 
     const vals: any = await config.loadStaticConfigSync();
@@ -19,7 +23,7 @@ describe('Config (valid file)', () => {
       WARTHOG_MODELS_PATH: 'env/models/path'
     };
 
-    const config = new Config({ configSearchPath: __dirname }).loadSync();
+    const config = new Config({ configSearchPath: __dirname });
 
     expect(config.get('WARTHOG_MODELS_PATH')).toEqual('env/models/path');
   });
@@ -31,7 +35,7 @@ describe('Config (valid file)', () => {
       TYPEORM_HOST: 'typeorm/host'
     };
 
-    const config = new Config({ configSearchPath: __dirname }).loadSync();
+    const config = new Config({ configSearchPath: __dirname });
 
     expect(config.get('WARTHOG_DB_HOST')).toEqual('warthog/db/host');
     expect(process.env.WARTHOG_DB_HOST).toEqual('warthog/db/host');

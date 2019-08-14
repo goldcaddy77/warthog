@@ -8,6 +8,7 @@ import {
   GraphQLString
 } from 'graphql';
 import { GraphQLISODateTime } from 'type-graphql';
+import { Container } from 'typedi';
 import { EntityMetadata } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
@@ -214,7 +215,17 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
 }
 
 export function entityToCreateInput(entity: EntityMetadata): string {
+  const idsOnCreate =
+    (Container.get('Config') as any).get('ALLOW_OPTIONAL_ID_ON_CREATE') === 'true';
+
   let fieldTemplates = '';
+
+  if (idsOnCreate) {
+    fieldTemplates += `
+      @TypeGraphQLField({ nullable: true })
+      id?: string;
+    `;
+  }
 
   entity.columns.forEach((column: ColumnMetadata) => {
     if (

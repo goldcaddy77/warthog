@@ -12,7 +12,7 @@ describe('Config', () => {
       process.env.NODE_ENV = 'production';
 
       try {
-        new Config({ configSearchPath: __dirname }).loadSync();
+        new Config({ configSearchPath: __dirname });
       } catch (error) {
         expect(error.message).toContain('WARTHOG_APP_HOST is required');
       }
@@ -23,7 +23,7 @@ describe('Config', () => {
     test('uses correct defaults', async () => {
       process.env.NODE_ENV = 'development';
 
-      const config = new Config({ configSearchPath: __dirname }).loadSync();
+      const config = new Config({ configSearchPath: __dirname });
 
       expect(config.get('DB_HOST')).toEqual('localhost');
     });
@@ -37,7 +37,7 @@ describe('Config', () => {
         JEST_WORKER_ID: '12345'
       };
 
-      const config = new Config({ configSearchPath: __dirname }).loadSync();
+      const config = new Config({ configSearchPath: __dirname });
 
       expect(config.get('WARTHOG_AUTO_OPEN_PLAYGROUND')).toEqual('false');
     });
@@ -50,7 +50,7 @@ describe('Config', () => {
         TYPEORM_FOO: 'baz456'
       };
 
-      const config = new Config({ configSearchPath: __dirname }).loadSync();
+      const config = new Config({ configSearchPath: __dirname });
 
       expect(config.get('WARTHOG_DB_FOO')).toEqual('baz456');
     });

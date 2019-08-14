@@ -57,7 +57,8 @@ export abstract class BaseModel implements BaseGraphQLObject {
   @VersionColumn() version!: number;
 
   getId() {
-    return shortid.generate();
+    // If settings allow ID to be specified on create, use the specified ID
+    return this.id || shortid.generate();
   }
 
   @BeforeInsert()
