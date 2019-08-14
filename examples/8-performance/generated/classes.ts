@@ -64,6 +64,9 @@ export class UserWhereUniqueInput {
 
 @TypeGraphQLInputType()
 export class UserCreateInput {
+  @TypeGraphQLField({ nullable: true })
+  id?: string;
+
   @TypeGraphQLField()
   firstName!: string;
 }
@@ -148,6 +151,9 @@ export class PostWhereUniqueInput {
 
 @TypeGraphQLInputType()
 export class PostCreateInput {
+  @TypeGraphQLField({ nullable: true })
+  id?: string;
+
   @TypeGraphQLField()
   title!: string;
 

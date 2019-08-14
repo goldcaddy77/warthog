@@ -91,6 +91,7 @@ export interface BaseWhereInput {
 }
 
 export interface PostCreateInput {
+  id?: String | null
   title: String
   userId: String
 }
@@ -136,6 +137,7 @@ export interface PostWhereUniqueInput {
 }
 
 export interface UserCreateInput {
+  id?: String | null
   firstName: String
 }
 

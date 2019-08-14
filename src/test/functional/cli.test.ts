@@ -284,4 +284,39 @@ describe('cli functional tests', () => {
     filesystem.remove(folder);
     done();
   });
+
+  test.skip('codegen creates correct files', async done => {
+    const examplesFolder = './src/test/examples/';
+    const folder = examplesFolder + 'create-id-model';
+
+    process.env.WARTHOG_GENERATED_FOLDER = folder;
+    process.env.WARTHOG_ALLOW_OPTIONAL_ID_ON_CREATE = 'true';
+    process.env.WARTHOG_DB_ENTITIES = `${examplesFolder}/create-id-model.ts`;
+    process.env.WARTHOG_GENERATED_FOLDER = `${folder}/generated`;
+    process.env.WARTHOG_RESOLVERS_PATH = `${examplesFolder}/create-id-model.ts`;
+    process.env.WARTHOG_MODULE_IMPORT_PATH = '../../../../';
+
+    await callWarthogCLI('codegen');
+
+    // TODO: how much file content validation should we do here?
+    const bindingContents = filesystem.read(`${folder}/binding.ts`);
+    expect(bindingContents).toContain('export interface Binding');
+
+    const classContents = filesystem.read(`${folder}/classes.ts`);
+    expect(classContents).toContain('export enum KitchenSinkOrderByEnum');
+
+    const indexContents = filesystem.read(`${folder}/index.ts`);
+    expect(indexContents).toContain("export * from './classes';");
+
+    const ormConfigContents = filesystem.read(`${folder}/ormconfig.ts`);
+    expect(ormConfigContents).toContain('module.exports = getBaseConfig();');
+
+    const schemaContents = filesystem.read(`${folder}/schema.graphql`);
+    expect(schemaContents).toContain(`input KitchenSinkCreateInput {
+  id: ID
+`);
+    expect(schemaContents).toContain(' id: ID');
+
+    done();
+  });
 });

@@ -19,7 +19,7 @@ describe('Config (valid file)', () => {
       WARTHOG_MODELS_PATH: 'env/models/path'
     };
 
-    const config = new Config({ configSearchPath: __dirname }).loadSync();
+    const config = new Config({ configSearchPath: __dirname });
 
     expect(config.get('WARTHOG_MODELS_PATH')).toEqual('env/models/path');
   });
@@ -31,7 +31,7 @@ describe('Config (valid file)', () => {
       TYPEORM_HOST: 'typeorm/host'
     };
 
-    const config = new Config({ configSearchPath: __dirname }).loadSync();
+    const config = new Config({ configSearchPath: __dirname });
 
     expect(config.get('WARTHOG_DB_HOST')).toEqual('warthog/db/host');
     expect(process.env.WARTHOG_DB_HOST).toEqual('warthog/db/host');

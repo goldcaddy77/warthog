@@ -103,7 +103,7 @@ export class Server<C extends BaseContext> {
 
     // NOTE: this should be after we hard-code the WARTHOG_ env vars above because we want the config
     // module to think they were set by the user
-    this.config = new Config({ container: this.container, logger: this.logger }).loadSync();
+    this.config = new Config({ container: this.container, logger: this.logger });
 
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");

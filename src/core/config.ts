@@ -2,7 +2,7 @@ import * as cosmiconfig from 'cosmiconfig';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Container } from 'typedi';
+import { Container, Service } from 'typedi';
 
 import { ObjectUtil } from '../utils';
 import { Logger } from '../core';
@@ -15,6 +15,7 @@ interface ConfigOptions {
 }
 
 const CONFIG_VALUE_VALID_KEYS = [
+  'allowOptionalIdOnCreate',
   'generatedFolder',
   'cliGeneratePath',
   'moduleImportPath',
@@ -33,6 +34,7 @@ interface StaticConfigResponse {
   config: StaticConfigFile;
 }
 
+@Service('Config')
 export class Config {
   readonly WARTHOG_ENV_PREFIX = 'WARTHOG_';
   readonly TYPEORM_ENV_PREFIX = 'TYPEORM_';
@@ -56,6 +58,7 @@ export class Config {
     this.defaults = {
       WARTHOG_DB_CONNECTION: 'postgres',
       WARTHOG_ROOT_FOLDER: this.PROJECT_ROOT,
+      WARTHOG_ALLOW_OPTIONAL_ID_ON_CREATE: 'false',
       WARTHOG_APP_PROTOCOL: 'https',
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
@@ -90,7 +93,7 @@ export class Config {
     this.NODE_ENV = this.determineNodeEnv(dotenvPath);
     this.loadDotenvFiles(dotenvPath);
 
-    return this;
+    return this.loadSync();
   }
 
   // Allow NODE_ENV to be set in the .env file.  Check for this first here and then fall back on

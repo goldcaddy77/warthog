@@ -7,7 +7,7 @@ describe('Dotenv files', () => {
       WARTHOG_PROPER_ENV_VARIABLE: '12345'
     };
 
-    new Config({ dotenvPath: __dirname }).loadSync();
+    new Config({ dotenvPath: __dirname });
 
     expect(process.env.WARTHOG_PROPER_ENV_VARIABLE).toEqual('12345');
     expect(process.env.WARTHOG_ENV_LOCAL_DEVELOPMENT).toEqual('333');
