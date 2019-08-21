@@ -68,10 +68,10 @@ describe('cli functional tests', () => {
   });
 
   test('generates models', async done => {
-    expect.assertions(18);
+    expect.assertions(23);
 
     await callWarthogCLI(
-      `generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! --folder ${GENERATED_FOLDER}`
+      `generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! meta:json! --folder ${GENERATED_FOLDER}`
     );
     const stdout = spy.getStdOutErr();
 
@@ -101,6 +101,13 @@ describe('cli functional tests', () => {
     expect(fileContents).toContain('@FloatField()');
     expect(fileContents).toContain('balance!: number;');
 
+    // Generator should dynamically add these imports
+    expect(fileContents).toContain('BooleanField,');
+    expect(fileContents).toContain('DateField,');
+    expect(fileContents).toContain('FloatField,');
+    expect(fileContents).toContain('IntField,');
+    expect(fileContents).toContain('JSONField,');
+
     expect(stdout).toContain(`Generated file at ${GENERATED_FOLDER}/user.service.ts`);
     fileContents = filesystem.read(`${GENERATED_FOLDER}/user.service.ts`);
     expect(fileContents).toContain("@Service('UserService')");
@@ -113,7 +120,7 @@ describe('cli functional tests', () => {
   });
 
   test('generates a shell of a file of no params specified', async done => {
-    expect.assertions(4);
+    expect.assertions(9);
 
     await callWarthogCLI(`generate empty_class --folder ${GENERATED_FOLDER}`);
     const stdout = spy.getStdOutErr();
@@ -124,6 +131,13 @@ describe('cli functional tests', () => {
     expect(fileContents).toContain('export class EmptyClass extends BaseModel');
     expect(fileContents).toContain('@StringField({ nullable: true })');
     expect(fileContents).toContain('fieldName?: string;');
+
+    // Generator should NOT dynamically add these imports
+    expect(fileContents).not.toContain('BooleanField');
+    expect(fileContents).not.toContain('DateField');
+    expect(fileContents).not.toContain('FloatField');
+    expect(fileContents).not.toContain('IntField');
+    expect(fileContents).not.toContain('JSONField');
 
     done();
   });
