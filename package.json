@@ -18,7 +18,7 @@
     "url": "https://github.com/goldcaddy77"
   },
   "scripts": {
-    "build": "rm -rf ./dist && yarn tsc",
+    "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/**/*.ejs dist/",
     "bootstrap": "./tools/bootstrap-all.sh",
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "lint": "eslint './+(examples|src|test|tools)/**/*.{js,ts}' --fix",
@@ -114,6 +114,7 @@
     "@typescript-eslint/eslint-plugin": "^1.10.2",
     "@typescript-eslint/parser": "^1.10.2",
     "condition-circle": "^2.0.2",
+    "copyfiles": "^2.1.1",
     "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^5.0.0",
