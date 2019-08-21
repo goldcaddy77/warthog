@@ -161,6 +161,14 @@ type User implements BaseGraphQLObject {
   name: String!
 }
 
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+}
+
+type Query {
+  users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
+}
+
 input UserCreateInput {
   name: String!
 }
@@ -212,6 +220,10 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: String!
 }
+
+# ...
+# ...
+
 ```
 
 Notice how we've only added a single field on the model and you get pagination, filtering and tracking of who created, updated and deleted records automatically.
@@ -221,7 +233,7 @@ Notice how we've only added a single field on the model and you get pagination, 
 Most of the config in Warthog is done via environment variables (see `Config - Environment Variables` below). However, more complex/dynamic objects should be passed via the server config.
 
 | attribute   | description                                                                                               | default                                       |
-| ----------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+|-------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------------|
 | container   | TypeDI container. Warthog uses dependency injection under the hood.                                       | empty container                               |
 | authChecker | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers. |                                               |
 | context     | Context getter of form `(request: Request) => object`                                                     | empty                                         |
@@ -233,7 +245,7 @@ Most of the config in Warthog is done via environment variables (see `Config - E
 Almost all config in Warthog is driven by environment variables. The following items are available:
 
 | variable                     | value                                       | default                     |
-| ---------------------------- | ------------------------------------------- | --------------------------- |
+|------------------------------|---------------------------------------------|-----------------------------|
 | WARTHOG_APP_HOST             | App server host                             | _none_                      |
 | WARTHOG_APP_PORT             | App server port                             | 4000                        |
 | WARTHOG_APP_PROTOCOL         | App server protocol                         | http                        |
@@ -288,7 +300,7 @@ Warthog ships with the following commands that can be accessed by running `yarn 
 See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/blob/master/package.json) project's package.json for example usage.
 
 | Command           | Args      | Description                                                                             |
-| ----------------- | --------- | --------------------------------------------------------------------------------------- |
+|-------------------|-----------|-----------------------------------------------------------------------------------------|
 | codegen           | none      | autogenerates code from decorated models and resolvers and places in `generated` folder |
 | db:create         | none      | creates DB based on DB specified in config file                                         |
 | db:drop           | none      | drops DB based on DB specified in config file                                           |
@@ -324,7 +336,7 @@ Warthog uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig) for con
 The following config options are currently available:
 
 | Config Key      | Description                                                                  | Equivalent Environment Variable |
-| --------------- | ---------------------------------------------------------------------------- | ------------------------------- |
+|-----------------|------------------------------------------------------------------------------|---------------------------------|
 | generatedFolder | Relative location to generated folder (relative path from the config file)   | WARTHOG_GENERATED_FOLDER        |
 | cliGeneratePath | Where should CLI place generated files? (relative path from the config file) | WARTHOG_CLI_GENERATE_PATH       |
 | resolversPath   | Where should Warthog look for resolvers? (comma-delimited list of regexes)   | WARTHOG_RESOLVERS_PATH          |
