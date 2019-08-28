@@ -61,12 +61,12 @@ export class BaseService<E extends BaseModel> {
     // turn this off
     where = where || {};
 
-    const hasDeletedAts = Object.keys(where).find(
-      key => key.indexOf('deletedAt_') === 0 && key.indexOf('deletedAt_all') < 0
-    );
-    if (!hasDeletedAts) {
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
+    if (!where.deletedAt_all) {
+      const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
+      if (!hasDeletedAts) {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
+      }
     }
 
     // Delete this param so that it doesn't try to filter on the magic `all` param
