@@ -60,8 +60,11 @@ export class BaseService<E extends BaseModel> {
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
     // turn this off
     where = where || {};
-    // TODO: Bug: does not support deletedAt_gt: "2000-10-10" or deletedAt_not: null
-    if (!where.deletedAt_all) {
+
+    const hasDeletedAts = Object.keys(where).find(
+      key => key.indexOf('deletedAt_') === 0 && key.indexOf('deletedAt_all') < 0
+    );
+    if (!hasDeletedAts) {
       // eslint-disable-next-line @typescript-eslint/camelcase
       where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
     }
