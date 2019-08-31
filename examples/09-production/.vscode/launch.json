@@ -10,10 +10,10 @@
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
-			"env": {
+      "env": {
         "TS_NODE_IGNORE": "false",
         "DEBUG": "*"
-			}
+      }
     }
   ]
 }
