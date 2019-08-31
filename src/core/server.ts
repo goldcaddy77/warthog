@@ -2,7 +2,7 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
-import { Request } from 'express';
+import { Express, Request } from 'express';
 import express = require('express');
 import { GraphQLID, GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
@@ -24,6 +24,7 @@ import { Config } from './config';
 import { BaseContext } from './Context';
 
 import * as Debug from 'debug';
+import { RequestHandlerParams } from '../../examples/10-sofa-api-rest/node_modules/@types/express-serve-static-core';
 
 const debug = Debug('warthog:server');
 
@@ -53,6 +54,7 @@ export class Server<C extends BaseContext> {
   authChecker?: AuthChecker<C>;
   connection!: Connection;
   container: Container;
+  expressApp: Express;
   graphQLServer!: ApolloServer;
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
@@ -108,6 +110,8 @@ export class Server<C extends BaseContext> {
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }
+
+    this.expressApp = express();
   }
 
   getLogger(): Logger {
@@ -179,6 +183,29 @@ export class Server<C extends BaseContext> {
     return this.schema;
   }
 
+  contextGetter() {
+    const contextGetter =
+      this.appOptions.context ||
+      (async () => {
+        return {};
+      });
+
+    return async (options: { req: Request }) => {
+      const consumerCtx = await contextGetter(options.req);
+
+      return {
+        connection: this.connection,
+        dataLoader: {
+          initialized: false,
+          loaders: {}
+        },
+        request: options.req,
+        // Allows consumer to add to the context object - ex. context.user
+        ...consumerCtx
+      };
+    };
+  }
+
   async generateFiles(): Promise<void> {
     debug('start:generateFiles:start');
     await this.establishDBConnection();
@@ -191,6 +218,10 @@ export class Server<C extends BaseContext> {
     debug('start:generateFiles:end');
   }
 
+  async addExpressMiddleware(...args: RequestHandlerParams[]) {
+    this.expressApp.use(...args);
+  }
+
   async start() {
     debug('start:start');
     await this.establishDBConnection();
@@ -199,12 +230,6 @@ export class Server<C extends BaseContext> {
     }
     await this.buildGraphQLSchema();
 
-    const contextGetter =
-      this.appOptions.context ||
-      (async () => {
-        return {};
-      });
-
     debug('start:ApolloServerAllocation:start');
     // See all options here: https://github.com/apollographql/apollo-server/blob/9ffb4a847e1503ea2ab1f3fcd47837daacf40870/packages/apollo-server-core/src/types.ts#L69
     const playgroundOption = this.config.get('PLAYGROUND') === 'true' ? { playground: true } : {};
@@ -212,20 +237,7 @@ export class Server<C extends BaseContext> {
       this.config.get('INTROSPECTION') === 'true' ? { introspection: true } : {};
 
     this.graphQLServer = new ApolloServer({
-      context: async (options: { req: Request }) => {
-        const consumerCtx = await contextGetter(options.req);
-
-        return {
-          connection: this.connection,
-          dataLoader: {
-            initialized: false,
-            loaders: {}
-          },
-          request: options.req,
-          // Allows consumer to add to the context object - ex. context.user
-          ...consumerCtx
-        };
-      },
+      context: this.contextGetter(),
       ...playgroundOption,
       ...introspectionOption,
       schema: this.schema,
@@ -234,12 +246,11 @@ export class Server<C extends BaseContext> {
 
     debug('start:ApolloServerAllocation:end');
 
-    const app = express();
-    app.use('/health', healthCheckMiddleware);
+    this.expressApp.use('/health', healthCheckMiddleware);
 
     debug('start:applyMiddleware:start');
     this.graphQLServer.applyMiddleware({
-      app,
+      app: this.expressApp,
       bodyParserConfig: this.bodyParserConfig,
       path: '/graphql'
     });
@@ -247,7 +258,7 @@ export class Server<C extends BaseContext> {
 
     const url = this.getGraphQLServerUrl();
 
-    this.httpServer = app.listen({ port: this.config.get('APP_PORT') }, () =>
+    this.httpServer = this.expressApp.listen({ port: this.config.get('APP_PORT') }, () =>
       this.logger.info(`🚀 Server ready at ${url}`)
     );
 

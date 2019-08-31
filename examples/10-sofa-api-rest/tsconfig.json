@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "lib": ["dom", "es5", "es6", "es7", "esnext", "esnext.asynciterable"],
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "keyofStringsOnly": true,
+    "noImplicitAny": false, // not sure why this is blowing up
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false, // Avoid noise in our resolvers when we use DI
+    "strict": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "types": ["jest", "isomorphic-fetch", "node"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**/*", "generated/**/*"]
+}
