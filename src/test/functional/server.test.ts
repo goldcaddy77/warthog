@@ -10,10 +10,14 @@ import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
 import { KITCHEN_SINKS } from './fixtures';
+import { Application } from 'express';
 
 let server: Server<any>;
 // let binding: Binding;
 let binding: any;
+
+let onBeforeCalled = false;
+let onAfterCalled = false;
 
 describe('server', () => {
   beforeEach(() => {
@@ -29,7 +33,15 @@ describe('server', () => {
       setTestServerEnvironmentVariables();
 
       server = getTestServer({
-        apolloConfig: { playground: false }
+        apolloConfig: { playground: false },
+        onBeforeGraphQLMiddleware: (app: Application) => {
+          app;
+          onBeforeCalled = true;
+        },
+        onAfterGraphQLMiddleware: (app: Application) => {
+          app;
+          onAfterCalled = true;
+        }
       });
 
       await server.start();
@@ -52,6 +64,11 @@ describe('server', () => {
     await cleanUpTestData();
     await server.stop();
     done();
+  });
+
+  test('before and after middleware hooks called', async () => {
+    expect(onBeforeCalled).toEqual(true);
+    expect(onAfterCalled).toEqual(true);
   });
 
   test('disables playground properly using apollo config options', async () => {

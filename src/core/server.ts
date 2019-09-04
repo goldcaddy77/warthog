@@ -29,7 +29,6 @@ const debug = Debug('warthog:server');
 
 export interface ServerOptions<T> {
   container?: Container;
-
   apolloConfig?: ApolloServerExpressConfig;
   authChecker?: AuthChecker<T>;
   autoGenerateFiles?: boolean;
@@ -45,6 +44,8 @@ export interface ServerOptions<T> {
   warthogImportPath?: string;
   introspection?: boolean; // DEPRECATED
   bodyParserConfig?: OptionsJson;
+  onBeforeGraphQLMiddleware?: (app: express.Application) => void;
+  onAfterGraphQLMiddleware?: (app: express.Application) => void;
 }
 
 export class Server<C extends BaseContext> {
@@ -235,7 +236,12 @@ export class Server<C extends BaseContext> {
     debug('start:ApolloServerAllocation:end');
 
     const app = express();
+
     app.use('/health', healthCheckMiddleware);
+
+    if (this.appOptions.onBeforeGraphQLMiddleware) {
+      this.appOptions.onBeforeGraphQLMiddleware(app);
+    }
 
     debug('start:applyMiddleware:start');
     this.graphQLServer.applyMiddleware({
@@ -244,6 +250,10 @@ export class Server<C extends BaseContext> {
       path: '/graphql'
     });
     debug('start:applyMiddleware:end');
+
+    if (this.appOptions.onAfterGraphQLMiddleware) {
+      this.appOptions.onAfterGraphQLMiddleware(app);
+    }
 
     const url = this.getGraphQLServerUrl();
 
