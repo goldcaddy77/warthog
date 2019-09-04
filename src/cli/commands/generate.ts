@@ -27,7 +27,8 @@ export default {
     const names = {
       className: toolbox.strings.pascalCase(name),
       camelName: toolbox.strings.camelCase(name),
-      kebabName: toolbox.strings.kebabCase(name)
+      kebabName: toolbox.strings.kebabCase(name),
+      camelNamePlural: toolbox.strings.camelCase(name) + 's' // Not good, but easy to fix in generated code
     };
 
     // Allow folder to be passed in or pulled from config files
@@ -55,6 +56,8 @@ export default {
 
     const props = {
       ...names,
+      pascalCase: toolbox.strings.pascalCase,
+      camelCase: toolbox.strings.camelCase,
       fields: array ? processFields(array.slice(1)) : [],
       generatedFolderRelativePath,
       warthogPathInSourceFiles
@@ -153,20 +156,26 @@ function processFields(fields: string[]) {
         decorator: 'FloatField',
         tsType: 'number'
       },
+      json: {
+        decorator: 'JSONField',
+        tsType: 'JSON'
+      },
+      otm: {
+        decorator: 'OneToMany',
+        tsType: '---'
+      },
       string: {
         decorator: 'StringField',
         tsType: 'string'
       }
     };
 
+    // TODO: validate otm fields are plural?
+
     field = {
       ...field,
       ...typeFields[field.type]
     };
-
-    if (parts.length > 2) {
-      field.filterable = true;
-    }
 
     return field;
   });
