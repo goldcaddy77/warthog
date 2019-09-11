@@ -109,12 +109,30 @@ describe('server', () => {
     expect(results[0].dishes.length).toEqual(20);
   });
 
-  test('throws errors when given bad input', async done => {
+  test('throws errors when given bad input on a single create', async done => {
     expect.assertions(1);
 
     createKitchenSink(binding, '')
       .catch(error => {
-        expect(error).toBeDefined();
+        expect(error).toHaveProperty('message', 'Argument Validation Error\n');
+      })
+      .finally(done);
+  });
+
+  test('throws errors when given bad input on a many create', async done => {
+    expect.assertions(1);
+    const sink = {
+      dateField: '2000-03-26T19:39:08.597Z',
+      stringField: 'Trantow',
+      emailField: '',
+      integerField: 41,
+      booleanField: false,
+      floatField: -1.3885
+    };
+
+    createManyKitchenSinks(binding, [sink])
+      .catch(error => {
+        expect(error).toHaveProperty('message', 'Argument Validation Error\n');
       })
       .finally(done);
   });
@@ -388,8 +406,8 @@ async function updateKitchenSink(
   );
 }
 
-async function createManyKitchenSinks(binding: any): Promise<KitchenSink> {
-  return binding.mutation.createManyKitchenSinks({ data: KITCHEN_SINKS }, `{ id }`);
+async function createManyKitchenSinks(binding: any, data = KITCHEN_SINKS): Promise<KitchenSink> {
+  return binding.mutation.createManyKitchenSinks({ data }, `{ id }`);
 }
 
 async function createManyDishes(binding: any, kitchenSinkId: string): Promise<KitchenSink> {
