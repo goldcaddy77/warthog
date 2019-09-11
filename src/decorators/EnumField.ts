@@ -8,7 +8,7 @@ import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } 
 
 interface EnumFieldOptions {
   nullable?: boolean;
-  default?: boolean;
+  default?: any;
 }
 
 export function EnumField(name: string, enumeration: object, options: EnumFieldOptions = {}): any {
