@@ -40,7 +40,16 @@ export function filenameToImportPath(filename: string): string {
 }
 
 export function extractEnumObject(column: ColumnMetadata): GraphQLEnumType {
-  return getMetadataStorage().getEnum(column.entityMetadata.name, column.propertyName);
+  const modelNames = column.entityMetadata.inheritanceTree.map(f => f.name);
+  let enumObject = null;
+  for (let i = 0, ii = modelNames.length; i < ii; i++) {
+    enumObject = getMetadataStorage().getEnum(modelNames[i], column.propertyName);
+    if (enumObject) {
+      break;
+    }
+  }
+
+  return enumObject;
 }
 
 export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
