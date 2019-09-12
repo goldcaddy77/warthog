@@ -9,10 +9,7 @@ import {
 } from 'graphql';
 import { GraphQLISODateTime } from 'type-graphql';
 import { Container } from 'typedi';
-import { EntityMetadata } from 'typeorm';
-import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
-import { getMetadataStorage } from '../metadata';
+import { ColumnMetadata, getMetadataStorage, ModelMetadata } from '../metadata';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
@@ -26,15 +23,6 @@ const SYSTEM_FIELDS = [
   'deletedById'
 ];
 
-function uniquesForEntity(entity: EntityMetadata): string[] {
-  return entity.uniques.reduce<string[]>(
-    (arr, unique: UniqueMetadata) => {
-      return [...arr, ...unique.columns.map((col: ColumnMetadata) => col.propertyName)];
-    },
-    [] as string[]
-  );
-}
-
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
@@ -46,6 +34,9 @@ export function extractEnumObject(column: ColumnMetadata): GraphQLEnumType {
   );
 
   return modelEnums.find(m => Boolean(m));
+
+  // TODO: GENERATOR
+  // return getMetadataStorage().getEnum(column.modelName, column.propertyName);
 }
 
 export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
@@ -181,22 +172,15 @@ export function generateEnumMapImports(): string[] {
   return imports;
 }
 
-export function entityToWhereUniqueInput(entity: EntityMetadata): string {
-  const uniques = uniquesForEntity(entity);
+export function entityToWhereUniqueInput(model: ModelMetadata): string {
+  const uniques = getMetadataStorage().uniquesForModel(model);
 
-  const numUniques = entity.columns.reduce<number>((num, column: ColumnMetadata) => {
-    if (uniques.includes(column.propertyName) || column.isPrimary) {
-      num++;
-    }
-
-    return num;
-  }, 0);
   // If there is only one unique field, it should not be nullable
-  const uniqueFieldsAreNullable = numUniques > 1;
+  const uniqueFieldsAreNullable = uniques.length > 1;
 
   let fieldsTemplate = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
+  model.columns.forEach((column: ColumnMetadata) => {
     if (uniques.includes(column.propertyName) || column.isPrimary) {
       const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
       const graphQLDataType = columnTypeToGraphQLDataType(column);
@@ -211,7 +195,7 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
 
   const template = `
     @TypeGraphQLInputType()
-    export class ${entity.name}WhereUniqueInput {
+    export class ${model.name}WhereUniqueInput {
       ${fieldsTemplate}
     }
   `;
@@ -219,7 +203,7 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
   return template;
 }
 
-export function entityToCreateInput(entity: EntityMetadata): string {
+export function entityToCreateInput(model: ModelMetadata): string {
   const idsOnCreate =
     (Container.get('Config') as any).get('ALLOW_OPTIONAL_ID_ON_CREATE') === 'true';
 
@@ -232,7 +216,7 @@ export function entityToCreateInput(entity: EntityMetadata): string {
     `;
   }
 
-  entity.columns.forEach((column: ColumnMetadata) => {
+  model.columns.forEach((column: ColumnMetadata) => {
     if (
       !column.isPrimary &&
       !column.isCreateDate &&
@@ -249,12 +233,7 @@ export function entityToCreateInput(entity: EntityMetadata): string {
       // we need to know what the graphql type is and what the tsType is
       // for enums
 
-      if (
-        column.enum ||
-        column.type === 'json' ||
-        column.type === 'jsonb' ||
-        column.type === 'varying character'
-      ) {
+      if (column.enum || column.type === 'json') {
         fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
@@ -270,16 +249,16 @@ export function entityToCreateInput(entity: EntityMetadata): string {
 
   return `
     @TypeGraphQLInputType()
-    export class ${entity.name}CreateInput {
+    export class ${model.name}CreateInput {
       ${fieldTemplates}
     }
   `;
 }
 
-export function entityToUpdateInput(entity: EntityMetadata): string {
+export function entityToUpdateInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
+  model.columns.forEach((column: ColumnMetadata) => {
     if (
       !column.isPrimary &&
       !column.isCreateDate &&
@@ -293,12 +272,7 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
       const graphQLDataType = columnTypeToGraphQLDataType(column);
       const tsType = columnToTypeScriptType(column);
 
-      if (
-        column.enum ||
-        column.type === 'json' ||
-        column.type === 'jsonb' ||
-        column.type === 'varying character'
-      ) {
+      if (column.enum || column.type === 'json') {
         fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}?: ${tsType};
@@ -314,19 +288,19 @@ export function entityToUpdateInput(entity: EntityMetadata): string {
 
   return `
     @TypeGraphQLInputType()
-    export class ${entity.name}UpdateInput {
+    export class ${model.name}UpdateInput {
       ${fieldTemplates}
     }
   `;
 }
 
 // Constructs required arguments needed when doing an update
-export function entityToUpdateInputArgs(entity: EntityMetadata): string {
+export function entityToUpdateInputArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
-    export class ${entity.name}UpdateArgs {
-      @TypeGraphQLField() data!: ${entity.name}UpdateInput;
-      @TypeGraphQLField() where!: ${entity.name}WhereUniqueInput;
+    export class ${model.name}UpdateArgs {
+      @TypeGraphQLField() data!: ${model.name}UpdateInput;
+      @TypeGraphQLField() where!: ${model.name}WhereUniqueInput;
     }
   `;
 }
@@ -338,10 +312,10 @@ function columnToTypes(column: ColumnMetadata) {
   return { graphqlType, tsType };
 }
 
-export function entityToWhereInput(entity: EntityMetadata): string {
+export function entityToWhereInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
+  model.columns.forEach((column: ColumnMetadata) => {
     // Don't allow filtering on these fields
     if (column.isPrimary || column.isVersion || SYSTEM_FIELDS.includes(column.propertyName)) {
       return;
@@ -435,43 +409,43 @@ export function entityToWhereInput(entity: EntityMetadata): string {
 
   return `
     @TypeGraphQLInputType()
-    export class ${entity.name}WhereInput extends BaseWhereInput {
+    export class ${model.name}WhereInput extends BaseWhereInput {
       ${fieldTemplates}
     }
   `;
 }
 
-export function entityToWhereArgs(entity: EntityMetadata): string {
+export function entityToWhereArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
-    export class ${entity.name}WhereArgs extends PaginationArgs {
-      @TypeGraphQLField(() => ${entity.name}WhereInput, { nullable: true })
-      where?: ${entity.name}WhereInput;
+    export class ${model.name}WhereArgs extends PaginationArgs {
+      @TypeGraphQLField(() => ${model.name}WhereInput, { nullable: true })
+      where?: ${model.name}WhereInput;
 
-      @TypeGraphQLField(() => ${entity.name}OrderByEnum, { nullable: true })
-      orderBy?: ${entity.name}OrderByEnum;
+      @TypeGraphQLField(() => ${model.name}OrderByEnum, { nullable: true })
+      orderBy?: ${model.name}OrderByEnum;
     }
   `;
 }
 
-// Note: it would be great to inject a single `Arg` with the [entity.nameCreateInput] array arg,
+// Note: it would be great to inject a single `Arg` with the [model.nameCreateInput] array arg,
 // but that is not allowed by TypeGraphQL
-export function entityToCreateManyArgs(entity: EntityMetadata): string {
+export function entityToCreateManyArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
-    export class ${entity.name}CreateManyArgs {
-      @TypeGraphQLField(() => [${entity.name}CreateInput])
-      data!: ${entity.name}CreateInput[];
+    export class ${model.name}CreateManyArgs {
+      @TypeGraphQLField(() => [${model.name}CreateInput])
+      data!: ${model.name}CreateInput[];
     }
   `;
 }
 
-export function entityToOrderByEnum(entity: EntityMetadata): string {
+export function entityToOrderByEnum(model: ModelMetadata): string {
   const ORDER_BY_BLACKLIST = ['createdById', 'updatedById', 'deletedById'];
 
   let fieldsTemplate = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
+  model.columns.forEach((column: ColumnMetadata) => {
     if (
       !column.isPrimary &&
       !column.isVersion &&
@@ -485,12 +459,12 @@ export function entityToOrderByEnum(entity: EntityMetadata): string {
   });
 
   return `
-    export enum ${entity.name}OrderByEnum {
+    export enum ${model.name}OrderByEnum {
       ${fieldsTemplate}
     }
 
-    registerEnumType(${entity.name}OrderByEnum, {
-      name: '${entity.name}OrderByInput'
+    registerEnumType(${model.name}OrderByEnum, {
+      name: '${model.name}OrderByInput'
     });
   `;
 }
