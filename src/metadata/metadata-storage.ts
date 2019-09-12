@@ -1,21 +1,29 @@
+export type ColumnType = 'boolean' | 'enum' | 'json';
+
+export interface ColumnMetadata {
+  type: ColumnType;
+  propertyName: string;
+  modelName: string;
+  enum?: boolean;
+  dataType?: string; // int16, jsonb, etc...
+  isCreateDate?: boolean;
+  isGenerated?: boolean;
+  isNullable?: boolean;
+  isPrimary?: boolean;
+  isUpdateDate?: boolean;
+  isVersion?: boolean;
+  unique?: boolean;
+}
+
+export interface ModelMetadata {
+  name: string;
+  columns: ColumnMetadata[];
+}
+
 export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
   classMap: { [table: string]: any } = {};
-
-  addEnum(
-    tableName: string,
-    columnName: string,
-    enumName: string,
-    enumValues: any,
-    filename: string
-  ) {
-    this.enumMap[tableName] = this.enumMap[tableName] || {};
-    this.enumMap[tableName][columnName] = {
-      enumeration: enumValues,
-      filename,
-      name: enumName
-    };
-  }
+  models: { [table: string]: ModelMetadata } = {};
 
   addModel(name: string, klass: any, filename: string) {
     this.classMap[name] = {
@@ -25,19 +33,77 @@ export class MetadataStorage {
     };
   }
 
-  getEnum(tableName: string, columnName: string) {
-    if (!this.enumMap[tableName]) {
-      return undefined;
-    }
-    return this.enumMap[tableName][columnName] || undefined;
+  addEnum(
+    modelName: string,
+    columnName: string,
+    enumName: string,
+    enumValues: any,
+    filename: string
+  ) {
+    this.enumMap[modelName] = this.enumMap[modelName] || {};
+    this.enumMap[modelName][columnName] = {
+      enumeration: enumValues,
+      filename,
+      name: enumName
+    };
+
+    this._addField('enum', modelName, columnName, { enum: true });
   }
 
-  // getModel(tableName: string) {
-  //   if (!this.enumMap[tableName]) {
-  //     return undefined;
+  addBooleanField(modelName: string, columnName: string) {
+    this._addField('boolean', modelName, columnName);
+  }
+
+  getModels() {
+    return this.models;
+  }
+
+  getModel(name: string): ModelMetadata {
+    return this.models[name];
+  }
+
+  getEnum(modelName: string, columnName: string) {
+    if (!this.enumMap[modelName]) {
+      return undefined;
+    }
+    return this.enumMap[modelName][columnName] || undefined;
+  }
+
+  _addField(type: ColumnType, modelName: string, columnName: string, options: object = {}) {
+    if (!this.models[modelName]) {
+      this.models[modelName] = { name: modelName, columns: [] };
+    }
+
+    this.models[modelName].columns.push({
+      type,
+      propertyName: columnName,
+      modelName,
+      ...options
+    });
+  }
+
+  uniquesForModel(model: ModelMetadata): string[] {
+    model.toString();
+    return ['id'];
+  }
+
+  // const numUniques = entity.columns.reduce<number>((num, column: ColumnMetadata) => {
+  //   if (uniques.includes(column.propertyName) || column.isPrimary) {
+  //     num++;
   //   }
-  //   return this.enumMap[tableName];
-  // }
+  //   return num;
+  // }, 0);
+
+  uniquesForEntity(model: EntityMetadata): string[] {
+    model.tostring;
+    return [];
+    // return entity.uniques.reduce<string[]>(
+    //   (arr, unique: UniqueMetadata) => {
+    //     return [...arr, ...unique.columns.map((col: ColumnMetadata) => col.propertyName)];
+    //   },
+    //   [] as string[]
+    // );
+  }
 }
 
 export function getMetadataStorage(): MetadataStorage {

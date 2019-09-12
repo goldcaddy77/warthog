@@ -6,7 +6,6 @@ import { GraphQLID, GraphQLSchema, printSchema } from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import { buildSchema } from 'type-graphql';
-import { Connection } from 'typeorm';
 import * as util from 'util';
 
 import { generateBindingFile } from '../gql';
@@ -27,15 +26,7 @@ interface CodeGeneratorOptions {
 export class CodeGenerator {
   schema?: GraphQLSchema;
 
-  constructor(
-    private connection: Connection,
-    private generatedFolder: string,
-    private options: CodeGeneratorOptions
-  ) {
-    if (!connection) {
-      throw new Error('FileGenerator: connection is required');
-    }
-
+  constructor(private generatedFolder: string, private options: CodeGeneratorOptions) {
     this.createGeneratedFolder();
   }
 
@@ -97,10 +88,7 @@ export class CodeGenerator {
 
   private async getGeneratedTypes() {
     debug('getGeneratedTypes:start');
-    const x = SchemaGenerator.generate(
-      this.connection.entityMetadatas,
-      this.options.warthogImportPath
-    );
+    const x = SchemaGenerator.generate(this.options.warthogImportPath);
     debug('getGeneratedTypes:end');
     return x;
   }
