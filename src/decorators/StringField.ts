@@ -9,12 +9,16 @@ interface StringFieldOptions {
   minLength?: number;
   nullable?: boolean;
   unique?: boolean;
+  comment?: string; // TODO: GENERATOR: remove when we use metadata to do codegen
 }
 
 export function StringField(args: StringFieldOptions = {}): any {
   const nullableOption = args.nullable === true ? { nullable: true } : {};
   const maxLenOption = args.maxLength ? { length: args.maxLength } : {};
   const uniqueOption = args.unique ? { unique: true } : {};
+
+  // TODO: GENERATOR: remove when we use metadata to do codegen
+  const commentOption = args.comment ? { comment: args.comment } : {};
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
@@ -27,7 +31,8 @@ export function StringField(args: StringFieldOptions = {}): any {
       type: 'varchar',
       ...maxLenOption,
       ...nullableOption,
-      ...uniqueOption
+      ...uniqueOption,
+      ...commentOption // TODO: GENERATOR: remove when we use metadata to do codegen
     }) as MethodDecoratorFactory
   ];
 

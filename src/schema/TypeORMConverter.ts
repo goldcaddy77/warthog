@@ -52,7 +52,9 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
   // Check to see if this column is an enum and return that
   if (column.enum) {
     return extractEnumObject(column);
-  } else if (column.propertyName.match(/Id$/)) {
+  }
+  // TODO: GENERATOR: remove when we use metadata to do codegen
+  else if (column.comment === 'warthog_foreign_key') {
     return GraphQLID;
   }
 

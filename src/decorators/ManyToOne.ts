@@ -7,6 +7,9 @@ import { StringField } from '../decorators';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 export function ManyToOne(parentType: any, joinFunc: any, options: any = {}): any {
+  // TODO: GENERATOR: remove when we use metadata to do codegen
+  options = { ...options, comment: 'warthog_foreign_key' };
+
   // Need to grab the class name from within a decorator
   let klass: string;
   const extractClassName = (target: any): any => {
