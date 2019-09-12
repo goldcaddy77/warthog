@@ -27,10 +27,12 @@ export function ManyToOne(parentType: any, joinFunc: any, options: any = {}): an
     StringField(options)(target, `${propertyKey}Id`, descriptor);
   };
 
-  // In some instances, we don't want to expose the foreign key ID through GraphQL
-  const graphQLdecorator = options.skipGraphQLField
-    ? []
-    : [Field(parentType, { nullable: true, ...options }) as MethodDecoratorFactory]; // TODO: This should not be nullable by default
+  // NOTE: this is unnecessary, but I'm keeping it around because otherwise it will generate the schema properties in a different order
+  // It could otherwise safely be deleted
+  const graphQLdecorator = [
+    Field(parentType, { nullable: true, ...options }) as MethodDecoratorFactory
+  ];
+  // END NOTE
 
   const factories: MethodDecoratorFactory[] = [
     extractClassName,
