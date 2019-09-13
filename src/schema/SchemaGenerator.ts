@@ -42,7 +42,7 @@ export class SchemaGenerator {
 
     console.log('metadata: ', metadata);
 
-    console.log(metadata.getModels());
+    console.log(metadata.getModels()['User'].columns);
 
     Object.keys(metadata.getModels()).forEach((modelName: string) => {
       const model: ModelMetadata = metadata.getModel(modelName);

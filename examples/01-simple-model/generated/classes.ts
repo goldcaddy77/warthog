@@ -19,15 +19,6 @@ import { BaseWhereInput, PaginationArgs } from "../../../src";
 import { User } from "../src/user.model";
 
 export enum UserOrderByEnum {
-  createdAt_ASC = "createdAt_ASC",
-  createdAt_DESC = "createdAt_DESC",
-
-  updatedAt_ASC = "updatedAt_ASC",
-  updatedAt_DESC = "updatedAt_DESC",
-
-  deletedAt_ASC = "deletedAt_ASC",
-  deletedAt_DESC = "deletedAt_DESC",
-
   firstName_ASC = "firstName_ASC",
   firstName_DESC = "firstName_DESC",
 
@@ -142,13 +133,7 @@ export class UserWhereInput extends BaseWhereInput {
 }
 
 @TypeGraphQLInputType()
-export class UserWhereUniqueInput {
-  @TypeGraphQLField(() => String, { nullable: true })
-  id?: string;
-
-  @TypeGraphQLField(() => String, { nullable: true })
-  email?: string;
-}
+export class UserWhereUniqueInput {}
 
 @TypeGraphQLInputType()
 export class UserCreateInput {

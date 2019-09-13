@@ -52,6 +52,8 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
 
   switch (type) {
     // TODO: clean up unused types (String and 'String')
+    case 'email':
+    case 'string':
     case String:
     case 'String':
     case 'varchar':
@@ -91,6 +93,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
       return GraphQLInt;
     // TODO: clean up unused types (Date and 'Date')
     case Date:
+    case 'date':
     case 'Date':
     case 'timestamp':
     case 'datetime':
@@ -226,8 +229,8 @@ export function entityToCreateInput(model: ModelMetadata): string {
       !SYSTEM_FIELDS.includes(column.propertyName)
     ) {
       const graphQLDataType = columnTypeToGraphQLDataType(column);
-      const nullable = column.isNullable ? '{ nullable: true }' : '';
-      const tsRequired = column.isNullable ? '?' : '!';
+      const nullable = column.nullable ? '{ nullable: true }' : '';
+      const tsRequired = column.nullable ? '?' : '!';
       const tsType = columnToTypeScriptType(column);
 
       // we need to know what the graphql type is and what the tsType is

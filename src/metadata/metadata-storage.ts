@@ -1,4 +1,12 @@
-export type ColumnType = 'boolean' | 'enum' | 'json';
+export type ColumnType =
+  | 'boolean'
+  | 'date'
+  | 'email'
+  | 'enum'
+  | 'float'
+  | 'integer'
+  | 'json'
+  | 'string';
 
 export interface ColumnMetadata {
   type: ColumnType;
@@ -8,10 +16,10 @@ export interface ColumnMetadata {
   dataType?: string; // int16, jsonb, etc...
   isCreateDate?: boolean;
   isGenerated?: boolean;
-  isNullable?: boolean;
   isPrimary?: boolean;
   isUpdateDate?: boolean;
   isVersion?: boolean;
+  nullable?: boolean;
   unique?: boolean;
 }
 
@@ -56,11 +64,7 @@ export class MetadataStorage {
       name: enumName
     };
 
-    this._addField('enum', modelName, columnName, { enum: true });
-  }
-
-  addBooleanField(modelName: string, columnName: string) {
-    this._addField('boolean', modelName, columnName);
+    this.addField('enum', modelName, columnName, { enum: true });
   }
 
   getModels() {
@@ -78,7 +82,7 @@ export class MetadataStorage {
     return this.enumMap[modelName][columnName] || undefined;
   }
 
-  _addField(type: ColumnType, modelName: string, columnName: string, options: object = {}) {
+  addField(type: ColumnType, modelName: string, columnName: string, options: object = {}) {
     if (!this.models[modelName]) {
       this.models[modelName] = {
         name: modelName,

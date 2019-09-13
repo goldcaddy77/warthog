@@ -15,7 +15,7 @@ export function BooleanField(args: BooleanFieldOptions = {}): any {
   const defaultOption = args.default ? { default: args.default } : {};
 
   const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addBooleanField(target.constructor.name, propertyKey);
+    getMetadataStorage().addField('boolean', target.constructor.name, propertyKey);
   };
 
   const factories = [

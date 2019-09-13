@@ -1,3 +1,5 @@
+import * as util from 'util';
+
 import { CodeGenerator } from '../../core/code-generator';
 import { loadFromGlobArray } from '../../tgql/loadGlobs';
 import { cleanUpTestData } from '../../db';
@@ -15,7 +17,10 @@ export default {
 
     const config = load();
 
-    console.log(config.get());
+    console.log(util.inspect(config.get(), { showHidden: false, depth: null }));
+
+    console.log(JSON.stringify(config.get(), null, 2));
+    console.log(JSON.stringify(config, null, 2));
     loadFromGlobArray(config.get('DB_ENTITIES'));
 
     try {
