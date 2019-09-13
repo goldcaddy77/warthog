@@ -28,15 +28,15 @@ export function filenameToImportPath(filename: string): string {
 }
 
 export function extractEnumObject(column: ColumnMetadata): GraphQLEnumType {
-  const storage = getMetadataStorage();
-  const modelEnums = column.entityMetadata.inheritanceTree.map(model =>
-    storage.getEnum(model.name, column.propertyName)
-  );
-
-  return modelEnums.find(m => Boolean(m));
-
   // TODO: GENERATOR
-  // return getMetadataStorage().getEnum(column.modelName, column.propertyName);
+  // const storage = getMetadataStorage();
+  // const modelEnums = column.entityMetadata.inheritanceTree.map(model =>
+  //   storage.getEnum(model.name, column.propertyName)
+  // );
+
+  // return modelEnums.find(m => Boolean(m));
+
+  return getMetadataStorage().getEnum(column.modelName, column.propertyName);
 }
 
 export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
@@ -388,11 +388,7 @@ export function entityToWhereInput(model: ModelMetadata): string {
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
       `;
-    } else if (
-      column.type !== 'json' &&
-      column.type !== 'jsonb' &&
-      column.type !== 'varying character'
-    ) {
+    } else if (column.type !== 'json') {
       // @@@ dcaddigan not sure what it means to search by JSONObjects
       // future release?
 
