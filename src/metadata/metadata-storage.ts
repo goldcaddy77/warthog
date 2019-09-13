@@ -17,6 +17,8 @@ export interface ColumnMetadata {
 
 export interface ModelMetadata {
   name: string;
+  klass?: any; // optional because Class decorators added after field decorators
+  filename?: string; // optional because Class decorators added after field decorators
   columns: ColumnMetadata[];
 }
 
@@ -30,6 +32,13 @@ export class MetadataStorage {
       filename,
       klass,
       name
+    };
+
+    // Just add `klass` and `filename` to the model object
+    this.models[name] = {
+      ...this.models[name],
+      klass,
+      filename
     };
   }
 
@@ -71,7 +80,10 @@ export class MetadataStorage {
 
   _addField(type: ColumnType, modelName: string, columnName: string, options: object = {}) {
     if (!this.models[modelName]) {
-      this.models[modelName] = { name: modelName, columns: [] };
+      this.models[modelName] = {
+        name: modelName,
+        columns: []
+      };
     }
 
     this.models[modelName].columns.push({
@@ -94,8 +106,8 @@ export class MetadataStorage {
   //   return num;
   // }, 0);
 
-  uniquesForEntity(model: EntityMetadata): string[] {
-    model.tostring;
+  uniquesForEntity(model: ModelMetadata): string[] {
+    model.toString();
     return [];
     // return entity.uniques.reduce<string[]>(
     //   (arr, unique: UniqueMetadata) => {

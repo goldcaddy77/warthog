@@ -41,7 +41,11 @@ export class SchemaGenerator {
       ${generateEnumMapImports().join('')}
     `;
 
-    Object.keys(models).forEach((modelName: string) => {
+    console.log('metadata: ', metadata);
+
+    console.log(metadata.getModels());
+
+    Object.keys(metadata.getModels()).forEach((modelName: string) => {
       const model: ModelMetadata = metadata.getModel(modelName);
 
       template += `
