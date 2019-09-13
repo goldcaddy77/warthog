@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Application } from 'express';
 
 import { getBindingError, logger } from '../../';
 import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
 import { cleanUpTestData } from '../../db';
 
+import { Binding } from '../generated/binding';
 import { KitchenSink } from '../modules';
 import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
 import { KITCHEN_SINKS } from './fixtures';
-import { Application } from 'express';
 
 let server: Server<any>;
-// let binding: Binding;
-let binding: any;
+let binding: Binding;
 
 let onBeforeCalled = false;
 let onAfterCalled = false;
@@ -46,7 +46,7 @@ describe('server', () => {
 
       await server.start();
 
-      binding = (await server.getBinding()) as unknown;
+      binding = ((await server.getBinding()) as unknown) as Binding;
     } catch (error) {
       logger.error(error);
       throw new Error(error);
@@ -84,7 +84,7 @@ describe('server', () => {
   test('queries deeply nested objects without an ID', async () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
-      { skip: 0, orderBy: 'createdAt_ASC', limit: 1 },
+      { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
       `{
           dateField
           jsonField
@@ -106,17 +106,18 @@ describe('server', () => {
     );
 
     expect(results).toMatchSnapshot();
-    expect(results[0].dishes.length).toEqual(20);
+    const firstResult = (results[0] as unknown) as KitchenSink;
+
+    expect(firstResult.dishes.length).toEqual(20);
   });
 
   test('throws errors when given bad input on a single create', async done => {
     expect.assertions(1);
 
-    createKitchenSink(binding, '')
-      .catch(error => {
-        expect(error).toHaveProperty('message', 'Argument Validation Error\n');
-      })
-      .finally(done);
+    createKitchenSink(binding, '').catch(error => {
+      expect(error).toHaveProperty('message', 'Argument Validation Error\n');
+      done();
+    });
   });
 
   test('throws errors when given bad input on a many create', async done => {
@@ -130,11 +131,10 @@ describe('server', () => {
       floatField: -1.3885
     };
 
-    createManyKitchenSinks(binding, [sink])
-      .catch(error => {
-        expect(error).toHaveProperty('message', 'Argument Validation Error\n');
-      })
-      .finally(done);
+    createManyKitchenSinks(binding, [sink]).catch(error => {
+      expect(error).toHaveProperty('message', 'Argument Validation Error\n');
+      done();
+    });
   });
 
   test('getBindingError pulls correct info from binding error', async done => {
@@ -281,18 +281,19 @@ describe('server', () => {
   });
 
   test('Update and Delete', async () => {
-    expect.assertions(6);
+    expect.assertions(12);
 
     // First create a record for the scope of this test
     const email = 'update@warthog.com';
     const returnFields = '{ id, stringField, emailField, integerField, booleanField, floatField }';
+    let sink;
     let result;
     try {
-      result = await createKitchenSink(binding, email, returnFields);
+      sink = await createKitchenSink(binding, email, returnFields);
     } catch (error) {
       throw new Error(error);
     }
-    expect(result.stringField).toEqual('My String');
+    expect(sink.stringField).toEqual('My String');
 
     // Update via unique email field
     try {
@@ -355,19 +356,51 @@ describe('server', () => {
     expect(result).toBeTruthy();
     expect(result.id).toBeTruthy();
 
-    // Try to find the deleted record
+    // Get error when trying to find a single deleted item by ID
     let error = '';
     try {
-      result = await binding.query.kitchenSink({ where: { id: result.id } }, '{ stringField }');
+      result = await binding.query.kitchenSink({ where: { id: sink.id } }, '{ stringField }');
     } catch (err) {
       error = err.message;
     }
     expect(error).toContain('Unable to find KitchenSink where');
+
+    // Get no results when trying to find deleted record by ID
+    try {
+      result = await binding.query.kitchenSinks({ where: { id_eq: sink.id } }, '{ stringField }');
+      expect(result).toBeTruthy();
+      expect(result.length).toEqual(0);
+    } catch (err) {
+      error = err.message;
+    }
+
+    // Able to find deleted record with list endpoint and deletedAt_all specified
+    try {
+      result = await binding.query.kitchenSinks(
+        { where: { id_eq: sink.id, deletedAt_all: true } },
+        '{ stringField }'
+      );
+
+      expect(result).toBeTruthy();
+      expect(result.length).toEqual(1);
+    } catch (err) {
+      error = err.message;
+    }
+
+    // Able to find deleted record with deletedAt_gt
+    try {
+      result = await binding.query.kitchenSinks(
+        { where: { deletedAt_gt: '2000-01-01' } },
+        '{ stringField }'
+      );
+
+      expect(result).toBeTruthy();
+      expect(result.length).toEqual(1);
+    } catch (err) {
+      error = err.message;
+    }
   });
 });
-
-// where - offset, fields
-// create many with a validation error
 
 async function createKitchenSink(
   binding: any,

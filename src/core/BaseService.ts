@@ -60,15 +60,20 @@ export class BaseService<E extends BaseModel> {
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
     // turn this off
     where = where || {};
-    // TODO: Bug: does not support deletedAt_gt: "2000-10-10" or deletedAt_not: null
-    if (!where.deletedAt_all) {
+
+    const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
+    // If no deletedAt filters specified, hide them by default
+    if (!hasDeletedAts) {
       // eslint-disable-next-line @typescript-eslint/camelcase
       where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
+    } else if (typeof where.deletedAt_all !== 'undefined') {
+      // Delete this param so that it doesn't try to filter on the magic `all` param
+      // Put this here so that we delete it even if `deletedAt_all: false` specified
+      delete where.deletedAt_all;
+    } else {
+      // If we get here, the user has added a different deletedAt filter, like deletedAt_gt: <date>
+      // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
-
-    // Delete this param so that it doesn't try to filter on the magic `all` param
-    // Put this here so that we delete it even if `deletedAt_all: false` specified
-    delete where.deletedAt_all;
 
     findOptions.where = this.processWhereOptions<W>(where);
 
