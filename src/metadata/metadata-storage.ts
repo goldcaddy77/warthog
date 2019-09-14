@@ -1,24 +1,42 @@
-export type ColumnType = 'boolean' | 'enum' | 'json';
+import { GraphQLEnumType } from 'graphql';
+
+export type ColumnType =
+  | 'boolean'
+  | 'date'
+  | 'email'
+  | 'enum'
+  | 'float'
+  | 'id'
+  | 'integer'
+  | 'json'
+  | 'string';
+
+export const decoratorDefaults = {
+  editable: true,
+  filters: true,
+  nullable: false,
+  orders: true
+};
 
 export interface ColumnMetadata {
   type: ColumnType;
   propertyName: string;
-  modelName: string;
-  enum?: boolean;
   dataType?: string; // int16, jsonb, etc...
-  isCreateDate?: boolean;
-  isGenerated?: boolean;
-  isNullable?: boolean;
-  isPrimary?: boolean;
-  isUpdateDate?: boolean;
-  isVersion?: boolean;
+  editable?: boolean;
+  filters?: boolean;
+  enum?: GraphQLEnumType;
+  nullable?: boolean;
+  orders?: boolean;
   unique?: boolean;
 }
 
+export type ColumnOptions = Partial<ColumnMetadata>;
+
 export interface ModelMetadata {
-  name: string;
-  klass?: any; // optional because Class decorators added after field decorators
+  abstract?: boolean;
   filename?: string; // optional because Class decorators added after field decorators
+  klass?: any; // optional because Class decorators added after field decorators
+  name: string;
   columns: ColumnMetadata[];
 }
 
@@ -26,8 +44,89 @@ export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
   classMap: { [table: string]: any } = {};
   models: { [table: string]: ModelMetadata } = {};
+  interfaces: string[] = [];
+  baseColumns: ColumnMetadata[] = [
+    {
+      propertyName: 'id',
+      type: 'id',
+      filters: true,
+      nullable: false,
+      orders: true,
+      unique: true,
+      editable: false
+    },
+    {
+      propertyName: 'createdAt',
+      type: 'date',
+      editable: false,
+      filters: true,
+      nullable: false,
+      orders: true,
+      unique: false
+    },
+    {
+      propertyName: 'createdById',
+      type: 'string',
+      editable: false,
+      filters: true,
+      nullable: false,
+      orders: false,
+      unique: false
+    },
+    {
+      propertyName: 'updatedAt',
+      type: 'date',
+      editable: false,
+      filters: true,
+      nullable: true,
+      orders: true,
+      unique: false
+    },
+    {
+      propertyName: 'updatedById',
+      type: 'string',
+      editable: false,
+      filters: true,
+      nullable: true,
+      orders: false,
+      unique: false
+    },
+    {
+      propertyName: 'deletedAt',
+      type: 'date',
+      editable: false,
+      filters: true,
+      nullable: true,
+      orders: true,
+      unique: false
+    },
+    {
+      propertyName: 'deletedById',
+      type: 'string',
+      editable: false,
+      filters: true,
+      nullable: true,
+      orders: false,
+      unique: false
+    },
+    {
+      type: 'integer',
+      propertyName: 'version',
+      editable: false,
+      filters: true,
+      nullable: false,
+      orders: true,
+      unique: false
+    }
+  ];
 
-  addModel(name: string, klass: any, filename: string) {
+  addModel(name: string, klass: any, filename: string, options = {}) {
+    // console.log(`Adding model: ${name}`);
+
+    if (this.interfaces.indexOf(name) > -1) {
+      return; // Don't add interface types to model list
+    }
+
     this.classMap[name] = {
       filename,
       klass,
@@ -38,7 +137,8 @@ export class MetadataStorage {
     this.models[name] = {
       ...this.models[name],
       klass,
-      filename
+      filename,
+      ...options
     };
   }
 
@@ -47,7 +147,8 @@ export class MetadataStorage {
     columnName: string,
     enumName: string,
     enumValues: any,
-    filename: string
+    filename: string,
+    options: ColumnOptions
   ) {
     this.enumMap[modelName] = this.enumMap[modelName] || {};
     this.enumMap[modelName][columnName] = {
@@ -56,11 +157,9 @@ export class MetadataStorage {
       name: enumName
     };
 
-    this._addField('enum', modelName, columnName, { enum: true });
-  }
-
-  addBooleanField(modelName: string, columnName: string) {
-    this._addField('boolean', modelName, columnName);
+    // the enum needs to be passed so that it can be bound to column metadata
+    options.enum = enumValues;
+    this.addField('enum', modelName, columnName, options);
   }
 
   getModels() {
@@ -78,43 +177,39 @@ export class MetadataStorage {
     return this.enumMap[modelName][columnName] || undefined;
   }
 
-  _addField(type: ColumnType, modelName: string, columnName: string, options: object = {}) {
+  addField(
+    type: ColumnType,
+    modelName: string,
+    columnName: string,
+    options: Partial<ColumnMetadata> = {}
+  ) {
+    // console.log(`Adding field: ${modelName}.${columnName} (${type})`);
+
+    if (this.interfaces.indexOf(modelName) > -1) {
+      return; // Don't add interfaces
+    }
+
     if (!this.models[modelName]) {
       this.models[modelName] = {
         name: modelName,
-        columns: []
+        columns: this.baseColumns
       };
     }
 
     this.models[modelName].columns.push({
       type,
       propertyName: columnName,
-      modelName,
       ...options
     });
   }
 
   uniquesForModel(model: ModelMetadata): string[] {
-    model.toString();
-    return ['id'];
+    return model.columns.filter(column => column.unique).map(column => column.propertyName);
   }
 
-  // const numUniques = entity.columns.reduce<number>((num, column: ColumnMetadata) => {
-  //   if (uniques.includes(column.propertyName) || column.isPrimary) {
-  //     num++;
-  //   }
-  //   return num;
-  // }, 0);
-
-  uniquesForEntity(model: ModelMetadata): string[] {
-    model.toString();
-    return [];
-    // return entity.uniques.reduce<string[]>(
-    //   (arr, unique: UniqueMetadata) => {
-    //     return [...arr, ...unique.columns.map((col: ColumnMetadata) => col.propertyName)];
-    //   },
-    //   [] as string[]
-    // );
+  addInterfaceType(name: string) {
+    // console.log(`Adding interface: ${name}`);
+    this.addModel(name, null, '', { abstract: true });
   }
 }
 

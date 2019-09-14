@@ -15,7 +15,7 @@ export default {
 
     const config = load();
 
-    console.log(config.get());
+    // Load all model files so that decorators will gather metadata for code generation
     loadFromGlobArray(config.get('DB_ENTITIES'));
 
     try {
@@ -24,7 +24,7 @@ export default {
         warthogImportPath: config.get('MODULE_IMPORT_PATH')
       }).generate();
     } catch (error) {
-      console.error(error);
+      console.error(error); // eslint-disable-line
     }
 
     cleanUpTestData();

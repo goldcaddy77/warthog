@@ -1,5 +1,3 @@
-console.log('IN USER RESOLVER');
-
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';

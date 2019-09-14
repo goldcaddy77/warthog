@@ -6,8 +6,6 @@ export function findFileNamesFromGlob(globString: string) {
 
 export function loadFromGlobString(globString: string) {
   const filePaths = findFileNamesFromGlob(globString);
-  console.log('filePaths: ', filePaths);
-
   filePaths.map(fileName => require(fileName));
 }
 
@@ -17,8 +15,6 @@ export function loadFromGlobArray(globs: string[]) {
   }
   globs.forEach(globString => {
     if (typeof globString === 'string') {
-      console.log('globString: ', globString);
-
       loadFromGlobString(globString);
     }
   });
