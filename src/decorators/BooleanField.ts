@@ -2,20 +2,23 @@ import { GraphQLBoolean } from 'graphql';
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { getMetadataStorage } from '../metadata';
+import { decoratorDefaults, getMetadataStorage } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface BooleanFieldOptions {
-  nullable?: boolean;
   default?: boolean;
+  filters?: boolean;
+  nullable?: boolean;
+  orders?: boolean;
 }
 
 export function BooleanField(args: BooleanFieldOptions = {}): any {
-  const nullableOption = args.nullable === true ? { nullable: true } : {};
-  const defaultOption = args.default ? { default: args.default } : {};
+  const options = { ...decoratorDefaults, ...args };
+  const nullableOption = options.nullable === true ? { nullable: true } : {};
+  const defaultOption = options.default ? { default: options.default } : {};
 
   const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addBooleanField(target.constructor.name, propertyKey);
+    getMetadataStorage().addField('boolean', target.constructor.name, propertyKey, options);
   };
 
   const factories = [
