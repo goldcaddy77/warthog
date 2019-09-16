@@ -324,6 +324,16 @@ export function entityToWhereInput(model: ModelMetadata): string {
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
       `;
+
+      console.log('column.propertyName: ', column.propertyName);
+
+      // I really don't like putting this magic here, but it has to go somewhere
+      if (column.propertyName === 'deletedAt') {
+        fieldTemplates += `
+          @TypeGraphQLField({ nullable: true })
+          ${column.propertyName}_all?: ${tsType};
+        `;
+      }
     } else if (column.type === 'enum') {
       // Enums will fall through here
       fieldTemplates += `

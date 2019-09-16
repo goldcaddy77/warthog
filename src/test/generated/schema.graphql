@@ -84,12 +84,16 @@ input DishCreateInput {
 }
 
 enum DishOrderByInput {
+  id_ASC
+  id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
+  version_ASC
+  version_DESC
   name_ASC
   name_DESC
   kitchenSinkId_ASC
@@ -102,38 +106,56 @@ input DishUpdateInput {
 }
 
 input DishWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
   createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
+  createdById_contains: String
+  createdById_startsWith: String
+  createdById_endsWith: String
+  createdById_in: [String!]
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
   updatedById_eq: String
-  deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
+  updatedById_contains: String
+  updatedById_startsWith: String
+  updatedById_endsWith: String
+  updatedById_in: [String!]
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_all: DateTime
   deletedById_eq: String
+  deletedById_contains: String
+  deletedById_startsWith: String
+  deletedById_endsWith: String
+  deletedById_in: [String!]
+  version_eq: Float
+  version_gt: Float
+  version_gte: Float
+  version_lt: Float
+  version_lte: Float
+  version_in: [Int!]
   name_eq: String
   name_contains: String
   name_startsWith: String
   name_endsWith: String
   name_in: [String!]
-  kitchenSinkId_eq: ID
-  kitchenSinkId_in: [ID!]
+  kitchenSinkId_eq: String
+  kitchenSinkId_contains: String
+  kitchenSinkId_startsWith: String
+  kitchenSinkId_endsWith: String
+  kitchenSinkId_in: [String!]
 }
 
 input DishWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 """
@@ -173,12 +195,16 @@ input KitchenSinkCreateInput {
 }
 
 enum KitchenSinkOrderByInput {
+  id_ASC
+  id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
+  version_ASC
+  version_DESC
   stringField_ASC
   stringField_DESC
   nullableStringField_ASC
@@ -209,27 +235,42 @@ input KitchenSinkUpdateInput {
 }
 
 input KitchenSinkWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
   createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
+  createdById_contains: String
+  createdById_startsWith: String
+  createdById_endsWith: String
+  createdById_in: [String!]
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
   updatedById_eq: String
-  deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
+  updatedById_contains: String
+  updatedById_startsWith: String
+  updatedById_endsWith: String
+  updatedById_in: [String!]
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_all: DateTime
   deletedById_eq: String
+  deletedById_contains: String
+  deletedById_startsWith: String
+  deletedById_endsWith: String
+  deletedById_in: [String!]
+  version_eq: Float
+  version_gt: Float
+  version_gte: Float
+  version_lt: Float
+  version_lte: Float
+  version_in: [Int!]
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String
@@ -266,7 +307,7 @@ input KitchenSinkWhereInput {
 }
 
 input KitchenSinkWhereUniqueInput {
-  id: String
+  id: ID
   emailField: String
 }
 

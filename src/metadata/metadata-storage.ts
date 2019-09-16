@@ -121,7 +121,7 @@ export class MetadataStorage {
   ];
 
   addModel(name: string, klass: any, filename: string, options = {}) {
-    // console.log(`Adding model: ${name}`);
+    console.log(`Adding model: ${name}`);
 
     if (this.interfaces.indexOf(name) > -1) {
       return; // Don't add interface types to model list
@@ -183,7 +183,7 @@ export class MetadataStorage {
     columnName: string,
     options: Partial<ColumnMetadata> = {}
   ) {
-    // console.log(`Adding field: ${modelName}.${columnName} (${type})`);
+    console.log(`Adding field: ${modelName}.${columnName} (${type})`);
 
     if (this.interfaces.indexOf(modelName) > -1) {
       return; // Don't add interfaces
@@ -192,7 +192,7 @@ export class MetadataStorage {
     if (!this.models[modelName]) {
       this.models[modelName] = {
         name: modelName,
-        columns: this.baseColumns
+        columns: Array.from(this.baseColumns)
       };
     }
 
@@ -208,7 +208,7 @@ export class MetadataStorage {
   }
 
   addInterfaceType(name: string) {
-    // console.log(`Adding interface: ${name}`);
+    console.log(`Adding interface: ${name}`);
     this.addModel(name, null, '', { abstract: true });
   }
 }

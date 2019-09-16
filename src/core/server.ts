@@ -186,7 +186,7 @@ export class Server<C extends BaseContext> {
 
   async generateFiles(): Promise<void> {
     debug('start:generateFiles:start');
-    await new CodeGenerator(this.config.get('GENERATED_FOLDER'), {
+    await new CodeGenerator(this.config.get('GENERATED_FOLDER'), this.config.get('DB_ENTITIES'), {
       resolversPath: this.config.get('RESOLVERS_PATH'),
       warthogImportPath: this.config.get('MODULE_IMPORT_PATH')
     }).generate();

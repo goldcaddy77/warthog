@@ -24,7 +24,7 @@ export class User extends BaseModel {
   @StringField({ nullable: true })
   lastName?: string;
 
-  @EmailField({ unique: true })
+  @EmailField()
   email?: string;
 
   @IntField()

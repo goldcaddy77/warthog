@@ -5,3 +5,4 @@ export * from './BaseWhereInput';
 export * from './DeleteResponse';
 export * from './PaginationArgs';
 export { StandardDeleteResponse } from './DeleteResponse';
+export { loadFromGlobArray } from './loadGlobs';
