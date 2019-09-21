@@ -1,0 +1,66 @@
+openapi: "3.0.0"
+info:
+  version: 0.0.1
+  title: Test API spec
+paths: {}
+servers:
+  - url: http://localhost:4100/
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - createdAt
+        - createdById
+        - updatedAt
+        - updatedById
+        - deletedAt
+        - deletedById
+        - version
+        - firstName
+        - lastName
+        - email
+        - age
+        - isRequired
+        - rating
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+        createdById:
+          type: string
+        updatedAt:
+          type: string
+        updatedById:
+          type: string
+          nullable: true
+        deletedAt:
+          type: string
+          nullable: true
+        deletedById:
+          type: string
+          nullable: true
+        version:
+          type: number
+        firstName:
+          type: string
+        lastName:
+          type: string
+          nullable: true
+        email:
+          type: string
+        age:
+          type: number
+        isRequired:
+          type: boolean
+        rating:
+          type: number
+    BaseError:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string

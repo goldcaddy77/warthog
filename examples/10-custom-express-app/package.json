@@ -1,0 +1,55 @@
+{
+  "name": "example10",
+  "version": "0.0.0",
+  "scripts": {
+    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn clean && yarn db:create && yarn codegen",
+    "clean": "rm -f ./warthog.sqlite.tmp",
+    "codegen": "warthog codegen",
+    "db:create": "warthog db:create",
+    "db:drop": "warthog db:drop",
+    "db:seed:dev": "ts-node tools/seed.ts",
+    "playground": "warthog playground",
+    "start": "yarn start:ts",
+    "start:ts": "DEBUG=warthog* ts-node-dev --type-check src/index.ts",
+    "start:prod": "ts-node src/index.ts",
+    "//": "Allows us to use the local warthog CLI in commands above",
+    "warthog": "../../bin/warthog"
+  },
+  "dependencies": {
+    "@types/js-yaml": "^3.12.1",
+    "body-parser": "^1.19.0",
+    "express-openapi": "^4.6.5",
+    "handlebars": "^4.0.14",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.13",
+    "reflect-metadata": "^0.1.12",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/faker": "^4.1.4",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/jest": "^23.3.11",
+    "@types/node": "^10.12.18",
+    "faker": "^4.1.0",
+    "jest": "^23.6.0",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.32"
+  },
+  "jest": {
+    "transform": {
+      ".ts": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.test\\.ts$"
+    ]
+  }
+}
