@@ -222,7 +222,6 @@ input UserWhereUniqueInput {
 }
 
 # ...
-# ...
 
 ```
 
