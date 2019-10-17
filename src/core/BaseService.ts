@@ -1,9 +1,9 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, FindManyOptions, FindOperator, getRepository, Repository } from 'typeorm';
+import { DeepPartial, FindOperator, getRepository, Repository, QueryBuilder } from 'typeorm';
 
 import { StandardDeleteResponse } from '../tgql';
-import { getFindOperator } from '../torm';
+import { getFindOperator, addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel, WhereInput } from '..';
 
@@ -31,30 +31,31 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    const findOptions: FindManyOptions = {};
+    const klass = this.entityClass.name.toString().toLowerCase();
+    let qb = this.repository.createQueryBuilder(klass);
 
     if (limit) {
-      findOptions.take = limit;
+      qb = qb.take(limit);
     }
     if (offset) {
-      findOptions.skip = offset;
+      qb = qb.skip(offset);
     }
     if (fields) {
       // We always need to select ID or dataloaders will not function properly
       if (fields.indexOf('id') === -1) {
         fields.push('id');
       }
-      findOptions.select = fields;
+
+      qb = qb.select(fields);
     }
     if (orderBy) {
       // TODO: allow multiple sorts
       const parts = orderBy.toString().split('_');
+      // TODO: ensure attr is one of the properties on the model
       const attr = parts[0];
       const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
-      // TODO: ensure key is one of the properties on the model
-      findOptions.order = {
-        [attr]: direction
-      };
+
+      qb = qb.orderBy(`klass.${attr}`, direction);
     }
 
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
@@ -75,9 +76,11 @@ export class BaseService<E extends BaseModel> {
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    findOptions.where = this.processWhereOptions<W>(where);
+    if (where.length) {
+      qb = qb.where(this.addQueryBuilderWhere<E, W>(qb, where));
+    }
 
-    return this.repository.find(findOptions);
+    return qb.getMany();
   }
 
   // TODO: fix - W extends Partial<E>
@@ -181,6 +184,17 @@ export class BaseService<E extends BaseModel> {
     Object.keys(where).forEach(k => {
       const key = k as keyof W;
       const [attr, operator] = getFindOperator(String(key), where[key]);
+      whereOptions[attr] = operator;
+    });
+    return whereOptions;
+  }
+
+  // extends WhereInput
+  addQueryBuilderWhere<E, W extends any>(qb: QueryBuilder<E>, where: W) {
+    const whereOptions: { [key: string]: FindOperator<any> } = {};
+    Object.keys(where).forEach(k => {
+      const key = k as keyof W;
+      const [attr, operator] = addQueryBuilderWhereItem(qb, String(key), where[key]);
       whereOptions[attr] = operator;
     });
     return whereOptions;
