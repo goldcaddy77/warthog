@@ -44,7 +44,7 @@ You must have Postgresql installed to use Warthog. If you already have it instal
 
 ### Docker
 
-See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/pull/6/files) project for how to use Docker to run Postgres.
+See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) project for how to use Docker to run Postgres.
 
 ### Homebrew
 
