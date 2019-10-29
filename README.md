@@ -288,9 +288,9 @@ If you need to add a field that is only exposed via the API that is not DB-backe
 
 See the [feature-flag example](./examples/07-feature-flags/) for an example of where we'd want to build something beyond the standard CRUD actions. In this example we want to add a custom query that makes a complex DB call.
 
-- First add the query to the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.resolver.ts#L75-L79)
-- Then add the custom query input in the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.resolver.ts#L31-L41)
-- Then add the custom service method that fetches the data [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.service.ts#L28-L48)
+- First add the query to the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/07-feature-flags/src/feature-flag/feature-flag.resolver.ts#L75-L79)
+- Then add the custom query input in the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/07-feature-flags/src/feature-flag/feature-flag.resolver.ts#L31-L41)
+- Then add the custom service method that fetches the data [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/07-feature-flags/src/feature-flag/feature-flag.service.ts#L28-L48)
 
 Warthog will generate the correct GraphQL query and InputType automatically.
 
