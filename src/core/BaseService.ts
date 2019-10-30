@@ -1,13 +1,18 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, FindOperator, getRepository, Repository, QueryBuilder } from 'typeorm';
+import { DeepPartial, getRepository, Repository } from 'typeorm';
+import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { StandardDeleteResponse } from '../tgql';
-import { getFindOperator, addQueryBuilderWhereItem } from '../torm';
+import { addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel, WhereInput } from '..';
+import { StringMap } from './types';
 
 export class BaseService<E extends BaseModel> {
+  columnMap: StringMap;
+  klass: string;
+
   // TODO: need to figure out why we couldn't type this as Repository<E>
   constructor(protected entityClass: any, protected repository: Repository<any>) {
     if (!entityClass) {
@@ -22,6 +27,17 @@ export class BaseService<E extends BaseModel> {
     if (!repository) {
       throw new Error(`BaseService requires a valid repository, class ${entityClass}`);
     }
+
+    // Need a mapping of camelCase field name to the modified case using the naming strategy.  For the standard
+    // SnakeNamingStrategy this would be something like { id: 'id', stringField: 'string_field' }
+    this.columnMap = this.repository.metadata.columns.reduce(
+      (prev: StringMap, column: ColumnMetadata) => {
+        prev[column.propertyPath] = column.databasePath;
+        return prev;
+      },
+      {}
+    );
+    this.klass = this.repository.metadata.name.toLowerCase();
   }
 
   async find<W extends WhereInput>(
@@ -31,8 +47,7 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    const klass = this.entityClass.name.toString().toLowerCase();
-    let qb = this.repository.createQueryBuilder(klass);
+    let qb = this.repository.createQueryBuilder(this.klass);
 
     if (limit) {
       qb = qb.take(limit);
@@ -40,22 +55,24 @@ export class BaseService<E extends BaseModel> {
     if (offset) {
       qb = qb.skip(offset);
     }
+
     if (fields) {
       // We always need to select ID or dataloaders will not function properly
       if (fields.indexOf('id') === -1) {
         fields.push('id');
       }
 
-      qb = qb.select(fields);
+      qb = qb.select(this.attrsToDBColumns(fields));
     }
     if (orderBy) {
       // TODO: allow multiple sorts
+      // See https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#adding-order-by-expression
       const parts = orderBy.toString().split('_');
       // TODO: ensure attr is one of the properties on the model
       const attr = parts[0];
       const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
 
-      qb = qb.orderBy(`klass.${attr}`, direction);
+      qb = qb.orderBy(`${this.klass}.${this.attrToDBColumn(attr)}`, direction);
     }
 
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
@@ -76,8 +93,25 @@ export class BaseService<E extends BaseModel> {
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    if (where.length) {
-      qb = qb.where(this.addQueryBuilderWhere<E, W>(qb, where));
+    console.log('where', where, where.length);
+
+    if (Object.keys(where).length) {
+      // qb = qb.where('1=1');
+
+      Object.keys(where).forEach(k => {
+        const key = k as keyof W;
+        const parts = key.toString().split('_');
+        const attr = parts[0];
+        const operator = parts.length > 1 ? parts[1] : 'eq';
+
+        qb = addQueryBuilderWhereItem(
+          qb,
+          this.klass,
+          this.attrToDBColumn(attr),
+          operator,
+          where[key]
+        );
+      });
     }
 
     return qb.getMany();
@@ -178,25 +212,11 @@ export class BaseService<E extends BaseModel> {
     return { id: found.id };
   }
 
-  // extends WhereInput
-  processWhereOptions<W extends any>(where: W) {
-    const whereOptions: { [key: string]: FindOperator<any> } = {};
-    Object.keys(where).forEach(k => {
-      const key = k as keyof W;
-      const [attr, operator] = getFindOperator(String(key), where[key]);
-      whereOptions[attr] = operator;
-    });
-    return whereOptions;
-  }
+  attrsToDBColumns = (attrs: string[]): string[] => {
+    return attrs.map(this.attrToDBColumn);
+  };
 
-  // extends WhereInput
-  addQueryBuilderWhere<E, W extends any>(qb: QueryBuilder<E>, where: W) {
-    const whereOptions: { [key: string]: FindOperator<any> } = {};
-    Object.keys(where).forEach(k => {
-      const key = k as keyof W;
-      const [attr, operator] = addQueryBuilderWhereItem(qb, String(key), where[key]);
-      whereOptions[attr] = operator;
-    });
-    return whereOptions;
-  }
+  attrToDBColumn = (attr: string): string => {
+    return this.columnMap[attr];
+  };
 }

@@ -24,10 +24,11 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_APP_PROTOCOL: 'http',
     WARTHOG_AUTO_GENERATE_FILES: 'true',
     WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
+    WARTHOG_DB_CONNECTION: 'sqlite',
     WARTHOG_DB_DATABASE: 'warthog-test',
     WARTHOG_DB_ENTITIES: 'src/test/modules/**/*.model.ts',
     WARTHOG_DB_HOST: 'localhost',
-    WARTHOG_DB_LOGGING: 'none',
+    WARTHOG_DB_LOGGING: 'all',
     WARTHOG_DB_MIGRATIONS_DIR: './tmp/test/migrations',
     WARTHOG_DB_OVERRIDE: 'true', // Set so that we can do DB stuff outside of NODE_ENV=development
     WARTHOG_DB_USERNAME: 'foo',

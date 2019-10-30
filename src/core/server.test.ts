@@ -30,7 +30,6 @@ describe('Server', () => {
     expect(server.schema).toBeTruthy();
     expect(appListenSpy).toHaveBeenCalledTimes(0);
     expect(hasGraphQlRoute(server.expressApp._router)).toBeTruthy();
-    expect(server.expressApp.settings.env).toEqual('test');
   });
 
   test('start a server with a custom express app', async () => {
@@ -44,7 +43,6 @@ describe('Server', () => {
     expect(server.schema).toBeTruthy();
     expect(appListenSpy).toHaveBeenCalledTimes(1);
     expect(hasGraphQlRoute(server.expressApp._router)).toBeTruthy();
-    expect(server.expressApp.settings.env).toEqual('test');
   });
 });
 

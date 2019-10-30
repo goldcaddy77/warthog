@@ -21,7 +21,6 @@ export function getTestServer(options: ServerOptions<any>) {
       };
     },
     introspection: true,
-    mockDBConnection: true,
     openPlayground: false,
     ...options
   });
