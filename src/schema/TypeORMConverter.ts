@@ -66,6 +66,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
     case 'varchar':
     case 'text':
     case 'uuid':
+    case 'bytea':
       return GraphQLString;
     // TODO: clean up unused types (Boolean and 'Boolean')
     case Boolean:
