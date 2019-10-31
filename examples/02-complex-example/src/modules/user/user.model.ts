@@ -1,5 +1,5 @@
 import { Authorized } from 'type-graphql';
-import { Unique } from 'typeorm';
+import { Unique, Column } from 'typeorm';
 import {
   BaseModel,
   DateField,
@@ -44,4 +44,7 @@ export class User extends BaseModel {
 
   @JSONField({ nullable: true })
   jsonField?: JSON;
+
+  @Column('bytea')
+  serialized?: Buffer;
 }
