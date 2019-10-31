@@ -22,7 +22,7 @@ export class SchemaGenerator {
 
   static generate(
     // This will reference 'warthog in the deployed module, but we need to do a relative import in the examples library
-    warthogImportPath: string = 'warthog'
+    warthogImportPath = 'warthog'
   ): string {
     const metadata = getMetadataStorage();
     let template = `
@@ -42,7 +42,7 @@ export class SchemaGenerator {
     `;
 
     // console.log('metadata: ', metadata);
-    logger.logObject(metadata.getModels());
+    // logger.logObject(metadata.getModels());
 
     Object.keys(metadata.getModels()).forEach((modelName: string) => {
       const model: ModelMetadata = metadata.getModel(modelName);

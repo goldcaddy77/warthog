@@ -18,7 +18,7 @@ export enum StringEnum {
 }
 
 @Model()
-// @Unique(['firstName', 'stringEnumField'])
+@Unique(['firstName', 'stringEnumField'])
 export class User extends BaseModel {
   @StringField({ maxLength: 30 })
   firstName: string;
@@ -26,8 +26,7 @@ export class User extends BaseModel {
   @StringField({ maxLength: 50, minLength: 2 })
   lastName: string;
 
-  // @EnumField('StringEnum', StringEnum)
-  @StringField()
+  @EnumField('StringEnum', StringEnum)
   stringEnumField: StringEnum;
 
   @EmailField()
@@ -46,6 +45,24 @@ export class User extends BaseModel {
   @JSONField({ nullable: true })
   jsonField?: JSON;
 
-  // @Column('bytea')
-  // serialized?: Buffer;
+  @Column('bytea')
+  serialized?: Buffer;
+
+  // This will automatically convert to an ID
+  // V2: remove this
+  @StringField()
+  magicId?: string;
+
+  // This will remain a string type because we overrode with `filters`
+  @StringField({ filters: 'string' })
+  bypassMagicId?: string;
+
+  @StringField({ filters: false })
+  noFiltersField?: string;
+
+  @StringField({ orders: false })
+  noOrdersField?: string;
+
+  @StringField({ filters: false, orders: false })
+  noFiltersOrOrdersField?: string;
 }

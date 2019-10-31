@@ -26,6 +26,7 @@ export interface ColumnMetadata {
   editable?: boolean;
   filters?: boolean | FieldType;
   enum?: GraphQLEnumType;
+  enumName?: string;
   nullable?: boolean;
   orders?: boolean;
   unique?: boolean;
@@ -158,6 +159,7 @@ export class MetadataStorage {
 
     // the enum needs to be passed so that it can be bound to column metadata
     options.enum = enumValues;
+    options.enumName = enumName;
     this.addField('enum', modelName, columnName, options);
   }
 

@@ -1,6 +1,5 @@
 import {
   GraphQLBoolean,
-  GraphQLEnumType,
   GraphQLFloat,
   GraphQLID,
   GraphQLInt,
@@ -18,9 +17,9 @@ export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
 
-export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
-  if (column.type === 'enum' && column.enum) {
-    return column.enum;
+export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | string {
+  if (column.enum) {
+    return String(column.enumName);
   }
 
   switch (column.type) {
@@ -57,7 +56,7 @@ export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
     case GraphQLJSONObject:
       return 'GraphQLJSONObject';
     default:
-      return graphQLType.name;
+      return typeof graphQLType === 'string' ? graphQLType : graphQLType.name;
   }
 }
 
@@ -66,7 +65,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
   if (column.type === 'id') {
     return 'string'; // TODO: should this be ID_TYPE?
   } else if (column.enum) {
-    return column.propertyName;
+    return String(column.enumName);
   } else {
     const graphqlType = columnTypeToGraphQLDataType(column);
     const typeMap: any = {

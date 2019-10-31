@@ -84,6 +84,11 @@ type StandardDeleteResponse {
   id: ID!
 }
 
+enum StringEnum {
+  FOO
+  BAR
+}
+
 type User implements BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!
@@ -95,23 +100,33 @@ type User implements BaseGraphQLObject {
   version: Int!
   firstName: String!
   lastName: String!
-  stringEnumField: String!
+  stringEnumField: StringEnum!
   email: String!
   registeredAt: DateTime!
   nickName: String
   privateField: String
   jsonField: JSONObject
+  magicId: String!
+  bypassMagicId: String!
+  noFiltersField: String!
+  noOrdersField: String!
+  noFiltersOrOrdersField: String!
 }
 
 input UserCreateInput {
   firstName: String!
   lastName: String!
-  stringEnumField: String!
+  stringEnumField: StringEnum!
   email: String!
   registeredAt: DateTime!
   nickName: String
   privateField: String
   jsonField: JSONObject
+  magicId: ID!
+  bypassMagicId: String!
+  noFiltersField: String!
+  noOrdersField: String!
+  noFiltersOrOrdersField: String!
 }
 
 enum UserOrderByInput {
@@ -137,17 +152,28 @@ enum UserOrderByInput {
   privateField_DESC
   jsonField_ASC
   jsonField_DESC
+  magicId_ASC
+  magicId_DESC
+  bypassMagicId_ASC
+  bypassMagicId_DESC
+  noFiltersField_ASC
+  noFiltersField_DESC
 }
 
 input UserUpdateInput {
   firstName: String
   lastName: String
-  stringEnumField: String
+  stringEnumField: StringEnum
   email: String
   registeredAt: DateTime
   nickName: String
   privateField: String
   jsonField: JSONObject
+  magicId: ID
+  bypassMagicId: String
+  noFiltersField: String
+  noOrdersField: String
+  noFiltersOrOrdersField: String
 }
 
 input UserWhereInput {
@@ -185,11 +211,8 @@ input UserWhereInput {
   lastName_startsWith: String
   lastName_endsWith: String
   lastName_in: [String!]
-  stringEnumField_eq: String
-  stringEnumField_contains: String
-  stringEnumField_startsWith: String
-  stringEnumField_endsWith: String
-  stringEnumField_in: [String!]
+  stringEnumField_eq: StringEnum
+  stringEnumField_in: [StringEnum!]
   email_eq: String
   email_contains: String
   email_startsWith: String
@@ -210,6 +233,18 @@ input UserWhereInput {
   privateField_startsWith: String
   privateField_endsWith: String
   privateField_in: [String!]
+  magicId_eq: ID
+  magicId_in: [ID!]
+  bypassMagicId_eq: String
+  bypassMagicId_contains: String
+  bypassMagicId_startsWith: String
+  bypassMagicId_endsWith: String
+  bypassMagicId_in: [String!]
+  noOrdersField_eq: String
+  noOrdersField_contains: String
+  noOrdersField_startsWith: String
+  noOrdersField_endsWith: String
+  noOrdersField_in: [String!]
 }
 
 input UserWhereUniqueInput {

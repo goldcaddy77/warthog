@@ -144,7 +144,8 @@
       ]
     },
     "ignore": [
-      "**/generated/*"
+      "**/generated/*",
+      "examples/**/*"
     ]
   },
   "prettier": {
