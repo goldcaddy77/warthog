@@ -18,7 +18,7 @@ export enum StringEnum {
 }
 
 @Model()
-@Unique(['firstName', 'stringEnumField'])
+// @Unique(['firstName', 'stringEnumField'])
 export class User extends BaseModel {
   @StringField({ maxLength: 30 })
   firstName: string;
@@ -26,7 +26,8 @@ export class User extends BaseModel {
   @StringField({ maxLength: 50, minLength: 2 })
   lastName: string;
 
-  @EnumField('StringEnum', StringEnum)
+  // @EnumField('StringEnum', StringEnum)
+  @StringField()
   stringEnumField: StringEnum;
 
   @EmailField()
@@ -45,6 +46,6 @@ export class User extends BaseModel {
   @JSONField({ nullable: true })
   jsonField?: JSON;
 
-  @Column('bytea')
-  serialized?: Buffer;
+  // @Column('bytea')
+  // serialized?: Buffer;
 }
