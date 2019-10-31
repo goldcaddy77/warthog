@@ -1,11 +1,12 @@
 import { Field, GraphQLISODateTime } from 'type-graphql';
-import { Column } from 'typeorm';
+import { Column, ColumnType } from 'typeorm';
 
 import { decoratorDefaults, getMetadataStorage } from '../metadata';
 import { defaultColumnType } from '../torm';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface DateFieldOptions {
+  dataType?: ColumnType; // int16, jsonb, etc...
   default?: Date;
   filters?: boolean;
   nullable?: boolean;
@@ -30,7 +31,7 @@ export function DateField(args: DateFieldOptions = {}): any {
       ...nullableOption
     }),
     Column({
-      type,
+      type: args.dataType || type,
       ...nullableOption,
       ...defaultOption
     }) as MethodDecoratorFactory

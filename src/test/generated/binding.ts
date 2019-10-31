@@ -47,31 +47,23 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
  * Types
 */
 
-export type DishOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
+export type DishOrderByInput =   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'deletedAt_ASC' |
   'deletedAt_DESC' |
-  'version_ASC' |
-  'version_DESC' |
   'name_ASC' |
   'name_DESC' |
   'kitchenSinkId_ASC' |
   'kitchenSinkId_DESC'
 
-export type KitchenSinkOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
+export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'deletedAt_ASC' |
   'deletedAt_DESC' |
-  'version_ASC' |
-  'version_DESC' |
   'stringField_ASC' |
   'stringField_DESC' |
   'nullableStringField_ASC' |
@@ -126,50 +118,35 @@ export interface DishUpdateInput {
 export interface DishWhereInput {
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
-  createdAt_gt?: DateTime | null
-  createdAt_gte?: DateTime | null
+  createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
-  createdById_eq?: String | null
-  createdById_contains?: String | null
-  createdById_startsWith?: String | null
-  createdById_endsWith?: String | null
-  createdById_in?: String[] | String | null
-  updatedAt_gt?: DateTime | null
-  updatedAt_gte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
   updatedAt_lt?: DateTime | null
   updatedAt_lte?: DateTime | null
-  updatedById_eq?: String | null
-  updatedById_contains?: String | null
-  updatedById_startsWith?: String | null
-  updatedById_endsWith?: String | null
-  updatedById_in?: String[] | String | null
-  deletedAt_gt?: DateTime | null
-  deletedAt_gte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: DateTime | null
   deletedAt_lt?: DateTime | null
   deletedAt_lte?: DateTime | null
-  deletedAt_all?: DateTime | null
-  deletedById_eq?: String | null
-  deletedById_contains?: String | null
-  deletedById_startsWith?: String | null
-  deletedById_endsWith?: String | null
-  deletedById_in?: String[] | String | null
-  version_eq?: Float | null
-  version_gt?: Float | null
-  version_gte?: Float | null
-  version_lt?: Float | null
-  version_lte?: Float | null
-  version_in?: Int[] | Int | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
   name_endsWith?: String | null
   name_in?: String[] | String | null
-  kitchenSinkId_eq?: String | null
-  kitchenSinkId_contains?: String | null
-  kitchenSinkId_startsWith?: String | null
-  kitchenSinkId_endsWith?: String | null
-  kitchenSinkId_in?: String[] | String | null
+  kitchenSinkId_eq?: ID_Input | null
+  kitchenSinkId_in?: ID_Output[] | ID_Output | null
 }
 
 export interface DishWhereUniqueInput {
@@ -201,40 +178,28 @@ export interface KitchenSinkUpdateInput {
 export interface KitchenSinkWhereInput {
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
-  createdAt_gt?: DateTime | null
-  createdAt_gte?: DateTime | null
+  createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
-  createdById_eq?: String | null
-  createdById_contains?: String | null
-  createdById_startsWith?: String | null
-  createdById_endsWith?: String | null
-  createdById_in?: String[] | String | null
-  updatedAt_gt?: DateTime | null
-  updatedAt_gte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
   updatedAt_lt?: DateTime | null
   updatedAt_lte?: DateTime | null
-  updatedById_eq?: String | null
-  updatedById_contains?: String | null
-  updatedById_startsWith?: String | null
-  updatedById_endsWith?: String | null
-  updatedById_in?: String[] | String | null
-  deletedAt_gt?: DateTime | null
-  deletedAt_gte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: DateTime | null
   deletedAt_lt?: DateTime | null
   deletedAt_lte?: DateTime | null
-  deletedAt_all?: DateTime | null
-  deletedById_eq?: String | null
-  deletedById_contains?: String | null
-  deletedById_startsWith?: String | null
-  deletedById_endsWith?: String | null
-  deletedById_in?: String[] | String | null
-  version_eq?: Float | null
-  version_gt?: Float | null
-  version_gte?: Float | null
-  version_lt?: Float | null
-  version_lte?: Float | null
-  version_in?: Int[] | Int | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   stringField_eq?: String | null
   stringField_contains?: String | null
   stringField_startsWith?: String | null
@@ -245,10 +210,11 @@ export interface KitchenSinkWhereInput {
   nullableStringField_startsWith?: String | null
   nullableStringField_endsWith?: String | null
   nullableStringField_in?: String[] | String | null
-  dateField_gt?: DateTime | null
-  dateField_gte?: DateTime | null
+  dateField_eq?: DateTime | null
   dateField_lt?: DateTime | null
   dateField_lte?: DateTime | null
+  dateField_gt?: DateTime | null
+  dateField_gte?: DateTime | null
   emailField_eq?: String | null
   emailField_contains?: String | null
   emailField_startsWith?: String | null

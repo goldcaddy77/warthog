@@ -151,27 +151,30 @@ input UserUpdateInput {
 }
 
 input UserWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   firstName_eq: String
   firstName_contains: String
   firstName_startsWith: String
@@ -192,10 +195,11 @@ input UserWhereInput {
   email_startsWith: String
   email_endsWith: String
   email_in: [String!]
-  registeredAt_gt: DateTime
-  registeredAt_gte: DateTime
+  registeredAt_eq: DateTime
   registeredAt_lt: DateTime
   registeredAt_lte: DateTime
+  registeredAt_gt: DateTime
+  registeredAt_gte: DateTime
   nickName_eq: String
   nickName_contains: String
   nickName_startsWith: String
@@ -209,6 +213,6 @@ input UserWhereInput {
 }
 
 input UserWhereUniqueInput {
-  id: String
+  id: ID
   email: String
 }

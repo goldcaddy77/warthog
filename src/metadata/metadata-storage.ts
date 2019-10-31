@@ -1,6 +1,7 @@
 import { GraphQLEnumType } from 'graphql';
+import { ColumnType } from 'typeorm';
 
-export type ColumnType =
+export type FieldType =
   | 'boolean'
   | 'date'
   | 'email'
@@ -19,11 +20,11 @@ export const decoratorDefaults = {
 };
 
 export interface ColumnMetadata {
-  type: ColumnType;
+  type: FieldType;
   propertyName: string;
-  dataType?: string; // int16, jsonb, etc...
+  dataType?: ColumnType; // int16, jsonb, etc...
   editable?: boolean;
-  filters?: boolean;
+  filters?: boolean | FieldType;
   enum?: GraphQLEnumType;
   nullable?: boolean;
   orders?: boolean;
@@ -51,7 +52,7 @@ export class MetadataStorage {
       type: 'id',
       filters: true,
       nullable: false,
-      orders: true,
+      orders: false,
       unique: true,
       editable: false
     },
@@ -66,7 +67,7 @@ export class MetadataStorage {
     },
     {
       propertyName: 'createdById',
-      type: 'string',
+      type: 'id',
       editable: false,
       filters: true,
       nullable: false,
@@ -84,7 +85,7 @@ export class MetadataStorage {
     },
     {
       propertyName: 'updatedById',
-      type: 'string',
+      type: 'id',
       editable: false,
       filters: true,
       nullable: true,
@@ -102,7 +103,7 @@ export class MetadataStorage {
     },
     {
       propertyName: 'deletedById',
-      type: 'string',
+      type: 'id',
       editable: false,
       filters: true,
       nullable: true,
@@ -113,16 +114,14 @@ export class MetadataStorage {
       type: 'integer',
       propertyName: 'version',
       editable: false,
-      filters: true,
+      filters: false,
       nullable: false,
-      orders: true,
+      orders: false,
       unique: false
     }
   ];
 
   addModel(name: string, klass: any, filename: string, options = {}) {
-    console.log(`Adding model: ${name}`);
-
     if (this.interfaces.indexOf(name) > -1) {
       return; // Don't add interface types to model list
     }
@@ -178,13 +177,11 @@ export class MetadataStorage {
   }
 
   addField(
-    type: ColumnType,
+    type: FieldType,
     modelName: string,
     columnName: string,
     options: Partial<ColumnMetadata> = {}
   ) {
-    console.log(`Adding field: ${modelName}.${columnName} (${type})`);
-
     if (this.interfaces.indexOf(modelName) > -1) {
       return; // Don't add interfaces
     }
@@ -208,7 +205,6 @@ export class MetadataStorage {
   }
 
   addInterfaceType(name: string) {
-    console.log(`Adding interface: ${name}`);
     this.addModel(name, null, '', { abstract: true });
   }
 }

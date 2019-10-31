@@ -1,11 +1,12 @@
 import { Field, Float } from 'type-graphql';
-import { Column } from 'typeorm';
+import { Column, ColumnType } from 'typeorm';
 
 import { decoratorDefaults, getMetadataStorage } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 import { defaultColumnType } from '../torm';
 
 interface FloatFieldOptions {
+  dataType?: ColumnType; // int16, jsonb, etc...
   filters?: boolean;
   nullable?: boolean;
   orders?: boolean;
@@ -29,7 +30,7 @@ export function FloatField(args: FloatFieldOptions = decoratorDefaults): any {
     }),
     Column({
       // This type will be different per database driver
-      type,
+      type: args.dataType || type,
       ...nullableOption
     }) as MethodDecoratorFactory
   ];

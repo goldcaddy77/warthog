@@ -1,14 +1,15 @@
 import { MaxLength, MinLength } from 'class-validator';
 import { Field } from 'type-graphql';
-import { Column } from 'typeorm';
+import { Column, ColumnType } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage } from '../metadata';
+import { FieldType, decoratorDefaults, getMetadataStorage } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface StringFieldOptions {
+  dataType?: ColumnType; // int16, jsonb, etc...
   maxLength?: number;
   minLength?: number;
-  filters?: boolean;
+  filters?: boolean | FieldType;
   nullable?: boolean;
   orders?: boolean;
   unique?: boolean;
@@ -21,7 +22,24 @@ export function StringField(args: StringFieldOptions = decoratorDefaults): any {
   const uniqueOption = options.unique ? { unique: true } : {};
 
   const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addField('string', target.constructor.name, propertyKey, options);
+    // Sorry, I put in some magic that automatically identified columns that end in Id to be ID columns
+    // that only uses the ID filters (eq and in).  This was silly.  I've added a workaround here where you
+    // can explicitly state which filters you want to use.  So if you have a field called userId and add filters: 'string'
+    // this will bypass the magic Id logic below
+    const explicitType = typeof args.filters === 'string' ? args.filters : null;
+    let fieldType = explicitType;
+
+    // V2: remove the auto-ID logic.  Need to keep this around as to not introduce a breaking change
+    if (!explicitType && propertyKey.match(/Id$/)) {
+      fieldType = 'id';
+    }
+
+    getMetadataStorage().addField(
+      fieldType || 'string', // User-provided type, or magic Id type, fall back to string
+      target.constructor.name,
+      propertyKey,
+      options
+    );
   };
 
   // These are the 2 required decorators to get type-graphql and typeorm working
@@ -33,7 +51,7 @@ export function StringField(args: StringFieldOptions = decoratorDefaults): any {
       ...nullableOption
     }),
     Column({
-      type: 'varchar',
+      type: args.dataType || 'varchar',
       ...maxLenOption,
       ...nullableOption,
       ...uniqueOption

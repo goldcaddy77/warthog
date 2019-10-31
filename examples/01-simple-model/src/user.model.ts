@@ -38,4 +38,10 @@ export class User extends BaseModel {
 
   @FloatField()
   rating?: number;
+
+  @StringField()
+  magicId?: string;
+
+  @StringField({ filters: 'string' })
+  bypassMagicId?: string;
 }

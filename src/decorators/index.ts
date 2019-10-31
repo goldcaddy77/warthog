@@ -5,6 +5,7 @@ export * from './EnumField';
 export * from './Fields';
 export * from './FloatField';
 export * from './ForeignKeyField';
+export * from './IdField';
 export * from './IntField';
 export * from './InterfaceType';
 export * from './JSONField';

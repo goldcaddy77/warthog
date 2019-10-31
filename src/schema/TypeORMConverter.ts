@@ -37,6 +37,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
       return GraphQLInt;
     case 'date':
       return GraphQLISODateTime;
+    // return GraphQLString; // V2: This should be GraphQLISODateTime
     case 'json':
       return GraphQLJSONObject;
     case 'enum':
@@ -311,29 +312,30 @@ export function entityToWhereInput(model: ModelMetadata): string {
         ${column.propertyName}_in?: ${tsType}[];
       `;
     } else if (column.type === 'date') {
+      // I really don't like putting this magic here, but it has to go somewhere
+      // This deletedAt_all turns off the default filtering of soft-deleted items
+      if (column.propertyName === 'deletedAt') {
+        fieldTemplates += `
+          @TypeGraphQLField({ nullable: true })
+          deletedAt_all?: Boolean;
+        `;
+      }
       fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_gt?: ${tsType};
-
-        @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_gte?: ${tsType};
+        ${column.propertyName}_eq?: ${tsType};
 
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lt?: ${tsType};
 
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
+
+        @TypeGraphQLField({ nullable: true })
+        ${column.propertyName}_gt?: ${tsType};
+
+        @TypeGraphQLField({ nullable: true })
+        ${column.propertyName}_gte?: ${tsType};
       `;
-
-      console.log('column.propertyName: ', column.propertyName);
-
-      // I really don't like putting this magic here, but it has to go somewhere
-      if (column.propertyName === 'deletedAt') {
-        fieldTemplates += `
-          @TypeGraphQLField({ nullable: true })
-          ${column.propertyName}_all?: ${tsType};
-        `;
-      }
     } else if (column.type === 'enum') {
       // Enums will fall through here
       fieldTemplates += `

@@ -84,16 +84,12 @@ input DishCreateInput {
 }
 
 enum DishOrderByInput {
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  version_ASC
-  version_DESC
   name_ASC
   name_DESC
   kitchenSinkId_ASC
@@ -108,50 +104,35 @@ input DishUpdateInput {
 input DishWhereInput {
   id_eq: ID
   id_in: [ID!]
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
+  createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
-  createdById_eq: String
-  createdById_contains: String
-  createdById_startsWith: String
-  createdById_endsWith: String
-  createdById_in: [String!]
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
   updatedAt_lt: DateTime
   updatedAt_lte: DateTime
-  updatedById_eq: String
-  updatedById_contains: String
-  updatedById_startsWith: String
-  updatedById_endsWith: String
-  updatedById_in: [String!]
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
   deletedAt_lt: DateTime
   deletedAt_lte: DateTime
-  deletedAt_all: DateTime
-  deletedById_eq: String
-  deletedById_contains: String
-  deletedById_startsWith: String
-  deletedById_endsWith: String
-  deletedById_in: [String!]
-  version_eq: Float
-  version_gt: Float
-  version_gte: Float
-  version_lt: Float
-  version_lte: Float
-  version_in: [Int!]
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
   name_endsWith: String
   name_in: [String!]
-  kitchenSinkId_eq: String
-  kitchenSinkId_contains: String
-  kitchenSinkId_startsWith: String
-  kitchenSinkId_endsWith: String
-  kitchenSinkId_in: [String!]
+  kitchenSinkId_eq: ID
+  kitchenSinkId_in: [ID!]
 }
 
 input DishWhereUniqueInput {
@@ -195,16 +176,12 @@ input KitchenSinkCreateInput {
 }
 
 enum KitchenSinkOrderByInput {
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  version_ASC
-  version_DESC
   stringField_ASC
   stringField_DESC
   nullableStringField_ASC
@@ -237,40 +214,28 @@ input KitchenSinkUpdateInput {
 input KitchenSinkWhereInput {
   id_eq: ID
   id_in: [ID!]
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
+  createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
-  createdById_eq: String
-  createdById_contains: String
-  createdById_startsWith: String
-  createdById_endsWith: String
-  createdById_in: [String!]
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
   updatedAt_lt: DateTime
   updatedAt_lte: DateTime
-  updatedById_eq: String
-  updatedById_contains: String
-  updatedById_startsWith: String
-  updatedById_endsWith: String
-  updatedById_in: [String!]
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
   deletedAt_lt: DateTime
   deletedAt_lte: DateTime
-  deletedAt_all: DateTime
-  deletedById_eq: String
-  deletedById_contains: String
-  deletedById_startsWith: String
-  deletedById_endsWith: String
-  deletedById_in: [String!]
-  version_eq: Float
-  version_gt: Float
-  version_gte: Float
-  version_lt: Float
-  version_lte: Float
-  version_in: [Int!]
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String
@@ -281,10 +246,11 @@ input KitchenSinkWhereInput {
   nullableStringField_startsWith: String
   nullableStringField_endsWith: String
   nullableStringField_in: [String!]
-  dateField_gt: DateTime
-  dateField_gte: DateTime
+  dateField_eq: DateTime
   dateField_lt: DateTime
   dateField_lte: DateTime
+  dateField_gt: DateTime
+  dateField_gte: DateTime
   emailField_eq: String
   emailField_contains: String
   emailField_startsWith: String
