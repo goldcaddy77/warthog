@@ -6,7 +6,7 @@ references:
 jobs:
   build:
     docker:
-      - image: circleci/node:10.7
+      - image: circleci/node:10.13
     steps:
       - checkout
       - restore_cache:
