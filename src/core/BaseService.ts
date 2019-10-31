@@ -61,8 +61,10 @@ export class BaseService<E extends BaseModel> {
       if (fields.indexOf('id') === -1) {
         fields.push('id');
       }
-
-      qb = qb.select(this.attrsToDBColumns(fields));
+      // Querybuilder requires you to prefix all fields with the table alias.  It also requires you to
+      // specify the field name using it's TypeORM attribute name, not the camel-cased DB column name
+      const selection = fields.map(field => `${this.klass}.${field}`);
+      qb = qb.select(selection);
     }
     if (orderBy) {
       // TODO: allow multiple sorts
@@ -72,14 +74,12 @@ export class BaseService<E extends BaseModel> {
       const attr = parts[0];
       const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
 
-      qb = qb.orderBy(`${this.klass}.${this.attrToDBColumn(attr)}`, direction);
+      qb = qb.orderBy(this.attrToDBColumn(attr), direction);
     }
 
-    // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
-    // turn this off
-    console.log('WHERE', where);
     where = where || {};
 
+    // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
     const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
     // If no deletedAt filters specified, hide them by default
     if (!hasDeletedAts) {
@@ -94,29 +94,19 @@ export class BaseService<E extends BaseModel> {
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    console.log('where', where, where.length);
-
     if (Object.keys(where).length) {
+      // where is of shape { userName_contains: 'a' }
       Object.keys(where).forEach(k => {
-        const key = k as keyof W;
-        const parts = key.toString().split('_');
-        const attr = parts[0];
-        const operator = parts.length > 1 ? parts[1] : 'eq';
+        const key = k as keyof W; // userName
+        const parts = key.toString().split('_'); // ['userName', 'contains']
+        const attr = parts[0]; // userName
+        const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
 
-        qb = addQueryBuilderWhereItem(
-          qb,
-          this.klass,
-          this.attrToDBColumn(attr),
-          operator,
-          where[key]
-        );
+        qb = addQueryBuilderWhereItem(qb, attr, this.attrToDBColumn(attr), operator, where[key]);
       });
     }
 
-    const results = await qb.getMany();
-    console.log(results.length, results);
-
-    return results;
+    return qb.getMany();
   }
 
   // TODO: fix - W extends Partial<E>
@@ -219,6 +209,6 @@ export class BaseService<E extends BaseModel> {
   };
 
   attrToDBColumn = (attr: string): string => {
-    return this.columnMap[attr];
+    return `${this.klass}.${this.columnMap[attr]}`;
   };
 }

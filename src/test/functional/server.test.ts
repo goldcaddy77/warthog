@@ -172,7 +172,7 @@ describe('server', () => {
     done();
   });
 
-  test.only('find: string query: exact match (Nakia)', async () => {
+  test('find: string query: exact match (Nakia)', async () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
