@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn db:create && yarn codegen && yarn db:seed:dev",
+    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn run clean && yarn db:create && yarn codegen && yarn db:seed:dev",
     "clean": "rm -f ./warthog.sqlite.tmp",
     "codegen": "yarn warthog codegen",
     "db:create": "yarn warthog db:create",
