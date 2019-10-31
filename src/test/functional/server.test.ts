@@ -29,14 +29,14 @@ describe('server', () => {
   // Make sure to clean up server
   beforeAll(async done => {
     jest.setTimeout(20000);
+    setTestServerEnvironmentVariables();
+
     await cleanUpTestData();
 
     // build a custom express app with a dummy endpoint
     customExpressApp = buildCustomExpressApp();
 
     try {
-      setTestServerEnvironmentVariables();
-
       server = getTestServer({
         apolloConfig: { playground: false },
         expressApp: customExpressApp,

@@ -1,13 +1,18 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, FindManyOptions, FindOperator, getRepository, Repository } from 'typeorm';
+import { DeepPartial, getRepository, Repository } from 'typeorm';
+import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { StandardDeleteResponse } from '../tgql';
-import { getFindOperator } from '../torm';
+import { addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel, WhereInput } from '..';
+import { StringMap } from './types';
 
 export class BaseService<E extends BaseModel> {
+  columnMap: StringMap;
+  klass: string;
+
   // TODO: need to figure out why we couldn't type this as Repository<E>
   constructor(protected entityClass: any, protected repository: Repository<any>) {
     if (!entityClass) {
@@ -22,6 +27,17 @@ export class BaseService<E extends BaseModel> {
     if (!repository) {
       throw new Error(`BaseService requires a valid repository, class ${entityClass}`);
     }
+
+    // Need a mapping of camelCase field name to the modified case using the naming strategy.  For the standard
+    // SnakeNamingStrategy this would be something like { id: 'id', stringField: 'string_field' }
+    this.columnMap = this.repository.metadata.columns.reduce(
+      (prev: StringMap, column: ColumnMetadata) => {
+        prev[column.propertyPath] = column.databasePath;
+        return prev;
+      },
+      {}
+    );
+    this.klass = this.repository.metadata.name.toLowerCase();
   }
 
   async find<W extends WhereInput>(
@@ -31,36 +47,39 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    const findOptions: FindManyOptions = {};
+    let qb = this.repository.createQueryBuilder(this.klass);
 
     if (limit) {
-      findOptions.take = limit;
+      qb = qb.take(limit);
     }
     if (offset) {
-      findOptions.skip = offset;
+      qb = qb.skip(offset);
     }
+
     if (fields) {
       // We always need to select ID or dataloaders will not function properly
       if (fields.indexOf('id') === -1) {
         fields.push('id');
       }
-      findOptions.select = fields;
+      // Querybuilder requires you to prefix all fields with the table alias.  It also requires you to
+      // specify the field name using it's TypeORM attribute name, not the camel-cased DB column name
+      const selection = fields.map(field => `${this.klass}.${field}`);
+      qb = qb.select(selection);
     }
     if (orderBy) {
       // TODO: allow multiple sorts
+      // See https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#adding-order-by-expression
       const parts = orderBy.toString().split('_');
+      // TODO: ensure attr is one of the properties on the model
       const attr = parts[0];
       const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
-      // TODO: ensure key is one of the properties on the model
-      findOptions.order = {
-        [attr]: direction
-      };
+
+      qb = qb.orderBy(this.attrToDBColumn(attr), direction);
     }
 
-    // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
-    // turn this off
     where = where || {};
 
+    // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
     const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
     // If no deletedAt filters specified, hide them by default
     if (!hasDeletedAts) {
@@ -75,9 +94,19 @@ export class BaseService<E extends BaseModel> {
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    findOptions.where = this.processWhereOptions<W>(where);
+    if (Object.keys(where).length) {
+      // where is of shape { userName_contains: 'a' }
+      Object.keys(where).forEach(k => {
+        const key = k as keyof W; // userName
+        const parts = key.toString().split('_'); // ['userName', 'contains']
+        const attr = parts[0]; // userName
+        const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
 
-    return this.repository.find(findOptions);
+        qb = addQueryBuilderWhereItem(qb, attr, this.attrToDBColumn(attr), operator, where[key]);
+      });
+    }
+
+    return qb.getMany();
   }
 
   // TODO: fix - W extends Partial<E>
@@ -175,14 +204,11 @@ export class BaseService<E extends BaseModel> {
     return { id: found.id };
   }
 
-  // extends WhereInput
-  processWhereOptions<W extends any>(where: W) {
-    const whereOptions: { [key: string]: FindOperator<any> } = {};
-    Object.keys(where).forEach(k => {
-      const key = k as keyof W;
-      const [attr, operator] = getFindOperator(String(key), where[key]);
-      whereOptions[attr] = operator;
-    });
-    return whereOptions;
-  }
+  attrsToDBColumns = (attrs: string[]): string[] => {
+    return attrs.map(this.attrToDBColumn);
+  };
+
+  attrToDBColumn = (attr: string): string => {
+    return `${this.klass}.${this.columnMap[attr]}`;
+  };
 }
