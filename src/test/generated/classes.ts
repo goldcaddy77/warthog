@@ -449,7 +449,7 @@ export class DishCreateInput {
   @TypeGraphQLField()
   name!: string;
 
-  @TypeGraphQLField()
+  @TypeGraphQLField(() => ID)
   kitchenSinkId!: string;
 }
 
@@ -458,7 +458,7 @@ export class DishUpdateInput {
   @TypeGraphQLField({ nullable: true })
   name?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   kitchenSinkId?: string;
 }
 

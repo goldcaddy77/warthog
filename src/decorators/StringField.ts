@@ -26,20 +26,18 @@ export function StringField(args: StringFieldOptions = decoratorDefaults): any {
     // that only uses the ID filters (eq and in).  This was silly.  I've added a workaround here where you
     // can explicitly state which filters you want to use.  So if you have a field called userId and add filters: 'string'
     // this will bypass the magic Id logic below
-    const explicitType = typeof args.filters === 'string' ? args.filters : null;
-    let fieldType = explicitType;
+    let fieldType: FieldType = 'string'; // default
 
+    const explicitType = typeof args.filters === 'string' ? args.filters : null;
+    if (explicitType) {
+      fieldType = explicitType;
+    }
     // V2: remove the auto-ID logic.  Need to keep this around as to not introduce a breaking change
-    if (!explicitType && propertyKey.match(/Id$/)) {
+    else if (propertyKey.match(/Id$/)) {
       fieldType = 'id';
     }
 
-    getMetadataStorage().addField(
-      fieldType || 'string', // User-provided type, or magic Id type, fall back to string
-      target.constructor.name,
-      propertyKey,
-      options
-    );
+    getMetadataStorage().addField(fieldType, target.constructor.name, propertyKey, options);
   };
 
   // These are the 2 required decorators to get type-graphql and typeorm working

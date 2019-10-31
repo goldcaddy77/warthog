@@ -270,7 +270,7 @@ export class UserCreateInput {
   @TypeGraphQLField()
   rating!: number;
 
-  @TypeGraphQLField()
+  @TypeGraphQLField(() => ID)
   magicId!: string;
 
   @TypeGraphQLField()
@@ -297,7 +297,7 @@ export class UserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   rating?: number;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   magicId?: string;
 
   @TypeGraphQLField({ nullable: true })

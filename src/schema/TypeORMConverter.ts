@@ -165,10 +165,7 @@ export function entityToCreateInput(model: ModelMetadata): string {
     const tsRequired = column.nullable ? '?' : '!';
     const tsType = columnToTypeScriptType(column);
 
-    // we need to know what the graphql type is and what the tsType is
-    // for enums
-
-    if (column.enum || column.type === 'json') {
+    if (column.enum || column.type === 'json' || column.type === 'id') {
       fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
@@ -202,7 +199,7 @@ export function entityToUpdateInput(model: ModelMetadata): string {
     const graphQLDataType = columnTypeToGraphQLDataType(column);
     const tsType = columnToTypeScriptType(column);
 
-    if (column.enum || column.type === 'json') {
+    if (column.enum || column.type === 'json' || column.type === 'id') {
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}?: ${tsType};

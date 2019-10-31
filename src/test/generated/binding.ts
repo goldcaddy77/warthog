@@ -107,12 +107,12 @@ export interface BaseWhereInput {
 
 export interface DishCreateInput {
   name: String
-  kitchenSinkId: String
+  kitchenSinkId: ID_Output
 }
 
 export interface DishUpdateInput {
   name?: String | null
-  kitchenSinkId?: String | null
+  kitchenSinkId?: ID_Input | null
 }
 
 export interface DishWhereInput {

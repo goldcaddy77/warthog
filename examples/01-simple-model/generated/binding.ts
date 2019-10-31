@@ -94,7 +94,7 @@ export interface UserCreateInput {
   age: Float
   isRequired: Boolean
   rating: Float
-  magicId: String
+  magicId: ID_Output
   bypassMagicId: String
 }
 
@@ -105,7 +105,7 @@ export interface UserUpdateInput {
   age?: Float | null
   isRequired?: Boolean | null
   rating?: Float | null
-  magicId?: String | null
+  magicId?: ID_Input | null
   bypassMagicId?: String | null
 }
 
