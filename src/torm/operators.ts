@@ -7,7 +7,7 @@ export function addQueryBuilderWhereItem<E>(
   operator: string,
   value: any
 ): SelectQueryBuilder<E> {
-  const column = `${dbTable}.${dbColumn}`;
+  const column = `"${dbTable}"."${dbColumn}"`;
   console.log('arguments', dbTable, dbColumn, column, operator, value);
 
   switch (operator) {
