@@ -2,6 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export async function cleanUpTestData() {
+  return;
+
   try {
     fs.unlinkSync(path.join(__dirname, '../../', String(process.env.WARTHOG_DB_DATABASE)));
   } catch (error) {

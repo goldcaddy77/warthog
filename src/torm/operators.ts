@@ -16,28 +16,24 @@ export function addQueryBuilderWhereItem<E>(
         return qb.andWhere(`${column} IS NULL`);
       }
       return qb.andWhere(`${column} = :${dbColumn}`, { [dbColumn]: value });
-    // // Not using "not" yet
-    // case 'not':
-    //   return [attr, Not(value)];
+    case 'not':
+      return qb.andWhere(`${column} != :${dbColumn}`, { [dbColumn]: value });
     case 'lt':
-      return qb.andWhere(`${column} IS NULL`);
+      return qb.andWhere(`${column} < :${dbColumn}`, { [dbColumn]: value });
     case 'lte':
-      return qb.andWhere(`${column} IS NULL`);
+      return qb.andWhere(`${column} <= :${dbColumn}`, { [dbColumn]: value });
     case 'gt':
-      return qb.andWhere(`${column} IS NULL`);
+      return qb.andWhere(`${column} > :${dbColumn}`, { [dbColumn]: value });
     case 'gte':
-      return qb.andWhere(`${column} IS NULL`);
+      return qb.andWhere(`${column} >= :${dbColumn}`, { [dbColumn]: value });
     case 'in':
-      return qb.andWhere(`${column} IS NULL`);
+      return qb.andWhere(`${column} IN (:${dbColumn})`, { [dbColumn]: value });
     case 'contains':
-      return qb.andWhere(`${column} IS NULL`);
-    // return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('%${value}%')`)];
+      return qb.andWhere(`LOWER(${column}) LIKE :${dbColumn}`, { [dbColumn]: `%${value}%` });
     case 'startsWith':
-      return qb.andWhere(`${column} IS NULL`);
-    // return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('${value}%')`)];
+      return qb.andWhere(`LOWER(${column}) LIKE :${dbColumn}`, { [dbColumn]: `${value}%` });
     case 'endsWith':
-      return qb.andWhere(`${column} IS NULL`);
-    // return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('%${value}')`)];
+      return qb.andWhere(`LOWER(${column}) LIKE :${dbColumn}`, { [dbColumn]: `%${value}` });
     default:
       throw new Error(`Can't find operator ${operator}`);
   }

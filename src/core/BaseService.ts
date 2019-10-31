@@ -77,6 +77,7 @@ export class BaseService<E extends BaseModel> {
 
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
     // turn this off
+    console.log('WHERE', where);
     where = where || {};
 
     const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
@@ -96,8 +97,6 @@ export class BaseService<E extends BaseModel> {
     console.log('where', where, where.length);
 
     if (Object.keys(where).length) {
-      // qb = qb.where('1=1');
-
       Object.keys(where).forEach(k => {
         const key = k as keyof W;
         const parts = key.toString().split('_');
@@ -114,7 +113,10 @@ export class BaseService<E extends BaseModel> {
       });
     }
 
-    return qb.getMany();
+    const results = await qb.getMany();
+    console.log(results.length, results);
+
+    return results;
   }
 
   // TODO: fix - W extends Partial<E>
