@@ -21,6 +21,7 @@
     "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/**/*.ejs dist/",
     "bootstrap": "./tools/bootstrap-all.sh",
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
+    "deploy:debug": "npm_config_loglevel=verbose CIRCLE_BRANCH=beta CIRCLECI=true CI=true yarn semantic-release --debug",
     "lint": "eslint './+(examples|src|test|tools)/**/*.{js,ts}' --fix",
     "//prettier": "Note: ignores node_modules by default and 'generated' folder via .prettierignore",
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
@@ -145,9 +146,6 @@
     "ignore": [
       "**/generated/*"
     ]
-  },
-  "release": {
-    "verifyConditions": "condition-circle"
   },
   "prettier": {
     "printWidth": 100,

@@ -2181,7 +2181,7 @@ concat-stream@^1.5.0:
 
 condition-circle@^2.0.2:
   version "2.0.2"
-  resolved "https://registry.npmjs.org/condition-circle/-/condition-circle-2.0.2.tgz#1eda973569b2de24eff11179f228e7eadde80506"
+  resolved "https://registry.yarnpkg.com/condition-circle/-/condition-circle-2.0.2.tgz#1eda973569b2de24eff11179f228e7eadde80506"
   integrity sha512-lX/6YGbAIFrxxI00y4ZfQYoF1dYSLwcu6Lk7lnnfxiIs/yS4/GBkS5rRxktivU444bRXaFBeVt/JM9sL9fX9SA==
   dependencies:
     "@semantic-release/error" "2.1.0"
