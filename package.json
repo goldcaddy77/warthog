@@ -25,7 +25,7 @@
     "//prettier": "Note: ignores node_modules by default and 'generated' folder via .prettierignore",
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
-    "test": "jest --verbose --coverage",
+    "test": "jest --verbose --coverage --runInBand",
     "//verbose": "--verbose flag must be used to accurately test the CLI writing to stdout",
     "test:prod": "yarn jest --coverage --ci --detectOpenHandles --runInBand --verbose",
     "test:watch": "jest --verbose --watch"
@@ -125,7 +125,7 @@
     "jest": "^24.8.0",
     "lint-staged": "^8.1.0",
     "npm-run-all": "^4.1.5",
-    "semantic-release": "^15.13.2",
+    "semantic-release": "^16.0.0-beta.31",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "ts-node": "^7.0.1"
