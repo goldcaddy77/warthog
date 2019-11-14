@@ -16,6 +16,7 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../../src";
+import { StringEnum } from "../src/modules/user/user.model";
 // @ts-ignore
 import { User } from "../src/modules/user/user.model";
 
@@ -51,7 +52,16 @@ export enum UserOrderByEnum {
   privateField_DESC = "privateField_DESC",
 
   jsonField_ASC = "jsonField_ASC",
-  jsonField_DESC = "jsonField_DESC"
+  jsonField_DESC = "jsonField_DESC",
+
+  magicId_ASC = "magicId_ASC",
+  magicId_DESC = "magicId_DESC",
+
+  bypassMagicId_ASC = "bypassMagicId_ASC",
+  bypassMagicId_DESC = "bypassMagicId_DESC",
+
+  noFiltersField_ASC = "noFiltersField_ASC",
+  noFiltersField_DESC = "noFiltersField_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -59,7 +69,79 @@ registerEnumType(UserOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class UserWhereInput extends BaseWhereInput {
+export class UserWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
   @TypeGraphQLField({ nullable: true })
   firstName_eq?: string;
 
@@ -90,20 +172,11 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField(() => [String], { nullable: true })
   lastName_in?: string[];
 
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_eq?: string;
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField_eq?: StringEnum;
 
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  stringEnumField_in?: string[];
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  stringEnumField_in?: StringEnum[];
 
   @TypeGraphQLField({ nullable: true })
   email_eq?: string;
@@ -121,16 +194,19 @@ export class UserWhereInput extends BaseWhereInput {
   email_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  registeredAt_gt?: Date;
-
-  @TypeGraphQLField({ nullable: true })
-  registeredAt_gte?: Date;
+  registeredAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
   registeredAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
   registeredAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  registeredAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  registeredAt_gte?: Date;
 
   @TypeGraphQLField({ nullable: true })
   nickName_eq?: string;
@@ -161,11 +237,47 @@ export class UserWhereInput extends BaseWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   privateField_in?: string[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  magicId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  magicId_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  bypassMagicId_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  bypassMagicId_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  bypassMagicId_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  bypassMagicId_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  bypassMagicId_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  noOrdersField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  noOrdersField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  noOrdersField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  noOrdersField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  noOrdersField_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id?: string;
 
   @TypeGraphQLField(() => String, { nullable: true })
@@ -180,8 +292,8 @@ export class UserCreateInput {
   @TypeGraphQLField()
   lastName!: string;
 
-  @TypeGraphQLField()
-  stringEnumField!: string;
+  @TypeGraphQLField(() => StringEnum)
+  stringEnumField!: StringEnum;
 
   @TypeGraphQLField()
   email!: string;
@@ -197,6 +309,21 @@ export class UserCreateInput {
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JSON;
+
+  @TypeGraphQLField(() => ID)
+  magicId!: string;
+
+  @TypeGraphQLField()
+  bypassMagicId!: string;
+
+  @TypeGraphQLField()
+  noFiltersField!: string;
+
+  @TypeGraphQLField()
+  noOrdersField!: string;
+
+  @TypeGraphQLField()
+  noFiltersOrOrdersField!: string;
 }
 
 @TypeGraphQLInputType()
@@ -207,8 +334,8 @@ export class UserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   lastName?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField?: string;
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
   email?: string;
@@ -224,6 +351,21 @@ export class UserUpdateInput {
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JSON;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  magicId?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  bypassMagicId?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  noFiltersField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  noOrdersField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  noFiltersOrOrdersField?: string;
 }
 
 @ArgsType()
