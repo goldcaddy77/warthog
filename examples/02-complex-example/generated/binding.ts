@@ -40,6 +40,9 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
  * Types
 */
 
+export type StringEnum =   'FOO' |
+  'BAR'
+
 export type UserOrderByInput =   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
@@ -61,7 +64,13 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'privateField_ASC' |
   'privateField_DESC' |
   'jsonField_ASC' |
-  'jsonField_DESC'
+  'jsonField_DESC' |
+  'magicId_ASC' |
+  'magicId_DESC' |
+  'bypassMagicId_ASC' |
+  'bypassMagicId_DESC' |
+  'noFiltersField_ASC' |
+  'noFiltersField_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -90,47 +99,60 @@ export interface BaseWhereInput {
 export interface UserCreateInput {
   firstName: String
   lastName: String
-  stringEnumField: String
+  stringEnumField: StringEnum
   email: String
   registeredAt: DateTime
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
+  magicId: ID_Output
+  bypassMagicId: String
+  noFiltersField: String
+  noOrdersField: String
+  noFiltersOrOrdersField: String
 }
 
 export interface UserUpdateInput {
   firstName?: String | null
   lastName?: String | null
-  stringEnumField?: String | null
+  stringEnumField?: StringEnum | null
   email?: String | null
   registeredAt?: DateTime | null
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
+  magicId?: ID_Input | null
+  bypassMagicId?: String | null
+  noFiltersField?: String | null
+  noOrdersField?: String | null
+  noFiltersOrOrdersField?: String | null
 }
 
 export interface UserWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   firstName_eq?: String | null
   firstName_contains?: String | null
   firstName_startsWith?: String | null
@@ -141,20 +163,18 @@ export interface UserWhereInput {
   lastName_startsWith?: String | null
   lastName_endsWith?: String | null
   lastName_in?: String[] | String | null
-  stringEnumField_eq?: String | null
-  stringEnumField_contains?: String | null
-  stringEnumField_startsWith?: String | null
-  stringEnumField_endsWith?: String | null
-  stringEnumField_in?: String[] | String | null
+  stringEnumField_eq?: StringEnum | null
+  stringEnumField_in?: StringEnum[] | StringEnum | null
   email_eq?: String | null
   email_contains?: String | null
   email_startsWith?: String | null
   email_endsWith?: String | null
   email_in?: String[] | String | null
-  registeredAt_gt?: DateTime | null
-  registeredAt_gte?: DateTime | null
+  registeredAt_eq?: DateTime | null
   registeredAt_lt?: DateTime | null
   registeredAt_lte?: DateTime | null
+  registeredAt_gt?: DateTime | null
+  registeredAt_gte?: DateTime | null
   nickName_eq?: String | null
   nickName_contains?: String | null
   nickName_startsWith?: String | null
@@ -165,10 +185,22 @@ export interface UserWhereInput {
   privateField_startsWith?: String | null
   privateField_endsWith?: String | null
   privateField_in?: String[] | String | null
+  magicId_eq?: ID_Input | null
+  magicId_in?: ID_Output[] | ID_Output | null
+  bypassMagicId_eq?: String | null
+  bypassMagicId_contains?: String | null
+  bypassMagicId_startsWith?: String | null
+  bypassMagicId_endsWith?: String | null
+  bypassMagicId_in?: String[] | String | null
+  noOrdersField_eq?: String | null
+  noOrdersField_contains?: String | null
+  noOrdersField_startsWith?: String | null
+  noOrdersField_endsWith?: String | null
+  noOrdersField_in?: String[] | String | null
 }
 
 export interface UserWhereUniqueInput {
-  id?: String | null
+  id?: ID_Input | null
   email?: String | null
 }
 
@@ -224,12 +256,17 @@ export interface User extends BaseGraphQLObject {
   version: Int
   firstName: String
   lastName: String
-  stringEnumField: String
+  stringEnumField: StringEnum
   email: String
   registeredAt: DateTime
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
+  magicId: String
+  bypassMagicId: String
+  noFiltersField: String
+  noOrdersField: String
+  noFiltersOrOrdersField: String
 }
 
 /*

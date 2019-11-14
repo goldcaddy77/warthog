@@ -80,7 +80,7 @@ type Dish implements BaseGraphQLObject {
 
 input DishCreateInput {
   name: String!
-  kitchenSinkId: String!
+  kitchenSinkId: ID!
 }
 
 enum DishOrderByInput {
@@ -98,31 +98,34 @@ enum DishOrderByInput {
 
 input DishUpdateInput {
   name: String
-  kitchenSinkId: String
+  kitchenSinkId: ID
 }
 
 input DishWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
@@ -133,7 +136,7 @@ input DishWhereInput {
 }
 
 input DishWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 """
@@ -209,27 +212,30 @@ input KitchenSinkUpdateInput {
 }
 
 input KitchenSinkWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String
@@ -240,10 +246,11 @@ input KitchenSinkWhereInput {
   nullableStringField_startsWith: String
   nullableStringField_endsWith: String
   nullableStringField_in: [String!]
-  dateField_gt: DateTime
-  dateField_gte: DateTime
+  dateField_eq: DateTime
   dateField_lt: DateTime
   dateField_lte: DateTime
+  dateField_gt: DateTime
+  dateField_gte: DateTime
   emailField_eq: String
   emailField_contains: String
   emailField_startsWith: String
@@ -266,7 +273,7 @@ input KitchenSinkWhereInput {
 }
 
 input KitchenSinkWhereUniqueInput {
-  id: String
+  id: ID
   emailField: String
 }
 

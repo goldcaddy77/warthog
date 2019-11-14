@@ -84,6 +84,11 @@ type StandardDeleteResponse {
   id: ID!
 }
 
+enum StringEnum {
+  FOO
+  BAR
+}
+
 type User implements BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!
@@ -95,23 +100,33 @@ type User implements BaseGraphQLObject {
   version: Int!
   firstName: String!
   lastName: String!
-  stringEnumField: String!
+  stringEnumField: StringEnum!
   email: String!
   registeredAt: DateTime!
   nickName: String
   privateField: String
   jsonField: JSONObject
+  magicId: String!
+  bypassMagicId: String!
+  noFiltersField: String!
+  noOrdersField: String!
+  noFiltersOrOrdersField: String!
 }
 
 input UserCreateInput {
   firstName: String!
   lastName: String!
-  stringEnumField: String!
+  stringEnumField: StringEnum!
   email: String!
   registeredAt: DateTime!
   nickName: String
   privateField: String
   jsonField: JSONObject
+  magicId: ID!
+  bypassMagicId: String!
+  noFiltersField: String!
+  noOrdersField: String!
+  noFiltersOrOrdersField: String!
 }
 
 enum UserOrderByInput {
@@ -137,41 +152,55 @@ enum UserOrderByInput {
   privateField_DESC
   jsonField_ASC
   jsonField_DESC
+  magicId_ASC
+  magicId_DESC
+  bypassMagicId_ASC
+  bypassMagicId_DESC
+  noFiltersField_ASC
+  noFiltersField_DESC
 }
 
 input UserUpdateInput {
   firstName: String
   lastName: String
-  stringEnumField: String
+  stringEnumField: StringEnum
   email: String
   registeredAt: DateTime
   nickName: String
   privateField: String
   jsonField: JSONObject
+  magicId: ID
+  bypassMagicId: String
+  noFiltersField: String
+  noOrdersField: String
+  noFiltersOrOrdersField: String
 }
 
 input UserWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   firstName_eq: String
   firstName_contains: String
   firstName_startsWith: String
@@ -182,20 +211,18 @@ input UserWhereInput {
   lastName_startsWith: String
   lastName_endsWith: String
   lastName_in: [String!]
-  stringEnumField_eq: String
-  stringEnumField_contains: String
-  stringEnumField_startsWith: String
-  stringEnumField_endsWith: String
-  stringEnumField_in: [String!]
+  stringEnumField_eq: StringEnum
+  stringEnumField_in: [StringEnum!]
   email_eq: String
   email_contains: String
   email_startsWith: String
   email_endsWith: String
   email_in: [String!]
-  registeredAt_gt: DateTime
-  registeredAt_gte: DateTime
+  registeredAt_eq: DateTime
   registeredAt_lt: DateTime
   registeredAt_lte: DateTime
+  registeredAt_gt: DateTime
+  registeredAt_gte: DateTime
   nickName_eq: String
   nickName_contains: String
   nickName_startsWith: String
@@ -206,9 +233,21 @@ input UserWhereInput {
   privateField_startsWith: String
   privateField_endsWith: String
   privateField_in: [String!]
+  magicId_eq: ID
+  magicId_in: [ID!]
+  bypassMagicId_eq: String
+  bypassMagicId_contains: String
+  bypassMagicId_startsWith: String
+  bypassMagicId_endsWith: String
+  bypassMagicId_in: [String!]
+  noOrdersField_eq: String
+  noOrdersField_contains: String
+  noOrdersField_startsWith: String
+  noOrdersField_endsWith: String
+  noOrdersField_in: [String!]
 }
 
 input UserWhereUniqueInput {
-  id: String
+  id: ID
   email: String
 }
