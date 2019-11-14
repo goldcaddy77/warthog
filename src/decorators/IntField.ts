@@ -6,9 +6,9 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface IntFieldOptions {
   dataType?: ColumnType; // int16, jsonb, etc...
-  filters?: boolean;
+  filter?: boolean;
   nullable?: boolean;
-  orders?: boolean;
+  sort?: boolean;
 }
 
 export function IntField(args: IntFieldOptions = decoratorDefaults): any {

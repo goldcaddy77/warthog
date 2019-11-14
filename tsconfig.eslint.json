@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "lib": ["es2016", "dom", "es5", "scripthost", "esnext", "esnext.asynciterable"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "keyofStringsOnly": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "pretty": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es5",
+    "types": ["jest", "isomorphic-fetch", "node"],
+    "typeRoots": ["node_modules/@types", "./typings", "./typings/typings.d.ts"]
+  },
+  "include": ["examples/**/*", "src/**/*"],
+  "exclude": ["node_modules/**/*", "src/**/*.test.ts", "**/generated/*"]
+}

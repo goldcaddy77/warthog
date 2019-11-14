@@ -5,6 +5,7 @@ import {
   DateField,
   EmailField,
   EnumField,
+  IdField,
   JSONField,
   Model,
   StringField
@@ -45,24 +46,18 @@ export class User extends BaseModel {
   @JSONField({ nullable: true })
   jsonField?: JSON;
 
-  @Column('bytea')
-  serialized?: Buffer;
+  @IdField({ nullable: true })
+  idField: string;
 
-  // This will automatically convert to an ID
-  // V2: remove this
-  @StringField()
-  magicId?: string;
+  @Column({ nullable: true })
+  dbOnlyColumn?: string;
 
-  // This will remain a string type because we overrode with `filters`
-  @StringField({ filters: 'string' })
-  bypassMagicId?: string;
+  @StringField({ filter: false, nullable: true })
+  noFilterField?: string;
 
-  @StringField({ filters: false })
-  noFiltersField?: string;
+  @StringField({ sort: false, nullable: true })
+  noSortField?: string;
 
-  @StringField({ orders: false })
-  noOrdersField?: string;
-
-  @StringField({ filters: false, orders: false })
-  noFiltersOrOrdersField?: string;
+  @StringField({ filter: false, sort: false, nullable: true })
+  noFilterOrSortField?: string;
 }

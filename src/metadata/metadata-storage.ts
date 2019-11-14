@@ -14,9 +14,9 @@ export type FieldType =
 
 export const decoratorDefaults = {
   editable: true,
-  filters: true,
+  filter: true,
   nullable: false,
-  orders: true
+  sort: true
 };
 
 export interface ColumnMetadata {
@@ -24,11 +24,11 @@ export interface ColumnMetadata {
   propertyName: string;
   dataType?: ColumnType; // int16, jsonb, etc...
   editable?: boolean;
-  filters?: boolean | FieldType;
+  filter?: boolean | FieldType;
   enum?: GraphQLEnumType;
   enumName?: string;
   nullable?: boolean;
-  orders?: boolean;
+  sort?: boolean;
   unique?: boolean;
 }
 
@@ -51,9 +51,9 @@ export class MetadataStorage {
     {
       propertyName: 'id',
       type: 'id',
-      filters: true,
+      filter: true,
       nullable: false,
-      orders: false,
+      sort: false,
       unique: true,
       editable: false
     },
@@ -61,63 +61,63 @@ export class MetadataStorage {
       propertyName: 'createdAt',
       type: 'date',
       editable: false,
-      filters: true,
+      filter: true,
       nullable: false,
-      orders: true,
+      sort: true,
       unique: false
     },
     {
       propertyName: 'createdById',
       type: 'id',
       editable: false,
-      filters: true,
+      filter: true,
       nullable: false,
-      orders: false,
+      sort: false,
       unique: false
     },
     {
       propertyName: 'updatedAt',
       type: 'date',
       editable: false,
-      filters: true,
+      filter: true,
       nullable: true,
-      orders: true,
+      sort: true,
       unique: false
     },
     {
       propertyName: 'updatedById',
       type: 'id',
       editable: false,
-      filters: true,
+      filter: true,
       nullable: true,
-      orders: false,
+      sort: false,
       unique: false
     },
     {
       propertyName: 'deletedAt',
       type: 'date',
       editable: false,
-      filters: true,
+      filter: true,
       nullable: true,
-      orders: true,
+      sort: true,
       unique: false
     },
     {
       propertyName: 'deletedById',
       type: 'id',
       editable: false,
-      filters: true,
+      filter: true,
       nullable: true,
-      orders: false,
+      sort: false,
       unique: false
     },
     {
       type: 'integer',
       propertyName: 'version',
       editable: false,
-      filters: false,
+      filter: false,
       nullable: false,
-      orders: false,
+      sort: false,
       unique: false
     }
   ];

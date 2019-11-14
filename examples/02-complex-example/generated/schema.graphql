@@ -106,11 +106,10 @@ type User implements BaseGraphQLObject {
   nickName: String
   privateField: String
   jsonField: JSONObject
-  magicId: String!
-  bypassMagicId: String!
-  noFiltersField: String!
-  noOrdersField: String!
-  noFiltersOrOrdersField: String!
+  idField: String
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
 }
 
 input UserCreateInput {
@@ -122,11 +121,10 @@ input UserCreateInput {
   nickName: String
   privateField: String
   jsonField: JSONObject
-  magicId: ID!
-  bypassMagicId: String!
-  noFiltersField: String!
-  noOrdersField: String!
-  noFiltersOrOrdersField: String!
+  idField: ID
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
 }
 
 enum UserOrderByInput {
@@ -152,12 +150,10 @@ enum UserOrderByInput {
   privateField_DESC
   jsonField_ASC
   jsonField_DESC
-  magicId_ASC
-  magicId_DESC
-  bypassMagicId_ASC
-  bypassMagicId_DESC
-  noFiltersField_ASC
-  noFiltersField_DESC
+  idField_ASC
+  idField_DESC
+  noFilterField_ASC
+  noFilterField_DESC
 }
 
 input UserUpdateInput {
@@ -169,11 +165,10 @@ input UserUpdateInput {
   nickName: String
   privateField: String
   jsonField: JSONObject
-  magicId: ID
-  bypassMagicId: String
-  noFiltersField: String
-  noOrdersField: String
-  noFiltersOrOrdersField: String
+  idField: ID
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
 }
 
 input UserWhereInput {
@@ -233,18 +228,13 @@ input UserWhereInput {
   privateField_startsWith: String
   privateField_endsWith: String
   privateField_in: [String!]
-  magicId_eq: ID
-  magicId_in: [ID!]
-  bypassMagicId_eq: String
-  bypassMagicId_contains: String
-  bypassMagicId_startsWith: String
-  bypassMagicId_endsWith: String
-  bypassMagicId_in: [String!]
-  noOrdersField_eq: String
-  noOrdersField_contains: String
-  noOrdersField_startsWith: String
-  noOrdersField_endsWith: String
-  noOrdersField_in: [String!]
+  idField_eq: ID
+  idField_in: [ID!]
+  noSortField_eq: String
+  noSortField_contains: String
+  noSortField_startsWith: String
+  noSortField_endsWith: String
+  noSortField_in: [String!]
 }
 
 input UserWhereUniqueInput {

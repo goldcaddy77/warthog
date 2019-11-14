@@ -5,9 +5,9 @@ import { decoratorDefaults, getMetadataStorage } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface StringFieldOptions {
-  filters?: boolean;
+  filter?: boolean;
   nullable?: boolean;
-  orders?: boolean;
+  sort?: boolean;
   unique?: boolean;
 }
 
