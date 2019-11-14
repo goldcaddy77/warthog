@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { Field } from 'type-graphql';
 import { JoinColumn, ManyToOne as TypeORMManyToOne } from 'typeorm';
 
-import { StringField } from '../decorators';
+import { IdField } from '../decorators';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 export function ManyToOne(parentType: any, joinFunc: any, options: any = {}): any {
@@ -24,7 +24,7 @@ export function ManyToOne(parentType: any, joinFunc: any, options: any = {}): an
   ): any => {
     klass = target.constructor.name;
     Reflect.defineProperty(target, `${klass}Id`, {});
-    StringField(options)(target, `${propertyKey}Id`, descriptor);
+    IdField(options)(target, `${propertyKey}Id`, descriptor);
   };
 
   // NOTE: this is unnecessary, but I'm keeping it around because otherwise it will generate the schema properties in a different order

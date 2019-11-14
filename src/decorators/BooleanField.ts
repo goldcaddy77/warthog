@@ -1,22 +1,28 @@
+import { GraphQLBoolean } from 'graphql';
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { GraphQLBoolean } from 'graphql';
+import { decoratorDefaults, getMetadataStorage } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface BooleanFieldOptions {
-  nullable?: boolean;
   default?: boolean;
+  filters?: boolean;
+  nullable?: boolean;
+  orders?: boolean;
 }
 
 export function BooleanField(args: BooleanFieldOptions = {}): any {
-  const nullableOption = args.nullable === true ? { nullable: true } : {};
-  const defaultOption = args.default ? { default: args.default } : {};
+  const options = { ...decoratorDefaults, ...args };
+  const nullableOption = options.nullable === true ? { nullable: true } : {};
+  const defaultOption = options.default ? { default: options.default } : {};
 
-  // These are the 2 required decorators to get type-graphql and typeorm working
+  const registerWithWarthog = (target: object, propertyKey: string): any => {
+    getMetadataStorage().addField('boolean', target.constructor.name, propertyKey, options);
+  };
+
   const factories = [
-    // We explicitly say string here because when we're metaprogramming without
-    // TS types, Field does not know that this should be a String
+    registerWithWarthog,
     Field(() => GraphQLBoolean, {
       ...nullableOption,
       ...defaultOption

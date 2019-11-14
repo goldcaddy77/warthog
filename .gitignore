@@ -22,5 +22,7 @@ dist
 tmp
 
 warthog.sqlite.tmp
+
 warthog-test
+
 # examples/**/generated/*
