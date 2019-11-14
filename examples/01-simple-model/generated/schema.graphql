@@ -94,6 +94,8 @@ type User implements BaseGraphQLObject {
   age: Int!
   isRequired: Boolean!
   rating: Float!
+  magicId: String!
+  bypassMagicId: String!
 }
 
 input UserCreateInput {
@@ -103,6 +105,8 @@ input UserCreateInput {
   age: Float!
   isRequired: Boolean!
   rating: Float!
+  magicId: ID!
+  bypassMagicId: String!
 }
 
 enum UserOrderByInput {
@@ -124,6 +128,10 @@ enum UserOrderByInput {
   isRequired_DESC
   rating_ASC
   rating_DESC
+  magicId_ASC
+  magicId_DESC
+  bypassMagicId_ASC
+  bypassMagicId_DESC
 }
 
 input UserUpdateInput {
@@ -133,30 +141,35 @@ input UserUpdateInput {
   age: Float
   isRequired: Boolean
   rating: Float
+  magicId: ID
+  bypassMagicId: String
 }
 
 input UserWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   firstName_eq: String
   firstName_contains: String
   firstName_startsWith: String
@@ -186,9 +199,16 @@ input UserWhereInput {
   rating_lt: Float
   rating_lte: Float
   rating_in: [Float!]
+  magicId_eq: ID
+  magicId_in: [ID!]
+  bypassMagicId_eq: String
+  bypassMagicId_contains: String
+  bypassMagicId_startsWith: String
+  bypassMagicId_endsWith: String
+  bypassMagicId_in: [String!]
 }
 
 input UserWhereUniqueInput {
-  id: String
+  id: ID
   email: String
 }

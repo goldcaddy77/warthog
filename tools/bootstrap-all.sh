@@ -5,5 +5,6 @@ for d in examples/*/ ; do
     pwd
     # yarn remove warthog || true
     yarn bootstrap
+    # yarn codegen
     cd -
 done

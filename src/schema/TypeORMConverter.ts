@@ -1,6 +1,5 @@
 import {
   GraphQLBoolean,
-  GraphQLEnumType,
   GraphQLFloat,
   GraphQLID,
   GraphQLInt,
@@ -9,112 +8,40 @@ import {
 } from 'graphql';
 import { GraphQLISODateTime } from 'type-graphql';
 import { Container } from 'typedi';
-import { EntityMetadata } from 'typeorm';
-import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
-import { getMetadataStorage } from '../metadata';
+import { ColumnMetadata, getMetadataStorage, ModelMetadata } from '../metadata';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
-
-const SYSTEM_FIELDS = [
-  'createdAt',
-  'createdById',
-  'updatedAt',
-  'updatedById',
-  'deletedAt',
-  'deletedById'
-];
-
-function uniquesForEntity(entity: EntityMetadata): string[] {
-  return entity.uniques.reduce<string[]>(
-    (arr, unique: UniqueMetadata) => {
-      return [...arr, ...unique.columns.map((col: ColumnMetadata) => col.propertyName)];
-    },
-    [] as string[]
-  );
-}
 
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
 
-export function extractEnumObject(column: ColumnMetadata): GraphQLEnumType {
-  const storage = getMetadataStorage();
-  const modelEnums = column.entityMetadata.inheritanceTree.map(model =>
-    storage.getEnum(model.name, column.propertyName)
-  );
-
-  return modelEnums.find(m => Boolean(m));
-}
-
-export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | GraphQLEnumType {
-  // Check to see if this column is an enum and return that
+export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | string {
   if (column.enum) {
-    return extractEnumObject(column);
-  } else if (column.propertyName.match(/Id$/)) {
-    return GraphQLID;
+    return String(column.enumName);
   }
 
-  // Some types have a name attribute
-  const type = (column.type as any).name ? (column.type as any).name : column.type;
-
-  switch (type) {
-    // TODO: clean up unused types (String and 'String')
-    case String:
-    case 'String':
-    case 'varchar':
-    case 'text':
-    case 'uuid':
-    case 'bytea':
+  switch (column.type) {
+    case 'id':
+      return GraphQLID;
+    case 'email':
+    case 'string':
       return GraphQLString;
-    // TODO: clean up unused types (Boolean and 'Boolean')
-    case Boolean:
-    case 'Boolean':
     case 'boolean':
-    case 'bool':
       return GraphQLBoolean;
-    // TODO: clean up unused types (Number and 'Number')
-    case Number:
-    case 'Number':
     case 'float':
-    case 'float4':
-    case 'float8':
-    case 'smallmoney':
-    case 'money':
-    case 'double':
-    case 'dec':
-    case 'decimal':
-    case 'fixed':
-    case 'numeric':
-    case 'real':
-    case 'double precision':
       return GraphQLFloat;
-    case 'int':
-    case 'smallint':
-    case 'mediumint':
-    case 'bigint':
     case 'integer':
-    case 'int2':
-    case 'int4':
-    case 'int8':
       return GraphQLInt;
-    // TODO: clean up unused types (Date and 'Date')
-    case Date:
-    case 'Date':
-    case 'timestamp':
-    case 'datetime':
+    case 'date':
       return GraphQLISODateTime;
+    // return GraphQLString; // V2: This should be GraphQLISODateTime
     case 'json':
-    case 'jsonb':
-    case 'varying character': // HACK: allows us to generate proper types for sqlite (mock db)
       return GraphQLJSONObject;
-    default:
-      if (type instanceof GraphQLScalarType) {
-        return type;
-      }
-
-      throw new Error(`convertToGraphQLType: Unexpected type: ${type}`);
+    case 'enum':
+      // This is to make TS happy and so that we'll get a compile time error if a new type is added
+      throw new Error("Will never get here because it's handled above");
   }
 }
 
@@ -129,16 +56,16 @@ export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
     case GraphQLJSONObject:
       return 'GraphQLJSONObject';
     default:
-      return graphQLType.name;
+      return typeof graphQLType === 'string' ? graphQLType : graphQLType.name;
   }
 }
 
 // const ID_TYPE = 'ID';
 export function columnToTypeScriptType(column: ColumnMetadata): string {
-  if (column.isPrimary) {
+  if (column.type === 'id') {
     return 'string'; // TODO: should this be ID_TYPE?
   } else if (column.enum) {
-    return extractEnumObject(column).name;
+    return String(column.enumName);
   } else {
     const graphqlType = columnTypeToGraphQLDataType(column);
     const typeMap: any = {
@@ -182,37 +109,32 @@ export function generateEnumMapImports(): string[] {
   return imports;
 }
 
-export function entityToWhereUniqueInput(entity: EntityMetadata): string {
-  const uniques = uniquesForEntity(entity);
+export function entityToWhereUniqueInput(model: ModelMetadata): string {
+  const uniques = getMetadataStorage().uniquesForModel(model);
 
-  const numUniques = entity.columns.reduce<number>((num, column: ColumnMetadata) => {
-    if (uniques.includes(column.propertyName) || column.isPrimary) {
-      num++;
-    }
-
-    return num;
-  }, 0);
   // If there is only one unique field, it should not be nullable
-  const uniqueFieldsAreNullable = numUniques > 1;
+  const uniqueFieldsAreNullable = uniques.length > 1;
 
   let fieldsTemplate = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
-    if (uniques.includes(column.propertyName) || column.isPrimary) {
-      const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
-      const graphQLDataType = columnTypeToGraphQLDataType(column);
-      const tsType = columnToTypeScriptType(column);
+  model.columns.forEach((column: ColumnMetadata) => {
+    if (!column.unique) {
+      return;
+    }
 
-      fieldsTemplate += `
+    const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
+    const graphQLDataType = columnTypeToGraphQLDataType(column);
+    const tsType = columnToTypeScriptType(column);
+
+    fieldsTemplate += `
         @TypeGraphQLField(() => ${graphQLDataType}${nullable})
         ${column.propertyName}?: ${tsType};
       `;
-    }
   });
 
   const template = `
     @TypeGraphQLInputType()
-    export class ${entity.name}WhereUniqueInput {
+    export class ${model.name}WhereUniqueInput {
       ${fieldsTemplate}
     }
   `;
@@ -220,7 +142,7 @@ export function entityToWhereUniqueInput(entity: EntityMetadata): string {
   return template;
 }
 
-export function entityToCreateInput(entity: EntityMetadata): string {
+export function entityToCreateInput(model: ModelMetadata): string {
   const idsOnCreate =
     (Container.get('Config') as any).get('ALLOW_OPTIONAL_ID_ON_CREATE') === 'true';
 
@@ -233,101 +155,77 @@ export function entityToCreateInput(entity: EntityMetadata): string {
     `;
   }
 
-  entity.columns.forEach((column: ColumnMetadata) => {
-    if (
-      !column.isPrimary &&
-      !column.isCreateDate &&
-      !column.isGenerated &&
-      !column.isUpdateDate &&
-      !column.isVersion &&
-      !SYSTEM_FIELDS.includes(column.propertyName)
-    ) {
-      const graphQLDataType = columnTypeToGraphQLDataType(column);
-      const nullable = column.isNullable ? '{ nullable: true }' : '';
-      const tsRequired = column.isNullable ? '?' : '!';
-      const tsType = columnToTypeScriptType(column);
+  model.columns.forEach((column: ColumnMetadata) => {
+    if (!column.editable) {
+      return;
+    }
+    const graphQLDataType = columnTypeToGraphQLDataType(column);
+    const nullable = column.nullable ? '{ nullable: true }' : '';
+    const tsRequired = column.nullable ? '?' : '!';
+    const tsType = columnToTypeScriptType(column);
 
-      // we need to know what the graphql type is and what the tsType is
-      // for enums
-
-      if (
-        column.enum ||
-        column.type === 'json' ||
-        column.type === 'jsonb' ||
-        column.type === 'varying character'
-      ) {
-        fieldTemplates += `
+    if (column.enum || column.type === 'json' || column.type === 'id') {
+      fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
        `;
-      } else {
-        fieldTemplates += `
+    } else {
+      fieldTemplates += `
           @TypeGraphQLField(${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
         `;
-      }
     }
   });
 
   return `
     @TypeGraphQLInputType()
-    export class ${entity.name}CreateInput {
+    export class ${model.name}CreateInput {
       ${fieldTemplates}
     }
   `;
 }
 
-export function entityToUpdateInput(entity: EntityMetadata): string {
+export function entityToUpdateInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
-    if (
-      !column.isPrimary &&
-      !column.isCreateDate &&
-      !column.isGenerated &&
-      !column.isUpdateDate &&
-      !column.isVersion &&
-      !SYSTEM_FIELDS.includes(column.propertyName)
-    ) {
-      // TODO: also don't allow updated foreign key fields
-      // Example: photo.userId: String
-      const graphQLDataType = columnTypeToGraphQLDataType(column);
-      const tsType = columnToTypeScriptType(column);
+  model.columns.forEach((column: ColumnMetadata) => {
+    if (!column.editable) {
+      return;
+    }
 
-      if (
-        column.enum ||
-        column.type === 'json' ||
-        column.type === 'jsonb' ||
-        column.type === 'varying character'
-      ) {
-        fieldTemplates += `
+    // TODO: also don't allow updated foreign key fields
+    // Example: photo.userId: String
+    const graphQLDataType = columnTypeToGraphQLDataType(column);
+    const tsType = columnToTypeScriptType(column);
+
+    if (column.enum || column.type === 'json' || column.type === 'id') {
+      fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}?: ${tsType};
       `;
-      } else {
-        fieldTemplates += `
+    } else {
+      fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}?: ${tsType};
       `;
-      }
     }
   });
 
   return `
     @TypeGraphQLInputType()
-    export class ${entity.name}UpdateInput {
+    export class ${model.name}UpdateInput {
       ${fieldTemplates}
     }
   `;
 }
 
 // Constructs required arguments needed when doing an update
-export function entityToUpdateInputArgs(entity: EntityMetadata): string {
+export function entityToUpdateInputArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
-    export class ${entity.name}UpdateArgs {
-      @TypeGraphQLField() data!: ${entity.name}UpdateInput;
-      @TypeGraphQLField() where!: ${entity.name}WhereUniqueInput;
+    export class ${model.name}UpdateArgs {
+      @TypeGraphQLField() data!: ${model.name}UpdateInput;
+      @TypeGraphQLField() where!: ${model.name}WhereUniqueInput;
     }
   `;
 }
@@ -339,22 +237,22 @@ function columnToTypes(column: ColumnMetadata) {
   return { graphqlType, tsType };
 }
 
-export function entityToWhereInput(entity: EntityMetadata): string {
+export function entityToWhereInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
+  model.columns.forEach((column: ColumnMetadata) => {
     // Don't allow filtering on these fields
-    if (column.isPrimary || column.isVersion || SYSTEM_FIELDS.includes(column.propertyName)) {
+    if (!column.filters) {
       return;
     }
 
-    const { graphqlType, tsType } = columnToTypes(column);
+    const { tsType } = columnToTypes(column);
 
     const graphQLDataType = columnTypeToGraphQLDataType(column);
 
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
-    if (column.isPrimary || graphqlType === GraphQLID) {
+    if (column.type === 'id') {
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType},{ nullable: true })
         ${column.propertyName}_eq?: string;
@@ -362,7 +260,15 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: string[];
       `;
-    } else if (graphqlType === GraphQLString) {
+    } else if (column.type === 'boolean') {
+      fieldTemplates += `
+        @TypeGraphQLField(() => ${graphQLDataType},{ nullable: true })
+        ${column.propertyName}_eq?: Boolean;
+
+        @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
+        ${column.propertyName}_in?: Boolean[];
+      `;
+    } else if (column.type === 'string' || column.type === 'email') {
       // TODO: do we need NOT?
       // `${column.propertyName}_not`
       fieldTemplates += `
@@ -381,7 +287,7 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
-    } else if (graphqlType === GraphQLFloat || graphqlType === GraphQLInt) {
+    } else if (column.type === 'float' || column.type === 'integer') {
       fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_eq?: ${tsType};
@@ -401,28 +307,32 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
-    } else if (graphqlType === GraphQLISODateTime) {
+    } else if (column.type === 'date') {
+      // I really don't like putting this magic here, but it has to go somewhere
+      // This deletedAt_all turns off the default filtering of soft-deleted items
+      if (column.propertyName === 'deletedAt') {
+        fieldTemplates += `
+          @TypeGraphQLField({ nullable: true })
+          deletedAt_all?: Boolean;
+        `;
+      }
       fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_gt?: ${tsType};
-
-        @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_gte?: ${tsType};
+        ${column.propertyName}_eq?: ${tsType};
 
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lt?: ${tsType};
 
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_lte?: ${tsType};
-      `;
-    } else if (
-      column.type !== 'json' &&
-      column.type !== 'jsonb' &&
-      column.type !== 'varying character'
-    ) {
-      // @@@ dcaddigan not sure what it means to search by JSONObjects
-      // future release?
 
+        @TypeGraphQLField({ nullable: true })
+        ${column.propertyName}_gt?: ${tsType};
+
+        @TypeGraphQLField({ nullable: true })
+        ${column.propertyName}_gte?: ${tsType};
+      `;
+    } else if (column.type === 'enum') {
       // Enums will fall through here
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
@@ -431,53 +341,49 @@ export function entityToWhereInput(entity: EntityMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${graphQLDataType}[];
       `;
+    } else if (column.type === 'json') {
+      // Determine how to handle JSON
     }
   });
 
   return `
     @TypeGraphQLInputType()
-    export class ${entity.name}WhereInput extends BaseWhereInput {
+    export class ${model.name}WhereInput {
       ${fieldTemplates}
     }
   `;
 }
 
-export function entityToWhereArgs(entity: EntityMetadata): string {
+export function entityToWhereArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
-    export class ${entity.name}WhereArgs extends PaginationArgs {
-      @TypeGraphQLField(() => ${entity.name}WhereInput, { nullable: true })
-      where?: ${entity.name}WhereInput;
+    export class ${model.name}WhereArgs extends PaginationArgs {
+      @TypeGraphQLField(() => ${model.name}WhereInput, { nullable: true })
+      where?: ${model.name}WhereInput;
 
-      @TypeGraphQLField(() => ${entity.name}OrderByEnum, { nullable: true })
-      orderBy?: ${entity.name}OrderByEnum;
+      @TypeGraphQLField(() => ${model.name}OrderByEnum, { nullable: true })
+      orderBy?: ${model.name}OrderByEnum;
     }
   `;
 }
 
-// Note: it would be great to inject a single `Arg` with the [entity.nameCreateInput] array arg,
+// Note: it would be great to inject a single `Arg` with the [model.nameCreateInput] array arg,
 // but that is not allowed by TypeGraphQL
-export function entityToCreateManyArgs(entity: EntityMetadata): string {
+export function entityToCreateManyArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
-    export class ${entity.name}CreateManyArgs {
-      @TypeGraphQLField(() => [${entity.name}CreateInput])
-      data!: ${entity.name}CreateInput[];
+    export class ${model.name}CreateManyArgs {
+      @TypeGraphQLField(() => [${model.name}CreateInput])
+      data!: ${model.name}CreateInput[];
     }
   `;
 }
 
-export function entityToOrderByEnum(entity: EntityMetadata): string {
-  const ORDER_BY_BLACKLIST = ['createdById', 'updatedById', 'deletedById'];
-
+export function entityToOrderByEnum(model: ModelMetadata): string {
   let fieldsTemplate = '';
 
-  entity.columns.forEach((column: ColumnMetadata) => {
-    if (
-      !column.isPrimary &&
-      !column.isVersion &&
-      !ORDER_BY_BLACKLIST.includes(column.propertyName)
-    ) {
+  model.columns.forEach((column: ColumnMetadata) => {
+    if (column.orders) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',
@@ -486,12 +392,12 @@ export function entityToOrderByEnum(entity: EntityMetadata): string {
   });
 
   return `
-    export enum ${entity.name}OrderByEnum {
+    export enum ${model.name}OrderByEnum {
       ${fieldsTemplate}
     }
 
-    registerEnumType(${entity.name}OrderByEnum, {
-      name: '${entity.name}OrderByInput'
+    registerEnumType(${model.name}OrderByEnum, {
+      name: '${model.name}OrderByInput'
     });
   `;
 }

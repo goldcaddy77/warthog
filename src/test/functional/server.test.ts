@@ -15,7 +15,8 @@ import express = require('express');
 import * as request from 'supertest';
 
 let server: Server<any>;
-let binding: Binding;
+// Can't type this as Binding as TypeScript will do static analysis and bomb if any new fields are introduced
+let binding: any; // Binding;
 let customExpressApp: express.Application;
 
 let onBeforeCalled = false;
@@ -50,6 +51,7 @@ describe('server', () => {
         }
       });
 
+      // TODO: before you attempt to start the server, we need to generate the code so that we don't get TS compiler issues
       await server.start();
 
       binding = ((await server.getBinding()) as unknown) as Binding;
