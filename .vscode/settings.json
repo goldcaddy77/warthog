@@ -1,27 +1,17 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
   "editor.formatOnSave": true,
-  "[typescript]": {
-    "editor.formatOnSave": true
-  },
   // Don't auto-format ejs templates
   "[html]": {
     "editor.formatOnSave": false
   },
   "eslint.autoFixOnSave": true,
-  "prettier.printWidth": 100,
-  "prettier.singleQuote": true,
-  "prettier.semi": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.validate": [
     "javascript",
     {
       "language": "typescript",
       "autoFix": true
     }
-  ],
-  "prettier.eslintIntegration": true,
-  "search.exclude": {
-    "dist/": true,
-    "node_modules/": true
-  }
+  ]
 }

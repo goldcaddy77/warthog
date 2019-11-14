@@ -121,7 +121,9 @@ export class Config {
     files.forEach((filename: string) => {
       const filepath = path.join(dotenvPath, filename);
       if (fs.existsSync(filepath)) {
-        dotenv.config({ path: filepath });
+        dotenv.config({
+          path: filepath
+        });
       }
     });
   }

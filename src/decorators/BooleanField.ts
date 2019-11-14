@@ -7,9 +7,9 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface BooleanFieldOptions {
   default?: boolean;
-  filters?: boolean;
+  filter?: boolean;
   nullable?: boolean;
-  orders?: boolean;
+  sort?: boolean;
 }
 
 export function BooleanField(args: BooleanFieldOptions = {}): any {

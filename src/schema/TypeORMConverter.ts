@@ -242,7 +242,7 @@ export function entityToWhereInput(model: ModelMetadata): string {
 
   model.columns.forEach((column: ColumnMetadata) => {
     // Don't allow filtering on these fields
-    if (!column.filters) {
+    if (!column.filter) {
       return;
     }
 
@@ -383,7 +383,7 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
   let fieldsTemplate = '';
 
   model.columns.forEach((column: ColumnMetadata) => {
-    if (column.orders) {
+    if (column.sort) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',

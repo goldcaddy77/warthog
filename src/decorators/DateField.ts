@@ -8,9 +8,9 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 interface DateFieldOptions {
   dataType?: ColumnType; // int16, jsonb, etc...
   default?: Date;
-  filters?: boolean;
+  filter?: boolean;
   nullable?: boolean;
-  orders?: boolean;
+  sort?: boolean;
 }
 
 export function DateField(args: DateFieldOptions = {}): any {

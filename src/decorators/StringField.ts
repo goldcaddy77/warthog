@@ -1,4 +1,5 @@
 import { MaxLength, MinLength } from 'class-validator';
+
 import { Field } from 'type-graphql';
 import { Column, ColumnType } from 'typeorm';
 
@@ -9,9 +10,9 @@ interface StringFieldOptions {
   dataType?: ColumnType; // int16, jsonb, etc...
   maxLength?: number;
   minLength?: number;
-  filters?: boolean | FieldType;
+  filter?: boolean;
   nullable?: boolean;
-  orders?: boolean;
+  sort?: boolean;
   unique?: boolean;
 }
 
@@ -23,12 +24,12 @@ export function StringField(args: StringFieldOptions = decoratorDefaults): any {
 
   const registerWithWarthog = (target: object, propertyKey: string): any => {
     // Sorry, I put in some magic that automatically identified columns that end in Id to be ID columns
-    // that only uses the ID filters (eq and in).  This was silly.  I've added a workaround here where you
-    // can explicitly state which filters you want to use.  So if you have a field called userId and add filters: 'string'
+    // that only uses the ID filter (eq and in).  This was silly.  I've added a workaround here where you
+    // can explicitly state which filter you want to use.  So if you have a field called userId and add filter: 'string'
     // this will bypass the magic Id logic below
     let fieldType: FieldType = 'string'; // default
 
-    const explicitType = typeof args.filters === 'string' ? args.filters : null;
+    const explicitType = typeof args.filter === 'string' ? args.filter : null;
     if (explicitType) {
       fieldType = explicitType;
     }

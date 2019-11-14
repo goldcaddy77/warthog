@@ -7,9 +7,9 @@ import { defaultColumnType } from '../torm';
 
 interface FloatFieldOptions {
   dataType?: ColumnType; // int16, jsonb, etc...
-  filters?: boolean;
+  filter?: boolean;
   nullable?: boolean;
-  orders?: boolean;
+  sort?: boolean;
 }
 
 export function FloatField(args: FloatFieldOptions = decoratorDefaults): any {

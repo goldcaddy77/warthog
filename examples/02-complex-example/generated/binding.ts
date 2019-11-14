@@ -65,12 +65,10 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'privateField_DESC' |
   'jsonField_ASC' |
   'jsonField_DESC' |
-  'magicId_ASC' |
-  'magicId_DESC' |
-  'bypassMagicId_ASC' |
-  'bypassMagicId_DESC' |
-  'noFiltersField_ASC' |
-  'noFiltersField_DESC'
+  'idField_ASC' |
+  'idField_DESC' |
+  'noFilterField_ASC' |
+  'noFilterField_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -105,11 +103,10 @@ export interface UserCreateInput {
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
-  magicId: ID_Output
-  bypassMagicId: String
-  noFiltersField: String
-  noOrdersField: String
-  noFiltersOrOrdersField: String
+  idField?: ID_Input | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
 }
 
 export interface UserUpdateInput {
@@ -121,11 +118,10 @@ export interface UserUpdateInput {
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
-  magicId?: ID_Input | null
-  bypassMagicId?: String | null
-  noFiltersField?: String | null
-  noOrdersField?: String | null
-  noFiltersOrOrdersField?: String | null
+  idField?: ID_Input | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
 }
 
 export interface UserWhereInput {
@@ -185,18 +181,13 @@ export interface UserWhereInput {
   privateField_startsWith?: String | null
   privateField_endsWith?: String | null
   privateField_in?: String[] | String | null
-  magicId_eq?: ID_Input | null
-  magicId_in?: ID_Output[] | ID_Output | null
-  bypassMagicId_eq?: String | null
-  bypassMagicId_contains?: String | null
-  bypassMagicId_startsWith?: String | null
-  bypassMagicId_endsWith?: String | null
-  bypassMagicId_in?: String[] | String | null
-  noOrdersField_eq?: String | null
-  noOrdersField_contains?: String | null
-  noOrdersField_startsWith?: String | null
-  noOrdersField_endsWith?: String | null
-  noOrdersField_in?: String[] | String | null
+  idField_eq?: ID_Input | null
+  idField_in?: ID_Output[] | ID_Output | null
+  noSortField_eq?: String | null
+  noSortField_contains?: String | null
+  noSortField_startsWith?: String | null
+  noSortField_endsWith?: String | null
+  noSortField_in?: String[] | String | null
 }
 
 export interface UserWhereUniqueInput {
@@ -262,11 +253,10 @@ export interface User extends BaseGraphQLObject {
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
-  magicId: String
-  bypassMagicId: String
-  noFiltersField: String
-  noOrdersField: String
-  noFiltersOrOrdersField: String
+  idField?: String | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
 }
 
 /*

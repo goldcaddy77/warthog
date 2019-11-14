@@ -54,14 +54,11 @@ export enum UserOrderByEnum {
   jsonField_ASC = "jsonField_ASC",
   jsonField_DESC = "jsonField_DESC",
 
-  magicId_ASC = "magicId_ASC",
-  magicId_DESC = "magicId_DESC",
+  idField_ASC = "idField_ASC",
+  idField_DESC = "idField_DESC",
 
-  bypassMagicId_ASC = "bypassMagicId_ASC",
-  bypassMagicId_DESC = "bypassMagicId_DESC",
-
-  noFiltersField_ASC = "noFiltersField_ASC",
-  noFiltersField_DESC = "noFiltersField_DESC"
+  noFilterField_ASC = "noFilterField_ASC",
+  noFilterField_DESC = "noFilterField_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -239,40 +236,25 @@ export class UserWhereInput {
   privateField_in?: string[];
 
   @TypeGraphQLField(() => ID, { nullable: true })
-  magicId_eq?: string;
+  idField_eq?: string;
 
   @TypeGraphQLField(() => [ID], { nullable: true })
-  magicId_in?: string[];
+  idField_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  bypassMagicId_eq?: string;
+  noSortField_eq?: string;
 
   @TypeGraphQLField({ nullable: true })
-  bypassMagicId_contains?: string;
+  noSortField_contains?: string;
 
   @TypeGraphQLField({ nullable: true })
-  bypassMagicId_startsWith?: string;
+  noSortField_startsWith?: string;
 
   @TypeGraphQLField({ nullable: true })
-  bypassMagicId_endsWith?: string;
+  noSortField_endsWith?: string;
 
   @TypeGraphQLField(() => [String], { nullable: true })
-  bypassMagicId_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  noOrdersField_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  noOrdersField_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  noOrdersField_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  noOrdersField_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  noOrdersField_in?: string[];
+  noSortField_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -310,20 +292,17 @@ export class UserCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JSON;
 
-  @TypeGraphQLField(() => ID)
-  magicId!: string;
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField?: string;
 
-  @TypeGraphQLField()
-  bypassMagicId!: string;
+  @TypeGraphQLField({ nullable: true })
+  noFilterField?: string;
 
-  @TypeGraphQLField()
-  noFiltersField!: string;
+  @TypeGraphQLField({ nullable: true })
+  noSortField?: string;
 
-  @TypeGraphQLField()
-  noOrdersField!: string;
-
-  @TypeGraphQLField()
-  noFiltersOrOrdersField!: string;
+  @TypeGraphQLField({ nullable: true })
+  noFilterOrSortField?: string;
 }
 
 @TypeGraphQLInputType()
@@ -353,19 +332,16 @@ export class UserUpdateInput {
   jsonField?: JSON;
 
   @TypeGraphQLField(() => ID, { nullable: true })
-  magicId?: string;
+  idField?: string;
 
   @TypeGraphQLField({ nullable: true })
-  bypassMagicId?: string;
+  noFilterField?: string;
 
   @TypeGraphQLField({ nullable: true })
-  noFiltersField?: string;
+  noSortField?: string;
 
   @TypeGraphQLField({ nullable: true })
-  noOrdersField?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  noFiltersOrOrdersField?: string;
+  noFilterOrSortField?: string;
 }
 
 @ArgsType()
