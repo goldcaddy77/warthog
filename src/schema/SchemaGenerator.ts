@@ -37,6 +37,7 @@ export class SchemaGenerator {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { GraphQLJSONObject } = require('graphql-type-json');
 
+      // @ts-ignore
       import { BaseWhereInput, JsonValue, PaginationArgs } from '${warthogImportPath}';
       ${generateEnumMapImports().join('')}
     `;
