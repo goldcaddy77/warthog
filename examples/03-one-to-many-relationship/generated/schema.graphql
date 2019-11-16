@@ -89,7 +89,7 @@ type Post implements BaseGraphQLObject {
 
 input PostCreateInput {
   title: String!
-  userId: String!
+  userId: ID!
 }
 
 enum PostOrderByInput {
@@ -107,7 +107,7 @@ enum PostOrderByInput {
 
 input PostUpdateInput {
   title: String
-  userId: String
+  userId: ID
 }
 
 input PostWhereInput {

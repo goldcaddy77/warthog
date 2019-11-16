@@ -6,8 +6,8 @@ import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
-import { BaseModel, WhereInput } from '..';
-import { StringMap } from './types';
+import { BaseModel } from '..';
+import { StringMap, WhereInput } from './types';
 
 export class BaseService<E extends BaseModel> {
   columnMap: StringMap;
@@ -109,9 +109,8 @@ export class BaseService<E extends BaseModel> {
     return qb.getMany();
   }
 
-  // TODO: fix - W extends Partial<E>
-  async findOne<W extends any>(where: W): Promise<E> {
-    const items = await this.find<W>(where);
+  async findOne<W extends Partial<E>>(where: Partial<E>): Promise<E> {
+    const items = await this.find(where);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
     } else if (items.length > 1) {

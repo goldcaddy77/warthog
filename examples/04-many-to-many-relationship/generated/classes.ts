@@ -308,10 +308,10 @@ export class UserRoleWhereUniqueInput {
 
 @TypeGraphQLInputType()
 export class UserRoleCreateInput {
-  @TypeGraphQLField()
+  @TypeGraphQLField(() => ID)
   userId!: string;
 
-  @TypeGraphQLField()
+  @TypeGraphQLField(() => ID)
   roleId!: string;
 
   @TypeGraphQLField({ nullable: true })
@@ -320,10 +320,10 @@ export class UserRoleCreateInput {
 
 @TypeGraphQLInputType()
 export class UserRoleUpdateInput {
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   roleId?: string;
 
   @TypeGraphQLField({ nullable: true })

@@ -296,7 +296,7 @@ export class PostCreateInput {
   @TypeGraphQLField()
   title!: string;
 
-  @TypeGraphQLField()
+  @TypeGraphQLField(() => ID)
   userId!: string;
 }
 
@@ -305,7 +305,7 @@ export class PostUpdateInput {
   @TypeGraphQLField({ nullable: true })
   title?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId?: string;
 }
 

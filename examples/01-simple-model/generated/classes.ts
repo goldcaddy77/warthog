@@ -16,6 +16,7 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../../src";
+import { StringEnum } from "../src/user.model";
 // @ts-ignore
 import { User } from "../src/user.model";
 
@@ -44,14 +45,11 @@ export enum UserOrderByEnum {
   isRequired_ASC = "isRequired_ASC",
   isRequired_DESC = "isRequired_DESC",
 
+  stringEnumField_ASC = "stringEnumField_ASC",
+  stringEnumField_DESC = "stringEnumField_DESC",
+
   rating_ASC = "rating_ASC",
-  rating_DESC = "rating_DESC",
-
-  magicId_ASC = "magicId_ASC",
-  magicId_DESC = "magicId_DESC",
-
-  bypassMagicId_ASC = "bypassMagicId_ASC",
-  bypassMagicId_DESC = "bypassMagicId_DESC"
+  rating_DESC = "rating_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -201,6 +199,12 @@ export class UserWhereInput {
   @TypeGraphQLField(() => [Boolean], { nullable: true })
   isRequired_in?: Boolean[];
 
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField_eq?: StringEnum;
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  stringEnumField_in?: StringEnum[];
+
   @TypeGraphQLField({ nullable: true })
   rating_eq?: number;
 
@@ -218,27 +222,6 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [Float], { nullable: true })
   rating_in?: number[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  magicId_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  magicId_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  bypassMagicId_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  bypassMagicId_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  bypassMagicId_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  bypassMagicId_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  bypassMagicId_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -267,14 +250,11 @@ export class UserCreateInput {
   @TypeGraphQLField()
   isRequired!: boolean;
 
+  @TypeGraphQLField(() => StringEnum)
+  stringEnumField!: StringEnum;
+
   @TypeGraphQLField()
   rating!: number;
-
-  @TypeGraphQLField(() => ID)
-  magicId!: string;
-
-  @TypeGraphQLField()
-  bypassMagicId!: string;
 }
 
 @TypeGraphQLInputType()
@@ -294,14 +274,11 @@ export class UserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   isRequired?: boolean;
 
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
+
   @TypeGraphQLField({ nullable: true })
   rating?: number;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  magicId?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  bypassMagicId?: string;
 }
 
 @ArgsType()

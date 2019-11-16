@@ -1,4 +1,4 @@
-import * as cosmiconfig from 'cosmiconfig';
+import { cosmiconfigSync } from 'cosmiconfig';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -309,10 +309,10 @@ export class Config {
   // Use cosmiconfig to load static config that has to be the same for all environments
   // paths to folders for the most part
   private loadStaticConfigFileSync(): StaticConfigResponse | undefined {
-    const explorer = cosmiconfig('warthog');
+    const explorer = cosmiconfigSync('warthog');
 
     // Pull config values from cosmiconfig
-    const results = explorer.searchSync(this.options.configSearchPath);
+    const results = explorer.search(this.options.configSearchPath);
     if (!results || results.isEmpty) {
       return;
     }

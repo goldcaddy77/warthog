@@ -40,6 +40,9 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
  * Types
 */
 
+export type StringEnum =   'FOO' |
+  'BAR'
+
 export type UserOrderByInput =   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
@@ -56,12 +59,10 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'age_DESC' |
   'isRequired_ASC' |
   'isRequired_DESC' |
+  'stringEnumField_ASC' |
+  'stringEnumField_DESC' |
   'rating_ASC' |
-  'rating_DESC' |
-  'magicId_ASC' |
-  'magicId_DESC' |
-  'bypassMagicId_ASC' |
-  'bypassMagicId_DESC'
+  'rating_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -93,9 +94,8 @@ export interface UserCreateInput {
   email: String
   age: Float
   isRequired: Boolean
+  stringEnumField: StringEnum
   rating: Float
-  magicId: ID_Output
-  bypassMagicId: String
 }
 
 export interface UserUpdateInput {
@@ -104,9 +104,8 @@ export interface UserUpdateInput {
   email?: String | null
   age?: Float | null
   isRequired?: Boolean | null
+  stringEnumField?: StringEnum | null
   rating?: Float | null
-  magicId?: ID_Input | null
-  bypassMagicId?: String | null
 }
 
 export interface UserWhereInput {
@@ -157,19 +156,14 @@ export interface UserWhereInput {
   age_in?: Int[] | Int | null
   isRequired_eq?: Boolean | null
   isRequired_in?: Boolean[] | Boolean | null
+  stringEnumField_eq?: StringEnum | null
+  stringEnumField_in?: StringEnum[] | StringEnum | null
   rating_eq?: Float | null
   rating_gt?: Float | null
   rating_gte?: Float | null
   rating_lt?: Float | null
   rating_lte?: Float | null
   rating_in?: Float[] | Float | null
-  magicId_eq?: ID_Input | null
-  magicId_in?: ID_Output[] | ID_Output | null
-  bypassMagicId_eq?: String | null
-  bypassMagicId_contains?: String | null
-  bypassMagicId_startsWith?: String | null
-  bypassMagicId_endsWith?: String | null
-  bypassMagicId_in?: String[] | String | null
 }
 
 export interface UserWhereUniqueInput {
@@ -232,9 +226,8 @@ export interface User extends BaseGraphQLObject {
   email: String
   age: Int
   isRequired: Boolean
+  stringEnumField: StringEnum
   rating: Float
-  magicId: String
-  bypassMagicId: String
 }
 
 /*
@@ -248,7 +241,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 export type DateTime = Date | string
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 */
 export type Float = number
 
@@ -259,7 +252,7 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 

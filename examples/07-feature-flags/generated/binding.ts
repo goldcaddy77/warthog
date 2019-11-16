@@ -231,14 +231,14 @@ export interface EnvironmentCreateInput {
   name: String
   key: String
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface EnvironmentUpdateInput {
   name?: String | null
   key?: String | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface EnvironmentWhereInput {
@@ -293,29 +293,29 @@ export interface FeatureFlagCreateInput {
   name: String
   key: String
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface FeatureFlagSegmentCreateInput {
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   featureKey: String
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   segmentKey: String
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface FeatureFlagSegmentUpdateInput {
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   featureKey?: String | null
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   segmentKey?: String | null
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface FeatureFlagSegmentWhereInput {
@@ -387,29 +387,29 @@ export interface FeatureFlagUpdateInput {
   name?: String | null
   key?: String | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface FeatureFlagUserCreateInput {
   featureKey: String
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   userKey: String
-  userId?: String | null
+  userId?: ID_Input | null
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface FeatureFlagUserUpdateInput {
   featureKey?: String | null
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   userKey?: String | null
-  userId?: String | null
+  userId?: ID_Input | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface FeatureFlagUserWhereInput {
@@ -576,9 +576,9 @@ export interface SegmentCreateInput {
   key: String
   description: String
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface SegmentUpdateInput {
@@ -586,9 +586,9 @@ export interface SegmentUpdateInput {
   key?: String | null
   description?: String | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface SegmentWhereInput {
@@ -657,24 +657,24 @@ export interface UserCreateInput {
 
 export interface UserSegmentCreateInput {
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   userKey: String
-  userId?: String | null
+  userId?: ID_Input | null
   segmentKey: String
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface UserSegmentUpdateInput {
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   userKey?: String | null
-  userId?: String | null
+  userId?: ID_Input | null
   segmentKey?: String | null
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface UserSegmentWhereInput {
@@ -997,7 +997,7 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 
