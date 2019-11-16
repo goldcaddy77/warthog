@@ -84,6 +84,11 @@ type StandardDeleteResponse {
   id: ID!
 }
 
+enum StringEnum {
+  FOO
+  BAR
+}
+
 type User implements BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!
@@ -95,7 +100,7 @@ type User implements BaseGraphQLObject {
   version: Int!
   firstName: String!
   lastName: String!
-  stringEnumField: String!
+  stringEnumField: StringEnum!
   email: String!
   registeredAt: DateTime!
   nickName: String
@@ -106,7 +111,7 @@ type User implements BaseGraphQLObject {
 input UserCreateInput {
   firstName: String!
   lastName: String!
-  stringEnumField: String!
+  stringEnumField: StringEnum!
   email: String!
   registeredAt: DateTime!
   nickName: String
@@ -142,7 +147,7 @@ enum UserOrderByInput {
 input UserUpdateInput {
   firstName: String
   lastName: String
-  stringEnumField: String
+  stringEnumField: StringEnum
   email: String
   registeredAt: DateTime
   nickName: String
@@ -182,11 +187,8 @@ input UserWhereInput {
   lastName_startsWith: String
   lastName_endsWith: String
   lastName_in: [String!]
-  stringEnumField_eq: String
-  stringEnumField_contains: String
-  stringEnumField_startsWith: String
-  stringEnumField_endsWith: String
-  stringEnumField_in: [String!]
+  stringEnumField_eq: StringEnum
+  stringEnumField_in: [StringEnum!]
   email_eq: String
   email_contains: String
   email_startsWith: String
@@ -210,5 +212,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: String
+  firstName: String
+  stringEnumField: StringEnum
   email: String
 }

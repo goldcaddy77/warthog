@@ -9,7 +9,7 @@
     "db:create": "yarn warthog db:create",
     "db:drop": "yarn warthog db:drop",
     "db:seed:dev": "ts-node tools/seed.ts",
-    "playground": "warthog playground",
+    "playground": "yarn warthog playground",
     "start": "yarn start:ts",
     "start:debug": "yarn start:ts --inspect",
     "start:ts": "ts-node --type-check src/index.ts",

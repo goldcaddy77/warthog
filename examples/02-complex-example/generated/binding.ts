@@ -40,6 +40,9 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
  * Types
 */
 
+export type StringEnum =   'FOO' |
+  'BAR'
+
 export type UserOrderByInput =   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
@@ -90,7 +93,7 @@ export interface BaseWhereInput {
 export interface UserCreateInput {
   firstName: String
   lastName: String
-  stringEnumField: String
+  stringEnumField: StringEnum
   email: String
   registeredAt: DateTime
   nickName?: String | null
@@ -101,7 +104,7 @@ export interface UserCreateInput {
 export interface UserUpdateInput {
   firstName?: String | null
   lastName?: String | null
-  stringEnumField?: String | null
+  stringEnumField?: StringEnum | null
   email?: String | null
   registeredAt?: DateTime | null
   nickName?: String | null
@@ -141,11 +144,8 @@ export interface UserWhereInput {
   lastName_startsWith?: String | null
   lastName_endsWith?: String | null
   lastName_in?: String[] | String | null
-  stringEnumField_eq?: String | null
-  stringEnumField_contains?: String | null
-  stringEnumField_startsWith?: String | null
-  stringEnumField_endsWith?: String | null
-  stringEnumField_in?: String[] | String | null
+  stringEnumField_eq?: StringEnum | null
+  stringEnumField_in?: StringEnum[] | StringEnum | null
   email_eq?: String | null
   email_contains?: String | null
   email_startsWith?: String | null
@@ -169,6 +169,8 @@ export interface UserWhereInput {
 
 export interface UserWhereUniqueInput {
   id?: String | null
+  firstName?: String | null
+  stringEnumField?: StringEnum | null
   email?: String | null
 }
 
@@ -224,7 +226,7 @@ export interface User extends BaseGraphQLObject {
   version: Int
   firstName: String
   lastName: String
-  stringEnumField: String
+  stringEnumField: StringEnum
   email: String
   registeredAt: DateTime
   nickName?: String | null
