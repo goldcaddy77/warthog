@@ -1,12 +1,12 @@
 {
-  "MD009": {
-    "br_spaces": 2
+  "first-line-h1": {
+    "level": 2
   },
-  "MD013": false,
-  "MD026": {
+  "line-length": false,
+  "no-inline-html": {
+    "allowed_elements": ["a", "img", "p"]
+  },
+  "no-trailing-punctuation": {
     "punctuation": ".,;:"
-  },
-  "MD029": {
-    "style": "ordered"
   }
 }

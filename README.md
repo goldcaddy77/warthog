@@ -222,7 +222,6 @@ input UserWhereUniqueInput {
 }
 
 # ...
-
 ```
 
 Notice how we've only added a single field on the model and you get pagination, filtering and tracking of who created, updated and deleted records automatically.
@@ -381,7 +380,7 @@ Special thanks to:
 
 Warthog is essentially a really opinionated composition of TypeORM and TypeGraphQL that uses similar GraphQL conventions to the Prisma project.
 
-## Contribute
+## Contributing
 
 PRs accepted, fire away! Or add issues if you have use cases Warthog doesn't cover.
 
