@@ -1,5 +1,5 @@
 import { Authorized } from 'type-graphql';
-import { Unique, Column } from 'typeorm';
+import { Unique } from 'typeorm';
 import {
   BaseModel,
   DateField,
@@ -18,7 +18,7 @@ export enum StringEnum {
 }
 
 @Model()
-// @Unique(['firstName', 'stringEnumField'])
+@Unique(['firstName', 'stringEnumField'])
 export class User extends BaseModel {
   @StringField({ maxLength: 30 })
   firstName: string;
@@ -26,8 +26,7 @@ export class User extends BaseModel {
   @StringField({ maxLength: 50, minLength: 2 })
   lastName: string;
 
-  // @EnumField('StringEnum', StringEnum)
-  @StringField()
+  @EnumField('StringEnum', StringEnum)
   stringEnumField: StringEnum;
 
   @EmailField()

@@ -40,6 +40,9 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
  * Types
 */
 
+export type StringEnum =   'FOO' |
+  'BAR'
+
 export type UserOrderByInput =   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
@@ -56,6 +59,8 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'age_DESC' |
   'isRequired_ASC' |
   'isRequired_DESC' |
+  'stringEnumField_ASC' |
+  'stringEnumField_DESC' |
   'rating_ASC' |
   'rating_DESC'
 
@@ -89,6 +94,7 @@ export interface UserCreateInput {
   email: String
   age: Float
   isRequired: Boolean
+  stringEnumField: StringEnum
   rating: Float
 }
 
@@ -98,6 +104,7 @@ export interface UserUpdateInput {
   email?: String | null
   age?: Float | null
   isRequired?: Boolean | null
+  stringEnumField?: StringEnum | null
   rating?: Float | null
 }
 
@@ -146,6 +153,8 @@ export interface UserWhereInput {
   age_in?: Int[] | Int | null
   isRequired_eq?: Boolean | null
   isRequired_in?: Boolean[] | Boolean | null
+  stringEnumField_eq?: StringEnum | null
+  stringEnumField_in?: StringEnum[] | StringEnum | null
   rating_eq?: Float | null
   rating_gt?: Float | null
   rating_gte?: Float | null
@@ -214,6 +223,7 @@ export interface User extends BaseGraphQLObject {
   email: String
   age: Int
   isRequired: Boolean
+  stringEnumField: StringEnum
   rating: Float
 }
 

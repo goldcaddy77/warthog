@@ -3,7 +3,8 @@ set -e
 for d in examples/*/ ; do
     cd $d
     pwd
-    # yarn remove warthog || true
+    rm -rf generated
+    yarn db:drop
     yarn bootstrap
     cd -
 done

@@ -209,6 +209,6 @@ export class BaseService<E extends BaseModel> {
   };
 
   attrToDBColumn = (attr: string): string => {
-    return `${this.klass}.${this.columnMap[attr]}`;
+    return `"${this.klass}"."${this.columnMap[attr]}"`;
   };
 }

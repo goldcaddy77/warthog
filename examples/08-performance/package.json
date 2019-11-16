@@ -7,7 +7,7 @@
     "db:create": "yarn warthog db:create",
     "db:drop": "yarn warthog db:drop",
     "db:seed:dev": "ts-node tools/seed.ts",
-    "playground": "warthog playground",
+    "playground": "yarn warthog playground",
     "start": "yarn start:ts",
     "start:ts": "ts-node --type-check src/index.ts",
     "//": "Allows us to use the local warthog CLI in commands above",

@@ -16,6 +16,7 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 import { BaseWhereInput, PaginationArgs } from "../../../src";
+import { StringEnum } from "../src/modules/user/user.model";
 // @ts-ignore
 import { User } from "../src/modules/user/user.model";
 
@@ -90,20 +91,11 @@ export class UserWhereInput extends BaseWhereInput {
   @TypeGraphQLField(() => [String], { nullable: true })
   lastName_in?: string[];
 
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_eq?: string;
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField_eq?: StringEnum;
 
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  stringEnumField_in?: string[];
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  stringEnumField_in?: StringEnum[];
 
   @TypeGraphQLField({ nullable: true })
   email_eq?: string;
@@ -169,6 +161,12 @@ export class UserWhereUniqueInput {
   id?: string;
 
   @TypeGraphQLField(() => String, { nullable: true })
+  firstName?: string;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
+
+  @TypeGraphQLField(() => String, { nullable: true })
   email?: string;
 }
 
@@ -180,8 +178,8 @@ export class UserCreateInput {
   @TypeGraphQLField()
   lastName!: string;
 
-  @TypeGraphQLField()
-  stringEnumField!: string;
+  @TypeGraphQLField(() => StringEnum)
+  stringEnumField!: StringEnum;
 
   @TypeGraphQLField()
   email!: string;
@@ -207,8 +205,8 @@ export class UserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   lastName?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  stringEnumField?: string;
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
   email?: string;

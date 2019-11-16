@@ -222,7 +222,6 @@ input UserWhereUniqueInput {
 }
 
 # ...
-
 ```
 
 Notice how we've only added a single field on the model and you get pagination, filtering and tracking of who created, updated and deleted records automatically.
@@ -362,6 +361,18 @@ Running `yarn warthog generate featureFlag` would create 3 files in the `./src/f
 
 It is recommended that you not run Warthog's TypeScript files via `ts-node` in Production as we do in development as `ts-node` has been known to cause issues in some smaller AWS instances. Instead, compile down to JS and run in `node`. For a full project example (using [dotenvi](https://github.com/b3ross/dotenvi) for config management), see [warthog-starter](https://github.com/goldcaddy77/warthog-starter)
 
+## Contributing
+
+PRs accepted, fire away! Or add issues if you have use cases Warthog doesn't cover.
+
+Before contributing, make sure you have Postgres installed and running with a user named `postgres` with an empty password. If you don't have this local Postgres user, you'll need to update the `.env` files in the `examples` folders to point to a user that can run DB migrations.
+
+Once you have this user set up, you can build a specific example by navigating to that folder and running `yarn bootstrap`.
+
+If you want to build all examples, you can run `yarn bootstrap` from the Warthog root folder.
+
+It's helpful to add a new feature to the Warthog and make use of it in one of the examples folders until you've determined how it's going to work. Once you have it working, you can add tests.
+
 ## Intentionally Opinionated
 
 Warthog is intentionally opinionated to accelerate development and make use of technology-specific features:
@@ -380,10 +391,6 @@ Special thanks to:
 - [richardbmx](https://github.com/richardbmx) - Logo design
 
 Warthog is essentially a really opinionated composition of TypeORM and TypeGraphQL that uses similar GraphQL conventions to the Prisma project.
-
-## Contribute
-
-PRs accepted, fire away! Or add issues if you have use cases Warthog doesn't cover.
 
 ## License
 
