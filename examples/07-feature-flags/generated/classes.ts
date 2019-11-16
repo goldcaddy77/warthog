@@ -16,7 +16,7 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 // @ts-ignore
-import { BaseWhereInput, JsonValue, PaginationArgs } from "../../../src";
+import { BaseWhereInput, JsonObject, PaginationArgs } from "../../../src";
 // @ts-ignore
 import { Segment } from "../src/segment/segment.model";
 // @ts-ignore

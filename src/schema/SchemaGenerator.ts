@@ -38,7 +38,7 @@ export class SchemaGenerator {
       const { GraphQLJSONObject } = require('graphql-type-json');
 
       // @ts-ignore
-      import { BaseWhereInput, JsonValue, PaginationArgs } from '${warthogImportPath}';
+      import { BaseWhereInput, JsonObject, PaginationArgs } from '${warthogImportPath}';
       ${generateEnumMapImports().join('')}
     `;
 

@@ -16,7 +16,7 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 // @ts-ignore
-import { BaseWhereInput, JsonValue, PaginationArgs } from "../../";
+import { BaseWhereInput, JsonObject, PaginationArgs } from "../../";
 // @ts-ignore
 import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
@@ -196,7 +196,7 @@ export class KitchenSinkCreateInput {
   floatField!: number;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  jsonField?: JsonValue;
+  jsonField?: JsonObject;
 }
 
 @TypeGraphQLInputType()
@@ -223,7 +223,7 @@ export class KitchenSinkUpdateInput {
   floatField?: number;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  jsonField?: JsonValue;
+  jsonField?: JsonObject;
 }
 
 @ArgsType()
