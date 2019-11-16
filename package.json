@@ -114,7 +114,6 @@
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
-    "condition-circle": "^2.0.2",
     "copyfiles": "^2.1.1",
     "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
@@ -145,9 +144,6 @@
     "ignore": [
       "**/generated/*"
     ]
-  },
-  "release": {
-    "verifyConditions": "condition-circle"
   },
   "prettier": {
     "printWidth": 100,
