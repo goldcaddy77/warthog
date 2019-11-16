@@ -9,7 +9,8 @@ import {
   JSONField,
   OneToMany,
   Model,
-  StringField
+  StringField,
+  JsonValue
 } from '../../../';
 
 import { Dish } from '../dish/dish.model';
@@ -45,7 +46,7 @@ export class KitchenSink extends BaseModel {
   floatField?: number;
 
   @JSONField({ nullable: true })
-  jsonField?: JSON;
+  jsonField?: JsonValue;
 
   @OneToMany(() => Dish, (dish: Dish) => dish.kitchenSink)
   dishes!: Dish[];
