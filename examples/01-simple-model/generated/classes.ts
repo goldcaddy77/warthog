@@ -15,6 +15,7 @@ import { registerEnumType } from "type-graphql";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");
 
+// @ts-ignore
 import { BaseWhereInput, JsonValue, PaginationArgs } from "../../../src";
 import { StringEnum } from "../src/user.model";
 // @ts-ignore

@@ -7,7 +7,8 @@ import {
   EnumField,
   JSONField,
   Model,
-  StringField
+  StringField,
+  JsonValue
 } from '../../../../../src';
 
 // Note: this must be exported and in the same file where it's attached with @EnumField
@@ -43,7 +44,7 @@ export class User extends BaseModel {
   privateField?: string;
 
   @JSONField({ nullable: true })
-  jsonField?: JSON;
+  jsonField?: JsonValue;
 
   // @Column('bytea')
   // serialized?: Buffer;
