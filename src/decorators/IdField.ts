@@ -1,39 +1,37 @@
-import { Field, GraphQLISODateTime } from 'type-graphql';
-import { Column, ColumnType } from 'typeorm';
+import { Field } from 'type-graphql';
+import { Column } from 'typeorm';
 
 import { decoratorDefaults, getMetadataStorage } from '../metadata';
-import { defaultColumnType } from '../torm';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
-interface DateFieldOptions {
-  dataType?: ColumnType; // int16, jsonb, etc...
-  default?: Date;
+interface StringFieldOptions {
   filter?: boolean;
   nullable?: boolean;
   sort?: boolean;
+  unique?: boolean;
 }
 
-export function DateField(args: DateFieldOptions = {}): any {
+export function IdField(args: StringFieldOptions = decoratorDefaults): any {
   const options = { ...decoratorDefaults, ...args };
   const nullableOption = options.nullable === true ? { nullable: true } : {};
-  const defaultOption = options.default ? { default: options.default } : {};
-  const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
-  const type = defaultColumnType(databaseConnection, 'date');
+  const uniqueOption = options.unique ? { unique: true } : {};
 
   const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addField('date', target.constructor.name, propertyKey, options);
+    getMetadataStorage().addField('id', target.constructor.name, propertyKey, options);
   };
 
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
     registerWithWarthog,
-    Field(() => GraphQLISODateTime, {
+    // We explicitly say string here because when we're metaprogramming without
+    // TS types, Field does not know that this should be a String
+    Field(() => String, {
       ...nullableOption
     }),
     Column({
-      type: args.dataType || type,
+      type: 'varchar',
       ...nullableOption,
-      ...defaultOption
+      ...uniqueOption
     }) as MethodDecoratorFactory
   ];
 

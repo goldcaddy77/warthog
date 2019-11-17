@@ -106,6 +106,10 @@ type User implements BaseGraphQLObject {
   nickName: String
   privateField: String
   jsonField: JSONObject
+  idField: String
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
 }
 
 input UserCreateInput {
@@ -117,6 +121,10 @@ input UserCreateInput {
   nickName: String
   privateField: String
   jsonField: JSONObject
+  idField: String
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
 }
 
 enum UserOrderByInput {
@@ -142,6 +150,10 @@ enum UserOrderByInput {
   privateField_DESC
   jsonField_ASC
   jsonField_DESC
+  idField_ASC
+  idField_DESC
+  noFilterField_ASC
+  noFilterField_DESC
 }
 
 input UserUpdateInput {
@@ -153,6 +165,10 @@ input UserUpdateInput {
   nickName: String
   privateField: String
   jsonField: JSONObject
+  idField: String
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
 }
 
 input UserWhereInput {
@@ -194,10 +210,11 @@ input UserWhereInput {
   email_startsWith: String
   email_endsWith: String
   email_in: [String!]
-  registeredAt_gt: DateTime
-  registeredAt_gte: DateTime
+  registeredAt_eq: DateTime
   registeredAt_lt: DateTime
   registeredAt_lte: DateTime
+  registeredAt_gt: DateTime
+  registeredAt_gte: DateTime
   nickName_eq: String
   nickName_contains: String
   nickName_startsWith: String
@@ -208,11 +225,16 @@ input UserWhereInput {
   privateField_startsWith: String
   privateField_endsWith: String
   privateField_in: [String!]
+  idField_eq: ID
+  idField_in: [ID!]
+  noSortField_eq: String
+  noSortField_contains: String
+  noSortField_startsWith: String
+  noSortField_endsWith: String
+  noSortField_in: [String!]
 }
 
 input UserWhereUniqueInput {
   id: String
-  firstName: String
-  stringEnumField: StringEnum
   email: String
 }

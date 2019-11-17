@@ -64,7 +64,11 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'privateField_ASC' |
   'privateField_DESC' |
   'jsonField_ASC' |
-  'jsonField_DESC'
+  'jsonField_DESC' |
+  'idField_ASC' |
+  'idField_DESC' |
+  'noFilterField_ASC' |
+  'noFilterField_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -99,6 +103,10 @@ export interface UserCreateInput {
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
+  idField?: String | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
 }
 
 export interface UserUpdateInput {
@@ -110,6 +118,10 @@ export interface UserUpdateInput {
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
+  idField?: String | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
 }
 
 export interface UserWhereInput {
@@ -151,10 +163,11 @@ export interface UserWhereInput {
   email_startsWith?: String | null
   email_endsWith?: String | null
   email_in?: String[] | String | null
-  registeredAt_gt?: DateTime | null
-  registeredAt_gte?: DateTime | null
+  registeredAt_eq?: DateTime | null
   registeredAt_lt?: DateTime | null
   registeredAt_lte?: DateTime | null
+  registeredAt_gt?: DateTime | null
+  registeredAt_gte?: DateTime | null
   nickName_eq?: String | null
   nickName_contains?: String | null
   nickName_startsWith?: String | null
@@ -165,12 +178,17 @@ export interface UserWhereInput {
   privateField_startsWith?: String | null
   privateField_endsWith?: String | null
   privateField_in?: String[] | String | null
+  idField_eq?: ID_Input | null
+  idField_in?: ID_Output[] | ID_Output | null
+  noSortField_eq?: String | null
+  noSortField_contains?: String | null
+  noSortField_startsWith?: String | null
+  noSortField_endsWith?: String | null
+  noSortField_in?: String[] | String | null
 }
 
 export interface UserWhereUniqueInput {
   id?: String | null
-  firstName?: String | null
-  stringEnumField?: StringEnum | null
   email?: String | null
 }
 
@@ -232,6 +250,10 @@ export interface User extends BaseGraphQLObject {
   nickName?: String | null
   privateField?: String | null
   jsonField?: JSONObject | null
+  idField?: String | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
 }
 
 /*

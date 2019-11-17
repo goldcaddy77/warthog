@@ -76,7 +76,7 @@ yarn add warthog
 The model will auto-generate your database table and graphql types. Warthog will find all models that match the following glob - `'/**/*.model.ts'`. So for this file, you would name it `user.model.ts`
 
 ```typescript
-import { BaseModel, Model, StringField } from 'warthog';
+import { BaseModel, Model, StringField } from "warthog";
 
 @Model()
 export class User extends BaseModel {
@@ -90,20 +90,25 @@ export class User extends BaseModel {
 The resolver auto-generates queries and mutations in your GraphQL schema. Warthog will find all resolvers that match the following glob - `'/**/*.resolver.ts'`. So for this file, you would name it `user.resolver.ts`
 
 ```typescript
-import { User } from './user.model';
-import { UserService } from './user.service';
+import { User } from "./user.model";
+import { UserService } from "./user.service";
 
 @Resolver(User)
 export class UserResolver {
-  constructor(@Inject('UserService') readonly service: UserService) {}
+  constructor(@Inject("UserService") readonly service: UserService) {}
 
   @Query(() => [User])
-  async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
+  async users(
+    @Args() { where, orderBy, limit, offset }: UserWhereArgs
+  ): Promise<User[]> {
     return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
   @Mutation(() => User)
-  async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
+  async createUser(
+    @Arg("data") data: UserCreateInput,
+    @Ctx() ctx: BaseContext
+  ): Promise<User> {
     return this.service.create(data, ctx.user.id);
   }
 }
@@ -112,11 +117,13 @@ export class UserResolver {
 ### 3. Create a Service
 
 ```typescript
-import { User } from './user.model';
+import { User } from "./user.model";
 
-@Service('UserService')
+@Service("UserService")
 export class UserService extends BaseService<User> {
-  constructor(@InjectRepository(User) protected readonly repository: Repository<User>) {
+  constructor(
+    @InjectRepository(User) protected readonly repository: Repository<User>
+  ) {
     super(User, repository);
   }
 }
@@ -135,8 +142,8 @@ WARTHOG_DB_PASSWORD=
 ### 5. Run your server
 
 ```typescript
-import 'reflect-metadata';
-import { Server } from 'warthog';
+import "reflect-metadata";
+import { Server } from "warthog";
 
 async function bootstrap() {
   const server = new Server();
@@ -166,7 +173,12 @@ type Mutation {
 }
 
 type Query {
-  users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
+  users(
+    offset: Int
+    limit: Int = 50
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+  ): [User!]!
 }
 
 input UserCreateInput {

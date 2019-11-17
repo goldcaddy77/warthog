@@ -55,5 +55,5 @@ function buildServer(options: ServerOptions<any>): Server<any> {
 }
 
 function hasGraphQlRoute(router: any): boolean {
-  return router.stack.find((layer: any) => layer.path === '/graphql');
+  return router.stack.find((layer: any) => layer.name === 'query');
 }

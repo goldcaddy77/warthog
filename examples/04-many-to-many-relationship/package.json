@@ -1,6 +1,7 @@
 {
   "name": "example4",
   "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
     "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn db:create && yarn codegen",
     "clean": "rm -f ./warthog.sqlite.tmp",
@@ -14,20 +15,18 @@
     "warthog": "../../bin/warthog"
   },
   "dependencies": {
-    "handlebars": "^4.0.14",
-    "lodash": "^4.17.13",
-    "reflect-metadata": "^0.1.12",
-    "typescript": "^3.2.2"
+    "handlebars": "^4.5.2",
+    "lodash": "^4.17.15",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
-    "@types/express": "^4.16.0",
-    "@types/faker": "^4.1.4",
+    "@types/faker": "^4.1.7",
     "@types/isomorphic-fetch": "^0.0.34",
-    "@types/jest": "^23.3.11",
-    "@types/node": "^10.12.18",
+    "@types/jest": "^23.3.14",
+    "@types/node": "^10.17.5",
     "faker": "^4.1.0",
     "jest": "^23.6.0",
-    "npm-run-all": "^4.1.5",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1"
   },

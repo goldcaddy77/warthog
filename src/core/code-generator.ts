@@ -1,23 +1,25 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { writeFile } from 'fs';
+import { readFile, writeFile } from 'fs';
 import { GraphQLID, GraphQLSchema, printSchema } from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import { buildSchema } from 'type-graphql';
-import { Connection } from 'typeorm';
 import * as util from 'util';
 
 import { generateBindingFile } from '../gql';
 import { SchemaGenerator } from '../schema';
-import { authChecker } from '../tgql';
+import { authChecker, loadFromGlobArray } from '../tgql';
+import {} from '../tgql/loadGlobs';
+// Load all model files so that decorators will gather metadata for code generation
 
 import * as Debug from 'debug';
 
 const debug = Debug('warthog:code-generators');
 
 const writeFilePromise = util.promisify(writeFile);
+const readFilePromise = util.promisify(readFile);
 
 interface CodeGeneratorOptions {
   resolversPath: string[];
@@ -28,15 +30,12 @@ export class CodeGenerator {
   schema?: GraphQLSchema;
 
   constructor(
-    private connection: Connection,
     private generatedFolder: string,
+    private modelsArray: string[],
     private options: CodeGeneratorOptions
   ) {
-    if (!connection) {
-      throw new Error('FileGenerator: connection is required');
-    }
-
     this.createGeneratedFolder();
+    loadFromGlobArray(modelsArray);
   }
 
   createGeneratedFolder() {
@@ -45,11 +44,15 @@ export class CodeGenerator {
 
   async generate() {
     debug('generate:start');
-    await this.writeGeneratedIndexFile();
-    await this.writeGeneratedTSTypes();
-    await this.writeOrmConfig();
-    await this.writeSchemaFile();
-    await this.generateBinding();
+    try {
+      await this.writeGeneratedIndexFile();
+      await this.writeGeneratedTSTypes();
+      await this.writeOrmConfig();
+      await this.writeSchemaFile();
+      await this.generateBinding();
+    } catch (error) {
+      console.error(error);
+    }
     debug('generate:end');
   }
 
@@ -89,18 +92,14 @@ export class CodeGenerator {
   private async writeGeneratedTSTypes() {
     debug('writeGeneratedTSTypes:start');
     const generatedTSTypes = await this.getGeneratedTypes();
-
-    const x = this.writeToGeneratedFolder('classes.ts', generatedTSTypes);
+    const x = await this.writeToGeneratedFolder('classes.ts', generatedTSTypes);
     debug('writeGeneratedTSTypes:end');
     return x;
   }
 
   private async getGeneratedTypes() {
     debug('getGeneratedTypes:start');
-    const x = SchemaGenerator.generate(
-      this.connection.entityMetadatas,
-      this.options.warthogImportPath
-    );
+    const x = SchemaGenerator.generate(this.options.warthogImportPath);
     debug('getGeneratedTypes:end');
     return x;
   }
@@ -134,7 +133,7 @@ module.exports = getBaseConfig();`;
 
   private async writeToGeneratedFolder(filename: string, contents: string) {
     debug('writeToGeneratedFolder:' + filename + ':start');
-    const x = writeFilePromise(path.join(this.generatedFolder, filename), contents, {
+    const x = await writeFilePromise(path.join(this.generatedFolder, filename), contents, {
       encoding: 'utf8',
       flag: 'w'
     });
