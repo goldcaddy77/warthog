@@ -7,13 +7,21 @@ var devMode = require('fs').existsSync(`${__dirname}/../src/cli`);
 var wantsCompiled = process.argv.indexOf('--compiled-build') >= 0;
 
 if (wantsCompiled || !devMode) {
-  // TODO: had to load up ts-node so that we can use the warthog CLI in TypeScript projects
-  // NOTE: commented the line below because in production, ts-node is not installed
-  // require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
+  // Load ts-node if it's available
+  try {
+    require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
+  } catch (e) {}
 
   // this runs from the compiled javascript source
   require(`${__dirname}/../dist/cli/cli`).run(process.argv);
 } else {
+  try {
+    require.resolve('ts-node');
+  } catch (e) {
+    console.error('Error: ts-node is required.');
+    process.exit(1);
+  }
+
   // this runs from the typescript source (for dev only)
   // hook into ts-node so we can run typescript on the fly
   require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
