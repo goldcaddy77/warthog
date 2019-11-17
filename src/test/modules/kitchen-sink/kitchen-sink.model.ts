@@ -9,7 +9,8 @@ import {
   JSONField,
   OneToMany,
   Model,
-  StringField
+  StringField,
+  JsonObject
 } from '../../../';
 
 import { Dish } from '../dish/dish.model';
@@ -45,9 +46,12 @@ export class KitchenSink extends BaseModel {
   floatField?: number;
 
   @JSONField({ nullable: true })
-  jsonField?: JSON;
+  jsonField?: JsonObject;
 
-  @OneToMany(() => Dish, (dish: Dish) => dish.kitchenSink)
+  @OneToMany(
+    () => Dish,
+    (dish: Dish) => dish.kitchenSink
+  )
   dishes!: Dish[];
 
   // @EnumField('StringEnum', StringEnum)
