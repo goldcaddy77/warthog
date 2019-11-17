@@ -80,7 +80,7 @@ type Dish implements BaseGraphQLObject {
 
 input DishCreateInput {
   name: String!
-  kitchenSinkId: String!
+  kitchenSinkId: ID!
 }
 
 enum DishOrderByInput {
@@ -98,7 +98,7 @@ enum DishOrderByInput {
 
 input DishUpdateInput {
   name: String
-  kitchenSinkId: String
+  kitchenSinkId: ID
 }
 
 input DishWhereInput {
@@ -240,10 +240,11 @@ input KitchenSinkWhereInput {
   nullableStringField_startsWith: String
   nullableStringField_endsWith: String
   nullableStringField_in: [String!]
-  dateField_gt: DateTime
-  dateField_gte: DateTime
+  dateField_eq: DateTime
   dateField_lt: DateTime
   dateField_lte: DateTime
+  dateField_gt: DateTime
+  dateField_gte: DateTime
   emailField_eq: String
   emailField_contains: String
   emailField_startsWith: String

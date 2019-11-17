@@ -107,12 +107,12 @@ export interface BaseWhereInput {
 
 export interface DishCreateInput {
   name: String
-  kitchenSinkId: String
+  kitchenSinkId: ID_Output
 }
 
 export interface DishUpdateInput {
   name?: String | null
-  kitchenSinkId?: String | null
+  kitchenSinkId?: ID_Input | null
 }
 
 export interface DishWhereInput {
@@ -204,10 +204,11 @@ export interface KitchenSinkWhereInput {
   nullableStringField_startsWith?: String | null
   nullableStringField_endsWith?: String | null
   nullableStringField_in?: String[] | String | null
-  dateField_gt?: DateTime | null
-  dateField_gte?: DateTime | null
+  dateField_eq?: DateTime | null
   dateField_lt?: DateTime | null
   dateField_lte?: DateTime | null
+  dateField_gt?: DateTime | null
+  dateField_gte?: DateTime | null
   emailField_eq?: String | null
   emailField_contains?: String | null
   emailField_startsWith?: String | null
@@ -338,7 +339,18 @@ export type Int = number
 /*
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 */
-export type JSONObject = string
+
+    export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+    export type JsonPrimitive = string | number | boolean | null | {};
+    
+        // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    export interface JsonArray extends Array<JsonValue> {}
+    
+    export type JsonObject = { [member: string]: JsonValue };
+
+    export type JSONObject = JsonObject;
+  
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.

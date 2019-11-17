@@ -31,6 +31,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
     case 'boolean':
       return GraphQLBoolean;
     case 'float':
+    case 'numeric':
       return GraphQLFloat;
     case 'integer':
       return GraphQLInt;
@@ -38,6 +39,7 @@ export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType |
       return GraphQLISODateTime;
     // return GraphQLString; // V2: This should be GraphQLISODateTime
     case 'json':
+    case 'object':
       return GraphQLJSONObject;
     case 'enum':
       // This is to make TS happy and so that we'll get a compile time error if a new type is added
@@ -64,6 +66,8 @@ export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
 export function columnToTypeScriptType(column: ColumnMetadata): string {
   if (column.type === 'id') {
     return 'string'; // TODO: should this be ID_TYPE?
+  } else if (column.type === 'object') {
+    return 'object';
   } else if (column.enum) {
     return String(column.enumName);
   } else {
@@ -171,7 +175,7 @@ export function entityToCreateInput(model: ModelMetadata): string {
     const tsRequired = column.nullable ? '?' : '!';
     const tsType = columnToTypeScriptType(column);
 
-    if (column.enum || column.type === 'json') {
+    if (columnRequiresExplicitGQLType(column)) {
       fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
@@ -213,7 +217,7 @@ export function entityToUpdateInput(model: ModelMetadata): string {
     const graphQLDataType = columnTypeToGraphQLDataType(column);
     const tsType = columnToTypeScriptType(column);
 
-    if (column.enum || column.type === 'json') {
+    if (columnRequiresExplicitGQLType(column)) {
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}?: ${tsType};
@@ -334,21 +338,21 @@ export function entityToWhereInput(model: ModelMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
-    } else if (column.type === 'float' || column.type === 'integer') {
+    } else if (column.type === 'float' || column.type === 'integer' || column.type === 'numeric') {
       fieldTemplates += `
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_eq?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_gt?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_gte?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_lt?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_lte?: ${tsType};
 
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
@@ -458,4 +462,8 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
       name: '${model.name}OrderByInput'
     });
   `;
+}
+
+function columnRequiresExplicitGQLType(column: ColumnMetadata) {
+  return column.enum || column.type === 'json' || column.type === 'id' || column.type === 'object';
 }

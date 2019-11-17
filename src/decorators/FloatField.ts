@@ -1,12 +1,14 @@
 import { Field, Float } from 'type-graphql';
-import { Column, ColumnType } from 'typeorm';
+import { Column } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage } from '../metadata';
+import { decoratorDefaults } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
-import { defaultColumnType } from '../torm';
+import { FloatColumnType, defaultColumnType } from '../torm';
+
+import { WarthogField } from './WarthogField';
 
 interface FloatFieldOptions {
-  dataType?: ColumnType; // int16, jsonb, etc...
+  dataType?: FloatColumnType; // int16, jsonb, etc...
   filter?: boolean;
   nullable?: boolean;
   sort?: boolean;
@@ -18,13 +20,8 @@ export function FloatField(args: FloatFieldOptions = decoratorDefaults): any {
   const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
   const type = defaultColumnType(databaseConnection, 'float');
 
-  const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addField('float', target.constructor.name, propertyKey, options);
-  };
-
-  // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    registerWithWarthog,
+    WarthogField('float', options),
     Field(() => Float, {
       ...nullableOption
     }),

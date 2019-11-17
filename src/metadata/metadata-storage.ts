@@ -1,5 +1,5 @@
 import { GraphQLEnumType } from 'graphql';
-import { ColumnType } from 'typeorm';
+import { ColumnType } from '../torm';
 
 export type FieldType =
   | 'boolean'
@@ -10,6 +10,8 @@ export type FieldType =
   | 'id'
   | 'integer'
   | 'json'
+  | 'numeric'
+  | 'object'
   | 'string';
 
 export const decoratorDefaults = {

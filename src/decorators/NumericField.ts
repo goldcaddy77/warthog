@@ -1,30 +1,31 @@
-import { Field, Int } from 'type-graphql';
+import { Field, Float } from 'type-graphql';
 import { Column } from 'typeorm';
 
 import { decoratorDefaults } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
-import { IntColumnType } from '../torm';
+import { NumericColumnType } from '../torm';
 
 import { WarthogField } from './WarthogField';
 
-interface IntFieldOptions {
-  dataType?: IntColumnType;
+interface NumericFieldOptions {
+  dataType?: NumericColumnType;
   filter?: boolean;
   nullable?: boolean;
   sort?: boolean;
+  // TODO: allow passing of precision
 }
 
-export function IntField(args: IntFieldOptions = decoratorDefaults): any {
+export function NumericField(args: NumericFieldOptions = decoratorDefaults): any {
   const options = { ...decoratorDefaults, ...args };
   const nullableOption = options.nullable === true ? { nullable: true } : {};
 
   const factories = [
-    WarthogField('integer', options),
-    Field(() => Int, {
+    WarthogField('numeric', options),
+    Field(() => Float, {
       ...nullableOption
     }),
     Column({
-      type: args.dataType || 'int',
+      type: args.dataType || 'numeric',
       ...nullableOption
     }) as MethodDecoratorFactory
   ];

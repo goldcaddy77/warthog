@@ -79,7 +79,24 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
   };
 
   const generatorInstance = new TypescriptGenerator(generatorOptions);
-  const code = generatorInstance.render();
+
+  // The generated binding considers all JSON inputs as strings.  Doing this replacement fixes it.
+  // I looked for a more elegant solution, but couldn't find one
+  const code = generatorInstance.render().replace(
+    'export type JSONObject = string',
+    `
+    export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+    export type JsonPrimitive = string | number | boolean | null | {};
+    
+        // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    export interface JsonArray extends Array<JsonValue> {}
+    
+    export type JsonObject = { [member: string]: JsonValue };
+
+    export type JSONObject = JsonObject;
+  `
+  );
 
   fs.writeFileSync(outputBindingFile, code);
   logger.debug('generateBindingFile:end');

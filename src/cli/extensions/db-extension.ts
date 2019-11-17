@@ -2,6 +2,7 @@ import * as childProcess from 'child_process';
 
 import { GluegunToolbox } from 'gluegun';
 import * as path from 'path';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import * as pgtools from 'pgtools';
 import * as util from 'util';
@@ -34,9 +35,10 @@ module.exports = (toolbox: GluegunToolbox) => {
       } catch (e) {
         if (e.message.indexOf('duplicate') > -1) {
           return error(`Error: Database '${database}' already exists`);
-        } else {
-          return error('Error: unknown error');
+        } else if (e.message) {
+          return error(e.message);
         }
+        return error(e);
       }
       info(`Database '${database}' created!`);
     },
@@ -56,7 +58,10 @@ module.exports = (toolbox: GluegunToolbox) => {
       } catch (e) {
         if (e.name.indexOf('invalid_catalog_name') > -1) {
           return error(`Database '${database}' does not exist`);
+        } else if (e.message) {
+          return error(e.message);
         }
+        return error(e);
       }
       info(`Database '${database}' dropped!`);
     },
@@ -100,7 +105,7 @@ module.exports = (toolbox: GluegunToolbox) => {
   };
 };
 
-async function runTypeORMCommand(command: string, toolbox: Toolbox, additionalParams: string = '') {
+async function runTypeORMCommand(command: string, toolbox: Toolbox, additionalParams = '') {
   const tsNodePath = path.join(process.cwd(), './node_modules/.bin/ts-node');
   const typeORMPath = path.join(process.cwd(), './node_modules/.bin/typeorm');
   const ormConfigFullPath = path.join(String(process.env.WARTHOG_GENERATED_FOLDER), 'ormconfig.ts');
