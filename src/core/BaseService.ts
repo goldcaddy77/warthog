@@ -13,8 +13,7 @@ export class BaseService<E extends BaseModel> {
   columnMap: StringMap;
   klass: string;
 
-  // TODO: need to figure out why we couldn't type this as Repository<E>
-  constructor(protected entityClass: any, protected repository: Repository<any>) {
+  constructor(protected entityClass: any, protected repository: Repository<E>) {
     if (!entityClass) {
       throw new Error('BaseService requires an entity Class');
     }
@@ -42,7 +41,7 @@ export class BaseService<E extends BaseModel> {
 
   async find<W extends WhereInput>(
     where?: any,
-    orderBy?: any, // Fix this
+    orderBy?: string,
     limit?: number,
     offset?: number,
     fields?: string[]
@@ -138,7 +137,8 @@ export class BaseService<E extends BaseModel> {
     }
 
     // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
-    return this.repository.save(obj, { reload: true });
+    // TODO: Fix `any`
+    return this.repository.save(obj as any, { reload: true });
   }
 
   async createMany(data: DeepPartial<E>[], userId: string): Promise<E[]> {
@@ -160,7 +160,8 @@ export class BaseService<E extends BaseModel> {
     }
 
     // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
-    return this.repository.save(results, { reload: true });
+    // TODO: Fix `any`
+    return this.repository.save(results as any, { reload: true });
   }
 
   // TODO: There must be a more succinct way to:
@@ -183,8 +184,8 @@ export class BaseService<E extends BaseModel> {
       throw new ArgumentValidationError(errors);
     }
 
-    // TODO: remove `any` - getting issue here
-    const result = await this.repository.save(merged);
+    // TODO: Fix `any`
+    const result = await this.repository.save(merged as any);
     return this.repository.findOneOrFail({ where: { id: result.id } });
   }
 
@@ -198,7 +199,8 @@ export class BaseService<E extends BaseModel> {
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
     const merged = this.repository.merge(new this.entityClass(), data as any, idData);
 
-    await this.repository.save(merged);
+    // TODO: Fix `any`
+    await this.repository.save(merged as any);
 
     return { id: found.id };
   }
