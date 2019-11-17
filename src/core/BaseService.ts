@@ -109,9 +109,8 @@ export class BaseService<E extends BaseModel> {
     return qb.getMany();
   }
 
-  // TODO: fix - W extends Partial<E>
-  async findOne<W extends any>(where: W): Promise<E> {
-    const items = await this.find<W>(where);
+  async findOne<W extends Partial<E>>(where: Partial<E>): Promise<E> {
+    const items = await this.find(where);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
     } else if (items.length > 1) {

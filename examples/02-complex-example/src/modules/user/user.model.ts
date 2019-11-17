@@ -1,10 +1,11 @@
 import { Authorized } from 'type-graphql';
-import { Unique } from 'typeorm';
+import { Unique, Column } from 'typeorm';
 import {
   BaseModel,
   DateField,
   EmailField,
   EnumField,
+  IdField,
   JSONField,
   Model,
   StringField,
@@ -46,6 +47,18 @@ export class User extends BaseModel {
   @JSONField({ nullable: true })
   jsonField?: JsonObject;
 
-  // @Column('bytea')
-  // serialized?: Buffer;
+  @IdField({ nullable: true })
+  idField: string;
+
+  @Column({ nullable: true })
+  dbOnlyColumn?: string;
+
+  @StringField({ filter: false, nullable: true })
+  noFilterField?: string;
+
+  @StringField({ sort: false, nullable: true })
+  noSortField?: string;
+
+  @StringField({ filter: false, sort: false, nullable: true })
+  noFilterOrSortField?: string;
 }

@@ -45,7 +45,70 @@ registerEnumType(UserOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class UserWhereInput extends BaseWhereInput {
+export class UserWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   firstName_eq?: string;
 

@@ -48,7 +48,10 @@ export class KitchenSink extends BaseModel {
   @JSONField({ nullable: true })
   jsonField?: JsonObject;
 
-  @OneToMany(() => Dish, (dish: Dish) => dish.kitchenSink)
+  @OneToMany(
+    () => Dish,
+    (dish: Dish) => dish.kitchenSink
+  )
   dishes!: Dish[];
 
   // @EnumField('StringEnum', StringEnum)

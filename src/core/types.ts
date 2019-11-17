@@ -26,6 +26,8 @@ export interface DeleteReponse {
 
 export type ClassType<T = any> = new (...args: any[]) => T;
 
+export type Constructor<T = any> = Function & { prototype: T };
+
 export type Maybe<T> = T | void;
 
 export type JsonValue = JsonPrimitive | JsonObject | JsonArray;

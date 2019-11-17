@@ -64,7 +64,7 @@ export class Config {
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
       WARTHOG_INTROSPECTION: 'true',
       WARTHOG_CLI_GENERATE_PATH: './src',
-      WARTHOG_DB_ENTITIES: ['src/**/*.model.ts'],
+      WARTHOG_DB_ENTITIES: [path.join(this.PROJECT_ROOT, 'src/**/*.model.ts')],
       WARTHOG_DB_ENTITIES_DIR: 'src/models',
       WARTHOG_DB_LOGGER: 'advanced-console',
       WARTHOG_DB_MIGRATIONS: ['db/migrations/**/*.ts'],
@@ -121,7 +121,9 @@ export class Config {
     files.forEach((filename: string) => {
       const filepath = path.join(dotenvPath, filename);
       if (fs.existsSync(filepath)) {
-        dotenv.config({ path: filepath });
+        dotenv.config({
+          path: filepath
+        });
       }
     });
   }

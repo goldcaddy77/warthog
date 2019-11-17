@@ -12,6 +12,8 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    // This is the same as tsconfig.json, but it also includes the examples.  We don't want to inclue the
+    // examples in the actual bundled asset
     project: './tsconfig.eslint.json',
     sourceType: 'module' // Allows for the use of imports
   },

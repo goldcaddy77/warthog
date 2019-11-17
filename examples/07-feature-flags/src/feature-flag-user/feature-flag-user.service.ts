@@ -25,14 +25,13 @@ export class FeatureFlagUserService extends BaseService<FeatureFlagUser> {
   }
 
   // Linking of Environment to Project happens via `projKey`
-  async create(data: DeepPartial<FeatureFlagUser>, userId: string): Promise<FeatureFlagUser> {
+  async create(data: FeatureFlagUser, userId: string): Promise<FeatureFlagUser> {
     const project = await this.projectService.findOne({ key: data.projKey });
     const environment = await this.environmentService.findOne({
       key: data.envKey,
       projKey: data.projKey
     });
     const featureFlag = await this.featureFlagService.findOne({
-      envKey: data.envKey,
       key: data.featureKey,
       projKey: data.projKey
     });

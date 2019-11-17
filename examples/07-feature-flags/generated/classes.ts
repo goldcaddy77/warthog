@@ -71,7 +71,70 @@ registerEnumType(SegmentOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class SegmentWhereInput extends BaseWhereInput {
+export class SegmentWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   name_eq?: string;
 
@@ -180,13 +243,13 @@ export class SegmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 }
 
@@ -204,13 +267,13 @@ export class SegmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 }
 
@@ -275,7 +338,70 @@ registerEnumType(UserSegmentOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class UserSegmentWhereInput extends BaseWhereInput {
+export class UserSegmentWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   projKey_eq?: string;
 
@@ -372,25 +498,25 @@ export class UserSegmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField()
   userKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField()
   segmentKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   segmentId?: string;
 }
 
@@ -399,25 +525,25 @@ export class UserSegmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField({ nullable: true })
   userKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField({ nullable: true })
   segmentKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   segmentId?: string;
 }
 
@@ -461,7 +587,70 @@ registerEnumType(UserOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class UserWhereInput extends BaseWhereInput {
+export class UserWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   key_eq?: string;
 
@@ -560,7 +749,70 @@ registerEnumType(FeatureFlagUserOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class FeatureFlagUserWhereInput extends BaseWhereInput {
+export class FeatureFlagUserWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   featureKey_eq?: string;
 
@@ -657,25 +909,25 @@ export class FeatureFlagUserCreateInput {
   @TypeGraphQLField()
   featureKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField()
   userKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 }
 
@@ -684,25 +936,25 @@ export class FeatureFlagUserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   featureKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField({ nullable: true })
   userKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 }
 
@@ -749,7 +1001,70 @@ registerEnumType(ProjectOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class ProjectWhereInput extends BaseWhereInput {
+export class ProjectWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   name_eq?: string;
 
@@ -857,7 +1172,70 @@ registerEnumType(FeatureFlagOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class FeatureFlagWhereInput extends BaseWhereInput {
+export class FeatureFlagWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   name_eq?: string;
 
@@ -927,7 +1305,7 @@ export class FeatureFlagCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 }
 
@@ -942,7 +1320,7 @@ export class FeatureFlagUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 }
 
@@ -1007,7 +1385,70 @@ registerEnumType(FeatureFlagSegmentOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class FeatureFlagSegmentWhereInput extends BaseWhereInput {
+export class FeatureFlagSegmentWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   projKey_eq?: string;
 
@@ -1104,25 +1545,25 @@ export class FeatureFlagSegmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField()
   featureKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField()
   segmentKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   segmentId?: string;
 }
 
@@ -1131,25 +1572,25 @@ export class FeatureFlagSegmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField({ nullable: true })
   featureKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField({ nullable: true })
   segmentKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   segmentId?: string;
 }
 
@@ -1202,7 +1643,70 @@ registerEnumType(EnvironmentOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class EnvironmentWhereInput extends BaseWhereInput {
+export class EnvironmentWhereInput {
+  @TypeGraphQLField(() => String, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: String;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: String;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  deletedById_eq?: string;
+
   @TypeGraphQLField({ nullable: true })
   name_eq?: string;
 
@@ -1272,7 +1776,7 @@ export class EnvironmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 }
 
@@ -1287,7 +1791,7 @@ export class EnvironmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => String, { nullable: true })
   projectId?: string;
 }
 
