@@ -251,13 +251,13 @@ export class SegmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 }
 
@@ -275,13 +275,13 @@ export class SegmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 }
 
@@ -515,25 +515,25 @@ export class UserSegmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField()
   userKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField()
   segmentKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   segmentId?: string;
 }
 
@@ -542,25 +542,25 @@ export class UserSegmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField({ nullable: true })
   userKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField({ nullable: true })
   segmentKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   segmentId?: string;
 }
 
@@ -944,25 +944,25 @@ export class FeatureFlagUserCreateInput {
   @TypeGraphQLField()
   featureKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField()
   userKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 }
 
@@ -971,25 +971,25 @@ export class FeatureFlagUserUpdateInput {
   @TypeGraphQLField({ nullable: true })
   featureKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField({ nullable: true })
   userKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   userId?: string;
 
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 }
 
@@ -1358,7 +1358,7 @@ export class FeatureFlagCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 }
 
@@ -1373,7 +1373,7 @@ export class FeatureFlagUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 }
 
@@ -1607,25 +1607,25 @@ export class FeatureFlagSegmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField()
   envKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField()
   featureKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField()
   segmentKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   segmentId?: string;
 }
 
@@ -1634,25 +1634,25 @@ export class FeatureFlagSegmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 
   @TypeGraphQLField({ nullable: true })
   envKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   environmentId?: string;
 
   @TypeGraphQLField({ nullable: true })
   featureKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   featureFlagId?: string;
 
   @TypeGraphQLField({ nullable: true })
   segmentKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   segmentId?: string;
 }
 
@@ -1847,7 +1847,7 @@ export class EnvironmentCreateInput {
   @TypeGraphQLField()
   projKey!: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 }
 
@@ -1862,7 +1862,7 @@ export class EnvironmentUpdateInput {
   @TypeGraphQLField({ nullable: true })
   projKey?: string;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   projectId?: string;
 }
 

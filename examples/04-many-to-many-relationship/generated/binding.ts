@@ -246,14 +246,14 @@ export interface UserCreateInput {
 }
 
 export interface UserRoleCreateInput {
-  userId: String
-  roleId: String
+  userId: ID_Output
+  roleId: ID_Output
   otherMetadata?: String | null
 }
 
 export interface UserRoleUpdateInput {
-  userId?: String | null
-  roleId?: String | null
+  userId?: ID_Input | null
+  roleId?: ID_Input | null
   otherMetadata?: String | null
 }
 
@@ -464,7 +464,7 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 

@@ -1,5 +1,5 @@
 import { Authorized } from 'type-graphql';
-import { Unique, Column } from 'typeorm';
+import { Column, Unique } from 'typeorm';
 import {
   BaseModel,
   DateField,
