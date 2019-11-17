@@ -145,7 +145,7 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
       Boolean: 'boolean',
       DateTime: 'Date',
       Float: 'number',
-      GraphQLJSONObject: 'JSON',
+      GraphQLJSONObject: 'JsonObject',
       ID: 'string', // TODO: should this be ID_TYPE?
       Int: 'number',
       String: 'string'

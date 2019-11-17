@@ -158,7 +158,7 @@ function processFields(fields: string[]) {
       },
       json: {
         decorator: 'JSONField',
-        tsType: 'JSON'
+        tsType: 'JsonObject'
       },
       otm: {
         decorator: 'OneToMany',
