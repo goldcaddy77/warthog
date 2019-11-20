@@ -10,6 +10,7 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 interface JSONFieldOptions {
   nullable?: boolean;
+  graphqlNullable?: boolean;
 }
 
 export function JSONField(args: JSONFieldOptions = {}): any {

@@ -10,6 +10,7 @@ interface DateFieldOptions {
   default?: Date;
   filter?: boolean;
   nullable?: boolean;
+  graphqlNullable?: boolean;
   sort?: boolean;
 }
 

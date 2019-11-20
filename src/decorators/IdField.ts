@@ -7,6 +7,7 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 interface StringFieldOptions {
   filter?: boolean;
   nullable?: boolean;
+  graphqlNullable?: boolean;
   sort?: boolean;
   unique?: boolean;
 }

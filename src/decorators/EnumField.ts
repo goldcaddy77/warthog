@@ -8,6 +8,7 @@ import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } 
 
 interface EnumFieldOptions {
   nullable?: boolean;
+  graphqlNullable?: boolean;
   default?: any;
   filter?: boolean;
   sort?: boolean;

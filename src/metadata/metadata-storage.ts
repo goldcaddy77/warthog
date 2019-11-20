@@ -28,6 +28,7 @@ export interface ColumnMetadata {
   enum?: GraphQLEnumType;
   enumName?: string;
   nullable?: boolean;
+  graphqlNullable?: boolean;
   sort?: boolean;
   unique?: boolean;
 }

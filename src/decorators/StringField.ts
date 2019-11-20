@@ -12,6 +12,7 @@ interface StringFieldOptions {
   minLength?: number;
   filter?: boolean;
   nullable?: boolean;
+  graphqlNullable?: boolean;
   sort?: boolean;
   unique?: boolean;
 }

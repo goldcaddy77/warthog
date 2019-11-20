@@ -168,7 +168,7 @@ export function entityToCreateInput(model: ModelMetadata): string {
     }
     const graphQLDataType = columnTypeToGraphQLDataType(column);
     const nullable = column.nullable ? '{ nullable: true }' : '';
-    const tsRequired = column.nullable ? '?' : '!';
+    const tsRequired = column.nullable || column.graphqlNullable ? '?' : '!';
     const tsType = columnToTypeScriptType(column);
 
     if (column.enum || column.type === 'json') {

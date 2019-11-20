@@ -228,7 +228,7 @@ export class UserWhereUniqueInput {
 @TypeGraphQLInputType()
 export class UserCreateInput {
   @TypeGraphQLField()
-  firstName!: string;
+  firstName?: string;
 
   @TypeGraphQLField({ nullable: true })
   lastName?: string;

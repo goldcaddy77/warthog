@@ -18,7 +18,7 @@ export enum StringEnum {
 
 @Model()
 export class User extends BaseModel {
-  @StringField()
+  @StringField({ nullable: false, graphqlNullable: true })
   firstName?: string;
 
   @StringField({ nullable: true })

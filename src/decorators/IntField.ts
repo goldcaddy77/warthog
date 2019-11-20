@@ -8,6 +8,7 @@ interface IntFieldOptions {
   dataType?: ColumnType; // int16, jsonb, etc...
   filter?: boolean;
   nullable?: boolean;
+  graphqlNullable?: boolean;
   sort?: boolean;
 }
 

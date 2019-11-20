@@ -9,6 +9,7 @@ interface BooleanFieldOptions {
   default?: boolean;
   filter?: boolean;
   nullable?: boolean;
+  graphqlNullable?: boolean;
   sort?: boolean;
 }
 

@@ -8,6 +8,7 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 interface EmailFieldOptions {
   filter?: boolean;
   nullable?: boolean;
+  graphqlNullable?: boolean;
   sort?: boolean;
   unique?: boolean;
 }
