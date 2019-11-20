@@ -1,35 +1,43 @@
-import { Equal, FindOperator, In, IsNull, LessThan, MoreThan, Not, Raw } from 'typeorm';
+import { SelectQueryBuilder } from 'typeorm';
 
-export function getFindOperator(key: string, value: any): [string, FindOperator<any>] {
-  const parts = key.toString().split('_');
-  const attr = parts[0];
-  const operator = parts.length > 1 ? parts[1] : 'eq';
-
+export function addQueryBuilderWhereItem<E>(
+  qb: SelectQueryBuilder<E>,
+  dbColumn: string,
+  columnWithAlias: string,
+  operator: string,
+  value: any
+): SelectQueryBuilder<E> {
   switch (operator) {
     case 'eq':
       if (value === null) {
-        return [attr, IsNull()];
+        return qb.andWhere(`${columnWithAlias} IS NULL`);
       }
-      return [attr, Equal(value)];
-    // // Not using "not" yet
-    // case 'not':
-    //   return [attr, Not(value)];
+      return qb.andWhere(`${columnWithAlias} = :${dbColumn}`, { [dbColumn]: value });
+    case 'not':
+      return qb.andWhere(`${columnWithAlias} != :${dbColumn}`, { [dbColumn]: value });
     case 'lt':
-      return [attr, LessThan(value)];
+      return qb.andWhere(`${columnWithAlias} < :${dbColumn}`, { [dbColumn]: value });
     case 'lte':
-      return [attr, Not(MoreThan(value))];
+      return qb.andWhere(`${columnWithAlias} <= :${dbColumn}`, { [dbColumn]: value });
     case 'gt':
-      return [attr, MoreThan(value)];
+      return qb.andWhere(`${columnWithAlias} > :${dbColumn}`, { [dbColumn]: value });
     case 'gte':
-      return [attr, Not(LessThan(value))];
+      return qb.andWhere(`${columnWithAlias} >= :${dbColumn}`, { [dbColumn]: value });
     case 'in':
-      return [attr, In(value)];
+      // IN (:... is the syntax for exploding array params into (?, ?, ?) in QueryBuilder
+      return qb.andWhere(`${columnWithAlias} IN (:...${dbColumn})`, { [dbColumn]: value });
     case 'contains':
-      return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('%${value}%')`)];
+      return qb.andWhere(`LOWER(${columnWithAlias}) LIKE :${dbColumn}`, {
+        [dbColumn]: `%${value}%`
+      });
     case 'startsWith':
-      return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('${value}%')`)];
+      return qb.andWhere(`LOWER(${columnWithAlias}) LIKE :${dbColumn}`, {
+        [dbColumn]: `${value}%`
+      });
     case 'endsWith':
-      return [attr, Raw(alias => `LOWER(${alias}) LIKE LOWER('%${value}')`)];
+      return qb.andWhere(`LOWER(${columnWithAlias}) LIKE :${dbColumn}`, {
+        [dbColumn]: `%${value}`
+      });
     default:
       throw new Error(`Can't find operator ${operator}`);
   }

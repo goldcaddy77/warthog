@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Application } from 'express';
-
 import { getBindingError, logger } from '../../';
 import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
@@ -13,8 +11,13 @@ import { getTestServer } from '../test-server';
 
 import { KITCHEN_SINKS } from './fixtures';
 
+import express = require('express');
+import * as request from 'supertest';
+
 let server: Server<any>;
-let binding: Binding;
+// Can't type this as Binding as TypeScript will do static analysis and bomb if any new fields are introduced
+let binding: any; // Binding;
+let customExpressApp: express.Application;
 
 let onBeforeCalled = false;
 let onAfterCalled = false;
@@ -27,18 +30,24 @@ describe('server', () => {
   // Make sure to clean up server
   beforeAll(async done => {
     jest.setTimeout(20000);
+    setTestServerEnvironmentVariables();
+
     await cleanUpTestData();
 
+    // build a custom express app with a dummy endpoint
+    customExpressApp = buildCustomExpressApp();
+
     try {
-      setTestServerEnvironmentVariables();
+      // TODO: before you attempt to start the server, we need to generate the code so that we don't get TS compiler issues
 
       server = getTestServer({
         apolloConfig: { playground: false },
-        onBeforeGraphQLMiddleware: (app: Application) => {
+        expressApp: customExpressApp,
+        onBeforeGraphQLMiddleware: (app: express.Application) => {
           app;
           onBeforeCalled = true;
         },
-        onAfterGraphQLMiddleware: (app: Application) => {
+        onAfterGraphQLMiddleware: (app: express.Application) => {
           app;
           onAfterCalled = true;
         }
@@ -400,6 +409,28 @@ describe('server', () => {
       error = err.message;
     }
   });
+
+  test('Send request to /foo via passed in custom express app', async () => {
+    expect.assertions(5);
+    const response: request.Response = await request(customExpressApp)
+      .get('/foo')
+      .send();
+
+    expect(response.status).toEqual(200);
+    expect(response.body).toEqual({ bar: 'baz' });
+    noSupertestRequestErrors(response);
+  });
+
+  test("Send request to /foo via server's exposed express app", async () => {
+    expect.assertions(5);
+    const response: request.Response = await request(server.expressApp)
+      .get('/foo')
+      .send();
+
+    expect(response.status).toEqual(200);
+    expect(response.body).toEqual({ bar: 'baz' });
+    noSupertestRequestErrors(response);
+  });
 });
 
 async function createKitchenSink(
@@ -459,6 +490,20 @@ async function createManyDishes(binding: any, kitchenSinkId: string): Promise<Ki
   }
 
   return dishes;
+}
+
+function buildCustomExpressApp() {
+  const app = express();
+  app.get('/foo', (req: express.Request, res: express.Response) => {
+    res.status(200).json({ bar: 'baz' });
+  });
+  return app;
+}
+
+function noSupertestRequestErrors(result: request.Response) {
+  expect(result.error).toBe(false);
+  expect(result.clientError).toBe(false);
+  expect(result.serverError).toBe(false);
 }
 
 /* eslint-enable @typescript-eslint/camelcase */

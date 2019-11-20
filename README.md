@@ -76,7 +76,7 @@ yarn add warthog
 The model will auto-generate your database table and graphql types. Warthog will find all models that match the following glob - `'/**/*.model.ts'`. So for this file, you would name it `user.model.ts`
 
 ```typescript
-import { BaseModel, Model, StringField } from 'warthog';
+import { BaseModel, Model, StringField } from "warthog";
 
 @Model()
 export class User extends BaseModel {
@@ -90,20 +90,25 @@ export class User extends BaseModel {
 The resolver auto-generates queries and mutations in your GraphQL schema. Warthog will find all resolvers that match the following glob - `'/**/*.resolver.ts'`. So for this file, you would name it `user.resolver.ts`
 
 ```typescript
-import { User } from './user.model';
-import { UserService } from './user.service';
+import { User } from "./user.model";
+import { UserService } from "./user.service";
 
 @Resolver(User)
 export class UserResolver {
-  constructor(@Inject('UserService') readonly service: UserService) {}
+  constructor(@Inject("UserService") readonly service: UserService) {}
 
   @Query(() => [User])
-  async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
+  async users(
+    @Args() { where, orderBy, limit, offset }: UserWhereArgs
+  ): Promise<User[]> {
     return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
   @Mutation(() => User)
-  async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
+  async createUser(
+    @Arg("data") data: UserCreateInput,
+    @Ctx() ctx: BaseContext
+  ): Promise<User> {
     return this.service.create(data, ctx.user.id);
   }
 }
@@ -112,11 +117,13 @@ export class UserResolver {
 ### 3. Create a Service
 
 ```typescript
-import { User } from './user.model';
+import { User } from "./user.model";
 
-@Service('UserService')
+@Service("UserService")
 export class UserService extends BaseService<User> {
-  constructor(@InjectRepository(User) protected readonly repository: Repository<User>) {
+  constructor(
+    @InjectRepository(User) protected readonly repository: Repository<User>
+  ) {
     super(User, repository);
   }
 }
@@ -135,8 +142,8 @@ WARTHOG_DB_PASSWORD=
 ### 5. Run your server
 
 ```typescript
-import 'reflect-metadata';
-import { Server } from 'warthog';
+import "reflect-metadata";
+import { Server } from "warthog";
 
 async function bootstrap() {
   const server = new Server();
@@ -166,7 +173,12 @@ type Mutation {
 }
 
 type Query {
-  users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
+  users(
+    offset: Int
+    limit: Int = 50
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+  ): [User!]!
 }
 
 input UserCreateInput {
@@ -222,8 +234,6 @@ input UserWhereUniqueInput {
 }
 
 # ...
-# ...
-
 ```
 
 Notice how we've only added a single field on the model and you get pagination, filtering and tracking of who created, updated and deleted records automatically.
@@ -289,9 +299,9 @@ If you need to add a field that is only exposed via the API that is not DB-backe
 
 See the [feature-flag example](./examples/07-feature-flags/) for an example of where we'd want to build something beyond the standard CRUD actions. In this example we want to add a custom query that makes a complex DB call.
 
-- First add the query to the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.resolver.ts#L75-L79)
-- Then add the custom query input in the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.resolver.ts#L31-L41)
-- Then add the custom service method that fetches the data [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/7-feature-flags/src/feature-flag/feature-flag.service.ts#L28-L48)
+- First add the query to the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/07-feature-flags/src/feature-flag/feature-flag.resolver.ts#L75-L79)
+- Then add the custom query input in the resolver - [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/07-feature-flags/src/feature-flag/feature-flag.resolver.ts#L31-L41)
+- Then add the custom service method that fetches the data [link to code](https://github.com/goldcaddy77/warthog/blob/master/examples/07-feature-flags/src/feature-flag/feature-flag.service.ts#L28-L48)
 
 Warthog will generate the correct GraphQL query and InputType automatically.
 
@@ -363,6 +373,18 @@ Running `yarn warthog generate featureFlag` would create 3 files in the `./src/f
 
 It is recommended that you not run Warthog's TypeScript files via `ts-node` in Production as we do in development as `ts-node` has been known to cause issues in some smaller AWS instances. Instead, compile down to JS and run in `node`. For a full project example (using [dotenvi](https://github.com/b3ross/dotenvi) for config management), see [warthog-starter](https://github.com/goldcaddy77/warthog-starter)
 
+## Contributing
+
+PRs accepted, fire away! Or add issues if you have use cases Warthog doesn't cover.
+
+Before contributing, make sure you have Postgres installed and running with a user named `postgres` with an empty password. If you don't have this local Postgres user, you'll need to update the `.env` files in the `examples` folders to point to a user that can run DB migrations.
+
+Once you have this user set up, you can build a specific example by navigating to that folder and running `yarn bootstrap`.
+
+If you want to build all examples, you can run `yarn bootstrap` from the Warthog root folder.
+
+It's helpful to add a new feature to the Warthog and make use of it in one of the examples folders until you've determined how it's going to work. Once you have it working, you can add tests.
+
 ## Intentionally Opinionated
 
 Warthog is intentionally opinionated to accelerate development and make use of technology-specific features:
@@ -381,10 +403,6 @@ Special thanks to:
 - [richardbmx](https://github.com/richardbmx) - Logo design
 
 Warthog is essentially a really opinionated composition of TypeORM and TypeGraphQL that uses similar GraphQL conventions to the Prisma project.
-
-## Contribute
-
-PRs accepted, fire away! Or add issues if you have use cases Warthog doesn't cover.
 
 ## License
 

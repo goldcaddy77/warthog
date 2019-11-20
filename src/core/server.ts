@@ -33,6 +33,7 @@ export interface ServerOptions<T> {
   authChecker?: AuthChecker<T>;
   autoGenerateFiles?: boolean;
   context?: (request: Request) => object;
+  expressApp?: express.Application;
   host?: string;
   generatedFolder?: string;
   logger?: Logger;
@@ -54,6 +55,7 @@ export class Server<C extends BaseContext> {
   authChecker?: AuthChecker<C>;
   connection!: Connection;
   container: Container;
+  expressApp!: express.Application;
   graphQLServer!: ApolloServer;
   httpServer!: HttpServer | HttpsServer;
   logger: Logger;
@@ -105,6 +107,8 @@ export class Server<C extends BaseContext> {
     // NOTE: this should be after we hard-code the WARTHOG_ env vars above because we want the config
     // module to think they were set by the user
     this.config = new Config({ container: this.container, logger: this.logger });
+
+    this.expressApp = this.appOptions.expressApp || express();
 
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
@@ -182,9 +186,7 @@ export class Server<C extends BaseContext> {
 
   async generateFiles(): Promise<void> {
     debug('start:generateFiles:start');
-    await this.establishDBConnection();
-
-    await new CodeGenerator(this.connection, this.config.get('GENERATED_FOLDER'), {
+    await new CodeGenerator(this.config.get('GENERATED_FOLDER'), this.config.get('DB_ENTITIES'), {
       resolversPath: this.config.get('RESOLVERS_PATH'),
       warthogImportPath: this.config.get('MODULE_IMPORT_PATH')
     }).generate();
@@ -235,29 +237,27 @@ export class Server<C extends BaseContext> {
 
     debug('start:ApolloServerAllocation:end');
 
-    const app = express();
-
-    app.use('/health', healthCheckMiddleware);
+    this.expressApp.use('/health', healthCheckMiddleware);
 
     if (this.appOptions.onBeforeGraphQLMiddleware) {
-      this.appOptions.onBeforeGraphQLMiddleware(app);
+      this.appOptions.onBeforeGraphQLMiddleware(this.expressApp);
     }
 
     debug('start:applyMiddleware:start');
     this.graphQLServer.applyMiddleware({
-      app,
+      app: this.expressApp,
       bodyParserConfig: this.bodyParserConfig,
       path: '/graphql'
     });
     debug('start:applyMiddleware:end');
 
     if (this.appOptions.onAfterGraphQLMiddleware) {
-      this.appOptions.onAfterGraphQLMiddleware(app);
+      this.appOptions.onAfterGraphQLMiddleware(this.expressApp);
     }
 
     const url = this.getGraphQLServerUrl();
 
-    this.httpServer = app.listen({ port: this.config.get('APP_PORT') }, () =>
+    this.httpServer = this.expressApp.listen({ port: this.config.get('APP_PORT') }, () =>
       this.logger.info(`🚀 Server ready at ${url}`)
     );
 

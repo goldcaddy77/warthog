@@ -26,4 +26,15 @@ export interface DeleteReponse {
 
 export type ClassType<T = any> = new (...args: any[]) => T;
 
+export type Constructor<T = any> = Function & { prototype: T };
+
 export type Maybe<T> = T | void;
+
+export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+export type JsonPrimitive = string | number | boolean | null;
+
+export type JsonObject = { [member: string]: JsonValue };
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface JsonArray extends Array<JsonValue> {}

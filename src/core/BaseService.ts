@@ -1,15 +1,19 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, FindManyOptions, FindOperator, getRepository, Repository } from 'typeorm';
+import { DeepPartial, getRepository, Repository } from 'typeorm';
+import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { StandardDeleteResponse } from '../tgql';
-import { getFindOperator } from '../torm';
+import { addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel, WhereInput } from '..';
+import { StringMap } from './types';
 
 export class BaseService<E extends BaseModel> {
-  // TODO: need to figure out why we couldn't type this as Repository<E>
-  constructor(protected entityClass: any, protected repository: Repository<any>) {
+  columnMap: StringMap;
+  klass: string;
+
+  constructor(protected entityClass: any, protected repository: Repository<E>) {
     if (!entityClass) {
       throw new Error('BaseService requires an entity Class');
     }
@@ -22,45 +26,59 @@ export class BaseService<E extends BaseModel> {
     if (!repository) {
       throw new Error(`BaseService requires a valid repository, class ${entityClass}`);
     }
+
+    // Need a mapping of camelCase field name to the modified case using the naming strategy.  For the standard
+    // SnakeNamingStrategy this would be something like { id: 'id', stringField: 'string_field' }
+    this.columnMap = this.repository.metadata.columns.reduce(
+      (prev: StringMap, column: ColumnMetadata) => {
+        prev[column.propertyPath] = column.databasePath;
+        return prev;
+      },
+      {}
+    );
+    this.klass = this.repository.metadata.name.toLowerCase();
   }
 
   async find<W extends WhereInput>(
     where?: any,
-    orderBy?: any, // Fix this
+    orderBy?: string,
     limit?: number,
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    const findOptions: FindManyOptions = {};
+    let qb = this.repository.createQueryBuilder(this.klass);
 
     if (limit) {
-      findOptions.take = limit;
+      qb = qb.take(limit);
     }
     if (offset) {
-      findOptions.skip = offset;
+      qb = qb.skip(offset);
     }
+
     if (fields) {
       // We always need to select ID or dataloaders will not function properly
       if (fields.indexOf('id') === -1) {
         fields.push('id');
       }
-      findOptions.select = fields;
+      // Querybuilder requires you to prefix all fields with the table alias.  It also requires you to
+      // specify the field name using it's TypeORM attribute name, not the camel-cased DB column name
+      const selection = fields.map(field => `${this.klass}.${field}`);
+      qb = qb.select(selection);
     }
     if (orderBy) {
       // TODO: allow multiple sorts
+      // See https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#adding-order-by-expression
       const parts = orderBy.toString().split('_');
+      // TODO: ensure attr is one of the properties on the model
       const attr = parts[0];
       const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
-      // TODO: ensure key is one of the properties on the model
-      findOptions.order = {
-        [attr]: direction
-      };
+
+      qb = qb.orderBy(this.attrToDBColumn(attr), direction);
     }
 
-    // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to
-    // turn this off
     where = where || {};
 
+    // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
     const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
     // If no deletedAt filters specified, hide them by default
     if (!hasDeletedAts) {
@@ -75,14 +93,23 @@ export class BaseService<E extends BaseModel> {
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    findOptions.where = this.processWhereOptions<W>(where);
+    if (Object.keys(where).length) {
+      // where is of shape { userName_contains: 'a' }
+      Object.keys(where).forEach(k => {
+        const key = k as keyof W; // userName
+        const parts = key.toString().split('_'); // ['userName', 'contains']
+        const attr = parts[0]; // userName
+        const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
 
-    return this.repository.find(findOptions);
+        qb = addQueryBuilderWhereItem(qb, attr, this.attrToDBColumn(attr), operator, where[key]);
+      });
+    }
+
+    return qb.getMany();
   }
 
-  // TODO: fix - W extends Partial<E>
-  async findOne<W extends any>(where: W): Promise<E> {
-    const items = await this.find<W>(where);
+  async findOne<W extends Partial<E>>(where: Partial<E>): Promise<E> {
+    const items = await this.find(where);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
     } else if (items.length > 1) {
@@ -110,7 +137,8 @@ export class BaseService<E extends BaseModel> {
     }
 
     // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
-    return this.repository.save(obj, { reload: true });
+    // TODO: Fix `any`
+    return this.repository.save(obj as any, { reload: true });
   }
 
   async createMany(data: DeepPartial<E>[], userId: string): Promise<E[]> {
@@ -132,7 +160,8 @@ export class BaseService<E extends BaseModel> {
     }
 
     // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
-    return this.repository.save(results, { reload: true });
+    // TODO: Fix `any`
+    return this.repository.save(results as any, { reload: true });
   }
 
   // TODO: There must be a more succinct way to:
@@ -155,8 +184,8 @@ export class BaseService<E extends BaseModel> {
       throw new ArgumentValidationError(errors);
     }
 
-    // TODO: remove `any` - getting issue here
-    const result = await this.repository.save(merged);
+    // TODO: Fix `any`
+    const result = await this.repository.save(merged as any);
     return this.repository.findOneOrFail({ where: { id: result.id } });
   }
 
@@ -170,19 +199,17 @@ export class BaseService<E extends BaseModel> {
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
     const merged = this.repository.merge(new this.entityClass(), data as any, idData);
 
-    await this.repository.save(merged);
+    // TODO: Fix `any`
+    await this.repository.save(merged as any);
 
     return { id: found.id };
   }
 
-  // extends WhereInput
-  processWhereOptions<W extends any>(where: W) {
-    const whereOptions: { [key: string]: FindOperator<any> } = {};
-    Object.keys(where).forEach(k => {
-      const key = k as keyof W;
-      const [attr, operator] = getFindOperator(String(key), where[key]);
-      whereOptions[attr] = operator;
-    });
-    return whereOptions;
-  }
+  attrsToDBColumns = (attrs: string[]): string[] => {
+    return attrs.map(this.attrToDBColumn);
+  };
+
+  attrToDBColumn = (attr: string): string => {
+    return `"${this.klass}"."${this.columnMap[attr]}"`;
+  };
 }

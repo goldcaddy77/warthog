@@ -6,7 +6,7 @@ references:
 jobs:
   build:
     docker:
-      - image: circleci/node:10.7
+      - image: circleci/node:10.13
     steps:
       - checkout
       - restore_cache:
@@ -27,7 +27,7 @@ jobs:
           flags: backend
       - run:
           name: deploy
-          command: yarn run semantic-release || true
+          command: DEBUG=condition* yarn run semantic-release --debug || true
       - save_cache:
           key: *yarn_cache_key
           paths: ~/circleci/node_modules

@@ -1,13 +1,15 @@
 import { Authorized } from 'type-graphql';
-import { Unique } from 'typeorm';
+import { Unique, Column } from 'typeorm';
 import {
   BaseModel,
   DateField,
   EmailField,
   EnumField,
+  IdField,
   JSONField,
   Model,
-  StringField
+  StringField,
+  JsonObject
 } from '../../../../../src';
 
 // Note: this must be exported and in the same file where it's attached with @EnumField
@@ -43,5 +45,20 @@ export class User extends BaseModel {
   privateField?: string;
 
   @JSONField({ nullable: true })
-  jsonField?: JSON;
+  jsonField?: JsonObject;
+
+  @IdField({ nullable: true })
+  idField: string;
+
+  @Column({ nullable: true })
+  dbOnlyColumn?: string;
+
+  @StringField({ filter: false, nullable: true })
+  noFilterField?: string;
+
+  @StringField({ sort: false, nullable: true })
+  noSortField?: string;
+
+  @StringField({ filter: false, sort: false, nullable: true })
+  noFilterOrSortField?: string;
 }
