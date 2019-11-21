@@ -1,6 +1,9 @@
+import { Column } from 'typeorm';
+
 import {
   BaseModel,
   BooleanField,
+  CustomField,
   DateField,
   EmailField,
   // EnumField,
@@ -9,6 +12,7 @@ import {
   JSONField,
   OneToMany,
   Model,
+  NumericField,
   StringField,
   JsonObject
 } from '../../../';
@@ -53,6 +57,33 @@ export class KitchenSink extends BaseModel {
     (dish: Dish) => dish.kitchenSink
   )
   dishes!: Dish[];
+
+  @Column({ nullable: true })
+  dbOnlyColumn?: string;
+
+  @NumericField({ nullable: true })
+  numericField?: number;
+
+  @NumericField({ nullable: true, precision: 5, scale: 2 })
+  numericFieldCustomPrecisionScale?: number;
+
+  @StringField({ filter: false, nullable: true })
+  noFilterField?: string;
+
+  @StringField({ sort: false, nullable: true })
+  noSortField?: string;
+
+  @StringField({ filter: false, sort: false, nullable: true })
+  noFilterOrSortField?: string;
+
+  @StringField({ dataType: 'character', nullable: true })
+  characterField?: string;
+
+  @CustomField({
+    api: { type: 'string', nullable: true, sort: false, filter: false },
+    db: { type: 'text', nullable: true }
+  })
+  customTextFieldNoSortOrFilter?: string;
 
   // @EnumField('StringEnum', StringEnum)
   // stringEnumField: StringEnum;

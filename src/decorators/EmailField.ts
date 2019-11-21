@@ -2,8 +2,10 @@ import { IsEmail } from 'class-validator';
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage } from '../metadata';
+import { decoratorDefaults } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+
+import { WarthogField } from './WarthogField';
 
 interface EmailFieldOptions {
   filter?: boolean;
@@ -15,12 +17,8 @@ interface EmailFieldOptions {
 export function EmailField(args: EmailFieldOptions = {}): any {
   const options = { unique: true, ...decoratorDefaults, ...args };
 
-  const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addField('email', target.constructor.name, propertyKey, options);
-  };
-
   const factories = [
-    registerWithWarthog,
+    WarthogField('email', options),
     IsEmail(),
     Field(),
     Column(options) as MethodDecoratorFactory

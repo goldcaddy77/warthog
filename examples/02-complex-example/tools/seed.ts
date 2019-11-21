@@ -3,6 +3,7 @@ import * as Faker from 'faker';
 import { getBindingError, logger } from '../../../src';
 
 import { getServer } from '../src/server';
+import { Binding } from '../generated/binding';
 
 const NUM_USERS = 10;
 
@@ -16,9 +17,9 @@ async function seedDatabase() {
 
   await server.start();
 
-  let binding;
+  let binding: Binding;
   try {
-    binding = await server.getBinding();
+    binding = ((await server.getBinding()) as unknown) as Binding;
   } catch (error) {
     logger.error(error);
     return process.exit(1);
@@ -29,37 +30,42 @@ async function seedDatabase() {
       .getTime()
       .toString()
       .substring(8, 13);
-    const firstName = Faker.name.firstName();
-    const lastName = Faker.name.lastName();
-    const email = `${firstName
-      .substr(0, 1)
-      .toLowerCase()}${lastName.toLowerCase()}-${random}@fakeemail.com`;
+    const stringField = `${Faker.name.firstName()} ${Faker.name.lastName()}`;
+    const emailField = `${stringField
+      .substring(0, 1)
+      .toLowerCase()}${Faker.name.firstName().toLowerCase()}-${random}@fakeemail.com`;
+
     const jsonField = {
-      bar: 'hello',
-      baz: [{}, { one: 3 }],
+      string: 'hello',
+      arrayOfObjects: [{ one: 2 }],
       bool: false,
-      foo: 1
+      number: 1,
+      emptyObject: {},
+      emptyArray: []
     };
-    const registeredAt = new Date().toISOString();
+    const dateField = new Date().toISOString();
 
     try {
       const user = await binding.mutation.createUser(
         {
           data: {
-            email,
-            firstName,
+            emailField,
+            stringField,
             jsonField,
-            lastName,
-            registeredAt,
-            stringEnumField: 'FOO'
+            dateField,
+            enumField: 'FOO',
+            geometryField: {
+              type: 'Point',
+              coordinates: [Faker.random.number(100), Faker.random.number(200)]
+            }
           }
         },
-        `{ id email createdAt createdById }`
+        `{ id emailField createdAt createdById }`
       );
-      logger.info(user.email);
+      logger.info(user.emailField);
     } catch (err) {
       const error = getBindingError(err);
-      logger.error(email);
+      logger.error(emailField);
       logger.error(error);
     }
   }
