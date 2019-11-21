@@ -54,6 +54,6 @@ export class KitchenSink extends BaseModel {
   )
   dishes!: Dish[];
 
-  // @EnumField('StringEnum', StringEnum)
-  // stringEnumField: StringEnum;
+  // @EnumField('StringEnum', StringEnum, { nullable: true })
+  // stringEnumField?: StringEnum;
 }
