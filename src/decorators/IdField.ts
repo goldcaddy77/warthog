@@ -1,8 +1,10 @@
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage } from '../metadata';
+import { decoratorDefaults } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+
+import { WarthogField } from './WarthogField';
 
 interface StringFieldOptions {
   filter?: boolean;
@@ -16,13 +18,9 @@ export function IdField(args: StringFieldOptions = decoratorDefaults): any {
   const nullableOption = options.nullable === true ? { nullable: true } : {};
   const uniqueOption = options.unique ? { unique: true } : {};
 
-  const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addField('id', target.constructor.name, propertyKey, options);
-  };
-
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    registerWithWarthog,
+    WarthogField('id', options),
     // We explicitly say string here because when we're metaprogramming without
     // TS types, Field does not know that this should be a String
     Field(() => String, {

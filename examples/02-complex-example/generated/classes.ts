@@ -31,35 +31,86 @@ export enum UserOrderByEnum {
   deletedAt_ASC = "deletedAt_ASC",
   deletedAt_DESC = "deletedAt_DESC",
 
-  firstName_ASC = "firstName_ASC",
-  firstName_DESC = "firstName_DESC",
+  booleanField_ASC = "booleanField_ASC",
+  booleanField_DESC = "booleanField_DESC",
 
-  lastName_ASC = "lastName_ASC",
-  lastName_DESC = "lastName_DESC",
+  dateField_ASC = "dateField_ASC",
+  dateField_DESC = "dateField_DESC",
 
-  stringEnumField_ASC = "stringEnumField_ASC",
-  stringEnumField_DESC = "stringEnumField_DESC",
+  emailField_ASC = "emailField_ASC",
+  emailField_DESC = "emailField_DESC",
 
-  email_ASC = "email_ASC",
-  email_DESC = "email_DESC",
+  enumField_ASC = "enumField_ASC",
+  enumField_DESC = "enumField_DESC",
 
-  registeredAt_ASC = "registeredAt_ASC",
-  registeredAt_DESC = "registeredAt_DESC",
+  floatField_ASC = "floatField_ASC",
+  floatField_DESC = "floatField_DESC",
 
-  nickName_ASC = "nickName_ASC",
-  nickName_DESC = "nickName_DESC",
-
-  privateField_ASC = "privateField_ASC",
-  privateField_DESC = "privateField_DESC",
-
-  jsonField_ASC = "jsonField_ASC",
-  jsonField_DESC = "jsonField_DESC",
+  realField_ASC = "realField_ASC",
+  realField_DESC = "realField_DESC",
 
   idField_ASC = "idField_ASC",
   idField_DESC = "idField_DESC",
 
+  intFieldDefault_ASC = "intFieldDefault_ASC",
+  intFieldDefault_DESC = "intFieldDefault_DESC",
+
+  smallIntField_ASC = "smallIntField_ASC",
+  smallIntField_DESC = "smallIntField_DESC",
+
+  bigIntField_ASC = "bigIntField_ASC",
+  bigIntField_DESC = "bigIntField_DESC",
+
+  stringField_ASC = "stringField_ASC",
+  stringField_DESC = "stringField_DESC",
+
   noFilterField_ASC = "noFilterField_ASC",
-  noFilterField_DESC = "noFilterField_DESC"
+  noFilterField_DESC = "noFilterField_DESC",
+
+  numericField_ASC = "numericField_ASC",
+  numericField_DESC = "numericField_DESC",
+
+  numericFieldCustomPrecisionScale_ASC = "numericFieldCustomPrecisionScale_ASC",
+  numericFieldCustomPrecisionScale_DESC = "numericFieldCustomPrecisionScale_DESC",
+
+  charField_ASC = "charField_ASC",
+  charField_DESC = "charField_DESC",
+
+  characterField_ASC = "characterField_ASC",
+  characterField_DESC = "characterField_DESC",
+
+  characterVaryingField_ASC = "characterVaryingField_ASC",
+  characterVaryingField_DESC = "characterVaryingField_DESC",
+
+  textField_ASC = "textField_ASC",
+  textField_DESC = "textField_DESC",
+
+  varcharField_ASC = "varcharField_ASC",
+  varcharField_DESC = "varcharField_DESC",
+
+  intField_ASC = "intField_ASC",
+  intField_DESC = "intField_DESC",
+
+  integerField_ASC = "integerField_ASC",
+  integerField_DESC = "integerField_DESC",
+
+  int2Field_ASC = "int2Field_ASC",
+  int2Field_DESC = "int2Field_DESC",
+
+  int4Field_ASC = "int4Field_ASC",
+  int4Field_DESC = "int4Field_DESC",
+
+  int8Field_ASC = "int8Field_ASC",
+  int8Field_DESC = "int8Field_DESC",
+
+  float4Field_ASC = "float4Field_ASC",
+  float4Field_DESC = "float4Field_DESC",
+
+  float8Field_ASC = "float8Field_ASC",
+  float8Field_DESC = "float8Field_DESC",
+
+  doublePrecisionField_ASC = "doublePrecisionField_ASC",
+  doublePrecisionField_DESC = "doublePrecisionField_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -140,107 +191,158 @@ export class UserWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   deletedById_in?: string[];
 
-  @TypeGraphQLField({ nullable: true })
-  firstName_eq?: string;
+  @TypeGraphQLField(() => Boolean, { nullable: true })
+  booleanField_eq?: Boolean;
+
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
+  booleanField_in?: Boolean[];
 
   @TypeGraphQLField({ nullable: true })
-  firstName_contains?: string;
+  dateField_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  firstName_startsWith?: string;
+  dateField_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  firstName_endsWith?: string;
+  dateField_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  dateField_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  dateField_gte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField_endsWith?: string;
 
   @TypeGraphQLField(() => [String], { nullable: true })
-  firstName_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  lastName_in?: string[];
+  emailField_in?: string[];
 
   @TypeGraphQLField(() => StringEnum, { nullable: true })
-  stringEnumField_eq?: StringEnum;
+  enumField_eq?: StringEnum;
 
   @TypeGraphQLField(() => [StringEnum], { nullable: true })
-  stringEnumField_in?: StringEnum[];
+  enumField_in?: StringEnum[];
 
-  @TypeGraphQLField({ nullable: true })
-  email_eq?: string;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  floatField_eq?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  email_contains?: string;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  floatField_gt?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  email_startsWith?: string;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  floatField_gte?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  email_endsWith?: string;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  floatField_lt?: number;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
-  email_in?: string[];
+  @TypeGraphQLField(() => Float, { nullable: true })
+  floatField_lte?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  registeredAt_eq?: Date;
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  floatField_in?: number[];
 
-  @TypeGraphQLField({ nullable: true })
-  registeredAt_lt?: Date;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  realField_eq?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  registeredAt_lte?: Date;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  realField_gt?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  registeredAt_gt?: Date;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  realField_gte?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  registeredAt_gte?: Date;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  realField_lt?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  nickName_eq?: string;
+  @TypeGraphQLField(() => Float, { nullable: true })
+  realField_lte?: number;
 
-  @TypeGraphQLField({ nullable: true })
-  nickName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  nickName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  nickName_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  nickName_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  privateField_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  privateField_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  privateField_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  privateField_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  privateField_in?: string[];
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  realField_in?: number[];
 
   @TypeGraphQLField(() => ID, { nullable: true })
   idField_eq?: string;
 
   @TypeGraphQLField(() => [ID], { nullable: true })
   idField_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldDefault_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldDefault_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldDefault_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldDefault_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldDefault_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  intFieldDefault_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  smallIntField_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  smallIntField_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  smallIntField_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  smallIntField_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  smallIntField_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  smallIntField_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  bigIntField_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  bigIntField_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  bigIntField_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  bigIntField_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  bigIntField_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  bigIntField_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  stringField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  stringField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  stringField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  stringField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  stringField_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   noSortField_eq?: string;
@@ -256,6 +358,261 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   noSortField_in?: string[];
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericField_eq?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericField_gt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericField_gte?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericField_lt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericField_lte?: number;
+
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  numericField_in?: number[];
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericFieldCustomPrecisionScale_eq?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericFieldCustomPrecisionScale_gt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericFieldCustomPrecisionScale_gte?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericFieldCustomPrecisionScale_lt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  numericFieldCustomPrecisionScale_lte?: number;
+
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  numericFieldCustomPrecisionScale_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  charField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  charField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  charField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  charField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  charField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  characterField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  characterField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  characterVaryingField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterVaryingField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterVaryingField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterVaryingField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  characterVaryingField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  textField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  textField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  textField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  textField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  textField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  varcharField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  varcharField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  varcharField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  varcharField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  varcharField_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intField_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intField_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intField_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intField_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intField_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  intField_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  integerField_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  integerField_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  integerField_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  integerField_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  integerField_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  integerField_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int2Field_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int2Field_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int2Field_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int2Field_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int2Field_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  int2Field_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int4Field_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int4Field_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int4Field_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int4Field_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int4Field_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  int4Field_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int8Field_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int8Field_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int8Field_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int8Field_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  int8Field_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  int8Field_in?: number[];
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float4Field_eq?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float4Field_gt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float4Field_gte?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float4Field_lt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float4Field_lte?: number;
+
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  float4Field_in?: number[];
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float8Field_eq?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float8Field_gt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float8Field_gte?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float8Field_lt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  float8Field_lte?: number;
+
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  float8Field_in?: number[];
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  doublePrecisionField_eq?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  doublePrecisionField_gt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  doublePrecisionField_gte?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  doublePrecisionField_lt?: number;
+
+  @TypeGraphQLField(() => Float, { nullable: true })
+  doublePrecisionField_lte?: number;
+
+  @TypeGraphQLField(() => [Float], { nullable: true })
+  doublePrecisionField_in?: number[];
 }
 
 @TypeGraphQLInputType()
@@ -264,37 +621,46 @@ export class UserWhereUniqueInput {
   id?: string;
 
   @TypeGraphQLField(() => String, { nullable: true })
-  email?: string;
+  emailField?: string;
 }
 
 @TypeGraphQLInputType()
 export class UserCreateInput {
-  @TypeGraphQLField()
-  firstName!: string;
-
-  @TypeGraphQLField()
-  lastName!: string;
-
-  @TypeGraphQLField(() => StringEnum)
-  stringEnumField!: StringEnum;
-
-  @TypeGraphQLField()
-  email!: string;
-
-  @TypeGraphQLField()
-  registeredAt!: Date;
+  @TypeGraphQLField({ nullable: true })
+  booleanField?: boolean;
 
   @TypeGraphQLField({ nullable: true })
-  nickName?: string;
+  dateField?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  privateField?: string;
+  emailField?: string;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  enumField?: StringEnum;
+
+  @TypeGraphQLField({ nullable: true })
+  floatField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  realField?: number;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  intFieldDefault?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  smallIntField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  bigIntField?: number;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
 
-  @TypeGraphQLField(() => ID, { nullable: true })
-  idField?: string;
+  @TypeGraphQLField({ nullable: true })
+  stringField?: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;
@@ -304,36 +670,93 @@ export class UserCreateInput {
 
   @TypeGraphQLField({ nullable: true })
   noFilterOrSortField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  numericField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  numericFieldCustomPrecisionScale?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  charField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterVaryingField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  textField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  varcharField?: string;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geometryField?: JsonObject;
+
+  @TypeGraphQLField({ nullable: true })
+  intField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  integerField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  int2Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  int4Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  int8Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  float4Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  float8Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  doublePrecisionField?: number;
 }
 
 @TypeGraphQLInputType()
 export class UserUpdateInput {
   @TypeGraphQLField({ nullable: true })
-  firstName?: string;
+  booleanField?: boolean;
 
   @TypeGraphQLField({ nullable: true })
-  lastName?: string;
+  dateField?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  emailField?: string;
 
   @TypeGraphQLField(() => StringEnum, { nullable: true })
-  stringEnumField?: StringEnum;
+  enumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
-  email?: string;
+  floatField?: number;
 
   @TypeGraphQLField({ nullable: true })
-  registeredAt?: Date;
+  realField?: number;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField?: string;
 
   @TypeGraphQLField({ nullable: true })
-  nickName?: string;
+  intFieldDefault?: number;
 
   @TypeGraphQLField({ nullable: true })
-  privateField?: string;
+  smallIntField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  bigIntField?: number;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
 
-  @TypeGraphQLField(() => ID, { nullable: true })
-  idField?: string;
+  @TypeGraphQLField({ nullable: true })
+  stringField?: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;
@@ -343,6 +766,54 @@ export class UserUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   noFilterOrSortField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  numericField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  numericFieldCustomPrecisionScale?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  charField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  characterVaryingField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  textField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  varcharField?: string;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geometryField?: JsonObject;
+
+  @TypeGraphQLField({ nullable: true })
+  intField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  integerField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  int2Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  int4Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  int8Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  float4Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  float8Field?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  doublePrecisionField?: number;
 }
 
 @ArgsType()

@@ -98,33 +98,71 @@ type User implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
-  firstName: String!
-  lastName: String!
-  stringEnumField: StringEnum!
-  email: String!
-  registeredAt: DateTime!
-  nickName: String
-  privateField: String
-  jsonField: JSONObject
+  booleanField: Boolean
+  dateField: DateTime
+  emailField: String!
+  enumField: StringEnum
+  floatField: Float
+  realField: Float
   idField: String
+  intFieldDefault: Int
+  smallIntField: Int
+  bigIntField: Int
+  jsonField: JSONObject
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  numericField: Float
+  numericFieldCustomPrecisionScale: Float
+  charField: String
+  characterField: String
+  characterVaryingField: String
+  textField: String
+  varcharField: String
+  geometryField: JSONObject
+  intField: Int
+  integerField: Int
+  int2Field: Int
+  int4Field: Int
+  int8Field: Int
+  float4Field: Float
+  float8Field: Float
+  doublePrecisionField: Float
 }
 
 input UserCreateInput {
-  firstName: String!
-  lastName: String!
-  stringEnumField: StringEnum!
-  email: String!
-  registeredAt: DateTime!
-  nickName: String
-  privateField: String
-  jsonField: JSONObject
+  booleanField: Boolean
+  dateField: DateTime
+  emailField: String
+  enumField: StringEnum
+  floatField: Float
+  realField: Float
   idField: ID
+  intFieldDefault: Float
+  smallIntField: Float
+  bigIntField: Float
+  jsonField: JSONObject
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  numericField: Float
+  numericFieldCustomPrecisionScale: Float
+  charField: String
+  characterField: String
+  characterVaryingField: String
+  textField: String
+  varcharField: String
+  geometryField: JSONObject
+  intField: Float
+  integerField: Float
+  int2Field: Float
+  int4Field: Float
+  int8Field: Float
+  float4Field: Float
+  float8Field: Float
+  doublePrecisionField: Float
 }
 
 enum UserOrderByInput {
@@ -134,41 +172,94 @@ enum UserOrderByInput {
   updatedAt_DESC
   deletedAt_ASC
   deletedAt_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
-  stringEnumField_ASC
-  stringEnumField_DESC
-  email_ASC
-  email_DESC
-  registeredAt_ASC
-  registeredAt_DESC
-  nickName_ASC
-  nickName_DESC
-  privateField_ASC
-  privateField_DESC
-  jsonField_ASC
-  jsonField_DESC
+  booleanField_ASC
+  booleanField_DESC
+  dateField_ASC
+  dateField_DESC
+  emailField_ASC
+  emailField_DESC
+  enumField_ASC
+  enumField_DESC
+  floatField_ASC
+  floatField_DESC
+  realField_ASC
+  realField_DESC
   idField_ASC
   idField_DESC
+  intFieldDefault_ASC
+  intFieldDefault_DESC
+  smallIntField_ASC
+  smallIntField_DESC
+  bigIntField_ASC
+  bigIntField_DESC
+  stringField_ASC
+  stringField_DESC
   noFilterField_ASC
   noFilterField_DESC
+  numericField_ASC
+  numericField_DESC
+  numericFieldCustomPrecisionScale_ASC
+  numericFieldCustomPrecisionScale_DESC
+  charField_ASC
+  charField_DESC
+  characterField_ASC
+  characterField_DESC
+  characterVaryingField_ASC
+  characterVaryingField_DESC
+  textField_ASC
+  textField_DESC
+  varcharField_ASC
+  varcharField_DESC
+  intField_ASC
+  intField_DESC
+  integerField_ASC
+  integerField_DESC
+  int2Field_ASC
+  int2Field_DESC
+  int4Field_ASC
+  int4Field_DESC
+  int8Field_ASC
+  int8Field_DESC
+  float4Field_ASC
+  float4Field_DESC
+  float8Field_ASC
+  float8Field_DESC
+  doublePrecisionField_ASC
+  doublePrecisionField_DESC
 }
 
 input UserUpdateInput {
-  firstName: String
-  lastName: String
-  stringEnumField: StringEnum
-  email: String
-  registeredAt: DateTime
-  nickName: String
-  privateField: String
-  jsonField: JSONObject
+  booleanField: Boolean
+  dateField: DateTime
+  emailField: String
+  enumField: StringEnum
+  floatField: Float
+  realField: Float
   idField: ID
+  intFieldDefault: Float
+  smallIntField: Float
+  bigIntField: Float
+  jsonField: JSONObject
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  numericField: Float
+  numericFieldCustomPrecisionScale: Float
+  charField: String
+  characterField: String
+  characterVaryingField: String
+  textField: String
+  varcharField: String
+  geometryField: JSONObject
+  intField: Float
+  integerField: Float
+  int2Field: Float
+  int4Field: Float
+  int8Field: Float
+  float4Field: Float
+  float8Field: Float
+  doublePrecisionField: Float
 }
 
 input UserWhereInput {
@@ -196,48 +287,150 @@ input UserWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
-  lastName_eq: String
-  lastName_contains: String
-  lastName_startsWith: String
-  lastName_endsWith: String
-  lastName_in: [String!]
-  stringEnumField_eq: StringEnum
-  stringEnumField_in: [StringEnum!]
-  email_eq: String
-  email_contains: String
-  email_startsWith: String
-  email_endsWith: String
-  email_in: [String!]
-  registeredAt_eq: DateTime
-  registeredAt_lt: DateTime
-  registeredAt_lte: DateTime
-  registeredAt_gt: DateTime
-  registeredAt_gte: DateTime
-  nickName_eq: String
-  nickName_contains: String
-  nickName_startsWith: String
-  nickName_endsWith: String
-  nickName_in: [String!]
-  privateField_eq: String
-  privateField_contains: String
-  privateField_startsWith: String
-  privateField_endsWith: String
-  privateField_in: [String!]
+  booleanField_eq: Boolean
+  booleanField_in: [Boolean!]
+  dateField_eq: DateTime
+  dateField_lt: DateTime
+  dateField_lte: DateTime
+  dateField_gt: DateTime
+  dateField_gte: DateTime
+  emailField_eq: String
+  emailField_contains: String
+  emailField_startsWith: String
+  emailField_endsWith: String
+  emailField_in: [String!]
+  enumField_eq: StringEnum
+  enumField_in: [StringEnum!]
+  floatField_eq: Float
+  floatField_gt: Float
+  floatField_gte: Float
+  floatField_lt: Float
+  floatField_lte: Float
+  floatField_in: [Float!]
+  realField_eq: Float
+  realField_gt: Float
+  realField_gte: Float
+  realField_lt: Float
+  realField_lte: Float
+  realField_in: [Float!]
   idField_eq: ID
   idField_in: [ID!]
+  intFieldDefault_eq: Int
+  intFieldDefault_gt: Int
+  intFieldDefault_gte: Int
+  intFieldDefault_lt: Int
+  intFieldDefault_lte: Int
+  intFieldDefault_in: [Int!]
+  smallIntField_eq: Int
+  smallIntField_gt: Int
+  smallIntField_gte: Int
+  smallIntField_lt: Int
+  smallIntField_lte: Int
+  smallIntField_in: [Int!]
+  bigIntField_eq: Int
+  bigIntField_gt: Int
+  bigIntField_gte: Int
+  bigIntField_lt: Int
+  bigIntField_lte: Int
+  bigIntField_in: [Int!]
+  stringField_eq: String
+  stringField_contains: String
+  stringField_startsWith: String
+  stringField_endsWith: String
+  stringField_in: [String!]
   noSortField_eq: String
   noSortField_contains: String
   noSortField_startsWith: String
   noSortField_endsWith: String
   noSortField_in: [String!]
+  numericField_eq: Float
+  numericField_gt: Float
+  numericField_gte: Float
+  numericField_lt: Float
+  numericField_lte: Float
+  numericField_in: [Float!]
+  numericFieldCustomPrecisionScale_eq: Float
+  numericFieldCustomPrecisionScale_gt: Float
+  numericFieldCustomPrecisionScale_gte: Float
+  numericFieldCustomPrecisionScale_lt: Float
+  numericFieldCustomPrecisionScale_lte: Float
+  numericFieldCustomPrecisionScale_in: [Float!]
+  charField_eq: String
+  charField_contains: String
+  charField_startsWith: String
+  charField_endsWith: String
+  charField_in: [String!]
+  characterField_eq: String
+  characterField_contains: String
+  characterField_startsWith: String
+  characterField_endsWith: String
+  characterField_in: [String!]
+  characterVaryingField_eq: String
+  characterVaryingField_contains: String
+  characterVaryingField_startsWith: String
+  characterVaryingField_endsWith: String
+  characterVaryingField_in: [String!]
+  textField_eq: String
+  textField_contains: String
+  textField_startsWith: String
+  textField_endsWith: String
+  textField_in: [String!]
+  varcharField_eq: String
+  varcharField_contains: String
+  varcharField_startsWith: String
+  varcharField_endsWith: String
+  varcharField_in: [String!]
+  intField_eq: Int
+  intField_gt: Int
+  intField_gte: Int
+  intField_lt: Int
+  intField_lte: Int
+  intField_in: [Int!]
+  integerField_eq: Int
+  integerField_gt: Int
+  integerField_gte: Int
+  integerField_lt: Int
+  integerField_lte: Int
+  integerField_in: [Int!]
+  int2Field_eq: Int
+  int2Field_gt: Int
+  int2Field_gte: Int
+  int2Field_lt: Int
+  int2Field_lte: Int
+  int2Field_in: [Int!]
+  int4Field_eq: Int
+  int4Field_gt: Int
+  int4Field_gte: Int
+  int4Field_lt: Int
+  int4Field_lte: Int
+  int4Field_in: [Int!]
+  int8Field_eq: Int
+  int8Field_gt: Int
+  int8Field_gte: Int
+  int8Field_lt: Int
+  int8Field_lte: Int
+  int8Field_in: [Int!]
+  float4Field_eq: Float
+  float4Field_gt: Float
+  float4Field_gte: Float
+  float4Field_lt: Float
+  float4Field_lte: Float
+  float4Field_in: [Float!]
+  float8Field_eq: Float
+  float8Field_gt: Float
+  float8Field_gte: Float
+  float8Field_lt: Float
+  float8Field_lte: Float
+  float8Field_in: [Float!]
+  doublePrecisionField_eq: Float
+  doublePrecisionField_gt: Float
+  doublePrecisionField_gte: Float
+  doublePrecisionField_lt: Float
+  doublePrecisionField_lte: Float
+  doublePrecisionField_in: [Float!]
 }
 
 input UserWhereUniqueInput {
   id: ID
-  email: String
+  emailField: String
 }

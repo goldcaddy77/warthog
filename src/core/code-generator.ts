@@ -1,7 +1,7 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { readFile, writeFile } from 'fs';
+import { writeFile } from 'fs';
 import { GraphQLID, GraphQLSchema, printSchema } from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
@@ -11,7 +11,7 @@ import * as util from 'util';
 import { generateBindingFile } from '../gql';
 import { SchemaGenerator } from '../schema';
 import { authChecker, loadFromGlobArray } from '../tgql';
-import {} from '../tgql/loadGlobs';
+import { logger } from '../core';
 // Load all model files so that decorators will gather metadata for code generation
 
 import * as Debug from 'debug';
@@ -19,7 +19,6 @@ import * as Debug from 'debug';
 const debug = Debug('warthog:code-generators');
 
 const writeFilePromise = util.promisify(writeFile);
-const readFilePromise = util.promisify(readFile);
 
 interface CodeGeneratorOptions {
   resolversPath: string[];
@@ -51,7 +50,7 @@ export class CodeGenerator {
       await this.writeSchemaFile();
       await this.generateBinding();
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
     debug('generate:end');
   }
