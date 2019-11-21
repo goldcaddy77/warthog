@@ -53,6 +53,7 @@ export class CodeGenerator {
       await this.generateBinding();
     } catch (error) {
       logger.error(error);
+      debug(error); // this is required to log when run in a separate project
     }
     debug('generate:end');
   }
