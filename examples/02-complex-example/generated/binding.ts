@@ -59,40 +59,24 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'enumField_DESC' |
   'floatField_ASC' |
   'floatField_DESC' |
-  'float4Field_ASC' |
-  'float4Field_DESC' |
   'realField_ASC' |
   'realField_DESC' |
-  'float8Field_ASC' |
-  'float8Field_DESC' |
-  'doublePrecisionField_ASC' |
-  'doublePrecisionField_DESC' |
   'idField_ASC' |
   'idField_DESC' |
-  'intDefaultField_ASC' |
-  'intDefaultField_DESC' |
-  'jsonField_ASC' |
-  'jsonField_DESC' |
-  'stringField_ASC' |
-  'stringField_DESC' |
-  'noFilterField_ASC' |
-  'noFilterField_DESC' |
-  'intField_ASC' |
-  'intField_DESC' |
-  'integerField_ASC' |
-  'integerField_DESC' |
-  'int2Field_ASC' |
-  'int2Field_DESC' |
-  'int4Field_ASC' |
-  'int4Field_DESC' |
-  'int8Field_ASC' |
-  'int8Field_DESC' |
+  'intFieldDefault_ASC' |
+  'intFieldDefault_DESC' |
   'smallIntField_ASC' |
   'smallIntField_DESC' |
   'bigIntField_ASC' |
   'bigIntField_DESC' |
+  'stringField_ASC' |
+  'stringField_DESC' |
+  'noFilterField_ASC' |
+  'noFilterField_DESC' |
   'numericField_ASC' |
   'numericField_DESC' |
+  'numericFieldCustomPrecisionScale_ASC' |
+  'numericFieldCustomPrecisionScale_DESC' |
   'charField_ASC' |
   'charField_DESC' |
   'characterField_ASC' |
@@ -103,8 +87,22 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'textField_DESC' |
   'varcharField_ASC' |
   'varcharField_DESC' |
-  'geometryField_ASC' |
-  'geometryField_DESC'
+  'intField_ASC' |
+  'intField_DESC' |
+  'integerField_ASC' |
+  'integerField_DESC' |
+  'int2Field_ASC' |
+  'int2Field_DESC' |
+  'int4Field_ASC' |
+  'int4Field_DESC' |
+  'int8Field_ASC' |
+  'int8Field_DESC' |
+  'float4Field_ASC' |
+  'float4Field_DESC' |
+  'float8Field_ASC' |
+  'float8Field_DESC' |
+  'doublePrecisionField_ASC' |
+  'doublePrecisionField_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -136,31 +134,32 @@ export interface UserCreateInput {
   emailField?: String | null
   enumField?: StringEnum | null
   floatField?: Float | null
-  float4Field?: Float | null
   realField?: Float | null
-  float8Field?: Float | null
-  doublePrecisionField?: Float | null
   idField?: ID_Input | null
-  intDefaultField?: Float | null
+  intFieldDefault?: Float | null
+  smallIntField?: Float | null
+  bigIntField?: Float | null
   jsonField?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
-  intField?: Float | null
-  integerField?: Float | null
-  int2Field?: Float | null
-  int4Field?: Float | null
-  int8Field?: Float | null
-  smallIntField?: Float | null
-  bigIntField?: Float | null
   numericField?: Float | null
+  numericFieldCustomPrecisionScale?: Float | null
   charField?: String | null
   characterField?: String | null
   characterVaryingField?: String | null
   textField?: String | null
   varcharField?: String | null
   geometryField?: JSONObject | null
+  intField?: Float | null
+  integerField?: Float | null
+  int2Field?: Float | null
+  int4Field?: Float | null
+  int8Field?: Float | null
+  float4Field?: Float | null
+  float8Field?: Float | null
+  doublePrecisionField?: Float | null
 }
 
 export interface UserUpdateInput {
@@ -169,31 +168,32 @@ export interface UserUpdateInput {
   emailField?: String | null
   enumField?: StringEnum | null
   floatField?: Float | null
-  float4Field?: Float | null
   realField?: Float | null
-  float8Field?: Float | null
-  doublePrecisionField?: Float | null
   idField?: ID_Input | null
-  intDefaultField?: Float | null
+  intFieldDefault?: Float | null
+  smallIntField?: Float | null
+  bigIntField?: Float | null
   jsonField?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
-  intField?: Float | null
-  integerField?: Float | null
-  int2Field?: Float | null
-  int4Field?: Float | null
-  int8Field?: Float | null
-  smallIntField?: Float | null
-  bigIntField?: Float | null
   numericField?: Float | null
+  numericFieldCustomPrecisionScale?: Float | null
   charField?: String | null
   characterField?: String | null
   characterVaryingField?: String | null
   textField?: String | null
   varcharField?: String | null
   geometryField?: JSONObject | null
+  intField?: Float | null
+  integerField?: Float | null
+  int2Field?: Float | null
+  int4Field?: Float | null
+  int8Field?: Float | null
+  float4Field?: Float | null
+  float8Field?: Float | null
+  doublePrecisionField?: Float | null
 }
 
 export interface UserWhereInput {
@@ -238,38 +238,32 @@ export interface UserWhereInput {
   floatField_lt?: Float | null
   floatField_lte?: Float | null
   floatField_in?: Float[] | Float | null
-  float4Field_eq?: Float | null
-  float4Field_gt?: Float | null
-  float4Field_gte?: Float | null
-  float4Field_lt?: Float | null
-  float4Field_lte?: Float | null
-  float4Field_in?: Float[] | Float | null
   realField_eq?: Float | null
   realField_gt?: Float | null
   realField_gte?: Float | null
   realField_lt?: Float | null
   realField_lte?: Float | null
   realField_in?: Float[] | Float | null
-  float8Field_eq?: Float | null
-  float8Field_gt?: Float | null
-  float8Field_gte?: Float | null
-  float8Field_lt?: Float | null
-  float8Field_lte?: Float | null
-  float8Field_in?: Float[] | Float | null
-  doublePrecisionField_eq?: Float | null
-  doublePrecisionField_gt?: Float | null
-  doublePrecisionField_gte?: Float | null
-  doublePrecisionField_lt?: Float | null
-  doublePrecisionField_lte?: Float | null
-  doublePrecisionField_in?: Float[] | Float | null
   idField_eq?: ID_Input | null
   idField_in?: ID_Output[] | ID_Output | null
-  intDefaultField_eq?: Int | null
-  intDefaultField_gt?: Int | null
-  intDefaultField_gte?: Int | null
-  intDefaultField_lt?: Int | null
-  intDefaultField_lte?: Int | null
-  intDefaultField_in?: Int[] | Int | null
+  intFieldDefault_eq?: Int | null
+  intFieldDefault_gt?: Int | null
+  intFieldDefault_gte?: Int | null
+  intFieldDefault_lt?: Int | null
+  intFieldDefault_lte?: Int | null
+  intFieldDefault_in?: Int[] | Int | null
+  smallIntField_eq?: Int | null
+  smallIntField_gt?: Int | null
+  smallIntField_gte?: Int | null
+  smallIntField_lt?: Int | null
+  smallIntField_lte?: Int | null
+  smallIntField_in?: Int[] | Int | null
+  bigIntField_eq?: Int | null
+  bigIntField_gt?: Int | null
+  bigIntField_gte?: Int | null
+  bigIntField_lt?: Int | null
+  bigIntField_lte?: Int | null
+  bigIntField_in?: Int[] | Int | null
   stringField_eq?: String | null
   stringField_contains?: String | null
   stringField_startsWith?: String | null
@@ -280,6 +274,43 @@ export interface UserWhereInput {
   noSortField_startsWith?: String | null
   noSortField_endsWith?: String | null
   noSortField_in?: String[] | String | null
+  numericField_eq?: Float | null
+  numericField_gt?: Float | null
+  numericField_gte?: Float | null
+  numericField_lt?: Float | null
+  numericField_lte?: Float | null
+  numericField_in?: Float[] | Float | null
+  numericFieldCustomPrecisionScale_eq?: Float | null
+  numericFieldCustomPrecisionScale_gt?: Float | null
+  numericFieldCustomPrecisionScale_gte?: Float | null
+  numericFieldCustomPrecisionScale_lt?: Float | null
+  numericFieldCustomPrecisionScale_lte?: Float | null
+  numericFieldCustomPrecisionScale_in?: Float[] | Float | null
+  charField_eq?: String | null
+  charField_contains?: String | null
+  charField_startsWith?: String | null
+  charField_endsWith?: String | null
+  charField_in?: String[] | String | null
+  characterField_eq?: String | null
+  characterField_contains?: String | null
+  characterField_startsWith?: String | null
+  characterField_endsWith?: String | null
+  characterField_in?: String[] | String | null
+  characterVaryingField_eq?: String | null
+  characterVaryingField_contains?: String | null
+  characterVaryingField_startsWith?: String | null
+  characterVaryingField_endsWith?: String | null
+  characterVaryingField_in?: String[] | String | null
+  textField_eq?: String | null
+  textField_contains?: String | null
+  textField_startsWith?: String | null
+  textField_endsWith?: String | null
+  textField_in?: String[] | String | null
+  varcharField_eq?: String | null
+  varcharField_contains?: String | null
+  varcharField_startsWith?: String | null
+  varcharField_endsWith?: String | null
+  varcharField_in?: String[] | String | null
   intField_eq?: Int | null
   intField_gt?: Int | null
   intField_gte?: Int | null
@@ -310,49 +341,24 @@ export interface UserWhereInput {
   int8Field_lt?: Int | null
   int8Field_lte?: Int | null
   int8Field_in?: Int[] | Int | null
-  smallIntField_eq?: Int | null
-  smallIntField_gt?: Int | null
-  smallIntField_gte?: Int | null
-  smallIntField_lt?: Int | null
-  smallIntField_lte?: Int | null
-  smallIntField_in?: Int[] | Int | null
-  bigIntField_eq?: Int | null
-  bigIntField_gt?: Int | null
-  bigIntField_gte?: Int | null
-  bigIntField_lt?: Int | null
-  bigIntField_lte?: Int | null
-  bigIntField_in?: Int[] | Int | null
-  numericField_eq?: Float | null
-  numericField_gt?: Float | null
-  numericField_gte?: Float | null
-  numericField_lt?: Float | null
-  numericField_lte?: Float | null
-  numericField_in?: Float[] | Float | null
-  charField_eq?: String | null
-  charField_contains?: String | null
-  charField_startsWith?: String | null
-  charField_endsWith?: String | null
-  charField_in?: String[] | String | null
-  characterField_eq?: String | null
-  characterField_contains?: String | null
-  characterField_startsWith?: String | null
-  characterField_endsWith?: String | null
-  characterField_in?: String[] | String | null
-  characterVaryingField_eq?: String | null
-  characterVaryingField_contains?: String | null
-  characterVaryingField_startsWith?: String | null
-  characterVaryingField_endsWith?: String | null
-  characterVaryingField_in?: String[] | String | null
-  textField_eq?: String | null
-  textField_contains?: String | null
-  textField_startsWith?: String | null
-  textField_endsWith?: String | null
-  textField_in?: String[] | String | null
-  varcharField_eq?: String | null
-  varcharField_contains?: String | null
-  varcharField_startsWith?: String | null
-  varcharField_endsWith?: String | null
-  varcharField_in?: String[] | String | null
+  float4Field_eq?: Float | null
+  float4Field_gt?: Float | null
+  float4Field_gte?: Float | null
+  float4Field_lt?: Float | null
+  float4Field_lte?: Float | null
+  float4Field_in?: Float[] | Float | null
+  float8Field_eq?: Float | null
+  float8Field_gt?: Float | null
+  float8Field_gte?: Float | null
+  float8Field_lt?: Float | null
+  float8Field_lte?: Float | null
+  float8Field_in?: Float[] | Float | null
+  doublePrecisionField_eq?: Float | null
+  doublePrecisionField_gt?: Float | null
+  doublePrecisionField_gte?: Float | null
+  doublePrecisionField_lt?: Float | null
+  doublePrecisionField_lte?: Float | null
+  doublePrecisionField_in?: Float[] | Float | null
 }
 
 export interface UserWhereUniqueInput {
@@ -415,31 +421,32 @@ export interface User extends BaseGraphQLObject {
   emailField: String
   enumField?: StringEnum | null
   floatField?: Float | null
-  float4Field?: Float | null
   realField?: Float | null
-  float8Field?: Float | null
-  doublePrecisionField?: Float | null
   idField?: String | null
-  intDefaultField?: Int | null
+  intFieldDefault?: Int | null
+  smallIntField?: Int | null
+  bigIntField?: Int | null
   jsonField?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
-  intField?: Int | null
-  integerField?: Int | null
-  int2Field?: Int | null
-  int4Field?: Int | null
-  int8Field?: Int | null
-  smallIntField?: Int | null
-  bigIntField?: Int | null
   numericField?: Float | null
+  numericFieldCustomPrecisionScale?: Float | null
   charField?: String | null
   characterField?: String | null
   characterVaryingField?: String | null
   textField?: String | null
   varcharField?: String | null
   geometryField?: JSONObject | null
+  intField?: Int | null
+  integerField?: Int | null
+  int2Field?: Int | null
+  int4Field?: Int | null
+  int8Field?: Int | null
+  float4Field?: Float | null
+  float8Field?: Float | null
+  doublePrecisionField?: Float | null
 }
 
 /*

@@ -159,6 +159,13 @@ type KitchenSink implements BaseGraphQLObject {
   floatField: Float!
   jsonField: JSONObject
   dishes: [Dish!]
+  numericField: Float
+  numericFieldCustomPrecisionScale: Float
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
+  characterField: String
+  customTextFieldNoSortOrFilter: String
 }
 
 input KitchenSinkCreateInput {
@@ -170,6 +177,13 @@ input KitchenSinkCreateInput {
   booleanField: Boolean!
   floatField: Float!
   jsonField: JSONObject
+  numericField: Float
+  numericFieldCustomPrecisionScale: Float
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
+  characterField: String
+  customTextFieldNoSortOrFilter: String
 }
 
 enum KitchenSinkOrderByInput {
@@ -193,8 +207,14 @@ enum KitchenSinkOrderByInput {
   booleanField_DESC
   floatField_ASC
   floatField_DESC
-  jsonField_ASC
-  jsonField_DESC
+  numericField_ASC
+  numericField_DESC
+  numericFieldCustomPrecisionScale_ASC
+  numericFieldCustomPrecisionScale_DESC
+  noFilterField_ASC
+  noFilterField_DESC
+  characterField_ASC
+  characterField_DESC
 }
 
 input KitchenSinkUpdateInput {
@@ -206,6 +226,13 @@ input KitchenSinkUpdateInput {
   booleanField: Boolean
   floatField: Float
   jsonField: JSONObject
+  numericField: Float
+  numericFieldCustomPrecisionScale: Float
+  noFilterField: String
+  noSortField: String
+  noFilterOrSortField: String
+  characterField: String
+  customTextFieldNoSortOrFilter: String
 }
 
 input KitchenSinkWhereInput {
@@ -250,11 +277,11 @@ input KitchenSinkWhereInput {
   emailField_startsWith: String
   emailField_endsWith: String
   emailField_in: [String!]
-  integerField_eq: Float
-  integerField_gt: Float
-  integerField_gte: Float
-  integerField_lt: Float
-  integerField_lte: Float
+  integerField_eq: Int
+  integerField_gt: Int
+  integerField_gte: Int
+  integerField_lt: Int
+  integerField_lte: Int
   integerField_in: [Int!]
   booleanField_eq: Boolean
   booleanField_in: [Boolean!]
@@ -264,6 +291,28 @@ input KitchenSinkWhereInput {
   floatField_lt: Float
   floatField_lte: Float
   floatField_in: [Float!]
+  numericField_eq: Float
+  numericField_gt: Float
+  numericField_gte: Float
+  numericField_lt: Float
+  numericField_lte: Float
+  numericField_in: [Float!]
+  numericFieldCustomPrecisionScale_eq: Float
+  numericFieldCustomPrecisionScale_gt: Float
+  numericFieldCustomPrecisionScale_gte: Float
+  numericFieldCustomPrecisionScale_lt: Float
+  numericFieldCustomPrecisionScale_lte: Float
+  numericFieldCustomPrecisionScale_in: [Float!]
+  noSortField_eq: String
+  noSortField_contains: String
+  noSortField_startsWith: String
+  noSortField_endsWith: String
+  noSortField_in: [String!]
+  characterField_eq: String
+  characterField_contains: String
+  characterField_startsWith: String
+  characterField_endsWith: String
+  characterField_in: [String!]
 }
 
 input KitchenSinkWhereUniqueInput {

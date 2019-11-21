@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { GraphQLJSONObject } = require('graphql-type-json');
-
 // import { Authorized } from 'type-graphql';
 import { Unique, Column } from 'typeorm';
 import {
@@ -42,36 +39,32 @@ export class User extends BaseModel {
   @EnumField('StringEnum', StringEnum, { nullable: true })
   enumField: StringEnum;
 
-  // Default = "double precision"
+  // FloatField variations
+  // Default (same as dataType: 'float8', 'double precision')
+
   // See below for more variations
   @FloatField({ nullable: true })
   floatField?: number;
 
-  // = "real"
-  @FloatField({ dataType: 'float4', nullable: true })
-  float4Field?: number;
-
-  // = "real"
+  // Note: same as "float4"
   @FloatField({ dataType: 'real', nullable: true })
   realField?: number;
-
-  // = "double precision"
-  @FloatField({ dataType: 'float8', nullable: true })
-  float8Field?: number;
-
-  // = "double precision"
-  @FloatField({ dataType: 'double precision', nullable: true })
-  doublePrecisionField?: number;
-
-  // TODO: ForeignKeyField
 
   @IdField({ nullable: true })
   idField: string;
 
-  // Default = `integer`
-  // See below for more variations
+  // IntField variations
+  // Default (same as dataType: 'int', `integer`, `int4`)
   @IntField({ nullable: true })
-  intDefaultField?: number;
+  intFieldDefault?: number;
+
+  // `smallint` (same as `int2`)
+  @IntField({ dataType: 'smallint', nullable: true })
+  smallIntField?: number;
+
+  // `bigint` (same as `int8`)
+  @IntField({ dataType: 'bigint', nullable: true })
+  bigIntField?: number;
 
   @JSONField({ nullable: true })
   jsonField?: JsonObject;
@@ -91,42 +84,13 @@ export class User extends BaseModel {
   @StringField({ filter: false, sort: false, nullable: true })
   noFilterOrSortField?: string;
 
-  // IntField variations
-  // It is recommended you only use
-  // IntField() --> default = integer
-  // IntField({ dataType: 'smallint' })
-  // IntField({ dataType: 'bigint' })
-
-  // `integer`
-  @IntField({ dataType: 'int', nullable: true })
-  intField?: number;
-
-  // `integer`
-  @IntField({ dataType: 'integer', nullable: true })
-  integerField?: number;
-
-  // `smallint`
-  @IntField({ dataType: 'int2', nullable: true })
-  int2Field?: number;
-
-  // `integer`
-  @IntField({ dataType: 'int4', nullable: true })
-  int4Field?: number;
-
-  // `bigint`
-  @IntField({ dataType: 'int8', nullable: true })
-  int8Field?: number;
-
-  // `smallint`
-  @IntField({ dataType: 'smallint', nullable: true })
-  smallIntField?: number;
-
-  // `bigint`
-  @IntField({ dataType: 'bigint', nullable: true })
-  bigIntField?: number;
-
+  // See https://github.com/typeorm/typeorm/blob/a4dec02cc59d3219a29c7be0322af2253e1452dc/test/functional/database-schema/column-types/postgres/entity/PostWithOptions.ts
+  // Numeric fields (exact precision)
   @NumericField({ nullable: true })
   numericField?: number;
+
+  @NumericField({ nullable: true, precision: 5, scale: 2 })
+  numericFieldCustomPrecisionScale?: number;
 
   // StringField variations
   @StringField({ dataType: 'char', nullable: true })
@@ -147,11 +111,49 @@ export class User extends BaseModel {
   // Spacial fields
   // https://github.com/typeorm/typeorm/blob/master/test/functional/spatial/postgres/entity/Post.ts
   @CustomField({
-    fieldType: 'object',
-    dataType: 'geometry',
-    graphQLType: GraphQLJSONObject,
-    nullable: true,
-    dbOptions: { spatialFeatureType: 'Point' }
+    api: { type: 'json', nullable: true },
+    db: { type: 'geometry', spatialFeatureType: 'Point', nullable: false }
   })
-  geometryField: object;
+  geometryField?: object;
+
+  // Addition integer fields
+  // Note: it is advised to only use @IntField, @IntField({ dataType: 'smallint' }) and
+  // @IntField({ dataType: 'bigint' }), but the following are also possible
+
+  // `int`
+  @IntField({ dataType: 'int', nullable: true })
+  intField?: number;
+
+  // `integer`
+  @IntField({ dataType: 'integer', nullable: true })
+  integerField?: number;
+
+  // `smallint`
+  @IntField({ dataType: 'int2', nullable: true })
+  int2Field?: number;
+
+  // `integer`
+  @IntField({ dataType: 'int4', nullable: true })
+  int4Field?: number;
+
+  // `bigint`
+  @IntField({ dataType: 'int8', nullable: true })
+  int8Field?: number;
+
+  // Addition float fields
+  // Note: it is advised to only use @FloatField and @FloatField({ dataType: 'real' })
+
+  // = "real"
+  @FloatField({ dataType: 'float4', nullable: true })
+  float4Field?: number;
+
+  // = "double precision"
+  @FloatField({ dataType: 'float8', nullable: true })
+  float8Field?: number;
+
+  // = "double precision"
+  @FloatField({ dataType: 'double precision', nullable: true })
+  doublePrecisionField?: number;
+
+  // TODO: ForeignKeyField
 }

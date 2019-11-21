@@ -11,7 +11,6 @@ export type FieldType =
   | 'integer'
   | 'json'
   | 'numeric'
-  | 'object'
   | 'string';
 
 export const decoratorDefaults = {

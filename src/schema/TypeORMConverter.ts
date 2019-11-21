@@ -1,89 +1,23 @@
-import {
-  GraphQLBoolean,
-  GraphQLFloat,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLScalarType,
-  GraphQLString
-} from 'graphql';
-import { GraphQLISODateTime } from 'type-graphql';
 import { Container } from 'typedi';
+
 import { ColumnMetadata, getMetadataStorage, ModelMetadata } from '../metadata';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { GraphQLJSONObject } = require('graphql-type-json');
+import {
+  columnToGraphQLType,
+  columnTypeToGraphQLDataType,
+  columnInfoToTypeScriptType
+} from './type-conversion';
 
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
 
-export function columnToGraphQLType(column: ColumnMetadata): GraphQLScalarType | string {
-  if (column.enum) {
-    return String(column.enumName);
-  }
-
-  switch (column.type) {
-    case 'id':
-      return GraphQLID;
-    case 'email':
-    case 'string':
-      return GraphQLString;
-    case 'boolean':
-      return GraphQLBoolean;
-    case 'float':
-    case 'numeric':
-      return GraphQLFloat;
-    case 'integer':
-      return GraphQLInt;
-    case 'date':
-      return GraphQLISODateTime;
-    // return GraphQLString; // V2: This should be GraphQLISODateTime
-    case 'json':
-    case 'object':
-      return GraphQLJSONObject;
-    case 'enum':
-      // This is to make TS happy and so that we'll get a compile time error if a new type is added
-      throw new Error("Will never get here because it's handled above");
-  }
+export function columnToGraphQLDataType(column: ColumnMetadata): string {
+  return columnTypeToGraphQLDataType(column.type, column.enumName);
 }
 
-export function columnTypeToGraphQLDataType(column: ColumnMetadata): string {
-  const graphQLType = columnToGraphQLType(column);
-
-  // Sometimes we want to return the full blow GraphQL data type, but sometimes we want to return
-  // the more readable name.  Ex:
-  // GraphQLInt -> Int
-  // GraphQLJSONObject -> GraphQLJSONObject
-  switch (graphQLType) {
-    case GraphQLJSONObject:
-      return 'GraphQLJSONObject';
-    default:
-      return typeof graphQLType === 'string' ? graphQLType : graphQLType.name;
-  }
-}
-
-// const ID_TYPE = 'ID';
 export function columnToTypeScriptType(column: ColumnMetadata): string {
-  if (column.type === 'id') {
-    return 'string'; // TODO: should this be ID_TYPE?
-  } else if (column.type === 'object') {
-    return 'object';
-  } else if (column.enum) {
-    return String(column.enumName);
-  } else {
-    const graphqlType = columnTypeToGraphQLDataType(column);
-    const typeMap: any = {
-      Boolean: 'boolean',
-      DateTime: 'Date',
-      Float: 'number',
-      GraphQLJSONObject: 'JsonObject',
-      ID: 'string', // TODO: should this be ID_TYPE?
-      Int: 'number',
-      String: 'string'
-    };
-
-    return typeMap[graphqlType] || 'string';
-  }
+  return columnInfoToTypeScriptType(column.type, column.enumName);
 }
 
 export function generateEnumMapImports(): string[] {
@@ -127,7 +61,7 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
     }
 
     const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
-    let graphQLDataType = columnTypeToGraphQLDataType(column);
+    let graphQLDataType = columnToGraphQLDataType(column);
     let tsType = columnToTypeScriptType(column);
 
     // Note: HACK for backwards compatability
@@ -170,7 +104,7 @@ export function entityToCreateInput(model: ModelMetadata): string {
     if (!column.editable) {
       return;
     }
-    const graphQLDataType = columnTypeToGraphQLDataType(column);
+    const graphQLDataType = columnToGraphQLDataType(column);
     const nullable = column.nullable ? '{ nullable: true }' : '';
     const tsRequired = column.nullable ? '?' : '!';
     const tsType = columnToTypeScriptType(column);
@@ -214,7 +148,7 @@ export function entityToUpdateInput(model: ModelMetadata): string {
 
     // TODO: also don't allow updated foreign key fields
     // Example: photo.userId: String
-    const graphQLDataType = columnTypeToGraphQLDataType(column);
+    const graphQLDataType = columnToGraphQLDataType(column);
     const tsType = columnToTypeScriptType(column);
 
     if (columnRequiresExplicitGQLType(column)) {
@@ -258,7 +192,7 @@ export function entityToUpdateInputArgs(model: ModelMetadata): string {
 }
 
 function columnToTypes(column: ColumnMetadata) {
-  const graphqlType = columnToGraphQLType(column);
+  const graphqlType = columnToGraphQLType(column.type, column.enumName);
   const tsType = columnToTypeScriptType(column);
 
   return { graphqlType, tsType };
@@ -275,7 +209,7 @@ export function entityToWhereInput(model: ModelMetadata): string {
 
     const { tsType } = columnToTypes(column);
 
-    const graphQLDataType = columnTypeToGraphQLDataType(column);
+    const graphQLDataType = columnToGraphQLDataType(column);
 
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
@@ -445,6 +379,10 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
   let fieldsTemplate = '';
 
   model.columns.forEach((column: ColumnMetadata) => {
+    if (column.type === 'json') {
+      return;
+    }
+
     if (column.sort) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
@@ -465,5 +403,5 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
 }
 
 function columnRequiresExplicitGQLType(column: ColumnMetadata) {
-  return column.enum || column.type === 'json' || column.type === 'id' || column.type === 'object';
+  return column.enum || column.type === 'json' || column.type === 'id';
 }
