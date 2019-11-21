@@ -4,9 +4,11 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage } from '../metadata';
+import { decoratorDefaults } from '../metadata';
 import { defaultColumnType } from '../torm';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+
+import { WarthogField } from './WarthogField';
 
 interface JSONFieldOptions {
   nullable?: boolean;
@@ -17,13 +19,9 @@ export function JSONField(args: JSONFieldOptions = {}): any {
   const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
   const type = defaultColumnType(databaseConnection, 'json');
 
-  const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addField('json', target.constructor.name, propertyKey, options);
-  };
-
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    registerWithWarthog,
+    WarthogField('json', options),
     Field(() => GraphQLJSONObject, {
       ...options
     }),

@@ -78,8 +78,14 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'booleanField_DESC' |
   'floatField_ASC' |
   'floatField_DESC' |
-  'jsonField_ASC' |
-  'jsonField_DESC'
+  'numericField_ASC' |
+  'numericField_DESC' |
+  'numericFieldCustomPrecisionScale_ASC' |
+  'numericFieldCustomPrecisionScale_DESC' |
+  'noFilterField_ASC' |
+  'noFilterField_DESC' |
+  'characterField_ASC' |
+  'characterField_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -162,6 +168,13 @@ export interface KitchenSinkCreateInput {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
+  numericField?: Float | null
+  numericFieldCustomPrecisionScale?: Float | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
+  characterField?: String | null
+  customTextFieldNoSortOrFilter?: String | null
 }
 
 export interface KitchenSinkUpdateInput {
@@ -173,6 +186,13 @@ export interface KitchenSinkUpdateInput {
   booleanField?: Boolean | null
   floatField?: Float | null
   jsonField?: JSONObject | null
+  numericField?: Float | null
+  numericFieldCustomPrecisionScale?: Float | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
+  characterField?: String | null
+  customTextFieldNoSortOrFilter?: String | null
 }
 
 export interface KitchenSinkWhereInput {
@@ -220,11 +240,11 @@ export interface KitchenSinkWhereInput {
   emailField_startsWith?: String | null
   emailField_endsWith?: String | null
   emailField_in?: String[] | String | null
-  integerField_eq?: Float | null
-  integerField_gt?: Float | null
-  integerField_gte?: Float | null
-  integerField_lt?: Float | null
-  integerField_lte?: Float | null
+  integerField_eq?: Int | null
+  integerField_gt?: Int | null
+  integerField_gte?: Int | null
+  integerField_lt?: Int | null
+  integerField_lte?: Int | null
   integerField_in?: Int[] | Int | null
   booleanField_eq?: Boolean | null
   booleanField_in?: Boolean[] | Boolean | null
@@ -234,6 +254,28 @@ export interface KitchenSinkWhereInput {
   floatField_lt?: Float | null
   floatField_lte?: Float | null
   floatField_in?: Float[] | Float | null
+  numericField_eq?: Float | null
+  numericField_gt?: Float | null
+  numericField_gte?: Float | null
+  numericField_lt?: Float | null
+  numericField_lte?: Float | null
+  numericField_in?: Float[] | Float | null
+  numericFieldCustomPrecisionScale_eq?: Float | null
+  numericFieldCustomPrecisionScale_gt?: Float | null
+  numericFieldCustomPrecisionScale_gte?: Float | null
+  numericFieldCustomPrecisionScale_lt?: Float | null
+  numericFieldCustomPrecisionScale_lte?: Float | null
+  numericFieldCustomPrecisionScale_in?: Float[] | Float | null
+  noSortField_eq?: String | null
+  noSortField_contains?: String | null
+  noSortField_startsWith?: String | null
+  noSortField_endsWith?: String | null
+  noSortField_in?: String[] | String | null
+  characterField_eq?: String | null
+  characterField_contains?: String | null
+  characterField_startsWith?: String | null
+  characterField_endsWith?: String | null
+  characterField_in?: String[] | String | null
 }
 
 export interface KitchenSinkWhereUniqueInput {
@@ -310,6 +352,13 @@ export interface KitchenSink extends BaseGraphQLObject {
   floatField: Float
   jsonField?: JSONObject | null
   dishes?: Array<Dish> | null
+  numericField?: Float | null
+  numericFieldCustomPrecisionScale?: Float | null
+  noFilterField?: String | null
+  noSortField?: String | null
+  noFilterOrSortField?: String | null
+  characterField?: String | null
+  customTextFieldNoSortOrFilter?: String | null
 }
 
 export interface StandardDeleteResponse {
@@ -345,7 +394,18 @@ export type Int = number
 /*
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 */
-export type JSONObject = string
+
+    export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+    export type JsonPrimitive = string | number | boolean | null | {};
+    
+        // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    export interface JsonArray extends Array<JsonValue> {}
+    
+    export type JsonObject = { [member: string]: JsonValue };
+
+    export type JSONObject = JsonObject;
+  
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.

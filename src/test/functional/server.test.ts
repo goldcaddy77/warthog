@@ -435,7 +435,7 @@ describe('server', () => {
 async function createKitchenSink(
   binding: any,
   email: string,
-  returnFields: string = '{ id }'
+  returnFields = '{ id }'
 ): Promise<KitchenSink> {
   return binding.mutation.createKitchenSink(
     {
@@ -447,7 +447,8 @@ async function createKitchenSink(
         integerField: 123,
         // TODO: for some reason this is getting added as NULL
         jsonField: { hello: 'world' },
-        stringField: 'My String'
+        stringField: 'My String',
+        customTextFieldNoSortOrFilter: 'text field text field text field'
       }
     },
     returnFields
@@ -458,7 +459,7 @@ async function updateKitchenSink(
   binding: any,
   data: object,
   where: object,
-  returnFields: string = '{ id, stringField, emailField, integerField, booleanField, floatField }'
+  returnFields = '{ id, stringField, emailField, integerField, booleanField, floatField }'
 ): Promise<KitchenSink> {
   return binding.mutation.updateKitchenSink(
     {

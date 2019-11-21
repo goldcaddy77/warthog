@@ -1,9 +1,11 @@
 import { Field, GraphQLISODateTime } from 'type-graphql';
-import { Column, ColumnType } from 'typeorm';
+import { Column } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage } from '../metadata';
-import { defaultColumnType } from '../torm';
+import { decoratorDefaults } from '../metadata';
+import { ColumnType, defaultColumnType } from '../torm';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+
+import { WarthogField } from './WarthogField';
 
 interface DateFieldOptions {
   dataType?: ColumnType; // int16, jsonb, etc...
@@ -20,13 +22,9 @@ export function DateField(args: DateFieldOptions = {}): any {
   const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
   const type = defaultColumnType(databaseConnection, 'date');
 
-  const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addField('date', target.constructor.name, propertyKey, options);
-  };
-
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    registerWithWarthog,
+    WarthogField('date', options),
     Field(() => GraphQLISODateTime, {
       ...nullableOption
     }),
