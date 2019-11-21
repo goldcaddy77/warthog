@@ -30,6 +30,8 @@ export class CodeGenerator {
 
   constructor(
     private generatedFolder: string,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     private modelsArray: string[],
     private options: CodeGeneratorOptions
   ) {
@@ -51,6 +53,7 @@ export class CodeGenerator {
       await this.generateBinding();
     } catch (error) {
       logger.error(error);
+      debug(error); // this is required to log when run in a separate project
     }
     debug('generate:end');
   }
