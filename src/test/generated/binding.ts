@@ -78,6 +78,8 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'booleanField_DESC' |
   'floatField_ASC' |
   'floatField_DESC' |
+  'idField_ASC' |
+  'idField_DESC' |
   'numericField_ASC' |
   'numericField_DESC' |
   'numericFieldCustomPrecisionScale_ASC' |
@@ -168,6 +170,7 @@ export interface KitchenSinkCreateInput {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
+  idField?: ID_Input | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -186,6 +189,7 @@ export interface KitchenSinkUpdateInput {
   booleanField?: Boolean | null
   floatField?: Float | null
   jsonField?: JSONObject | null
+  idField?: ID_Input | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -254,6 +258,8 @@ export interface KitchenSinkWhereInput {
   floatField_lt?: Float | null
   floatField_lte?: Float | null
   floatField_in?: Float[] | Float | null
+  idField_eq?: ID_Input | null
+  idField_in?: ID_Output[] | ID_Output | null
   numericField_eq?: Float | null
   numericField_gt?: Float | null
   numericField_gte?: Float | null
@@ -351,6 +357,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
+  idField?: String | null
   dishes?: Array<Dish> | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null

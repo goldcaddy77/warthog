@@ -161,6 +161,7 @@ type KitchenSink implements BaseGraphQLObject {
   booleanField: Boolean!
   floatField: Float!
   jsonField: JSONObject
+  idField: String
   dishes: [Dish!]
   numericField: Float
   numericFieldCustomPrecisionScale: Float
@@ -180,6 +181,7 @@ input KitchenSinkCreateInput {
   booleanField: Boolean!
   floatField: Float!
   jsonField: JSONObject
+  idField: ID
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   noFilterField: String
@@ -210,6 +212,8 @@ enum KitchenSinkOrderByInput {
   booleanField_DESC
   floatField_ASC
   floatField_DESC
+  idField_ASC
+  idField_DESC
   numericField_ASC
   numericField_DESC
   numericFieldCustomPrecisionScale_ASC
@@ -229,6 +233,7 @@ input KitchenSinkUpdateInput {
   booleanField: Boolean
   floatField: Float
   jsonField: JSONObject
+  idField: ID
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   noFilterField: String
@@ -297,6 +302,8 @@ input KitchenSinkWhereInput {
   floatField_lt: Float
   floatField_lte: Float
   floatField_in: [Float!]
+  idField_eq: ID
+  idField_in: [ID!]
   numericField_eq: Float
   numericField_gt: Float
   numericField_gte: Float

@@ -57,6 +57,9 @@ export enum KitchenSinkOrderByEnum {
   floatField_ASC = "floatField_ASC",
   floatField_DESC = "floatField_DESC",
 
+  idField_ASC = "idField_ASC",
+  idField_DESC = "idField_DESC",
+
   numericField_ASC = "numericField_ASC",
   numericField_DESC = "numericField_DESC",
 
@@ -250,6 +253,12 @@ export class KitchenSinkWhereInput {
   @TypeGraphQLField(() => [Float], { nullable: true })
   floatField_in?: number[];
 
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  idField_in?: string[];
+
   @TypeGraphQLField(() => Float, { nullable: true })
   numericField_eq?: number;
 
@@ -352,6 +361,9 @@ export class KitchenSinkCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
 
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField?: string;
+
   @TypeGraphQLField({ nullable: true })
   numericField?: number;
 
@@ -399,6 +411,9 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField?: string;
 
   @TypeGraphQLField({ nullable: true })
   numericField?: number;
