@@ -185,11 +185,11 @@ input UserWhereInput {
   email_startsWith: String
   email_endsWith: String
   email_in: [String!]
-  age_eq: Float
-  age_gt: Float
-  age_gte: Float
-  age_lt: Float
-  age_lte: Float
+  age_eq: Int
+  age_gt: Int
+  age_gte: Int
+  age_lt: Int
+  age_lte: Int
   age_in: [Int!]
   isRequired_eq: Boolean
   isRequired_in: [Boolean!]

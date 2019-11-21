@@ -111,7 +111,7 @@ export class User extends BaseModel {
   // https://github.com/typeorm/typeorm/blob/master/test/functional/spatial/postgres/entity/Post.ts
   @CustomField({
     api: { type: 'json', nullable: true },
-    db: { type: 'geometry', spatialFeatureType: 'Point', nullable: false }
+    db: { type: 'geometry', spatialFeatureType: 'Point', nullable: true }
   })
   geometryField?: object;
 
