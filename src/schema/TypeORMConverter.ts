@@ -8,6 +8,8 @@ import {
   columnInfoToTypeScriptType
 } from './type-conversion';
 
+const ignoreBaseModels = ['BaseModel', 'BaseModelUUID'];
+
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
@@ -77,9 +79,12 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
       `;
   });
 
-  const classDeclaration = model.klass
-    ? `${model.name}WhereUniqueInput extends ${model.klass.__proto__.name}WhereUniqueInput`
-    : `${model.name}WhereUniqueInput`;
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}WhereUniqueInput extends ${superName}WhereUniqueInput`
+      : `${model.name}WhereUniqueInput`;
 
   const template = `
     @TypeGraphQLInputType()
@@ -134,9 +139,12 @@ export function entityToCreateInput(model: ModelMetadata): string {
     }
   });
 
-  const classDeclaration = model.klass
-    ? `${model.name}CreateInput extends ${model.klass.__proto__.name}CreateInput`
-    : `${model.name}CreateInput`;
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}CreateInput extends ${superName}CreateInput`
+      : `${model.name}CreateInput`;
 
   return `
     @TypeGraphQLInputType()
@@ -180,9 +188,12 @@ export function entityToUpdateInput(model: ModelMetadata): string {
     }
   });
 
-  const classDeclaration = model.klass
-    ? `${model.name}UpdateInput extends ${model.klass.__proto__.name}UpdateInput`
-    : `${model.name}UpdateInput`;
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}UpdateInput extends ${superName}UpdateInput`
+      : `${model.name}UpdateInput`;
 
   return `
     @TypeGraphQLInputType()
@@ -354,9 +365,12 @@ export function entityToWhereInput(model: ModelMetadata): string {
     }
   });
 
-  const classDeclaration = model.klass
-    ? `${model.name}WhereInput extends ${model.klass.__proto__.name}WhereInput`
-    : `${model.name}WhereInput`;
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}WhereInput extends ${superName}WhereInput`
+      : `${model.name}WhereInput`;
 
   return `
     @TypeGraphQLInputType()
