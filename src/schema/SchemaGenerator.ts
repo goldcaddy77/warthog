@@ -47,11 +47,9 @@ export class SchemaGenerator {
 
     Object.keys(metadata.getModels()).forEach((modelName: string) => {
       const model: ModelMetadata = metadata.getModel(modelName);
-      const superName = model.klass ? model.klass.__proto__.name : null;
-      const superModel = superName ? metadata.getModel(superName) : undefined;
 
       template += `
-        ${entityToOrderByEnum(model, superModel)}
+        ${entityToOrderByEnum(model)}
         ${entityToWhereInput(model)}
         ${entityToWhereUniqueInput(model)}
         ${entityToCreateInput(model)}

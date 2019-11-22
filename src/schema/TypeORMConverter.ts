@@ -405,7 +405,11 @@ export function entityToCreateManyArgs(model: ModelMetadata): string {
   `;
 }
 
-export function entityToOrderByEnum(model: ModelMetadata, superModel?: ModelMetadata): string {
+export function entityToOrderByEnum(model: ModelMetadata): string {
+  const metadata = getMetadataStorage();
+  const superName = model.klass ? model.klass.__proto__.name : null;
+  const superModel = superName ? metadata.getModel(superName) : undefined;
+
   let fieldsTemplate = '';
   const hitCache: { [key: string]: boolean } = {};
 
