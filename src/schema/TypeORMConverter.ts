@@ -77,9 +77,13 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
       `;
   });
 
+  const classDeclaration = model.klass
+    ? `${model.name}WhereUniqueInput extends ${model.klass.__proto__.name}WhereUniqueInput`
+    : `${model.name}WhereUniqueInput`;
+
   const template = `
     @TypeGraphQLInputType()
-    export class ${model.name}WhereUniqueInput {
+    export class ${classDeclaration} {
       ${fieldsTemplate}
     }
   `;
@@ -130,9 +134,13 @@ export function entityToCreateInput(model: ModelMetadata): string {
     }
   });
 
+  const classDeclaration = model.klass
+    ? `${model.name}CreateInput extends ${model.klass.__proto__.name}CreateInput`
+    : `${model.name}CreateInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}CreateInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -172,9 +180,13 @@ export function entityToUpdateInput(model: ModelMetadata): string {
     }
   });
 
+  const classDeclaration = model.klass
+    ? `${model.name}UpdateInput extends ${model.klass.__proto__.name}UpdateInput`
+    : `${model.name}UpdateInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}UpdateInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -342,9 +354,13 @@ export function entityToWhereInput(model: ModelMetadata): string {
     }
   });
 
+  const classDeclaration = model.klass
+    ? `${model.name}WhereInput extends ${model.klass.__proto__.name}WhereInput`
+    : `${model.name}WhereInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}WhereInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -375,15 +391,32 @@ export function entityToCreateManyArgs(model: ModelMetadata): string {
   `;
 }
 
-export function entityToOrderByEnum(model: ModelMetadata): string {
+export function entityToOrderByEnum(model: ModelMetadata, superModel?: ModelMetadata): string {
   let fieldsTemplate = '';
+  const hitCache: { [key: string]: boolean } = {};
+
+  if (superModel) {
+    superModel.columns.forEach((column: ColumnMetadata) => {
+      if (column.type === 'json') {
+        return;
+      }
+
+      if (column.sort) {
+        hitCache[column.propertyName] = true;
+        fieldsTemplate += `
+          ${column.propertyName}_ASC = '${column.propertyName}_ASC',
+          ${column.propertyName}_DESC = '${column.propertyName}_DESC',
+        `;
+      }
+    });
+  }
 
   model.columns.forEach((column: ColumnMetadata) => {
     if (column.type === 'json') {
       return;
     }
 
-    if (column.sort) {
+    if (column.sort && !hitCache[column.propertyName]) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',
