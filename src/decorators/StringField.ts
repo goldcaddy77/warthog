@@ -11,7 +11,7 @@ interface StringFieldOptions {
   dataType?: StringColumnType; // int16, jsonb, etc...
   maxLength?: number;
   minLength?: number;
-  filter?: boolean;
+  filter?: boolean | FieldType;
   nullable?: boolean;
   sort?: boolean;
   unique?: boolean;

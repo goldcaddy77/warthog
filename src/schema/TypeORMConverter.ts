@@ -8,6 +8,8 @@ import {
   columnInfoToTypeScriptType
 } from './type-conversion';
 
+const ignoreBaseModels = ['BaseModel', 'BaseModelUUID'];
+
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
 }
@@ -77,9 +79,16 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
       `;
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}WhereUniqueInput extends ${superName}WhereUniqueInput`
+      : `${model.name}WhereUniqueInput`;
+
   const template = `
     @TypeGraphQLInputType()
-    export class ${model.name}WhereUniqueInput {
+    export class ${classDeclaration} {
       ${fieldsTemplate}
     }
   `;
@@ -130,9 +139,16 @@ export function entityToCreateInput(model: ModelMetadata): string {
     }
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}CreateInput extends ${superName}CreateInput`
+      : `${model.name}CreateInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}CreateInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -172,9 +188,16 @@ export function entityToUpdateInput(model: ModelMetadata): string {
     }
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}UpdateInput extends ${superName}UpdateInput`
+      : `${model.name}UpdateInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}UpdateInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -342,9 +365,16 @@ export function entityToWhereInput(model: ModelMetadata): string {
     }
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}WhereInput extends ${superName}WhereInput`
+      : `${model.name}WhereInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}WhereInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -376,14 +406,35 @@ export function entityToCreateManyArgs(model: ModelMetadata): string {
 }
 
 export function entityToOrderByEnum(model: ModelMetadata): string {
+  const metadata = getMetadataStorage();
+  const superName = model.klass ? model.klass.__proto__.name : null;
+  const superModel = superName ? metadata.getModel(superName) : undefined;
+
   let fieldsTemplate = '';
+  const hitCache: { [key: string]: boolean } = {};
+
+  if (superModel) {
+    superModel.columns.forEach((column: ColumnMetadata) => {
+      if (column.type === 'json') {
+        return;
+      }
+
+      if (column.sort) {
+        hitCache[column.propertyName] = true;
+        fieldsTemplate += `
+          ${column.propertyName}_ASC = '${column.propertyName}_ASC',
+          ${column.propertyName}_DESC = '${column.propertyName}_DESC',
+        `;
+      }
+    });
+  }
 
   model.columns.forEach((column: ColumnMetadata) => {
     if (column.type === 'json') {
       return;
     }
 
-    if (column.sort) {
+    if (column.sort && !hitCache[column.propertyName]) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',
