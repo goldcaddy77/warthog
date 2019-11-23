@@ -1,4 +1,5 @@
 import { Container } from 'typedi';
+import { getMetadataArgsStorage } from 'typeorm';
 
 import { ColumnMetadata, getMetadataStorage, ModelMetadata } from '../metadata';
 
@@ -51,14 +52,29 @@ export function generateEnumMapImports(): string[] {
 
 export function entityToWhereUniqueInput(model: ModelMetadata): string {
   const uniques = getMetadataStorage().uniquesForModel(model);
+  const others = getMetadataArgsStorage().uniques;
+  const modelUniques: { [key: string]: string } = {};
+  others.forEach(o => {
+    const name = (o.target as Function).name;
+    const columns = o.columns as string[];
+    if (name === model.name && columns) {
+      columns.forEach((col: string) => {
+        modelUniques[col] = col;
+      });
+    }
+  });
+  uniques.forEach(unique => {
+    modelUniques[unique] = unique;
+  });
+  const distinctUniques = Object.keys(modelUniques);
 
   // If there is only one unique field, it should not be nullable
-  const uniqueFieldsAreNullable = uniques.length > 1;
+  const uniqueFieldsAreNullable = distinctUniques.length > 1;
 
   let fieldsTemplate = '';
 
   model.columns.forEach((column: ColumnMetadata) => {
-    if (!column.unique) {
+    if (!modelUniques[column.propertyName]) {
       return;
     }
 
