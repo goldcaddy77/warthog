@@ -74,6 +74,7 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
   let fieldsTemplate = '';
 
   model.columns.forEach((column: ColumnMetadata) => {
+    // Uniques can be from Field or Unique annotations
     if (!modelUniques[column.propertyName]) {
       return;
     }
