@@ -1,4 +1,5 @@
 import { Container } from 'typedi';
+import { getMetadataArgsStorage } from 'typeorm';
 
 import { ColumnMetadata, getMetadataStorage, ModelMetadata } from '../metadata';
 
@@ -9,6 +10,26 @@ import {
 } from './type-conversion';
 
 const ignoreBaseModels = ['BaseModel', 'BaseModelUUID'];
+
+export function getColumnsForModel(model: ModelMetadata) {
+  const models = [model];
+  const columns: { [key: string]: ColumnMetadata } = {};
+
+  let superProto = model.klass ? model.klass.__proto__ : null;
+  while (superProto) {
+    const superModel = getMetadataStorage().getModel(superProto.name);
+    superModel && models.unshift(superModel);
+    superProto = superProto.__proto__;
+  }
+
+  models.forEach(aModel => {
+    aModel.columns.forEach((col: ColumnMetadata) => {
+      columns[col.propertyName] = col;
+    });
+  });
+
+  return Object.values(columns);
+}
 
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
@@ -51,14 +72,31 @@ export function generateEnumMapImports(): string[] {
 
 export function entityToWhereUniqueInput(model: ModelMetadata): string {
   const uniques = getMetadataStorage().uniquesForModel(model);
+  const others = getMetadataArgsStorage().uniques;
+  const modelUniques: { [key: string]: string } = {};
+  others.forEach(o => {
+    const name = (o.target as Function).name;
+    const columns = o.columns as string[];
+    if (name === model.name && columns) {
+      columns.forEach((col: string) => {
+        modelUniques[col] = col;
+      });
+    }
+  });
+  uniques.forEach(unique => {
+    modelUniques[unique] = unique;
+  });
+  const distinctUniques = Object.keys(modelUniques);
 
   // If there is only one unique field, it should not be nullable
-  const uniqueFieldsAreNullable = uniques.length > 1;
+  const uniqueFieldsAreNullable = distinctUniques.length > 1;
 
   let fieldsTemplate = '';
 
-  model.columns.forEach((column: ColumnMetadata) => {
-    if (!column.unique) {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
+    // Uniques can be from Field or Unique annotations
+    if (!modelUniques[column.propertyName]) {
       return;
     }
 
@@ -109,7 +147,8 @@ export function entityToCreateInput(model: ModelMetadata): string {
     `;
   }
 
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     if (!column.editable) {
       return;
     }
@@ -157,7 +196,8 @@ export function entityToCreateInput(model: ModelMetadata): string {
 export function entityToUpdateInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     if (!column.editable) {
       return;
     }
@@ -224,7 +264,8 @@ function columnToTypes(column: ColumnMetadata) {
 export function entityToWhereInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     // Don't allow filtering on these fields
     if (!column.filter) {
       return;
@@ -406,35 +447,15 @@ export function entityToCreateManyArgs(model: ModelMetadata): string {
 }
 
 export function entityToOrderByEnum(model: ModelMetadata): string {
-  const metadata = getMetadataStorage();
-  const superName = model.klass ? model.klass.__proto__.name : null;
-  const superModel = superName ? metadata.getModel(superName) : undefined;
-
   let fieldsTemplate = '';
-  const hitCache: { [key: string]: boolean } = {};
 
-  if (superModel) {
-    superModel.columns.forEach((column: ColumnMetadata) => {
-      if (column.type === 'json') {
-        return;
-      }
-
-      if (column.sort) {
-        hitCache[column.propertyName] = true;
-        fieldsTemplate += `
-          ${column.propertyName}_ASC = '${column.propertyName}_ASC',
-          ${column.propertyName}_DESC = '${column.propertyName}_DESC',
-        `;
-      }
-    });
-  }
-
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     if (column.type === 'json') {
       return;
     }
 
-    if (column.sort && !hitCache[column.propertyName]) {
+    if (column.sort) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',

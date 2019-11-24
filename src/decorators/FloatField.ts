@@ -9,6 +9,7 @@ import { WarthogField } from './WarthogField';
 
 interface FloatFieldOptions {
   dataType?: FloatColumnType; // int16, jsonb, etc...
+  default?: number;
   filter?: boolean;
   nullable?: boolean;
   sort?: boolean;
@@ -17,6 +18,7 @@ interface FloatFieldOptions {
 export function FloatField(args: FloatFieldOptions = decoratorDefaults): any {
   const options = { ...decoratorDefaults, ...args };
   const nullableOption = options.nullable === true ? { nullable: true } : {};
+  const defaultOption = options.default ? { default: options.default } : {};
   const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
   const type = defaultColumnType(databaseConnection, 'float');
 
@@ -28,7 +30,8 @@ export function FloatField(args: FloatFieldOptions = decoratorDefaults): any {
     Column({
       // This type will be different per database driver
       type: args.dataType || type,
-      ...nullableOption
+      ...nullableOption,
+      ...defaultOption
     }) as MethodDecoratorFactory
   ];
 

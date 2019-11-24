@@ -9,6 +9,7 @@ import { WarthogField } from './WarthogField';
 
 interface IntFieldOptions {
   dataType?: IntColumnType;
+  default?: number;
   filter?: boolean;
   nullable?: boolean;
   sort?: boolean;
@@ -16,6 +17,7 @@ interface IntFieldOptions {
 
 export function IntField(args: IntFieldOptions = decoratorDefaults): any {
   const options = { ...decoratorDefaults, ...args };
+  const defaultOption = options.default ? { default: options.default } : {};
   const nullableOption = options.nullable === true ? { nullable: true } : {};
 
   const factories = [
@@ -25,7 +27,8 @@ export function IntField(args: IntFieldOptions = decoratorDefaults): any {
     }),
     Column({
       type: args.dataType || 'int',
-      ...nullableOption
+      ...nullableOption,
+      ...defaultOption
     }) as MethodDecoratorFactory
   ];
 
