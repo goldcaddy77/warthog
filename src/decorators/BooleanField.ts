@@ -12,6 +12,7 @@ interface BooleanFieldOptions {
   filter?: boolean;
   nullable?: boolean;
   sort?: boolean;
+  editable?: boolean;
 }
 
 export function BooleanField(args: BooleanFieldOptions = {}): any {

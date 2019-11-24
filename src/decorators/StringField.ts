@@ -15,6 +15,7 @@ interface StringFieldOptions {
   nullable?: boolean;
   sort?: boolean;
   unique?: boolean;
+  editable?: boolean;
 }
 
 export function StringField(args: StringFieldOptions = decoratorDefaults): any {
