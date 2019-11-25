@@ -36,6 +36,7 @@ module.exports = {
     ],
     // Turn this off for now, but fix later
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-floating-promises': 'error'
+    '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/ban-ts-ignore': 'off'
   }
 };

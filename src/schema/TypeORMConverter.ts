@@ -1,4 +1,5 @@
 import { Container } from 'typedi';
+import { getMetadataArgsStorage } from 'typeorm';
 
 import { ColumnMetadata, getMetadataStorage, ModelMetadata } from '../metadata';
 
@@ -7,6 +8,28 @@ import {
   columnTypeToGraphQLDataType,
   columnInfoToTypeScriptType
 } from './type-conversion';
+
+const ignoreBaseModels = ['BaseModel', 'BaseModelUUID'];
+
+export function getColumnsForModel(model: ModelMetadata) {
+  const models = [model];
+  const columns: { [key: string]: ColumnMetadata } = {};
+
+  let superProto = model.klass ? model.klass.__proto__ : null;
+  while (superProto) {
+    const superModel = getMetadataStorage().getModel(superProto.name);
+    superModel && models.unshift(superModel);
+    superProto = superProto.__proto__;
+  }
+
+  models.forEach(aModel => {
+    aModel.columns.forEach((col: ColumnMetadata) => {
+      columns[col.propertyName] = col;
+    });
+  });
+
+  return Object.values(columns);
+}
 
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
@@ -49,14 +72,31 @@ export function generateEnumMapImports(): string[] {
 
 export function entityToWhereUniqueInput(model: ModelMetadata): string {
   const uniques = getMetadataStorage().uniquesForModel(model);
+  const others = getMetadataArgsStorage().uniques;
+  const modelUniques: { [key: string]: string } = {};
+  others.forEach(o => {
+    const name = (o.target as Function).name;
+    const columns = o.columns as string[];
+    if (name === model.name && columns) {
+      columns.forEach((col: string) => {
+        modelUniques[col] = col;
+      });
+    }
+  });
+  uniques.forEach(unique => {
+    modelUniques[unique] = unique;
+  });
+  const distinctUniques = Object.keys(modelUniques);
 
   // If there is only one unique field, it should not be nullable
-  const uniqueFieldsAreNullable = uniques.length > 1;
+  const uniqueFieldsAreNullable = distinctUniques.length > 1;
 
   let fieldsTemplate = '';
 
-  model.columns.forEach((column: ColumnMetadata) => {
-    if (!column.unique) {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
+    // Uniques can be from Field or Unique annotations
+    if (!modelUniques[column.propertyName]) {
       return;
     }
 
@@ -70,9 +110,16 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
       `;
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}WhereUniqueInput extends ${superName}WhereUniqueInput`
+      : `${model.name}WhereUniqueInput`;
+
   const template = `
     @TypeGraphQLInputType()
-    export class ${model.name}WhereUniqueInput {
+    export class ${classDeclaration} {
       ${fieldsTemplate}
     }
   `;
@@ -93,7 +140,8 @@ export function entityToCreateInput(model: ModelMetadata): string {
     `;
   }
 
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     if (!column.editable) {
       return;
     }
@@ -115,9 +163,16 @@ export function entityToCreateInput(model: ModelMetadata): string {
     }
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}CreateInput extends ${superName}CreateInput`
+      : `${model.name}CreateInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}CreateInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -126,7 +181,8 @@ export function entityToCreateInput(model: ModelMetadata): string {
 export function entityToUpdateInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     if (!column.editable) {
       return;
     }
@@ -149,9 +205,16 @@ export function entityToUpdateInput(model: ModelMetadata): string {
     }
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}UpdateInput extends ${superName}UpdateInput`
+      : `${model.name}UpdateInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}UpdateInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -178,7 +241,8 @@ function columnToTypes(column: ColumnMetadata) {
 export function entityToWhereInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     // Don't allow filtering on these fields
     if (!column.filter) {
       return;
@@ -191,13 +255,17 @@ export function entityToWhereInput(model: ModelMetadata): string {
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
     if (column.type === 'id') {
-      fieldTemplates += `
-        @TypeGraphQLField(() => ${graphQLDataType},{ nullable: true })
-        ${column.propertyName}_eq?: string;
+      const graphQlType = 'ID';
 
-        @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
-        ${column.propertyName}_in?: string[];
+      fieldTemplates += `
+        @TypeGraphQLField(() => ${graphQlType},{ nullable: true })
+        ${column.propertyName}_eq?: string;
       `;
+
+      fieldTemplates += `
+        @TypeGraphQLField(() => [${graphQlType}], { nullable: true })
+        ${column.propertyName}_in?: string[];
+        `;
     } else if (column.type === 'boolean') {
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType},{ nullable: true })
@@ -254,6 +322,9 @@ export function entityToWhereInput(model: ModelMetadata): string {
           deletedAt_all?: Boolean;
         `;
       }
+
+      const tsType = 'Date';
+
       fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_eq?: ${tsType};
@@ -284,9 +355,16 @@ export function entityToWhereInput(model: ModelMetadata): string {
     }
   });
 
+  const superName = model.klass ? model.klass.__proto__.name : null;
+
+  const classDeclaration =
+    superName && !ignoreBaseModels.includes(superName)
+      ? `${model.name}WhereInput extends ${superName}WhereInput`
+      : `${model.name}WhereInput`;
+
   return `
     @TypeGraphQLInputType()
-    export class ${model.name}WhereInput {
+    export class ${classDeclaration} {
       ${fieldTemplates}
     }
   `;
@@ -320,7 +398,8 @@ export function entityToCreateManyArgs(model: ModelMetadata): string {
 export function entityToOrderByEnum(model: ModelMetadata): string {
   let fieldsTemplate = '';
 
-  model.columns.forEach((column: ColumnMetadata) => {
+  const modelColumns = getColumnsForModel(model);
+  modelColumns.forEach((column: ColumnMetadata) => {
     if (column.type === 'json') {
       return;
     }

@@ -25,7 +25,7 @@ export interface ColumnMetadata {
   propertyName: string;
   dataType?: ColumnType; // int16, jsonb, etc...
   editable?: boolean;
-  filter?: boolean | FieldType;
+  filter?: boolean;
   enum?: GraphQLEnumType;
   enumName?: string;
   nullable?: boolean;

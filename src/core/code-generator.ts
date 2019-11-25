@@ -30,7 +30,6 @@ export class CodeGenerator {
 
   constructor(
     private generatedFolder: string,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     private modelsArray: string[],
     private options: CodeGeneratorOptions
