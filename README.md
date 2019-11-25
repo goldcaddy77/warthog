@@ -40,203 +40,173 @@ Further, it covers the following concerns by hooking into best-in-class open sou
 
 ## Prerequisites
 
-You must have Postgresql installed to use Warthog. If you already have it installed, you can skip this step, otherwise there are 3 options:
+Warthog currently only supports PostgreSQL as a DB engine, so you must have Postgres installed before getting Warthog set up. (Note: Postgres 12 is not currently supported)
 
-### Docker
+<details>
+<summary>Expand for Postgres installation options</summary>
+<p>
 
-See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/pull/6/files) project for how to use Docker to run Postgres.
+### Homebrew (OSX)
 
-### Homebrew
+If you're on OSX and have [homebrew](http://brew.sh/) and [homebrew-cask](https://github.com/caskroom/homebrew-cask) installed, you can simply run:
 
-If you're on OSX and have [Homebrew](https://brew.sh/) installed, you can simply run:
+```bash
+brew cask install postgres
+```
+
+Or you can install Homebrew's official version:
 
 ```bash
 brew install postgresql
 `brew --prefix`/opt/postgres/bin/createuser -s postgres
 ```
 
-### Postgres.app
+### Postgres.app (OSX)
 
-Otherwise, you can install [Postgres.app](https://postgresapp.com/) or use the Google machine to figure out how to install on your OS.
+Otherwise, you can install [Postgres.app](https://postgresapp.com/) manually.
+
+### Docker
+
+See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/pull/6/files) project for how to use Docker to run Postgres.
+
+</p>
+</details>
 
 ## Usage
 
-The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. This has a simple example in place to get you started. There are also a bunch of examples in the [examples](./examples/README.md) folder for more advanced use cases.
+### Cloning the starter project
 
-Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog. In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM. In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
+The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. To get the starter project up and running, do the following:
+
+```bash
+git clone git@github.com:goldcaddy77/warthog-starter.git
+cd warthog-starter
+yarn bootstrap
+WARTHOG_AUTO_OPEN_PLAYGROUND=true yarn start:dev
+```
 
 ### Installing in Existing Project
 
+To install in an existing project, you'll need to create several files in place and then you'll need to call a few Warthog CLI commands that:
+
+- Generate a new resource
+- Create a database
+- Create a DB migration and run it
+- Run the server
+
+The following code will get you bootstrapped. You should read through this before running:
+
 ```bash
+# Install Warthog
 yarn add warthog
-```
 
-### 1. Create a Model
+# Pull down several nessesary files from the warthog-starter example
+declare -a arr=(".env" "warthog.config.js" "tsconfig.json" "src/config.ts" "src/index.ts" "src/logger.ts" "src/server.ts")
+for i in "${arr[@]}"
+do
+  if [ ! -f ./$i ]; then
+    curl https://raw.githubusercontent.com/goldcaddy77/warthog-starter/master/$i -o $i
+  fi
+done
 
-The model will auto-generate your database table and graphql types. Warthog will find all models that match the following glob - `'/**/*.model.ts'`. So for this file, you would name it `user.model.ts`
-
-```typescript
-import { BaseModel, Model, StringField } from "warthog";
-
-@Model()
-export class User extends BaseModel {
-  @StringField()
-  name?: string;
-}
-```
-
-### 2. Create a Resolver
-
-The resolver auto-generates queries and mutations in your GraphQL schema. Warthog will find all resolvers that match the following glob - `'/**/*.resolver.ts'`. So for this file, you would name it `user.resolver.ts`
-
-```typescript
-import { User } from "./user.model";
-import { UserService } from "./user.service";
-
-@Resolver(User)
-export class UserResolver {
-  constructor(@Inject("UserService") readonly service: UserService) {}
-
-  @Query(() => [User])
-  async users(
-    @Args() { where, orderBy, limit, offset }: UserWhereArgs
-  ): Promise<User[]> {
-    return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
-  }
-
-  @Mutation(() => User)
-  async createUser(
-    @Arg("data") data: UserCreateInput,
-    @Ctx() ctx: BaseContext
-  ): Promise<User> {
-    return this.service.create(data, ctx.user.id);
-  }
-}
-```
-
-### 3. Create a Service
-
-```typescript
-import { User } from "./user.model";
-
-@Service("UserService")
-export class UserService extends BaseService<User> {
-  constructor(
-    @InjectRepository(User) protected readonly repository: Repository<User>
-  ) {
-    super(User, repository);
-  }
-}
-```
-
-### 4. Add config to .env file
-
-```env
+# Create a .env file with your app and DB settings (modify these as needed)
+printf "DEBUG=*
+NODE_ENV=development
+WARTHOG_AUTO_OPEN_PLAYGROUND=true
 WARTHOG_APP_HOST=localhost
 WARTHOG_APP_PORT=4100
-WARTHOG_DB_DATABASE=warthog
-WARTHOG_DB_USERNAME=postgres
+WARTHOG_DB_DATABASE=warthog-starter
+WARTHOG_DB_HOST=localhost
 WARTHOG_DB_PASSWORD=
+WARTHOG_DB_PORT=5432
+WARTHOG_DB_SYNCHRONIZE=true
+WARTHOG_DB_USERNAME=postgres" > .env
+
+# Create your first model (See https://github.com/goldcaddy77/warthog#generate-command-in-depth for more info)
+yarn warthog generate user name! nickname age:int! verified:bool!
+
+# Generate typescript classes and GraphQL schema
+yarn warthog codegen
+
+# Create your DB
+yarn warthog db:create
+
+# Generate the DB migration for your newly generated model
+yarn warthog db:migrate:generate --name=create-user-table
+
+# Run the DB migration
+yarn warthog db:migrate
+
+# Start the server
+yarn ts-node --type-check src/index.ts
 ```
 
-### 5. Run your server
+This will open up GraphQL Playground, where you can execute queries and mutations against your API.
 
-```typescript
-import "reflect-metadata";
-import { Server } from "warthog";
-
-async function bootstrap() {
-  const server = new Server();
-  return server.start();
-}
-
-bootstrap();
-```
-
-When you start your server, there will be a new `generated` folder that has your GraphQL schema in `schema.graphql`. This contains:
+First, add a user by entering the following in the window:
 
 ```graphql
-type User implements BaseGraphQLObject {
-  id: String!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-  name: String!
+mutation {
+  createUser(data: { name: "Test User", age: 25, verified: false }) {
+    id
+    name
+    createdAt
+  }
 }
-
-type Mutation {
-  createUser(data: UserCreateInput!): User!
-}
-
-type Query {
-  users(
-    offset: Int
-    limit: Int = 50
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-  ): [User!]!
-}
-
-input UserCreateInput {
-  name: String!
-}
-
-enum UserOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  name_ASC
-  name_DESC
-}
-
-input UserUpdateInput {
-  name: String
-}
-
-input UserWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
-  deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
-  name_eq: String
-  name_contains: String
-  name_startsWith: String
-  name_endsWith: String
-  name_in: [String!]
-}
-
-input UserWhereUniqueInput {
-  id: String!
-}
-
-# ...
 ```
 
-Notice how we've only added a single field on the model and you get pagination, filtering and tracking of who created, updated and deleted records automatically.
+Then, query for this user:
+
+```graphql
+query {
+  users {
+    id
+    name
+    createdAt
+  }
+}
+```
+
+See [introducing-graphql-playground](https://www.prisma.io/blog/introducing-graphql-playground-f1e0a018f05d) for more info about GraphQL Playground.
+
+### Running the examples in the Warthog repo
+
+You can also clone the Warthog repo and run the examples in the [examples](./examples/README.md) folder.
+
+```bash
+git clone git@github.com:goldcaddy77/warthog.git
+cd warthog/examples/01-simple-model
+yarn bootstrap
+yarn db:seed:dev
+yarn start
+```
+
+This has a simple example in place to get you started. There are also a bunch of examples in the folder for more advanced use cases.
+
+Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog. In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM. In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
+
+### Warthog Constructs Explained
+
+#### Models
+
+A model represents both a GraphQL type and a DB table. Warthog exposes a [BaseModel](https://github.com/goldcaddy77/warthog/blob/master/src/core/BaseModel.ts) class that provides the following columns for free: `id`, `createdAt`, `createdById`, `updatedAt`, `updatedById`, `deletedAt`, `deletedById`, `version`. If you use BaseModel in conjunction with BaseService (see below), all of these columns will be updated as you'd expect. The Warthog server will find all models that match the following glob - `'/**/*.model.ts'`. Ex: `user.model.ts`
+
+#### Resolvers
+
+A Warthog resolver exposes queries (reading data) and mutations (writing data). They interact with the DB through `services` (described below) and typically make use of a bunch of auto-generated TypeScript types in the `generated` folder for things like sorting and filtering. Warthog will find all resolvers that match the following glob - `'/**/*.resolver.ts'`. Ex: `user.resolver.ts`
+
+#### Services
+
+Services are the glue between resolvers and models. Warthog exposes a class called [BaseService](https://github.com/goldcaddy77/warthog/blob/master/src/core/BaseService.ts) that exposes the following methods: `find`, `findOne`, `create`, `update`, `delete`. For the `find` operator, it also maps the auto-generated `WhereInput` attributes to the appropriate TypeORM Query Builders. Warthog's convention is to name services `<model-name>.service.ts`. Ex: `user.service.ts`
+
+#### Generated Folder
+
+When you start your server, there will be a new `generated` folder that Warthog creates automatically. The folder contains:
+
+- classes.ts: Warthog auto-generates this file from the metadata it collects (from decorators like `Model`, `Query`, `Resolver`, `StringField`, etc...). Resolvers will import items from here instead of having to manually create them.
+- schema.graphql: This is auto-generated from our resolvers, models and `classes.ts` above. Check out [this example's schema.graphql](https://github.com/goldcaddy77/warthog/blob/master/examples/01-simple-model/generated/schema.graphql) to show the additional GraphQL schema Warthog autogenerates.
+- ormconfig.ts: a TypeORM [ormconfig](https://github.com/typeorm/typeorm/blob/master/docs/using-ormconfig.md) file.
+- binding.ts - a [graphql-binding](https://www.prisma.io/docs/1.10/graphql-ecosystem/graphql-binding/graphql-binding-quaidah9ph) for type-safe programmatic access to your API (making real API calls)
 
 ## Server API (appOptions)
 

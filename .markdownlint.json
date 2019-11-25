@@ -4,7 +4,7 @@
   },
   "line-length": false,
   "no-inline-html": {
-    "allowed_elements": ["a", "img", "p"]
+    "allowed_elements": ["a", "img", "p", "details", "summary"]
   },
   "no-trailing-punctuation": {
     "punctuation": ".,;:"
