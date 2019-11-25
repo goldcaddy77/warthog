@@ -100,6 +100,9 @@ The following code will get you bootstrapped. You should read through this befor
 # Install Warthog
 yarn add warthog
 
+# Ensure you have the `postgres` user in your DB
+`which createuser` -s postgres
+
 # Pull down several nessesary files from the warthog-starter example
 declare -a arr=(".env" "warthog.config.js" "tsconfig.json" "src/config.ts" "src/index.ts" "src/logger.ts" "src/server.ts")
 for i in "${arr[@]}"
