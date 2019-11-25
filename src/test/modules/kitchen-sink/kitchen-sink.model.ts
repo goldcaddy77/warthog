@@ -56,7 +56,10 @@ export class KitchenSink extends BaseModel {
   @IdField({ nullable: true })
   idField?: string;
 
-  @OneToMany(() => Dish, (dish: Dish) => dish.kitchenSink)
+  @OneToMany(
+    () => Dish,
+    (dish: Dish) => dish.kitchenSink
+  )
   dishes!: Dish[];
 
   @Column({ nullable: true })

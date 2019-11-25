@@ -12,12 +12,14 @@ interface BooleanFieldOptions {
   filter?: boolean;
   nullable?: boolean;
   sort?: boolean;
+  editable?: boolean;
 }
 
 export function BooleanField(args: BooleanFieldOptions = {}): any {
   const options = { ...decoratorDefaults, ...args };
   const nullableOption = options.nullable === true ? { nullable: true } : {};
-  const defaultOption = options.default ? { default: options.default } : {};
+  const defaultOption =
+    options.default === true || options.default === false ? { default: options.default } : {};
 
   const factories = [
     WarthogField('boolean', options),

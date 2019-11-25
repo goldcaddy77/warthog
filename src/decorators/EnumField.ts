@@ -7,9 +7,10 @@ import { decoratorDefaults, getMetadataStorage } from '../metadata';
 import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 
 interface EnumFieldOptions {
-  nullable?: boolean;
   default?: any;
+  editable?: boolean;
   filter?: boolean;
+  nullable?: boolean;
   sort?: boolean;
 }
 
