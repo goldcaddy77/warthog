@@ -88,9 +88,14 @@ WARTHOG_AUTO_OPEN_PLAYGROUND=true yarn start:dev
 ### Create new project with the CLI
 
 ```bash
-yarn global add warthog@beta
+# Add warthog so that we can use the CLI
+yarn add warthog
 
+# Bootstrap a new application using Warthog CLI
 yarn warthog new
+
+# Install dependencies from generated package.json
+yarn
 
 # Generate a resource (model, resolver and service)
 yarn warthog generate user name! nickname age:int! verified:bool!
