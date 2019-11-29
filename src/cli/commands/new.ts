@@ -31,13 +31,14 @@ export default {
 
     const newFolder = toolbox.filesystem.path(__dirname, '../templates/new');
     const files = await getFileRecursive(newFolder);
+
     files.forEach(async file => {
       const relativePath = path.relative(newFolder, file);
       await generateFile(
         toolbox,
         props,
         `new/${relativePath}`,
-        path.join(process.cwd(), 'new_app'),
+        process.cwd(),
         relativePath.slice(0, -4) // remove .ejs
       );
     });
@@ -53,6 +54,9 @@ async function generateFile(
   destFolder: string,
   filename: string
 ) {
+  if (filename.startsWith('_')) {
+    filename = filename.replace(/^_/, '.');
+  }
   const target = path.join(destFolder, '/', filename);
 
   const generated = await toolbox.template.generate({
