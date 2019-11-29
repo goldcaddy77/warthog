@@ -107,6 +107,10 @@ yarn warthog db:migrate
 yarn start:dev
 ```
 
+Here's what this looks like in action:
+
+![warthog-quickstart](https://user-images.githubusercontent.com/573625/69854217-8967f380-1256-11ea-8492-dee07334501d.gif)
+
 This will open up GraphQL Playground, where you can execute queries and mutations against your API.
 
 First, add a user by entering the following in the window:
