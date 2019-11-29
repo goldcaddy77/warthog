@@ -12,9 +12,8 @@ export default {
     const {
       config: { load },
       parameters: { options, first, array },
-      print: { info, error },
-      string: { supplant },
-      template: { generate }
+      print: { error },
+      string: { supplant }
     } = toolbox;
 
     const config: any = load();
@@ -28,7 +27,8 @@ export default {
       className: toolbox.strings.pascalCase(name),
       camelName: toolbox.strings.camelCase(name),
       kebabName: toolbox.strings.kebabCase(name),
-      camelNamePlural: toolbox.strings.camelCase(name) + 's' // Not good, but easy to fix in generated code
+      // Not proper pluralization, but good enough and easy to fix in generated code
+      camelNamePlural: toolbox.strings.camelCase(name) + 's'
     };
 
     // Allow folder to be passed in or pulled from config files
@@ -63,23 +63,29 @@ export default {
       warthogPathInSourceFiles
     };
 
-    await generateFile(toolbox, props, 'model.ts.ejs', destFolder, `${names.kebabName}.model.ts`);
+    await generateFile(
+      toolbox,
+      props,
+      'generate/model.ts.ejs',
+      destFolder,
+      `${names.kebabName}.model.ts`
+    );
 
-    let target = path.join(destFolder, '/', `${names.kebabName}.service.ts`);
-    await generate({
-      template: 'service.ts.ejs',
-      target,
-      props
-    });
-    info(`Generated file at ${target}`);
+    await generateFile(
+      toolbox,
+      props,
+      'generate/service.ts.ejs',
+      destFolder,
+      `${names.kebabName}.service.ts`
+    );
 
-    target = path.join(destFolder, '/', `${names.kebabName}.resolver.ts`);
-    await generate({
-      template: 'resolver.ts.ejs',
-      target,
-      props
-    });
-    info(`Generated file at ${target}`);
+    await generateFile(
+      toolbox,
+      props,
+      'generate/resolver.ts.ejs',
+      destFolder,
+      `${names.kebabName}.resolver.ts`
+    );
 
     return;
   }

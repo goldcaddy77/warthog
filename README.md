@@ -85,6 +85,34 @@ yarn bootstrap
 WARTHOG_AUTO_OPEN_PLAYGROUND=true yarn start:dev
 ```
 
+### Create new project with the CLI
+
+```bash
+yarn global add warthog@beta
+
+yarn warthog new
+
+# Generate a resource (model, resolver and service)
+yarn warthog generate user name! nickname age:int! verified:bool!
+
+# Generate typescript classes and GraphQL schema
+yarn warthog codegen
+
+# Create your DB
+yarn warthog db:create
+
+# Generate the DB migration for your newly generated model
+yarn warthog db:migrate:generate --name=create-user-table
+
+# Run the DB migration
+yarn warthog db:migrate
+
+# Start the server
+yarn start:dev
+
+
+```
+
 ### Installing in Existing Project
 
 To install in an existing project, you'll need to create several files in place and then you'll need to call a few Warthog CLI commands that:
