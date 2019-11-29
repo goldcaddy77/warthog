@@ -114,67 +114,6 @@ yarn warthog db:migrate
 
 # Start the server
 yarn start:dev
-
-
-```
-
-### Installing in Existing Project
-
-To install in an existing project, you'll need to create several files in place and then you'll need to call a few Warthog CLI commands that:
-
-- Generate a new resource
-- Create a database
-- Create a DB migration and run it
-- Run the server
-
-The following code will get you bootstrapped. You should read through this before running:
-
-```bash
-# Install Warthog
-yarn add warthog
-
-# Ensure you have the `postgres` user in your DB
-`which createuser` -s postgres
-
-# Pull down several nessesary files from the warthog-starter example
-declare -a arr=(".env" "warthog.config.js" "tsconfig.json" "src/config.ts" "src/index.ts" "src/logger.ts" "src/server.ts")
-for i in "${arr[@]}"
-do
-  if [ ! -f ./$i ]; then
-    curl https://raw.githubusercontent.com/goldcaddy77/warthog-starter/master/$i -o $i
-  fi
-done
-
-# Create a .env file with your app and DB settings (modify these as needed)
-printf "DEBUG=*
-NODE_ENV=development
-WARTHOG_AUTO_OPEN_PLAYGROUND=true
-WARTHOG_APP_HOST=localhost
-WARTHOG_APP_PORT=4100
-WARTHOG_DB_DATABASE=warthog-starter
-WARTHOG_DB_HOST=localhost
-WARTHOG_DB_PASSWORD=
-WARTHOG_DB_PORT=5432
-WARTHOG_DB_SYNCHRONIZE=true
-WARTHOG_DB_USERNAME=postgres" > .env
-
-# Create your first model (See https://github.com/goldcaddy77/warthog#generate-command-in-depth for more info)
-yarn warthog generate user name! nickname age:int! verified:bool!
-
-# Generate typescript classes and GraphQL schema
-yarn warthog codegen
-
-# Create your DB
-yarn warthog db:create
-
-# Generate the DB migration for your newly generated model
-yarn warthog db:migrate:generate --name=create-user-table
-
-# Run the DB migration
-yarn warthog db:migrate
-
-# Start the server
-yarn ts-node --type-check src/index.ts
 ```
 
 This will open up GraphQL Playground, where you can execute queries and mutations against your API.
