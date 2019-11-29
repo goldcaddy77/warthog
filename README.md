@@ -74,16 +74,7 @@ See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/pull/6/
 
 ## Usage
 
-### Cloning the starter project
-
-The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. To get the starter project up and running, do the following:
-
-```bash
-git clone git@github.com:goldcaddy77/warthog-starter.git
-cd warthog-starter
-yarn bootstrap
-WARTHOG_AUTO_OPEN_PLAYGROUND=true yarn start:dev
-```
+Warthog comes with a CLI that makes it easy to get started.
 
 ### Create new project with the CLI
 
@@ -144,6 +135,21 @@ query {
 
 See [introducing-graphql-playground](https://www.prisma.io/blog/introducing-graphql-playground-f1e0a018f05d) for more info about GraphQL Playground.
 
+<details>
+<summary>Expand for other options for how to play with Warthog</summary>
+<p>
+
+### Cloning the starter project
+
+The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. To get the starter project up and running, do the following:
+
+```bash
+git clone git@github.com:goldcaddy77/warthog-starter.git
+cd warthog-starter
+yarn bootstrap
+WARTHOG_AUTO_OPEN_PLAYGROUND=true yarn start:dev
+```
+
 ### Running the examples in the Warthog repo
 
 You can also clone the Warthog repo and run the examples in the [examples](./examples/README.md) folder.
@@ -159,6 +165,9 @@ yarn start
 This has a simple example in place to get you started. There are also a bunch of examples in the folder for more advanced use cases.
 
 Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog. In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM. In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
+
+</p>
+</details>
 
 ### Warthog Constructs Explained
 
