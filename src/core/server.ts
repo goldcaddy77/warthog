@@ -175,8 +175,9 @@ export class Server<C extends BaseContext> {
         container: this.container as any,
         // TODO: ErrorLoggerMiddleware
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
-        resolvers: this.config.get('RESOLVERS_PATH')
+        resolvers: this.config.get('RESOLVERS_PATH'),
         // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
+        validate: false // Generated input types do not include `class-validator` decorators
       });
       debug('server:buildGraphQLSchema:end');
     }

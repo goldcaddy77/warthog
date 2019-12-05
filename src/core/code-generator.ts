@@ -82,7 +82,8 @@ export class CodeGenerator {
             scalar: GraphQLID
           }
         ],
-        resolvers: this.options.resolversPath
+        resolvers: this.options.resolversPath,
+        validate: false // Generated input types do not include `class-validator` decorators
       });
       debug('code-generator:buildGraphQLSchema:end');
     }
