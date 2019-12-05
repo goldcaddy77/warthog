@@ -189,6 +189,7 @@ export class Server<C extends BaseContext> {
     debug('start:generateFiles:start');
     await new CodeGenerator(this.config.get('GENERATED_FOLDER'), this.config.get('DB_ENTITIES'), {
       resolversPath: this.config.get('RESOLVERS_PATH'),
+      validateResolvers: this.config.get('VALIDATE_RESOLVERS') === 'true',
       warthogImportPath: this.config.get('MODULE_IMPORT_PATH')
     }).generate();
 
