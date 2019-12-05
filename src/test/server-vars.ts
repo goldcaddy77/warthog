@@ -36,7 +36,8 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_DB_SYNCHRONIZE: 'true',
     WARTHOG_GENERATED_FOLDER: './src/test/generated',
     WARTHOG_RESOLVERS_PATH: './src/test/modules/**/*.resolver.ts',
-    WARTHOG_MODULE_IMPORT_PATH: '../../'
+    WARTHOG_MODULE_IMPORT_PATH: '../../',
+    WARTHOG_VALIDATE_RESOLVERS: 'false'
   };
 }
 
