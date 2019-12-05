@@ -19,7 +19,8 @@ const CONFIG_VALUE_VALID_KEYS = [
   'generatedFolder',
   'cliGeneratePath',
   'moduleImportPath',
-  'resolversPath'
+  'resolversPath',
+  'validateResolvers'
 ];
 
 interface StaticConfigFile {
@@ -76,7 +77,8 @@ export class Config {
       WARTHOG_MODULE_IMPORT_PATH: 'warthog',
       // TODO: eventually we should do this path resolution when we ask for the variable with `get`
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
-      WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')]
+      WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
+      WARTHOG_VALIDATE_RESOLVERS: 'false'
     };
 
     this.devDefaults = {

@@ -22,6 +22,7 @@ const writeFilePromise = util.promisify(writeFile);
 
 interface CodeGeneratorOptions {
   resolversPath: string[];
+  validateResolvers?: boolean;
   warthogImportPath?: string;
 }
 
@@ -82,7 +83,8 @@ export class CodeGenerator {
             scalar: GraphQLID
           }
         ],
-        resolvers: this.options.resolversPath
+        resolvers: this.options.resolversPath,
+        validate: this.options.validateResolvers
       });
       debug('code-generator:buildGraphQLSchema:end');
     }

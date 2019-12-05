@@ -1,4 +1,5 @@
 {
   "generatedFolder": "./foo",
-  "resolversPath": "./r/e/s/o/l/v/e/r/s"
+  "resolversPath": "./r/e/s/o/l/v/e/r/s",
+  "validateResolvers": "true"
 }

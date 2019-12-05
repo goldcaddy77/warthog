@@ -248,6 +248,7 @@ Almost all config in Warthog is driven by environment variables. The following i
 | WARTHOG_INTROSPECTION        | Allow server to be introspected             | true                        |
 | WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?               | false                       |
 | WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers     | src/\*\*\/\*.resolver.ts    |
+| WARTHOG_VALIDATE_RESOLVERS   | TypeGraphQL validation enabled?             | false                       |
 
 ## Field/Column Decorators
 
