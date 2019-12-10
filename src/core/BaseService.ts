@@ -101,7 +101,7 @@ export class BaseService<E extends BaseModel> {
         const attr = parts[0]; // userName
         const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
 
-        qb = addQueryBuilderWhereItem(qb, attr, this.attrToDBColumn(attr), operator, where[key]);
+        qb = addQueryBuilderWhereItem(qb, k, this.attrToDBColumn(attr), operator, where[key]);
       });
     }
 
