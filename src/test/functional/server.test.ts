@@ -4,7 +4,7 @@ import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
 import { cleanUpTestData } from '../../db';
 
-import { Binding } from '../generated/binding';
+import { Binding, KitchenSinkWhereInput } from '../generated/binding';
 import { KitchenSink } from '../modules';
 import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
@@ -285,6 +285,24 @@ describe('server', () => {
       throw new Error(error);
     }
     expect(result.stringField).toEqual('Trantow');
+  });
+
+  test('Use 2 different operators on same attribute', async () => {
+    expect.assertions(3);
+    let result;
+    try {
+      const where: KitchenSinkWhereInput = {
+        stringField_endsWith: 'w',
+        stringField_contains: 'a'
+      };
+      result = await binding.query.kitchenSinks({ limit: 100, where }, '{ stringField }');
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    expect(result.length).toEqual(1);
+    expect(result[0].stringField).toEqual('Trantow');
+    expect(result).toMatchSnapshot();
   });
 
   test('Update and Delete', async () => {
