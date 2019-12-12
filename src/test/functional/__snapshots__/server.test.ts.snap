@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`server Use 2 different operators on same attribute 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+]
+`;
+
 exports[`server find: integer query: greater than 21 1`] = `
 Array [
   Object {

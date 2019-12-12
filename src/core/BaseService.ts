@@ -95,13 +95,20 @@ export class BaseService<E extends BaseModel> {
 
     if (Object.keys(where).length) {
       // where is of shape { userName_contains: 'a' }
-      Object.keys(where).forEach(k => {
+      Object.keys(where).forEach((k: string, i: number) => {
+        const paramKey = BaseService.buildParamKey(i);
         const key = k as keyof W; // userName
         const parts = key.toString().split('_'); // ['userName', 'contains']
         const attr = parts[0]; // userName
         const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
 
-        qb = addQueryBuilderWhereItem(qb, attr, this.attrToDBColumn(attr), operator, where[key]);
+        qb = addQueryBuilderWhereItem(
+          qb,
+          paramKey,
+          this.attrToDBColumn(attr),
+          operator,
+          where[key]
+        );
       });
     }
 
@@ -212,4 +219,6 @@ export class BaseService<E extends BaseModel> {
   attrToDBColumn = (attr: string): string => {
     return `"${this.klass}"."${this.columnMap[attr]}"`;
   };
+
+  static buildParamKey = (i: number): string => `param${i}`;
 }
