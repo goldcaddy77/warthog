@@ -29,20 +29,20 @@ export class FeatureFlagService extends BaseService<FeatureFlag> {
     const query = `
       SELECT ffu.feature_key
       FROM feature_flag_users ffu
-      WHERE ffu.user_key = '${data.userKey}'
-        AND ffu.proj_key = '${data.projKey}'
-        AND ffu.env_key = '${data.envKey}'
+      WHERE ffu.user_key = '$1'
+        AND ffu.proj_key = '$2'
+        AND ffu.env_key = '$3'
       UNION
       SELECT ffs.feature_key
       FROM user_segments us
       INNER JOIN segments s ON us.segment_id = s.id
       INNER JOIN feature_flag_segments ffs ON ffs.segment_id = s.id
-      WHERE us.user_key = '${data.userKey}'
-        AND us.proj_key = '${data.projKey}'
-        AND us.env_key = '${data.envKey}';
+      WHERE us.user_key = '$1'
+        AND us.proj_key = '$2'
+        AND us.env_key = '$3';
     `;
 
-    const results = await this.repository.query(query);
+    const results = await this.repository.query(query, [data.userKey, data.projKey, data.envKey]);
 
     return results.map(item => item.feature_key);
   }
