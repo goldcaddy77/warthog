@@ -1,13 +1,14 @@
 const caller = require('caller'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
 import { ObjectType } from 'type-graphql';
-import { Entity } from 'typeorm';
+import { Entity, EntityOptions } from 'typeorm';
 
 import { ClassType } from '../core';
 import { getMetadataStorage } from '../metadata';
 import { ClassDecoratorFactory, composeClassDecorators, generatedFolderPath } from '../utils/';
 
-export function Model() {
+// Allow default TypeORM options to be used
+export function Model(entityOptions: EntityOptions = {}) {
   // In order to use the enums in the generated classes file, we need to
   // save their locations and import them in the generated file
   const modelFileName = caller();
@@ -22,7 +23,7 @@ export function Model() {
   };
 
   const factories = [
-    Entity() as ClassDecoratorFactory,
+    Entity(entityOptions) as ClassDecoratorFactory,
     ObjectType() as ClassDecoratorFactory,
     registerModelWithWarthog as ClassDecoratorFactory
   ];
