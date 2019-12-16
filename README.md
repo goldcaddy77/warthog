@@ -214,28 +214,29 @@ Most of the config in Warthog is done via environment variables (see `Config - E
 
 Almost all config in Warthog is driven by environment variables. The following items are available:
 
-| variable                     | value                                       | default                     |
-| ---------------------------- | ------------------------------------------- | --------------------------- |
-| WARTHOG_APP_HOST             | App server host                             | _none_                      |
-| WARTHOG_APP_PORT             | App server port                             | 4000                        |
-| WARTHOG_APP_PROTOCOL         | App server protocol                         | http                        |
-| WARTHOG_AUTO_GENERATE_FILES  | Auto-generate files                         | false (true in development) |
-| WARTHOG_AUTO_OPEN_PLAYGROUND | Open playground on server start             | false (true in development) |
-| WARTHOG_CLI_GENERATE_PATH    | Where should CLI generate files             | ./src                       |
-| WARTHOG_DB_CONNECTION        | DB connection type                          | postgres                    |
-| WARTHOG_DB_DATABASE          | DB name                                     | _none_                      |
-| WARTHOG_DB_ENTITIES          | Where should warthog look for models        | src\/\*\*\/\*.model.ts      |
-| WARTHOG_DB_MIGRATIONS        | What DB migrations should TypeORM run       | db/migrations/\*\*\/\*.ts   |
-| WARTHOG_DB_MIGRATIONS_DIR    | Where should generated migrations be placed | db/migrations               |
-| WARTHOG_DB_PORT              | DB port                                     | 5432                        |
-| WARTHOG_DB_USERNAME          | DB username                                 | _none_                      |
-| WARTHOG_DB_LOGGER            | TypeORM logger                              | advanced-console            |
-| WARTHOG_DB_PASSWORD          | DB password                                 | _none_                      |
-| WARTHOG_DB_SYNCHRONIZE       | DB automatically migrated                   | false                       |
-| WARTHOG_GENERATED_FOLDER     | Where should generated code be placed       | ./generated                 |
-| WARTHOG_INTROSPECTION        | Allow server to be introspected             | true                        |
-| WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?               | false                       |
-| WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers     | src/\*\*\/\*.resolver.ts    |
+| variable                     | value                                                    | default                     |
+| ---------------------------- | -------------------------------------------------------- | --------------------------- |
+| WARTHOG_APP_HOST             | App server host                                          | _none_                      |
+| WARTHOG_APP_PORT             | App server port                                          | 4000                        |
+| WARTHOG_APP_PROTOCOL         | App server protocol                                      | http                        |
+| WARTHOG_AUTO_GENERATE_FILES  | Auto-generate files                                      | false (true in development) |
+| WARTHOG_AUTO_OPEN_PLAYGROUND | Open playground on server start                          | false (true in development) |
+| WARTHOG_CLI_GENERATE_PATH    | Where should CLI generate files                          | ./src                       |
+| WARTHOG_DB_CONNECTION        | DB connection type                                       | postgres                    |
+| WARTHOG_DB_DATABASE          | DB name                                                  | _none_                      |
+| WARTHOG_DB_ENTITIES          | Where should warthog look for models                     | src\/\*\*\/\*.model.ts      |
+| WARTHOG_DB_MIGRATIONS        | What DB migrations should TypeORM run                    | db/migrations/\*\*\/\*.ts   |
+| WARTHOG_DB_MIGRATIONS_DIR    | Where should generated migrations be placed              | db/migrations               |
+| WARTHOG_DB_PORT              | DB port                                                  | 5432                        |
+| WARTHOG_DB_USERNAME          | DB username                                              | _none_                      |
+| WARTHOG_DB_LOGGER            | TypeORM logger                                           | advanced-console            |
+| WARTHOG_DB_PASSWORD          | DB password                                              | _none_                      |
+| WARTHOG_DB_SYNCHRONIZE       | DB automatically migrated                                | false                       |
+| WARTHOG_GENERATED_FOLDER     | Where should generated code be placed                    | ./generated                 |
+| WARTHOG_INTROSPECTION        | Allow server to be introspected                          | true                        |
+| WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?                            | false                       |
+| WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers                  | src/\*\*\/\*.resolver.ts    |
+| WARTHOG_SUBSCRIPTIONS        | Should we enable subscriptions and open a websocket port | false                       |
 
 ## Field/Column Decorators
 

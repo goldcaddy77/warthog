@@ -14,7 +14,9 @@ export interface Mutation {
     deleteUser: <T = StandardDeleteResponse>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
-export interface Subscription {}
+export interface Subscription {
+    createUserSubscription: <T = User>(args?: {}, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
+  }
 
 export interface Binding {
   query: Query
@@ -40,9 +42,6 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
  * Types
 */
 
-export type StringEnum =   'FOO' |
-  'BAR'
-
 export type UserOrderByInput =   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
@@ -52,17 +51,7 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'firstName_ASC' |
   'firstName_DESC' |
   'lastName_ASC' |
-  'lastName_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'age_ASC' |
-  'age_DESC' |
-  'isRequired_ASC' |
-  'isRequired_DESC' |
-  'stringEnumField_ASC' |
-  'stringEnumField_DESC' |
-  'rating_ASC' |
-  'rating_DESC'
+  'lastName_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -90,22 +79,12 @@ export interface BaseWhereInput {
 
 export interface UserCreateInput {
   firstName: String
-  lastName?: String | null
-  email: String
-  age: Float
-  isRequired: Boolean
-  stringEnumField: StringEnum
-  rating: Float
+  lastName: String
 }
 
 export interface UserUpdateInput {
   firstName?: String | null
   lastName?: String | null
-  email?: String | null
-  age?: Float | null
-  isRequired?: Boolean | null
-  stringEnumField?: StringEnum | null
-  rating?: Float | null
 }
 
 export interface UserWhereInput {
@@ -140,32 +119,10 @@ export interface UserWhereInput {
   lastName_startsWith?: String | null
   lastName_endsWith?: String | null
   lastName_in?: String[] | String | null
-  email_eq?: String | null
-  email_contains?: String | null
-  email_startsWith?: String | null
-  email_endsWith?: String | null
-  email_in?: String[] | String | null
-  age_eq?: Int | null
-  age_gt?: Int | null
-  age_gte?: Int | null
-  age_lt?: Int | null
-  age_lte?: Int | null
-  age_in?: Int[] | Int | null
-  isRequired_eq?: Boolean | null
-  isRequired_in?: Boolean[] | Boolean | null
-  stringEnumField_eq?: StringEnum | null
-  stringEnumField_in?: StringEnum[] | StringEnum | null
-  rating_eq?: Float | null
-  rating_gt?: Float | null
-  rating_gte?: Float | null
-  rating_lt?: Float | null
-  rating_lte?: Float | null
-  rating_in?: Float[] | Float | null
 }
 
 export interface UserWhereUniqueInput {
-  id?: String | null
-  email?: String | null
+  id: String
 }
 
 export interface BaseGraphQLObject {
@@ -219,12 +176,7 @@ export interface User extends BaseGraphQLObject {
   deletedById?: String | null
   version: Int
   firstName: String
-  lastName?: String | null
-  email: String
-  age: Int
-  isRequired: Boolean
-  stringEnumField: StringEnum
-  rating: Float
+  lastName: String
 }
 
 /*
@@ -236,11 +188,6 @@ export type Boolean = boolean
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 */
 export type DateTime = Date | string
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
-*/
-export type Float = number
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.

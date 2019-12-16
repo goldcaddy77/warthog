@@ -21,7 +21,6 @@ const { GraphQLJSONObject } = require("graphql-type-json");
 
 // @ts-ignore
 import { BaseWhereInput, JsonObject, PaginationArgs } from "../../../src";
-import { StringEnum } from "../src/user.model";
 // @ts-ignore
 import { User } from "../src/user.model";
 
@@ -39,22 +38,7 @@ export enum UserOrderByEnum {
   firstName_DESC = "firstName_DESC",
 
   lastName_ASC = "lastName_ASC",
-  lastName_DESC = "lastName_DESC",
-
-  email_ASC = "email_ASC",
-  email_DESC = "email_DESC",
-
-  age_ASC = "age_ASC",
-  age_DESC = "age_DESC",
-
-  isRequired_ASC = "isRequired_ASC",
-  isRequired_DESC = "isRequired_DESC",
-
-  stringEnumField_ASC = "stringEnumField_ASC",
-  stringEnumField_DESC = "stringEnumField_DESC",
-
-  rating_ASC = "rating_ASC",
-  rating_DESC = "rating_DESC"
+  lastName_DESC = "lastName_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -155,78 +139,12 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   lastName_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  email_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  email_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  email_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  email_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  email_in?: string[];
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  age_eq?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  age_gt?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  age_gte?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  age_lt?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  age_lte?: number;
-
-  @TypeGraphQLField(() => [Int], { nullable: true })
-  age_in?: number[];
-
-  @TypeGraphQLField(() => Boolean, { nullable: true })
-  isRequired_eq?: Boolean;
-
-  @TypeGraphQLField(() => [Boolean], { nullable: true })
-  isRequired_in?: Boolean[];
-
-  @TypeGraphQLField(() => StringEnum, { nullable: true })
-  stringEnumField_eq?: StringEnum;
-
-  @TypeGraphQLField(() => [StringEnum], { nullable: true })
-  stringEnumField_in?: StringEnum[];
-
-  @TypeGraphQLField(() => Float, { nullable: true })
-  rating_eq?: number;
-
-  @TypeGraphQLField(() => Float, { nullable: true })
-  rating_gt?: number;
-
-  @TypeGraphQLField(() => Float, { nullable: true })
-  rating_gte?: number;
-
-  @TypeGraphQLField(() => Float, { nullable: true })
-  rating_lt?: number;
-
-  @TypeGraphQLField(() => Float, { nullable: true })
-  rating_lte?: number;
-
-  @TypeGraphQLField(() => [Float], { nullable: true })
-  rating_in?: number[];
 }
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => String)
   id?: string;
-
-  @TypeGraphQLField(() => String, { nullable: true })
-  email?: string;
 }
 
 @TypeGraphQLInputType()
@@ -234,23 +152,8 @@ export class UserCreateInput {
   @TypeGraphQLField()
   firstName!: string;
 
-  @TypeGraphQLField({ nullable: true })
-  lastName?: string;
-
   @TypeGraphQLField()
-  email!: string;
-
-  @TypeGraphQLField()
-  age!: number;
-
-  @TypeGraphQLField()
-  isRequired!: boolean;
-
-  @TypeGraphQLField(() => StringEnum)
-  stringEnumField!: StringEnum;
-
-  @TypeGraphQLField()
-  rating!: number;
+  lastName!: string;
 }
 
 @TypeGraphQLInputType()
@@ -260,21 +163,6 @@ export class UserUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   lastName?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  email?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  age?: number;
-
-  @TypeGraphQLField({ nullable: true })
-  isRequired?: boolean;
-
-  @TypeGraphQLField(() => StringEnum, { nullable: true })
-  stringEnumField?: StringEnum;
-
-  @TypeGraphQLField({ nullable: true })
-  rating?: number;
 }
 
 @ArgsType()
