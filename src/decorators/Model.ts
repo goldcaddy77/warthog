@@ -1,13 +1,20 @@
 const caller = require('caller'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
 import { ObjectType } from 'type-graphql';
-import { Entity } from 'typeorm';
+import { ObjectOptions } from 'type-graphql/dist/decorators/ObjectType.d';
+import { Entity, EntityOptions } from 'typeorm';
 
 import { ClassType } from '../core';
 import { getMetadataStorage } from '../metadata';
 import { ClassDecoratorFactory, composeClassDecorators, generatedFolderPath } from '../utils/';
 
-export function Model() {
+interface ModelOptions {
+  api?: ObjectOptions;
+  db?: EntityOptions;
+}
+
+// Allow default TypeORM and TypeGraphQL options to be used
+export function Model({ api = {}, db = {} }: ModelOptions = {}) {
   // In order to use the enums in the generated classes file, we need to
   // save their locations and import them in the generated file
   const modelFileName = caller();
@@ -22,8 +29,8 @@ export function Model() {
   };
 
   const factories = [
-    Entity() as ClassDecoratorFactory,
-    ObjectType() as ClassDecoratorFactory,
+    Entity(db) as ClassDecoratorFactory,
+    ObjectType(api) as ClassDecoratorFactory,
     registerModelWithWarthog as ClassDecoratorFactory
   ];
 
