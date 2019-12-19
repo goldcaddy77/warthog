@@ -330,6 +330,7 @@ input UserWhereInput {
   bigIntField_lt: Int
   bigIntField_lte: Int
   bigIntField_in: [Int!]
+  jsonField: JSONObject
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String
@@ -430,4 +431,6 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: String
   emailField: String
+  enumField: StringEnum
+  stringField: String
 }

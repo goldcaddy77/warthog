@@ -402,7 +402,11 @@ export function entityToWhereInput(model: ModelMetadata): string {
         ${column.propertyName}_in?: ${graphQLDataType}[];
       `;
     } else if (column.type === 'json') {
-      // Determine how to handle JSON
+      // Enums will fall through here
+      fieldTemplates += `
+        @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+        ${column.propertyName}?: JsonObject;
+      `;
     }
   });
 
