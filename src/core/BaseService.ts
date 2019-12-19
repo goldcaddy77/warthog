@@ -97,7 +97,7 @@ export class BaseService<E extends BaseModel> {
       // where is of shape { userName_contains: 'a' }
       Object.keys(where).forEach((k: string, i: number) => {
         const paramKey = BaseService.buildParamKey(i);
-        const key = k as keyof W; // userName
+        const key = k as keyof W; // userName_contains
         const parts = key.toString().split('_'); // ['userName', 'contains']
         const attr = parts[0]; // userName
         const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
