@@ -333,6 +333,9 @@ export class UserWhereInput {
   @TypeGraphQLField(() => [Int], { nullable: true })
   bigIntField_in?: number[];
 
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonField_json?: JsonObject;
+
   @TypeGraphQLField({ nullable: true })
   stringField_eq?: string;
 
@@ -626,6 +629,12 @@ export class UserWhereUniqueInput {
 
   @TypeGraphQLField(() => String, { nullable: true })
   emailField?: string;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  enumField?: StringEnum;
+
+  @TypeGraphQLField(() => String, { nullable: true })
+  stringField?: string;
 }
 
 @TypeGraphQLInputType()
@@ -662,6 +671,9 @@ export class UserCreateInput {
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonFieldNoFilter?: JsonObject;
 
   @TypeGraphQLField({ nullable: true })
   stringField?: string;
@@ -758,6 +770,9 @@ export class UserUpdateInput {
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonFieldNoFilter?: JsonObject;
 
   @TypeGraphQLField({ nullable: true })
   stringField?: string;

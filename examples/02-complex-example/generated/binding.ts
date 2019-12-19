@@ -140,6 +140,7 @@ export interface UserCreateInput {
   smallIntField?: Float | null
   bigIntField?: Float | null
   jsonField?: JSONObject | null
+  jsonFieldNoFilter?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
@@ -174,6 +175,7 @@ export interface UserUpdateInput {
   smallIntField?: Float | null
   bigIntField?: Float | null
   jsonField?: JSONObject | null
+  jsonFieldNoFilter?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
@@ -267,6 +269,7 @@ export interface UserWhereInput {
   bigIntField_lt?: Int | null
   bigIntField_lte?: Int | null
   bigIntField_in?: Int[] | Int | null
+  jsonField_json?: JSONObject | null
   stringField_eq?: String | null
   stringField_contains?: String | null
   stringField_startsWith?: String | null
@@ -367,6 +370,8 @@ export interface UserWhereInput {
 export interface UserWhereUniqueInput {
   id?: ID_Input | null
   emailField?: String | null
+  enumField?: StringEnum | null
+  stringField?: String | null
 }
 
 export interface BaseGraphQLObject {
@@ -430,6 +435,7 @@ export interface User extends BaseGraphQLObject {
   smallIntField?: Int | null
   bigIntField?: Int | null
   jsonField?: JSONObject | null
+  jsonFieldNoFilter?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null

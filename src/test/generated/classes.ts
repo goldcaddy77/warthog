@@ -253,6 +253,9 @@ export class KitchenSinkWhereInput {
   @TypeGraphQLField(() => [Float], { nullable: true })
   floatField_in?: number[];
 
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonField_json?: JsonObject;
+
   @TypeGraphQLField(() => ID, { nullable: true })
   idField_eq?: string;
 

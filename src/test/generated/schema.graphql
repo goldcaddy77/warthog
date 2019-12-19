@@ -302,6 +302,7 @@ input KitchenSinkWhereInput {
   floatField_lt: Float
   floatField_lte: Float
   floatField_in: [Float!]
+  jsonField_json: JSONObject
   idField_eq: ID
   idField_in: [ID!]
   numericField_eq: Float

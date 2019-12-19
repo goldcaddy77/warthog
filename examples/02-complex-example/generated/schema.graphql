@@ -109,6 +109,7 @@ type User implements BaseGraphQLObject {
   smallIntField: Int
   bigIntField: Int
   jsonField: JSONObject
+  jsonFieldNoFilter: JSONObject
   stringField: String
   noFilterField: String
   noSortField: String
@@ -143,6 +144,7 @@ input UserCreateInput {
   smallIntField: Float
   bigIntField: Float
   jsonField: JSONObject
+  jsonFieldNoFilter: JSONObject
   stringField: String
   noFilterField: String
   noSortField: String
@@ -240,6 +242,7 @@ input UserUpdateInput {
   smallIntField: Float
   bigIntField: Float
   jsonField: JSONObject
+  jsonFieldNoFilter: JSONObject
   stringField: String
   noFilterField: String
   noSortField: String
@@ -333,6 +336,7 @@ input UserWhereInput {
   bigIntField_lt: Int
   bigIntField_lte: Int
   bigIntField_in: [Int!]
+  jsonField_json: JSONObject
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String
@@ -433,4 +437,6 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   emailField: String
+  enumField: StringEnum
+  stringField: String
 }

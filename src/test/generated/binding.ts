@@ -258,6 +258,7 @@ export interface KitchenSinkWhereInput {
   floatField_lt?: Float | null
   floatField_lte?: Float | null
   floatField_in?: Float[] | Float | null
+  jsonField_json?: JSONObject | null
   idField_eq?: ID_Input | null
   idField_in?: ID_Output[] | ID_Output | null
   numericField_eq?: Float | null
