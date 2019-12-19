@@ -140,6 +140,7 @@ export interface UserCreateInput {
   smallIntField?: Float | null
   bigIntField?: Float | null
   jsonField?: JSONObject | null
+  jsonFieldNoFilter?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
@@ -174,6 +175,7 @@ export interface UserUpdateInput {
   smallIntField?: Float | null
   bigIntField?: Float | null
   jsonField?: JSONObject | null
+  jsonFieldNoFilter?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
@@ -430,6 +432,7 @@ export interface User extends BaseGraphQLObject {
   smallIntField?: Int | null
   bigIntField?: Int | null
   jsonField?: JSONObject | null
+  jsonFieldNoFilter?: JSONObject | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null

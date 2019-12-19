@@ -6,61 +6,51 @@ export function addQueryBuilderWhereItem<E>(
   columnWithAlias: string,
   operator: string,
   value: any,
-  tableName?: string
+  columnUniqueKey?: string
 ): SelectQueryBuilder<E> {
-  // console.log(tableName);
+  dbColumn = columnUniqueKey || dbColumn;
 
-  let qbReturn = qb;
+  if (typeof value === 'object') {
+    const flat = flattenObject(value);
+
+    Object.entries(flat).forEach(([key, val]) => {
+      const path = key.split('.');
+      const item = path.pop();
+      if (!item) {
+        throw new Error('item not found');
+      }
+
+      const nonTerminalPathParts = path;
+
+      // TODO: update so that property can be an underscored item
+      const itemParts = item.split('_');
+      const attr = itemParts[0];
+      const operator = itemParts[1];
+
+      if (!operator) {
+        throw new Error('must have operator');
+      }
+
+      const pre = nonTerminalPathParts.map(pathPart => `->'${pathPart}'`);
+
+      addQueryBuilderWhereItem(
+        qb,
+        dbColumn,
+        `${columnWithAlias}${pre}->>'${attr}'`,
+        operator,
+        val,
+        columnWithAlias + key // Make this unique for this JSON path
+      );
+    });
+
+    return qb;
+  }
 
   switch (operator) {
     case 'eq':
       if (value === null) {
         return qb.andWhere(`${columnWithAlias} IS NULL`);
       }
-      if (typeof value === 'object') {
-        const flat = flattenObject(value);
-        console.log('\nflat', flat);
-
-        Object.entries(flat).forEach(([key, value]) => {
-          // const finder = columnWithAlias;
-          const pathParts = key.split('.');
-          const last = pathParts.pop();
-          const rest = pathParts;
-
-          // WHERE "user"."json_field"->>'ben_eq' = $1 AND "user"."json_field"->>'bar' = $2
-
-          console.log('\nkey', key);
-          console.log('\nvalue', value);
-          console.log('\npathParts', pathParts);
-          console.log('\nlast', last);
-          console.log('\nrest', rest);
-
-          // key ben_eq
-          // value foo
-          // pathParts []
-          // last ben_eq
-          // rest []
-          // key foo.bar
-          // value hello
-          // pathParts [ 'foo' ]
-          // last bar
-          // rest [ 'foo' ]
-
-          const pre = pathParts.map(item => `->'${item}'`);
-
-          // return qb.andWhere(`${columnWithAlias}->'foo'->>'bar' = :${dbColumn}`, {
-
-          qbReturn = qb.andWhere(
-            `${columnWithAlias}${pre}->>'${last}' = :${columnWithAlias + key}`,
-            {
-              [columnWithAlias + key]: value
-            }
-          );
-        });
-
-        return qbReturn;
-      }
-
       return qb.andWhere(`${columnWithAlias} = :${dbColumn}`, { [dbColumn]: value });
     case 'not':
       return qb.andWhere(`${columnWithAlias} != :${dbColumn}`, { [dbColumn]: value });
@@ -93,22 +83,17 @@ export function addQueryBuilderWhereItem<E>(
 }
 
 function flattenObject(obj: any) {
-  const toReturn: any = {};
+  const result: any = {};
 
-  for (const i in obj) {
-    console.log('foo', i, obj);
-    // if (!obj.hasOwnProperty(i)) continue;
-
-    if (typeof obj[i] == 'object' && obj[i] !== null) {
-      const flatObject = flattenObject(obj[i]);
-      for (const x in flatObject) {
-        // if (!flatObject.hasOwnProperty(x)) continue;
-
-        toReturn[i + '.' + x] = flatObject[x];
+  for (const outer in obj) {
+    if (typeof obj[outer] == 'object' && obj[outer] !== null) {
+      const flatObject = flattenObject(obj[outer]);
+      for (const inner in flatObject) {
+        result[outer + '.' + inner] = flatObject[inner];
       }
     } else {
-      toReturn[i] = obj[i];
+      result[outer] = obj[outer];
     }
   }
-  return toReturn;
+  return result;
 }

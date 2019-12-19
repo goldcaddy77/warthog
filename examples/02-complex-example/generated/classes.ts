@@ -663,6 +663,9 @@ export class UserCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
 
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonFieldNoFilter?: JsonObject;
+
   @TypeGraphQLField({ nullable: true })
   stringField?: string;
 
@@ -758,6 +761,9 @@ export class UserUpdateInput {
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonFieldNoFilter?: JsonObject;
 
   @TypeGraphQLField({ nullable: true })
   stringField?: string;
