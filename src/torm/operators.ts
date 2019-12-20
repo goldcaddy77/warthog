@@ -39,32 +39,39 @@ export function addQueryBuilderWhereItem<E>(
         [parameterKey]: `%${value}`
       });
     case 'json': {
-      // Assume: value = { foo: { bar { baz_gt: 1 } } }
-      const flat = flattenObject(value); // { "foo.bar.baz_gt": 1 }
+      // It is not recommended to have snake_cased keys, but we should support them
+      // Assume: value = { foo: { bar { my_baz_gt: 1 } } }
+      const flat = flattenObject(value); // { "foo.bar.my_baz_gt": 1 }
 
       Object.entries(flat).forEach(([key, val]) => {
-        // key = "foo.bar.baz_gt"
+        // key = "foo.bar.my_baz_gt"
         // val = 1
-        const path = key.split('.'); // ["foo", "bar", "baz_gt"]
-        const item = path.pop(); // "baz_gt"
+        const path = key.split('.'); // ["foo", "bar", "my_baz_gt"]
+        const leaf = path.pop(); // "my_baz_gt"
         const nonTerminalPathParts = path; // ["foo", "bar"]
-        if (!item) {
-          throw new Error('item not found');
+        if (!leaf) {
+          throw new Error(`Invalid JSON search criteria ${value}`);
         }
 
-        // TODO: update so that property can be an underscored item
-        const itemParts = item.split('_'); // ["baz", "gt"]
-        const attr = itemParts[0]; // "baz"
-        const operator = itemParts[1]; // "gt"
+        // TODO: update so that property can be an underscored leaf
+        const leafParts = leaf.split('_'); // ["my", "baz", "gt"]
+        const operator = leafParts.pop(); // "gt"
+        const attr = leafParts.join('_'); // my_baz
 
         if (!operator) {
-          throw new Error('must have operator');
+          throw new Error(`Could not find operator in ${leaf}`);
         }
 
-        // TODO: test at least 3 levels deep
+        if (operator === 'json') {
+          throw new Error('Nested json filtering is not supported');
+        }
+
+        // TODO: add tests that:
+        // go at least 3 levels deep
+        // have snake_cased keys
         const pre = nonTerminalPathParts.map(pathPart => `->'${pathPart}'`).join(''); // ->'foo'->'bar'
 
-        // Adds: "user"."json_field"->'foo'->'bar'->>'baz' > 1
+        // Adds: "user"."json_field"->'foo'->'bar'->>'my_baz' > 1
         addQueryBuilderWhereItem(
           qb,
           columnWithAlias + key, // Make sure parameterKey used here is unique so that it doesn't get value from previous "where"
