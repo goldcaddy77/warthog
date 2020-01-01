@@ -9,7 +9,6 @@ import { cleanUpTestData } from '@warthog/core';
 
 import { callWarthogCLI, spyOnStd } from '../helpers';
 import { setTestServerEnvironmentVariables } from '../server-vars';
-import { getTestServer } from '../test-server';
 
 const root = filesystem.path(__dirname, '../../../');
 
@@ -55,7 +54,7 @@ describe('cli functional tests', () => {
     );
 
     // TODO: should we bother with this since we don't update the version in package.json?
-    expect(output).toContain('0.0.0-development');
+    expect(output).toContain('0.0.0');
     // This makes sure we're actually getting the version command and not the standard "help" command, which also includes the version
     expect(output).not.toContain('help');
     done();
@@ -232,10 +231,6 @@ describe('cli functional tests', () => {
       WARTHOG_DB_SYNCHRONIZE: 'false',
       WARTHOG_DB_CONNECTION: 'sqlite'
     });
-
-    const server = getTestServer({ mockDBConnection: false });
-    await server.start();
-    await server.stop();
 
     await callWarthogCLI('db:migrate:generate');
     stdout = spy.getStdOutErr();

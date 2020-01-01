@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { Connection } from 'typeorm';
 
 // TODO-MVP: update with actual context we're getting from Auth0
@@ -8,6 +7,6 @@ export interface BaseContext {
     initialized: boolean;
     loaders: { [key: string]: { [key: string]: any } };
   };
-  request: Request;
+  request: any;
   user?: any;
 }

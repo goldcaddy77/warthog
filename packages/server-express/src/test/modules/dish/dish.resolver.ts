@@ -11,7 +11,7 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../';
+import { BaseContext, Fields, StandardDeleteResponse, UserId } from '@warthog/core';
 import {
   DishCreateInput,
   DishCreateManyArgs,

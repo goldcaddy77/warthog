@@ -1,4 +1,4 @@
-import { BaseModel, ManyToOne, Model, StringField } from '../../../';
+import { BaseModel, ManyToOne, Model, StringField } from '@warthog/core';
 
 import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 

@@ -15,7 +15,7 @@ import {
   NumericField,
   StringField,
   JsonObject
-} from '../../../';
+} from '@warthog/core';
 
 import { Dish } from '../dish/dish.model';
 

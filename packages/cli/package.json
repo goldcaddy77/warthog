@@ -1,6 +1,6 @@
 {
   "name": "@warthog/cli",
-  "version": "0.0.0-development",
+  "version": "0.0.0",
   "description": "Warthog CLI",
   "main": "dist/cli.js",
   "types": "dist/types/cli.d.ts",
@@ -32,7 +32,6 @@
     "url": "https://github.com/goldcaddy77/warthog/issues"
   },
   "dependencies": {
-    "@warthog/core": "^0.0.0-development",
     "cosmiconfig": "^5.2.1",
     "prettier": "^1.18.2",
     "gluegun": "^3.3.1",
@@ -44,6 +43,7 @@
     "typescript": "^3.7.2"
   },
   "devDependencies": {
+    "@warthog/core": "^0.0.0",
     "@types/cosmiconfig": "^5.0.3",
     "@types/faker": "^4.1.5",
     "@types/isomorphic-fetch": "^0.0.34",
@@ -69,38 +69,5 @@
     "//verbose": "--verbose flag must be used to accurately test the CLI writing to stdout",
     "test:prod": "yarn jest --coverage --ci --detectOpenHandles --runInBand --verbose",
     "test:watch": "jest --verbose --watch"
-  },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "./src/test/setupFilesAfterEnv.ts"
-    ],
-    "transform": {
-      ".ts": "ts-jest"
-    },
-    "testRegex": "\\.test\\.ts$",
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "modulePathIgnorePatterns": [
-      "/examples/"
-    ],
-    "watchPathIgnorePatterns": [
-      "tmp/",
-      "/generated/*"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.ts"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "src/test/*",
-      "\\.test\\.ts$"
-    ],
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.test.json"
-      }
-    }
   }
 }
