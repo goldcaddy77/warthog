@@ -1,4 +1,3 @@
-export * from './server';
 export * from './code-generator';
 export * from './BaseModel';
 export * from './config';

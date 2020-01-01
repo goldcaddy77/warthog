@@ -30,6 +30,7 @@
     "**/test/*",
     "**/generated/*",
     "**/tmp/*",
+    "**/dist/*",
     "examples"
   ]
 }

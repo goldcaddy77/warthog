@@ -1,0 +1,55 @@
+{
+  "name": "@warthog/server-express",
+  "version": "0.0.0",
+  "description": "Warthog Server Express",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "author": {
+    "name": "Dan Caddigan",
+    "url": "https://github.com/goldcaddy77"
+  },
+  "homepage": "https://github.com/goldcaddy77/warthog/tree/master/packages/server-express#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goldcaddy77/warthog.git"
+  },
+  "keywords": [
+    "graphql",
+    "typeorm",
+    "express",
+    "typescript"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goldcaddy77/warthog/issues"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc -p tsconfig.build.json && copyfiles -u 1 src/**/*.ejs dist/",
+    "test": " jest --verbose --coverage --runInBand",
+    "//verbose": "--verbose flag must be used to accurately test the CLI writing to stdout",
+    "test:prod": "yarn jest --coverage --ci --detectOpenHandles --runInBand --verbose",
+    "test:watch": "jest --verbose --watch"
+  },
+  "dependencies": {
+    "@warthog/core": "^0.0.0",
+    "apollo-server": "^2.6.3",
+    "apollo-server-express": "^2.6.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@types/debug": "^0.0.31",
+    "@types/express": "^4.16.0",
+    "copyfiles": "^2.1.1",
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.7.2"
+  }
+}

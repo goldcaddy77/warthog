@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { getBindingError, logger } from '../../';
-import { get, GetResponse } from '../../core/http';
-import { Server } from '../../core/server';
-import { cleanUpTestData } from '../../db';
+import { getBindingError, logger, cleanUpTestData } from '@warthog/core';
+import { get, GetResponse } from '../../http';
+import { Server } from '../../server';
 
 import { Binding } from '../generated/binding';
 import { KitchenSink } from '../modules';

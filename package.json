@@ -1,6 +1,6 @@
 {
   "name": "warthog",
-  "version": "0.0.0-development",
+  "version": "0.0.0",
   "description": "Opinionated set of tools for setting up GraphQL backed by TypeORM",
   "private": true,
   "workspaces": [

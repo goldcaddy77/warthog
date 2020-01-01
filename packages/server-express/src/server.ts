@@ -13,15 +13,17 @@ import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValida
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
-import { logger, Logger } from '../core/logger';
-import { getRemoteBinding } from '../gql';
-import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-import { createDBConnection } from '../torm';
-
-import { CodeGenerator } from './code-generator';
-import { Config } from './config';
-
-import { BaseContext } from './Context';
+import {
+  logger,
+  Logger,
+  CodeGenerator,
+  Config,
+  DataLoaderMiddleware,
+  getRemoteBinding,
+  createDBConnection,
+  BaseContext
+} from '@warthog/core';
+import { healthCheckMiddleware } from './middleware';
 
 import * as Debug from 'debug';
 

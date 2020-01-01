@@ -4,7 +4,7 @@ export interface GetResponse {
 }
 
 // Custom http `get` without dependencies
-export async function get(url: string): Promise<GetResponse> {
+export function get(url: string): Promise<GetResponse> {
   // return new pending promise
   return new Promise((resolve, reject) => {
     // select http or https module, depending on reqested url
