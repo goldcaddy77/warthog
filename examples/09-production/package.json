@@ -12,7 +12,7 @@
     "start": "yarn start:ts",
     "start:ts": "ts-node --type-check src/index.ts",
     "//": "Allows us to use the local warthog CLI in commands above",
-    "warthog": "../../bin/warthog"
+    "warthog": "../../packages/cli/bin/warthog"
   },
   "dependencies": {
     "handlebars": "^4.5.2",

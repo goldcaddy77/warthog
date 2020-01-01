@@ -1,4 +1,4 @@
-import { BaseModel, Model, OneToMany, StringField } from '../../../../../src';
+import { BaseModel, Model, OneToMany, StringField } from '@warthog/core';
 
 import { Post } from '../post/post.model';
 
@@ -7,6 +7,9 @@ export class User extends BaseModel {
   @StringField()
   firstName?: string;
 
-  @OneToMany(() => Post, post => post.user)
+  @OneToMany(
+    () => Post,
+    post => post.user
+  )
   posts?: Post[];
 }

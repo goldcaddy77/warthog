@@ -1,4 +1,4 @@
-import { BaseModel, ManyToOne, Model, StringField } from '../../../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '@warthog/core';
 
 import { User } from '../user/user.model';
 
@@ -7,6 +7,10 @@ export class Post extends BaseModel {
   @StringField({ maxLength: 256 })
   title?: string;
 
-  @ManyToOne(() => User, user => user.posts, { nullable: false })
+  @ManyToOne(
+    () => User,
+    user => user.posts,
+    { nullable: false }
+  )
   user?: User;
 }

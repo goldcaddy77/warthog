@@ -1,0 +1,7 @@
+{
+  // eslint complains that the example folders aren't in our tsconfig path,
+  // so we give eslint it's own config file
+  "extends": "../../tsconfig.eslint.json",
+  "include": ["src/**/*", "examples/**/*"],
+  "exclude": ["node_modules/**/*", "**/generated/*"]
+}

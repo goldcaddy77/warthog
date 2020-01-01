@@ -2,7 +2,7 @@
 import { Arg, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext } from '../../../../src';
+import { BaseContext } from '@warthog/core';
 
 import { UserWhereUniqueInput } from '../../generated';
 
