@@ -145,11 +145,11 @@ export interface UserWhereInput {
   email_startsWith?: String | null
   email_endsWith?: String | null
   email_in?: String[] | String | null
-  age_eq?: Float | null
-  age_gt?: Float | null
-  age_gte?: Float | null
-  age_lt?: Float | null
-  age_lte?: Float | null
+  age_eq?: Int | null
+  age_gt?: Int | null
+  age_gte?: Int | null
+  age_lt?: Int | null
+  age_lte?: Int | null
   age_in?: Int[] | Int | null
   isRequired_eq?: Boolean | null
   isRequired_in?: Boolean[] | Boolean | null
@@ -238,7 +238,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 export type DateTime = Date | string
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 */
 export type Float = number
 
@@ -249,7 +249,7 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 

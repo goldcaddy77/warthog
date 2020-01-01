@@ -1,7 +1,7 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { StandardDeleteResponse, UserId } from '../../../../src';
+import { StandardDeleteResponse, UserId } from '@warthog/core';
 import {
   FeatureFlagSegmentCreateInput,
   FeatureFlagSegmentUpdateArgs,
@@ -20,13 +20,10 @@ export class FeatureFlagSegmentResolver {
   }
 
   @Query(() => [FeatureFlagSegment])
-  async featureFlagSegments(@Args()
-  {
-    where,
-    orderBy,
-    limit,
-    offset
-  }: FeatureFlagSegmentWhereArgs): Promise<FeatureFlagSegment[]> {
+  async featureFlagSegments(
+    @Args()
+    { where, orderBy, limit, offset }: FeatureFlagSegmentWhereArgs
+  ): Promise<FeatureFlagSegment[]> {
     return this.service.find<FeatureFlagSegmentWhereInput>(where, orderBy, limit, offset);
   }
 

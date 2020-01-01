@@ -1,7 +1,7 @@
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../../../src';
+import { BaseContext, Fields, StandardDeleteResponse, UserId } from '@warthog/core';
 import {
   PostCreateInput,
   PostCreateManyArgs,

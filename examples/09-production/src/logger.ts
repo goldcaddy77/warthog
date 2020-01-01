@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as util from 'util';
 
-import { getBindingError } from '../../../src';
+import { getBindingError } from '@warthog/core';
 
 export class Logger {
   static info(...args: any[]) {

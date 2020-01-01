@@ -2,7 +2,7 @@ import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from '
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseResolver } from '../../../../src';
+import { BaseContext, BaseResolver } from '@warthog/core';
 import {
   UserRoleCreateInput,
   UserRoleCreateManyArgs,
@@ -32,9 +32,9 @@ export class UserRoleResolver extends BaseResolver<UserRole> {
   }
 
   @Query(() => [UserRole])
-  async userRoles(@Args() { where, orderBy, limit, offset }: UserRoleWhereArgs): Promise<
-    UserRole[]
-  > {
+  async userRoles(
+    @Args() { where, orderBy, limit, offset }: UserRoleWhereArgs
+  ): Promise<UserRole[]> {
     return this.find<UserRoleWhereInput>(where, orderBy, limit, offset);
   }
 

@@ -1,0 +1,19 @@
+{
+  "linters": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.md": [
+      "markdownlint"
+    ]
+  },
+  "ignore": [
+    "**/generated/*"
+  ]
+}

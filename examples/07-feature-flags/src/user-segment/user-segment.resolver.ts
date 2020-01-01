@@ -1,7 +1,7 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { StandardDeleteResponse, UserId } from '../../../../src';
+import { StandardDeleteResponse, UserId } from '@warthog/core';
 import {
   UserSegmentCreateInput,
   UserSegmentUpdateArgs,
@@ -20,9 +20,9 @@ export class UserSegmentResolver {
   }
 
   @Query(() => [UserSegment])
-  async userSegments(@Args() { where, orderBy, limit, offset }: UserSegmentWhereArgs): Promise<
-    UserSegment[]
-  > {
+  async userSegments(
+    @Args() { where, orderBy, limit, offset }: UserSegmentWhereArgs
+  ): Promise<UserSegment[]> {
     return this.service.find<UserSegmentWhereInput>(where, orderBy, limit, offset);
   }
 

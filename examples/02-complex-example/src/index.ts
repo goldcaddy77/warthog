@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { logger } from '../../../src';
+import { logger } from '../../../packages/core/src';
 
 import { getServer } from './server';
 

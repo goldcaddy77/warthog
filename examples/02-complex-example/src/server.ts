@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { authChecker, BaseContext, Server } from '../../../src/';
+import { authChecker, BaseContext, Server } from '../../../packages/core/src/';
 
 import { customLogger } from './logger';
 
