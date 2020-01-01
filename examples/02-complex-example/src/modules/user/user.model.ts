@@ -14,7 +14,7 @@ import {
   NumericField,
   StringField,
   FloatField
-} from '../../../../../src';
+} from '@warthog/core';
 
 // Note: this must be exported and in the same file where it's attached with @EnumField
 // Also - must use string enums

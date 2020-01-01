@@ -12,7 +12,7 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
+import { BaseContext, StandardDeleteResponse, UserId } from '@warthog/core';
 import {
   FeatureFlagCreateInput,
   FeatureFlagUpdateArgs,

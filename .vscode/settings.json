@@ -5,13 +5,7 @@
   "[html]": {
     "editor.formatOnSave": false
   },
-  "eslint.validate": [
-    "javascript",
-    {
-      "language": "typescript",
-      "autoFix": true
-    }
-  ],
+  "eslint.validate": ["javascript", "typescript"],
   "search.exclude": {
     "dist/": true,
     "node_modules/": true

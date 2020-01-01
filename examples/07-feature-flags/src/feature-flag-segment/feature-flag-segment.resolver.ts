@@ -1,7 +1,7 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { StandardDeleteResponse, UserId } from '../../../../src';
+import { StandardDeleteResponse, UserId } from '@warthog/core';
 import {
   FeatureFlagSegmentCreateInput,
   FeatureFlagSegmentUpdateArgs,

@@ -2,7 +2,7 @@ import { Inject, Service } from 'typedi';
 import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseService } from '../../../../src';
+import { BaseService } from '@warthog/core';
 
 import { ProjectService } from '../project/project.service';
 
@@ -42,7 +42,14 @@ export class FeatureFlagService extends BaseService<FeatureFlag> {
         AND us.env_key = $3;
     `;
 
-    const results = await this.repository.query(query, [data.userKey, data.projKey, data.envKey]);
+    const results = await this.repository.query(query, [
+      data.userKey,
+      data.projKey,
+      data.envKey,
+      data.userKey,
+      data.projKey,
+      data.envKey
+    ]);
 
     return results.map(item => item.feature_key);
   }

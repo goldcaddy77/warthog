@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 
-import { BaseContext, Server } from '../../../src';
+import { BaseContext, Server } from '@warthog/server-express';
 
 interface Context extends BaseContext {
   user: {
     email: string;
     id: string;
-    permissions: string;
+    permissions: string[];
   };
 }
 
