@@ -20,6 +20,11 @@ export interface WhereInput {
   id_in?: IDType[];
 }
 
+export interface FindAndCountResult<E> {
+  records: E[]; // list of records returned from the database
+  total: number; // total number of records found
+}
+
 export interface DeleteReponse {
   id: IDType;
 }

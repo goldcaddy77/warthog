@@ -1,13 +1,13 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, EntityManager, getRepository, Repository } from 'typeorm';
+import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel } from '..';
-import { StringMap, WhereInput } from './types';
+import { StringMap, WhereInput, FindAndCountResult } from './types';
 
 interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -58,7 +58,33 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
+    const qb = this.buildFindQuery<W>(where, orderBy, limit, offset, fields);
+    return qb.getMany();
+  }
+
+  async findAndCount<W extends WhereInput>(
+    where?: any,
+    orderBy?: string,
+    limit?: number,
+    offset?: number,
+    fields?: string[]
+  ): Promise<FindAndCountResult<E>> {
+    const qb = this.buildFindQuery<W>(where, orderBy, limit, offset, fields);
+    const [records, total] = await qb.getManyAndCount();
+    return {
+      records,
+      total
+    };
+  }
+
+  private buildFindQuery<W extends WhereInput>(
+    where?: any,
+    orderBy?: string,
+    limit?: number,
+    offset?: number,
+    fields?: string[]
+  ): SelectQueryBuilder<E> {
+    let qb = this.repository.createQueryBuilder(this.klass);
 
     if (limit) {
       qb = qb.take(limit);
@@ -124,7 +150,7 @@ export class BaseService<E extends BaseModel> {
       });
     }
 
-    return qb.getMany();
+    return qb;
   }
 
   async findOne<W extends Partial<E>>(where: W): Promise<E> {
