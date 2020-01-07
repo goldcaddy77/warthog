@@ -7,7 +7,9 @@ import {
   Mutation,
   Query,
   Resolver,
-  Root
+  Root,
+  ObjectType,
+  Field
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
@@ -25,6 +27,28 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
+import { NestedFields } from '../../../decorators';
+
+@ObjectType()
+export class PageInfo {
+  @Field(() => Number, { nullable: false })
+  limit!: number;
+
+  @Field(() => Number, { nullable: false })
+  offset!: number;
+
+  @Field(() => Number, { nullable: false })
+  total!: number;
+}
+
+@ObjectType()
+export class DishesPaginated {
+  @Field(() => [Dish], { nullable: false })
+  dishes!: Dish[];
+
+  @Field(() => PageInfo, { nullable: false })
+  pageInfo!: PageInfo;
+}
 
 @Resolver(Dish)
 export class DishResolver {
@@ -43,6 +67,30 @@ export class DishResolver {
     @Fields() fields: string[]
   ): Promise<Dish[]> {
     return this.service.find<DishWhereInput>(where, orderBy, limit, offset, fields);
+  }
+
+  @Authorized('dish:read')
+  @Query(() => DishesPaginated)
+  async dishesPaginated(
+    @Args() { where, orderBy, limit, offset }: DishWhereArgs,
+    @NestedFields() fields: any
+  ): Promise<DishesPaginated> {
+    const { records: dishes, total } = await this.service.findAndCount<DishWhereInput>(
+      where,
+      orderBy,
+      limit,
+      offset,
+      fields.dishes || []
+    );
+
+    return {
+      dishes,
+      pageInfo: {
+        limit: limit == null ? total : limit,
+        offset: offset == null ? 0 : offset,
+        total
+      }
+    };
   }
 
   @Authorized('dish:read')

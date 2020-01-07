@@ -123,6 +123,31 @@ describe('server', () => {
     expect(firstResult.dishes.length).toEqual(20);
   });
 
+  test('queries for dishes with pagination', async () => {
+    expect.assertions(4);
+    const { dishes, pageInfo } = await binding.query.dishesPaginated(
+      { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
+      `{
+          dishes {
+            name
+            kitchenSink {
+              emailField
+            }
+          }
+          pageInfo {
+            limit
+            offset
+            total
+          }
+        }`
+    );
+
+    expect(dishes).toMatchSnapshot();
+    expect(pageInfo.offset).toEqual(0);
+    expect(pageInfo.limit).toEqual(1);
+    expect(pageInfo.total).toEqual(20);
+  });
+
   test('throws errors when given bad input on a single create', async done => {
     expect.assertions(1);
 

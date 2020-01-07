@@ -83,6 +83,11 @@ input DishCreateInput {
   kitchenSinkId: ID!
 }
 
+type DishesPaginated {
+  dishes: [Dish!]!
+  pageInfo: PageInfo!
+}
+
 enum DishOrderByInput {
   createdAt_ASC
   createdAt_DESC
@@ -374,8 +379,15 @@ type Mutation {
   deleteKitchenSink(where: KitchenSinkWhereUniqueInput!): StandardDeleteResponse!
 }
 
+type PageInfo {
+  limit: Float!
+  offset: Float!
+  total: Float!
+}
+
 type Query {
   dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
+  dishesPaginated(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): DishesPaginated!
   dish(where: DishWhereUniqueInput!): Dish!
   kitchenSinks(offset: Int, limit: Int = 50, where: KitchenSinkWhereInput, orderBy: KitchenSinkOrderByInput): [KitchenSink!]!
   kitchenSink(where: KitchenSinkWhereUniqueInput!): KitchenSink!
