@@ -45,7 +45,6 @@
   "homepage": "https://github.com/goldcaddy77/warthog#readme",
   "//": "TODO: figure out which of these are dependencies, devDeps or peerDeps",
   "devDependencies": {
-    "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "eslint": "^5.16.0",
