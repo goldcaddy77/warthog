@@ -7,10 +7,6 @@ export class Post extends BaseModel {
   @StringField({ maxLength: 256 })
   title?: string;
 
-  @ManyToOne(
-    () => User,
-    user => user.posts,
-    { nullable: false }
-  )
+  @ManyToOne(() => User, user => user.posts, { nullable: false })
   user?: User;
 }

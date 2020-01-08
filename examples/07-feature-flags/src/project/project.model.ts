@@ -15,28 +15,16 @@ export class Project extends BaseModel {
   @StringField({ maxLength: 20, minLength: 3, nullable: false, unique: true })
   key: string;
 
-  @OneToMany(
-    () => Environment,
-    (environment: Environment) => environment.project
-  )
+  @OneToMany(() => Environment, (environment: Environment) => environment.project)
   environments?: Environment[];
 
-  @OneToMany(
-    () => Segment,
-    (segment: Segment) => segment.project
-  )
+  @OneToMany(() => Segment, (segment: Segment) => segment.project)
   segments?: Segment[];
 
-  @OneToMany(
-    () => FeatureFlag,
-    (featureFlag: FeatureFlag) => featureFlag.project
-  )
+  @OneToMany(() => FeatureFlag, (featureFlag: FeatureFlag) => featureFlag.project)
   featureFlags?: FeatureFlag[];
 
-  @OneToMany(
-    () => FeatureFlagUser,
-    (featureFlagUser: FeatureFlagUser) => featureFlagUser.project
-  )
+  @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.project)
   featureFlagUsers?: FeatureFlagUser[];
 
   @OneToMany(
@@ -45,9 +33,6 @@ export class Project extends BaseModel {
   )
   featureFlagSegments?: FeatureFlagSegment[];
 
-  @OneToMany(
-    () => UserSegment,
-    (userSegment: UserSegment) => userSegment.project
-  )
+  @OneToMany(() => UserSegment, (userSegment: UserSegment) => userSegment.project)
   userSegments?: UserSegment[];
 }
