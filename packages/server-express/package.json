@@ -40,7 +40,13 @@
     "@warthog/core": "^0.0.0",
     "apollo-server": "^2.6.3",
     "apollo-server-express": "^2.6.3",
-    "express": "^4.16.4"
+    "debug": "^4.1.1",
+    "graphql": "^14.1.1",
+    "graphql-binding": "^2.5.1",
+    "express": "^4.16.4",
+    "typedi": "^0.8.0",
+    "typeorm": "^0.2.18",
+    "typeorm-typedi-extensions": "^0.2.3"
   },
   "devDependencies": {
     "@types/debug": "^0.0.31",

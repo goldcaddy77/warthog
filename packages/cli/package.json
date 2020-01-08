@@ -32,18 +32,18 @@
     "url": "https://github.com/goldcaddy77/warthog/issues"
   },
   "dependencies": {
+    "@warthog/core": "^0.0.0",
     "cosmiconfig": "^5.2.1",
     "prettier": "~1.18.2",
     "gluegun": "^3.3.1",
     "graphql": "^14.1.1",
+    "open": "^6.3.0",
+    "pgtools": "^0.3.0",
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
-    "typeorm": "^0.2.18",
-    "typeorm-typedi-extensions": "^0.2.3",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
-    "@warthog/core": "^0.0.0",
     "@types/cosmiconfig": "^5.0.3",
     "@types/faker": "^4.1.5",
     "@types/isomorphic-fetch": "^0.0.34",
@@ -53,14 +53,11 @@
     "@types/supertest": "^2.0.8",
     "copyfiles": "^2.1.1",
     "jest": "^24.8.0",
-    "open": "^6.3.0",
-    "pg": "^7.7.1",
-    "pgtools": "^0.3.0",
-    "sqlite3": "^4.0.6",
     "supertest": "^4.0.2",
     "type-graphql": "^0.17.4",
     "typedi": "^0.8.0",
     "typeorm": "^0.2.18",
+    "typeorm-typedi-extensions": "^0.2.3",
     "ts-jest": "^24.0.2"
   },
   "scripts": {
