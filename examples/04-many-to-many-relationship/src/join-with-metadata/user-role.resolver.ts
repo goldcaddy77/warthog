@@ -32,9 +32,9 @@ export class UserRoleResolver extends BaseResolver<UserRole> {
   }
 
   @Query(() => [UserRole])
-  async userRoles(
-    @Args() { where, orderBy, limit, offset }: UserRoleWhereArgs
-  ): Promise<UserRole[]> {
+  async userRoles(@Args() { where, orderBy, limit, offset }: UserRoleWhereArgs): Promise<
+    UserRole[]
+  > {
     return this.find<UserRoleWhereInput>(where, orderBy, limit, offset);
   }
 

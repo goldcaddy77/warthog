@@ -27,10 +27,13 @@ export class FeatureFlagUserResolver {
   }
 
   @Query(() => [FeatureFlagUser])
-  async featureFlagUsers(
-    @Args()
-    { where, orderBy, limit, offset }: FeatureFlagUserWhereArgs
-  ): Promise<FeatureFlagUser[]> {
+  async featureFlagUsers(@Args()
+  {
+    where,
+    orderBy,
+    limit,
+    offset
+  }: FeatureFlagUserWhereArgs): Promise<FeatureFlagUser[]> {
     return this.service.find<FeatureFlagUserWhereInput>(where, orderBy, limit, offset);
   }
 

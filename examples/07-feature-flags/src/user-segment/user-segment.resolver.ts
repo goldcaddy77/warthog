@@ -20,9 +20,9 @@ export class UserSegmentResolver {
   }
 
   @Query(() => [UserSegment])
-  async userSegments(
-    @Args() { where, orderBy, limit, offset }: UserSegmentWhereArgs
-  ): Promise<UserSegment[]> {
+  async userSegments(@Args() { where, orderBy, limit, offset }: UserSegmentWhereArgs): Promise<
+    UserSegment[]
+  > {
     return this.service.find<UserSegmentWhereInput>(where, orderBy, limit, offset);
   }
 

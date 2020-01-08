@@ -9,15 +9,9 @@ export class User extends BaseModel {
   @StringField({ maxLength: 20, minLength: 3, nullable: false, unique: true })
   key: string;
 
-  @OneToMany(
-    () => FeatureFlagUser,
-    (featureFlagUser: FeatureFlagUser) => featureFlagUser.user
-  )
+  @OneToMany(() => FeatureFlagUser, (featureFlagUser: FeatureFlagUser) => featureFlagUser.user)
   featureFlagUsers?: FeatureFlagUser[];
 
-  @OneToMany(
-    () => UserSegment,
-    (userSegments: UserSegment) => userSegments.user
-  )
+  @OneToMany(() => UserSegment, (userSegments: UserSegment) => userSegments.user)
   userSegments?: UserSegment[];
 }
