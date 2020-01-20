@@ -1,0 +1,55 @@
+{
+  "name": "example-10",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn db:create && yarn codegen && yarn db:seed:dev",
+    "clean": "rm -f ./warthog.sqlite.tmp",
+    "codegen": "yarn warthog codegen",
+    "db:create": "yarn warthog db:create",
+    "db:drop": "yarn warthog db:drop",
+    "db:seed:dev": "ts-node tools/seed.ts",
+    "playground": "yarn warthog playground",
+    "start": "yarn start:ts",
+    "start:debug": "yarn start:ts --inspect",
+    "start:ts": "DEBUG=warthog* ts-node-dev --type-check src/index.ts",
+    "test": "jest --detectOpenHandles --verbose --coverage",
+    "test:watch": "jest --watch",
+    "//": "Allows us to use the local warthog CLI in commands above",
+    "warthog": "../../bin/warthog"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "graphql-subscriptions": "^1.1.0",
+    "handlebars": "^4.5.2",
+    "lodash": "^4.17.15",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^3.7.2",
+    "xstate": "^4.7.3"
+  },
+  "devDependencies": {
+    "@types/faker": "^4.1.7",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/jest": "^23.3.14",
+    "@types/node": "^10.17.5",
+    "faker": "^4.1.0",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.44"
+  },
+  "jest": {
+    "transform": {
+      ".ts": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.test\\.ts$"
+    ]
+  }
+}
