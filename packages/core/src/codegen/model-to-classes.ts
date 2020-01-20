@@ -70,7 +70,7 @@ export function generateEnumMapImports(): string[] {
   return imports;
 }
 
-export function entityToWhereUniqueInput(model: ModelMetadata): string {
+export function modelToWhereUniqueInput(model: ModelMetadata): string {
   const uniques = getMetadataStorage().uniquesForModel(model);
   const others = getMetadataArgsStorage().uniques;
   const modelUniques: { [key: string]: string } = {};
@@ -134,7 +134,7 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
   return template;
 }
 
-export function entityToCreateInput(model: ModelMetadata): string {
+export function modelToCreateInput(model: ModelMetadata): string {
   const idsOnCreate =
     (Container.get('Config') as any).get('ALLOW_OPTIONAL_ID_ON_CREATE') === 'true';
 
@@ -193,7 +193,7 @@ export function entityToCreateInput(model: ModelMetadata): string {
   `;
 }
 
-export function entityToUpdateInput(model: ModelMetadata): string {
+export function modelToUpdateInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
   const modelColumns = getColumnsForModel(model);
@@ -244,7 +244,7 @@ export function entityToUpdateInput(model: ModelMetadata): string {
 }
 
 // Constructs required arguments needed when doing an update
-export function entityToUpdateInputArgs(model: ModelMetadata): string {
+export function modelToUpdateInputArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
     export class ${model.name}UpdateArgs {
@@ -261,7 +261,7 @@ function columnToTypes(column: ColumnMetadata) {
   return { graphqlType, tsType };
 }
 
-export function entityToWhereInput(model: ModelMetadata): string {
+export function modelToWhereInput(model: ModelMetadata): string {
   let fieldTemplates = '';
 
   const modelColumns = getColumnsForModel(model);
@@ -421,7 +421,7 @@ export function entityToWhereInput(model: ModelMetadata): string {
   `;
 }
 
-export function entityToWhereArgs(model: ModelMetadata): string {
+export function modelToWhereArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
     export class ${model.name}WhereArgs extends PaginationArgs {
@@ -436,7 +436,7 @@ export function entityToWhereArgs(model: ModelMetadata): string {
 
 // Note: it would be great to inject a single `Arg` with the [model.nameCreateInput] array arg,
 // but that is not allowed by TypeGraphQL
-export function entityToCreateManyArgs(model: ModelMetadata): string {
+export function modelToCreateManyArgs(model: ModelMetadata): string {
   return `
     @ArgsType()
     export class ${model.name}CreateManyArgs {
@@ -446,7 +446,7 @@ export function entityToCreateManyArgs(model: ModelMetadata): string {
   `;
 }
 
-export function entityToOrderByEnum(model: ModelMetadata): string {
+export function modelToOrderByEnum(model: ModelMetadata): string {
   let fieldsTemplate = '';
 
   const modelColumns = getColumnsForModel(model);

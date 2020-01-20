@@ -34,7 +34,7 @@ module.exports = (toolbox: GluegunToolbox) => {
         await createDb(getPgConfig(config), database);
       } catch (e) {
         if (e.message.indexOf('duplicate') > -1) {
-          return error(`Error: Database '${database}' already exists`);
+          return info(`Database '${database}' already exists`);
         } else if (e.message) {
           return error(e.message);
         }

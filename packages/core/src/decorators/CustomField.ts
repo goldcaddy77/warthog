@@ -4,7 +4,7 @@ import { Column, ColumnType } from 'typeorm';
 import { ColumnOptions } from 'typeorm/decorator/options/ColumnOptions';
 
 import { decoratorDefaults, FieldType } from '../metadata';
-import { columnTypeToGraphQLType } from '../schema';
+import { columnTypeToGraphQLType } from '../codegen';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 import { WarthogField } from './WarthogField';
 

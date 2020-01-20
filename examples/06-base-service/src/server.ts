@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
-import { BaseContext, Server } from '@warthog/core';
+import { BaseContext } from '@warthog/core';
+import { Server } from '@warthog/server-express';
 
 interface Context extends BaseContext {
   user: {

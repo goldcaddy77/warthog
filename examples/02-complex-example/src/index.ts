@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { logger } from '../../../packages/core/src';
+import { logger } from '@warthog/core';
 
 import { getServer } from './server';
 
