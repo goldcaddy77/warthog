@@ -314,8 +314,8 @@ type UserRole implements BaseGraphQLObject {
 }
 
 input UserRoleCreateInput {
-  userId: String!
-  roleId: String!
+  userId: ID!
+  roleId: ID!
   otherMetadata: String
 }
 
@@ -335,8 +335,8 @@ enum UserRoleOrderByInput {
 }
 
 input UserRoleUpdateInput {
-  userId: String
-  roleId: String
+  userId: ID
+  roleId: ID
   otherMetadata: String
 }
 

@@ -430,4 +430,6 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: String
   emailField: String
+  enumField: StringEnum
+  stringField: String
 }

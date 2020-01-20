@@ -364,6 +364,8 @@ export interface UserWhereInput {
 export interface UserWhereUniqueInput {
   id?: String | null
   emailField?: String | null
+  enumField?: StringEnum | null
+  stringField?: String | null
 }
 
 export interface BaseGraphQLObject {

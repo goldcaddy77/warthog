@@ -460,7 +460,7 @@ async function updateKitchenSink(
   binding: any,
   data: object,
   where: object,
-  returnFields: string = '{ id, stringField, emailField, integerField, booleanField, floatField }'
+  returnFields = '{ id, stringField, emailField, integerField, booleanField, floatField }'
 ): Promise<KitchenSink> {
   return binding.mutation.updateKitchenSink(
     {
