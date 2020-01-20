@@ -18,12 +18,12 @@ import {
   Logger,
   CodeGenerator,
   Config,
-  DataLoaderMiddleware,
   getRemoteBinding,
-  createDBConnection,
-  BaseContext
+  createDBConnection
 } from '@warthog/core';
-import { healthCheckMiddleware } from './middleware';
+
+import { BaseContext } from './context';
+import { DataLoaderMiddleware, healthCheckMiddleware } from './middleware';
 
 import * as Debug from 'debug';
 

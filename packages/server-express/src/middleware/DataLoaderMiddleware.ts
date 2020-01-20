@@ -2,7 +2,7 @@ import DataLoader = require('dataloader');
 import { MiddlewareInterface, NextFn, ResolverData } from 'type-graphql';
 import { Service } from 'typedi';
 
-import { BaseContext } from '../core';
+import { BaseContext } from '../context';
 
 interface Deleteable {
   deletedAt?: string;

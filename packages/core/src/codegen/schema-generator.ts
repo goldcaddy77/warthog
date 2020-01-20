@@ -3,15 +3,15 @@ import * as prettier from 'prettier';
 import { logger, Logger } from '../core/logger';
 import {
   generateEnumMapImports,
-  entityToCreateInput,
-  entityToCreateManyArgs,
-  entityToOrderByEnum,
-  entityToUpdateInput,
-  entityToUpdateInputArgs,
-  entityToWhereArgs,
-  entityToWhereInput,
-  entityToWhereUniqueInput
-} from './TypeORMConverter';
+  modelToCreateInput,
+  modelToCreateManyArgs,
+  modelToOrderByEnum,
+  modelToUpdateInput,
+  modelToUpdateInputArgs,
+  modelToWhereArgs,
+  modelToWhereInput,
+  modelToWhereUniqueInput
+} from './model-to-classes';
 import { getMetadataStorage, ModelMetadata } from '../metadata';
 
 export class SchemaGenerator {
@@ -54,14 +54,14 @@ export class SchemaGenerator {
       const model: ModelMetadata = metadata.getModel(modelName);
 
       template += `
-        ${entityToOrderByEnum(model)}
-        ${entityToWhereInput(model)}
-        ${entityToWhereUniqueInput(model)}
-        ${entityToCreateInput(model)}
-        ${entityToUpdateInput(model)}
-        ${entityToWhereArgs(model)}
-        ${entityToCreateManyArgs(model)}
-        ${entityToUpdateInputArgs(model)}
+        ${modelToOrderByEnum(model)}
+        ${modelToWhereInput(model)}
+        ${modelToWhereUniqueInput(model)}
+        ${modelToCreateInput(model)}
+        ${modelToUpdateInput(model)}
+        ${modelToWhereArgs(model)}
+        ${modelToCreateManyArgs(model)}
+        ${modelToUpdateInputArgs(model)}
       `;
     });
 

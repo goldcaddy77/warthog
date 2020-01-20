@@ -1,5 +1,5 @@
 import { GraphQLEnumType } from 'graphql';
-import { ColumnType } from '../torm';
+import { ColumnType } from './torm';
 
 export type FieldType =
   | 'boolean'
