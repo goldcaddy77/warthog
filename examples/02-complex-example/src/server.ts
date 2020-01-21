@@ -9,7 +9,7 @@ interface Context extends BaseContext {
   user: {
     email: string;
     id: string;
-    permissions: string;
+    permissions: string[];
   };
 }
 

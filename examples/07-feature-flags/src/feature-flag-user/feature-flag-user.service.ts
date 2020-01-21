@@ -12,7 +12,6 @@ import { ProjectService } from '../project/project.service';
 import { UserService } from '../user/user.service';
 
 import { FeatureFlagUser } from './feature-flag-user.model';
-import { FeatureFlagUserCreateInput } from '../../generated';
 
 @Service('FeatureFlagUserService')
 export class FeatureFlagUserService extends BaseService<FeatureFlagUser> {

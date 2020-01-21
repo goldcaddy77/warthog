@@ -93,12 +93,12 @@ export interface BaseWhereInput {
 export interface PostCreateInput {
   id?: String | null
   title: String
-  userId: String
+  userId: ID_Output
 }
 
 export interface PostUpdateInput {
   title?: String | null
-  userId?: String | null
+  userId?: ID_Input | null
 }
 
 export interface PostWhereInput {
