@@ -55,18 +55,14 @@ function ComposedMethodDecorator() {
 }
 
 @ComposedClassDecorator()
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore : TODO: shouldn't need this here.  Need to teach vscode how to allow experimental decorators in test files
 class TestClass {
-  constructor() {
-    //
-  }
-
   @ComposedMethodDecorator()
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore : TODO: shouldn't need this here
   public TestMethod() {
-    //
+    // Testing method
   }
 }
 

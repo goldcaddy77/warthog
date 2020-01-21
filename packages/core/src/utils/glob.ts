@@ -18,6 +18,5 @@ export function loadFromGlobArray(globs: string[]) {
       loadFromGlobString(globString);
     }
   });
-
   return undefined;
 }
