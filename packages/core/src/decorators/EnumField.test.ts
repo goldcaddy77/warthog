@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { IntrospectionEnumType, IntrospectionSchema } from 'graphql';
 import { ObjectType, Query, Resolver } from 'type-graphql';
 
-import { getSchemaInfo } from '../schema';
+import { getSchemaInfo } from '../utils/schema-info';
 
 import { EnumField } from './EnumField';
 
