@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
-import { authChecker, BaseContext, Server } from '../../../packages/core/src/';
+import { authChecker } from '@warthog/core';
+import { BaseContext, Server } from '@warthog/server-express';
 
 import { customLogger } from './logger';
 
@@ -8,7 +9,7 @@ interface Context extends BaseContext {
   user: {
     email: string;
     id: string;
-    permissions: string;
+    permissions: string[];
   };
 }
 

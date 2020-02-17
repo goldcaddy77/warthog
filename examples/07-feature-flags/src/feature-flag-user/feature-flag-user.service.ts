@@ -4,13 +4,14 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseService } from '@warthog/core';
 
+import { FeatureFlagUserCreateInput } from '../../generated';
+
 import { EnvironmentService } from '../environment/environment.service';
 import { FeatureFlagService } from '../feature-flag/feature-flag.service';
 import { ProjectService } from '../project/project.service';
 import { UserService } from '../user/user.service';
 
 import { FeatureFlagUser } from './feature-flag-user.model';
-import { FeatureFlagUserCreateInput } from '../../generated';
 
 @Service('FeatureFlagUserService')
 export class FeatureFlagUserService extends BaseService<FeatureFlagUser> {

@@ -37,12 +37,19 @@ export class FeatureFlagService extends BaseService<FeatureFlag> {
       FROM user_segments us
       INNER JOIN segments s ON us.segment_id = s.id
       INNER JOIN feature_flag_segments ffs ON ffs.segment_id = s.id
-      WHERE us.user_key = '$1'
-        AND us.proj_key = '$2'
-        AND us.env_key = '$3';
+      WHERE us.user_key = '$4'
+        AND us.proj_key = '$5'
+        AND us.env_key = '$6';
     `;
 
-    const results = await this.repository.query(query, [data.userKey, data.projKey, data.envKey]);
+    const results = await this.repository.query(query, [
+      data.userKey,
+      data.projKey,
+      data.envKey,
+      data.userKey,
+      data.projKey,
+      data.envKey
+    ]);
 
     return results.map(item => item.feature_key);
   }

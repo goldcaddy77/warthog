@@ -11,7 +11,9 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, Fields, StandardDeleteResponse, UserId } from '@warthog/core';
+import { Fields, StandardDeleteResponse, UserId } from '@warthog/core';
+import { BaseContext } from '@warthog/server-express';
+
 import {
   KitchenSinkCreateInput,
   KitchenSinkCreateManyArgs,

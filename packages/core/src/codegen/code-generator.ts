@@ -9,9 +9,10 @@ import { buildSchema } from 'type-graphql';
 import * as util from 'util';
 
 import { generateBindingFile } from '../gql';
-import { SchemaGenerator } from '../schema';
-import { authChecker, loadFromGlobArray } from '../tgql';
+import { SchemaGenerator } from './schema-generator';
+import { authChecker } from '../tgql';
 import { logger } from '../core';
+import { loadFromGlobArray } from '../utils';
 // Load all model files so that decorators will gather metadata for code generation
 
 import * as Debug from 'debug';
