@@ -1011,7 +1011,9 @@ Array [
     "emailField": "hi@warthog.com",
     "floatField": 123.456,
     "integerField": 123,
-    "jsonField": null,
+    "jsonField": Object {
+      "hello": "world",
+    },
     "stringField": "My String",
     "updatedById": null,
     "version": 1,

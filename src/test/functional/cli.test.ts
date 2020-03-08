@@ -165,8 +165,9 @@ describe('cli functional tests', () => {
 
     // Make sure there is no DB name
     delete process.env.WARTHOG_DB_DATABASE;
-    await callWarthogCLI('db:create');
 
+    process.env.PGUSER = 'postgres';
+    await callWarthogCLI('db:create');
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain('Database name is required');
@@ -228,9 +229,7 @@ describe('cli functional tests', () => {
 
     // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files
     setTestServerEnvironmentVariables({
-      WARTHOG_DB_DATABASE: './tmp/db/warthog-test-migrations',
-      WARTHOG_DB_SYNCHRONIZE: 'false',
-      WARTHOG_DB_CONNECTION: 'sqlite'
+      WARTHOG_DB_SYNCHRONIZE: 'false'
     });
 
     const server = getTestServer({ mockDBConnection: false });
@@ -241,8 +240,6 @@ describe('cli functional tests', () => {
     stdout = spy.getStdOutErr();
     expect(stdout).toContain('"name" option is required');
     spy.clear();
-
-    // console.log('ormConfigPath', ormConfigPath);
 
     await callWarthogCLI('db:migrate:generate --name cli_test_db_migration');
     stdout = spy.getStdOutErr();

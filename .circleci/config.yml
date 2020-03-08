@@ -7,8 +7,27 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.13
+        environment:
+          PGUSER: postgres
+          PG_USER: postgres
+          PG_HOST: localhost
+      - image: mdillon/postgis:11-alpine
+        environment:
+          PGUSER: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: warthog-test
     steps:
       - checkout
+      - run:
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgress && exit 1
       - restore_cache:
           keys:
             - *yarn_cache_key
@@ -21,7 +40,11 @@ jobs:
           command: yarn build
       - run:
           name: test
-          command: yarn test:prod
+          command: |
+            yarn test:db:drop
+            yarn test:db:create
+            yarn test:ci
+            yarn test:db:drop
       - codecov/upload:
           file: coverage/*.json
           flags: backend

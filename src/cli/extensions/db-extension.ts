@@ -155,7 +155,7 @@ function validateDevNodeEnv(env: string, action: string) {
   if (!env) {
     return 'NODE_ENV must be set';
   }
-  if (env !== 'development' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
+  if (env !== 'development' && env !== 'test' && process.env.WARTHOG_DB_OVERRIDE !== 'true') {
     return `Cannot ${action} database without setting WARTHOG_DB_OVERRIDE environment variable to 'true'`;
   }
   return '';

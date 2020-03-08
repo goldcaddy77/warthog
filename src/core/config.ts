@@ -43,6 +43,7 @@ export class Config {
 
   defaults: Record<string, any>;
   devDefaults: Record<string, any>;
+  testDefaults: Record<string, any>;
   PROJECT_ROOT: string;
   container: Container;
   logger?: Logger;
@@ -92,6 +93,17 @@ export class Config {
       WARTHOG_DB_LOGGING: 'all'
     };
 
+    this.testDefaults = {
+      WARTHOG_APP_HOST: 'localhost',
+      WARTHOG_APP_PORT: '4000',
+      WARTHOG_APP_PROTOCOL: 'http',
+      WARTHOG_AUTO_GENERATE_FILES: 'false',
+      WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
+      // WARTHOG_DB_DATABASE: 'warthog-test',
+      WARTHOG_DB_HOST: 'localhost',
+      WARTHOG_DB_USERNAME: 'postgres'
+    };
+
     const dotenvPath = options.dotenvPath || this.PROJECT_ROOT;
     this.NODE_ENV = this.determineNodeEnv(dotenvPath);
     this.loadDotenvFiles(dotenvPath);
@@ -133,6 +145,7 @@ export class Config {
 
   loadSync(): Config {
     const devOptions = this.NODE_ENV === 'development' ? this.devDefaults : {};
+    const testOptions = this.NODE_ENV === 'test' ? this.testDefaults : {};
     const configFile = this.loadStaticConfigSync();
 
     // Config is loaded as a waterfall.  Items at the top of the object are overwritten by those below, so the order is:
@@ -144,6 +157,7 @@ export class Config {
     const combined = {
       ...this.defaults,
       ...devOptions,
+      ...testOptions,
       ...configFile,
       ...this.typeORMToWarthogEnvVariables(),
       ...this.warthogEnvVariables()
@@ -156,7 +170,7 @@ export class Config {
 
     // Make sure to set the DB connection if we're using a mock DB
     if (combined['WARTHOG_MOCK_DATABASE'] === 'true') {
-      combined['WARTHOG_DB_CONNECTION'] = 'sqlite';
+      // combined['WARTHOG_DB_CONNECTION'] = 'sqlite';
       combined['WARTHOG_DB_DATABASE'] = 'warthog.sqlite.tmp';
       combined['WARTHOG_DB_SYNCHRONIZE'] = 'true';
     }

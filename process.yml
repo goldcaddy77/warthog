@@ -1,0 +1,116 @@
+# Orb 'codecov/codecov@1.0.4' resolved to 'codecov/codecov@1.0.4'
+version: 2
+jobs:
+  build:
+    docker:
+    - image: circleci/node:10.13
+      environment:
+        PGUSER: postgres
+        PG_USER: postgres
+        PG_HOST: localhost
+    - image: mdillon/postgis:11-alpine
+      environment:
+        PGUSER: postgres
+        POSTGRES_USER: postgres
+        POSTGRES_DB: warthog-test
+    steps:
+    - checkout
+    - run:
+        name: Waiting for Postgres to be ready
+        command: |
+          for i in `seq 1 10`;
+          do
+            nc -z localhost 5432 && echo Success && exit 0
+            echo -n .
+            sleep 1
+          done
+          echo Failed waiting for Postgress && exit 1
+    - restore_cache:
+        keys:
+        - yarn-v1-{{ checksum "yarn.lock" }}
+        - yarn-v1-
+    - run:
+        name: dependencies
+        command: yarn install --frozen-lockfile
+    - run:
+        name: build
+        command: yarn build
+    - run:
+        name: test
+        command: |
+          yarn test:db:drop
+          yarn test:db:create
+          yarn test:ci
+          yarn test:db:drop
+    - run:
+        name: Upload Coverage Results
+        command: "bash <(curl -s https://codecov.io/bash) \\\n  -f coverage/*.json \\\n  -n ${CIRCLE_BUILD_NUM} \\\n  -t ${CODECOV_TOKEN} \\\n  -y .codecov.yml \\\n   -F backend  \\\n  \n"
+    - run:
+        name: deploy
+        command: DEBUG=condition* yarn run semantic-release --debug || true
+    - save_cache:
+        key: yarn-v1-{{ checksum "yarn.lock" }}
+        paths: ~/circleci/node_modules
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build
+
+# Original config.yml file:
+# version: 2.1
+# orbs:
+#   codecov: codecov/codecov@1.0.4
+# references:
+#   yarn_cache_key: &yarn_cache_key yarn-v1-{{ checksum \"yarn.lock\" }}
+# jobs:
+#   build:
+#     docker:
+#       - image: circleci/node:10.13
+#         environment:
+#           PGUSER: postgres
+#           PG_USER: postgres
+#           PG_HOST: localhost
+#       - image: mdillon/postgis:11-alpine
+#         environment:
+#           PGUSER: postgres
+#           POSTGRES_USER: postgres
+#           POSTGRES_DB: warthog-test
+#     steps:
+#       - checkout
+#       - run:
+#           name: Waiting for Postgres to be ready
+#           command: |
+#             for i in `seq 1 10`;
+#             do
+#               nc -z localhost 5432 && echo Success && exit 0
+#               echo -n .
+#               sleep 1
+#             done
+#             echo Failed waiting for Postgress && exit 1
+#       - restore_cache:
+#           keys:
+#             - *yarn_cache_key
+#             - yarn-v1-
+#       - run:
+#           name: dependencies
+#           command: yarn install --frozen-lockfile
+#       - run:
+#           name: build
+#           command: yarn build
+#       - run:
+#           name: test
+#           command: |
+#             yarn test:db:drop
+#             yarn test:db:create
+#             yarn test:ci
+#             yarn test:db:drop
+#       - codecov/upload:
+#           file: coverage/*.json
+#           flags: backend
+#       - run:
+#           name: deploy
+#           command: DEBUG=condition* yarn run semantic-release --debug || true
+#       - save_cache:
+#           key: *yarn_cache_key
+#           paths: ~/circleci/node_modules
