@@ -263,6 +263,11 @@ export class Server<C extends BaseContext> {
       this.logger.info(`🚀 Server ready at ${url}`)
     );
 
+    // Open up websocket connection for subscriptions
+    if (this.config.get('SUBSCRIPTIONS') === 'true') {
+      this.graphQLServer.installSubscriptionHandlers(this.httpServer);
+    }
+
     // Open playground in the browser
     if (this.config.get('AUTO_OPEN_PLAYGROUND') === 'true') {
       // Assigning to variable and logging to appease linter

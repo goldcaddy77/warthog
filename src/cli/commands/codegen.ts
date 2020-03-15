@@ -1,3 +1,4 @@
+import { logger } from '../../core';
 import { CodeGenerator } from '../../core/code-generator';
 import { cleanUpTestData } from '../../db';
 
@@ -21,7 +22,10 @@ export default {
         warthogImportPath: config.get('MODULE_IMPORT_PATH')
       }).generate();
     } catch (error) {
-      console.error(error); // eslint-disable-line
+      logger.error(error);
+      if (error.name.indexOf('Cannot determine GraphQL input type') > -1) {
+        logger.error('This often means you have multiple versions of TypeGraphQL installed.');
+      }
     }
 
     await cleanUpTestData();

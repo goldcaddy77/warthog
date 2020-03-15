@@ -78,6 +78,7 @@ export class Config {
       // TODO: eventually we should do this path resolution when we ask for the variable with `get`
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
+      WARTHOG_SUBSCRIPTIONS: 'false',
       WARTHOG_VALIDATE_RESOLVERS: 'false'
     };
 

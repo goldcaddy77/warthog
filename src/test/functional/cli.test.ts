@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { system, filesystem } from 'gluegun';
+// eslint-disable-next-line
 // @ts-ignore
 import * as pgtools from 'pgtools';
 
@@ -18,10 +19,10 @@ describe('cli functional tests', () => {
   const spy = spyOnStd(); // Gives us access to whatever is written to stdout as part of the CLI command
   const openMock = jest.fn();
 
-  beforeAll(() => {
-    filesystem.dirAsync(GENERATED_FOLDER); // cleanup test artifacts
+  beforeAll(async () => {
+    await filesystem.dirAsync(GENERATED_FOLDER); // cleanup test artifacts
     jest.mock('open', () => openMock);
-    cleanUpTestData();
+    await cleanUpTestData();
   });
 
   beforeEach(() => {

@@ -179,5 +179,9 @@
         "tsConfig": "tsconfig.test.json"
       }
     }
+  },
+  "resolutions": {
+    "//": "Fixes security vulnerability",
+    "set-value": "2.0.1"
   }
 }
