@@ -1,0 +1,439 @@
+interface BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModel implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModelUUID implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+input BaseWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+}
+
+type Card implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  name: String!
+  nationalPokedexNumber: Int
+  types: String
+  subtype: String
+  supertype: String
+  hp: String
+  number: String
+  artist: String
+  rarity: String
+  series: String
+  set: String
+  setCode: String
+  retreatCost: String
+  convertedRetreatCost: String
+  text: String
+  attackDamage: String
+  attackCost: String
+  attackName: String
+  attackText: String
+  weaknesses: String
+  resistances: String
+  ancientTrait: String
+  abilityName: String
+  abilityText: String
+  abilityType: String
+  evolvesFrom: String
+  contains: String
+  imageUrl: String
+  imageUrlHiRes: String
+  ability: String
+  attacks: String
+}
+
+input CardCreateInput {
+  name: String!
+  nationalPokedexNumber: Float
+  types: String
+  subtype: String
+  supertype: String
+  hp: String
+  number: String
+  artist: String
+  rarity: String
+  series: String
+  set: String
+  setCode: String
+  retreatCost: String
+  convertedRetreatCost: String
+  text: String
+  attackDamage: String
+  attackCost: String
+  attackName: String
+  attackText: String
+  weaknesses: String
+  resistances: String
+  ancientTrait: String
+  abilityName: String
+  abilityText: String
+  abilityType: String
+  evolvesFrom: String
+  contains: String
+  imageUrl: String
+  imageUrlHiRes: String
+  ability: String
+  attacks: String
+}
+
+enum CardOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  name_ASC
+  name_DESC
+  nationalPokedexNumber_ASC
+  nationalPokedexNumber_DESC
+  types_ASC
+  types_DESC
+  subtype_ASC
+  subtype_DESC
+  supertype_ASC
+  supertype_DESC
+  hp_ASC
+  hp_DESC
+  number_ASC
+  number_DESC
+  artist_ASC
+  artist_DESC
+  rarity_ASC
+  rarity_DESC
+  series_ASC
+  series_DESC
+  set_ASC
+  set_DESC
+  setCode_ASC
+  setCode_DESC
+  retreatCost_ASC
+  retreatCost_DESC
+  convertedRetreatCost_ASC
+  convertedRetreatCost_DESC
+  text_ASC
+  text_DESC
+  attackDamage_ASC
+  attackDamage_DESC
+  attackCost_ASC
+  attackCost_DESC
+  attackName_ASC
+  attackName_DESC
+  attackText_ASC
+  attackText_DESC
+  weaknesses_ASC
+  weaknesses_DESC
+  resistances_ASC
+  resistances_DESC
+  ancientTrait_ASC
+  ancientTrait_DESC
+  abilityName_ASC
+  abilityName_DESC
+  abilityText_ASC
+  abilityText_DESC
+  abilityType_ASC
+  abilityType_DESC
+  evolvesFrom_ASC
+  evolvesFrom_DESC
+  contains_ASC
+  contains_DESC
+  imageUrl_ASC
+  imageUrl_DESC
+  imageUrlHiRes_ASC
+  imageUrlHiRes_DESC
+  ability_ASC
+  ability_DESC
+  attacks_ASC
+  attacks_DESC
+}
+
+input CardUpdateInput {
+  name: String
+  nationalPokedexNumber: Float
+  types: String
+  subtype: String
+  supertype: String
+  hp: String
+  number: String
+  artist: String
+  rarity: String
+  series: String
+  set: String
+  setCode: String
+  retreatCost: String
+  convertedRetreatCost: String
+  text: String
+  attackDamage: String
+  attackCost: String
+  attackName: String
+  attackText: String
+  weaknesses: String
+  resistances: String
+  ancientTrait: String
+  abilityName: String
+  abilityText: String
+  abilityType: String
+  evolvesFrom: String
+  contains: String
+  imageUrl: String
+  imageUrlHiRes: String
+  ability: String
+  attacks: String
+}
+
+input CardWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
+  nationalPokedexNumber_eq: Int
+  nationalPokedexNumber_gt: Int
+  nationalPokedexNumber_gte: Int
+  nationalPokedexNumber_lt: Int
+  nationalPokedexNumber_lte: Int
+  nationalPokedexNumber_in: [Int!]
+  types_eq: String
+  types_contains: String
+  types_startsWith: String
+  types_endsWith: String
+  types_in: [String!]
+  subtype_eq: String
+  subtype_contains: String
+  subtype_startsWith: String
+  subtype_endsWith: String
+  subtype_in: [String!]
+  supertype_eq: String
+  supertype_contains: String
+  supertype_startsWith: String
+  supertype_endsWith: String
+  supertype_in: [String!]
+  hp_eq: String
+  hp_contains: String
+  hp_startsWith: String
+  hp_endsWith: String
+  hp_in: [String!]
+  number_eq: String
+  number_contains: String
+  number_startsWith: String
+  number_endsWith: String
+  number_in: [String!]
+  artist_eq: String
+  artist_contains: String
+  artist_startsWith: String
+  artist_endsWith: String
+  artist_in: [String!]
+  rarity_eq: String
+  rarity_contains: String
+  rarity_startsWith: String
+  rarity_endsWith: String
+  rarity_in: [String!]
+  series_eq: String
+  series_contains: String
+  series_startsWith: String
+  series_endsWith: String
+  series_in: [String!]
+  set_eq: String
+  set_contains: String
+  set_startsWith: String
+  set_endsWith: String
+  set_in: [String!]
+  setCode_eq: String
+  setCode_contains: String
+  setCode_startsWith: String
+  setCode_endsWith: String
+  setCode_in: [String!]
+  retreatCost_eq: String
+  retreatCost_contains: String
+  retreatCost_startsWith: String
+  retreatCost_endsWith: String
+  retreatCost_in: [String!]
+  convertedRetreatCost_eq: String
+  convertedRetreatCost_contains: String
+  convertedRetreatCost_startsWith: String
+  convertedRetreatCost_endsWith: String
+  convertedRetreatCost_in: [String!]
+  text_eq: String
+  text_contains: String
+  text_startsWith: String
+  text_endsWith: String
+  text_in: [String!]
+  attackDamage_eq: String
+  attackDamage_contains: String
+  attackDamage_startsWith: String
+  attackDamage_endsWith: String
+  attackDamage_in: [String!]
+  attackCost_eq: String
+  attackCost_contains: String
+  attackCost_startsWith: String
+  attackCost_endsWith: String
+  attackCost_in: [String!]
+  attackName_eq: String
+  attackName_contains: String
+  attackName_startsWith: String
+  attackName_endsWith: String
+  attackName_in: [String!]
+  attackText_eq: String
+  attackText_contains: String
+  attackText_startsWith: String
+  attackText_endsWith: String
+  attackText_in: [String!]
+  weaknesses_eq: String
+  weaknesses_contains: String
+  weaknesses_startsWith: String
+  weaknesses_endsWith: String
+  weaknesses_in: [String!]
+  resistances_eq: String
+  resistances_contains: String
+  resistances_startsWith: String
+  resistances_endsWith: String
+  resistances_in: [String!]
+  ancientTrait_eq: String
+  ancientTrait_contains: String
+  ancientTrait_startsWith: String
+  ancientTrait_endsWith: String
+  ancientTrait_in: [String!]
+  abilityName_eq: String
+  abilityName_contains: String
+  abilityName_startsWith: String
+  abilityName_endsWith: String
+  abilityName_in: [String!]
+  abilityText_eq: String
+  abilityText_contains: String
+  abilityText_startsWith: String
+  abilityText_endsWith: String
+  abilityText_in: [String!]
+  abilityType_eq: String
+  abilityType_contains: String
+  abilityType_startsWith: String
+  abilityType_endsWith: String
+  abilityType_in: [String!]
+  evolvesFrom_eq: String
+  evolvesFrom_contains: String
+  evolvesFrom_startsWith: String
+  evolvesFrom_endsWith: String
+  evolvesFrom_in: [String!]
+  contains_eq: String
+  contains_contains: String
+  contains_startsWith: String
+  contains_endsWith: String
+  contains_in: [String!]
+  imageUrl_eq: String
+  imageUrl_contains: String
+  imageUrl_startsWith: String
+  imageUrl_endsWith: String
+  imageUrl_in: [String!]
+  imageUrlHiRes_eq: String
+  imageUrlHiRes_contains: String
+  imageUrlHiRes_startsWith: String
+  imageUrlHiRes_endsWith: String
+  imageUrlHiRes_in: [String!]
+  ability_eq: String
+  ability_contains: String
+  ability_startsWith: String
+  ability_endsWith: String
+  ability_in: [String!]
+  attacks_eq: String
+  attacks_contains: String
+  attacks_startsWith: String
+  attacks_endsWith: String
+  attacks_in: [String!]
+}
+
+input CardWhereUniqueInput {
+  id: String!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+interface DeleteResponse {
+  id: ID!
+}
+
+type Query {
+  cards(offset: Int, limit: Int = 50, where: CardWhereInput, orderBy: CardOrderByInput): [Card!]!
+  card(where: CardWhereUniqueInput!): Card!
+}
+
+type StandardDeleteResponse {
+  id: ID!
+}
