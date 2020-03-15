@@ -342,7 +342,6 @@ export function entityToWhereInput(model: ModelMetadata): string {
         ${column.propertyName}_gte?: ${tsType};
       `;
     } else if (column.type === 'enum') {
-      // Enums will fall through here
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_eq?: ${graphQLDataType};

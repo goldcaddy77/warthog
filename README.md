@@ -38,6 +38,34 @@ Further, it covers the following concerns by hooking into best-in-class open sou
 
 - Validation: Automatic validation before data is saved using any of the decorators available in the [class-validator](https://github.com/typestack/class-validator#validation-decorators) library.
 
+## Note: Upgrading from 1.0 to 2.0
+
+Warthog is now on version 2.0! There were a few breaking changes that you should consider while upgrading. Also, we tried to keep all new features development on v1, but did end up adding JSON filtering directly to 2.0 as it was much easier given some foundation refactors.
+
+<details>
+<summary>Expand for Breaking change details</summary>
+<p>
+
+### More specific scalars
+
+A few fields have been updated to use more specific GraphQL scalars:
+
+- ID fields: previously these were represented by type `String`. Dates now use type `ID`
+- Date fields: previously these were represented by type `String`. Dates now use type `DateTime`
+
+Since your GraphQL schema has changed and so have the associated TypeScript types in `classes.ts`, there might be changes in your server code and even perhaps some associated client code if you use these generated classes in your client code.
+
+### `mockDBConnection` has been removed
+
+The old codegen pipeline used TypeORM's metadata in order to generate the GraphQL schema since Warthog didn't also capture this metadata. Warthog now captures the necessary metadata, so we no longer need to lean on TypeORM and therefore we don't need the `mockDBConnection` we previously used during codegen. Searching your codebase for `mockDBConnection` and `WARTHOG_MOCK_DATABASE`/`MOCK_DATABASE` should do it. If you've been using the Warthog CLI for codegen, you shouldn't have anything to do here.
+
+### Project Dependencies Updated
+
+Staying on the latest versions of libraries is good for security, performance and new features. We've bumped to the latest stable versions of each of Warthog's dependencies. This might require some changes to your package.json.
+
+</p>
+</details>
+
 ## Prerequisites
 
 Warthog currently only supports PostgreSQL as a DB engine, so you must have Postgres installed before getting Warthog set up. (Note: Postgres 12 is not currently supported)
@@ -74,18 +102,9 @@ See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/pull/6/
 
 ## Usage
 
-### Cloning the starter project
+Warthog comes with a CLI that makes it easy to get started.
 
-The easiest way to start using Warthog for a fresh project is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. To get the starter project up and running, do the following:
-
-```bash
-git clone git@github.com:goldcaddy77/warthog-starter.git
-cd warthog-starter
-yarn bootstrap
-WARTHOG_AUTO_OPEN_PLAYGROUND=true yarn start:dev
-```
-
-### Installing in Existing Project
+### Create new project with the CLI
 
 To install in an existing project, you'll need to create several files in place and then you'll need to call a few Warthog CLI commands that:
 
@@ -97,32 +116,17 @@ To install in an existing project, you'll need to create several files in place 
 The following code will get you bootstrapped. You should read through this before running:
 
 ```bash
-# Install Warthog
+
+# Add warthog so that we can use the CLI
 yarn add warthog
 
-# Pull down several nessesary files from the warthog-starter example
-declare -a arr=(".env" "warthog.config.js" "tsconfig.json" "src/config.ts" "src/index.ts" "src/logger.ts" "src/server.ts")
-for i in "${arr[@]}"
-do
-  if [ ! -f ./$i ]; then
-    curl https://raw.githubusercontent.com/goldcaddy77/warthog-starter/master/$i -o $i
-  fi
-done
+# Bootstrap a new application using Warthog CLI
+yarn warthog new
 
-# Create a .env file with your app and DB settings (modify these as needed)
-printf "DEBUG=*
-NODE_ENV=development
-WARTHOG_AUTO_OPEN_PLAYGROUND=true
-WARTHOG_APP_HOST=localhost
-WARTHOG_APP_PORT=4100
-WARTHOG_DB_DATABASE=warthog-starter
-WARTHOG_DB_HOST=localhost
-WARTHOG_DB_PASSWORD=
-WARTHOG_DB_PORT=5432
-WARTHOG_DB_SYNCHRONIZE=true
-WARTHOG_DB_USERNAME=postgres" > .env
+# Install dependencies from generated package.json
+yarn
 
-# Create your first model (See https://github.com/goldcaddy77/warthog#generate-command-in-depth for more info)
+# Generate a resource (model, resolver and service)
 yarn warthog generate user name! nickname age:int! verified:bool!
 
 # Generate typescript classes and GraphQL schema
@@ -138,14 +142,18 @@ yarn warthog db:migrate:generate --name=create-user-table
 yarn warthog db:migrate
 
 # Start the server
-yarn ts-node --type-check src/index.ts
+yarn start:dev
 ```
+
+Here's what this looks like in action:
+
+![warthog-quickstart](https://user-images.githubusercontent.com/573625/69854217-8967f380-1256-11ea-8492-dee07334501d.gif)
 
 This will open up GraphQL Playground, where you can execute queries and mutations against your API.
 
 First, add a user by entering the following in the window:
 
-```graphql
+````graphql
 mutation {
   createUser(data: { name: "Test User", age: 25, verified: false }) {
     id
@@ -153,7 +161,6 @@ mutation {
     createdAt
   }
 }
-```
 
 Then, query for this user:
 
@@ -165,9 +172,24 @@ query {
     createdAt
   }
 }
-```
+````
 
 See [introducing-graphql-playground](https://www.prisma.io/blog/introducing-graphql-playground-f1e0a018f05d) for more info about GraphQL Playground.
+
+<details>
+<summary>Expand for other options for how to play with Warthog</summary>
+<p>
+
+### Cloning the `warthog-starter` project
+
+Another way to start playing with Warthog is to clone the [warthog-starter](https://github.com/goldcaddy77/warthog-starter) repo. To get the starter project up and running, do the following:
+
+```bash
+git clone git@github.com:goldcaddy77/warthog-starter.git
+cd warthog-starter
+yarn bootstrap
+WARTHOG_AUTO_OPEN_PLAYGROUND=true yarn start:dev
+```
 
 ### Running the examples in the Warthog repo
 
@@ -184,6 +206,9 @@ yarn start
 This has a simple example in place to get you started. There are also a bunch of examples in the folder for more advanced use cases.
 
 Note that the examples in the [examples](./examples/README.md) folder use relative import paths to call into Warthog. In your projects, you won't need to set this config value as it's only set to deal with the fact that it's using the Warthog core files without consuming the package from NPM. In your projects, you can omit this as I do in [warthog-starter](https://github.com/goldcaddy77/warthog-starter).
+
+</p>
+</details>
 
 ### Warthog Constructs Explained
 
@@ -209,6 +234,8 @@ Services are the glue between resolvers and models. Warthog exposes a class call
 
 When you start your server, there will be a new `generated` folder that Warthog creates automatically. The folder contains:
 
+> > > > > > > master
+
 - classes.ts: Warthog auto-generates this file from the metadata it collects (from decorators like `Model`, `Query`, `Resolver`, `StringField`, etc...). Resolvers will import items from here instead of having to manually create them.
 - schema.graphql: This is auto-generated from our resolvers, models and `classes.ts` above. Check out [this example's schema.graphql](https://github.com/goldcaddy77/warthog/blob/master/examples/01-simple-model/generated/schema.graphql) to show the additional GraphQL schema Warthog autogenerates.
 - ormconfig.ts: a TypeORM [ormconfig](https://github.com/typeorm/typeorm/blob/master/docs/using-ormconfig.md) file.
@@ -232,29 +259,30 @@ Most of the config in Warthog is done via environment variables (see `Config - E
 
 Almost all config in Warthog is driven by environment variables. The following items are available:
 
-| variable                     | value                                       | default                     |
-| ---------------------------- | ------------------------------------------- | --------------------------- |
-| WARTHOG_APP_HOST             | App server host                             | _none_                      |
-| WARTHOG_APP_PORT             | App server port                             | 4000                        |
-| WARTHOG_APP_PROTOCOL         | App server protocol                         | http                        |
-| WARTHOG_AUTO_GENERATE_FILES  | Auto-generate files                         | false (true in development) |
-| WARTHOG_AUTO_OPEN_PLAYGROUND | Open playground on server start             | false (true in development) |
-| WARTHOG_CLI_GENERATE_PATH    | Where should CLI generate files             | ./src                       |
-| WARTHOG_DB_CONNECTION        | DB connection type                          | postgres                    |
-| WARTHOG_DB_DATABASE          | DB name                                     | _none_                      |
-| WARTHOG_DB_ENTITIES          | Where should warthog look for models        | src\/\*\*\/\*.model.ts      |
-| WARTHOG_DB_MIGRATIONS        | What DB migrations should TypeORM run       | db/migrations/\*\*\/\*.ts   |
-| WARTHOG_DB_MIGRATIONS_DIR    | Where should generated migrations be placed | db/migrations               |
-| WARTHOG_DB_PORT              | DB port                                     | 5432                        |
-| WARTHOG_DB_USERNAME          | DB username                                 | _none_                      |
-| WARTHOG_DB_LOGGER            | TypeORM logger                              | advanced-console            |
-| WARTHOG_DB_PASSWORD          | DB password                                 | _none_                      |
-| WARTHOG_DB_SYNCHRONIZE       | DB automatically migrated                   | false                       |
-| WARTHOG_GENERATED_FOLDER     | Where should generated code be placed       | ./generated                 |
-| WARTHOG_INTROSPECTION        | Allow server to be introspected             | true                        |
-| WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?               | false                       |
-| WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers     | src/\*\*\/\*.resolver.ts    |
-| WARTHOG_VALIDATE_RESOLVERS   | TypeGraphQL validation enabled?             | false                       |
+| variable                     | value                                                    | default                   |
+| ---------------------------- | -------------------------------------------------------- | ------------------------- |
+| WARTHOG_APP_HOST             | App server host                                          | _none_                    |
+| WARTHOG_APP_PORT             | App server port                                          | 4000                      |
+| WARTHOG_APP_PROTOCOL         | App server protocol                                      | DEV: http, PROD: https    |
+| WARTHOG_AUTO_GENERATE_FILES  | Auto-generate files                                      | DEV: true, PROD: false    |
+| WARTHOG_AUTO_OPEN_PLAYGROUND | Open playground on server start                          | DEV: true, PROD: false    |
+| WARTHOG_CLI_GENERATE_PATH    | Where should CLI generate files                          | ./src                     |
+| WARTHOG_DB_CONNECTION        | DB connection type                                       | postgres                  |
+| WARTHOG_DB_DATABASE          | DB name                                                  | _none_                    |
+| WARTHOG_DB_ENTITIES          | Where should warthog look for models                     | src\/\*\*\/\*.model.ts    |
+| WARTHOG_DB_MIGRATIONS        | What DB migrations should TypeORM run                    | db/migrations/\*\*\/\*.ts |
+| WARTHOG_DB_MIGRATIONS_DIR    | Where should generated migrations be placed              | db/migrations             |
+| WARTHOG_DB_PORT              | DB port                                                  | 5432                      |
+| WARTHOG_DB_USERNAME          | DB username                                              | _none_                    |
+| WARTHOG_DB_LOGGER            | TypeORM logger                                           | advanced-console          |
+| WARTHOG_DB_PASSWORD          | DB password                                              | _none_                    |
+| WARTHOG_DB_SYNCHRONIZE       | DB automatically migrated                                | false                     |
+| WARTHOG_GENERATED_FOLDER     | Where should generated code be placed                    | ./generated               |
+| WARTHOG_INTROSPECTION        | Allow server to be introspected                          | true                      |
+| WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?                            | false                     |
+| WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers                  | src/\*\*\/\*.resolver.ts  |
+| WARTHOG_SUBSCRIPTIONS        | Should we enable subscriptions and open a websocket port | false                     |
+| WARTHOG_VALIDATE_RESOLVERS   | TypeGraphQL validation enabled?                          | false                     |
 
 ## Field/Column Decorators
 
