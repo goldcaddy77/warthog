@@ -99,7 +99,7 @@ export class Config {
       WARTHOG_APP_PROTOCOL: 'http',
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
-      // WARTHOG_DB_DATABASE: 'warthog-test',
+      WARTHOG_DB_DATABASE: 'warthog-test',
       WARTHOG_DB_HOST: 'localhost',
       WARTHOG_DB_USERNAME: 'postgres'
     };
@@ -166,13 +166,6 @@ export class Config {
     // If Jest is running, be smart and don't open playground
     if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
       (combined as any).WARTHOG_AUTO_OPEN_PLAYGROUND = 'false';
-    }
-
-    // Make sure to set the DB connection if we're using a mock DB
-    if (combined['WARTHOG_MOCK_DATABASE'] === 'true') {
-      // combined['WARTHOG_DB_CONNECTION'] = 'sqlite';
-      combined['WARTHOG_DB_DATABASE'] = 'warthog.sqlite.tmp';
-      combined['WARTHOG_DB_SYNCHRONIZE'] = 'true';
     }
 
     this.config = combined;
