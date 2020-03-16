@@ -1,4 +1,53 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import * as pgtools from 'pgtools';
+import * as util from 'util';
+
 import { run } from '../cli/cli';
+import { Config } from '../core';
+
+export async function createDB(database: string) {
+  const config = new Config();
+  const pgConfig = {
+    host: config.get('DB_HOST'),
+    user: config.get('DB_USERNAME'),
+    password: config.get('DB_PASSWORD'),
+    port: config.get('DB_PORT')
+  };
+
+  // const createDb = util.promisify(pgtools.createdb) as Function;
+  console.log('pgConfig', pgConfig);
+  // const result = await createDb(pgConfig, database);
+  // console.log('result', result);
+  // return result;
+
+  return new Promise((resolve, reject) => {
+    console.log('a');
+    pgtools.createdb(pgConfig, database, function(err: unknown, res: unknown) {
+      console.log('b');
+      if (err) {
+        console.log('c');
+        return reject(err);
+      }
+      console.log('d');
+      return resolve(res);
+    });
+  });
+}
+
+export async function dropDB(database: string) {
+  const config = new Config();
+  const pgConfig = {
+    host: config.get('DB_HOST'),
+    user: config.get('DB_USERNAME'),
+    password: config.get('DB_PASSWORD'),
+    port: config.get('DB_PORT')
+  };
+
+  const dropDB = util.promisify(pgtools.dropdb) as Function;
+  console.log('pgConfig', pgConfig);
+  return dropDB(pgConfig, database);
+}
 
 export function spyOnStd() {
   const spy: {
@@ -19,8 +68,8 @@ export function spyOnStd() {
   };
 
   beforeAll(() => {
-    spy.stderr = jest.spyOn(process.stderr, 'write').mockImplementation(() => false);
-    spy.stdout = jest.spyOn(process.stdout, 'write').mockImplementation(() => false);
+    spy.stderr = jest.spyOn(process.stderr, 'write');
+    spy.stdout = jest.spyOn(process.stdout, 'write');
   });
 
   beforeEach(() => {

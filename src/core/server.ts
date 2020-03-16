@@ -38,7 +38,6 @@ export interface ServerOptions<T> {
   generatedFolder?: string;
   logger?: Logger;
   middlewares?: any[]; // TODO: fix
-  mockDBConnection?: boolean;
   openPlayground?: boolean;
   port?: string | number;
   resolversPath?: string[];
@@ -89,9 +88,6 @@ export class Server<C extends BaseContext> {
       process.env.WARTHOG_AUTO_GENERATE_FILES = this.appOptions.autoGenerateFiles
         ? 'true'
         : 'false';
-    }
-    if (typeof this.appOptions.mockDBConnection !== 'undefined') {
-      process.env.WARTHOG_MOCK_DATABASE = this.appOptions.mockDBConnection ? 'true' : 'false';
     }
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container

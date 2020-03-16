@@ -2,7 +2,9 @@
 
 ### Troubleshoot CircleCI Issues
 
-- brew install circleci
+To troubleshoot things happening in Circle without having to kick off a bunch of builds, you can use the Circle CLI. To install, run:
+
+- `brew install circleci`
 - `circleci setup`
-- `circleci config process .circleci/config.yml > process.yml`
-- `circleci local execute -c process.yml --job build`
+
+Then run `circle:build` to run the build job via the Circle CLI.

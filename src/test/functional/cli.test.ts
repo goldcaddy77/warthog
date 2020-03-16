@@ -4,12 +4,13 @@ import { system, filesystem } from 'gluegun';
 // eslint-disable-next-line
 // @ts-ignore
 import * as pgtools from 'pgtools';
+const pgtoolsCreateDB = pgtools.createdb;
+const pgtoolsDropDB = pgtools.dropdb;
 
 import { cleanUpTestData } from '../../db';
 
-import { callWarthogCLI, spyOnStd } from '../helpers';
+import { callWarthogCLI, createDB, dropDB, spyOnStd } from '../helpers';
 import { setTestServerEnvironmentVariables } from '../server-vars';
-import { getTestServer } from '../test-server';
 
 const root = filesystem.path(__dirname, '../../../');
 
@@ -171,11 +172,11 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain('Database name is required');
-
     done();
   });
 
   test('successfully creates a database', async done => {
+    console.log('pgtools.createdb', pgtools.createdb);
     pgtools.createdb = jest.fn().mockImplementation((config: any, dbname: string, cb: Function) => {
       cb(null, { success: true });
     });
@@ -184,6 +185,7 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' created!");
+    pgtools.createdb = pgtoolsCreateDB;
     done();
   });
 
@@ -194,12 +196,13 @@ describe('cli functional tests', () => {
 
     await callWarthogCLI('db:create');
     const stdout = spy.getStdOutErr();
-
     expect(stdout).toContain("Database 'warthog-test' already exists");
+    pgtools.createdb = pgtoolsCreateDB;
     done();
   });
 
   test('db:drop: throws an error if database does not exist', async done => {
+    // THIS IS THE PROBLEM
     pgtools.dropdb = jest.fn().mockImplementation((config: any, dbname: string, cb: Function) => {
       cb({ name: 'invalid_catalog_name' }, null);
     });
@@ -208,6 +211,7 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' does not exist");
+    pgtools.dropdb = pgtoolsDropDB;
     done();
   });
 
@@ -220,29 +224,51 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' dropped!");
+    pgtools.dropdb = pgtoolsDropDB;
+    done();
+  });
+
+  test('db:drop success', async done => {
+    await callWarthogCLI('db:migrate:generate');
+    const stdout = spy.getStdOutErr();
+    expect(stdout).toContain('"name" option is required');
+    spy.clear();
+
     done();
   });
 
   test('generates and runs migrations', async done => {
-    expect.assertions(7);
-    let stdout;
+    // jest.setTimeout(8000);
+
+    // expect.assertions(6);
+    const migrationDBName = 'warthog-test-generate-migrations';
 
     // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files
     setTestServerEnvironmentVariables({
+      WARTHOG_DB_DATABASE: migrationDBName,
       WARTHOG_DB_SYNCHRONIZE: 'false'
     });
 
-    const server = getTestServer({ mockDBConnection: false });
-    await server.start();
-    await server.stop();
+    console.log(1);
+    try {
+      // await dropDB(migrationDBName);
+    } catch (error) {
+      // It's ok if this fails since the DB might already exist
+      console.log('failed to drop DB', error);
+    }
+    console.log(2);
 
-    await callWarthogCLI('db:migrate:generate');
-    stdout = spy.getStdOutErr();
-    expect(stdout).toContain('"name" option is required');
-    spy.clear();
+    try {
+      await createDB(migrationDBName);
+    } catch (error) {
+      // It's ok if this fails since the DB might already exist
+      console.log('failed to create DB', error);
+    }
+
+    console.log(3);
 
     await callWarthogCLI('db:migrate:generate --name cli_test_db_migration');
-    stdout = spy.getStdOutErr();
+    const stdout = spy.getStdOutErr();
     expect(stdout).toContain('-CliTestDbMigration.ts');
     expect(stdout).toContain('has been generated successfully.');
 

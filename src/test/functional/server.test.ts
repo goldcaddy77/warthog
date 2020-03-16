@@ -5,7 +5,7 @@ import { Server } from '../../core/server';
 import { cleanUpTestData } from '../../db';
 
 import { Binding, KitchenSinkWhereInput } from '../generated/binding';
-import { KitchenSink } from '../modules';
+import { KitchenSink, StringEnum } from '../modules';
 import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
@@ -268,6 +268,17 @@ describe('server', () => {
 
     const result = await binding.query.kitchenSinks(
       { where: { integerField_gte: 21 }, limit: 100 },
+      '{ stringField }'
+    );
+    expect(result.length).toEqual(36);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: enum field = BAR', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { stringEnumField: StringEnum.BAR }, limit: 100 },
       '{ stringField }'
     );
     expect(result.length).toEqual(36);

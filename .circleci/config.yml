@@ -21,6 +21,7 @@ jobs:
       - run:
           name: Waiting for Postgres to be ready
           command: |
+            # Wait for 10 seconds for Postgres to respond
             for i in `seq 1 10`;
             do
               nc -z localhost 5432 && echo Success && exit 0
@@ -41,10 +42,8 @@ jobs:
       - run:
           name: test
           command: |
-            yarn test:db:drop
             yarn test:db:create
             yarn test:ci
-            yarn test:db:drop
       - codecov/upload:
           file: coverage/*.json
           flags: backend

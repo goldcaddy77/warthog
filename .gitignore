@@ -20,9 +20,3 @@ dist
 
 # Generated files
 tmp
-
-warthog.sqlite.tmp
-
-warthog-test
-
-# examples/**/generated/*

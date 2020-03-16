@@ -21,6 +21,7 @@ const { GraphQLJSONObject } = require("graphql-type-json");
 
 // @ts-ignore
 import { BaseWhereInput, JsonObject, PaginationArgs } from "../../";
+import { StringEnum } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
 import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
@@ -59,6 +60,9 @@ export enum KitchenSinkOrderByEnum {
 
   idField_ASC = "idField_ASC",
   idField_DESC = "idField_DESC",
+
+  stringEnumField_ASC = "stringEnumField_ASC",
+  stringEnumField_DESC = "stringEnumField_DESC",
 
   numericField_ASC = "numericField_ASC",
   numericField_DESC = "numericField_DESC",
@@ -262,6 +266,12 @@ export class KitchenSinkWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   idField_in?: string[];
 
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField_eq?: StringEnum;
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  stringEnumField_in?: StringEnum[];
+
   @TypeGraphQLField(() => Float, { nullable: true })
   numericField_eq?: number;
 
@@ -367,6 +377,9 @@ export class KitchenSinkCreateInput {
   @TypeGraphQLField(() => ID, { nullable: true })
   idField?: string;
 
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
+
   @TypeGraphQLField({ nullable: true })
   numericField?: number;
 
@@ -417,6 +430,9 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField(() => ID, { nullable: true })
   idField?: string;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
   numericField?: number;

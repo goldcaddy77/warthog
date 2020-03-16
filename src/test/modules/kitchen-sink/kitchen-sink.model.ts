@@ -6,7 +6,7 @@ import {
   CustomField,
   DateField,
   EmailField,
-  // EnumField,
+  EnumField,
   FloatField,
   IdField,
   IntField,
@@ -22,10 +22,10 @@ import { Dish } from '../dish/dish.model';
 
 // Note: this must be exported and in the same file where it's attached with @EnumField
 // Also - must use string enums
-// export enum StringEnum {
-//   FOO = 'FOO',
-//   BAR = 'BAR'
-// }
+export enum StringEnum {
+  FOO = 'FOO',
+  BAR = 'BAR'
+}
 
 @Model()
 export class KitchenSink extends BaseModel {
@@ -55,6 +55,9 @@ export class KitchenSink extends BaseModel {
 
   @IdField({ nullable: true })
   idField?: string;
+
+  @EnumField('StringEnum', StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
 
   @OneToMany(
     () => Dish,
