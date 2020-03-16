@@ -94,27 +94,30 @@ export interface AuthorUpdateInput {
 }
 
 export interface AuthorWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   firstName_eq?: String | null
   firstName_contains?: String | null
   firstName_startsWith?: String | null
@@ -123,7 +126,7 @@ export interface AuthorWhereInput {
 }
 
 export interface AuthorWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface BaseWhereInput {
@@ -159,27 +162,30 @@ export interface PostUpdateInput {
 }
 
 export interface PostWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
@@ -188,7 +194,7 @@ export interface PostWhereInput {
 }
 
 export interface PostWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface RoleCreateInput {
@@ -200,27 +206,30 @@ export interface RoleUpdateInput {
 }
 
 export interface RoleWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
@@ -229,7 +238,7 @@ export interface RoleWhereInput {
 }
 
 export interface RoleWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface UserCreateInput {
@@ -249,27 +258,30 @@ export interface UserRoleUpdateInput {
 }
 
 export interface UserRoleWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   userId_eq?: ID_Input | null
   userId_in?: ID_Output[] | ID_Output | null
   roleId_eq?: ID_Input | null
@@ -282,7 +294,7 @@ export interface UserRoleWhereInput {
 }
 
 export interface UserRoleWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface UserUpdateInput {
@@ -290,27 +302,30 @@ export interface UserUpdateInput {
 }
 
 export interface UserWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   firstName_eq?: String | null
   firstName_contains?: String | null
   firstName_startsWith?: String | null
@@ -319,7 +334,7 @@ export interface UserWhereInput {
 }
 
 export interface UserWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface BaseGraphQLObject {
@@ -449,7 +464,7 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 

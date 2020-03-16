@@ -3,8 +3,8 @@
 // new TypeGraphQL objects
 // @ts-ignore
 import { GraphQLDateTime as DateTime } from "graphql-iso-date";
+// @ts-ignore
 import { GraphQLID as ID } from "graphql";
-
 // @ts-ignore
 import {
   ArgsType,
@@ -52,68 +52,77 @@ registerEnumType(UserOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class UserWhereInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id_eq?: string;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_eq?: String;
+  createdAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lt?: String;
+  createdAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lte?: String;
+  createdAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gt?: String;
+  createdAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gte?: String;
+  createdAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   createdById_eq?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  updatedAt_eq?: String;
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lt?: String;
+  updatedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lte?: String;
+  updatedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gt?: String;
+  updatedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gte?: String;
+  updatedAt_gt?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
   updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_eq?: String;
+  deletedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lt?: String;
+  deletedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lte?: String;
+  deletedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gt?: String;
+  deletedAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gte?: String;
+  deletedAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   firstName_eq?: string;
@@ -133,7 +142,7 @@ export class UserWhereInput {
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(() => String)
+  @TypeGraphQLField(() => ID)
   id?: string;
 }
 
@@ -196,68 +205,77 @@ registerEnumType(UserRoleOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class UserRoleWhereInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id_eq?: string;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_eq?: String;
+  createdAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lt?: String;
+  createdAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lte?: String;
+  createdAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gt?: String;
+  createdAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gte?: String;
+  createdAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   createdById_eq?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  updatedAt_eq?: String;
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lt?: String;
+  updatedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lte?: String;
+  updatedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gt?: String;
+  updatedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gte?: String;
+  updatedAt_gt?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
   updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_eq?: String;
+  deletedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lt?: String;
+  deletedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lte?: String;
+  deletedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gt?: String;
+  deletedAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gte?: String;
+  deletedAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
 
   @TypeGraphQLField(() => ID, { nullable: true })
   userId_eq?: string;
@@ -289,7 +307,7 @@ export class UserRoleWhereInput {
 
 @TypeGraphQLInputType()
 export class UserRoleWhereUniqueInput {
-  @TypeGraphQLField(() => String)
+  @TypeGraphQLField(() => ID)
   id?: string;
 }
 
@@ -358,68 +376,77 @@ registerEnumType(RoleOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class RoleWhereInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id_eq?: string;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_eq?: String;
+  createdAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lt?: String;
+  createdAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lte?: String;
+  createdAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gt?: String;
+  createdAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gte?: String;
+  createdAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   createdById_eq?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  updatedAt_eq?: String;
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lt?: String;
+  updatedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lte?: String;
+  updatedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gt?: String;
+  updatedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gte?: String;
+  updatedAt_gt?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
   updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_eq?: String;
+  deletedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lt?: String;
+  deletedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lte?: String;
+  deletedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gt?: String;
+  deletedAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gte?: String;
+  deletedAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   name_eq?: string;
@@ -439,7 +466,7 @@ export class RoleWhereInput {
 
 @TypeGraphQLInputType()
 export class RoleWhereUniqueInput {
-  @TypeGraphQLField(() => String)
+  @TypeGraphQLField(() => ID)
   id?: string;
 }
 
@@ -496,68 +523,77 @@ registerEnumType(PostOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class PostWhereInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id_eq?: string;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_eq?: String;
+  createdAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lt?: String;
+  createdAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lte?: String;
+  createdAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gt?: String;
+  createdAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gte?: String;
+  createdAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   createdById_eq?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  updatedAt_eq?: String;
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lt?: String;
+  updatedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lte?: String;
+  updatedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gt?: String;
+  updatedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gte?: String;
+  updatedAt_gt?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
   updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_eq?: String;
+  deletedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lt?: String;
+  deletedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lte?: String;
+  deletedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gt?: String;
+  deletedAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gte?: String;
+  deletedAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   name_eq?: string;
@@ -577,7 +613,7 @@ export class PostWhereInput {
 
 @TypeGraphQLInputType()
 export class PostWhereUniqueInput {
-  @TypeGraphQLField(() => String)
+  @TypeGraphQLField(() => ID)
   id?: string;
 }
 
@@ -634,68 +670,77 @@ registerEnumType(AuthorOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class AuthorWhereInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id_eq?: string;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_eq?: String;
+  createdAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lt?: String;
+  createdAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lte?: String;
+  createdAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gt?: String;
+  createdAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gte?: String;
+  createdAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   createdById_eq?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  updatedAt_eq?: String;
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lt?: String;
+  updatedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lte?: String;
+  updatedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gt?: String;
+  updatedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gte?: String;
+  updatedAt_gt?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
   updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_eq?: String;
+  deletedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lt?: String;
+  deletedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lte?: String;
+  deletedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gt?: String;
+  deletedAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gte?: String;
+  deletedAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   firstName_eq?: string;
@@ -715,7 +760,7 @@ export class AuthorWhereInput {
 
 @TypeGraphQLInputType()
 export class AuthorWhereUniqueInput {
-  @TypeGraphQLField(() => String)
+  @TypeGraphQLField(() => ID)
   id?: string;
 }
 

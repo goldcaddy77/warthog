@@ -1,4 +1,4 @@
-import * as cosmiconfig from 'cosmiconfig';
+import { cosmiconfig } from 'cosmiconfig';
 import * as path from 'path';
 import * as prettier from 'prettier';
 

@@ -101,15 +101,8 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
     }
 
     const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
-    let graphQLDataType = columnToGraphQLDataType(column);
-    let tsType = columnToTypeScriptType(column);
-
-    // Note: HACK for backwards compatability
-    // Will fix this in 2.0
-    if (column.propertyName === 'id') {
-      tsType = 'string';
-      graphQLDataType = 'String';
-    }
+    const graphQLDataType = columnToGraphQLDataType(column);
+    const tsType = columnToTypeScriptType(column);
 
     fieldsTemplate += `
         @TypeGraphQLField(() => ${graphQLDataType}${nullable})
@@ -162,14 +155,6 @@ export function entityToCreateInput(model: ModelMetadata): string {
           @TypeGraphQLField(() => ${graphQLDataType}, ${nullable})
           ${column.propertyName}${tsRequired}: ${tsType};
        `;
-    } else if (column.type === 'id') {
-      // HACK: the following block is to keep things backwards compatable
-      // the codegen previously incorrectly set some IDs to Strings
-      // NOTE: this will be fixed in v2.0
-      fieldTemplates += `
-          @TypeGraphQLField(() => String, ${nullable})
-          ${column.propertyName}${tsRequired}: ${tsType};
-       `;
     } else {
       fieldTemplates += `
           @TypeGraphQLField(${nullable})
@@ -212,14 +197,6 @@ export function entityToUpdateInput(model: ModelMetadata): string {
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}?: ${tsType};
       `;
-    } else if (column.type === 'id') {
-      // HACK: the following block is to keep things backwards compatable
-      // the codegen previously incorrectly set some IDs to Strings
-      // NOTE: this will be fixed in v2.0
-      fieldTemplates += `
-        @TypeGraphQLField(() => String, { nullable: true })
-        ${column.propertyName}?: ${tsType};
-     `;
     } else {
       fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
@@ -278,37 +255,17 @@ export function entityToWhereInput(model: ModelMetadata): string {
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
     if (column.type === 'id') {
-      // HACK: the following block is to keep things backwards compatable
-      // the codegen previously incorrectly set some IDs to Strings
-      // NOTE: this will be fixed in v2.0
-      let graphQlType = 'ID';
-      if (
-        column.propertyName === 'id' ||
-        column.propertyName === 'createdById' ||
-        column.propertyName === 'updatedById' ||
-        column.propertyName === 'deletedById'
-      ) {
-        graphQlType = 'String';
-      }
+      const graphQlType = 'ID';
 
-      // Note: TypeScript types will be updated to ID in v2.0
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQlType},{ nullable: true })
         ${column.propertyName}_eq?: string;
       `;
 
-      // HACK: this needs to remain missing for backwards-compatability
-      // This will be fixed in 2.0
-      if (
-        column.propertyName !== 'createdById' &&
-        column.propertyName !== 'updatedById' &&
-        column.propertyName !== 'deletedById'
-      ) {
-        fieldTemplates += `
+      fieldTemplates += `
         @TypeGraphQLField(() => [${graphQlType}], { nullable: true })
         ${column.propertyName}_in?: string[];
         `;
-      }
     } else if (column.type === 'boolean') {
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType},{ nullable: true })
@@ -366,16 +323,8 @@ export function entityToWhereInput(model: ModelMetadata): string {
         `;
       }
 
-      let tsType = 'Date';
-      if (
-        column.propertyName === 'createdAt' ||
-        column.propertyName === 'updatedAt' ||
-        column.propertyName === 'deletedAt'
-      ) {
-        tsType = 'String';
-      }
+      const tsType = 'Date';
 
-      // Note: All of the TypeScript types will be DateTime in v2.0
       fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
         ${column.propertyName}_eq?: ${tsType};
@@ -393,7 +342,6 @@ export function entityToWhereInput(model: ModelMetadata): string {
         ${column.propertyName}_gte?: ${tsType};
       `;
     } else if (column.type === 'enum') {
-      // Enums will fall through here
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_eq?: ${graphQLDataType};
@@ -402,7 +350,10 @@ export function entityToWhereInput(model: ModelMetadata): string {
         ${column.propertyName}_in?: ${graphQLDataType}[];
       `;
     } else if (column.type === 'json') {
-      // Determine how to handle JSON
+      fieldTemplates += `
+        @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+        ${column.propertyName}_json?: JsonObject;
+      `;
     }
   });
 

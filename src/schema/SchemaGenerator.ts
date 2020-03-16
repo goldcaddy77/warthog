@@ -31,8 +31,8 @@ export class SchemaGenerator {
       // new TypeGraphQL objects
       // @ts-ignore
       import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
+      // @ts-ignore
       import { GraphQLID as ID } from 'graphql';
-
       // @ts-ignore
       import { ArgsType, Field as TypeGraphQLField, Float, InputType as TypeGraphQLInputType, Int } from 'type-graphql';
       // @ts-ignore

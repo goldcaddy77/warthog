@@ -3,9 +3,11 @@ import { MaxLength, MinLength } from 'class-validator';
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { FieldType, decoratorDefaults, getMetadataStorage } from '../metadata';
+import { FieldType, decoratorDefaults } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 import { StringColumnType } from '../torm';
+
+import { WarthogField } from './WarthogField';
 
 interface StringFieldOptions {
   dataType?: StringColumnType; // int16, jsonb, etc...
@@ -24,28 +26,8 @@ export function StringField(args: StringFieldOptions = decoratorDefaults): any {
   const maxLenOption = options.maxLength ? { length: options.maxLength } : {};
   const uniqueOption = options.unique ? { unique: true } : {};
 
-  const registerWithWarthog = (target: object, propertyKey: string): any => {
-    // Sorry, I put in some magic that automatically identified columns that end in Id to be ID columns
-    // that only uses the ID filter (eq and in).  This was silly.  I've added a workaround here where you
-    // can explicitly state which filter you want to use.  So if you have a field called userId and add filter: 'string'
-    // this will bypass the magic Id logic below
-    let fieldType: FieldType = 'string'; // default
-
-    const explicitType = typeof args.filter === 'string' ? args.filter : null;
-    if (explicitType) {
-      fieldType = explicitType;
-    }
-    // V2: remove the auto-ID logic.  Need to keep this around as to not introduce a breaking change
-    else if (propertyKey.match(/Id$/)) {
-      fieldType = 'id';
-    }
-
-    getMetadataStorage().addField(fieldType, target.constructor.name, propertyKey, options);
-  };
-
-  // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
-    registerWithWarthog,
+    WarthogField('string', options),
     // We explicitly say string here because when we're metaprogramming without
     // TS types, Field does not know that this should be a String
     Field(() => String, {

@@ -88,7 +88,7 @@ input EnvironmentCreateInput {
   name: String!
   key: String!
   projKey: String!
-  projectId: String
+  projectId: ID
 }
 
 enum EnvironmentOrderByInput {
@@ -112,31 +112,34 @@ input EnvironmentUpdateInput {
   name: String
   key: String
   projKey: String
-  projectId: String
+  projectId: ID
 }
 
 input EnvironmentWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
@@ -157,7 +160,7 @@ input EnvironmentWhereInput {
 }
 
 input EnvironmentWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 type FeatureFlag implements BaseGraphQLObject {
@@ -182,7 +185,7 @@ input FeatureFlagCreateInput {
   name: String!
   key: String!
   projKey: String!
-  projectId: String
+  projectId: ID
 }
 
 enum FeatureFlagOrderByInput {
@@ -227,13 +230,13 @@ type FeatureFlagSegment implements BaseGraphQLObject {
 
 input FeatureFlagSegmentCreateInput {
   projKey: String!
-  projectId: String
+  projectId: ID
   envKey: String!
-  environmentId: String
+  environmentId: ID
   featureKey: String!
-  featureFlagId: String
+  featureFlagId: ID
   segmentKey: String!
-  segmentId: String
+  segmentId: ID
 }
 
 enum FeatureFlagSegmentOrderByInput {
@@ -263,37 +266,40 @@ enum FeatureFlagSegmentOrderByInput {
 
 input FeatureFlagSegmentUpdateInput {
   projKey: String
-  projectId: String
+  projectId: ID
   envKey: String
-  environmentId: String
+  environmentId: ID
   featureKey: String
-  featureFlagId: String
+  featureFlagId: ID
   segmentKey: String
-  segmentId: String
+  segmentId: ID
 }
 
 input FeatureFlagSegmentWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   projKey_eq: String
   projKey_contains: String
   projKey_startsWith: String
@@ -325,7 +331,7 @@ input FeatureFlagSegmentWhereInput {
 }
 
 input FeatureFlagSegmentWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 input FeatureFlagsForUserInput {
@@ -338,7 +344,7 @@ input FeatureFlagUpdateInput {
   name: String
   key: String
   projKey: String
-  projectId: String
+  projectId: ID
 }
 
 type FeatureFlagUser implements BaseGraphQLObject {
@@ -366,13 +372,13 @@ type FeatureFlagUser implements BaseGraphQLObject {
 
 input FeatureFlagUserCreateInput {
   featureKey: String!
-  featureFlagId: String
+  featureFlagId: ID
   userKey: String!
-  userId: String
+  userId: ID
   projKey: String!
-  projectId: String
+  projectId: ID
   envKey: String!
-  environmentId: String
+  environmentId: ID
 }
 
 enum FeatureFlagUserOrderByInput {
@@ -402,37 +408,40 @@ enum FeatureFlagUserOrderByInput {
 
 input FeatureFlagUserUpdateInput {
   featureKey: String
-  featureFlagId: String
+  featureFlagId: ID
   userKey: String
-  userId: String
+  userId: ID
   projKey: String
-  projectId: String
+  projectId: ID
   envKey: String
-  environmentId: String
+  environmentId: ID
 }
 
 input FeatureFlagUserWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   featureKey_eq: String
   featureKey_contains: String
   featureKey_startsWith: String
@@ -464,31 +473,34 @@ input FeatureFlagUserWhereInput {
 }
 
 input FeatureFlagUserWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 input FeatureFlagWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
@@ -509,7 +521,7 @@ input FeatureFlagWhereInput {
 }
 
 input FeatureFlagWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 type Mutation {
@@ -579,27 +591,30 @@ input ProjectUpdateInput {
 }
 
 input ProjectWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
@@ -613,7 +628,7 @@ input ProjectWhereInput {
 }
 
 input ProjectWhereUniqueInput {
-  id: String
+  id: ID
   key: String
 }
 
@@ -663,9 +678,9 @@ input SegmentCreateInput {
   key: String!
   description: String!
   projKey: String!
-  projectId: String
+  projectId: ID
   envKey: String!
-  environmentId: String
+  environmentId: ID
 }
 
 enum SegmentOrderByInput {
@@ -696,33 +711,36 @@ input SegmentUpdateInput {
   key: String
   description: String
   projKey: String
-  projectId: String
+  projectId: ID
   envKey: String
-  environmentId: String
+  environmentId: ID
 }
 
 input SegmentWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
@@ -755,7 +773,7 @@ input SegmentWhereInput {
 }
 
 input SegmentWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 type StandardDeleteResponse {
@@ -805,13 +823,13 @@ type UserSegment implements BaseGraphQLObject {
 
 input UserSegmentCreateInput {
   projKey: String!
-  projectId: String
+  projectId: ID
   envKey: String!
-  environmentId: String
+  environmentId: ID
   userKey: String!
-  userId: String
+  userId: ID
   segmentKey: String!
-  segmentId: String
+  segmentId: ID
 }
 
 enum UserSegmentOrderByInput {
@@ -841,37 +859,40 @@ enum UserSegmentOrderByInput {
 
 input UserSegmentUpdateInput {
   projKey: String
-  projectId: String
+  projectId: ID
   envKey: String
-  environmentId: String
+  environmentId: ID
   userKey: String
-  userId: String
+  userId: ID
   segmentKey: String
-  segmentId: String
+  segmentId: ID
 }
 
 input UserSegmentWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   projKey_eq: String
   projKey_contains: String
   projKey_startsWith: String
@@ -903,7 +924,7 @@ input UserSegmentWhereInput {
 }
 
 input UserSegmentWhereUniqueInput {
-  id: String!
+  id: ID!
 }
 
 input UserUpdateInput {
@@ -911,27 +932,30 @@ input UserUpdateInput {
 }
 
 input UserWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
   key_eq: String
   key_contains: String
   key_startsWith: String
@@ -940,6 +964,6 @@ input UserWhereInput {
 }
 
 input UserWhereUniqueInput {
-  id: String
+  id: ID
   key: String
 }

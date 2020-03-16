@@ -18,6 +18,7 @@ export default {
     try {
       await new CodeGenerator(config.get('GENERATED_FOLDER'), config.get('DB_ENTITIES'), {
         resolversPath: config.get('RESOLVERS_PATH'),
+        validateResolvers: config.get('VALIDATE_RESOLVERS') === 'true',
         warthogImportPath: config.get('MODULE_IMPORT_PATH')
       }).generate();
     } catch (error) {

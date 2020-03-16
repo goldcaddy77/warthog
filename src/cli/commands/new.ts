@@ -20,7 +20,7 @@ export default {
       const { n } = await toolbox.prompt.ask([
         { type: 'input', name: 'n', message: 'What do you want your project to be called?' }
       ]);
-      name = n;
+      name = String(n);
     }
 
     const props = {

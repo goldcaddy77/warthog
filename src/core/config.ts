@@ -1,4 +1,4 @@
-import * as cosmiconfig from 'cosmiconfig';
+import { cosmiconfigSync } from 'cosmiconfig';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -19,7 +19,8 @@ const CONFIG_VALUE_VALID_KEYS = [
   'generatedFolder',
   'cliGeneratePath',
   'moduleImportPath',
-  'resolversPath'
+  'resolversPath',
+  'validateResolvers'
 ];
 
 interface StaticConfigFile {
@@ -77,7 +78,8 @@ export class Config {
       // TODO: eventually we should do this path resolution when we ask for the variable with `get`
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
-      WARTHOG_SUBSCRIPTIONS: 'false'
+      WARTHOG_SUBSCRIPTIONS: 'false',
+      WARTHOG_VALIDATE_RESOLVERS: 'false'
     };
 
     this.devDefaults = {
@@ -310,10 +312,10 @@ export class Config {
   // Use cosmiconfig to load static config that has to be the same for all environments
   // paths to folders for the most part
   private loadStaticConfigFileSync(): StaticConfigResponse | undefined {
-    const explorer = cosmiconfig('warthog');
+    const explorer = cosmiconfigSync('warthog');
 
     // Pull config values from cosmiconfig
-    const results = explorer.searchSync(this.options.configSearchPath);
+    const results = explorer.search(this.options.configSearchPath);
     if (!results || results.isEmpty) {
       return;
     }

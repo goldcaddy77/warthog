@@ -78,6 +78,8 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'booleanField_DESC' |
   'floatField_ASC' |
   'floatField_DESC' |
+  'idField_ASC' |
+  'idField_DESC' |
   'numericField_ASC' |
   'numericField_DESC' |
   'numericFieldCustomPrecisionScale_ASC' |
@@ -122,27 +124,30 @@ export interface DishUpdateInput {
 }
 
 export interface DishWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
@@ -153,7 +158,7 @@ export interface DishWhereInput {
 }
 
 export interface DishWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface KitchenSinkCreateInput {
@@ -165,6 +170,7 @@ export interface KitchenSinkCreateInput {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
+  idField?: ID_Input | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -183,6 +189,7 @@ export interface KitchenSinkUpdateInput {
   booleanField?: Boolean | null
   floatField?: Float | null
   jsonField?: JSONObject | null
+  idField?: ID_Input | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -193,27 +200,30 @@ export interface KitchenSinkUpdateInput {
 }
 
 export interface KitchenSinkWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   stringField_eq?: String | null
   stringField_contains?: String | null
   stringField_startsWith?: String | null
@@ -248,6 +258,9 @@ export interface KitchenSinkWhereInput {
   floatField_lt?: Float | null
   floatField_lte?: Float | null
   floatField_in?: Float[] | Float | null
+  jsonField_json?: JSONObject | null
+  idField_eq?: ID_Input | null
+  idField_in?: ID_Output[] | ID_Output | null
   numericField_eq?: Float | null
   numericField_gt?: Float | null
   numericField_gte?: Float | null
@@ -273,7 +286,7 @@ export interface KitchenSinkWhereInput {
 }
 
 export interface KitchenSinkWhereUniqueInput {
-  id?: String | null
+  id?: ID_Input | null
   emailField?: String | null
 }
 
@@ -345,6 +358,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
+  idField?: String | null
   dishes?: Array<Dish> | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
@@ -370,7 +384,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 export type DateTime = Date | string
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 */
 export type Float = number
 
@@ -381,7 +395,7 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 

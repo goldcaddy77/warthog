@@ -22,6 +22,7 @@ const writeFilePromise = util.promisify(writeFile);
 
 interface CodeGeneratorOptions {
   resolversPath: string[];
+  validateResolvers?: boolean;
   warthogImportPath?: string;
 }
 
@@ -30,6 +31,7 @@ export class CodeGenerator {
 
   constructor(
     private generatedFolder: string,
+    // @ts-ignore
     private modelsArray: string[],
     private options: CodeGeneratorOptions
   ) {
@@ -51,6 +53,7 @@ export class CodeGenerator {
       await this.generateBinding();
     } catch (error) {
       logger.error(error);
+      debug(error); // this is required to log when run in a separate project
     }
     debug('generate:end');
   }
@@ -80,7 +83,8 @@ export class CodeGenerator {
             scalar: GraphQLID
           }
         ],
-        resolvers: this.options.resolversPath
+        resolvers: this.options.resolversPath,
+        validate: this.options.validateResolvers
       });
       debug('code-generator:buildGraphQLSchema:end');
     }

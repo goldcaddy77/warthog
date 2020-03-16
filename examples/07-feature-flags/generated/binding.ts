@@ -231,38 +231,41 @@ export interface EnvironmentCreateInput {
   name: String
   key: String
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface EnvironmentUpdateInput {
   name?: String | null
   key?: String | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface EnvironmentWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
@@ -283,60 +286,63 @@ export interface EnvironmentWhereInput {
 }
 
 export interface EnvironmentWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface FeatureFlagCreateInput {
   name: String
   key: String
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface FeatureFlagSegmentCreateInput {
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   featureKey: String
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   segmentKey: String
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface FeatureFlagSegmentUpdateInput {
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   featureKey?: String | null
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   segmentKey?: String | null
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface FeatureFlagSegmentWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   projKey_eq?: String | null
   projKey_contains?: String | null
   projKey_startsWith?: String | null
@@ -368,7 +374,7 @@ export interface FeatureFlagSegmentWhereInput {
 }
 
 export interface FeatureFlagSegmentWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface FeatureFlagsForUserInput {
@@ -381,53 +387,56 @@ export interface FeatureFlagUpdateInput {
   name?: String | null
   key?: String | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
 }
 
 export interface FeatureFlagUserCreateInput {
   featureKey: String
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   userKey: String
-  userId?: String | null
+  userId?: ID_Input | null
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface FeatureFlagUserUpdateInput {
   featureKey?: String | null
-  featureFlagId?: String | null
+  featureFlagId?: ID_Input | null
   userKey?: String | null
-  userId?: String | null
+  userId?: ID_Input | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface FeatureFlagUserWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   featureKey_eq?: String | null
   featureKey_contains?: String | null
   featureKey_startsWith?: String | null
@@ -459,31 +468,34 @@ export interface FeatureFlagUserWhereInput {
 }
 
 export interface FeatureFlagUserWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface FeatureFlagWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
@@ -504,7 +516,7 @@ export interface FeatureFlagWhereInput {
 }
 
 export interface FeatureFlagWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface ProjectCreateInput {
@@ -518,27 +530,30 @@ export interface ProjectUpdateInput {
 }
 
 export interface ProjectWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
@@ -552,7 +567,7 @@ export interface ProjectWhereInput {
 }
 
 export interface ProjectWhereUniqueInput {
-  id?: String | null
+  id?: ID_Input | null
   key?: String | null
 }
 
@@ -561,9 +576,9 @@ export interface SegmentCreateInput {
   key: String
   description: String
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface SegmentUpdateInput {
@@ -571,33 +586,36 @@ export interface SegmentUpdateInput {
   key?: String | null
   description?: String | null
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
 }
 
 export interface SegmentWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   name_eq?: String | null
   name_contains?: String | null
   name_startsWith?: String | null
@@ -630,7 +648,7 @@ export interface SegmentWhereInput {
 }
 
 export interface SegmentWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface UserCreateInput {
@@ -639,48 +657,51 @@ export interface UserCreateInput {
 
 export interface UserSegmentCreateInput {
   projKey: String
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey: String
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   userKey: String
-  userId?: String | null
+  userId?: ID_Input | null
   segmentKey: String
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface UserSegmentUpdateInput {
   projKey?: String | null
-  projectId?: String | null
+  projectId?: ID_Input | null
   envKey?: String | null
-  environmentId?: String | null
+  environmentId?: ID_Input | null
   userKey?: String | null
-  userId?: String | null
+  userId?: ID_Input | null
   segmentKey?: String | null
-  segmentId?: String | null
+  segmentId?: ID_Input | null
 }
 
 export interface UserSegmentWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   projKey_eq?: String | null
   projKey_contains?: String | null
   projKey_startsWith?: String | null
@@ -712,7 +733,7 @@ export interface UserSegmentWhereInput {
 }
 
 export interface UserSegmentWhereUniqueInput {
-  id: String
+  id: ID_Output
 }
 
 export interface UserUpdateInput {
@@ -720,27 +741,30 @@ export interface UserUpdateInput {
 }
 
 export interface UserWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
   deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
   key_eq?: String | null
   key_contains?: String | null
   key_startsWith?: String | null
@@ -749,7 +773,7 @@ export interface UserWhereInput {
 }
 
 export interface UserWhereUniqueInput {
-  id?: String | null
+  id?: ID_Input | null
   key?: String | null
 }
 
@@ -973,7 +997,7 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 

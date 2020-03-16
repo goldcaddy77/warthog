@@ -13,7 +13,7 @@ async function seedDatabase() {
   if (process.env.NODE_ENV !== 'development') {
     throw 'Seeding only available in development environment';
   }
-  y;
+
   await server.start();
 
   let binding;

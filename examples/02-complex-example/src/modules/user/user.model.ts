@@ -1,5 +1,4 @@
-// import { Authorized } from 'type-graphql';
-import { Unique, Column } from 'typeorm';
+import { Column, Unique } from 'typeorm';
 import {
   BaseModel,
   BooleanField,
@@ -68,6 +67,9 @@ export class User extends BaseModel {
 
   @JSONField({ nullable: true })
   jsonField?: JsonObject;
+
+  @JSONField({ filter: false, nullable: true })
+  jsonFieldNoFilter?: JsonObject;
 
   @StringField({ maxLength: 50, minLength: 2, nullable: true })
   stringField: string;

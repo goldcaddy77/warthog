@@ -12,6 +12,7 @@ import { WarthogField } from './WarthogField';
 
 interface JSONFieldOptions {
   nullable?: boolean;
+  filter?: boolean;
 }
 
 export function JSONField(args: JSONFieldOptions = {}): any {
@@ -19,7 +20,6 @@ export function JSONField(args: JSONFieldOptions = {}): any {
   const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
   const type = defaultColumnType(databaseConnection, 'json');
 
-  // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
     WarthogField('json', options),
     Field(() => GraphQLJSONObject, {

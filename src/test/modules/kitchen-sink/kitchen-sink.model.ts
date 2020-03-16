@@ -8,6 +8,7 @@ import {
   EmailField,
   // EnumField,
   FloatField,
+  IdField,
   IntField,
   JSONField,
   OneToMany,
@@ -52,7 +53,13 @@ export class KitchenSink extends BaseModel {
   @JSONField({ nullable: true })
   jsonField?: JsonObject;
 
-  @OneToMany(() => Dish, (dish: Dish) => dish.kitchenSink)
+  @IdField({ nullable: true })
+  idField?: string;
+
+  @OneToMany(
+    () => Dish,
+    (dish: Dish) => dish.kitchenSink
+  )
   dishes!: Dish[];
 
   @Column({ nullable: true })
