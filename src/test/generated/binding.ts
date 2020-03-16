@@ -80,6 +80,8 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'floatField_DESC' |
   'idField_ASC' |
   'idField_DESC' |
+  'stringEnumField_ASC' |
+  'stringEnumField_DESC' |
   'numericField_ASC' |
   'numericField_DESC' |
   'numericFieldCustomPrecisionScale_ASC' |
@@ -88,6 +90,9 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'noFilterField_DESC' |
   'characterField_ASC' |
   'characterField_DESC'
+
+export type StringEnum =   'FOO' |
+  'BAR'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -171,6 +176,7 @@ export interface KitchenSinkCreateInput {
   floatField: Float
   jsonField?: JSONObject | null
   idField?: ID_Input | null
+  stringEnumField?: StringEnum | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -190,6 +196,7 @@ export interface KitchenSinkUpdateInput {
   floatField?: Float | null
   jsonField?: JSONObject | null
   idField?: ID_Input | null
+  stringEnumField?: StringEnum | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -261,6 +268,8 @@ export interface KitchenSinkWhereInput {
   jsonField_json?: JSONObject | null
   idField_eq?: ID_Input | null
   idField_in?: ID_Output[] | ID_Output | null
+  stringEnumField_eq?: StringEnum | null
+  stringEnumField_in?: StringEnum[] | StringEnum | null
   numericField_eq?: Float | null
   numericField_gt?: Float | null
   numericField_gte?: Float | null
@@ -359,6 +368,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   floatField: Float
   jsonField?: JSONObject | null
   idField?: String | null
+  stringEnumField?: StringEnum | null
   dishes?: Array<Dish> | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null

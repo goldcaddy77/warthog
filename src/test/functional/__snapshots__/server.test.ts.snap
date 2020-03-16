@@ -8,6 +8,179 @@ Array [
 ]
 `;
 
+exports[`server find: enum field = BAR 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+]
+`;
+
 exports[`server find: integer query: greater than 21 1`] = `
 Array [
   Object {

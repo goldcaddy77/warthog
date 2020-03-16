@@ -1,4 +1,20 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import * as pgtools from 'pgtools';
+import * as util from 'util';
+
 import { run } from '../cli/cli';
+import { Config } from '../core';
+
+export async function createDB(database: string) {
+  const createDb = util.promisify(pgtools.createdb) as Function;
+  return createDb(getPGConfig(), database);
+}
+
+export async function dropDB(database: string) {
+  const dropDB = util.promisify(pgtools.dropdb) as Function;
+  return dropDB(getPGConfig(), database);
+}
 
 export function spyOnStd() {
   const spy: {
@@ -66,4 +82,15 @@ export async function callWarthogCLI(cmd: string) {
   await run(process.argv);
   process.argv = oldArgv;
   return;
+}
+
+function getPGConfig() {
+  const config = new Config();
+
+  return {
+    host: config.get('DB_HOST'),
+    user: config.get('DB_USERNAME'),
+    password: config.get('DB_PASSWORD'),
+    port: config.get('DB_PORT')
+  };
 }

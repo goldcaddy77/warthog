@@ -30,6 +30,7 @@
 //     stringField: string,
 //     emailField: `${Faker.lorem.word()}-${random}@${Faker.lorem.word()}.com`,
 //     integerField: Faker.random.number({ min: -100, max: 100 }),
+//     stringEnumField: 'BAR'
 //     booleanField: Faker.random.arrayElement([true, false]),
 //     floatField: parseFloat(Faker.random.number({ min: -2, max: 2, precision: 0.0001 }).toFixed(4))
 //   });
@@ -43,6 +44,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Trantow',
     emailField: 'consequuntur-94489@a.com',
     integerField: 41,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.3885
   },
@@ -51,6 +53,7 @@ export const KITCHEN_SINKS = [
     stringField: 'BOSCO',
     emailField: 'consequuntur-94490@odit.com',
     integerField: -77,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.2352
   },
@@ -59,6 +62,7 @@ export const KITCHEN_SINKS = [
     stringField: 'SCHOEN',
     emailField: 'deleniti-94490@voluptate.com',
     integerField: 59,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.6309
   },
@@ -67,6 +71,7 @@ export const KITCHEN_SINKS = [
     stringField: 'VOLUPTATUM NULLA',
     emailField: 'vitae-94490@dolore.com',
     integerField: -70,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.9273
   },
@@ -75,6 +80,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Wisoky',
     emailField: 'illum-94490@et.com',
     integerField: 60,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.0425
   },
@@ -83,6 +89,7 @@ export const KITCHEN_SINKS = [
     stringField: 'SCHINNER',
     emailField: 'nihil-94490@laboriosam.com',
     integerField: 72,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.9199
   },
@@ -91,6 +98,7 @@ export const KITCHEN_SINKS = [
     stringField: 'maximillia',
     emailField: 'voluptas-94490@dolores.com',
     integerField: -73,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.6969
   },
@@ -99,6 +107,7 @@ export const KITCHEN_SINKS = [
     stringField: 'koelpin',
     emailField: 'facere-94490@eius.com',
     integerField: -10,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.4273
   },
@@ -107,6 +116,7 @@ export const KITCHEN_SINKS = [
     stringField: 'DELENITI SUNT',
     emailField: 'voluptatem-94490@quisquam.com',
     integerField: 60,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.9735
   },
@@ -115,6 +125,7 @@ export const KITCHEN_SINKS = [
     stringField: 'inventore velit',
     emailField: 'unde-94490@quis.com',
     integerField: 60,
+    stringEnumField: 'BAR',
     booleanField: true,
     floatField: -1.7707
   },
@@ -123,6 +134,7 @@ export const KITCHEN_SINKS = [
     stringField: 'QUAM CULPA',
     emailField: 'porro-94490@voluptatem.com',
     integerField: -28,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.7448
   },
@@ -131,6 +143,7 @@ export const KITCHEN_SINKS = [
     stringField: 'SCHIMMEL',
     emailField: 'at-94490@culpa.com',
     integerField: -40,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.3528
   },
@@ -139,6 +152,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Madeline',
     emailField: 'nulla-94490@quia.com',
     integerField: -88,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.9475
   },
@@ -147,6 +161,7 @@ export const KITCHEN_SINKS = [
     stringField: 'NAKIA',
     emailField: 'maiores-94490@quia.com',
     integerField: 20,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.3992
   },
@@ -155,6 +170,7 @@ export const KITCHEN_SINKS = [
     stringField: 'nakia',
     emailField: 'illum-94490@odit.com',
     integerField: 36,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.0651
   },
@@ -163,6 +179,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Nakia',
     emailField: 'fugit-94490@doloremque.com',
     integerField: 37,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.4664
   },
@@ -171,6 +188,7 @@ export const KITCHEN_SINKS = [
     stringField: 'sed praesentium',
     emailField: 'illo-94490@aut.com',
     integerField: -18,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.9525
   },
@@ -179,6 +197,7 @@ export const KITCHEN_SINKS = [
     stringField: 'LUEILWITZ',
     emailField: 'ipsa-94490@animi.com',
     integerField: -34,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.7865
   },
@@ -187,6 +206,7 @@ export const KITCHEN_SINKS = [
     stringField: 'BERENICE',
     emailField: 'sapiente-94490@quia.com',
     integerField: 72,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.1031
   },
@@ -195,6 +215,7 @@ export const KITCHEN_SINKS = [
     stringField: 'amber',
     emailField: 'ducimus-94490@occaecati.com',
     integerField: -38,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.9494
   },
@@ -203,6 +224,7 @@ export const KITCHEN_SINKS = [
     stringField: 'JEROMY',
     emailField: 'sit-94490@facilis.com',
     integerField: -85,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.6478
   },
@@ -211,6 +233,7 @@ export const KITCHEN_SINKS = [
     stringField: 'RYLEIGH',
     emailField: 'qui-94490@exercitationem.com',
     integerField: -77,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.4488
   },
@@ -219,6 +242,7 @@ export const KITCHEN_SINKS = [
     stringField: 'delfinaz',
     emailField: 'et-94490@in.com',
     integerField: 21,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -1.1396
   },
@@ -227,6 +251,7 @@ export const KITCHEN_SINKS = [
     stringField: 'SHEMAR',
     emailField: 'officia-94490@officia.com',
     integerField: -64,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.869
   },
@@ -235,6 +260,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Wilmer',
     emailField: 'eligendi-94490@mollitia.com',
     integerField: 1,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.4152
   },
@@ -243,6 +269,7 @@ export const KITCHEN_SINKS = [
     stringField: 'stark',
     emailField: 'qui-94490@placeat.com',
     integerField: 93,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.076
   },
@@ -251,6 +278,7 @@ export const KITCHEN_SINKS = [
     stringField: 'elda',
     emailField: 'nostrum-94490@ex.com',
     integerField: 31,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.771
   },
@@ -259,6 +287,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Damien',
     emailField: 'consectetur-94490@maiores.com',
     integerField: 14,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.2581
   },
@@ -267,6 +296,7 @@ export const KITCHEN_SINKS = [
     stringField: 'earum nesciunt',
     emailField: 'rerum-94490@voluptatem.com',
     integerField: 38,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.6917
   },
@@ -275,6 +305,7 @@ export const KITCHEN_SINKS = [
     stringField: 'illum atque',
     emailField: 'nemo-94490@quis.com',
     integerField: 80,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.7094
   },
@@ -283,6 +314,7 @@ export const KITCHEN_SINKS = [
     stringField: 'horowitz',
     emailField: 'ab-94490@expedita.com',
     integerField: -7,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.4361
   },
@@ -291,6 +323,7 @@ export const KITCHEN_SINKS = [
     stringField: 'schowalter',
     emailField: 'autem-94490@ea.com',
     integerField: -55,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.1803
   },
@@ -299,6 +332,7 @@ export const KITCHEN_SINKS = [
     stringField: 'MAIORES ADIPISCI',
     emailField: 'aperiam-94490@consequatur.com',
     integerField: 19,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.2365
   },
@@ -307,6 +341,7 @@ export const KITCHEN_SINKS = [
     stringField: 'devin',
     emailField: 'officiis-94490@repellat.com',
     integerField: -30,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.1463
   },
@@ -315,6 +350,7 @@ export const KITCHEN_SINKS = [
     stringField: 'VELIT ADIPISCI',
     emailField: 'repellat-94490@qui.com',
     integerField: 47,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.6576
   },
@@ -323,6 +359,7 @@ export const KITCHEN_SINKS = [
     stringField: 'AMET QUI',
     emailField: 'sint-94490@quia.com',
     integerField: -87,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.1504
   },
@@ -331,6 +368,7 @@ export const KITCHEN_SINKS = [
     stringField: 'maiores praesentium',
     emailField: 'et-94490@velit.com',
     integerField: -83,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.7952
   },
@@ -339,6 +377,7 @@ export const KITCHEN_SINKS = [
     stringField: 'rerum et',
     emailField: 'laudantium-94490@illo.com',
     integerField: 50,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.7105
   },
@@ -347,6 +386,7 @@ export const KITCHEN_SINKS = [
     stringField: 'erling',
     emailField: 'non-94490@corrupti.com',
     integerField: -73,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.5513
   },
@@ -355,6 +395,7 @@ export const KITCHEN_SINKS = [
     stringField: 'KAELYN',
     emailField: 'vero-94490@qui.com',
     integerField: 24,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.4497
   },
@@ -363,6 +404,7 @@ export const KITCHEN_SINKS = [
     stringField: 'alias sint',
     emailField: 'modi-94490@animi.com',
     integerField: 62,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.5469
   },
@@ -371,6 +413,7 @@ export const KITCHEN_SINKS = [
     stringField: 'molestiae praesentium',
     emailField: 'error-94490@eveniet.com',
     integerField: -22,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.5727
   },
@@ -379,6 +422,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Okuneva',
     emailField: 'sed-94490@dolores.com',
     integerField: -93,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.1316
   },
@@ -387,6 +431,7 @@ export const KITCHEN_SINKS = [
     stringField: 'hartmann',
     emailField: 'non-94490@perspiciatis.com',
     integerField: -39,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.4536
   },
@@ -395,6 +440,7 @@ export const KITCHEN_SINKS = [
     stringField: 'raquel',
     emailField: 'necessitatibus-94490@quia.com',
     integerField: -35,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.3465
   },
@@ -403,6 +449,7 @@ export const KITCHEN_SINKS = [
     stringField: 'quas fugit',
     emailField: 'a-94490@a.com',
     integerField: -66,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -1.8619
   },
@@ -411,6 +458,7 @@ export const KITCHEN_SINKS = [
     stringField: 'ODIO ID',
     emailField: 'totam-94490@rem.com',
     integerField: -90,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.827
   },
@@ -419,6 +467,7 @@ export const KITCHEN_SINKS = [
     stringField: 'iste in',
     emailField: 'et-94491@sed.com',
     integerField: -24,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.5139
   },
@@ -427,6 +476,7 @@ export const KITCHEN_SINKS = [
     stringField: 'quia et',
     emailField: 'inventore-94491@quos.com',
     integerField: 60,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.8093
   },
@@ -435,6 +485,7 @@ export const KITCHEN_SINKS = [
     stringField: 'HOPPE',
     emailField: 'officia-94491@dolorum.com',
     integerField: 87,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.7151
   },
@@ -443,6 +494,7 @@ export const KITCHEN_SINKS = [
     stringField: 'korey',
     emailField: 'dolores-94491@excepturi.com',
     integerField: 1,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.3781
   },
@@ -451,6 +503,7 @@ export const KITCHEN_SINKS = [
     stringField: 'VON',
     emailField: 'facere-94491@blanditiis.com',
     integerField: -8,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.0037
   },
@@ -459,6 +512,7 @@ export const KITCHEN_SINKS = [
     stringField: 'neque tempore',
     emailField: 'sint-94491@sunt.com',
     integerField: 0,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.753
   },
@@ -467,6 +521,7 @@ export const KITCHEN_SINKS = [
     stringField: 'ut consequatur',
     emailField: 'et-94491@minus.com',
     integerField: -18,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.9532
   },
@@ -475,6 +530,7 @@ export const KITCHEN_SINKS = [
     stringField: 'fermin',
     emailField: 'doloremque-94491@aliquid.com',
     integerField: 82,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.6261
   },
@@ -483,6 +539,7 @@ export const KITCHEN_SINKS = [
     stringField: 'eum reiciendis',
     emailField: 'officia-94491@sit.com',
     integerField: -96,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -1.9195
   },
@@ -491,6 +548,7 @@ export const KITCHEN_SINKS = [
     stringField: 'iusto perspiciatis',
     emailField: 'hic-94491@praesentium.com',
     integerField: -72,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.87
   },
@@ -499,6 +557,7 @@ export const KITCHEN_SINKS = [
     stringField: 'HAMILL',
     emailField: 'suscipit-94491@temporibus.com',
     integerField: 13,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -1.2896
   },
@@ -507,6 +566,7 @@ export const KITCHEN_SINKS = [
     stringField: "o'reilly",
     emailField: 'dolorem-94491@dolorem.com',
     integerField: 74,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.2316
   },
@@ -515,6 +575,7 @@ export const KITCHEN_SINKS = [
     stringField: 'LABORE CULPA',
     emailField: 'commodi-94491@adipisci.com',
     integerField: 5,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.0592
   },
@@ -523,6 +584,7 @@ export const KITCHEN_SINKS = [
     stringField: 'VERITATIS EIUS',
     emailField: 'aut-94491@culpa.com',
     integerField: -54,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.8332
   },
@@ -531,6 +593,7 @@ export const KITCHEN_SINKS = [
     stringField: 'billie',
     emailField: 'aut-94491@debitis.com',
     integerField: 71,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.5285
   },
@@ -539,6 +602,7 @@ export const KITCHEN_SINKS = [
     stringField: 'winston',
     emailField: 'ipsum-94491@reprehenderit.com',
     integerField: -84,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.4247
   },
@@ -547,6 +611,7 @@ export const KITCHEN_SINKS = [
     stringField: 'HELGA',
     emailField: 'qui-94491@illum.com',
     integerField: -77,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.106
   },
@@ -555,6 +620,7 @@ export const KITCHEN_SINKS = [
     stringField: 'ipsum voluptas',
     emailField: 'totam-94491@eos.com',
     integerField: -94,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.2852
   },
@@ -563,6 +629,7 @@ export const KITCHEN_SINKS = [
     stringField: 'luettgen',
     emailField: 'optio-94491@voluptas.com',
     integerField: 4,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.7963
   },
@@ -571,6 +638,7 @@ export const KITCHEN_SINKS = [
     stringField: 'dietrich',
     emailField: 'necessitatibus-94491@natus.com',
     integerField: 87,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.9018
   },
@@ -579,6 +647,7 @@ export const KITCHEN_SINKS = [
     stringField: 'DOVIE',
     emailField: 'omnis-94491@dolore.com',
     integerField: 74,
+    stringEnumField: 'BAR',
     booleanField: true,
     floatField: -1.5775
   },
@@ -587,6 +656,7 @@ export const KITCHEN_SINKS = [
     stringField: 'linnea',
     emailField: 'delectus-94491@quia.com',
     integerField: 55,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.5746
   },
@@ -595,6 +665,7 @@ export const KITCHEN_SINKS = [
     stringField: 'madison',
     emailField: 'quae-94491@aspernatur.com',
     integerField: -6,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.328
   },
@@ -603,6 +674,7 @@ export const KITCHEN_SINKS = [
     stringField: 'NUMQUAM ALIQUAM',
     emailField: 'odit-94491@dolor.com',
     integerField: 14,
+    stringEnumField: 'BAR',
     booleanField: true,
     floatField: -1.6389
   },
@@ -611,6 +683,7 @@ export const KITCHEN_SINKS = [
     stringField: 'macy',
     emailField: 'qui-94491@maiores.com',
     integerField: -80,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.7988
   },
@@ -619,6 +692,7 @@ export const KITCHEN_SINKS = [
     stringField: 'GERLACH',
     emailField: 'in-94491@amet.com',
     integerField: 8,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.1804
   },
@@ -627,6 +701,7 @@ export const KITCHEN_SINKS = [
     stringField: 'padberg',
     emailField: 'consequatur-94491@corporis.com',
     integerField: 76,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.169
   },
@@ -635,6 +710,7 @@ export const KITCHEN_SINKS = [
     stringField: 'ENIM DICTA',
     emailField: 'est-94491@quasi.com',
     integerField: -47,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.8532
   },
@@ -643,6 +719,7 @@ export const KITCHEN_SINKS = [
     stringField: 'amalia',
     emailField: 'sequi-94491@quibusdam.com',
     integerField: 37,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.7813
   },
@@ -651,6 +728,7 @@ export const KITCHEN_SINKS = [
     stringField: 'QUAS PERSPICIATIS',
     emailField: 'et-94491@nesciunt.com',
     integerField: -48,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.3683
   },
@@ -659,6 +737,7 @@ export const KITCHEN_SINKS = [
     stringField: 'OMNIS ERROR',
     emailField: 'illum-94491@quam.com',
     integerField: 32,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.0507
   },
@@ -667,6 +746,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Williamson',
     emailField: 'quia-94491@ducimus.com',
     integerField: -2,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.7467
   },
@@ -675,6 +755,7 @@ export const KITCHEN_SINKS = [
     stringField: 'schamberger',
     emailField: 'impedit-94491@asperiores.com',
     integerField: -20,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.0223
   },
@@ -683,6 +764,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Jared',
     emailField: 'aut-94491@et.com',
     integerField: -27,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.8873
   },
@@ -691,6 +773,7 @@ export const KITCHEN_SINKS = [
     stringField: 'QUIDEM FUGIAT',
     emailField: 'corrupti-94491@vel.com',
     integerField: 30,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.5086
   },
@@ -699,6 +782,7 @@ export const KITCHEN_SINKS = [
     stringField: 'MAGNAM REICIENDIS',
     emailField: 'aut-94491@aspernatur.com',
     integerField: 32,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.707
   },
@@ -707,6 +791,7 @@ export const KITCHEN_SINKS = [
     stringField: 'DESTIN',
     emailField: 'non-94491@beatae.com',
     integerField: -33,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.566
   },
@@ -715,6 +800,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Block',
     emailField: 'veniam-94491@officiis.com',
     integerField: -98,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.3233
   },
@@ -723,6 +809,7 @@ export const KITCHEN_SINKS = [
     stringField: 'jaskolski',
     emailField: 'tenetur-94491@sit.com',
     integerField: -59,
+    stringEnumField: 'BAR',
     booleanField: true,
     floatField: -1.2778
   },
@@ -731,6 +818,7 @@ export const KITCHEN_SINKS = [
     stringField: 'BAUCH',
     emailField: 'repudiandae-94491@quae.com',
     integerField: 75,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.2883
   },
@@ -739,6 +827,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Wisoky',
     emailField: 'dolorem-94491@et.com',
     integerField: 92,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.7888
   },
@@ -747,6 +836,7 @@ export const KITCHEN_SINKS = [
     stringField: 'paucek',
     emailField: 'suscipit-94491@qui.com',
     integerField: -99,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -0.8793
   },
@@ -755,6 +845,7 @@ export const KITCHEN_SINKS = [
     stringField: 'sed quod',
     emailField: 'rerum-94491@totam.com',
     integerField: 94,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 1.4452
   },
@@ -763,6 +854,7 @@ export const KITCHEN_SINKS = [
     stringField: 'kuhic',
     emailField: 'delectus-94491@veniam.com',
     integerField: 29,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.155
   },
@@ -771,6 +863,7 @@ export const KITCHEN_SINKS = [
     stringField: 'WITTING',
     emailField: 'expedita-94491@et.com',
     integerField: -32,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.8227
   },
@@ -779,6 +872,7 @@ export const KITCHEN_SINKS = [
     stringField: 'VOLUPTATE ATQUE',
     emailField: 'fuga-94491@quia.com',
     integerField: -52,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 0.2288
   },
@@ -787,6 +881,7 @@ export const KITCHEN_SINKS = [
     stringField: 'placeat voluptate',
     emailField: 'distinctio-94491@quod.com',
     integerField: -56,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.0476
   },
@@ -795,6 +890,7 @@ export const KITCHEN_SINKS = [
     stringField: 'SIT ODIO',
     emailField: 'architecto-94491@assumenda.com',
     integerField: -48,
+    stringEnumField: 'BAR',
     booleanField: true,
     floatField: -1.9699
   },
@@ -803,6 +899,7 @@ export const KITCHEN_SINKS = [
     stringField: 'pagac',
     emailField: 'ipsam-94491@suscipit.com',
     integerField: -31,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.4011
   },
@@ -811,6 +908,7 @@ export const KITCHEN_SINKS = [
     stringField: 'eius necessitatibus',
     emailField: 'itaque-94491@enim.com',
     integerField: -91,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: 1.253
   },
@@ -819,6 +917,7 @@ export const KITCHEN_SINKS = [
     stringField: 'RICE',
     emailField: 'in-94491@et.com',
     integerField: -43,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: -1.2905
   },
@@ -827,6 +926,7 @@ export const KITCHEN_SINKS = [
     stringField: 'Mortimer',
     emailField: 'est-94491@illo.com',
     integerField: -90,
+    stringEnumField: 'BAR',
     booleanField: false,
     floatField: 0.7536
   },
@@ -835,6 +935,7 @@ export const KITCHEN_SINKS = [
     stringField: 'EX POSSIMUS',
     emailField: 'est-94491@aperiam.com',
     integerField: -63,
+    stringEnumField: 'FOO',
     booleanField: true,
     floatField: -0.78
   }

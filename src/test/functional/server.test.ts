@@ -2,10 +2,9 @@
 import { getBindingError, logger } from '../../';
 import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
-import { cleanUpTestData } from '../../db';
 
 import { Binding, KitchenSinkWhereInput } from '../generated/binding';
-import { KitchenSink } from '../modules';
+import { KitchenSink, StringEnum } from '../modules';
 import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
@@ -31,8 +30,6 @@ describe('server', () => {
   beforeAll(async done => {
     jest.setTimeout(20000);
     setTestServerEnvironmentVariables();
-
-    await cleanUpTestData();
 
     // build a custom express app with a dummy endpoint
     customExpressApp = buildCustomExpressApp();
@@ -70,7 +67,6 @@ describe('server', () => {
 
   // Make sure to clean up server
   afterAll(async done => {
-    await cleanUpTestData();
     await server.stop();
     done();
   });
@@ -137,10 +133,11 @@ describe('server', () => {
       emailField: '',
       integerField: 41,
       booleanField: false,
-      floatField: -1.3885
+      floatField: -1.3885,
+      stringEnumField: StringEnum.BAR
     };
 
-    createManyKitchenSinks(binding, [sink]).catch(error => {
+    createManyKitchenSinks(binding, [sink]).catch((error: Error) => {
       expect(error).toHaveProperty('message', 'Argument Validation Error\n');
       done();
     });
@@ -271,6 +268,17 @@ describe('server', () => {
       '{ stringField }'
     );
     expect(result.length).toEqual(36);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: enum field = BAR', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { stringEnumField_eq: StringEnum.BAR }, limit: 100 },
+      '{ stringField }'
+    );
+    expect(result.length).toEqual(56);
     expect(result).toMatchSnapshot();
   });
 
