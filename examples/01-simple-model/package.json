@@ -3,11 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn db:drop:tempbd && yarn codegen && yarn db:create",
+    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn codegen && yarn db:create",
     "codegen": "yarn warthog codegen",
     "db:create": "yarn warthog db:create",
     "db:drop": "yarn warthog db:drop",
-    "db:drop:tempbd": "rm -f ./warthog.sqlite.tmp",
     "db:seed:dev": "ts-node tools/seed.ts",
     "playground": "yarn warthog playground",
     "start": "yarn start:ts",

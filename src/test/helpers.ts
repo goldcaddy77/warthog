@@ -19,8 +19,8 @@ export function spyOnStd() {
   };
 
   beforeAll(() => {
-    spy.stderr = jest.spyOn(process.stderr, 'write').mockImplementation(() => false);
-    spy.stdout = jest.spyOn(process.stdout, 'write').mockImplementation(() => false);
+    spy.stderr = jest.spyOn(process.stderr, 'write');
+    spy.stdout = jest.spyOn(process.stdout, 'write');
   });
 
   beforeEach(() => {

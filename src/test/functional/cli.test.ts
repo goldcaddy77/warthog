@@ -165,12 +165,12 @@ describe('cli functional tests', () => {
 
     // Make sure there is no DB name
     delete process.env.WARTHOG_DB_DATABASE;
-    await callWarthogCLI('db:create');
 
+    process.env.PGUSER = 'postgres';
+    await callWarthogCLI('db:create');
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain('Database name is required');
-
     done();
   });
 
@@ -183,6 +183,7 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' created!");
+    pgtools.createdb.mockRestore();
     done();
   });
 
@@ -193,8 +194,8 @@ describe('cli functional tests', () => {
 
     await callWarthogCLI('db:create');
     const stdout = spy.getStdOutErr();
-
     expect(stdout).toContain("Database 'warthog-test' already exists");
+    pgtools.createdb.mockRestore();
     done();
   });
 
@@ -207,6 +208,7 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' does not exist");
+    pgtools.dropdb.mockRestore();
     done();
   });
 
@@ -219,33 +221,33 @@ describe('cli functional tests', () => {
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain("Database 'warthog-test' dropped!");
+    pgtools.dropdb.mockRestore();
     done();
   });
 
-  test('generates and runs migrations', async done => {
-    expect.assertions(7);
-    let stdout;
-
-    // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files
-    setTestServerEnvironmentVariables({
-      WARTHOG_DB_DATABASE: './tmp/db/warthog-test-migrations',
-      WARTHOG_DB_SYNCHRONIZE: 'false',
-      WARTHOG_DB_CONNECTION: 'sqlite'
-    });
-
-    const server = getTestServer({ mockDBConnection: false });
-    await server.start();
-    await server.stop();
-
+  test('db:drop success', async done => {
     await callWarthogCLI('db:migrate:generate');
-    stdout = spy.getStdOutErr();
+    const stdout = spy.getStdOutErr();
     expect(stdout).toContain('"name" option is required');
     spy.clear();
 
-    // console.log('ormConfigPath', ormConfigPath);
+    done();
+  });
+
+  test.only('generates and runs migrations', async done => {
+    expect.assertions(6);
+
+    // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files
+    setTestServerEnvironmentVariables({
+      WARTHOG_DB_DATABASE: 'warthog-test-generate-migrations',
+      WARTHOG_DB_SYNCHRONIZE: 'false'
+    });
+
+    await callWarthogCLI('db:drop');
+    await callWarthogCLI('db:create');
 
     await callWarthogCLI('db:migrate:generate --name cli_test_db_migration');
-    stdout = spy.getStdOutErr();
+    const stdout = spy.getStdOutErr();
     expect(stdout).toContain('-CliTestDbMigration.ts');
     expect(stdout).toContain('has been generated successfully.');
 
