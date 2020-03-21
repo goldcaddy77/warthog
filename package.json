@@ -27,11 +27,12 @@
     "//prettier": "Note: ignores node_modules by default and 'generated' folder via .prettierignore",
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
-    "test": "yarn test:db:drop && yarn test:db:create && NODE_ENV=test jest --verbose --runInBand && yarn test:db:drop",
-    "//verbose": "--verbose flag must be used to accurately test the CLI writing to stdout",
-    "test:db:create": "NODE_ENV=test WARTHOG_DB_DATABASE=warthog-test PGUSER=postgres PG_USER=postgres PGDATABASE=postgres PG_DATABASE=postgres ./bin/warthog db:create",
-    "test:db:drop": "NODE_ENV=test WARTHOG_DB_DATABASE=warthog-test PGUSER=postgres PG_USER=postgres PGDATABASE=postgres PG_DATABASE=postgres ./bin/warthog db:drop",
-    "test:watch": "jest --verbose --watch"
+    "test": "yarn test:setup && NODE_ENV=test jest --verbose --runInBand && yarn test:teardown",
+    "test:db:create": "NODE_ENV=test ./bin/warthog db:create",
+    "test:db:drop": "NODE_ENV=test ./bin/warthog db:drop",
+    "test:setup": "yarn test:db:drop && yarn test:db:create",
+    "test:teardown": "yarn test:db:drop",
+    "test:watch": "yarn test:setup && NODE_ENV=test jest --verbose --runInBand --watch && yarn test:teardown"
   },
   "husky": {
     "hooks": {
