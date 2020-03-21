@@ -8,10 +8,16 @@ import { User } from './user.model';
 // a lightweight join table with the foreign keys
 @Model()
 export class UserRole extends BaseModel {
-  @ManyToOne(() => User, user => user.userRoles)
+  @ManyToOne(
+    () => User,
+    user => user.userRoles
+  )
   user?: User;
 
-  @ManyToOne(() => Role, role => role.userRoles)
+  @ManyToOne(
+    () => Role,
+    role => role.userRoles
+  )
   role?: Role;
 
   @StringField({ nullable: true })

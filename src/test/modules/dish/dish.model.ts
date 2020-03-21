@@ -7,8 +7,12 @@ export class Dish extends BaseModel {
   @StringField({ maxLength: 30 })
   name?: string;
 
-  @ManyToOne(() => KitchenSink, (kitchenSink: KitchenSink) => kitchenSink.dishes, {
-    nullable: false
-  })
+  @ManyToOne(
+    () => KitchenSink,
+    (kitchenSink: KitchenSink) => kitchenSink.dishes,
+    {
+      nullable: false
+    }
+  )
   kitchenSink?: KitchenSink;
 }

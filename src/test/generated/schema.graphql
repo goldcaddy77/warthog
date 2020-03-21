@@ -162,6 +162,7 @@ type KitchenSink implements BaseGraphQLObject {
   floatField: Float!
   jsonField: JSONObject
   idField: String
+  stringEnumField: StringEnum
   dishes: [Dish!]
   numericField: Float
   numericFieldCustomPrecisionScale: Float
@@ -182,6 +183,7 @@ input KitchenSinkCreateInput {
   floatField: Float!
   jsonField: JSONObject
   idField: ID
+  stringEnumField: StringEnum
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   noFilterField: String
@@ -214,6 +216,8 @@ enum KitchenSinkOrderByInput {
   floatField_DESC
   idField_ASC
   idField_DESC
+  stringEnumField_ASC
+  stringEnumField_DESC
   numericField_ASC
   numericField_DESC
   numericFieldCustomPrecisionScale_ASC
@@ -234,6 +238,7 @@ input KitchenSinkUpdateInput {
   floatField: Float
   jsonField: JSONObject
   idField: ID
+  stringEnumField: StringEnum
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   noFilterField: String
@@ -305,6 +310,8 @@ input KitchenSinkWhereInput {
   jsonField_json: JSONObject
   idField_eq: ID
   idField_in: [ID!]
+  stringEnumField_eq: StringEnum
+  stringEnumField_in: [StringEnum!]
   numericField_eq: Float
   numericField_gt: Float
   numericField_gte: Float
@@ -354,4 +361,9 @@ type Query {
 
 type StandardDeleteResponse {
   id: ID!
+}
+
+enum StringEnum {
+  FOO
+  BAR
 }

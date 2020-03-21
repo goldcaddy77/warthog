@@ -99,7 +99,8 @@ export class Config {
       WARTHOG_APP_PROTOCOL: 'http',
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
-      WARTHOG_DB_DATABASE: 'warthog-test',
+      // Cannot default this or we cannot test properly
+      // WARTHOG_DB_DATABASE: 'warthog-test',
       WARTHOG_DB_HOST: 'localhost',
       WARTHOG_DB_USERNAME: 'postgres'
     };

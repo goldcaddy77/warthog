@@ -1,6 +1,5 @@
 import { logger } from '../../core';
 import { CodeGenerator } from '../../core/code-generator';
-import { cleanUpTestData } from '../../db';
 
 import { WarthogGluegunToolbox } from '../types';
 
@@ -27,7 +26,5 @@ export default {
         logger.error('This often means you have multiple versions of TypeGraphQL installed.');
       }
     }
-
-    await cleanUpTestData();
   }
 };

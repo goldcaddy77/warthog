@@ -20,13 +20,10 @@ export class FeatureFlagSegmentResolver {
   }
 
   @Query(() => [FeatureFlagSegment])
-  async featureFlagSegments(@Args()
-  {
-    where,
-    orderBy,
-    limit,
-    offset
-  }: FeatureFlagSegmentWhereArgs): Promise<FeatureFlagSegment[]> {
+  async featureFlagSegments(
+    @Args()
+    { where, orderBy, limit, offset }: FeatureFlagSegmentWhereArgs
+  ): Promise<FeatureFlagSegment[]> {
     return this.service.find<FeatureFlagSegmentWhereInput>(where, orderBy, limit, offset);
   }
 
