@@ -1,20 +1,9 @@
 #!/usr/bin/env node
 const path = require('path'); // eslint-disable-line @typescript-eslint/no-var-requires
 
-// check if we're running in dev mode
-var devMode = require('fs').existsSync(`${__dirname}/../src/cli`);
-// or want to "force" running the compiled version with --compiled-build
-var wantsCompiled = process.argv.indexOf('--compiled-build') >= 0;
+var devMode = process.env.WARTHOG_CLI_DEV_MODE === 'true';
 
-if (wantsCompiled || !devMode) {
-  // Load ts-node if it's available
-  try {
-    require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
-  } catch (e) {}
-
-  // this runs from the compiled javascript source
-  require(`${__dirname}/../dist/cli/cli`).run(process.argv);
-} else {
+if (devMode) {
   try {
     require.resolve('ts-node');
   } catch (e) {
@@ -27,4 +16,6 @@ if (wantsCompiled || !devMode) {
   require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
   // run the CLI with the current process arguments
   require(`${__dirname}/../src/cli/cli`).run(process.argv);
+} else {
+  require(`${__dirname}/../dist/cli/cli`).run(process.argv);
 }
