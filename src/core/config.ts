@@ -1,4 +1,6 @@
 import { cosmiconfigSync } from 'cosmiconfig';
+
+import * as Debug from 'debug';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -13,6 +15,8 @@ interface ConfigOptions {
   container?: Container;
   logger?: Logger;
 }
+
+const debug = Debug('warthog:config');
 
 const CONFIG_VALUE_VALID_KEYS = [
   'allowOptionalIdOnCreate',
@@ -99,8 +103,7 @@ export class Config {
       WARTHOG_APP_PROTOCOL: 'http',
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
-      // Cannot default this or we cannot test properly
-      // WARTHOG_DB_DATABASE: 'warthog-test',
+      WARTHOG_DB_DATABASE: 'warthog-test',
       WARTHOG_DB_HOST: 'localhost',
       WARTHOG_DB_USERNAME: 'postgres'
     };
@@ -170,6 +173,7 @@ export class Config {
     }
 
     this.config = combined;
+    debug('Config', this.config);
 
     // Must be after config is set above
     this.validateEntryExists('WARTHOG_APP_HOST');
@@ -196,8 +200,10 @@ export class Config {
   }
 
   public get(key?: string) {
-    if (!key) {
+    if (typeof key === 'undefined') {
       return this.config;
+    } else if (!key) {
+      console.error('Config.get: key cannot be blank');
     }
 
     const lookup = key.startsWith(this.WARTHOG_ENV_PREFIX)

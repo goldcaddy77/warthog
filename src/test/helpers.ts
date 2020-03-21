@@ -4,7 +4,7 @@ import * as pgtools from 'pgtools';
 import * as util from 'util';
 
 import { run } from '../cli/cli';
-import { Config } from '../core';
+import { Config, StringMap } from '../core';
 
 export async function createDB(database: string) {
   const createDb = util.promisify(pgtools.createdb) as Function;
@@ -73,14 +73,21 @@ export function spyOnStd() {
 
 // This function allows us to call the CLI from it's entry point, getting a good enough functional
 // test, but also having these tests add to our code coverage (using `system.run` does not give credit)
-export async function callWarthogCLI(cmd: string) {
+export async function callWarthogCLI(cmd: string, overrideEnvVars?: StringMap) {
   const oldArgv = process.argv;
+
+  if (overrideEnvVars) {
+    for (const key in overrideEnvVars) {
+      process.env[key] = overrideEnvVars[key];
+    }
+  }
+
   // Gluegun requires the command come in as the 3rd+ arguments
   // Could pass empty strings in the first 2 elements, but the node and warthog commands
   // are what are passed in when you call from the command line
   process.argv = ['/fake/path/to/node', '/fake/path/to/warthog', ...cmd.split(' ')];
   await run(process.argv);
-  process.argv = oldArgv;
+  process.argv = oldArgv; // eslint-disable-line
   return;
 }
 

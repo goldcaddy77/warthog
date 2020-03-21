@@ -161,11 +161,8 @@ describe('cli functional tests', () => {
   test('requires name for db:create', async done => {
     expect.assertions(1);
 
-    // Make sure there is no DB name
-    delete process.env.WARTHOG_DB_DATABASE;
-
-    process.env.PGUSER = 'postgres';
-    await callWarthogCLI('db:create');
+    // process.env.PGUSER = 'postgres';
+    await callWarthogCLI('db:create', { WARTHOG_DB_DATABASE: '' });
     const stdout = spy.getStdOutErr();
 
     expect(stdout).toContain('Database name is required');
