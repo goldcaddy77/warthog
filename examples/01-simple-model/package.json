@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn codegen && yarn db:create",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn codegen && yarn db:create",
     "codegen": "yarn warthog codegen",
     "db:create": "yarn warthog db:create",
     "db:drop": "yarn warthog db:drop",

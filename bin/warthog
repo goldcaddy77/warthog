@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 const path = require('path'); // eslint-disable-line @typescript-eslint/no-var-requires
-
 var devMode = process.env.WARTHOG_CLI_DEV_MODE === 'true';
 
-if (devMode) {
+var tsCommands = ['codegen'];
+var runCommand = process.argv[2];
+var commandRequiresTS = tsCommands.indexOf(runCommand) > -1;
+
+if (devMode || commandRequiresTS) {
   try {
     require.resolve('ts-node');
   } catch (e) {
