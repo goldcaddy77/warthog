@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "cd ../.. && yarn && yarn link && cd - && yarn && yarn db:create && yarn codegen && yarn db:seed:dev",
+    "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn codegen && yarn db:seed:dev",
     "codegen": "yarn warthog codegen",
-    "db:create": "WARTHOG_DB_OVERRIDE=true warthog db:create",
-    "db:drop": "WARTHOG_DB_OVERRIDE=true warthog db:drop",
+    "db:create": "WARTHOG_DB_OVERRIDE=true yarn warthog db:create",
+    "db:drop": "WARTHOG_DB_OVERRIDE=true yarn warthog db:drop",
     "db:seed:dev": "WARTHOG_DB_OVERRIDE=true ts-node tools/seed.ts",
     "playground": "yarn warthog playground",
     "start": "yarn start:ts",
