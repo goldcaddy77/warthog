@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 const path = require('path'); // eslint-disable-line @typescript-eslint/no-var-requires
+const fs = require('fs');
 var devMode = process.env.WARTHOG_CLI_DEV_MODE === 'true';
 
 var tsCommands = ['codegen'];
 var runCommand = process.argv[2];
 var commandRequiresTS = tsCommands.indexOf(runCommand) > -1;
+var srcFolder = `${__dirname}/../src/cli`;
+var srcFileExists = fs.existsSync(`${srcFolder}/cli.ts`);
 
-if (devMode || commandRequiresTS) {
+if (devMode || (commandRequiresTS && srcFileExists)) {
   try {
     require.resolve('ts-node');
   } catch (e) {
@@ -18,7 +21,7 @@ if (devMode || commandRequiresTS) {
   // hook into ts-node so we can run typescript on the fly
   require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
   // run the CLI with the current process arguments
-  require(`${__dirname}/../src/cli/cli`).run(process.argv);
+  require(`${srcFolder}/cli`).run(process.argv);
 } else {
   require(`${__dirname}/../dist/cli/cli`).run(process.argv);
 }
