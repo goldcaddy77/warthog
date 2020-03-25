@@ -9,7 +9,7 @@ var commandRequiresTS = tsCommands.indexOf(runCommand) > -1;
 var srcFolder = `${__dirname}/../src/cli`;
 var srcFileExists = fs.existsSync(`${srcFolder}/cli.ts`);
 
-if (devMode || (commandRequiresTS && srcFileExists)) {
+if (commandRequiresTS) {
   try {
     require.resolve('ts-node');
   } catch (e) {
@@ -17,9 +17,12 @@ if (devMode || (commandRequiresTS && srcFileExists)) {
     process.exit(1);
   }
 
+  require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
+}
+
+if (devMode || (commandRequiresTS && srcFileExists)) {
   // this runs from the typescript source (for dev only)
   // hook into ts-node so we can run typescript on the fly
-  require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
   // run the CLI with the current process arguments
   require(`${srcFolder}/cli`).run(process.argv);
 } else {
