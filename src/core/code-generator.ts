@@ -64,6 +64,7 @@ export class CodeGenerator {
     const outputBindingPath = path.join(this.generatedFolder, 'binding.ts');
 
     const x = generateBindingFile(schemaFilePath, outputBindingPath);
+
     debug('generateBinding:end');
     return x;
   }
