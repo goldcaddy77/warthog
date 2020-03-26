@@ -82,9 +82,13 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
 
   // The generated binding considers all JSON inputs as strings.  Doing this replacement fixes it.
   // I looked for a more elegant solution, but couldn't find one
-  const code = generatorInstance.render().replace(
-    'export type JSONObject = string',
-    `
+  const code =
+    "import 'graphql-import-node'; // Needed so you can import *.graphql files \n\n" +
+    generatorInstance
+      .render()
+      .replace(
+        'export type JSONObject = string',
+        `
     export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
     export type JsonPrimitive = string | number | boolean | null | {};
@@ -96,7 +100,8 @@ export async function generateBindingFile(inputSchemaPath: string, outputBinding
 
     export type JSONObject = JsonObject;
   `
-  );
+      )
+      .replace('({ schema })', '({ schema: schema as any })');
 
   fs.writeFileSync(outputBindingFile, code);
   logger.debug('generateBindingFile:end');

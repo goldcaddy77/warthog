@@ -1,3 +1,5 @@
+import 'graphql-import-node'; // Needed so you can import *.graphql files 
+
 import { makeBindingClass, Options } from 'graphql-binding'
 import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
 import { IResolvers } from 'graphql-tools/dist/Interfaces'
@@ -29,7 +31,7 @@ export interface BindingConstructor<T> {
   new(...args: any[]): T
 }
 
-export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
+export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: schema as any })
 
 /**
  * Types

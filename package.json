@@ -92,6 +92,7 @@
     "graphql": "^14.5.8",
     "graphql-binding": "^2.5.2",
     "graphql-fields": "^2.0.3",
+    "graphql-import-node": "^0.0.4",
     "graphql-iso-date": "^3.6.1",
     "graphql-tools": "^4.0.6",
     "graphql-type-json": "^0.3.0",
