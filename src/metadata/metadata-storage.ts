@@ -13,23 +13,31 @@ export type FieldType =
   | 'numeric'
   | 'string';
 
-export const decoratorDefaults = {
+export interface DecoratorDefaults {
+  editable?: boolean;
+  filter?: boolean;
+  nullable?: boolean;
+  readonly?: boolean;
+  sort?: boolean;
+  writeonly?: boolean;
+}
+
+export const decoratorDefaults: DecoratorDefaults = {
   editable: true,
   filter: true,
   nullable: false,
-  sort: true
+  readonly: false,
+  sort: true,
+  writeonly: false
 };
 
-export interface ColumnMetadata {
+export interface ColumnMetadata extends DecoratorDefaults {
   type: FieldType;
   propertyName: string;
   dataType?: ColumnType; // int16, jsonb, etc...
-  editable?: boolean;
-  filter?: boolean | FieldType;
+  default?: any;
   enum?: GraphQLEnumType;
   enumName?: string;
-  nullable?: boolean;
-  sort?: boolean;
   unique?: boolean;
 }
 

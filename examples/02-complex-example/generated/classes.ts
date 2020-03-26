@@ -114,7 +114,10 @@ export enum UserOrderByEnum {
   float8Field_DESC = "float8Field_DESC",
 
   doublePrecisionField_ASC = "doublePrecisionField_ASC",
-  doublePrecisionField_DESC = "doublePrecisionField_DESC"
+  doublePrecisionField_DESC = "doublePrecisionField_DESC",
+
+  readonlyField_ASC = "readonlyField_ASC",
+  readonlyField_DESC = "readonlyField_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -620,6 +623,21 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [Float], { nullable: true })
   doublePrecisionField_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  readonlyField_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -734,6 +752,12 @@ export class UserCreateInput {
 
   @TypeGraphQLField({ nullable: true })
   doublePrecisionField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  password?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  writeonlyField?: string;
 }
 
 @TypeGraphQLInputType()
@@ -833,6 +857,12 @@ export class UserUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   doublePrecisionField?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  password?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  writeonlyField?: string;
 }
 
 @ArgsType()

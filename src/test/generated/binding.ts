@@ -93,7 +93,9 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'noFilterField_ASC' |
   'noFilterField_DESC' |
   'characterField_ASC' |
-  'characterField_DESC'
+  'characterField_DESC' |
+  'readonlyField_ASC' |
+  'readonlyField_DESC'
 
 export type StringEnum =   'FOO' |
   'BAR'
@@ -188,6 +190,7 @@ export interface KitchenSinkCreateInput {
   noFilterOrSortField?: String | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
+  writeonlyField?: String | null
 }
 
 export interface KitchenSinkUpdateInput {
@@ -208,6 +211,7 @@ export interface KitchenSinkUpdateInput {
   noFilterOrSortField?: String | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
+  writeonlyField?: String | null
 }
 
 export interface KitchenSinkWhereInput {
@@ -296,6 +300,11 @@ export interface KitchenSinkWhereInput {
   characterField_startsWith?: String | null
   characterField_endsWith?: String | null
   characterField_in?: String[] | String | null
+  readonlyField_eq?: String | null
+  readonlyField_contains?: String | null
+  readonlyField_startsWith?: String | null
+  readonlyField_endsWith?: String | null
+  readonlyField_in?: String[] | String | null
 }
 
 export interface KitchenSinkWhereUniqueInput {
@@ -381,6 +390,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   noFilterOrSortField?: String | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
+  readonlyField?: String | null
 }
 
 export interface StandardDeleteResponse {

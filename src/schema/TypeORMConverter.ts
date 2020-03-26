@@ -142,7 +142,7 @@ export function entityToCreateInput(model: ModelMetadata): string {
 
   const modelColumns = getColumnsForModel(model);
   modelColumns.forEach((column: ColumnMetadata) => {
-    if (!column.editable) {
+    if (!column.editable || column.readonly) {
       return;
     }
     const graphQLDataType = columnToGraphQLDataType(column);
@@ -183,7 +183,7 @@ export function entityToUpdateInput(model: ModelMetadata): string {
 
   const modelColumns = getColumnsForModel(model);
   modelColumns.forEach((column: ColumnMetadata) => {
-    if (!column.editable) {
+    if (!column.editable || column.readonly) {
       return;
     }
 
@@ -243,8 +243,9 @@ export function entityToWhereInput(model: ModelMetadata): string {
 
   const modelColumns = getColumnsForModel(model);
   modelColumns.forEach((column: ColumnMetadata) => {
-    // Don't allow filtering on these fields
-    if (!column.filter) {
+    // If user specifically says not to filter (filter: false), then don't provide where inputs
+    // Also, if the columns is "write only", then it cannot therefore be read and shouldn't have filters
+    if (!column.filter || column.writeonly) {
       return;
     }
 
@@ -406,7 +407,9 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
       return;
     }
 
-    if (column.sort) {
+    // If user says this is not sortable, then don't allow sorting
+    // Also, if the column is "write only", therefore it cannot be read and shouldn't be sortable
+    if (column.sort && !column.writeonly) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',
