@@ -9,7 +9,7 @@ export class Post extends BaseModel {
 
   @OneToMany(
     () => Author,
-    author => author.role
+    (author: Author) => author.posts
   )
   authors?: Author[];
 }

@@ -10,13 +10,13 @@ import { User } from './user.model';
 export class UserRole extends BaseModel {
   @ManyToOne(
     () => User,
-    user => user.userRoles
+    (user: User) => user.userRoles
   )
   user?: User;
 
   @ManyToOne(
     () => Role,
-    role => role.userRoles
+    (role: Role) => role.userRoles
   )
   role?: Role;
 

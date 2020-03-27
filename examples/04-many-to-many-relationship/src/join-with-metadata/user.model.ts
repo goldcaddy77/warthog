@@ -9,7 +9,7 @@ export class User extends BaseModel {
 
   @OneToMany(
     () => UserRole,
-    userRole => userRole.user
+    (userRole: UserRole) => userRole.user
   )
   userRoles?: UserRole[];
 }

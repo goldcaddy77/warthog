@@ -9,7 +9,7 @@ export class Post extends BaseModel {
 
   @ManyToOne(
     () => User,
-    user => user.posts,
+    (user: User) => user.posts,
     { nullable: false }
   )
   user?: User;
