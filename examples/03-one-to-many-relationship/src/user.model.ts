@@ -9,7 +9,7 @@ export class User extends BaseModel {
 
   @OneToMany(
     () => Post,
-    post => post.user
+    (post: Post) => post.user
   )
   posts?: Post[];
 }
