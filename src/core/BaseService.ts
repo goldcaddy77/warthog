@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, getRepository, Repository } from 'typeorm';
+import { DeepPartial, EntityManager, getRepository, Repository } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { StandardDeleteResponse } from '../tgql';
@@ -9,14 +9,26 @@ import { addQueryBuilderWhereItem } from '../torm';
 import { BaseModel } from '..';
 import { StringMap, WhereInput } from './types';
 
+interface BaseOptions {
+  manager?: EntityManager; // Allows consumers to pass in a TransactionManager
+}
+
 export class BaseService<E extends BaseModel> {
+  manager: EntityManager;
   columnMap: StringMap;
   klass: string;
 
+  // TODO: any -> ObjectType<E> (or something close)
+  // V3: Only ask for entityClass, we can get repository and manager from that
   constructor(protected entityClass: any, protected repository: Repository<E>) {
     if (!entityClass) {
       throw new Error('BaseService requires an entity Class');
     }
+
+    // V3: remove the need to inject a repository, we simply need the entityClass and then we can do
+    // everything we need to do.
+    // For now, we'll keep the API the same so that there are no breaking changes
+    this.manager = this.repository.manager;
 
     // TODO: This handles an issue with typeorm-typedi-extensions where it is unable to
     // Inject the proper repository
@@ -46,7 +58,7 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    let qb = this.repository.createQueryBuilder(this.klass);
+    let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
 
     if (limit) {
       qb = qb.take(limit);
@@ -115,7 +127,7 @@ export class BaseService<E extends BaseModel> {
     return qb.getMany();
   }
 
-  async findOne<W extends Partial<E>>(where: Partial<E>): Promise<E> {
+  async findOne<W extends Partial<E>>(where: W): Promise<E> {
     const items = await this.find(where);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
@@ -128,32 +140,32 @@ export class BaseService<E extends BaseModel> {
     return items[0];
   }
 
-  async create(data: DeepPartial<E>, userId: string): Promise<E> {
-    (data as any).createdById = userId; // TODO: fix any
-
-    const results = this.repository.create([data]);
-    const obj = results[0];
+  async create(data: DeepPartial<E>, userId: string, options?: BaseOptions): Promise<E> {
+    const manager = options?.manager ?? this.manager;
+    const entity = manager.create(this.entityClass, { ...data, createdById: userId });
 
     // Validate against the the data model
     // Without `skipMissingProperties`, some of the class-validator validations (like MinLength)
     // will fail if you don't specify the property
-    const errors = await validate(obj, { skipMissingProperties: true });
+    const errors = await validate(entity, { skipMissingProperties: true });
     if (errors.length) {
-      // TODO: create our own error format that matches Mike B's format
+      // TODO: create our own error format
       throw new ArgumentValidationError(errors);
     }
 
     // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
     // TODO: Fix `any`
-    return this.repository.save(obj as any, { reload: true });
+    return manager.save(entity as any, { reload: true });
   }
 
-  async createMany(data: DeepPartial<E>[], userId: string): Promise<E[]> {
+  async createMany(data: DeepPartial<E>[], userId: string, options?: BaseOptions): Promise<E[]> {
+    const manager = options?.manager ?? this.manager;
+
     data = data.map(item => {
       return { ...item, createdById: userId };
     });
 
-    const results = this.repository.create(data);
+    const results = manager.create(this.entityClass, data);
 
     // Validate against the the data model
     // Without `skipMissingProperties`, some of the class-validator validations (like MinLength)
@@ -166,9 +178,7 @@ export class BaseService<E extends BaseModel> {
       }
     }
 
-    // TODO: remove any when this is fixed: https://github.com/Microsoft/TypeScript/issues/21592
-    // TODO: Fix `any`
-    return this.repository.save(results as any, { reload: true });
+    return manager.save(results, { reload: true });
   }
 
   // TODO: There must be a more succinct way to:
@@ -177,38 +187,44 @@ export class BaseService<E extends BaseModel> {
   //   - Return the full object
   // NOTE: assumes all models have a unique `id` field
   // W extends Partial<E>
-  async update<W extends any>(data: DeepPartial<E>, where: W, userId: string): Promise<E> {
-    (data as any).updatedById = userId; // TODO: fix any
-
-    // const whereOptions = this.pullParamsFromClass(where);
+  async update<W extends any>(
+    data: DeepPartial<E>,
+    where: W,
+    userId: string,
+    options?: BaseOptions
+  ): Promise<E> {
+    const manager = options?.manager ?? this.manager;
     const found = await this.findOne(where);
-    const idData = ({ id: found.id } as any) as DeepPartial<E>;
-    const merged = this.repository.merge(new this.entityClass(), data, idData);
+    const mergeData = ({ id: found.id, updatedById: userId } as any) as DeepPartial<E>;
+    const entity = manager.merge<E>(this.entityClass, new this.entityClass(), data, mergeData);
 
     // skipMissingProperties -> partial validation of only supplied props
-    const errors = await validate(merged, { skipMissingProperties: true });
+    const errors = await validate(entity, { skipMissingProperties: true });
     if (errors.length) {
       throw new ArgumentValidationError(errors);
     }
 
-    // TODO: Fix `any`
-    const result = await this.repository.save(merged as any);
-    return this.repository.findOneOrFail({ where: { id: result.id } });
+    const result = await manager.save<E>(entity);
+    return manager.findOneOrFail(this.entityClass, result.id);
   }
 
-  async delete<W extends any>(where: W, userId: string): Promise<StandardDeleteResponse> {
+  async delete<W extends any>(
+    where: W,
+    userId: string,
+    options?: BaseOptions
+  ): Promise<StandardDeleteResponse> {
+    const manager = options?.manager ?? this.manager;
+
     const data = {
       deletedAt: new Date().toISOString(),
       deletedById: userId
     };
 
-    const found = await this.repository.findOneOrFail(where);
+    const found = await manager.findOneOrFail<E>(this.entityClass, where);
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
-    const merged = this.repository.merge(new this.entityClass(), data as any, idData);
+    const entity = manager.merge<E>(this.entityClass, new this.entityClass(), data as any, idData);
 
-    // TODO: Fix `any`
-    await this.repository.save(merged as any);
-
+    await manager.save(entity as any);
     return { id: found.id };
   }
 

@@ -807,6 +807,185 @@ Array [
 ]
 `;
 
+exports[`server find: string query: contains \`A\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+]
+`;
+
 exports[`server find: string query: contains \`a\` (upper or lower) 1`] = `
 Array [
   Object {

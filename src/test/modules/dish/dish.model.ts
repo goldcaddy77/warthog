@@ -4,7 +4,7 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 @Model()
 export class Dish extends BaseModel {
-  @StringField({ maxLength: 30 })
+  @StringField({ maxLength: 40 })
   name?: string;
 
   @ManyToOne(
