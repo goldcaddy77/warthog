@@ -4,7 +4,7 @@ import * as Debug from 'debug';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Container, Service } from 'typedi';
+import { Container, Inject, Service } from 'typedi';
 
 import { ObjectUtil } from '../utils';
 import { Logger } from '../core';
@@ -13,7 +13,6 @@ interface ConfigOptions {
   dotenvPath?: string;
   configSearchPath?: string;
   container?: Container;
-  logger?: Logger;
 }
 
 const debug = Debug('warthog:config');
@@ -50,16 +49,17 @@ export class Config {
   testDefaults: Record<string, any>;
   PROJECT_ROOT: string;
   container: Container;
-  logger?: Logger;
   NODE_ENV?: string;
 
   // The full config object
   config: any;
 
-  constructor(private options: ConfigOptions = {}) {
+  constructor(
+    private options: ConfigOptions = {},
+    @Inject('warthog.logger') public readonly logger: Logger
+  ) {
     this.PROJECT_ROOT = process.cwd();
     this.container = options.container || Container;
-    this.logger = options.logger;
 
     this.defaults = {
       WARTHOG_DB_CONNECTION: 'postgres',
@@ -190,11 +190,7 @@ export class Config {
     // NOTE: this is likely a bad idea and we should use Containers
     this.writeWarthogEnvVars();
 
-    (this.container as any).set('warthog.logger', this.logger); // Save for later so we can pull globally
-
-    if (this.logger && this.logger.debug) {
-      this.logger.debug('loadSync complete', this.get());
-    }
+    this.logger.debug('loadSync complete', this.get());
 
     return this;
   }

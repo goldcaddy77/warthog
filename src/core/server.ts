@@ -10,10 +10,10 @@ import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
-import { Container } from 'typedi';
+import { Container, Inject } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
-import { logger, Logger } from '../core/logger';
+import { Logger } from '../core/logger';
 import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { createDBConnection } from '../torm';
@@ -49,7 +49,6 @@ export interface ServerOptions<T> {
 }
 
 export class Server<C extends BaseContext> {
-  config: Config;
   apolloConfig?: ApolloServerExpressConfig;
   authChecker?: AuthChecker<C>;
   connection!: Connection;
@@ -63,8 +62,15 @@ export class Server<C extends BaseContext> {
 
   constructor(
     private appOptions: ServerOptions<C>,
-    private dbOptions: Partial<ConnectionOptions> = {}
+    private dbOptions: Partial<ConnectionOptions> = {},
+    @Inject('warthog.logger') public readonly diLogger?: Logger,
+    @Inject('Config') public readonly config?: Config,
+    @Inject('CodeGenerator') public readonly codeGenerator?: CodeGenerator
   ) {
+    // Need to explicitly state that Config and Logger are guaranteed to be here
+    this.config = (config as unknown) as Config;
+    this.logger = ((this.appOptions.logger || diLogger) as unknown) as Logger;
+
     if (typeof this.appOptions.host !== 'undefined') {
       process.env.WARTHOG_APP_HOST = this.appOptions.host;
       // When we move to v2.0 we'll officially deprecate these config values in favor of ENV vars
@@ -98,26 +104,11 @@ export class Server<C extends BaseContext> {
     this.bodyParserConfig = this.appOptions.bodyParserConfig;
     this.apolloConfig = this.appOptions.apolloConfig || {};
 
-    this.logger = this.getLogger();
-
-    // NOTE: this should be after we hard-code the WARTHOG_ env vars above because we want the config
-    // module to think they were set by the user
-    this.config = new Config({ container: this.container, logger: this.logger });
-
     this.expressApp = this.appOptions.expressApp || express();
 
     if (!process.env.NODE_ENV) {
       throw new Error("NODE_ENV must be set - use 'development' locally");
     }
-  }
-
-  getLogger(): Logger {
-    if (this.appOptions.logger) {
-      return this.appOptions.logger;
-      // } else if (Container.has('warthog.logger')) {
-      //   return Container.get('warthog.logger');
-    }
-    return logger;
   }
 
   async establishDBConnection(): Promise<Connection> {
@@ -183,11 +174,7 @@ export class Server<C extends BaseContext> {
 
   async generateFiles(): Promise<void> {
     debug('start:generateFiles:start');
-    await new CodeGenerator(this.config.get('GENERATED_FOLDER'), this.config.get('DB_ENTITIES'), {
-      resolversPath: this.config.get('RESOLVERS_PATH'),
-      validateResolvers: this.config.get('VALIDATE_RESOLVERS') === 'true',
-      warthogImportPath: this.config.get('MODULE_IMPORT_PATH')
-    }).generate();
+    await this.codeGenerator!.generate();
 
     debug('start:generateFiles:end');
   }

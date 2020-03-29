@@ -1,4 +1,4 @@
-import { logger } from '../../core';
+import { Logger } from '../../core';
 import { CodeGenerator } from '../../core/code-generator';
 
 import { WarthogGluegunToolbox } from '../types';
@@ -21,9 +21,9 @@ export default {
         warthogImportPath: config.get('MODULE_IMPORT_PATH')
       }).generate();
     } catch (error) {
-      logger.error(error);
+      Logger.error(error);
       if (error.name.indexOf('Cannot determine GraphQL input type') > -1) {
-        logger.error('This often means you have multiple versions of TypeGraphQL installed.');
+        Logger.error('This often means you have multiple versions of TypeGraphQL installed.');
       }
     }
   }

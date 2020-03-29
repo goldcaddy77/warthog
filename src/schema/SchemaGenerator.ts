@@ -1,7 +1,7 @@
 import * as prettier from 'prettier';
-import { Container } from 'typedi';
+import { Inject, Service } from 'typedi';
 
-import { logger, Logger } from '../core/logger';
+import { Logger } from '../core/logger';
 import {
   generateEnumMapImports,
   entityToCreateInput,
@@ -15,12 +15,11 @@ import {
 } from './TypeORMConverter';
 import { getMetadataStorage, ModelMetadata } from '../metadata';
 
+@Service('SchemaGenerator')
 export class SchemaGenerator {
-  static logger: Logger = Container.has('warthog.logger')
-    ? Container.get('warthog.logger')
-    : logger;
+  constructor(@Inject('warthog.logger') public readonly logger: Logger) {}
 
-  static generate(
+  generate(
     // This will reference 'warthog in the deployed module, but we need to do a relative import in the examples library
     warthogImportPath = 'warthog'
   ): string {
@@ -67,7 +66,7 @@ export class SchemaGenerator {
     return this.format(template);
   }
 
-  static format(code: string, options: prettier.Options = {}) {
+  format(code: string, options: prettier.Options = {}) {
     try {
       // TODO: grab our prettier options (single quote, etc...)
       return prettier.format(code, {

@@ -11,10 +11,11 @@ import * as util from 'util';
 import { generateBindingFile } from '../gql';
 import { SchemaGenerator } from '../schema';
 import { authChecker, loadFromGlobArray } from '../tgql';
-import { logger } from '../core';
+import { Logger } from '../core';
 // Load all model files so that decorators will gather metadata for code generation
 
 import * as Debug from 'debug';
+import { Inject, Service } from 'typedi';
 
 const debug = Debug('warthog:code-generators');
 
@@ -26,6 +27,26 @@ interface CodeGeneratorOptions {
   warthogImportPath?: string;
 }
 
+
+
+
+
+
+await new CodeGenerator(this.config.get('GENERATED_FOLDER'), this.config.get('DB_ENTITIES'), {
+  resolversPath: this.config.get('RESOLVERS_PATH'),
+  validateResolvers: this.config.get('VALIDATE_RESOLVERS') === 'true',
+  warthogImportPath: this.config.get('MODULE_IMPORT_PATH')
+}).generate();
+
+
+
+
+
+
+
+
+
+@Service('CodeGenerator')
 export class CodeGenerator {
   schema?: GraphQLSchema;
 
@@ -33,7 +54,8 @@ export class CodeGenerator {
     private generatedFolder: string,
     // @ts-ignore
     private modelsArray: string[],
-    private options: CodeGeneratorOptions
+    private options: CodeGeneratorOptions,
+    @Inject('warthog.logger') public readonly logger: Logger
   ) {
     this.createGeneratedFolder();
     loadFromGlobArray(modelsArray);
@@ -52,7 +74,7 @@ export class CodeGenerator {
       await this.writeSchemaFile();
       await this.generateBinding();
     } catch (error) {
-      logger.error(error);
+      Logger.error(error);
       debug(error); // this is required to log when run in a separate project
     }
     debug('generate:end');
