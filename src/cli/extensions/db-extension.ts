@@ -142,7 +142,7 @@ function filteredProcessEnv() {
     }, {});
 }
 
-async function getPgConfig(config: any) {
+function getPgConfig(config: any) {
   return {
     host: config.get('DB_HOST'),
     user: config.get('DB_USERNAME'),
