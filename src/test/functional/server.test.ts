@@ -1,3 +1,5 @@
+import { EntityMetadata } from 'typeorm';
+
 /* eslint-disable @typescript-eslint/camelcase */
 import { getBindingError, logger } from '../../';
 import { get, GetResponse } from '../../core/http';
@@ -495,8 +497,6 @@ describe('server', () => {
       expect(users[1].name).toBe(`${name} Updated`);
 
       const savedDishes = await binding.query.dishes({ where: { name_contains: name } }, '{ id }');
-
-      console.log(JSON.stringify(savedDishes));
       expect(savedDishes.length).toEqual(2);
       done();
     });
@@ -518,9 +518,34 @@ describe('server', () => {
       try {
         savedDishes = await binding.query.dishes({ where: { name_eq: name } }, '{ id }');
       } catch (error) {
-        console.log('This should not have errored', savedDishes);
+        console.error('This should not have errored', savedDishes);
       }
       expect(savedDishes.length).toEqual(0);
+      done();
+    });
+  });
+
+  describe('apiOnly and dbOnly', () => {
+    let kitchenSinkDBColumns: string[];
+    beforeEach(() => {
+      const kitchenSinkTableMeta = server.connection.entityMetadatas.find(
+        entity => entity.name === 'KitchenSink'
+      ) as EntityMetadata;
+
+      if (!kitchenSinkTableMeta) {
+        throw new Error('Expected to find the KitchenSink TypeORM metadata');
+      }
+
+      kitchenSinkDBColumns = kitchenSinkTableMeta.columns.map(column => column.propertyName);
+    });
+
+    test('apiOnly column does not exist in the DB', async done => {
+      expect(kitchenSinkDBColumns).not.toContain('apiOnlyField');
+      done();
+    });
+
+    test('dbOnly column does exist in the DB', async done => {
+      expect(kitchenSinkDBColumns).toContain('dbOnlyField');
       done();
     });
   });

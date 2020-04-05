@@ -172,6 +172,7 @@ type KitchenSink implements BaseGraphQLObject {
   characterField: String
   customTextFieldNoSortOrFilter: String
   readonlyField: String
+  apiOnlyField: String
 }
 
 input KitchenSinkCreateInput {
@@ -193,6 +194,7 @@ input KitchenSinkCreateInput {
   characterField: String
   customTextFieldNoSortOrFilter: String
   writeonlyField: String
+  apiOnlyField: String
 }
 
 enum KitchenSinkOrderByInput {
@@ -230,6 +232,8 @@ enum KitchenSinkOrderByInput {
   characterField_DESC
   readonlyField_ASC
   readonlyField_DESC
+  apiOnlyField_ASC
+  apiOnlyField_DESC
 }
 
 input KitchenSinkUpdateInput {
@@ -251,6 +255,7 @@ input KitchenSinkUpdateInput {
   characterField: String
   customTextFieldNoSortOrFilter: String
   writeonlyField: String
+  apiOnlyField: String
 }
 
 input KitchenSinkWhereInput {
@@ -344,6 +349,11 @@ input KitchenSinkWhereInput {
   readonlyField_startsWith: String
   readonlyField_endsWith: String
   readonlyField_in: [String!]
+  apiOnlyField_eq: String
+  apiOnlyField_contains: String
+  apiOnlyField_startsWith: String
+  apiOnlyField_endsWith: String
+  apiOnlyField_in: [String!]
 }
 
 input KitchenSinkWhereUniqueInput {

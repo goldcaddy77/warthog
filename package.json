@@ -27,7 +27,7 @@
     "//prettier": "Note: ignores node_modules by default and 'generated' folder via .prettierignore",
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
-    "test": "yarn test:setup && NODE_ENV=test jest --verbose --runInBand $1 && yarn test:teardown",
+    "test": "yarn test:setup && NODE_ENV=test jest --verbose --runInBand && yarn test:teardown",
     "test:codegen": "./src/test/codegen-test-files.sh",
     "test:db:create": "NODE_ENV=test PGUSER=postgres ./bin/warthog db:create",
     "test:db:drop": "NODE_ENV=test PGUSER=postgres ./bin/warthog db:drop",

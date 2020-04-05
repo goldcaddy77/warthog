@@ -166,5 +166,11 @@ export class User extends BaseModel {
   @StringField({ readonly: true, nullable: true })
   readonlyField!: string;
 
+  @StringField({ apiOnly: true, nullable: true })
+  apiOnlyField!: string;
+
+  @StringField({ dbOnly: true, nullable: true })
+  dbOnlyField!: string;
+
   // TODO: ForeignKeyField
 }
