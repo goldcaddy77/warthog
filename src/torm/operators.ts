@@ -27,15 +27,15 @@ export function addQueryBuilderWhereItem<E>(
       // IN (:... is the syntax for exploding array params into (?, ?, ?) in QueryBuilder
       return qb.andWhere(`${columnWithAlias} IN (:...${parameterKey})`, { [parameterKey]: value });
     case 'contains':
-      return qb.andWhere(`LOWER(${columnWithAlias}) LIKE :${parameterKey}`, {
+      return qb.andWhere(`${columnWithAlias} ILIKE :${parameterKey}`, {
         [parameterKey]: `%${value}%`
       });
     case 'startsWith':
-      return qb.andWhere(`LOWER(${columnWithAlias}) LIKE :${parameterKey}`, {
+      return qb.andWhere(`${columnWithAlias} ILIKE :${parameterKey}`, {
         [parameterKey]: `${value}%`
       });
     case 'endsWith':
-      return qb.andWhere(`LOWER(${columnWithAlias}) LIKE :${parameterKey}`, {
+      return qb.andWhere(`${columnWithAlias} ILIKE :${parameterKey}`, {
         [parameterKey]: `%${value}`
       });
     case 'json': {
