@@ -22,7 +22,7 @@ export function getBaseConfig() {
     port: parseInt(process.env.WARTHOG_DB_PORT || '', 10),
     subscribers: getDatabaseSubscriberPaths(),
     synchronize: process.env.WARTHOG_DB_SYNCHRONIZE === 'true',
-    type: process.env.WARTHOG_DB_DATABASE_TYPE || process.env.WARTHOG_DB_CONNECTION!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    type: process.env.WARTHOG_DB_CONNECTION!, // eslint-disable-line @typescript-eslint/no-non-null-assertion
     username: process.env.WARTHOG_DB_USERNAME
   };
 }
