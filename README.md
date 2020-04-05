@@ -265,7 +265,6 @@ Almost all config in Warthog is driven by environment variables. The following i
 | WARTHOG_AUTO_GENERATE_FILES  | Auto-generate files                                      | DEV: true, PROD: false    |
 | WARTHOG_AUTO_OPEN_PLAYGROUND | Open playground on server start                          | DEV: true, PROD: false    |
 | WARTHOG_CLI_GENERATE_PATH    | Where should CLI generate files                          | ./src                     |
-| WARTHOG_DB_CONNECTION        | DB connection type                                       | postgres                  |
 | WARTHOG_DB_DATABASE          | DB name                                                  | _none_                    |
 | WARTHOG_DB_ENTITIES          | Where should warthog look for models                     | src\/\*\*\/\*.model.ts    |
 | WARTHOG_DB_MIGRATIONS        | What DB migrations should TypeORM run                    | db/migrations/\*\*\/\*.ts |
@@ -277,7 +276,6 @@ Almost all config in Warthog is driven by environment variables. The following i
 | WARTHOG_DB_SYNCHRONIZE       | DB automatically migrated                                | false                     |
 | WARTHOG_GENERATED_FOLDER     | Where should generated code be placed                    | ./generated               |
 | WARTHOG_INTROSPECTION        | Allow server to be introspected                          | true                      |
-| WARTHOG_MOCK_DATABASE        | Should we use mock sqlite DB?                            | false                     |
 | WARTHOG_RESOLVERS_PATH       | Where should Warthog look for resolvers                  | src/\*\*\/\*.resolver.ts  |
 | WARTHOG_SUBSCRIPTIONS        | Should we enable subscriptions and open a websocket port | false                     |
 | WARTHOG_VALIDATE_RESOLVERS   | TypeGraphQL validation enabled?                          | false                     |
