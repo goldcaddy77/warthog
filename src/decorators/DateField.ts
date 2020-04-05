@@ -1,6 +1,6 @@
 import { GraphQLISODateTime } from 'type-graphql';
 
-import { decoratorDefaults, DecoratorDefaults } from '../metadata';
+import { DecoratorDefaults } from '../metadata';
 import { ColumnType } from '../torm';
 import { composeMethodDecorators } from '../utils';
 
@@ -11,17 +11,16 @@ interface DateFieldOptions extends DecoratorDefaults {
   default?: Date;
 }
 
-export function DateField(args: DateFieldOptions = {}): any {
-  const options = { ...decoratorDefaults, ...args };
+export function DateField(options: DateFieldOptions = {}): any {
   const nullableOption = options.nullable === true ? { nullable: true } : {};
   const defaultOption = options.default ? { default: options.default } : {};
 
   const factories = getCombinedDecorator({
     fieldType: 'date',
-    columnMetadata: options,
+    warthogColumnMeta: options,
     gqlFieldType: GraphQLISODateTime,
-    dbType: args.dataType || 'timestamp',
-    columnOptions: { ...nullableOption, ...defaultOption }
+    dbType: options.dataType || 'timestamp',
+    dbColumnOptions: { ...nullableOption, ...defaultOption }
   });
 
   return composeMethodDecorators(...factories);

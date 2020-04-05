@@ -439,7 +439,7 @@ export interface User extends BaseGraphQLObject {
   version: Int
   booleanField?: Boolean | null
   dateField?: DateTime | null
-  emailField: String
+  emailField?: String | null
   enumField?: StringEnum | null
   floatField?: Float | null
   realField?: Float | null

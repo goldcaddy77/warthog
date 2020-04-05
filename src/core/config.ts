@@ -79,6 +79,7 @@ export class Config {
       WARTHOG_DB_SUBSCRIBERS: ['src/subscribers/**/*.ts'],
       WARTHOG_DB_SUBSCRIBERS_DIR: 'src/subscribers',
       WARTHOG_DB_SYNCHRONIZE: 'false',
+      WARTHOG_FILTER_BY_DEFAULT: 'true',
       WARTHOG_MODULE_IMPORT_PATH: 'warthog',
       // TODO: eventually we should do this path resolution when we ask for the variable with `get`
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),

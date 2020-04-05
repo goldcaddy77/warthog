@@ -1,6 +1,6 @@
 import { Int } from 'type-graphql';
 
-import { decoratorDefaults, DecoratorDefaults } from '../metadata';
+import { DecoratorDefaults } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 import { IntColumnType } from '../torm';
 
@@ -11,17 +11,16 @@ interface IntFieldOptions extends DecoratorDefaults {
   default?: number;
 }
 
-export function IntField(args: IntFieldOptions = decoratorDefaults): any {
-  const options = { ...decoratorDefaults, ...args };
+export function IntField(options: IntFieldOptions = {}): any {
   const defaultOption = options.default ? { default: options.default } : {};
   const nullableOption = options.nullable === true ? { nullable: true } : {};
 
   const factories = getCombinedDecorator({
     fieldType: 'integer',
-    columnMetadata: options,
+    warthogColumnMeta: options,
     gqlFieldType: Int,
-    dbType: args.dataType || 'int',
-    columnOptions: { ...nullableOption, ...defaultOption }
+    dbType: options.dataType ?? 'int',
+    dbColumnOptions: { ...nullableOption, ...defaultOption }
   });
 
   return composeMethodDecorators(...factories);

@@ -3,20 +3,14 @@ import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage, DecoratorDefaults } from '../metadata';
+import { getMetadataStorage, DecoratorDefaults } from '../metadata';
 import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 
 interface EnumFieldOptions extends DecoratorDefaults {
   default?: any;
 }
 
-export function EnumField(
-  name: string,
-  enumeration: object,
-  args: EnumFieldOptions = decoratorDefaults
-): any {
-  const options = { ...decoratorDefaults, ...args };
-
+export function EnumField(name: string, enumeration: object, options: EnumFieldOptions = {}): any {
   // Register enum with TypeGraphQL so that it lands in generated schema
   registerEnumType(enumeration, { name });
 

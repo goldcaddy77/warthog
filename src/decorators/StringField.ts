@@ -1,6 +1,6 @@
 import { MaxLength, MinLength } from 'class-validator';
 
-import { decoratorDefaults, DecoratorDefaults } from '../metadata';
+import { DecoratorDefaults } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 import { StringColumnType } from '../torm';
 
@@ -14,24 +14,23 @@ interface StringFieldOptions extends DecoratorDefaults {
   unique?: boolean;
 }
 
-export function StringField(args: StringFieldOptions = decoratorDefaults): any {
-  const options = { ...decoratorDefaults, ...args };
+export function StringField(options: StringFieldOptions = {}): any {
   const maxLenOption = options.maxLength ? { length: options.maxLength } : {};
   const uniqueOption = options.unique ? { unique: true } : {};
 
   const factories = getCombinedDecorator({
     fieldType: 'string',
-    columnMetadata: options,
+    warthogColumnMeta: options,
     gqlFieldType: String,
-    dbType: args.dataType || 'varchar',
-    columnOptions: { ...maxLenOption, ...uniqueOption }
+    dbType: options.dataType || 'varchar',
+    dbColumnOptions: { ...maxLenOption, ...uniqueOption }
   });
 
-  if (args.minLength) {
-    factories.push(MinLength(args.minLength));
+  if (options.minLength) {
+    factories.push(MinLength(options.minLength));
   }
-  if (args.maxLength) {
-    factories.push(MaxLength(args.maxLength));
+  if (options.maxLength) {
+    factories.push(MaxLength(options.maxLength));
   }
 
   return composeMethodDecorators(...factories);

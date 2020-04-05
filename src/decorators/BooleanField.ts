@@ -12,7 +12,7 @@ interface BooleanFieldOptions extends DecoratorDefaults {
 export function BooleanField(options: BooleanFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'boolean',
-    columnMetadata: options,
+    warthogColumnMeta: options,
     gqlFieldType: GraphQLBoolean,
     dbType: 'boolean'
   });
