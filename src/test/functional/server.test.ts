@@ -187,7 +187,7 @@ describe('server', () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
-      { where: { stringField_contains: 'a' }, limit: 100 },
+      { where: { stringField_contains: 'A' }, limit: 100 },
       '{ stringField }'
     );
     expect(result.length).toEqual(58);
@@ -198,7 +198,7 @@ describe('server', () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
-      { where: { stringField_startsWith: 'b' } },
+      { where: { stringField_startsWith: 'B' } },
       '{ stringField }'
     );
     expect(result.length).toEqual(5);
@@ -209,7 +209,7 @@ describe('server', () => {
     expect.assertions(2);
 
     const result = await binding.query.kitchenSinks(
-      { where: { stringField_endsWith: 'z' } },
+      { where: { stringField_endsWith: 'Z' } },
       '{ stringField }'
     );
     expect(result.length).toEqual(3);

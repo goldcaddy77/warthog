@@ -86,7 +86,13 @@ export async function callWarthogCLI(cmd: string, overrideEnvVars?: StringMap) {
   // Could pass empty strings in the first 2 elements, but the node and warthog commands
   // are what are passed in when you call from the command line
   process.argv = ['/fake/path/to/node', '/fake/path/to/warthog', ...cmd.split(' ')];
-  await run(process.argv);
+
+  try {
+    await run(process.argv);
+  } catch (error) {
+    console.error('Error', error);
+  }
+
   process.argv = oldArgv; // eslint-disable-line
   return;
 }
