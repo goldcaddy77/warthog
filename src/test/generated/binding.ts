@@ -1,3 +1,5 @@
+import 'graphql-import-node'; // Needed so you can import *.graphql files 
+
 import { makeBindingClass, Options } from 'graphql-binding'
 import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
 import { IResolvers } from 'graphql-tools/dist/Interfaces'
@@ -15,6 +17,8 @@ export interface Mutation {
     updateDish: <T = Dish>(args: { data: DishUpdateInput, where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createManyDishs: <T = Array<Dish>>(args: { data: Array<DishCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteDish: <T = StandardDeleteResponse>(args: { where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    successfulTransaction: <T = Array<Dish>>(args: { data: DishCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    failedTransaction: <T = Array<Dish>>(args: { data: DishCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createKitchenSink: <T = KitchenSink>(args: { data: KitchenSinkCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createManyKitchenSinks: <T = Array<KitchenSink>>(args: { data: Array<KitchenSinkCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateKitchenSink: <T = KitchenSink>(args: { data: KitchenSinkUpdateInput, where: KitchenSinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -41,7 +45,7 @@ export interface BindingConstructor<T> {
   new(...args: any[]): T
 }
 
-export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
+export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: schema as any })
 
 /**
  * Types

@@ -2,44 +2,38 @@ import { Service } from 'typedi';
 import { DeepPartial, Repository, Transaction, TransactionManager, EntityManager } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseService } from '../../../';
-import { Dish } from './dish.model';
+import { BaseService } from '../../../src';
 
-@Service('DishService')
-export class DishService extends BaseService<Dish> {
-  constructor(@InjectRepository(Dish) protected readonly repository: Repository<Dish>) {
-    super(Dish, repository);
+import { User } from './user.model';
+
+@Service('UserService')
+export class UserService extends BaseService<User> {
+  constructor(@InjectRepository(User) protected readonly repository: Repository<User>) {
+    super(User, repository);
   }
 
   @Transaction()
   async successfulTransaction(
-    data: DeepPartial<Dish>,
+    data: DeepPartial<User>,
     userId: string,
     @TransactionManager() manager?: EntityManager
-  ): Promise<Dish[]> {
-    const { id, ...nonTransactionUser } = await this.create(data, userId);
-
-    const user1 = await this.create(data, userId, { manager });
-    const user2 = await this.update(
-      { ...nonTransactionUser, name: `${data.name} Updated` },
-      { id },
-      userId,
-      {
-        manager
-      }
-    );
-
-    return [user1, user2];
+  ): Promise<User[]> {
+    // Per comment below, this should also be executed in an `await` or else something could go wrong and the
+    // items would be done outside the transaction
+    return Promise.all([
+      this.create(data, userId, { manager }),
+      this.create(data, userId, { manager })
+    ]);
   }
 
   // This opens the transaction automatically and either commits or rolls back based on whether the function
   // throws or not, so you must execute database calls in here, they cannot be returned like they are above.
   @Transaction()
   async failedTransaction(
-    data: DeepPartial<Dish>,
+    data: DeepPartial<User>,
     userId: string,
     @TransactionManager() manager?: EntityManager
-  ): Promise<Dish[]> {
+  ): Promise<User[]> {
     const invalidUserData = {};
 
     const users = await Promise.all([
