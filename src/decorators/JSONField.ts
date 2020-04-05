@@ -1,14 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
 
-import { Field } from 'type-graphql';
-import { Column } from 'typeorm';
-
 import { decoratorDefaults } from '../metadata';
-import { defaultColumnType } from '../torm';
-import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+import { composeMethodDecorators } from '../utils';
 
-import { WarthogField } from './WarthogField';
+import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface JSONFieldOptions {
   nullable?: boolean;
@@ -17,19 +13,13 @@ interface JSONFieldOptions {
 
 export function JSONField(args: JSONFieldOptions = {}): any {
   const options = { ...decoratorDefaults, ...args };
-  const databaseConnection: string = process.env.WARTHOG_DB_CONNECTION || '';
-  const type = defaultColumnType(databaseConnection, 'json');
 
-  const factories = [
-    WarthogField('json', options),
-    Field(() => GraphQLJSONObject, {
-      ...options
-    }),
-    Column({
-      type,
-      ...options
-    }) as MethodDecoratorFactory
-  ];
+  const factories = getCombinedDecorator({
+    fieldType: 'json',
+    columnMetadata: options,
+    gqlFieldType: GraphQLJSONObject,
+    dbType: 'jsonb'
+  });
 
   return composeMethodDecorators(...factories);
 }

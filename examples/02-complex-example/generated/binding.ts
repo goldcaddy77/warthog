@@ -104,7 +104,9 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'float8Field_ASC' |
   'float8Field_DESC' |
   'doublePrecisionField_ASC' |
-  'doublePrecisionField_DESC'
+  'doublePrecisionField_DESC' |
+  'readonlyField_ASC' |
+  'readonlyField_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -163,6 +165,8 @@ export interface UserCreateInput {
   float4Field?: Float | null
   float8Field?: Float | null
   doublePrecisionField?: Float | null
+  password?: String | null
+  writeonlyField?: String | null
 }
 
 export interface UserUpdateInput {
@@ -198,6 +202,8 @@ export interface UserUpdateInput {
   float4Field?: Float | null
   float8Field?: Float | null
   doublePrecisionField?: Float | null
+  password?: String | null
+  writeonlyField?: String | null
 }
 
 export interface UserWhereInput {
@@ -367,6 +373,11 @@ export interface UserWhereInput {
   doublePrecisionField_lt?: Float | null
   doublePrecisionField_lte?: Float | null
   doublePrecisionField_in?: Float[] | Float | null
+  readonlyField_eq?: String | null
+  readonlyField_contains?: String | null
+  readonlyField_startsWith?: String | null
+  readonlyField_endsWith?: String | null
+  readonlyField_in?: String[] | String | null
 }
 
 export interface UserWhereUniqueInput {
@@ -458,6 +469,7 @@ export interface User extends BaseGraphQLObject {
   float4Field?: Float | null
   float8Field?: Float | null
   doublePrecisionField?: Float | null
+  readonlyField?: String | null
 }
 
 /*

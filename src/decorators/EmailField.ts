@@ -1,28 +1,24 @@
 import { IsEmail } from 'class-validator';
-import { Field } from 'type-graphql';
-import { Column } from 'typeorm';
 
-import { decoratorDefaults } from '../metadata';
-import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+import { decoratorDefaults, DecoratorDefaults } from '../metadata';
+import { composeMethodDecorators } from '../utils';
 
-import { WarthogField } from './WarthogField';
+import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface EmailFieldOptions {
-  filter?: boolean;
-  nullable?: boolean;
-  sort?: boolean;
+interface EmailFieldOptions extends DecoratorDefaults {
   unique?: boolean;
 }
 
 export function EmailField(args: EmailFieldOptions = {}): any {
   const options = { unique: true, ...decoratorDefaults, ...args };
 
-  const factories = [
-    WarthogField('email', options),
-    IsEmail(),
-    Field(),
-    Column(options) as MethodDecoratorFactory
-  ];
+  const factories = getCombinedDecorator({
+    fieldType: 'email',
+    columnMetadata: options
+  });
+
+  // Adds email validation
+  factories.push(IsEmail());
 
   return composeMethodDecorators(...factories);
 }

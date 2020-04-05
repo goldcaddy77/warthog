@@ -33,6 +33,7 @@
     "test:db:drop": "NODE_ENV=test PGUSER=postgres ./bin/warthog db:drop",
     "test:setup": "yarn test:db:drop && yarn test:db:create && yarn test:codegen",
     "test:teardown": "yarn test:db:drop",
+    "test:update-snapshots": "yarn test:setup && NODE_ENV=test jest --verbose --runInBand -u && yarn test:teardown",
     "test:watch": "yarn test:setup && NODE_ENV=test jest --verbose --runInBand --watch && yarn test:teardown"
   },
   "husky": {

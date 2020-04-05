@@ -92,6 +92,9 @@ export class KitchenSink extends BaseModel {
   })
   customTextFieldNoSortOrFilter?: string;
 
-  // @EnumField('StringEnum', StringEnum)
-  // stringEnumField: StringEnum;
+  @StringField({ readonly: true, nullable: true })
+  readonlyField?: string;
+
+  @StringField({ writeonly: true, nullable: true })
+  writeonlyField?: string;
 }

@@ -1,18 +1,14 @@
-import { Field, Int } from 'type-graphql';
-import { Column } from 'typeorm';
+import { Int } from 'type-graphql';
 
-import { decoratorDefaults } from '../metadata';
-import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
+import { decoratorDefaults, DecoratorDefaults } from '../metadata';
+import { composeMethodDecorators } from '../utils';
 import { IntColumnType } from '../torm';
 
-import { WarthogField } from './WarthogField';
+import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface IntFieldOptions {
+interface IntFieldOptions extends DecoratorDefaults {
   dataType?: IntColumnType;
   default?: number;
-  filter?: boolean;
-  nullable?: boolean;
-  sort?: boolean;
 }
 
 export function IntField(args: IntFieldOptions = decoratorDefaults): any {
@@ -20,17 +16,13 @@ export function IntField(args: IntFieldOptions = decoratorDefaults): any {
   const defaultOption = options.default ? { default: options.default } : {};
   const nullableOption = options.nullable === true ? { nullable: true } : {};
 
-  const factories = [
-    WarthogField('integer', options),
-    Field(() => Int, {
-      ...nullableOption
-    }),
-    Column({
-      type: args.dataType || 'int',
-      ...nullableOption,
-      ...defaultOption
-    }) as MethodDecoratorFactory
-  ];
+  const factories = getCombinedDecorator({
+    fieldType: 'integer',
+    columnMetadata: options,
+    gqlFieldType: Int,
+    dbType: args.dataType || 'int',
+    columnOptions: { ...nullableOption, ...defaultOption }
+  });
 
   return composeMethodDecorators(...factories);
 }

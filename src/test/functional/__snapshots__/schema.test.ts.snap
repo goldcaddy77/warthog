@@ -1,4 +1,7 @@
-interface BaseGraphQLObject {
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`schema test schema doesn't change 1`] = `
+"interface BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -55,9 +58,9 @@ input BaseWhereInput {
   deletedById_eq: String
 }
 
-"""
-The javascript `Date` as string. Type represents date and time as the ISO Date string.
-"""
+\\"\\"\\"
+The javascript \`Date\` as string. Type represents date and time as the ISO Date string.
+\\"\\"\\"
 scalar DateTime
 
 interface DeleteResponse {
@@ -139,9 +142,9 @@ input DishWhereUniqueInput {
   id: ID!
 }
 
-"""
-The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
+\\"\\"\\"
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
 scalar JSONObject
 
 type KitchenSink implements BaseGraphQLObject {
@@ -379,3 +382,5 @@ enum StringEnum {
   FOO
   BAR
 }
+"
+`;

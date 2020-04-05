@@ -157,5 +157,14 @@ export class User extends BaseModel {
   @FloatField({ dataType: 'double precision', nullable: true })
   doublePrecisionField?: number;
 
+  @StringField({ writeonly: true, nullable: true })
+  password!: string;
+
+  @StringField({ writeonly: true, nullable: true })
+  writeonlyField!: string;
+
+  @StringField({ readonly: true, nullable: true })
+  readonlyField!: string;
+
   // TODO: ForeignKeyField
 }

@@ -3,15 +3,11 @@ import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { decoratorDefaults, getMetadataStorage } from '../metadata';
+import { decoratorDefaults, getMetadataStorage, DecoratorDefaults } from '../metadata';
 import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 
-interface EnumFieldOptions {
+interface EnumFieldOptions extends DecoratorDefaults {
   default?: any;
-  editable?: boolean;
-  filter?: boolean;
-  nullable?: boolean;
-  sort?: boolean;
 }
 
 export function EnumField(
