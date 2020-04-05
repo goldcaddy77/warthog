@@ -1,8 +1,6 @@
-import { ColumnMetadata, decoratorDefaults, getMetadataStorage, FieldType } from '../metadata';
+import { ColumnMetadata, getMetadataStorage, FieldType } from '../metadata';
 
-export function WarthogField(fieldType: FieldType, args: Partial<ColumnMetadata> = {}): any {
-  const options = { ...decoratorDefaults, ...args };
-
+export function WarthogField(fieldType: FieldType, options: Partial<ColumnMetadata> = {}): any {
   return (target: object, propertyKey: string): any => {
     // console.log(propertyKey, options, args);
 

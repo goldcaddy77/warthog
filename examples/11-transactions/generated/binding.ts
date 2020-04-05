@@ -10,7 +10,7 @@ export interface Query {
   }
 
 export interface Mutation {
-  successfulTransaction: <T = Array<User>>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    successfulTransaction: <T = Array<User>>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     failedTransaction: <T = Array<User>>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 

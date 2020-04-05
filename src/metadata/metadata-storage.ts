@@ -1,5 +1,8 @@
 import { GraphQLEnumType } from 'graphql';
+import { Container, Inject, Service } from 'typedi';
+
 import { ColumnType } from '../torm';
+import { Config } from '../core';
 
 export type FieldType =
   | 'boolean'
@@ -22,15 +25,6 @@ export interface DecoratorDefaults {
   writeonly?: boolean;
 }
 
-export const decoratorDefaults: DecoratorDefaults = {
-  editable: true,
-  filter: true,
-  nullable: false,
-  readonly: false,
-  sort: true,
-  writeonly: false
-};
-
 export interface ColumnMetadata extends DecoratorDefaults {
   type: FieldType;
   propertyName: string;
@@ -51,85 +45,107 @@ export interface ModelMetadata {
   columns: ColumnMetadata[];
 }
 
+@Service('MetadataStorage')
 export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
   classMap: { [table: string]: any } = {};
   models: { [table: string]: ModelMetadata } = {};
   interfaces: string[] = [];
-  baseColumns: ColumnMetadata[] = [
-    {
-      propertyName: 'id',
-      type: 'id',
-      filter: true,
-      nullable: false,
-      sort: false,
-      unique: true,
-      editable: false
-    },
-    {
-      propertyName: 'createdAt',
-      type: 'date',
-      editable: false,
-      filter: true,
-      nullable: false,
-      sort: true,
-      unique: false
-    },
-    {
-      propertyName: 'createdById',
-      type: 'id',
-      editable: false,
-      filter: true,
-      nullable: false,
-      sort: false,
-      unique: false
-    },
-    {
-      propertyName: 'updatedAt',
-      type: 'date',
-      editable: false,
-      filter: true,
-      nullable: true,
-      sort: true,
-      unique: false
-    },
-    {
-      propertyName: 'updatedById',
-      type: 'id',
-      editable: false,
-      filter: true,
-      nullable: true,
-      sort: false,
-      unique: false
-    },
-    {
-      propertyName: 'deletedAt',
-      type: 'date',
-      editable: false,
-      filter: true,
-      nullable: true,
-      sort: true,
-      unique: false
-    },
-    {
-      propertyName: 'deletedById',
-      type: 'id',
-      editable: false,
-      filter: true,
-      nullable: true,
-      sort: false,
-      unique: false
-    },
-    {
-      type: 'integer',
-      propertyName: 'version',
-      editable: false,
-      filter: false,
-      nullable: false,
-      sort: false,
-      unique: false
+  baseColumns: ColumnMetadata[];
+
+  decoratorDefaults: Partial<ColumnMetadata>;
+
+  constructor(@Inject('Config') readonly config?: Config) {
+    if (!config) {
+      config = Container.get('Config');
     }
-  ];
+    config = config as Config; // `config` needs to be optional in the constructor for the global instantiation below
+
+    this.decoratorDefaults = {
+      editable: true,
+      // `true` by default, provide opt-out for backward compatability
+      // V3: make this false by default
+      filter: config.get('FILTER_BY_DEFAULT') !== 'false',
+      nullable: false,
+      sort: config.get('FILTER_BY_DEFAULT') !== 'false',
+      unique: false
+    };
+
+    this.baseColumns = [
+      {
+        propertyName: 'id',
+        type: 'id',
+        filter: true,
+        nullable: false,
+        sort: false,
+        unique: true,
+        editable: false
+      },
+      {
+        propertyName: 'createdAt',
+        type: 'date',
+        editable: false,
+        filter: true,
+        nullable: false,
+        sort: true,
+        unique: false
+      },
+      {
+        propertyName: 'createdById',
+        type: 'id',
+        editable: false,
+        filter: true,
+        nullable: false,
+        sort: false,
+        unique: false
+      },
+      {
+        propertyName: 'updatedAt',
+        type: 'date',
+        editable: false,
+        filter: true,
+        nullable: true,
+        sort: true,
+        unique: false
+      },
+      {
+        propertyName: 'updatedById',
+        type: 'id',
+        editable: false,
+        filter: true,
+        nullable: true,
+        sort: false,
+        unique: false
+      },
+      {
+        propertyName: 'deletedAt',
+        type: 'date',
+        editable: false,
+        filter: true,
+        nullable: true,
+        sort: true,
+        unique: false
+      },
+      {
+        propertyName: 'deletedById',
+        type: 'id',
+        editable: false,
+        filter: true,
+        nullable: true,
+        sort: false,
+        unique: false
+      },
+      {
+        type: 'integer',
+        propertyName: 'version',
+        editable: false,
+        filter: false,
+        nullable: false,
+        sort: false,
+        unique: false
+      }
+    ];
+  }
 
   addModel(name: string, klass: any, filename: string, options = {}) {
     if (this.interfaces.indexOf(name) > -1) {
@@ -207,6 +223,7 @@ export class MetadataStorage {
     this.models[modelName].columns.push({
       type,
       propertyName: columnName,
+      ...this.decoratorDefaults,
       ...options
     });
   }
@@ -222,7 +239,8 @@ export class MetadataStorage {
 
 export function getMetadataStorage(): MetadataStorage {
   if (!(global as any).WarthogMetadataStorage) {
-    (global as any).WarthogMetadataStorage = new MetadataStorage();
+    // Since we can't use DI to inject this, just call into the container directly
+    (global as any).WarthogMetadataStorage = Container.get('MetadataStorage');
   }
   return (global as any).WarthogMetadataStorage;
 }

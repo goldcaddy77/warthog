@@ -100,7 +100,7 @@ type User implements BaseGraphQLObject {
   version: Int!
   booleanField: Boolean
   dateField: DateTime
-  emailField: String!
+  emailField: String
   enumField: StringEnum
   floatField: Float
   realField: Float

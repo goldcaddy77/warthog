@@ -2,7 +2,7 @@ import { Float } from 'type-graphql';
 import { ColumnNumericOptions } from 'typeorm/decorator/options/ColumnNumericOptions';
 import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions';
 
-import { decoratorDefaults, DecoratorDefaults } from '../metadata';
+import { DecoratorDefaults } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 import { NumericColumnType } from '../torm';
 
@@ -12,17 +12,16 @@ interface NumericFieldOptions extends ColumnCommonOptions, ColumnNumericOptions,
   dataType?: NumericColumnType;
 }
 
-export function NumericField(args: NumericFieldOptions = decoratorDefaults): any {
-  const { dataType, filter, sort, ...dbOptions } = args;
-  const options = { ...decoratorDefaults, ...args };
+export function NumericField(options: NumericFieldOptions = {}): any {
+  const { dataType, filter, sort, ...dbOptions } = options;
   const nullableOption = options.nullable === true ? { nullable: true } : {};
 
   const factories = getCombinedDecorator({
     fieldType: 'numeric',
-    columnMetadata: options,
+    warthogColumnMeta: options,
     gqlFieldType: Float,
-    dbType: args.dataType || 'numeric',
-    columnOptions: { ...nullableOption, ...dbOptions }
+    dbType: options.dataType ?? 'numeric',
+    dbColumnOptions: { ...nullableOption, ...dbOptions }
   });
 
   return composeMethodDecorators(...factories);
