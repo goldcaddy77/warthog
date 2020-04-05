@@ -17,6 +17,8 @@ export type FieldType =
   | 'string';
 
 export interface DecoratorDefaults {
+  apiOnly?: boolean;
+  dbOnly?: boolean;
   editable?: boolean;
   filter?: boolean;
   nullable?: boolean;
@@ -62,13 +64,17 @@ export class MetadataStorage {
     config = config as Config; // `config` needs to be optional in the constructor for the global instantiation below
 
     this.decoratorDefaults = {
-      editable: true,
+      apiOnly: false,
+      dbOnly: false,
+      editable: true, // Deprecated
       // `true` by default, provide opt-out for backward compatability
       // V3: make this false by default
       filter: config.get('FILTER_BY_DEFAULT') !== 'false',
       nullable: false,
+      readonly: false,
       sort: config.get('FILTER_BY_DEFAULT') !== 'false',
-      unique: false
+      unique: false,
+      writeonly: false
     };
 
     this.baseColumns = [

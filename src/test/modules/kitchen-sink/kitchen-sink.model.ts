@@ -97,4 +97,10 @@ export class KitchenSink extends BaseModel {
 
   @StringField({ writeonly: true, nullable: true })
   writeonlyField?: string;
+
+  @StringField({ dbOnly: true, nullable: true })
+  dbOnlyField?: string;
+
+  @StringField({ apiOnly: true, nullable: true })
+  apiOnlyField?: string;
 }

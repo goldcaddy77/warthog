@@ -1,5 +1,5 @@
-import { Field } from 'type-graphql';
-import { Column, ColumnType } from 'typeorm';
+import { Field as TypeGraphQLField } from 'type-graphql';
+import { Column as TypeORMColumn, ColumnType } from 'typeorm';
 
 import { ColumnMetadata, FieldType } from '../metadata';
 import { MethodDecoratorFactory } from '../utils';
@@ -29,15 +29,22 @@ export function getCombinedDecorator({
   const uniqueOption =
     typeof warthogColumnMeta.unique !== 'undefined' ? { unique: warthogColumnMeta.unique } : {};
 
+  const exposeDB = !warthogColumnMeta.apiOnly;
+  const exposeAPI = !warthogColumnMeta.dbOnly;
+
   // Warthog: start with the Warthog decorator that adds metadata for generating the GraphQL schema
   // for sorting, filtering, args, where inputs, etc...
-  const decorators = [WarthogField(fieldType, warthogColumnMeta)];
+  const decorators = [];
 
+  if (exposeAPI) {
+    decorators.push(WarthogField(fieldType, warthogColumnMeta));
+  }
+
+  // TypeGraphQL: next add the type-graphql decorator that generates the GraphQL type (or field within that type)
   // If an object is only writeable, don't add the `Field` decorators that will add it to the GraphQL type
-  if (!warthogColumnMeta.writeonly) {
-    // TypeGraphQL: next add the type-graphql decorator that generates the GraphQL type (or field within that type)
+  if (exposeAPI && !warthogColumnMeta.writeonly) {
     decorators.push(
-      Field(() => gqlFieldType, {
+      TypeGraphQLField(() => gqlFieldType, {
         ...nullableOption,
         ...defaultOption
       })
@@ -45,15 +52,17 @@ export function getCombinedDecorator({
   }
 
   // TypeORM: finally add the TypeORM decorator to describe the DB field
-  decorators.push(
-    Column({
-      type: dbType,
-      ...nullableOption,
-      ...defaultOption,
-      ...columnOptions,
-      ...uniqueOption
-    }) as MethodDecoratorFactory
-  );
+  if (exposeDB) {
+    decorators.push(
+      TypeORMColumn({
+        type: dbType,
+        ...nullableOption,
+        ...defaultOption,
+        ...columnOptions,
+        ...uniqueOption
+      }) as MethodDecoratorFactory
+    );
+  }
 
   return decorators;
 }

@@ -77,7 +77,10 @@ export enum KitchenSinkOrderByEnum {
   characterField_DESC = "characterField_DESC",
 
   readonlyField_ASC = "readonlyField_ASC",
-  readonlyField_DESC = "readonlyField_DESC"
+  readonlyField_DESC = "readonlyField_DESC",
+
+  apiOnlyField_ASC = "apiOnlyField_ASC",
+  apiOnlyField_DESC = "apiOnlyField_DESC"
 }
 
 registerEnumType(KitchenSinkOrderByEnum, {
@@ -355,6 +358,21 @@ export class KitchenSinkWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   readonlyField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  apiOnlyField_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -421,6 +439,9 @@ export class KitchenSinkCreateInput {
 
   @TypeGraphQLField({ nullable: true })
   writeonlyField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField?: string;
 }
 
 @TypeGraphQLInputType()
@@ -478,6 +499,9 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   writeonlyField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField?: string;
 }
 
 @ArgsType()
