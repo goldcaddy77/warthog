@@ -84,7 +84,7 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): SelectQueryBuilder<E> {
-    let qb = this.repository.createQueryBuilder(this.klass);
+    let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
 
     if (limit) {
       qb = qb.take(limit);
