@@ -13,7 +13,14 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../';
+import {
+  BaseContext,
+  ConnectionResult,
+  Fields,
+  PageInfo,
+  StandardDeleteResponse,
+  UserId
+} from '../../../';
 import {
   DishCreateInput,
   DishCreateManyArgs,
@@ -30,21 +37,9 @@ import { DishService } from './dish.service';
 import { NestedFields } from '../../../decorators';
 
 @ObjectType()
-export class PageInfo {
-  @Field(() => Number, { nullable: false })
-  limit!: number;
-
-  @Field(() => Number, { nullable: false })
-  offset!: number;
-
-  @Field(() => Number, { nullable: false })
-  total!: number;
-}
-
-@ObjectType()
-export class DishesPaginated {
+export class DishConnection implements ConnectionResult<Dish> {
   @Field(() => [Dish], { nullable: false })
-  dishes!: Dish[];
+  nodes!: Dish[];
 
   @Field(() => PageInfo, { nullable: false })
   pageInfo!: PageInfo;
@@ -70,27 +65,11 @@ export class DishResolver {
   }
 
   @Authorized('dish:read')
-  @Query(() => DishesPaginated)
-  async dishesPaginated(
-    @Args() { where, orderBy, limit, offset }: DishWhereArgs,
-    @NestedFields() fields: any
-  ): Promise<DishesPaginated> {
-    const { records: dishes, total } = await this.service.findAndCount<DishWhereInput>(
-      where,
-      orderBy,
-      limit,
-      offset,
-      fields.dishes || []
-    );
-
-    return {
-      dishes,
-      pageInfo: {
-        limit: limit == null ? total : limit,
-        offset: offset == null ? 0 : offset,
-        total
-      }
-    };
+  @Query(() => DishConnection)
+  async dishConnection(
+    @Args() { where, orderBy, limit, offset }: DishWhereArgs
+  ): Promise<DishConnection> {
+    return this.service.findConnection<DishWhereInput>(where, orderBy, limit, offset);
   }
 
   @Authorized('dish:read')

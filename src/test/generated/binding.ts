@@ -7,7 +7,7 @@ import * as schema from  './schema.graphql'
 
 export interface Query {
     dishes: <T = Array<Dish>>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    dishesPaginated: <T = DishesPaginated>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    dishConnection: <T = DishConnection>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dish: <T = Dish>(args: { where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSinks: <T = Array<KitchenSink>>(args: { offset?: Int | null, limit?: Int | null, where?: KitchenSinkWhereInput | null, orderBy?: KitchenSinkOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSink: <T = KitchenSink>(args: { where: KitchenSinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
@@ -373,8 +373,8 @@ export interface Dish extends BaseGraphQLObject {
   kitchenSinkId: String
 }
 
-export interface DishesPaginated {
-  dishes: Array<Dish>
+export interface DishConnection {
+  nodes: Array<Dish>
   pageInfo: PageInfo
 }
 
@@ -412,7 +412,9 @@ export interface KitchenSink extends BaseGraphQLObject {
 export interface PageInfo {
   limit: Float
   offset: Float
-  total: Float
+  totalCount: Float
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
 }
 
 export interface StandardDeleteResponse {
