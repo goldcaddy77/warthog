@@ -78,14 +78,14 @@ type Dish implements BaseGraphQLObject {
   kitchenSinkId: String!
 }
 
+type DishConnection {
+  nodes: [Dish!]!
+  pageInfo: PageInfo!
+}
+
 input DishCreateInput {
   name: String!
   kitchenSinkId: ID!
-}
-
-type DishesPaginated {
-  dishes: [Dish!]!
-  pageInfo: PageInfo!
 }
 
 enum DishOrderByInput {
@@ -382,12 +382,14 @@ type Mutation {
 type PageInfo {
   limit: Float!
   offset: Float!
-  total: Float!
+  totalCount: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
 }
 
 type Query {
   dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
-  dishesPaginated(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): DishesPaginated!
+  dishConnection(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): DishConnection!
   dish(where: DishWhereUniqueInput!): Dish!
   kitchenSinks(offset: Int, limit: Int = 50, where: KitchenSinkWhereInput, orderBy: KitchenSinkOrderByInput): [KitchenSink!]!
   kitchenSink(where: KitchenSinkWhereUniqueInput!): KitchenSink!

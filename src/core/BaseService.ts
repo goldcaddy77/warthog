@@ -6,8 +6,8 @@ import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
-import { BaseModel } from '..';
-import { StringMap, WhereInput, FindAndCountResult } from './types';
+import { BaseModel, ConnectionResult } from '..';
+import { StringMap, WhereInput } from './types';
 
 interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -51,6 +51,16 @@ export class BaseService<E extends BaseModel> {
     this.klass = this.repository.metadata.name.toLowerCase();
   }
 
+  getPageInfo(limit: number, offset: number, totalCount: number) {
+    return {
+      hasNextPage: totalCount > offset + limit,
+      hasPreviousPage: offset > 0,
+      limit,
+      offset,
+      totalCount
+    };
+  }
+
   async find<W extends WhereInput>(
     where?: any,
     orderBy?: string,
@@ -58,22 +68,25 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    const qb = this.buildFindQuery<W>(where, orderBy, limit, offset, fields);
-    return qb.getMany();
+    return this.buildFindQuery<W>(where, orderBy, limit, offset, fields).getMany();
   }
 
-  async findAndCount<W extends WhereInput>(
+  async findConnection<W extends WhereInput>(
     where?: any,
     orderBy?: string,
     limit?: number,
     offset?: number,
     fields?: string[]
-  ): Promise<FindAndCountResult<E>> {
+  ): Promise<ConnectionResult<E>> {
     const qb = this.buildFindQuery<W>(where, orderBy, limit, offset, fields);
-    const [records, total] = await qb.getManyAndCount();
+    const [nodes, totalCount] = await qb.getManyAndCount();
+    // TODO: FEATURE - make the default limit configurable
+    limit = limit ?? 50;
+    offset = offset ?? 0;
+
     return {
-      records,
-      total
+      nodes,
+      pageInfo: this.getPageInfo(limit, offset, totalCount)
     };
   }
 
