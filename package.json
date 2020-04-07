@@ -23,6 +23,8 @@
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "circle:build": "rm ./tmp/circle.build.yml 2> /dev/null && circleci config process .circleci/config.yml > ./tmp/circle.build.yml && circleci local execute -c ./tmp/circle.build.yml --job build",
     "deploy:debug": "npm_config_loglevel=verbose CIRCLE_BRANCH=beta CIRCLECI=true CI=true yarn semantic-release --debug",
+    "docs:build": "cd docs && yarn && yarn build",
+    "docs:dev": "cd docs && yarn && yarn dev",
     "lint": "eslint './+(examples|src|test|tools)/**/*.{js,ts}' --fix",
     "//prettier": "Note: ignores node_modules by default and 'generated' folder via .prettierignore",
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
