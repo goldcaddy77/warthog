@@ -1,0 +1,615 @@
+{
+  "config": {
+    "title": "Warthog",
+    "description": "",
+    "menu": [
+      "Intro",
+      {
+        "name": "Overview",
+        "menu": [
+          "Getting Started",
+          "Models",
+          "Resolvers",
+          "Services",
+          "Generated Folder",
+          "Server",
+          "Config"
+        ]
+      },
+      {
+        "name": "Techniques",
+        "menu": [
+          "Authentication",
+          "Authorization",
+          "Validations",
+          "Complex Use Cases",
+          "Transactions",
+          "Production"
+        ]
+      },
+      "CLI",
+      "Upgrading"
+    ],
+    "version": "2.0.0-rc.41",
+    "repository": "https://github.com/pedronauck/docz",
+    "native": false,
+    "themeConfig": {
+      "initialColorMode": "dark"
+    },
+    "separator": "-"
+  },
+  "entries": [
+    {
+      "key": "README.md",
+      "value": {
+        "id": "04c6e90faac2675aa89e2176d2eec7d8",
+        "filepath": "README.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/README.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/README.md",
+        "hidden": false,
+        "slug": "readme",
+        "route": "/readme",
+        "name": "Readme",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "docz",
+            "depth": 2,
+            "value": "Docz"
+          },
+          {
+            "slug": "to-add",
+            "depth": 3,
+            "value": "To Add"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/overview/1-getting-started.md",
+      "value": {
+        "name": "Getting Started",
+        "menu": "Overview",
+        "id": "fce0b2b26c1d179a0626d1102327d0a5",
+        "filepath": "src/overview/1-getting-started.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/1-getting-started.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/1-getting-started.md",
+        "hidden": false,
+        "slug": "src-overview-1-getting-started",
+        "route": "/src-overview-1-getting-started",
+        "headings": [
+          {
+            "slug": "installation",
+            "depth": 2,
+            "value": "Installation"
+          },
+          {
+            "slug": "prerequisites",
+            "depth": 2,
+            "value": "Prerequisites"
+          },
+          {
+            "slug": "homebrew-osx",
+            "depth": 3,
+            "value": "Homebrew (OSX)"
+          },
+          {
+            "slug": "postgresapp-osx",
+            "depth": 3,
+            "value": "Postgres.app (OSX)"
+          },
+          {
+            "slug": "docker",
+            "depth": 3,
+            "value": "Docker"
+          },
+          {
+            "slug": "getting-started",
+            "depth": 2,
+            "value": "Getting Started"
+          },
+          {
+            "slug": "create-new-project-with-the-cli",
+            "depth": 3,
+            "value": "Create new project with the CLI"
+          },
+          {
+            "slug": "cloning-the-warthog-starter-project",
+            "depth": 3,
+            "value": "Cloning the  warthog-starter  project"
+          },
+          {
+            "slug": "running-the-examples-in-the-warthog-repo",
+            "depth": 3,
+            "value": "Running the examples in the Warthog repo"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/overview/2-models.md",
+      "value": {
+        "name": "Models",
+        "menu": "Overview",
+        "id": "4ab2c3c0258a834794fbec36cda80d0d",
+        "filepath": "src/overview/2-models.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/2-models.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/2-models.md",
+        "hidden": false,
+        "slug": "src-overview-2-models",
+        "route": "/src-overview-2-models",
+        "headings": [
+          {
+            "slug": "models",
+            "depth": 2,
+            "value": "Models"
+          },
+          {
+            "slug": "fieldcolumn-decorators",
+            "depth": 2,
+            "value": "Field/Column Decorators"
+          },
+          {
+            "slug": "stringfield",
+            "depth": 3,
+            "value": "StringField"
+          },
+          {
+            "slug": "booleanfield",
+            "depth": 3,
+            "value": "BooleanField"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/overview/3-resolvers.md",
+      "value": {
+        "name": "Resolvers",
+        "menu": "Overview",
+        "id": "f8a8b5c20e27f4a96ef9be3577aec47a",
+        "filepath": "src/overview/3-resolvers.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/3-resolvers.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/3-resolvers.md",
+        "hidden": false,
+        "slug": "src-overview-3-resolvers",
+        "route": "/src-overview-3-resolvers",
+        "headings": [
+          {
+            "slug": "resolvers",
+            "depth": 2,
+            "value": "Resolvers"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/overview/4-services.md",
+      "value": {
+        "name": "Services",
+        "menu": "Overview",
+        "id": "3ccf28e7ab1d9ec0128ff57436f8417b",
+        "filepath": "src/overview/4-services.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/4-services.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/4-services.md",
+        "hidden": false,
+        "slug": "src-overview-4-services",
+        "route": "/src-overview-4-services",
+        "headings": [
+          {
+            "slug": "services",
+            "depth": 2,
+            "value": "Services"
+          },
+          {
+            "slug": "baseservice-class",
+            "depth": 3,
+            "value": "BaseService  Class"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/overview/5-generated-folder.md",
+      "value": {
+        "name": "Generated Folder",
+        "menu": "Overview",
+        "id": "0207be522b9d1605aa028c4e0dfd22fe",
+        "filepath": "src/overview/5-generated-folder.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/5-generated-folder.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/5-generated-folder.md",
+        "hidden": false,
+        "slug": "src-overview-5-generated-folder",
+        "route": "/src-overview-5-generated-folder",
+        "headings": [
+          {
+            "slug": "generated-folder",
+            "depth": 2,
+            "value": "Generated Folder"
+          },
+          {
+            "slug": "classests",
+            "depth": 3,
+            "value": "classes.ts"
+          },
+          {
+            "slug": "schemagraphql",
+            "depth": 3,
+            "value": "schema.graphql"
+          },
+          {
+            "slug": "ormconfigts",
+            "depth": 3,
+            "value": "ormconfig.ts"
+          },
+          {
+            "slug": "bindingts",
+            "depth": 3,
+            "value": "binding.ts"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/overview/6-server.md",
+      "value": {
+        "name": "Server",
+        "menu": "Overview",
+        "id": "b5fa3bf819be8e9e8423bb25b19ab96a",
+        "filepath": "src/overview/6-server.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/6-server.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/6-server.md",
+        "hidden": false,
+        "slug": "src-overview-6-server",
+        "route": "/src-overview-6-server",
+        "headings": [
+          {
+            "slug": "server",
+            "depth": 2,
+            "value": "Server"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/overview/7-config.md",
+      "value": {
+        "name": "Config",
+        "menu": "Overview",
+        "id": "6987bbd72aaac514158215693a7ecaab",
+        "filepath": "src/overview/7-config.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/7-config.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/7-config.md",
+        "hidden": false,
+        "slug": "src-overview-7-config",
+        "route": "/src-overview-7-config",
+        "headings": [
+          {
+            "slug": "config",
+            "depth": 2,
+            "value": "Config"
+          },
+          {
+            "slug": "warthogrc-config-file",
+            "depth": 2,
+            "value": "warthogrc  config file"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/pages/cli.md",
+      "value": {
+        "name": "CLI",
+        "route": "/cli",
+        "id": "e19990ffa0b1adbd1b2af19cce2d757f",
+        "filepath": "src/pages/cli.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/pages/cli.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/pages/cli.md",
+        "hidden": false,
+        "slug": "src-pages-cli",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "cli",
+            "depth": 2,
+            "value": "CLI"
+          },
+          {
+            "slug": "generate-command-in-depth",
+            "depth": 3,
+            "value": "generate  Command in depth"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/pages/index.md",
+      "value": {
+        "name": "Intro",
+        "route": "/",
+        "id": "3e962c3925fb76bbbf85793868d9e1d0",
+        "filepath": "src/pages/index.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/pages/index.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/pages/index.md",
+        "hidden": false,
+        "slug": "src-pages-index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "summary",
+            "depth": 2,
+            "value": "Summary"
+          },
+          {
+            "slug": "intentionally-opinionated",
+            "depth": 2,
+            "value": "Intentionally Opinionated"
+          },
+          {
+            "slug": "philosophy",
+            "depth": 2,
+            "value": "Philosophy"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/authentication.md",
+      "value": {
+        "name": "Authentication",
+        "menu": "Techniques",
+        "id": "15976a854d74400a3dbb729e1844a92c",
+        "filepath": "src/techniques/authentication.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/authentication.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/authentication.md",
+        "hidden": false,
+        "slug": "src-techniques-authentication",
+        "route": "/src-techniques-authentication",
+        "headings": [
+          {
+            "slug": "authentication",
+            "depth": 2,
+            "value": "Authentication"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/authorization.md",
+      "value": {
+        "name": "Authorization",
+        "menu": "Techniques",
+        "id": "4f1751b6140ace4dd643478d483aa633",
+        "filepath": "src/techniques/authorization.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/authorization.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/authorization.md",
+        "hidden": false,
+        "slug": "src-techniques-authorization",
+        "route": "/src-techniques-authorization",
+        "headings": [
+          {
+            "slug": "authorization",
+            "depth": 2,
+            "value": "Authorization"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/complex-use-cases.md",
+      "value": {
+        "name": "Complex Use Cases",
+        "menu": "Techniques",
+        "id": "866d3b5b1204ca5f525592c40f3cd10a",
+        "filepath": "src/techniques/complex-use-cases.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/complex-use-cases.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/complex-use-cases.md",
+        "hidden": false,
+        "slug": "src-techniques-complex-use-cases",
+        "route": "/src-techniques-complex-use-cases",
+        "headings": [
+          {
+            "slug": "complex-use-cases",
+            "depth": 2,
+            "value": "Complex use cases"
+          },
+          {
+            "slug": "db-only",
+            "depth": 3,
+            "value": "DB-only"
+          },
+          {
+            "slug": "api-only",
+            "depth": 3,
+            "value": "API-only"
+          },
+          {
+            "slug": "custom-query",
+            "depth": 3,
+            "value": "Custom Query"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/production.md",
+      "value": {
+        "name": "Production",
+        "menu": "Techniques",
+        "id": "d4827c4a34765d870e9eca8bbb2c4e97",
+        "filepath": "src/techniques/production.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/production.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/production.md",
+        "hidden": false,
+        "slug": "src-techniques-production",
+        "route": "/src-techniques-production",
+        "headings": [
+          {
+            "slug": "production",
+            "depth": 2,
+            "value": "Production"
+          },
+          {
+            "slug": "db-migration-workflow",
+            "depth": 2,
+            "value": "DB Migration Workflow"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/subscriptions.md",
+      "value": {
+        "name": "Subscriptions",
+        "menu": "Techniques",
+        "id": "11b25aac75f72ca14055ef229634092d",
+        "filepath": "src/techniques/subscriptions.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/subscriptions.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/subscriptions.md",
+        "hidden": false,
+        "slug": "src-techniques-subscriptions",
+        "route": "/src-techniques-subscriptions",
+        "headings": [
+          {
+            "slug": "subscriptions",
+            "depth": 2,
+            "value": "Subscriptions"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/testing.md",
+      "value": {
+        "name": "Testing",
+        "menu": "Techniques",
+        "id": "1ccd3deb40d2d2dd8bfa2bc8f45d56a6",
+        "filepath": "src/techniques/testing.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/testing.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/testing.md",
+        "hidden": false,
+        "slug": "src-techniques-testing",
+        "route": "/src-techniques-testing",
+        "headings": [
+          {
+            "slug": "testing",
+            "depth": 2,
+            "value": "Testing"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/transactions.md",
+      "value": {
+        "name": "Transactions",
+        "menu": "Techniques",
+        "id": "9f467815b5cae8574beab75a05797a00",
+        "filepath": "src/techniques/transactions.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/transactions.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/transactions.md",
+        "hidden": false,
+        "slug": "src-techniques-transactions",
+        "route": "/src-techniques-transactions",
+        "headings": [
+          {
+            "slug": "transactions",
+            "depth": 2,
+            "value": "Transactions"
+          },
+          {
+            "slug": "using-baseservice",
+            "depth": 3,
+            "value": "Using BaseService"
+          },
+          {
+            "slug": "transaction-method-decorator",
+            "depth": 4,
+            "value": "@Transaction method decorator"
+          },
+          {
+            "slug": "transactionmanager-decorator",
+            "depth": 4,
+            "value": "@TransactionManager decorator"
+          },
+          {
+            "slug": "pass-manager-to-baseservice",
+            "depth": 4,
+            "value": "Pass manager to BaseService"
+          },
+          {
+            "slug": "example",
+            "depth": 4,
+            "value": "Example"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/techniques/validations.md",
+      "value": {
+        "name": "Validations",
+        "menu": "Techniques",
+        "id": "8063fc353c0827a382bdbde6e5fde08f",
+        "filepath": "src/techniques/validations.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/validations.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/validations.md",
+        "hidden": false,
+        "slug": "src-techniques-validations",
+        "route": "/src-techniques-validations",
+        "headings": [
+          {
+            "slug": "validations",
+            "depth": 2,
+            "value": "Validations"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/upgrading/1-upgrading-to-2.md",
+      "value": {
+        "name": "Upgrading to 2.0",
+        "menu": "Upgrading",
+        "id": "061158aabd28bb6d3a8ec11115918425",
+        "filepath": "src/upgrading/1-upgrading-to-2.md",
+        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/upgrading/1-upgrading-to-2.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/upgrading/1-upgrading-to-2.md",
+        "hidden": false,
+        "slug": "src-upgrading-1-upgrading-to-2",
+        "route": "/src-upgrading-1-upgrading-to-2",
+        "headings": [
+          {
+            "slug": "more-specific-scalars",
+            "depth": 3,
+            "value": "More specific scalars"
+          },
+          {
+            "slug": "mockdbconnection-has-been-removed",
+            "depth": 3,
+            "value": "mockDBConnection  has been removed"
+          },
+          {
+            "slug": "project-dependencies-updated",
+            "depth": 3,
+            "value": "Project Dependencies Updated"
+          }
+        ]
+      }
+    }
+  ],
+  "props": [
+    {
+      "key": "src/gatsby-theme-docz/components/Logo/index.js",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Logo",
+          "methods": [],
+          "actualName": "Logo"
+        }
+      ]
+    }
+  ]
+}
