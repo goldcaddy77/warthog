@@ -7,11 +7,20 @@ import {
   Mutation,
   Query,
   Resolver,
-  Root
+  Root,
+  ObjectType,
+  Field
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../';
+import {
+  BaseContext,
+  ConnectionResult,
+  Fields,
+  PageInfo,
+  StandardDeleteResponse,
+  UserId
+} from '../../../';
 import {
   DishCreateInput,
   DishCreateManyArgs,
@@ -25,6 +34,16 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
+import { NestedFields } from '../../../decorators';
+
+@ObjectType()
+export class DishConnection implements ConnectionResult<Dish> {
+  @Field(() => [Dish], { nullable: false })
+  nodes!: Dish[];
+
+  @Field(() => PageInfo, { nullable: false })
+  pageInfo!: PageInfo;
+}
 
 @Resolver(Dish)
 export class DishResolver {
@@ -43,6 +62,14 @@ export class DishResolver {
     @Fields() fields: string[]
   ): Promise<Dish[]> {
     return this.service.find<DishWhereInput>(where, orderBy, limit, offset, fields);
+  }
+
+  @Authorized('dish:read')
+  @Query(() => DishConnection)
+  async dishConnection(
+    @Args() { where, orderBy, limit, offset }: DishWhereArgs
+  ): Promise<DishConnection> {
+    return this.service.findConnection<DishWhereInput>(where, orderBy, limit, offset);
   }
 
   @Authorized('dish:read')

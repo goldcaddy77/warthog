@@ -1,12 +1,12 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, EntityManager, getRepository, Repository } from 'typeorm';
+import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
-import { BaseModel } from '..';
+import { BaseModel, ConnectionResult } from '..';
 import { StringMap, WhereInput } from './types';
 
 interface BaseOptions {
@@ -51,6 +51,16 @@ export class BaseService<E extends BaseModel> {
     this.klass = this.repository.metadata.name.toLowerCase();
   }
 
+  getPageInfo(limit: number, offset: number, totalCount: number) {
+    return {
+      hasNextPage: totalCount > offset + limit,
+      hasPreviousPage: offset > 0,
+      limit,
+      offset,
+      totalCount
+    };
+  }
+
   async find<W extends WhereInput>(
     where?: any,
     orderBy?: string,
@@ -58,6 +68,35 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
+    return this.buildFindQuery<W>(where, orderBy, limit, offset, fields).getMany();
+  }
+
+  async findConnection<W extends WhereInput>(
+    where?: any,
+    orderBy?: string,
+    limit?: number,
+    offset?: number,
+    fields?: string[]
+  ): Promise<ConnectionResult<E>> {
+    const qb = this.buildFindQuery<W>(where, orderBy, limit, offset, fields);
+    const [nodes, totalCount] = await qb.getManyAndCount();
+    // TODO: FEATURE - make the default limit configurable
+    limit = limit ?? 50;
+    offset = offset ?? 0;
+
+    return {
+      nodes,
+      pageInfo: this.getPageInfo(limit, offset, totalCount)
+    };
+  }
+
+  private buildFindQuery<W extends WhereInput>(
+    where?: any,
+    orderBy?: string,
+    limit?: number,
+    offset?: number,
+    fields?: string[]
+  ): SelectQueryBuilder<E> {
     let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
 
     if (limit) {
@@ -124,7 +163,7 @@ export class BaseService<E extends BaseModel> {
       });
     }
 
-    return qb.getMany();
+    return qb;
   }
 
   async findOne<W extends Partial<E>>(where: W): Promise<E> {

@@ -78,6 +78,11 @@ type Dish implements BaseGraphQLObject {
   kitchenSinkId: String!
 }
 
+type DishConnection {
+  nodes: [Dish!]!
+  pageInfo: PageInfo!
+}
+
 input DishCreateInput {
   name: String!
   kitchenSinkId: ID!
@@ -374,8 +379,17 @@ type Mutation {
   deleteKitchenSink(where: KitchenSinkWhereUniqueInput!): StandardDeleteResponse!
 }
 
+type PageInfo {
+  limit: Float!
+  offset: Float!
+  totalCount: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type Query {
   dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
+  dishConnection(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): DishConnection!
   dish(where: DishWhereUniqueInput!): Dish!
   kitchenSinks(offset: Int, limit: Int = 50, where: KitchenSinkWhereInput, orderBy: KitchenSinkOrderByInput): [KitchenSink!]!
   kitchenSink(where: KitchenSinkWhereUniqueInput!): KitchenSink!

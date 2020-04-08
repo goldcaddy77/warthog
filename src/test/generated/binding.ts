@@ -7,6 +7,7 @@ import * as schema from  './schema.graphql'
 
 export interface Query {
     dishes: <T = Array<Dish>>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    dishConnection: <T = DishConnection>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dish: <T = Dish>(args: { where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSinks: <T = Array<KitchenSink>>(args: { offset?: Int | null, limit?: Int | null, where?: KitchenSinkWhereInput | null, orderBy?: KitchenSinkOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSink: <T = KitchenSink>(args: { where: KitchenSinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
@@ -372,6 +373,11 @@ export interface Dish extends BaseGraphQLObject {
   kitchenSinkId: String
 }
 
+export interface DishConnection {
+  nodes: Array<Dish>
+  pageInfo: PageInfo
+}
+
 export interface KitchenSink extends BaseGraphQLObject {
   id: ID_Output
   createdAt: DateTime
@@ -401,6 +407,14 @@ export interface KitchenSink extends BaseGraphQLObject {
   customTextFieldNoSortOrFilter?: String | null
   readonlyField?: String | null
   apiOnlyField?: String | null
+}
+
+export interface PageInfo {
+  limit: Float
+  offset: Float
+  totalCount: Float
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
 }
 
 export interface StandardDeleteResponse {

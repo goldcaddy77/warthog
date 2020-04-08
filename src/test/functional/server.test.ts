@@ -123,6 +123,37 @@ describe('server', () => {
     expect(firstResult.dishes.length).toEqual(20);
   });
 
+  test('queries for dishes with pagination', async () => {
+    expect.assertions(6);
+    const { nodes, pageInfo } = await binding.query.dishConnection(
+      { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
+      `{
+          nodes {
+            name
+            kitchenSink {
+              emailField
+            }
+          }
+          pageInfo {
+            limit
+            offset
+            totalCount
+            hasNextPage
+            hasPreviousPage
+          }
+        }`
+    );
+
+    console.log('test', nodes, pageInfo);
+
+    expect(nodes).toMatchSnapshot();
+    expect(pageInfo.offset).toEqual(0);
+    expect(pageInfo.limit).toEqual(1);
+    expect(pageInfo.hasNextPage).toEqual(true);
+    expect(pageInfo.hasPreviousPage).toEqual(false);
+    expect(pageInfo.totalCount).toEqual(20);
+  });
+
   test('throws errors when given bad input on a single create', async done => {
     expect.assertions(1);
 
