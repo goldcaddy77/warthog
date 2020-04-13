@@ -87,7 +87,7 @@ export class Config {
       WARTHOG_SUBSCRIPTIONS: 'false',
       WARTHOG_VALIDATE_RESOLVERS: 'false',
       WARTHOG_KEEP_ALIVE_TIMEOUT_MS: 30000,
-      WARTHOG_HEADERS_TIMEOUT_MS: 5000
+      WARTHOG_HEADERS_TIMEOUT_MS: 60000
     };
 
     this.devDefaults = {
