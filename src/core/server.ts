@@ -193,21 +193,13 @@ export class Server<C extends BaseContext> {
   }
 
   private startHttpServer(url: string): void {
-    const keepAliveTimeout = Number(this.config.get('WARTHOG_KEEPALIVE_TIMEOUT_MS'));
-    // Workaround for https://github.com/nodejs/node/issues/27363 so the `keepAliveTimeout`
-    // change above actually works; `headersTimeout` just needs to be longer than `keepAliveTimeout`.
-    // May be able to be removed when using a future version of Node.
-    const headersTimeout =
-      keepAliveTimeout + Number(this.config.get('WARTHOG_HEADER_TIMEOUT_OFFSET_MS'));
+    const keepAliveTimeout = Number(this.config.get('WARTHOG_KEEP_ALIVE_TIMEOUT_MS'));
+    const headersTimeout = Number(this.config.get('WARTHOG_HEADERS_TIMEOUT_MS'));
 
-    logger.info(`Starting express http server.`);
     this.httpServer = this.expressApp.listen({ port: this.config.get('APP_PORT') }, () =>
       this.logger.info(`🚀 Server ready at ${url}`)
     );
 
-    logger.info(
-      `Setting keep-alive timeout to ${keepAliveTimeout}ms and header-timeout to ${headersTimeout}ms.`
-    );
     this.httpServer.keepAliveTimeout = keepAliveTimeout;
     this.httpServer.headersTimeout = headersTimeout;
   }

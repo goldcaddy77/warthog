@@ -86,8 +86,8 @@ export class Config {
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
       WARTHOG_SUBSCRIPTIONS: 'false',
       WARTHOG_VALIDATE_RESOLVERS: 'false',
-      WARTHOG_KEEPALIVE_TIMEOUT_MS: 30000,
-      WARTHOG_HEADER_TIMEOUT_OFFSET_MS: 5000
+      WARTHOG_KEEP_ALIVE_TIMEOUT_MS: 30000,
+      WARTHOG_HEADERS_TIMEOUT_MS: 5000
     };
 
     this.devDefaults = {
