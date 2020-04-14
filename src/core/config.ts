@@ -86,6 +86,8 @@ export class Config {
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
       WARTHOG_SUBSCRIPTIONS: 'false',
       WARTHOG_VALIDATE_RESOLVERS: 'false',
+      // Prevent 502s from happening in AWS and GCP (and probably other Production ENVs)
+      // See https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
       WARTHOG_KEEP_ALIVE_TIMEOUT_MS: 30000,
       WARTHOG_HEADERS_TIMEOUT_MS: 60000
     };
