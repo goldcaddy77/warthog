@@ -192,6 +192,18 @@ export class Server<C extends BaseContext> {
     debug('start:generateFiles:end');
   }
 
+  private startHttpServer(url: string): void {
+    const keepAliveTimeout = Number(this.config.get('WARTHOG_KEEP_ALIVE_TIMEOUT_MS'));
+    const headersTimeout = Number(this.config.get('WARTHOG_HEADERS_TIMEOUT_MS'));
+
+    this.httpServer = this.expressApp.listen({ port: this.config.get('APP_PORT') }, () =>
+      this.logger.info(`🚀 Server ready at ${url}`)
+    );
+
+    this.httpServer.keepAliveTimeout = keepAliveTimeout;
+    this.httpServer.headersTimeout = headersTimeout;
+  }
+
   async start() {
     debug('start:start');
     await this.establishDBConnection();
@@ -254,10 +266,7 @@ export class Server<C extends BaseContext> {
     }
 
     const url = this.getGraphQLServerUrl();
-
-    this.httpServer = this.expressApp.listen({ port: this.config.get('APP_PORT') }, () =>
-      this.logger.info(`🚀 Server ready at ${url}`)
-    );
+    this.startHttpServer(url);
 
     // Open up websocket connection for subscriptions
     if (this.config.get('SUBSCRIPTIONS') === 'true') {

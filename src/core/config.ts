@@ -85,7 +85,9 @@ export class Config {
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
       WARTHOG_SUBSCRIPTIONS: 'false',
-      WARTHOG_VALIDATE_RESOLVERS: 'false'
+      WARTHOG_VALIDATE_RESOLVERS: 'false',
+      WARTHOG_KEEP_ALIVE_TIMEOUT_MS: 30000,
+      WARTHOG_HEADERS_TIMEOUT_MS: 60000
     };
 
     this.devDefaults = {
