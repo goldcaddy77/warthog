@@ -44,6 +44,49 @@ The old codegen pipeline used TypeORM's metadata in order to generate the GraphQ
 
 Staying on the latest versions of libraries is good for security, performance and new features. We've bumped to the latest stable versions of each of Warthog's dependencies. This might require some changes to your package.json.
 
+### Troubleshooting
+
+#### Cannot get connection "default" from the connection manager
+
+If you get an error like:
+
+```txt
+Cannot get connection "default" from the connection manager. Make sure you have created such connection. Also make sure you have called useContainer(Container) in your application before you established a connection and importing any entity.
+```
+
+It could be caused by 2 things:
+
+##### Remove explicit `Container` injection
+
+In V1 of Warthog, the README suggested that you should explicitly create your DI containers and pass them into your `App` instance like so:
+
+```typescript
+import { Container } from 'typedi'; // REMOVE this
+import { useContainer } from 'typeorm'; // REMOVE this
+
+import { App } from 'warthog';
+
+async function run() {
+  useContainer(Container); // REMOVE this
+
+  const app = new App({ container: Container }); // REMOVE the container option here
+  await app.start();
+}
+```
+
+In V2, it is recommended that you no longer do this unless you explicitly need access to the Container.
+
+##### Remove references to Warthog's dependencies
+
+It can sometimes cause problems to explicitly require Warthog's depdendencies (ie `type-graphql`, `typedi`, `typeorm` and `typeorm-typedi-extensions`). In future versions, remove these explicit dependencies from `package.json`:
+
+```txt
+- "type-graphql": "...",
+- "typedi": "...",
+- "typeorm": "...",
+- "typeorm-typedi-extensions": "...",
+```
+
 </p>
 </details>
 
