@@ -130,33 +130,38 @@ describe('server', () => {
     expect(firstResult.dishes.length).toEqual(20);
   });
 
-  test('queries for dishes with pagination', async () => {
+  test.only('queries for dishes with pagination', async () => {
     expect.assertions(6);
-    const { nodes, pageInfo } = await binding.query.dishConnection(
-      { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
+    const { totalCount, edges, pageInfo } = await binding.query.dishConnection(
+      { offset: 0, orderBy: 'name_ASC', limit: 1 },
       `{
-          nodes {
-            name
-            kitchenSink {
-              emailField
+          totalCount
+          edges {
+            node {
+              name
+              kitchenSink {
+                emailField
+              }
             }
+            cursor
           }
           pageInfo {
-            limit
-            offset
-            totalCount
             hasNextPage
             hasPreviousPage
+            startCursor
+            endCursor
           }
         }`
     );
 
-    expect(nodes).toMatchSnapshot();
-    expect(pageInfo.offset).toEqual(0);
-    expect(pageInfo.limit).toEqual(1);
+    console.log('test', totalCount, edges, pageInfo);
+
+    expect(edges).toMatchSnapshot();
+    // expect(pageInfo.offset).toEqual(0);
+    // expect(pageInfo.limit).toEqual(1);
     expect(pageInfo.hasNextPage).toEqual(true);
     expect(pageInfo.hasPreviousPage).toEqual(false);
-    expect(pageInfo.totalCount).toEqual(20);
+    expect(totalCount).toEqual(20);
   });
 
   test('throws errors when given bad input on a single create', async done => {

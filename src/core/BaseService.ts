@@ -3,11 +3,12 @@ import { ArgumentValidationError } from 'type-graphql';
 import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
-import { ConnectionResult, StandardDeleteResponse } from '../tgql';
+import { ConnectionResult, PageInfo, StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel } from './';
 import { StringMap, WhereInput } from './types';
+import { isArray } from 'util';
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -51,14 +52,33 @@ export class BaseService<E extends BaseModel> {
     this.klass = this.repository.metadata.name.toLowerCase();
   }
 
-  getPageInfo(limit: number, offset: number, totalCount: number) {
+  getPageInfo(items: E[], orderBy: string[], limit: number, offset: number): PageInfo {
+    // We ask for one more record than we need to see if there is a "next page"
+    const onLastPage = items.length === limit;
+    const lastItemIndex = onLastPage ? limit - 1 : limit - 2;
+    const firstItem = items[0];
+    const lastItem = items[lastItemIndex];
+
     return {
-      hasNextPage: totalCount > offset + limit,
+      hasNextPage: items.length > limit,
       hasPreviousPage: offset > 0,
-      limit,
-      offset,
-      totalCount
+      startCursor: this.getCursor(firstItem, orderBy),
+      endCursor: this.getCursor(lastItem, orderBy)
     };
+  }
+
+  getCursor(record: E, orderBy: string[]) {
+    return orderBy
+      .map(orderItem => {
+        const parts = orderItem.toString().split('_');
+        const attr = parts[0];
+        const value = record.getString(attr);
+        // TODO: should I encode whether they asked for ASC/DESC, this would make the cursor more pure, but likely unnecessary
+        // const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
+
+        return `${attr}:${value}`;
+      })
+      .join(',');
   }
 
   async find<W extends WhereInput>(
@@ -78,21 +98,36 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<ConnectionResult<E>> {
-    const qb = this.buildFindQuery<W>(where, orderBy, limit, offset, fields);
-    const [nodes, totalCount] = await qb.getManyAndCount();
     // TODO: FEATURE - make the default limit configurable
     limit = limit ?? 50;
     offset = offset ?? 0;
+    let order: string[];
+    if (!orderBy) {
+      order = ['id_ASC'];
+    } else if (orderBy.startsWith('id_')) {
+      order = [orderBy];
+    } else {
+      order = [orderBy, 'id_ASC'];
+    }
+
+    const qb = this.buildFindQuery<W>(where, order, limit, offset, fields);
+    const [data, totalCount] = await qb.getManyAndCount();
 
     return {
-      nodes,
-      pageInfo: this.getPageInfo(limit, offset, totalCount)
+      totalCount,
+      edges: data.map((item: E) => {
+        return {
+          node: item,
+          cursor: this.getCursor(item, order)
+        };
+      }),
+      pageInfo: this.getPageInfo(data, order, limit, offset)
     };
   }
 
   private buildFindQuery<W extends WhereInput>(
     where?: any,
-    orderBy?: string,
+    orderBy?: string | string[],
     limit?: number,
     offset?: number,
     fields?: string[]
@@ -116,15 +151,22 @@ export class BaseService<E extends BaseModel> {
       const selection = fields.map(field => `${this.klass}.${field}`);
       qb = qb.select(selection);
     }
-    if (orderBy) {
-      // TODO: allow multiple sorts
-      // See https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#adding-order-by-expression
-      const parts = orderBy.toString().split('_');
-      // TODO: ensure attr is one of the properties on the model
-      const attr = parts[0];
-      const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
 
-      qb = qb.orderBy(this.attrToDBColumn(attr), direction);
+    if (orderBy) {
+      if (!isArray(orderBy)) {
+        orderBy = [orderBy];
+      }
+
+      orderBy.forEach((orderByItem: string) => {
+        // TODO: allow multiple sorts
+        // See https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#adding-order-by-expression
+        const parts = orderByItem.toString().split('_');
+        // TODO: ensure attr is one of the properties on the model
+        const attr = parts[0];
+        const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
+
+        qb = qb.orderBy(this.attrToDBColumn(attr), direction);
+      });
     }
 
     where = where || {};

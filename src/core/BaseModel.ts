@@ -61,6 +61,14 @@ export abstract class BaseModel implements BaseGraphQLObject {
     return this.id || shortid.generate();
   }
 
+  getString(field: any) {
+    const self = this as any;
+    if (self[field] instanceof Date) {
+      return self[field].toISOString();
+    }
+    return self[field];
+  }
+
   @BeforeInsert()
   setId() {
     this.id = this.getId();
