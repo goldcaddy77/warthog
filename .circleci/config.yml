@@ -42,9 +42,7 @@ jobs:
       - run:
           name: test
           command: |
-            yarn test:db:drop
-            yarn test:db:create
-            NODE_ENV=test yarn jest --verbose --coverage --ci --detectOpenHandles --runInBand
+            yarn test
       - codecov/upload:
           file: coverage/*.json
           flags: backend
