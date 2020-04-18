@@ -131,7 +131,6 @@ describe('server', () => {
   });
 
   test.only('queries for dishes with pagination', async () => {
-    expect.assertions(6);
     const { totalCount, edges, pageInfo } = await binding.query.dishConnection(
       { offset: 0, orderBy: 'name_ASC', limit: 1 },
       `{
@@ -156,9 +155,7 @@ describe('server', () => {
 
     console.log('test', totalCount, edges, pageInfo);
 
-    expect(edges).toMatchSnapshot();
-    // expect(pageInfo.offset).toEqual(0);
-    // expect(pageInfo.limit).toEqual(1);
+    expect(edges[0].cursor).toMatch(/name:Dish \d+,id:\w+/);
     expect(pageInfo.hasNextPage).toEqual(true);
     expect(pageInfo.hasPreviousPage).toEqual(false);
     expect(totalCount).toEqual(20);

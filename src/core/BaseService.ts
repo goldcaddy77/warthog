@@ -72,6 +72,9 @@ export class BaseService<E extends BaseModel> {
       .map(orderItem => {
         const parts = orderItem.toString().split('_');
         const attr = parts[0];
+        if (!record.getString) {
+          throw new Error(`record isn't a model 1: ${JSON.stringify(record, null, 2)}`);
+        }
         const value = record.getString(attr);
         // TODO: should I encode whether they asked for ASC/DESC, this would make the cursor more pure, but likely unnecessary
         // const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
@@ -79,6 +82,16 @@ export class BaseService<E extends BaseModel> {
         return `${attr}:${value}`;
       })
       .join(',');
+  }
+
+  getCursorOrderBy(orderBy?: string) {
+    if (!orderBy) {
+      return ['id_ASC'];
+    } else if (orderBy.startsWith('id_')) {
+      return [orderBy];
+    } else {
+      return [orderBy, 'id_ASC'];
+    }
   }
 
   async find<W extends WhereInput>(
@@ -101,17 +114,15 @@ export class BaseService<E extends BaseModel> {
     // TODO: FEATURE - make the default limit configurable
     limit = limit ?? 50;
     offset = offset ?? 0;
-    let order: string[];
-    if (!orderBy) {
-      order = ['id_ASC'];
-    } else if (orderBy.startsWith('id_')) {
-      order = [orderBy];
-    } else {
-      order = [orderBy, 'id_ASC'];
-    }
+    const order = this.getCursorOrderBy(orderBy);
 
-    const qb = this.buildFindQuery<W>(where, order, limit, offset, fields);
+    const qb = this.buildFindQuery<W>(where, order, limit + 1, offset, fields);
+
+    console.log('fields', fields);
+
     const [data, totalCount] = await qb.getManyAndCount();
+
+    // return this.buildFindQuery<W>(where, orderBy, limit, offset, fields).getMany();
 
     return {
       totalCount,
