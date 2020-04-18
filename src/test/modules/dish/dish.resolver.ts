@@ -4,6 +4,7 @@ import {
   Authorized,
   Ctx,
   FieldResolver,
+  Int,
   Mutation,
   Query,
   Resolver,
@@ -34,12 +35,23 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
-import { NestedFields } from '../../../decorators';
+
+@ObjectType()
+export class DishEdge {
+  @Field(() => Dish, { nullable: false })
+  node!: Dish;
+
+  @Field(() => String, { nullable: false })
+  cursor!: string;
+}
 
 @ObjectType()
 export class DishConnection implements ConnectionResult<Dish> {
-  @Field(() => [Dish], { nullable: false })
-  nodes!: Dish[];
+  @Field(() => Int, { nullable: false })
+  totalCount!: number;
+
+  @Field(() => [DishEdge], { nullable: false })
+  edges!: DishEdge[];
 
   @Field(() => PageInfo, { nullable: false })
   pageInfo!: PageInfo;

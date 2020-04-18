@@ -374,8 +374,14 @@ export interface Dish extends BaseGraphQLObject {
 }
 
 export interface DishConnection {
-  nodes: Array<Dish>
+  totalCount: Int
+  edges: Array<DishEdge>
   pageInfo: PageInfo
+}
+
+export interface DishEdge {
+  node: Dish
+  cursor: String
 }
 
 export interface KitchenSink extends BaseGraphQLObject {
@@ -410,11 +416,10 @@ export interface KitchenSink extends BaseGraphQLObject {
 }
 
 export interface PageInfo {
-  limit: Float
-  offset: Float
-  totalCount: Float
   hasNextPage: Boolean
   hasPreviousPage: Boolean
+  startCursor: String
+  endCursor: String
 }
 
 export interface StandardDeleteResponse {

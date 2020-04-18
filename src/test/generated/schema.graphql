@@ -79,13 +79,19 @@ type Dish implements BaseGraphQLObject {
 }
 
 type DishConnection {
-  nodes: [Dish!]!
+  totalCount: Int!
+  edges: [DishEdge!]!
   pageInfo: PageInfo!
 }
 
 input DishCreateInput {
   name: String!
   kitchenSinkId: ID!
+}
+
+type DishEdge {
+  node: Dish!
+  cursor: String!
 }
 
 enum DishOrderByInput {
@@ -382,11 +388,10 @@ type Mutation {
 }
 
 type PageInfo {
-  limit: Float!
-  offset: Float!
-  totalCount: Float!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
 }
 
 type Query {
