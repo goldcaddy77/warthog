@@ -71,7 +71,12 @@ export class User extends BaseModel {
   @JSONField({ filter: false, nullable: true })
   jsonFieldNoFilter?: JsonObject;
 
-  @StringField({ maxLength: 50, minLength: 2, nullable: true })
+  @StringField({
+    maxLength: 50,
+    minLength: 2,
+    nullable: false,
+    description: 'This is a string field'
+  })
   stringField: string;
 
   @Column({ nullable: true })

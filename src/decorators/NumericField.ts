@@ -2,13 +2,16 @@ import { Float } from 'type-graphql';
 import { ColumnNumericOptions } from 'typeorm/decorator/options/ColumnNumericOptions';
 import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions';
 
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 import { NumericColumnType } from '../torm';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface NumericFieldOptions extends ColumnCommonOptions, ColumnNumericOptions, DecoratorDefaults {
+interface NumericFieldOptions
+  extends ColumnCommonOptions,
+    ColumnNumericOptions,
+    DecoratorCommonOptions {
   dataType?: NumericColumnType;
 }
 

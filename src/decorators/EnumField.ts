@@ -3,10 +3,10 @@ import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { getMetadataStorage, DecoratorDefaults } from '../metadata';
+import { getMetadataStorage, DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 
-interface EnumFieldOptions extends DecoratorDefaults {
+interface EnumFieldOptions extends DecoratorCommonOptions {
   default?: any;
 }
 

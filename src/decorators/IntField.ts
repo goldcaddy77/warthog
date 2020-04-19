@@ -1,12 +1,12 @@
 import { Int } from 'type-graphql';
 
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 import { IntColumnType } from '../torm';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface IntFieldOptions extends DecoratorDefaults {
+interface IntFieldOptions extends DecoratorCommonOptions {
   dataType?: IntColumnType;
   default?: number;
 }

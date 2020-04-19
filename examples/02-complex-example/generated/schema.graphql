@@ -75,6 +75,14 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): StandardDeleteResponse!
 }
 
+type PageInfo {
+  limit: Float!
+  offset: Float!
+  totalCount: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type Query {
   users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
   user(where: UserWhereUniqueInput!): User!
@@ -110,6 +118,8 @@ type User implements BaseGraphQLObject {
   bigIntField: Int
   jsonField: JSONObject
   jsonFieldNoFilter: JSONObject
+
+  """This is a string field"""
   stringField: String
   noFilterField: String
   noSortField: String

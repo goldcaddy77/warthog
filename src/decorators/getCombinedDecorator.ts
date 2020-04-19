@@ -28,6 +28,15 @@ export function getCombinedDecorator({
     typeof warthogColumnMeta.default !== 'undefined' ? { default: warthogColumnMeta.default } : {};
   const uniqueOption =
     typeof warthogColumnMeta.unique !== 'undefined' ? { unique: warthogColumnMeta.unique } : {};
+  const tgqlDescriptionOption =
+    typeof warthogColumnMeta.description !== 'undefined'
+      ? { description: warthogColumnMeta.description }
+      : {};
+  // TODO: Enable this when TypeORM is fixed: https://github.com/typeorm/typeorm/issues/5906
+  // const typeOrmColumnOption =
+  //   typeof warthogColumnMeta.description !== 'undefined'
+  //     ? { column: warthogColumnMeta.description }
+  //     : {};
 
   const exposeDB = !warthogColumnMeta.apiOnly;
   const exposeAPI = !warthogColumnMeta.dbOnly;
@@ -46,7 +55,8 @@ export function getCombinedDecorator({
     decorators.push(
       TypeGraphQLField(() => gqlFieldType, {
         ...nullableOption,
-        ...defaultOption
+        ...defaultOption,
+        ...tgqlDescriptionOption
       })
     );
   }
@@ -60,6 +70,7 @@ export function getCombinedDecorator({
         ...defaultOption,
         ...columnOptions,
         ...uniqueOption
+        // ...typeOrmColumnOption: // TODO: Enable this when TypeORM is fixed: https://github.com/typeorm/typeorm/issues/5906
       }) as MethodDecoratorFactory
     );
   }

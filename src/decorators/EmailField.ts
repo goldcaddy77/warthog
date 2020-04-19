@@ -1,11 +1,11 @@
 import { IsEmail } from 'class-validator';
 
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface EmailFieldOptions extends DecoratorDefaults {
+interface EmailFieldOptions extends DecoratorCommonOptions {
   unique?: boolean;
 }
 

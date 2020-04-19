@@ -1,9 +1,9 @@
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface IdFieldOptions extends DecoratorDefaults {
+interface IdFieldOptions extends DecoratorCommonOptions {
   unique?: boolean;
 }
 

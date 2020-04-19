@@ -15,6 +15,7 @@ import { callAPIError, callAPISuccess } from '../utils';
 
 import express = require('express');
 import * as request from 'supertest';
+import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 let runKey: string;
 let server: Server<any>;
@@ -556,8 +557,9 @@ describe('server', () => {
     });
   });
 
-  describe('apiOnly and dbOnly', () => {
+  describe('DB Decorator options', () => {
     let kitchenSinkDBColumns: string[];
+    let stringFieldColumn: ColumnMetadata;
     beforeEach(() => {
       const kitchenSinkTableMeta = server.connection.entityMetadatas.find(
         entity => entity.name === 'KitchenSink'
@@ -568,6 +570,10 @@ describe('server', () => {
       }
 
       kitchenSinkDBColumns = kitchenSinkTableMeta.columns.map(column => column.propertyName);
+
+      stringFieldColumn = kitchenSinkTableMeta.columns.find(
+        column => column.propertyName === 'stringField'
+      ) as ColumnMetadata;
     });
 
     test('apiOnly column does not exist in the DB', async done => {
@@ -577,6 +583,14 @@ describe('server', () => {
 
     test('dbOnly column does exist in the DB', async done => {
       expect(kitchenSinkDBColumns).toContain('dbOnlyField');
+      done();
+    });
+
+    // TypeORM comment support is currently broken
+    // See: https://github.com/typeorm/typeorm/issues/5906
+    test.skip('description maps to comment DB metadata', async done => {
+      console.log('stringFieldColumn', stringFieldColumn);
+      expect(stringFieldColumn.comment).toEqual('This is a string field');
       done();
     });
   });
