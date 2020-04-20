@@ -9,6 +9,7 @@ import { addQueryBuilderWhereItem } from '../torm';
 import { BaseModel, ConnectionResult } from '..';
 import { StringMap, WhereInput } from './types';
 import { isArray } from 'util';
+import { RelayService } from './RelayService';
 
 interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -18,6 +19,7 @@ export class BaseService<E extends BaseModel> {
   manager: EntityManager;
   columnMap: StringMap;
   klass: string;
+  relayService: RelayService;
 
   // TODO: any -> ObjectType<E> (or something close)
   // V3: Only ask for entityClass, we can get repository and manager from that
@@ -25,6 +27,9 @@ export class BaseService<E extends BaseModel> {
     if (!entityClass) {
       throw new Error('BaseService requires an entity Class');
     }
+
+    // TODO: use DI
+    this.relayService = new RelayService();
 
     // V3: remove the need to inject a repository, we simply need the entityClass and then we can do
     // everything we need to do.
@@ -59,6 +64,12 @@ export class BaseService<E extends BaseModel> {
     const firstItem = items[0];
     const lastItem = items[lastItemIndex];
 
+    console.log('items.length', lastItemIndex);
+    console.log('lastItemIndex', lastItemIndex);
+    console.log('lastItemIndex', lastItemIndex);
+    console.log('firstItem', firstItem);
+    console.log('lastItem', lastItem);
+
     return {
       hasNextPage: items.length > limit,
       hasPreviousPage: offset > 0,
@@ -72,6 +83,15 @@ export class BaseService<E extends BaseModel> {
       .map(orderItem => {
         const parts = orderItem.toString().split('_');
         const attr = parts[0];
+
+        if (!record) {
+          throw new Error(`Expected a record, but got ${record}`);
+        }
+
+        console.log('record', record);
+        console.log('createdAt', record.createdAt);
+        console.log('getString', record.getString);
+
         if (!record.getString) {
           throw new Error(`record isn't a model 1: ${JSON.stringify(record, null, 2)}`);
         }
@@ -121,6 +141,8 @@ export class BaseService<E extends BaseModel> {
     console.log('fields', fields);
 
     const [data, totalCount] = await qb.getManyAndCount();
+
+    console.log('data', data);
 
     // return this.buildFindQuery<W>(where, orderBy, limit, offset, fields).getMany();
 

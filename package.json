@@ -151,6 +151,9 @@
     "singleQuote": true
   },
   "jest": {
+    "setupFiles": [
+      "./src/test/setupFiles.ts"
+    ],
     "setupFilesAfterEnv": [
       "./src/test/setupFilesAfterEnv.ts"
     ],
