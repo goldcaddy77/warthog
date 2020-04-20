@@ -1,12 +1,12 @@
 import { Float } from 'type-graphql';
 
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 import { FloatColumnType } from '../torm';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface FloatFieldOptions extends DecoratorDefaults {
+interface FloatFieldOptions extends DecoratorCommonOptions {
   dataType?: FloatColumnType; // int16, jsonb, etc...
   default?: number;
 }

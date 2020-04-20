@@ -433,6 +433,14 @@ export interface BaseModelUUID extends BaseGraphQLObject {
   version: Int
 }
 
+export interface PageInfo {
+  limit: Float
+  offset: Float
+  totalCount: Float
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+}
+
 export interface StandardDeleteResponse {
   id: ID_Output
 }

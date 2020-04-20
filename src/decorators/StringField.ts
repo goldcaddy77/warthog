@@ -1,12 +1,12 @@
 import { MaxLength, MinLength } from 'class-validator';
 
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 import { StringColumnType } from '../torm';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface StringFieldOptions extends DecoratorDefaults {
+interface StringFieldOptions extends DecoratorCommonOptions {
   dataType?: StringColumnType; // int16, jsonb, etc...
   maxLength?: number;
   minLength?: number;

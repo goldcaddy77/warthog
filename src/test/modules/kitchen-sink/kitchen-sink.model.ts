@@ -29,7 +29,7 @@ export enum StringEnum {
 
 @Model()
 export class KitchenSink extends BaseModel {
-  @StringField()
+  @StringField({ description: 'This is a string field' })
   stringField?: string;
 
   @StringField({ nullable: true })

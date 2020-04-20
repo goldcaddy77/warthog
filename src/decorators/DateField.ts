@@ -1,12 +1,12 @@
 import { GraphQLISODateTime } from 'type-graphql';
 
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { ColumnType } from '../torm';
 import { composeMethodDecorators } from '../utils';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface DateFieldOptions extends DecoratorDefaults {
+interface DateFieldOptions extends DecoratorCommonOptions {
   dataType?: ColumnType; // int16, jsonb, etc...
   default?: Date;
 }

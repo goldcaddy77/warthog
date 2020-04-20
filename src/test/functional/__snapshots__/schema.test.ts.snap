@@ -161,6 +161,8 @@ type KitchenSink implements BaseGraphQLObject {
   deletedAt: DateTime
   deletedById: String
   version: Int!
+
+  \\"\\"\\"This is a string field\\"\\"\\"
   stringField: String!
   nullableStringField: String
   dateField: DateTime

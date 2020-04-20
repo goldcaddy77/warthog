@@ -1,11 +1,11 @@
 import { GraphQLBoolean } from 'graphql';
 
-import { DecoratorDefaults } from '../metadata';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface BooleanFieldOptions extends DecoratorDefaults {
+interface BooleanFieldOptions extends DecoratorCommonOptions {
   default?: boolean;
 }
 

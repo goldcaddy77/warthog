@@ -16,9 +16,10 @@ export type FieldType =
   | 'numeric'
   | 'string';
 
-export interface DecoratorDefaults {
+export interface DecoratorCommonOptions {
   apiOnly?: boolean;
   dbOnly?: boolean;
+  description?: string;
   editable?: boolean;
   filter?: boolean;
   nullable?: boolean;
@@ -27,7 +28,7 @@ export interface DecoratorDefaults {
   writeonly?: boolean;
 }
 
-export interface ColumnMetadata extends DecoratorDefaults {
+export interface ColumnMetadata extends DecoratorCommonOptions {
   type: FieldType;
   propertyName: string;
   dataType?: ColumnType; // int16, jsonb, etc...
