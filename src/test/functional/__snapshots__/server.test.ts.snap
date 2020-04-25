@@ -1372,17 +1372,3 @@ Array [
   },
 ]
 `;
-
-exports[`server queries for dishes with pagination 1`] = `
-Array [
-  Object {
-    "cursor": "name:Dish 3,id:1wmB5kIgjo",
-    "node": Object {
-      "kitchenSink": Object {
-        "emailField": "hi@warthog.com",
-      },
-      "name": "Dish 3",
-    },
-  },
-]
-`;

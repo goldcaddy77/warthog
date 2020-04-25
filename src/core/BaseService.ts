@@ -3,13 +3,13 @@ import { ArgumentValidationError } from 'type-graphql';
 import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
-import { StandardDeleteResponse, PageInfo } from '../tgql';
+import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel, ConnectionResult } from '..';
 import { StringMap, WhereInput } from './types';
 import { isArray } from 'util';
-import { RelayService } from './RelayService';
+import { RelayService, RelayPageOptionsInput } from './RelayService';
 
 interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -57,63 +57,6 @@ export class BaseService<E extends BaseModel> {
     this.klass = this.repository.metadata.name.toLowerCase();
   }
 
-  getPageInfo(items: E[], orderBy: string[], limit: number, offset: number): PageInfo {
-    // We ask for one more record than we need to see if there is a "next page"
-    const onLastPage = items.length === limit;
-    const lastItemIndex = onLastPage ? limit - 1 : limit - 2;
-    const firstItem = items[0];
-    const lastItem = items[lastItemIndex];
-
-    console.log('items.length', lastItemIndex);
-    console.log('lastItemIndex', lastItemIndex);
-    console.log('lastItemIndex', lastItemIndex);
-    console.log('firstItem', firstItem);
-    console.log('lastItem', lastItem);
-
-    return {
-      hasNextPage: items.length > limit,
-      hasPreviousPage: offset > 0,
-      startCursor: this.getCursor(firstItem, orderBy),
-      endCursor: this.getCursor(lastItem, orderBy)
-    };
-  }
-
-  getCursor(record: E, orderBy: string[]) {
-    return orderBy
-      .map(orderItem => {
-        const parts = orderItem.toString().split('_');
-        const attr = parts[0];
-
-        if (!record) {
-          throw new Error(`Expected a record, but got ${record}`);
-        }
-
-        console.log('record', record);
-        console.log('createdAt', record.createdAt);
-        console.log('getString', record.getString);
-
-        if (!record.getString) {
-          throw new Error(`record isn't a model 1: ${JSON.stringify(record, null, 2)}`);
-        }
-        const value = record.getString(attr);
-        // TODO: should I encode whether they asked for ASC/DESC, this would make the cursor more pure, but likely unnecessary
-        // const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
-
-        return `${attr}:${value}`;
-      })
-      .join(',');
-  }
-
-  getCursorOrderBy(orderBy?: string) {
-    if (!orderBy) {
-      return ['id_ASC'];
-    } else if (orderBy.startsWith('id_')) {
-      return [orderBy];
-    } else {
-      return [orderBy, 'id_ASC'];
-    }
-  }
-
   async find<W extends WhereInput>(
     where?: any,
     orderBy?: string,
@@ -121,22 +64,26 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    return this.buildFindQuery<W>(where, orderBy, limit, offset, fields).getMany();
+    return this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields).getMany();
   }
 
   async findConnection<W extends WhereInput>(
     where?: any,
     orderBy?: string,
-    limit?: number,
-    offset?: number,
+    pageOptions: RelayPageOptionsInput = {},
     fields?: string[]
   ): Promise<ConnectionResult<E>> {
     // TODO: FEATURE - make the default limit configurable
-    limit = limit ?? 50;
-    offset = offset ?? 0;
-    const order = this.getCursorOrderBy(orderBy);
+    const first = pageOptions.first ?? 50;
+    const order = this.relayService.getCursorOrderBy(orderBy);
+    const { after, last, before } = pageOptions;
 
-    const qb = this.buildFindQuery<W>(where, order, limit + 1, offset, fields);
+    const qb = this.buildFindQuery<W>(
+      where,
+      order,
+      { limit: first + 1, after, last, before },
+      fields
+    );
 
     console.log('fields', fields);
 
@@ -144,34 +91,40 @@ export class BaseService<E extends BaseModel> {
 
     console.log('data', data);
 
-    // return this.buildFindQuery<W>(where, orderBy, limit, offset, fields).getMany();
-
     return {
       totalCount,
       edges: data.map((item: E) => {
         return {
           node: item,
-          cursor: this.getCursor(item, order)
+          cursor: this.relayService.getCursor(item, order)
         };
       }),
-      pageInfo: this.getPageInfo(data, order, limit, offset)
+      pageInfo: this.relayService.getPageInfo(data, order, { first, after, last, before })
     };
   }
 
   private buildFindQuery<W extends WhereInput>(
     where?: any,
     orderBy?: string | string[],
-    limit?: number,
-    offset?: number,
+    pageOptions: {
+      // For `find` query
+      limit?: number;
+      offset?: number;
+      // For connection cursor-based pagination
+      first?: number;
+      after?: string;
+      last?: number;
+      before?: string;
+    } = {},
     fields?: string[]
   ): SelectQueryBuilder<E> {
     let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
 
-    if (limit) {
-      qb = qb.take(limit);
+    if (pageOptions.limit) {
+      qb = qb.take(pageOptions.limit);
     }
-    if (offset) {
-      qb = qb.skip(offset);
+    if (pageOptions.offset) {
+      qb = qb.skip(pageOptions.offset);
     }
 
     if (fields) {
