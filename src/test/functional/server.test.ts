@@ -155,7 +155,7 @@ describe('server', () => {
 
     console.log('test', totalCount, edges, pageInfo);
 
-    expect(edges[0].cursor).toMatch(/name:Dish \d+,id:\w+/);
+    expect(edges[0].cursor).toMatch(/name_ASC:Dish \d+,id_ASC:\w+/);
     expect(pageInfo.hasNextPage).toEqual(true);
     expect(pageInfo.hasPreviousPage).toEqual(false);
     expect(totalCount).toEqual(20);

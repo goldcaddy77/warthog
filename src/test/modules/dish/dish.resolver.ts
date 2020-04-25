@@ -1,6 +1,7 @@
 import {
   Arg,
   Args,
+  ArgsType,
   Authorized,
   Ctx,
   FieldResolver,
@@ -13,6 +14,7 @@ import {
   Field
 } from 'type-graphql';
 import { Inject } from 'typedi';
+import { Min } from 'class-validator';
 
 import {
   BaseContext,
@@ -25,6 +27,7 @@ import {
 import {
   DishCreateInput,
   DishCreateManyArgs,
+  DishOrderByEnum,
   DishUpdateArgs,
   DishWhereArgs,
   DishWhereInput,
@@ -35,6 +38,7 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
+import { NestedFields } from 'decorators';
 
 @ObjectType()
 export class DishEdge {
@@ -55,6 +59,32 @@ export class DishConnection implements ConnectionResult<Dish> {
 
   @Field(() => PageInfo, { nullable: false })
   pageInfo!: PageInfo;
+}
+
+@ArgsType()
+export class ConnectionPageInputOptions {
+  @Field(() => Int, { nullable: true })
+  @Min(0)
+  first?: number;
+
+  @Field(() => String, { nullable: true })
+  after?: string; // TODO: should we make a RelayCursor scalar?
+
+  @Field(() => Int, { nullable: true })
+  @Min(0)
+  last?: number;
+
+  @Field(() => String, { nullable: true })
+  before?: string;
+}
+
+@ArgsType()
+export class DishConnectionWhereArgs extends ConnectionPageInputOptions {
+  @Field(() => DishWhereInput, { nullable: true })
+  where?: DishWhereInput;
+
+  @Field(() => DishOrderByEnum, { nullable: true })
+  orderBy?: DishOrderByEnum;
 }
 
 @Resolver(Dish)
@@ -79,9 +109,10 @@ export class DishResolver {
   @Authorized('dish:read')
   @Query(() => DishConnection)
   async dishConnection(
-    @Args() { where, orderBy, limit, offset }: DishWhereArgs
+    @Args() { where, orderBy, ...pageOptions }: DishConnectionWhereArgs,
+    @NestedFields() fields: string[]
   ): Promise<DishConnection> {
-    return this.service.findConnection<DishWhereInput>(where, orderBy, limit, offset);
+    return this.service.findConnection<DishWhereInput>(where, orderBy, pageOptions, fields);
   }
 
   @Authorized('dish:read')
