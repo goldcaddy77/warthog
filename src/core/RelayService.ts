@@ -6,14 +6,14 @@ import { EncodingService } from './encoding';
 export type Cursor = string;
 
 export interface ConnectionEdge<E> {
-  node: E;
-  cursor: Cursor;
+  node?: E;
+  cursor?: Cursor;
 }
 
 export interface ConnectionResult<E> {
-  totalCount: number;
-  edges: ConnectionEdge<E>[];
-  pageInfo: PageInfo;
+  totalCount?: number;
+  edges?: ConnectionEdge<E>[];
+  pageInfo?: PageInfo;
 }
 
 type PageInfo = {

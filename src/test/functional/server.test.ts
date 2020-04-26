@@ -18,6 +18,7 @@ import { callAPIError, callAPISuccess } from '../utils';
 import express = require('express');
 import * as request from 'supertest';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
+import { EncodingService } from '../../core/encoding';
 
 let runKey: string;
 let server: Server<any>;
@@ -79,6 +80,10 @@ describe('server', () => {
     done();
   });
 
+  beforeEach(() => {
+    runKey = String(new Date().getTime()); // used to ensure test runs create unique data
+  });
+
   // Make sure to clean up server
   afterAll(async done => {
     await server.stop();
@@ -104,7 +109,7 @@ describe('server', () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
-      `{
+      `{ 
           dateField
           jsonField
           stringField
@@ -130,35 +135,45 @@ describe('server', () => {
     expect(firstResult.dishes.length).toEqual(20);
   });
 
-  test.only('queries for dishes with pagination', async () => {
-    const { totalCount, edges, pageInfo } = await binding.query.dishConnection(
-      { offset: 0, orderBy: 'name_ASC', limit: 1 },
-      `{
-          totalCount
-          edges {
-            node {
-              name
-              kitchenSink {
-                emailField
+  test('queries for dishes with pagination', async () => {
+    const { totalCount, edges, pageInfo } = await callAPISuccess(
+      binding.query.dishConnection(
+        { orderBy: 'name_ASC', first: 1 },
+        `{
+            totalCount
+            edges {
+              node {
+                name
+                kitchenSink {
+                  emailField
+                }
               }
+              cursor
             }
-            cursor
-          }
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-          }
-        }`
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }`
+      )
     );
 
-    console.log('test', totalCount, edges, pageInfo);
+    const encodingService = new EncodingService();
 
-    expect(edges[0].cursor).toMatch(/name_ASC:Dish \d+,id_ASC:\w+/);
+    expect(encodingService.decode(edges[0].cursor)).toMatch(
+      /name_ASC:Dish \d+,id_ASC:[A-Za-z0-9_-]{7,14}/
+    );
+    expect(edges[0].node.name).toBeTruthy();
+    expect(edges[0].node.kitchenSink.emailField).toBeTruthy();
     expect(pageInfo.hasNextPage).toEqual(true);
     expect(pageInfo.hasPreviousPage).toEqual(false);
     expect(totalCount).toEqual(20);
+  });
+
+  test.skip('Does not perform expensive totalCount operation if not needed', async () => {
+    //
   });
 
   test('throws errors when given bad input on a single create', async done => {
@@ -812,5 +827,3 @@ function noSupertestRequestErrors(result: request.Response) {
   expect(result.clientError).toBe(false);
   expect(result.serverError).toBe(false);
 }
-
-/* eslint-enable @typescript-eslint/camelcase */
