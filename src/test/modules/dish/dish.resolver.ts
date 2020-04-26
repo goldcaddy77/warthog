@@ -18,12 +18,13 @@ import { Min } from 'class-validator';
 
 import {
   BaseContext,
-  ConnectionResult,
   Fields,
+  RawFields,
   PageInfo,
   StandardDeleteResponse,
   UserId
 } from '../../../';
+
 import {
   DishCreateInput,
   DishCreateManyArgs,
@@ -38,7 +39,6 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
-import { NestedFields } from 'decorators';
 
 @ObjectType()
 export class DishEdge {
@@ -50,7 +50,7 @@ export class DishEdge {
 }
 
 @ObjectType()
-export class DishConnection implements ConnectionResult<Dish> {
+export class DishConnection {
   @Field(() => Int, { nullable: false })
   totalCount!: number;
 
@@ -110,7 +110,7 @@ export class DishResolver {
   @Query(() => DishConnection)
   async dishConnection(
     @Args() { where, orderBy, ...pageOptions }: DishConnectionWhereArgs,
-    @NestedFields() fields: string[]
+    @RawFields() fields: object
   ): Promise<DishConnection> {
     return this.service.findConnection<DishWhereInput>(where, orderBy, pageOptions, fields);
   }

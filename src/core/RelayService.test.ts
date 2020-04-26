@@ -84,12 +84,12 @@ describe('RelayService', () => {
   describe('getPageInfo', () => {
     test('throws if data has no items', () => {
       expect(() => {
-        return relay.getPageInfo([], 'createdAt_ASC', 5, 0);
+        return relay.getPageInfo([], 'createdAt_ASC', { first: 1 });
       }).toThrow();
     });
 
     test('Returns the same for first and last if 1 item', () => {
-      const result = relay.getPageInfo([foo], 'createdAt_ASC', 5, 0);
+      const result = relay.getPageInfo([foo], 'createdAt_ASC', { first: 1 });
       const startDecoded = encoding.decode(result.startCursor);
       const endDecoded = encoding.decode(result.endCursor);
 
@@ -100,7 +100,9 @@ describe('RelayService', () => {
     });
 
     test('Works properly if youre on the last page', () => {
-      const result = relay.getPageInfo([foo, foo, foo, foo, bar, foo], 'createdAt_ASC', 5, 0);
+      const result = relay.getPageInfo([foo, foo, foo, foo, bar, foo], 'createdAt_ASC', {
+        first: 5
+      });
       const startDecoded = encoding.decode(result.startCursor);
       const endDecoded = encoding.decode(result.endCursor);
 
@@ -109,5 +111,7 @@ describe('RelayService', () => {
       expect(startDecoded).toEqual('createdAt_ASC:1981-10-15T00:00:00.000Z,id_ASC:1');
       expect(endDecoded).toEqual('createdAt_ASC:1989-11-20T00:00:00.000Z,id_ASC:2');
     });
+
+    // TODO: Add tests for last/before
   });
 });

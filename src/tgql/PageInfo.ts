@@ -8,9 +8,9 @@ export class PageInfo {
   @Field({ nullable: false })
   hasPreviousPage!: boolean;
 
-  @Field({ nullable: false })
-  startCursor!: string;
+  @Field({ nullable: true })
+  startCursor?: string;
 
-  @Field({ nullable: false })
-  endCursor!: string;
+  @Field({ nullable: true })
+  endCursor?: string;
 }

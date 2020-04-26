@@ -6,10 +6,11 @@ import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
-import { BaseModel, ConnectionResult } from '..';
+import { BaseModel } from '..';
 import { StringMap, WhereInput } from './types';
 import { isArray } from 'util';
 import { RelayService, RelayPageOptionsInput } from './RelayService';
+import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
 
 interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -20,6 +21,7 @@ export class BaseService<E extends BaseModel> {
   columnMap: StringMap;
   klass: string;
   relayService: RelayService;
+  graphQLInfoService: GraphQLInfoService;
 
   // TODO: any -> ObjectType<E> (or something close)
   // V3: Only ask for entityClass, we can get repository and manager from that
@@ -30,6 +32,7 @@ export class BaseService<E extends BaseModel> {
 
     // TODO: use DI
     this.relayService = new RelayService();
+    this.graphQLInfoService = new GraphQLInfoService();
 
     // V3: remove the need to inject a repository, we simply need the entityClass and then we can do
     // everything we need to do.
@@ -71,28 +74,33 @@ export class BaseService<E extends BaseModel> {
     where?: any,
     orderBy?: string,
     pageOptions: RelayPageOptionsInput = {},
-    fields?: string[]
-  ): Promise<ConnectionResult<E>> {
+    fields?: ConnectionInputFields
+  ): Promise<any> {
     // TODO: FEATURE - make the default limit configurable
+    const { after, last, before } = pageOptions;
     const first = pageOptions.first ?? 50;
     const order = this.relayService.getCursorOrderBy(orderBy);
-    const { after, last, before } = pageOptions;
+    const options = this.graphQLInfoService.connectionOptions(fields);
+    let data;
+    let totalCount;
+    let totalCountOption = {};
 
     const qb = this.buildFindQuery<W>(
       where,
       order,
       { limit: first + 1, after, last, before },
-      fields
+      options.selectFields
     );
 
-    console.log('fields', fields);
-
-    const [data, totalCount] = await qb.getManyAndCount();
-
-    console.log('data', data);
+    if (options.totalCount) {
+      [data, totalCount] = await qb.getManyAndCount();
+      totalCountOption = { totalCount };
+    } else {
+      data = await qb.getMany();
+    }
 
     return {
-      totalCount,
+      ...totalCountOption,
       edges: data.map((item: E) => {
         return {
           node: item,
@@ -126,6 +134,11 @@ export class BaseService<E extends BaseModel> {
     if (pageOptions.offset) {
       qb = qb.skip(pageOptions.offset);
     }
+
+    // TODO: make sure the following are mutually exclusive
+    // limit/offset
+    // first/after
+    // last/before
 
     if (fields) {
       // We always need to select ID or dataloaders will not function properly
