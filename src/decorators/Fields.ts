@@ -12,7 +12,7 @@ export function Fields(): ParameterDecorator {
     const rawFields = graphqlFields(info);
 
     const scalars = Object.keys(rawFields).filter(item => {
-      return Object.keys(rawFields[item]).length === 0;
+      return Object.keys(rawFields[item]).length === 0 && !item.startsWith('__');
     });
 
     return scalars;

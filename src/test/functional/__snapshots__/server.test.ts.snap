@@ -8,6 +8,14 @@ Array [
 ]
 `;
 
+exports[`server find: allows client to ask for __typename 1`] = `
+Array [
+  Object {
+    "__typename": "KitchenSink",
+  },
+]
+`;
+
 exports[`server find: enum field = BAR 1`] = `
 Array [
   Object {

@@ -211,6 +211,14 @@ describe('server', () => {
     done();
   });
 
+  test('find: allows client to ask for __typename', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks({ limit: 1 }, '{ __typename }');
+    expect(result.length).toEqual(1);
+    expect(result).toMatchSnapshot();
+  });
+
   test('find: string query: exact match (Nakia)', async () => {
     expect.assertions(2);
 
