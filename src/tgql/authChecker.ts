@@ -9,7 +9,7 @@ export const authChecker: AuthChecker<BaseContext> = ({ context: { user } }, per
   }
 
   // Just checking @Authorized() - return true since we know there is a user now
-  if (user.permissions.length === 0) {
+  if (permissions.length === 0) {
     return user !== undefined;
   }
   // Check that permissions overlap
