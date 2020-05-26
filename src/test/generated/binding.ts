@@ -186,8 +186,8 @@ export interface KitchenSinkCreateInput {
   jsonField?: JSONObject | null
   idField?: ID_Input | null
   stringEnumField?: StringEnum | null
-  numericField?: Float | null
-  numericFieldCustomPrecisionScale?: Float | null
+  numericField?: String | null
+  numericFieldCustomPrecisionScale?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
@@ -208,8 +208,8 @@ export interface KitchenSinkUpdateInput {
   jsonField?: JSONObject | null
   idField?: ID_Input | null
   stringEnumField?: StringEnum | null
-  numericField?: Float | null
-  numericFieldCustomPrecisionScale?: Float | null
+  numericField?: String | null
+  numericFieldCustomPrecisionScale?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
@@ -283,18 +283,16 @@ export interface KitchenSinkWhereInput {
   idField_in?: ID_Output[] | ID_Output | null
   stringEnumField_eq?: StringEnum | null
   stringEnumField_in?: StringEnum[] | StringEnum | null
-  numericField_eq?: Float | null
-  numericField_gt?: Float | null
-  numericField_gte?: Float | null
-  numericField_lt?: Float | null
-  numericField_lte?: Float | null
-  numericField_in?: Float[] | Float | null
-  numericFieldCustomPrecisionScale_eq?: Float | null
-  numericFieldCustomPrecisionScale_gt?: Float | null
-  numericFieldCustomPrecisionScale_gte?: Float | null
-  numericFieldCustomPrecisionScale_lt?: Float | null
-  numericFieldCustomPrecisionScale_lte?: Float | null
-  numericFieldCustomPrecisionScale_in?: Float[] | Float | null
+  numericField_eq?: String | null
+  numericField_contains?: String | null
+  numericField_startsWith?: String | null
+  numericField_endsWith?: String | null
+  numericField_in?: String[] | String | null
+  numericFieldCustomPrecisionScale_eq?: String | null
+  numericFieldCustomPrecisionScale_contains?: String | null
+  numericFieldCustomPrecisionScale_startsWith?: String | null
+  numericFieldCustomPrecisionScale_endsWith?: String | null
+  numericFieldCustomPrecisionScale_in?: String[] | String | null
   noSortField_eq?: String | null
   noSortField_contains?: String | null
   noSortField_startsWith?: String | null
@@ -398,8 +396,8 @@ export interface KitchenSink extends BaseGraphQLObject {
   idField?: String | null
   stringEnumField?: StringEnum | null
   dishes?: Array<Dish> | null
-  numericField?: Float | null
-  numericFieldCustomPrecisionScale?: Float | null
+  numericField?: String | null
+  numericFieldCustomPrecisionScale?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null

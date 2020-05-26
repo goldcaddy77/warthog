@@ -171,8 +171,8 @@ type KitchenSink implements BaseGraphQLObject {
   idField: String
   stringEnumField: StringEnum
   dishes: [Dish!]
-  numericField: Float
-  numericFieldCustomPrecisionScale: Float
+  numericField: String
+  numericFieldCustomPrecisionScale: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -193,8 +193,8 @@ input KitchenSinkCreateInput {
   jsonField: JSONObject
   idField: ID
   stringEnumField: StringEnum
-  numericField: Float
-  numericFieldCustomPrecisionScale: Float
+  numericField: String
+  numericFieldCustomPrecisionScale: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -254,8 +254,8 @@ input KitchenSinkUpdateInput {
   jsonField: JSONObject
   idField: ID
   stringEnumField: StringEnum
-  numericField: Float
-  numericFieldCustomPrecisionScale: Float
+  numericField: String
+  numericFieldCustomPrecisionScale: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -329,18 +329,16 @@ input KitchenSinkWhereInput {
   idField_in: [ID!]
   stringEnumField_eq: StringEnum
   stringEnumField_in: [StringEnum!]
-  numericField_eq: Float
-  numericField_gt: Float
-  numericField_gte: Float
-  numericField_lt: Float
-  numericField_lte: Float
-  numericField_in: [Float!]
-  numericFieldCustomPrecisionScale_eq: Float
-  numericFieldCustomPrecisionScale_gt: Float
-  numericFieldCustomPrecisionScale_gte: Float
-  numericFieldCustomPrecisionScale_lt: Float
-  numericFieldCustomPrecisionScale_lte: Float
-  numericFieldCustomPrecisionScale_in: [Float!]
+  numericField_eq: String
+  numericField_contains: String
+  numericField_startsWith: String
+  numericField_endsWith: String
+  numericField_in: [String!]
+  numericFieldCustomPrecisionScale_eq: String
+  numericFieldCustomPrecisionScale_contains: String
+  numericFieldCustomPrecisionScale_startsWith: String
+  numericFieldCustomPrecisionScale_endsWith: String
+  numericFieldCustomPrecisionScale_in: [String!]
   noSortField_eq: String
   noSortField_contains: String
   noSortField_startsWith: String

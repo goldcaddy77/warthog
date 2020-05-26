@@ -294,7 +294,7 @@ export function entityToWhereInput(model: ModelMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
-    } else if (column.type === 'float' || column.type === 'integer' || column.type === 'numeric') {
+    } else if (column.type === 'float' || column.type === 'integer') {
       fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_eq?: ${tsType};
@@ -314,6 +314,24 @@ export function entityToWhereInput(model: ModelMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
+    } else if (column.type === 'numeric') {
+      // Postgres nodejs driver use string for numeric type
+      fieldTemplates += `
+      @TypeGraphQLField({ nullable: true })
+      ${column.propertyName}_eq?: ${tsType};
+
+      @TypeGraphQLField({ nullable: true })
+      ${column.propertyName}_contains?: ${tsType};
+
+      @TypeGraphQLField({ nullable: true })
+      ${column.propertyName}_startsWith?: ${tsType};
+
+      @TypeGraphQLField({ nullable: true })
+      ${column.propertyName}_endsWith?: ${tsType};
+
+      @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
+      ${column.propertyName}_in?: ${tsType}[];
+    `;
     } else if (column.type === 'date') {
       // I really don't like putting this magic here, but it has to go somewhere
       // This deletedAt_all turns off the default filtering of soft-deleted items

@@ -30,8 +30,9 @@ export function columnToGraphQLType(
     case 'boolean':
       return GraphQLBoolean;
     case 'float':
-    case 'numeric':
       return GraphQLFloat;
+    case 'numeric':
+      return GraphQLString;
     case 'integer':
       return GraphQLInt;
     case 'date':
@@ -55,8 +56,10 @@ export function columnTypeToGraphQLType(type: FieldType): GraphQLScalarType {
     case 'boolean':
       return GraphQLBoolean;
     case 'float':
-    case 'numeric':
       return GraphQLFloat;
+    case 'numeric':
+      // Postgres nodejs driver use string for numeric type
+      return GraphQLString;
     case 'integer':
       return GraphQLInt;
     case 'date':
@@ -91,6 +94,9 @@ export function columnInfoToTypeScriptType(type: FieldType, enumName?: string): 
     return 'string'; // TODO: should this be ID_TYPE?
   } else if (enumName) {
     return String(enumName);
+  } else if (type === 'numeric') {
+    // postgres nodejs driver use string type or numeric type
+    return 'string';
   } else {
     const graphqlType = columnTypeToGraphQLDataType(type, enumName);
     const typeMap: any = {

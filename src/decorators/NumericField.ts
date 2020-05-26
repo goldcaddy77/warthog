@@ -1,4 +1,3 @@
-import { Float } from 'type-graphql';
 import { ColumnNumericOptions } from 'typeorm/decorator/options/ColumnNumericOptions';
 import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions';
 
@@ -22,7 +21,7 @@ export function NumericField(options: NumericFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'numeric',
     warthogColumnMeta: options,
-    gqlFieldType: Float,
+    gqlFieldType: String,
     dbType: options.dataType ?? 'numeric',
     dbColumnOptions: { ...nullableOption, ...dbOptions }
   });

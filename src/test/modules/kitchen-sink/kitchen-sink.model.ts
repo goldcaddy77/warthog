@@ -69,10 +69,10 @@ export class KitchenSink extends BaseModel {
   dbOnlyColumn?: string;
 
   @NumericField({ nullable: true })
-  numericField?: number;
+  numericField?: string;
 
   @NumericField({ nullable: true, precision: 5, scale: 2 })
-  numericFieldCustomPrecisionScale?: number;
+  numericFieldCustomPrecisionScale?: string;
 
   @StringField({ filter: false, nullable: true })
   noFilterField?: string;

@@ -278,41 +278,35 @@ export class KitchenSinkWhereInput {
   @TypeGraphQLField(() => [StringEnum], { nullable: true })
   stringEnumField_in?: StringEnum[];
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericField_eq?: number;
+  @TypeGraphQLField({ nullable: true })
+  numericField_eq?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericField_gt?: number;
+  @TypeGraphQLField({ nullable: true })
+  numericField_contains?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericField_gte?: number;
+  @TypeGraphQLField({ nullable: true })
+  numericField_startsWith?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericField_lt?: number;
+  @TypeGraphQLField({ nullable: true })
+  numericField_endsWith?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericField_lte?: number;
+  @TypeGraphQLField(() => [String], { nullable: true })
+  numericField_in?: string[];
 
-  @TypeGraphQLField(() => [Float], { nullable: true })
-  numericField_in?: number[];
+  @TypeGraphQLField({ nullable: true })
+  numericFieldCustomPrecisionScale_eq?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericFieldCustomPrecisionScale_eq?: number;
+  @TypeGraphQLField({ nullable: true })
+  numericFieldCustomPrecisionScale_contains?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericFieldCustomPrecisionScale_gt?: number;
+  @TypeGraphQLField({ nullable: true })
+  numericFieldCustomPrecisionScale_startsWith?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericFieldCustomPrecisionScale_gte?: number;
+  @TypeGraphQLField({ nullable: true })
+  numericFieldCustomPrecisionScale_endsWith?: string;
 
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericFieldCustomPrecisionScale_lt?: number;
-
-  @TypeGraphQLField(() => Float, { nullable: true })
-  numericFieldCustomPrecisionScale_lte?: number;
-
-  @TypeGraphQLField(() => [Float], { nullable: true })
-  numericFieldCustomPrecisionScale_in?: number[];
+  @TypeGraphQLField(() => [String], { nullable: true })
+  numericFieldCustomPrecisionScale_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   noSortField_eq?: string;
@@ -417,10 +411,10 @@ export class KitchenSinkCreateInput {
   stringEnumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
-  numericField?: number;
+  numericField?: string;
 
   @TypeGraphQLField({ nullable: true })
-  numericFieldCustomPrecisionScale?: number;
+  numericFieldCustomPrecisionScale?: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;
@@ -477,10 +471,10 @@ export class KitchenSinkUpdateInput {
   stringEnumField?: StringEnum;
 
   @TypeGraphQLField({ nullable: true })
-  numericField?: number;
+  numericField?: string;
 
   @TypeGraphQLField({ nullable: true })
-  numericFieldCustomPrecisionScale?: number;
+  numericFieldCustomPrecisionScale?: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;
