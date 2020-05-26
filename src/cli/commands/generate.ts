@@ -54,13 +54,23 @@ export default {
       warthogPathInSourceFiles = path.relative(destFolder, warthogAbsolutePath);
     }
 
+    const getRelativePathForModel = (name: string): string => {
+      // relative import path
+      return path.join(
+        '..',
+        toolbox.strings.kebabCase(name),
+        `${toolbox.strings.camelCase(name)}.model`
+      );
+    };
+
     const props = {
       ...names,
       pascalCase: toolbox.strings.pascalCase,
       camelCase: toolbox.strings.camelCase,
       fields: array ? processFields(array.slice(1)) : [],
       generatedFolderRelativePath,
-      warthogPathInSourceFiles
+      warthogPathInSourceFiles,
+      getRelativePathForModel
     };
 
     await generateFile(

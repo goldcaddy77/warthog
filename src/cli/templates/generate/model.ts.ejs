@@ -11,6 +11,29 @@ import {
   StringField
 } from '<%= props.warthogPathInSourceFiles %>';
 
+
+<% props.fields.forEach(function(field){ %>
+
+  <%
+    // Special case for OneToMany
+    if(field.type === 'otm') {
+      locals.relClassName = props.pascalCase(field.name).slice(0, -1)
+      locals.relCamelName = props.camelCase(field.name).slice(0, -1)
+  %>
+    import { <%= locals.relClassName %> } from '<%= props.getRelativePathForModel(relCamelName) %>'
+  <% return; } %>
+  
+  <%
+  // Special case for OneToMany
+  if(field.type === 'mto') {
+    locals.relClassName = props.pascalCase(field.name)
+    locals.relCamelName = props.camelCase(field.name)
+  %>
+    import { <%= locals.relClassName %> } from '<%= props.getRelativePathForModel(locals.relCamelName) %>'
+  <% return; } %>
+
+<% }) %>
+
 @Model()
 export class <%= props.className %> extends BaseModel {
 <% props.fields.forEach(function(field){ %>
@@ -19,11 +42,11 @@ export class <%= props.className %> extends BaseModel {
   <%
     // Special case for OneToMany
     if(field.type === 'otm') {
-      locals.relClassName = props.pascalCase(field.name)
-      locals.relCamelName = props.camelCase(field.name)
+      locals.relClassName = props.pascalCase(field.name).slice(0, -1)
+      locals.relCamelName = props.camelCase(field.name).slice(0, -1)
   %>
     @OneToMany(() => <%= locals.relClassName %>, (<%= locals.relCamelName %>: <%= locals.relClassName %>) => <%= locals.relCamelName %>.<%= props.camelName %>)
-    <%= locals.relCamelName %>?: <%= locals.relClassName %>[];
+    <%= props.camelCase(field.name) %>?: <%= locals.relClassName %>[];
   <% return; } %>
 
   <%
