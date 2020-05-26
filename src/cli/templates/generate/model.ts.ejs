@@ -4,6 +4,7 @@ import {
   <%= props.fields.some((field) => { return field.type === 'date' }) ? "DateField," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'float' }) ? "FloatField," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'int' }) ? "IntField," : "" -%>
+  <%= props.fields.some((field) => { return field.type === 'biginteger' || 'bigdecimal' }) ? "NumericField," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'json' }) ? "JSONField," : "" -%>
   Model,
   <%= props.fields.some((field) => { return field.type === 'mto' }) ? "ManyToOne," : "" -%>
@@ -64,6 +65,7 @@ export class <%= props.className %> extends BaseModel {
 
   @<%= field.decorator %>(<%= locals.tmp ? "{" : "" -%>
     <%_ _%><%= field.required ? "" : "nullable: true," -%>
+    <%_ _%><%- field.type === 'bigdecimal' ? "dataType: 'decimal'" : "" %>
     <%_ _%><%= locals.tmp ? "}" : "" -%>)
   <%= field.name %><%= field.required ? "!" : "?" %>: <%= field.tsType %>;
 <% }) %>
