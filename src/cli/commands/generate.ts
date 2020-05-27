@@ -184,11 +184,11 @@ function processFields(fields: string[]) {
         decorator: 'StringField',
         tsType: 'string'
       },
-      biginteger: {
+      numeric: {
         decorator: 'NumericField',
         tsType: 'string'
       },
-      bigdecimal: {
+      decimal: {
         decorator: 'NumericField',
         tsType: 'string'
       }
