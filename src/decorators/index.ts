@@ -19,3 +19,4 @@ export * from './OneToMany';
 export * from './StringField';
 export * from './UserId';
 export * from './WarthogField';
+export * from './OneToOne';

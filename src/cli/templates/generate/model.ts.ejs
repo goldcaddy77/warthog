@@ -9,6 +9,7 @@ import {
   Model,
   <%= props.fields.some((field) => { return field.type === 'mto' }) ? "ManyToOne," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'otm' }) ? "OneToMany," : "" -%>
+  <%= props.fields.some((field) => { return field.type === 'oto' }) ? "OneToOne, JoinColumn," : "" -%>
   StringField
 } from '<%= props.warthogPathInSourceFiles %>';
 
@@ -27,6 +28,15 @@ import {
   <%
   // Special case for OneToMany
   if(field.type === 'mto') {
+    locals.relClassName = props.pascalCase(field.name)
+    locals.relCamelName = props.camelCase(field.name)
+  %>
+    import { <%= locals.relClassName %> } from '<%= props.getRelativePathForModel(locals.relCamelName) %>'
+  <% return; } %>
+
+  <%
+  // Special case for OneToOne
+  if(field.type === 'oto') {
     locals.relClassName = props.pascalCase(field.name)
     locals.relCamelName = props.camelCase(field.name)
   %>
@@ -62,6 +72,17 @@ export class <%= props.className %> extends BaseModel {
       nullable: true
     })
     <%= locals.relCamelName %>?: <%= locals.relClassName %>;
+  <% return; } %>
+
+  <%
+  // Special case for OneToOne
+  if(field.type === 'oto') {
+    locals.relClassName = props.pascalCase(field.name)
+    locals.relCamelName = props.camelCase(field.name)
+  %>
+    @OneToOne(() => <%= locals.relClassName %>)
+    @JoinColumn()
+    <%= props.camelCase(field.name) %>?: <%= locals.relClassName %>;
   <% return; } %>
 
   @<%= field.decorator %>(<%= locals.tmp ? "{" : "" -%>

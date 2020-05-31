@@ -191,6 +191,10 @@ function processFields(fields: string[]) {
       decimal: {
         decorator: 'NumericField',
         tsType: 'string'
+      },
+      oto: {
+        decorator: 'OneToOne',
+        tsType: '---'
       }
     };
 
