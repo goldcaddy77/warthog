@@ -40,10 +40,22 @@ export type RelayLastBefore = {
   before?: string;
 };
 
+export type SortColumn = string;
+export type SortDirection = 'ASC' | 'DESC';
+export type Sort = [SortColumn, SortDirection];
+
+type SortAndValue = [SortColumn, SortDirection, string | number];
+type SortAndValueArray = Array<SortAndValue>;
+
 export type RelayPageOptions = RelayFirstAfter | RelayLastBefore;
 
-function isFirstAfter(pet: RelayFirstAfter | RelayLastBefore): pet is RelayFirstAfter {
-  return (pet as RelayFirstAfter).first !== undefined;
+function isFirstAfter(pageType: RelayFirstAfter | RelayLastBefore): pageType is RelayFirstAfter {
+  return (pageType as RelayFirstAfter).first !== undefined;
+}
+
+function isSortArray(sort: any[]): sort is Sort[] {
+  sort = sort as Sort[];
+  return sort && sort[0] && sort[0][0] && typeof (sort as Sort[])[0][0] === 'string';
 }
 
 @Service()
@@ -57,7 +69,7 @@ export class RelayService {
 
   getPageInfo<E extends BaseModel>(
     items: E[],
-    orderBy: string | string[],
+    sortOrSortArray: Sort | Sort[],
     pageOptions: RelayPageOptions
   ): PageInfo {
     if (!items.length) {
@@ -75,15 +87,15 @@ export class RelayService {
     }
 
     const [firstItem, lastItem] = this.firstAndLast<E>(items, limit);
-    const order = this.getCursorOrderBy(orderBy);
+    const sort = this.normalizeSort(sortOrSortArray);
 
     return {
       hasNextPage: items.length > limit,
       // Right now we assume there is a previous page if client specifies the cursor
       // typically a client will not specify a cursor on the first page and would otherwise
       hasPreviousPage: !!cursor,
-      startCursor: this.getCursor(firstItem, order),
-      endCursor: this.getCursor(lastItem, order)
+      startCursor: this.encodeCursor(firstItem, sort),
+      endCursor: this.encodeCursor(lastItem, sort)
     };
   }
 
@@ -103,7 +115,7 @@ export class RelayService {
     return [firstItem, lastItem];
   }
 
-  getCursor<E extends BaseModel>(record: E, orderBy: string | string[]): Cursor {
+  encodeCursor<E extends BaseModel>(record: E, sortOrSortArray: Sort | Sort[]): Cursor {
     if (!record) {
       throw new Error(`Record is not defined`);
     }
@@ -111,32 +123,104 @@ export class RelayService {
       throw new Error(`Record is not a BaseModel: ${JSON.stringify(record, null, 2)}`);
     }
 
-    orderBy = typeof orderBy === 'string' ? [orderBy] : orderBy;
+    const sortArray = this.normalizeSort(sortOrSortArray);
 
-    const payload = orderBy.map(orderItem => this.getCursorItem(record, orderItem)).join(',');
+    const payload: SortAndValueArray = sortArray.map(sort => {
+      const value = record.getString(sort[0]); // `Dan`
+
+      return [sort[0], sort[1] as SortDirection, value]; // ['name', 'ASC', 'Dan']
+    });
 
     return this.encoding.encode(payload);
   }
 
-  getCursorItem<E extends BaseModel>(record: E, orderBy: string) {
-    // orderItem: name_ASC
-    const parts = orderBy.toString().split('_'); // ['name', 'ASC']
-    const value = record.getString(parts[0]); // "Dan"
+  decodeCursor(cursor: Cursor): SortAndValueArray {
+    const decoded: SortAndValueArray = this.encoding.decode<SortAndValueArray>(cursor);
 
-    // TODO: test strings with :, _ and special values
-    return `${orderBy}:${value}`; // 'name_ASC:Dan'
+    return decoded;
   }
 
-  getCursorOrderBy(orderBy?: string | string[]): string[] {
-    if (!orderBy) {
-      return ['id_ASC'];
+  toSortArray(sort?: Sort | Sort[]): Sort[] {
+    if (!sort) {
+      return [];
+    }
+    return isSortArray(sort) ? sort : [sort];
+  }
+
+  normalizeSort(sortOrSortArray?: Sort | Sort[]): Sort[] {
+    const sort = this.toSortArray(sortOrSortArray);
+
+    console.log(sort.length);
+
+    if (!sort.length) {
+      return [['id', 'ASC']];
     }
 
-    const order = typeof orderBy === 'string' ? [orderBy] : orderBy;
-    const hasIdSort = order.find(item => item.startsWith('id_'));
+    const hasIdSort = sort.find(item => item[0] === 'id');
+
+    console.log('hasIdSort', hasIdSort);
 
     // If we're not already sorting by ID, add this to sort to make cursor work
     // When the user-specified sort isn't unique
-    return hasIdSort ? order : [...order, 'id_ASC'];
+    if (!hasIdSort) {
+      sort.push(['id', 'ASC']);
+    }
+    return sort;
+  }
+
+  // Takes sorts of the form ["name_DESC", "startAt_ASC"] and converts to relay service's internal
+  // representation  [ ['name', 'DESC'], ['startAt', 'ASC'] ]
+  sortFromStrings(stringOrStringArray: string | string[] = []): Sort[] {
+    const stringArray = Array.isArray(stringOrStringArray)
+      ? stringOrStringArray
+      : [stringOrStringArray];
+
+    const sorts: Sort[] = stringArray.map((str: string) => {
+      const sorts = str.split('_');
+
+      return [sorts[0], sorts[1] as SortDirection];
+    });
+
+    return this.normalizeSort(sorts);
+  }
+
+  /*
+    e.g. 
+    
+    decodedCursor = ['three', 2, 7]
+    order = [['c', 'ASC'], ['b', 'DESC'], ['id', 'ASC']]
+    
+    =>
+    
+    WHERE c > 'three' OR (c = 'three' AND b < 2) OR (c = 'three' AND b = 2 AND id > 7)
+    */
+
+  orderByCursor(order: Sort[], cursor: Cursor): SortAndValueArray[] {
+    const decodedCursor = this.decodeCursor(cursor);
+
+    /*
+      Result in shape
+      [
+        [ [ 'c', 'gt', 'three'] ],
+        [ [ 'c', 'eq', 'three'], [ 'b', 'lt', 2] ],
+        [ [ 'c', 'eq', 'three'], [ 'b', 'eq', 2], [ 'id', 'gt', 7] ]
+      ]      
+      */
+
+    return decodedCursor as any;
+    //   const validOrderings = order.map(([columnName, sortDirection], i: number) => {
+    //   const result: SortAndValueArray[];
+
+    //   result[columnName] = { [sortDirection]: decodedCursor[i] };
+
+    //   order.slice(0, i).forEach((item: Sort, j: number) => {
+    //     const column = item[0];
+    //     result[column] = { eq: decodedCursor[j][2] };
+    //   });
+
+    //   return result;
+    // });
+
+    // return { or: validOrderings };
   }
 }

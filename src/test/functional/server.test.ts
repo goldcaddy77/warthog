@@ -31,14 +31,9 @@ let onAfterCalled = false;
 let kitchenSink: KitchenSink;
 
 describe('server', () => {
-  beforeEach(() => {
-    jest.setTimeout(20000);
-  });
-
   // Make sure to clean up server
   beforeAll(async done => {
-    jest.setTimeout(20000);
-    setTestServerEnvironmentVariables();
+    // setTestServerEnvironmentVariables();
 
     runKey = String(new Date().getTime()); // used to ensure test runs create unique data
 
@@ -80,10 +75,6 @@ describe('server', () => {
     done();
   });
 
-  beforeEach(() => {
-    runKey = String(new Date().getTime()); // used to ensure test runs create unique data
-  });
-
   // Make sure to clean up server
   afterAll(async done => {
     await server.stop();
@@ -109,7 +100,7 @@ describe('server', () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
-      `{ 
+      `{
           dateField
           jsonField
           stringField

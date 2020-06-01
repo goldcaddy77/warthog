@@ -14,7 +14,8 @@ export class Foo extends BaseModel {
 
 describe('RelayService', () => {
   const relay = Container.get(RelayService);
-  const encoding = Container.get(EncodingService);
+  const e = Container.get(EncodingService);
+
   const foo = new Foo();
   foo.id = '1';
   foo.name = 'Foo';
@@ -25,34 +26,64 @@ describe('RelayService', () => {
   bar.name = 'Bar';
   bar.createdAt = new Date('1989-11-20');
 
-  beforeEach(() => {});
-
-  describe('getCursorOrderBy', () => {
-    test('defaults to ID', () => {
-      expect(relay.getCursorOrderBy()).toStrictEqual(['id_ASC']);
-    });
-
-    test('Adds ID to sort', () => {
-      expect(relay.getCursorOrderBy('foo_DESC')).toStrictEqual(['foo_DESC', 'id_ASC']);
-    });
-
-    test('Does not add ID to sort if already sorting by ID', () => {
-      expect(relay.getCursorOrderBy('id_ASC')).toStrictEqual(['id_ASC']);
-      expect(relay.getCursorOrderBy('id_DESC')).toStrictEqual(['id_DESC']);
+  describe('toSortArray', () => {
+    test.only('turns a sort into a Sort array', () => {
+      expect(relay.toSortArray(['id', 'ASC'])).toStrictEqual([['id', 'ASC']]);
     });
   });
 
-  describe('getCursor', () => {
-    test('Works with Dates', () => {
-      expect(relay.getCursor(foo, 'createdAt_ASC')).toBe(
-        encoding.encode('createdAt_ASC:1981-10-15T00:00:00.000Z')
-      );
+  describe('normalizeSort', () => {
+    test('defaults to ID', () => {
+      expect(relay.normalizeSort()).toStrictEqual([['id', 'ASC']]);
     });
 
-    test('Works with multiple sorts', () => {
-      expect(relay.getCursor(foo, ['createdAt_DESC', 'name_ASC'])).toBe(
-        encoding.encode('createdAt_DESC:1981-10-15T00:00:00.000Z,name_ASC:Foo')
+    test('Adds ID to sort', () => {
+      console.log(relay.normalizeSort(['foo', 'DESC']));
+      expect(relay.normalizeSort(['foo', 'DESC'])).toEqual([
+        ['foo', 'DESC'],
+        ['id', 'ASC']
+      ]);
+    });
+
+    test('Does not add ID to sort if already sorting by ID', () => {
+      expect(relay.normalizeSort(['id', 'ASC'])).toStrictEqual([['id', 'ASC']]);
+      expect(relay.normalizeSort(['id', 'DESC'])).toStrictEqual(['id_DESC']);
+    });
+  });
+
+  describe('encodeCursorItem', () => {
+    test('Works with Dates', () => {
+      expect(relay.encodeCursor(foo, ['createdAt', 'DESC'])).toBe(
+        e.encode([['createdAt_DESC', '1981-10-15T00:00:00.000Z']])
       );
+    });
+  });
+
+  describe('encodeCursor', () => {
+    test('Works with multiple sorts', () => {
+      const expected = e.encode([
+        ['createdAt_DESC', '1981-10-15T00:00:00.000Z'],
+        ['name_ASC', 'Foo']
+      ]);
+      expect(
+        relay.encodeCursor(foo, [
+          ['createdAt', 'DESC'],
+          ['name', 'ASC']
+        ])
+      ).toBe(expected);
+    });
+  });
+
+  describe('decodeCursor', () => {
+    test('Works with multiple sorts', () => {
+      const obj = relay.decodeCursor(
+        'W1siY3JlYXRlZEF0X0RFU0MiLCIxOTgxLTEwLTE1VDAwOjAwOjAwLjAwMFoiXSxbIm5hbWVfQVNDIiwiRm9vIl1d'
+      );
+
+      expect(obj).toStrictEqual([
+        { direction: 'DESC', field: 'createdAt', value: '1981-10-15T00:00:00.000Z' },
+        { direction: 'ASC', field: 'name', value: 'Foo' }
+      ]);
     });
   });
 
@@ -84,34 +115,48 @@ describe('RelayService', () => {
   describe('getPageInfo', () => {
     test('throws if data has no items', () => {
       expect(() => {
-        return relay.getPageInfo([], 'createdAt_ASC', { first: 1 });
+        return relay.getPageInfo([], ['createdAt', 'ASC'], { first: 1 });
       }).toThrow();
     });
 
     test('Returns the same for first and last if 1 item', () => {
-      const result = relay.getPageInfo([foo], 'createdAt_ASC', { first: 1 });
-      const startDecoded = encoding.decode(result.startCursor);
-      const endDecoded = encoding.decode(result.endCursor);
+      const result = relay.getPageInfo([foo], ['createdAt', 'ASC'], { first: 1 });
+      const startDecoded = e.decode(result.startCursor);
+      const endDecoded = e.decode(result.endCursor);
 
       expect(result.hasNextPage).toEqual(false);
       expect(result.hasPreviousPage).toEqual(false);
-      expect(startDecoded).toEqual('createdAt_ASC:1981-10-15T00:00:00.000Z,id_ASC:1');
-      expect(endDecoded).toEqual('createdAt_ASC:1981-10-15T00:00:00.000Z,id_ASC:1');
+      expect(startDecoded).toEqual([
+        ['createdAt_ASC', '1981-10-15T00:00:00.000Z'],
+        ['id_ASC', '1']
+      ]);
+      expect(endDecoded).toEqual([
+        ['createdAt_ASC', '1981-10-15T00:00:00.000Z'],
+        ['id_ASC', '1']
+      ]);
     });
 
     test('Works properly if youre on the last page', () => {
-      const result = relay.getPageInfo([foo, foo, foo, foo, bar, foo], 'createdAt_ASC', {
+      const result = relay.getPageInfo([foo, foo, foo, foo, bar, foo], ['createdAt', 'ASC'], {
         first: 5
       });
-      const startDecoded = encoding.decode(result.startCursor);
-      const endDecoded = encoding.decode(result.endCursor);
+      const startDecoded = e.decode(result.startCursor);
+      const endDecoded = e.decode(result.endCursor);
 
       expect(result.hasNextPage).toEqual(true);
       expect(result.hasPreviousPage).toEqual(false);
-      expect(startDecoded).toEqual('createdAt_ASC:1981-10-15T00:00:00.000Z,id_ASC:1');
-      expect(endDecoded).toEqual('createdAt_ASC:1989-11-20T00:00:00.000Z,id_ASC:2');
+      expect(startDecoded).toEqual([
+        ['createdAt_ASC', '1981-10-15T00:00:00.000Z'],
+        ['id_ASC', '1']
+      ]);
+      expect(endDecoded).toEqual([
+        ['createdAt_ASC', '1989-11-20T00:00:00.000Z'],
+        ['id_ASC', '2']
+      ]);
     });
 
     // TODO: Add tests for last/before
   });
+
+  describe('getPageInfo', () => {});
 });

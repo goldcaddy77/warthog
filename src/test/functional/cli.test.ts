@@ -24,7 +24,6 @@ describe('cli functional tests', () => {
   });
 
   beforeEach(() => {
-    jest.setTimeout(20000);
     setTestServerEnvironmentVariables();
     spy.clear();
   });
@@ -230,9 +229,6 @@ describe('cli functional tests', () => {
   });
 
   test('generates and runs migrations', async done => {
-    // jest.setTimeout(8000);
-
-    // expect.assertions(6);
     const migrationDBName = 'warthog-test-generate-migrations';
 
     // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files

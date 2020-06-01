@@ -21,7 +21,7 @@ export class <%= props.className %> extends BaseModel {
     if(field.type === 'otm') {
       locals.relClassName = props.pascalCase(field.name)
       locals.relCamelName = props.camelCase(field.name)
-  %>
+  %>                               
     @OneToMany(() => <%= locals.relClassName %>, (<%= locals.relCamelName %>: <%= locals.relClassName %>) => <%= locals.relCamelName %>.<%= props.camelName %>)
     <%= locals.relCamelName %>?: <%= locals.relClassName %>[];
   <% return; } %>

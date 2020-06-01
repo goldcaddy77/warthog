@@ -83,10 +83,11 @@ type Mutation {
 }
 
 type PageInfo {
+  limit: Float!
+  offset: Float!
+  totalCount: Float!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
-  startCursor: String
-  endCursor: String
 }
 
 type Query {
@@ -128,7 +129,7 @@ type User implements BaseGraphQLObject {
   jsonFieldNoFilter: JSONObject
 
   """This is a string field"""
-  stringField: String!
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -171,7 +172,7 @@ input UserCreateInput {
   bigIntField: Float
   jsonField: JSONObject
   jsonFieldNoFilter: JSONObject
-  stringField: String!
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String

@@ -9,11 +9,36 @@ import { addQueryBuilderWhereItem } from '../torm';
 import { BaseModel } from './';
 import { StringMap, WhereInput } from './types';
 import { isArray } from 'util';
-import { RelayService, RelayPageOptionsInput } from './RelayService';
+import {
+  RelayFirstAfter,
+  RelayLastBefore,
+  RelayService,
+  RelayPageOptions,
+  RelayPageOptionsInput
+} from './RelayService';
 import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
+}
+
+export type LimitOffset = {
+  limit: number;
+  offset?: number;
+};
+
+export type PaginationOptions = LimitOffset | RelayPageOptions;
+
+function isFirstAfter(pageType: PaginationOptions): pageType is RelayFirstAfter {
+  return (pageType as RelayFirstAfter).first !== undefined;
+}
+
+function isLastBefore(pageType: PaginationOptions): pageType is RelayLastBefore {
+  return (pageType as RelayLastBefore).last !== undefined;
+}
+
+function isLimitOffset(pageType: PaginationOptions): pageType is LimitOffset {
+  return (pageType as LimitOffset).limit !== undefined;
 }
 
 export class BaseService<E extends BaseModel> {
@@ -67,6 +92,8 @@ export class BaseService<E extends BaseModel> {
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
+    // TODO: FEATURE - make the default limit configurable
+    limit = limit ?? 20;
     return this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields).getMany();
   }
 
@@ -78,21 +105,21 @@ export class BaseService<E extends BaseModel> {
   ): Promise<any> {
     // TODO: FEATURE - make the default limit configurable
     const { after, last, before } = pageOptions;
-    const first = pageOptions.first ?? 50;
-    const order = this.relayService.getCursorOrderBy(orderBy);
+    const first = pageOptions.first ?? 20;
+    const order = this.relayService.sortFromStrings(orderBy);
     const options = this.graphQLInfoService.connectionOptions(fields);
-    let data;
-    let totalCount;
-    let totalCountOption = {};
 
     const qb = this.buildFindQuery<W>(
       where,
-      order,
+      order as any, // TODO: need to allow a more complex query shape for Relay wheres
       { limit: first + 1, after, last, before },
       options.selectFields
     );
 
+    let data;
+    let totalCountOption = {};
     if (options.totalCount) {
+      let totalCount;
       [data, totalCount] = await qb.getManyAndCount();
       totalCountOption = { totalCount };
     } else {
@@ -104,7 +131,7 @@ export class BaseService<E extends BaseModel> {
       edges: data.map((item: E) => {
         return {
           node: item,
-          cursor: this.relayService.getCursor(item, order)
+          cursor: this.relayService.encodeCursor(item, order)
         };
       }),
       pageInfo: this.relayService.getPageInfo(data, order, { first, after, last, before })
@@ -114,31 +141,38 @@ export class BaseService<E extends BaseModel> {
   private buildFindQuery<W extends WhereInput>(
     where?: any,
     orderBy?: string | string[],
-    pageOptions: {
-      // For `find` query
-      limit?: number;
-      offset?: number;
-      // For connection cursor-based pagination
-      first?: number;
-      after?: string;
-      last?: number;
-      before?: string;
-    } = {},
+    pageOptions?: PaginationOptions,
     fields?: string[]
   ): SelectQueryBuilder<E> {
     let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
-
-    if (pageOptions.limit) {
-      qb = qb.take(pageOptions.limit);
-    }
-    if (pageOptions.offset) {
-      qb = qb.skip(pageOptions.offset);
+    if (!pageOptions) {
+      pageOptions = {
+        limit: 20
+      };
     }
 
-    // TODO: make sure the following are mutually exclusive
-    // limit/offset
-    // first/after
-    // last/before
+    // There are 3 styles of pagination
+    // first-after: relay style
+    // last-before: relay style
+    // limit-offset: paged
+    let limit;
+    let cursor;
+    if (isFirstAfter(pageOptions)) {
+      limit = pageOptions.first;
+      cursor = pageOptions.after;
+    } else if (isLastBefore(pageOptions)) {
+      limit = pageOptions.last;
+      cursor = pageOptions.before;
+    } else if (isLimitOffset(pageOptions)) {
+      limit = pageOptions.limit;
+
+      if (pageOptions.offset) {
+        qb = qb.skip(pageOptions.offset);
+      }
+    } else {
+      limit = 20; // TODO: this should be configurable
+    }
+    qb = qb.take(limit);
 
     if (fields) {
       // We always need to select ID or dataloaders will not function properly
