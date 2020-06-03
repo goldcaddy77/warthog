@@ -26,6 +26,7 @@ export interface DecoratorCommonOptions {
   readonly?: boolean;
   sort?: boolean;
   writeonly?: boolean;
+  isArray?: boolean;
 }
 
 export interface ColumnMetadata extends DecoratorCommonOptions {
@@ -36,6 +37,7 @@ export interface ColumnMetadata extends DecoratorCommonOptions {
   enum?: GraphQLEnumType;
   enumName?: string;
   unique?: boolean;
+  isArray?: boolean;
 }
 
 export type ColumnOptions = Partial<ColumnMetadata>;

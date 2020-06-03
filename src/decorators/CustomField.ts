@@ -21,18 +21,30 @@ interface CustomFieldOptions {
   // nullable?: boolean; // need to decide if we should add this shortcut
   api: ExtendedTypeGraphQLOptions;
   db: CustomColumnOptions;
+  isArray?: boolean;
 }
 
 export function CustomField(args: CustomFieldOptions): any {
   // const nullableOption = typeof args.nullable !== 'undefined' ? { nullable: args.nullable } : {};
   // const dbOptions = { ...nullableOption, ...(args.db || {}) };
   const { type, filter, sort, ...typeGraphQLOptions } = args.api;
-  const warthogOptions = { nullable: args.api.nullable, type, filter, sort };
-
+  const warthogOptions = {
+    nullable: args.api.nullable,
+    type,
+    filter,
+    sort,
+    isArray: args.db.array
+  };
   // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
     WarthogField(args.api.type, warthogOptions),
-    Field(() => columnTypeToGraphQLType(args.api.type), typeGraphQLOptions),
+    Field(
+      () =>
+        args.db.array
+          ? [columnTypeToGraphQLType(args.api.type)]
+          : columnTypeToGraphQLType(args.api.type),
+      typeGraphQLOptions
+    ),
     Column(args.db) as MethodDecoratorFactory
   ];
 

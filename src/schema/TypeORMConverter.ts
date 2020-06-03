@@ -145,10 +145,15 @@ export function entityToCreateInput(model: ModelMetadata): string {
     if (!column.editable || column.readonly) {
       return;
     }
-    const graphQLDataType = columnToGraphQLDataType(column);
+    let graphQLDataType = columnToGraphQLDataType(column);
     const nullable = column.nullable ? '{ nullable: true }' : '';
     const tsRequired = column.nullable ? '?' : '!';
-    const tsType = columnToTypeScriptType(column);
+    let tsType = columnToTypeScriptType(column);
+
+    if (column.isArray) {
+      tsType = tsType.concat('[]');
+      graphQLDataType = `[${graphQLDataType}]`;
+    }
 
     if (columnRequiresExplicitGQLType(column)) {
       fieldTemplates += `
@@ -189,8 +194,13 @@ export function entityToUpdateInput(model: ModelMetadata): string {
 
     // TODO: also don't allow updated foreign key fields
     // Example: photo.userId: String
-    const graphQLDataType = columnToGraphQLDataType(column);
-    const tsType = columnToTypeScriptType(column);
+    let graphQLDataType = columnToGraphQLDataType(column);
+    let tsType = columnToTypeScriptType(column);
+
+    if (column.isArray) {
+      tsType = tsType.concat('[]');
+      graphQLDataType = `[${graphQLDataType}]`;
+    }
 
     if (columnRequiresExplicitGQLType(column)) {
       fieldTemplates += `
@@ -374,6 +384,20 @@ export function entityToWhereInput(model: ModelMetadata): string {
         ${column.propertyName}_json?: JsonObject;
       `;
     }
+
+    if (column.isArray) {
+      const graphQlType = `[${graphQLDataType}]`;
+
+      fieldTemplates = `
+        @TypeGraphQLField(() => ${graphQlType},{ nullable: true })
+        ${column.propertyName}_eq?: string[];
+      `;
+
+      fieldTemplates += `
+        @TypeGraphQLField(() => [${graphQlType}], { nullable: true })
+        ${column.propertyName}_in?: string[];
+        `;
+    }
   });
 
   const superName = model.klass ? model.klass.__proto__.name : null;
@@ -447,5 +471,5 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
 }
 
 function columnRequiresExplicitGQLType(column: ColumnMetadata) {
-  return column.enum || column.type === 'json' || column.type === 'id';
+  return column.enum || column.type === 'json' || column.type === 'id' || column.isArray;
 }

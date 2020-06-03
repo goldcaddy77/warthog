@@ -155,6 +155,8 @@ function processFields(fields: string[]) {
       field.type = 'string';
     }
 
+    if (parts[1] && parts[1].startsWith('array')) field.type = 'array';
+
     const typeFields: { [key: string]: { [key: string]: string } } = {
       bool: {
         decorator: 'BooleanField',
@@ -195,8 +197,23 @@ function processFields(fields: string[]) {
       oto: {
         decorator: 'OneToOne',
         tsType: '---'
+      },
+      array: {
+        decorator: 'ArrayField',
+        tsType: '' // will be updated with the correct type
       }
     };
+
+    if (parts[1] && parts[1].startsWith('array')) {
+      // Remove 'array' from field defination
+      const typeName = parts[1].slice(5);
+
+      const { dbType, apiType } = getTypesForArray(typeName);
+      field.apiType = apiType;
+      field.dbType = dbType;
+
+      typeFields[field.type].tsType = typeFields[typeName].tsType;
+    }
 
     // TODO: validate otm fields are plural?
 
@@ -207,4 +224,26 @@ function processFields(fields: string[]) {
 
     return field;
   });
+}
+
+function getTypesForArray(typeName: string) {
+  const graphQLFieldTypes: { [key: string]: string } = {
+    bool: 'boolean',
+    int: 'integer',
+    string: 'string',
+    float: 'float',
+    date: 'date',
+    numeric: 'numeric',
+    decimal: 'numeric'
+  };
+  const apiType = graphQLFieldTypes[typeName];
+
+  let dbType = apiType;
+  if (dbType === 'string') {
+    dbType = 'text'; // postgres doesnt have 'string'
+  } else if (dbType === 'float') {
+    dbType = 'decimal'; // postgres doesnt have 'float'
+  }
+
+  return { dbType, apiType };
 }

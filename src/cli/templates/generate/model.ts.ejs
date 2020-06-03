@@ -10,6 +10,7 @@ import {
   <%= props.fields.some((field) => { return field.type === 'mto' }) ? "ManyToOne," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'otm' }) ? "OneToMany," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'oto' }) ? "OneToOne, JoinColumn," : "" -%>
+  <%= props.fields.some((field) => { return field.type === 'array' }) ? "CustomField," : "" -%>
   StringField
 } from '<%= props.warthogPathInSourceFiles %>';
 
@@ -83,6 +84,17 @@ export class <%= props.className %> extends BaseModel {
     @OneToOne(() => <%= locals.relClassName %>)
     @JoinColumn()
     <%= props.camelCase(field.name) %>?: <%= locals.relClassName %>;
+  <% return; } %>
+
+  <%
+  // Special case for ArrayField
+  if(field.type === 'array') {
+    locals.relClassName = props.pascalCase(field.name)
+    locals.relCamelName = props.camelCase(field.name)
+    locals.nullable = field.required ? "" : "nullable: true"
+  %>
+    @CustomField({ db: { type: '<%= field.dbType %>', array: true, <%= locals.nullable -%> }, api: { type: '<%= field.apiType %>', <%= locals.nullable -%> } })
+    <%= props.camelCase(field.name) %>?: <%= field.tsType %>[];
   <% return; } %>
 
   @<%= field.decorator %>(<%= locals.tmp ? "{" : "" -%>
