@@ -201,6 +201,10 @@ function processFields(fields: string[]) {
       array: {
         decorator: 'ArrayField',
         tsType: '' // will be updated with the correct type
+      },
+      bytes: {
+        decorator: 'BytesField',
+        tsType: 'Buffer'
       }
     };
 

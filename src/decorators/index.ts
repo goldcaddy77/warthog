@@ -20,3 +20,4 @@ export * from './StringField';
 export * from './UserId';
 export * from './WarthogField';
 export * from './OneToOne';
+export * from './BytesField';

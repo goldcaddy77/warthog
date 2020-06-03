@@ -7,10 +7,10 @@ export type ColumnType =
   | NumericColumnType
   | JSONColumnType
   | BooleanColumnType
+  | ByteaColumnType
   | 'money'
   | 'citext'
   | 'hstore'
-  | 'bytea'
   | 'bit'
   | 'varbit'
   | 'bit varying'
@@ -55,3 +55,4 @@ export type NumericColumnType = 'numeric' | 'decimal';
 export type MoneyColumnType = 'money';
 export type JSONColumnType = 'json' | 'jsonb';
 export type BooleanColumnType = 'bool' | 'boolean';
+export type ByteaColumnType = 'bytea';

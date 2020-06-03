@@ -6,6 +6,7 @@ import {
   <%= props.fields.some((field) => { return field.type === 'int' }) ? "IntField," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'numeric' || 'decimal' }) ? "NumericField," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'json' }) ? "JSONField," : "" -%>
+  <%= props.fields.some((field) => { return field.type === 'bytes' }) ? "BytesField," : "" -%>
   Model,
   <%= props.fields.some((field) => { return field.type === 'mto' }) ? "ManyToOne," : "" -%>
   <%= props.fields.some((field) => { return field.type === 'otm' }) ? "OneToMany," : "" -%>
