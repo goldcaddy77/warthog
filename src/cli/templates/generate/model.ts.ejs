@@ -95,7 +95,7 @@ export class <%= props.className %> extends BaseModel {
     locals.nullable = field.required ? "" : "nullable: true"
   %>
     @CustomField({ db: { type: '<%= field.dbType %>', array: true, <%= locals.nullable -%> }, api: { type: '<%= field.apiType %>', <%= locals.nullable -%> } })
-    <%= props.camelCase(field.name) %>?: <%= field.tsType %>[];
+    <%= props.camelCase(field.name) %><%= field.required ? "!" : "?" %>: <%= field.tsType %>[];
   <% return; } %>
 
   @<%= field.decorator %>(<%= locals.tmp ? "{" : "" -%>
