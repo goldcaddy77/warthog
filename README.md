@@ -7,6 +7,7 @@
 </p>
 
 <p align="center">
+  <a href="https://blacklivesmatter.com/"><img src="https://img.shields.io/badge/branch-main-fce21b?labelColor=black" alt="Black Lives Matter"/></a>
   <a href="https://www.npmjs.org/package/warthog"><img src="https://img.shields.io/npm/v/warthog.svg" alt="npm version"></a>
   <a href="https://circleci.com/gh/goldcaddy77/warthog/tree/main"><img src="https://circleci.com/gh/goldcaddy77/warthog/tree/main.svg?style=shield" alt="CircleCI"></a>
   <a href="https://codecov.io/gh/goldcaddy77/warthog"><img src="https://codecov.io/gh/goldcaddy77/warthog/branch/master/graph/badge.svg" alt="styled with prettier"></a>
