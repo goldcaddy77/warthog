@@ -9,12 +9,12 @@ import { ByteaColumnType } from '../torm';
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 class BytesTransformer implements ValueTransformer {
-  to(value: string) {
-    return new Buffer(value, 'utf-8');
+  to(value: Buffer) {
+    return value;
   }
 
   from(value: Buffer) {
-    return 'x' + value.toString('hex');
+    return '0x' + value.toString('hex');
   }
 }
 
