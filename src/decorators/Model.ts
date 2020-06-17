@@ -9,8 +9,8 @@ import { getMetadataStorage } from '../metadata';
 import { ClassDecoratorFactory, composeClassDecorators, generatedFolderPath } from '../utils/';
 
 interface ModelOptions {
-  api?: ObjectOptions;
-  db?: EntityOptions;
+  api?: ObjectOptions | false;
+  db?: EntityOptions | false;
 }
 
 // Allow default TypeORM and TypeGraphQL options to be used
@@ -28,11 +28,15 @@ export function Model({ api = {}, db = {} }: ModelOptions = {}) {
     getMetadataStorage().addModel(target.name, target, relativeFilePath);
   };
 
-  const factories = [
-    Entity(db) as ClassDecoratorFactory,
-    ObjectType(api) as ClassDecoratorFactory,
-    registerModelWithWarthog as ClassDecoratorFactory
-  ];
+  const factories = [];
+  if (db !== false) {
+    factories.push(Entity(db) as ClassDecoratorFactory);
+  }
+  if (api !== false) {
+    factories.push(ObjectType(api) as ClassDecoratorFactory);
+  }
+
+  factories.push(registerModelWithWarthog as ClassDecoratorFactory);
 
   return composeClassDecorators(...factories);
 }

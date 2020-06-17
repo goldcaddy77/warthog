@@ -23,9 +23,158 @@ const { GraphQLJSONObject } = require("graphql-type-json");
 import { BaseWhereInput, JsonObject, PaginationArgs } from "../../";
 import { StringEnum } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
+import { ApiOnly } from "../modules/api-only/api-only.model";
+// @ts-ignore
 import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
 import { Dish } from "../modules/dish/dish.model";
+
+export enum ApiOnlyOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  name_ASC = "name_ASC",
+  name_DESC = "name_DESC"
+}
+
+registerEnumType(ApiOnlyOrderByEnum, {
+  name: "ApiOnlyOrderByInput"
+});
+
+@TypeGraphQLInputType()
+export class ApiOnlyWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_eq?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  createdAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  name_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  name_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  name_in?: string[];
+}
+
+@TypeGraphQLInputType()
+export class ApiOnlyWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class ApiOnlyCreateInput {
+  @TypeGraphQLField()
+  name!: string;
+}
+
+@TypeGraphQLInputType()
+export class ApiOnlyUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  name?: string;
+}
+
+@ArgsType()
+export class ApiOnlyWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => ApiOnlyWhereInput, { nullable: true })
+  where?: ApiOnlyWhereInput;
+
+  @TypeGraphQLField(() => ApiOnlyOrderByEnum, { nullable: true })
+  orderBy?: ApiOnlyOrderByEnum;
+}
+
+@ArgsType()
+export class ApiOnlyCreateManyArgs {
+  @TypeGraphQLField(() => [ApiOnlyCreateInput])
+  data!: ApiOnlyCreateInput[];
+}
+
+@ArgsType()
+export class ApiOnlyUpdateArgs {
+  @TypeGraphQLField() data!: ApiOnlyUpdateInput;
+  @TypeGraphQLField() where!: ApiOnlyWhereUniqueInput;
+}
 
 export enum KitchenSinkOrderByEnum {
   createdAt_ASC = "createdAt_ASC",
