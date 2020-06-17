@@ -1,0 +1,22 @@
+import { Args, Authorized, Query, Resolver } from 'type-graphql';
+import { Inject } from 'typedi';
+
+import { Fields } from '../../..';
+import { ApiOnlyWhereArgs, ApiOnlyWhereInput } from '../../generated';
+
+import { ApiOnly } from './api-only.model';
+import { ApiOnlyService } from './api-only.service';
+
+@Resolver(ApiOnly)
+export class DishResolver {
+  constructor(@Inject('ApiOnlyService') public readonly service: ApiOnlyService) {}
+
+  @Authorized('dish:read')
+  @Query(() => [ApiOnly])
+  async dishes(
+    @Args() { where, orderBy, limit, offset }: ApiOnlyWhereArgs,
+    @Fields() fields: string[]
+  ): Promise<ApiOnly[]> {
+    return this.service.find<ApiOnlyWhereInput>(where, orderBy, limit, offset, fields);
+  }
+}

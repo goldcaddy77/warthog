@@ -1,3 +1,5 @@
+import * as path from 'path';
+import * as fs from 'fs';
 import { EntityMetadata } from 'typeorm';
 
 /* eslint-disable @typescript-eslint/camelcase */
@@ -600,6 +602,28 @@ describe('server', () => {
       console.log('stringFieldColumn', stringFieldColumn);
       expect(stringFieldColumn.comment).toEqual('This is a string field');
       done();
+    });
+  });
+
+  describe('ApiOnly Model', () => {
+    let apiOnlyEntityMeta: EntityMetadata;
+    beforeEach(() => {
+      apiOnlyEntityMeta = server.connection.entityMetadatas.find(
+        entity => entity.name === 'ApiOnly'
+      ) as EntityMetadata;
+    });
+
+    test('Does not exist in the DB', async done => {
+      expect(apiOnlyEntityMeta).toBeFalsy();
+      done();
+    });
+
+    test('Does exist in the API schema', () => {
+      const file = path.join(__dirname, '..', 'generated', 'schema.graphql');
+      const schema = fs.readFileSync(file, 'utf-8');
+
+      expect(schema).toContain('ApiOnly');
+      expect(schema).toContain('ApiOnlyWhereInput');
     });
   });
 });
