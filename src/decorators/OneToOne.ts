@@ -1,10 +1,7 @@
 import { Field } from 'type-graphql';
-import { OneToOne as TypeORMOneToOne, JoinColumn } from 'typeorm';
+import { OneToOne as TypeORMOneToOne } from 'typeorm';
 
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
-
-// To be used in model.ejs
-export { JoinColumn };
 
 export function OneToOne(parentType: any, options: any = {}): any {
   const factories = [
