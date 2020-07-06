@@ -46,13 +46,15 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
 export function generateEnumMapImports(): string[] {
   const imports: string[] = [];
   const enumMap = getMetadataStorage().enumMap;
+  const imported = new Set();
 
   Object.keys(enumMap).forEach((tableName: string) => {
     Object.keys(enumMap[tableName]).forEach((columnName: string) => {
       const enumColumn = enumMap[tableName][columnName];
+      if (imported.has(enumColumn.name)) return;
       const filename = filenameToImportPath(enumColumn.filename);
-      imports.push(`import { ${enumColumn.name} } from '${filename}'
-`);
+      imports.push(`import { ${enumColumn.name} } from '${filename}'`);
+      imported.add(enumColumn.name);
     });
   });
 
