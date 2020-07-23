@@ -1,6 +1,6 @@
 ---
 name: Generated Folder
-menu: Overview
+menu: Constructs
 ---
 
 ## Generated Folder

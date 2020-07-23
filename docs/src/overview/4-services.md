@@ -1,6 +1,6 @@
 ---
 name: Services
-menu: Overview
+menu: Constructs
 ---
 
 ## Services

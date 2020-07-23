@@ -1,6 +1,6 @@
 ---
 name: Upgrading to 2.0
-menu: Upgrading
+menu: Upgrading Guides
 ---
 
 Warthog is now on version 2.0! There were a few breaking changes that you should consider while upgrading. Also, we tried to keep all new features development on v1, but did end up adding JSON filtering directly to 2.0 as it was much easier given some foundation refactors.

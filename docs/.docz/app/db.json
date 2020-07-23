@@ -3,11 +3,16 @@
     "title": "Warthog",
     "description": "",
     "menu": [
-      "Intro",
       {
-        "name": "Overview",
+        "name": "Introduction",
         "menu": [
-          "Getting Started",
+          "Introduction to Warthog",
+          "Installation and Setup"
+        ]
+      },
+      {
+        "name": "Constructs",
+        "menu": [
           "Models",
           "Resolvers",
           "Services",
@@ -27,14 +32,67 @@
           "Production"
         ]
       },
-      "CLI",
-      "Upgrading"
+      {
+        "name": "Decorators",
+        "menu": [
+          "Overview",
+          "BooleanField",
+          "CustomField",
+          "DateField",
+          "EmailField",
+          "EnumField",
+          "Field",
+          "FloatField",
+          "ForiegnKeyField",
+          "IdField",
+          "InterfaceType",
+          "IntField",
+          "JSONField",
+          "StringField",
+          "ManyToMany",
+          "ManyToManyJoin",
+          "ManyToOne",
+          "OneToMany",
+          "Model"
+        ]
+      },
+      {
+        "name": "Warthog CLI",
+        "menu": [
+          "CLI Overview",
+          "codegen",
+          "db:create",
+          "db:drop",
+          "generate",
+          "db:migrate",
+          "db:migrate:create"
+        ]
+      },
+      "Plugins",
+      {
+        "name": "Upgrading Guides",
+        "menu": [
+          "Upgrading to 2.0"
+        ]
+      }
     ],
     "version": "2.0.0-rc.41",
     "repository": "https://github.com/pedronauck/docz",
     "native": false,
     "themeConfig": {
-      "initialColorMode": "dark"
+      "initialColorMode": "dark",
+      "mainContainer": {
+        "fullscreen": false,
+        "align": "center"
+      },
+      "menu": {
+        "search": false,
+        "headings": {
+          "rightSide": true,
+          "scrollspy": true,
+          "depth": 3
+        }
+      }
     },
     "separator": "-"
   },
@@ -44,7 +102,7 @@
       "value": {
         "id": "04c6e90faac2675aa89e2176d2eec7d8",
         "filepath": "README.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/README.md",
+        "fullpath": "/Users/salius/warthog/docs/README.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/README.md",
         "hidden": false,
         "slug": "readme",
@@ -66,17 +124,395 @@
       }
     },
     {
-      "key": "src/overview/1-getting-started.md",
+      "key": "src/Decorators/BooleanField.md",
       "value": {
-        "name": "Getting Started",
-        "menu": "Overview",
-        "id": "fce0b2b26c1d179a0626d1102327d0a5",
-        "filepath": "src/overview/1-getting-started.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/1-getting-started.md",
-        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/1-getting-started.md",
+        "name": "BooleanField",
+        "menu": "Decorators",
+        "id": "9d12ca851a56d6c6c8a583095b4752f5",
+        "filepath": "src/Decorators/BooleanField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/BooleanField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/BooleanField.md",
         "hidden": false,
-        "slug": "src-overview-1-getting-started",
-        "route": "/src-overview-1-getting-started",
+        "slug": "src-decorators-boolean-field",
+        "route": "/src-decorators-boolean-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/CustomField.md",
+      "value": {
+        "name": "CustomField",
+        "menu": "Decorators",
+        "id": "24e37f705d1d955f2b3700c365bc1d0c",
+        "filepath": "src/Decorators/CustomField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/CustomField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/CustomField.md",
+        "hidden": false,
+        "slug": "src-decorators-custom-field",
+        "route": "/src-decorators-custom-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/DateField.md",
+      "value": {
+        "name": "DateField",
+        "menu": "Decorators",
+        "id": "3abc0ee078748ebab8bf63b6596ca65b",
+        "filepath": "src/Decorators/DateField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/DateField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/DateField.md",
+        "hidden": false,
+        "slug": "src-decorators-date-field",
+        "route": "/src-decorators-date-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/EmailField.md",
+      "value": {
+        "name": "EmailField",
+        "menu": "Decorators",
+        "id": "53231166be9caef7c2643b0d5dd2059d",
+        "filepath": "src/Decorators/EmailField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/EmailField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/EmailField.md",
+        "hidden": false,
+        "slug": "src-decorators-email-field",
+        "route": "/src-decorators-email-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/EnumField.md",
+      "value": {
+        "name": "EnumField",
+        "menu": "Decorators",
+        "id": "3eff4360d959b9b7f6434e33b1e212c3",
+        "filepath": "src/Decorators/EnumField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/EnumField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/EnumField.md",
+        "hidden": false,
+        "slug": "src-decorators-enum-field",
+        "route": "/src-decorators-enum-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/Field.md",
+      "value": {
+        "name": "Field",
+        "menu": "Decorators",
+        "id": "54e1e0d7af6bfe6ca8b10a985a0d30d8",
+        "filepath": "src/Decorators/Field.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/Field.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/Field.md",
+        "hidden": false,
+        "slug": "src-decorators-field",
+        "route": "/src-decorators-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/FloatField.md",
+      "value": {
+        "name": "FloatField",
+        "menu": "Decorators",
+        "id": "a4a98790c277d9b97f7ad5b315eca80e",
+        "filepath": "src/Decorators/FloatField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/FloatField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/FloatField.md",
+        "hidden": false,
+        "slug": "src-decorators-float-field",
+        "route": "/src-decorators-float-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/ForiegnKeyField.md",
+      "value": {
+        "name": "ForiegnKeyField",
+        "menu": "Decorators",
+        "id": "a8ebab321e533efb79c71dc58f2d6887",
+        "filepath": "src/Decorators/ForiegnKeyField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/ForiegnKeyField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/ForiegnKeyField.md",
+        "hidden": false,
+        "slug": "src-decorators-foriegn-key-field",
+        "route": "/src-decorators-foriegn-key-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/IdField.md",
+      "value": {
+        "name": "IdField",
+        "menu": "Decorators",
+        "id": "8cd521c3a1f2f6a40aa85e94c948c4b2",
+        "filepath": "src/Decorators/IdField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/IdField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/IdField.md",
+        "hidden": false,
+        "slug": "src-decorators-id-field",
+        "route": "/src-decorators-id-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/IntField.md",
+      "value": {
+        "name": "IntField",
+        "menu": "Decorators",
+        "id": "5722ce07940d98b9d081772d9b0738f8",
+        "filepath": "src/Decorators/IntField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/IntField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/IntField.md",
+        "hidden": false,
+        "slug": "src-decorators-int-field",
+        "route": "/src-decorators-int-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/InterfaceType.md",
+      "value": {
+        "name": "InterfaceType",
+        "menu": "Decorators",
+        "id": "5cf8d8c73c3ce05736dfb8ac9d74bee9",
+        "filepath": "src/Decorators/InterfaceType.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/InterfaceType.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/InterfaceType.md",
+        "hidden": false,
+        "slug": "src-decorators-interface-type",
+        "route": "/src-decorators-interface-type",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/JSONField.md",
+      "value": {
+        "name": "JSONField",
+        "menu": "Decorators",
+        "id": "a3bb5127d8ecfcbbf86ca36f1a1d6015",
+        "filepath": "src/Decorators/JSONField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/JSONField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/JSONField.md",
+        "hidden": false,
+        "slug": "src-decorators-json-field",
+        "route": "/src-decorators-json-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/ManyToMany.md",
+      "value": {
+        "name": "ManyToMany",
+        "menu": "Decorators",
+        "id": "772137f3d5afa2e100a8a3286b958276",
+        "filepath": "src/Decorators/ManyToMany.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/ManyToMany.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/ManyToMany.md",
+        "hidden": false,
+        "slug": "src-decorators-many-to-many",
+        "route": "/src-decorators-many-to-many",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/ManyToManyJoin.md",
+      "value": {
+        "name": "ManyToManyJoin",
+        "menu": "Decorators",
+        "id": "52c26662632ec49c0026803d62689eba",
+        "filepath": "src/Decorators/ManyToManyJoin.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/ManyToManyJoin.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/ManyToManyJoin.md",
+        "hidden": false,
+        "slug": "src-decorators-many-to-many-join",
+        "route": "/src-decorators-many-to-many-join",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/ManyToOne.md",
+      "value": {
+        "name": "ManyToOne",
+        "menu": "Decorators",
+        "id": "87ddf3a92eb9aa9fc01ae39e223f59ee",
+        "filepath": "src/Decorators/ManyToOne.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/ManyToOne.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/ManyToOne.md",
+        "hidden": false,
+        "slug": "src-decorators-many-to-one",
+        "route": "/src-decorators-many-to-one",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/OneToMany.md",
+      "value": {
+        "name": "OneToMany",
+        "menu": "Decorators",
+        "id": "bfc05d7f75df8badb2b7c1d7499a2c12",
+        "filepath": "src/Decorators/OneToMany.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/OneToMany.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/OneToMany.md",
+        "hidden": false,
+        "slug": "src-decorators-one-to-many",
+        "route": "/src-decorators-one-to-many",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/StringField.md",
+      "value": {
+        "name": "StringField",
+        "menu": "Decorators",
+        "id": "371e8c6aabdd030886e06773bcb99b79",
+        "filepath": "src/Decorators/StringField.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/StringField.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/StringField.md",
+        "hidden": false,
+        "slug": "src-decorators-string-field",
+        "route": "/src-decorators-string-field",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Decorators/overview.md",
+      "value": {
+        "name": "Overview",
+        "menu": "Decorators",
+        "id": "d2ed481fb99d8670aeee8cc947441f8b",
+        "filepath": "src/Decorators/overview.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Decorators/overview.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Decorators/overview.md",
+        "hidden": false,
+        "slug": "src-decorators-overview",
+        "route": "/src-decorators-overview",
+        "headings": [
+          {
+            "slug": "list-of-all-decorators",
+            "depth": 3,
+            "value": "List of all Decorators"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Introduction/Installation-setup.md",
+      "value": {
+        "name": "Installation and Setup",
+        "menu": "Introduction",
+        "id": "0e00b7e7715990e90a9ec935640849e2",
+        "filepath": "src/Introduction/Installation-setup.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Introduction/Installation-setup.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Introduction/Installation-setup.md",
+        "hidden": false,
+        "slug": "src-introduction-installation-setup",
+        "route": "/src-introduction-installation-setup",
         "headings": [
           {
             "slug": "installation",
@@ -127,13 +563,39 @@
       }
     },
     {
+      "key": "src/Introduction/Introduction.md",
+      "value": {
+        "name": "Introduction to Warthog",
+        "menu": "Introduction",
+        "id": "90709ebed0b295c2d7b5ddc29b7e613d",
+        "filepath": "src/Introduction/Introduction.md",
+        "fullpath": "/Users/salius/warthog/docs/src/Introduction/Introduction.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/Introduction/Introduction.md",
+        "hidden": false,
+        "slug": "src-introduction-introduction",
+        "route": "/src-introduction-introduction",
+        "headings": [
+          {
+            "slug": "intentionally-opinionated-framework",
+            "depth": 2,
+            "value": "Intentionally Opinionated Framework"
+          },
+          {
+            "slug": "philosophy",
+            "depth": 2,
+            "value": "Philosophy"
+          }
+        ]
+      }
+    },
+    {
       "key": "src/overview/2-models.md",
       "value": {
         "name": "Models",
-        "menu": "Overview",
+        "menu": "Constructs",
         "id": "4ab2c3c0258a834794fbec36cda80d0d",
         "filepath": "src/overview/2-models.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/2-models.md",
+        "fullpath": "/Users/salius/warthog/docs/src/overview/2-models.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/2-models.md",
         "hidden": false,
         "slug": "src-overview-2-models",
@@ -143,21 +605,6 @@
             "slug": "models",
             "depth": 2,
             "value": "Models"
-          },
-          {
-            "slug": "fieldcolumn-decorators",
-            "depth": 2,
-            "value": "Field/Column Decorators"
-          },
-          {
-            "slug": "stringfield",
-            "depth": 3,
-            "value": "StringField"
-          },
-          {
-            "slug": "booleanfield",
-            "depth": 3,
-            "value": "BooleanField"
           }
         ]
       }
@@ -166,10 +613,10 @@
       "key": "src/overview/3-resolvers.md",
       "value": {
         "name": "Resolvers",
-        "menu": "Overview",
+        "menu": "Constructs",
         "id": "f8a8b5c20e27f4a96ef9be3577aec47a",
         "filepath": "src/overview/3-resolvers.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/3-resolvers.md",
+        "fullpath": "/Users/salius/warthog/docs/src/overview/3-resolvers.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/3-resolvers.md",
         "hidden": false,
         "slug": "src-overview-3-resolvers",
@@ -187,10 +634,10 @@
       "key": "src/overview/4-services.md",
       "value": {
         "name": "Services",
-        "menu": "Overview",
+        "menu": "Constructs",
         "id": "3ccf28e7ab1d9ec0128ff57436f8417b",
         "filepath": "src/overview/4-services.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/4-services.md",
+        "fullpath": "/Users/salius/warthog/docs/src/overview/4-services.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/4-services.md",
         "hidden": false,
         "slug": "src-overview-4-services",
@@ -213,10 +660,10 @@
       "key": "src/overview/5-generated-folder.md",
       "value": {
         "name": "Generated Folder",
-        "menu": "Overview",
+        "menu": "Constructs",
         "id": "0207be522b9d1605aa028c4e0dfd22fe",
         "filepath": "src/overview/5-generated-folder.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/5-generated-folder.md",
+        "fullpath": "/Users/salius/warthog/docs/src/overview/5-generated-folder.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/5-generated-folder.md",
         "hidden": false,
         "slug": "src-overview-5-generated-folder",
@@ -254,10 +701,10 @@
       "key": "src/overview/6-server.md",
       "value": {
         "name": "Server",
-        "menu": "Overview",
+        "menu": "Constructs",
         "id": "b5fa3bf819be8e9e8423bb25b19ab96a",
         "filepath": "src/overview/6-server.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/6-server.md",
+        "fullpath": "/Users/salius/warthog/docs/src/overview/6-server.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/6-server.md",
         "hidden": false,
         "slug": "src-overview-6-server",
@@ -275,10 +722,10 @@
       "key": "src/overview/7-config.md",
       "value": {
         "name": "Config",
-        "menu": "Overview",
+        "menu": "Constructs",
         "id": "6987bbd72aaac514158215693a7ecaab",
         "filepath": "src/overview/7-config.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/overview/7-config.md",
+        "fullpath": "/Users/salius/warthog/docs/src/overview/7-config.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/overview/7-config.md",
         "hidden": false,
         "slug": "src-overview-7-config",
@@ -298,58 +745,22 @@
       }
     },
     {
-      "key": "src/pages/cli.md",
+      "key": "src/pages/plugins.md",
       "value": {
-        "name": "CLI",
-        "route": "/cli",
-        "id": "e19990ffa0b1adbd1b2af19cce2d757f",
-        "filepath": "src/pages/cli.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/pages/cli.md",
-        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/pages/cli.md",
+        "name": "Plugins",
+        "menu": "Plugins",
+        "id": "ca51c80397192759397e9107a58f6074",
+        "filepath": "src/pages/plugins.md",
+        "fullpath": "/Users/salius/warthog/docs/src/pages/plugins.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/pages/plugins.md",
         "hidden": false,
-        "slug": "src-pages-cli",
-        "menu": "",
+        "slug": "src-pages-plugins",
+        "route": "/src-pages-plugins",
         "headings": [
           {
-            "slug": "cli",
-            "depth": 2,
-            "value": "CLI"
-          },
-          {
-            "slug": "generate-command-in-depth",
-            "depth": 3,
-            "value": "generate  Command in depth"
-          }
-        ]
-      }
-    },
-    {
-      "key": "src/pages/index.md",
-      "value": {
-        "name": "Intro",
-        "route": "/",
-        "id": "3e962c3925fb76bbbf85793868d9e1d0",
-        "filepath": "src/pages/index.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/pages/index.md",
-        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/pages/index.md",
-        "hidden": false,
-        "slug": "src-pages-index",
-        "menu": "",
-        "headings": [
-          {
-            "slug": "summary",
-            "depth": 2,
-            "value": "Summary"
-          },
-          {
-            "slug": "intentionally-opinionated",
-            "depth": 2,
-            "value": "Intentionally Opinionated"
-          },
-          {
-            "slug": "philosophy",
-            "depth": 2,
-            "value": "Philosophy"
+            "slug": "loading-a-plugin",
+            "depth": 1,
+            "value": "Loading a plugin"
           }
         ]
       }
@@ -361,16 +772,16 @@
         "menu": "Techniques",
         "id": "15976a854d74400a3dbb729e1844a92c",
         "filepath": "src/techniques/authentication.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/authentication.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/authentication.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/authentication.md",
         "hidden": false,
         "slug": "src-techniques-authentication",
         "route": "/src-techniques-authentication",
         "headings": [
           {
-            "slug": "authentication",
-            "depth": 2,
-            "value": "Authentication"
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
           }
         ]
       }
@@ -382,16 +793,16 @@
         "menu": "Techniques",
         "id": "4f1751b6140ace4dd643478d483aa633",
         "filepath": "src/techniques/authorization.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/authorization.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/authorization.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/authorization.md",
         "hidden": false,
         "slug": "src-techniques-authorization",
         "route": "/src-techniques-authorization",
         "headings": [
           {
-            "slug": "authorization",
-            "depth": 2,
-            "value": "Authorization"
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
           }
         ]
       }
@@ -403,7 +814,7 @@
         "menu": "Techniques",
         "id": "866d3b5b1204ca5f525592c40f3cd10a",
         "filepath": "src/techniques/complex-use-cases.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/complex-use-cases.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/complex-use-cases.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/complex-use-cases.md",
         "hidden": false,
         "slug": "src-techniques-complex-use-cases",
@@ -439,7 +850,7 @@
         "menu": "Techniques",
         "id": "d4827c4a34765d870e9eca8bbb2c4e97",
         "filepath": "src/techniques/production.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/production.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/production.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/production.md",
         "hidden": false,
         "slug": "src-techniques-production",
@@ -465,16 +876,16 @@
         "menu": "Techniques",
         "id": "11b25aac75f72ca14055ef229634092d",
         "filepath": "src/techniques/subscriptions.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/subscriptions.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/subscriptions.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/subscriptions.md",
         "hidden": false,
         "slug": "src-techniques-subscriptions",
         "route": "/src-techniques-subscriptions",
         "headings": [
           {
-            "slug": "subscriptions",
-            "depth": 2,
-            "value": "Subscriptions"
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
           }
         ]
       }
@@ -486,16 +897,16 @@
         "menu": "Techniques",
         "id": "1ccd3deb40d2d2dd8bfa2bc8f45d56a6",
         "filepath": "src/techniques/testing.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/testing.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/testing.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/testing.md",
         "hidden": false,
         "slug": "src-techniques-testing",
         "route": "/src-techniques-testing",
         "headings": [
           {
-            "slug": "testing",
-            "depth": 2,
-            "value": "Testing"
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
           }
         ]
       }
@@ -507,7 +918,7 @@
         "menu": "Techniques",
         "id": "9f467815b5cae8574beab75a05797a00",
         "filepath": "src/techniques/transactions.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/transactions.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/transactions.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/transactions.md",
         "hidden": false,
         "slug": "src-techniques-transactions",
@@ -553,16 +964,16 @@
         "menu": "Techniques",
         "id": "8063fc353c0827a382bdbde6e5fde08f",
         "filepath": "src/techniques/validations.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/techniques/validations.md",
+        "fullpath": "/Users/salius/warthog/docs/src/techniques/validations.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/techniques/validations.md",
         "hidden": false,
         "slug": "src-techniques-validations",
         "route": "/src-techniques-validations",
         "headings": [
           {
-            "slug": "validations",
-            "depth": 2,
-            "value": "Validations"
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
           }
         ]
       }
@@ -571,10 +982,10 @@
       "key": "src/upgrading/1-upgrading-to-2.md",
       "value": {
         "name": "Upgrading to 2.0",
-        "menu": "Upgrading",
+        "menu": "Upgrading Guides",
         "id": "061158aabd28bb6d3a8ec11115918425",
         "filepath": "src/upgrading/1-upgrading-to-2.md",
-        "fullpath": "/Users/caddy/code/goldcaddy77/warthog/docs/src/upgrading/1-upgrading-to-2.md",
+        "fullpath": "/Users/salius/warthog/docs/src/upgrading/1-upgrading-to-2.md",
         "link": "https://github.com/pedronauck/docz/edit/master/docs/src/upgrading/1-upgrading-to-2.md",
         "hidden": false,
         "slug": "src-upgrading-1-upgrading-to-2",
@@ -596,6 +1007,147 @@
             "value": "Project Dependencies Updated"
           }
         ]
+      }
+    },
+    {
+      "key": "src/warthog-cli/cli.md",
+      "value": {
+        "name": "CLI Overview",
+        "menu": "Warthog CLI",
+        "id": "7f7301fe82777ee4383fc9bd20f40f37",
+        "filepath": "src/warthog-cli/cli.md",
+        "fullpath": "/Users/salius/warthog/docs/src/warthog-cli/cli.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/warthog-cli/cli.md",
+        "hidden": false,
+        "slug": "src-warthog-cli-cli",
+        "route": "/src-warthog-cli-cli",
+        "headings": [
+          {
+            "slug": "cli",
+            "depth": 2,
+            "value": "CLI"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/warthog-cli/codegen.md",
+      "value": {
+        "name": "codegen",
+        "menu": "Warthog CLI",
+        "id": "28b73146a43714e56fc48bc88b5d166d",
+        "filepath": "src/warthog-cli/codegen.md",
+        "fullpath": "/Users/salius/warthog/docs/src/warthog-cli/codegen.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/warthog-cli/codegen.md",
+        "hidden": false,
+        "slug": "src-warthog-cli-codegen",
+        "route": "/src-warthog-cli-codegen",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/warthog-cli/db-create.md",
+      "value": {
+        "name": "db:create",
+        "menu": "Warthog CLI",
+        "id": "7799a4bf72600930b5b38fe8a102307c",
+        "filepath": "src/warthog-cli/db-create.md",
+        "fullpath": "/Users/salius/warthog/docs/src/warthog-cli/db-create.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/warthog-cli/db-create.md",
+        "hidden": false,
+        "slug": "src-warthog-cli-db-create",
+        "route": "/src-warthog-cli-db-create",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/warthog-cli/db-drop.md",
+      "value": {
+        "name": "db:drop",
+        "menu": "Warthog CLI",
+        "id": "f8f171641e89b1b157b7795ca3aaf49c",
+        "filepath": "src/warthog-cli/db-drop.md",
+        "fullpath": "/Users/salius/warthog/docs/src/warthog-cli/db-drop.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/warthog-cli/db-drop.md",
+        "hidden": false,
+        "slug": "src-warthog-cli-db-drop",
+        "route": "/src-warthog-cli-db-drop",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/warthog-cli/db-migrate-create.md",
+      "value": {
+        "name": "db:migrate:create",
+        "menu": "Warthog CLI",
+        "id": "c3b9fbc355ab551e68d57e8b2295f0e2",
+        "filepath": "src/warthog-cli/db-migrate-create.md",
+        "fullpath": "/Users/salius/warthog/docs/src/warthog-cli/db-migrate-create.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/warthog-cli/db-migrate-create.md",
+        "hidden": false,
+        "slug": "src-warthog-cli-db-migrate-create",
+        "route": "/src-warthog-cli-db-migrate-create",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/warthog-cli/db-migrate.md",
+      "value": {
+        "name": "db:migrate",
+        "menu": "Warthog CLI",
+        "id": "47fde360db1cf38de584a878e12714d9",
+        "filepath": "src/warthog-cli/db-migrate.md",
+        "fullpath": "/Users/salius/warthog/docs/src/warthog-cli/db-migrate.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/warthog-cli/db-migrate.md",
+        "hidden": false,
+        "slug": "src-warthog-cli-db-migrate",
+        "route": "/src-warthog-cli-db-migrate",
+        "headings": [
+          {
+            "slug": "coming-soon",
+            "depth": 1,
+            "value": "COMING SOON"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/warthog-cli/generate.md",
+      "value": {
+        "name": "generate",
+        "menu": "Warthog CLI",
+        "id": "34d5b44e049ec19e4cd06040d98779db",
+        "filepath": "src/warthog-cli/generate.md",
+        "fullpath": "/Users/salius/warthog/docs/src/warthog-cli/generate.md",
+        "link": "https://github.com/pedronauck/docz/edit/master/docs/src/warthog-cli/generate.md",
+        "hidden": false,
+        "slug": "src-warthog-cli-generate",
+        "route": "/src-warthog-cli-generate",
+        "headings": []
       }
     }
   ],

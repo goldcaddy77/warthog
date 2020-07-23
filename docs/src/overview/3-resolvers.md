@@ -1,6 +1,6 @@
 ---
 name: Resolvers
-menu: Overview
+menu: Constructs
 ---
 
 ## Resolvers

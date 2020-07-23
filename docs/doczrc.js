@@ -1,14 +1,33 @@
 // https://www.docz.site/docs/project-configuration
+const pkgName = 'docz-theme-extended';
+
 export default {
   themeConfig: {
-    initialColorMode: 'dark'
+    initialColorMode: 'dark',
+    mainContainer: {
+      fullscreen: false,
+      align: 'center',
+    },
+    menu: {
+      search: false,
+      headings: {
+        rightSide: true,
+        scrollspy: true,
+        depth: 3,
+      },
+    },
   },
   menu: [
-    'Intro',
     {
-      name: 'Overview',
+      name: 'Introduction',
       menu: [
-        'Getting Started',
+        'Introduction to Warthog',
+        'Installation and Setup'
+      ]
+    },
+    {
+      name: 'Constructs',
+      menu: [
         'Models',
         'Resolvers',
         'Services',
@@ -28,8 +47,49 @@ export default {
         'Production'
       ]
     },
-    'CLI',
-    'Upgrading'
+    {
+      name: 'Decorators',
+      menu: [
+        'Overview',
+        'BooleanField',
+        'CustomField',
+        'DateField',
+        'EmailField',
+        'EnumField',
+        'Field',
+        'FloatField',
+        'ForiegnKeyField',
+        'IdField',
+        'InterfaceType',
+        'IntField',
+        'JSONField',
+        'StringField',
+        'ManyToMany',
+        'ManyToManyJoin',
+        'ManyToOne',
+        'OneToMany',
+        'Model'
+      ]
+    },
+    {
+      name: 'Warthog CLI',
+      menu: [
+        'CLI Overview',
+        'codegen',
+        'db:create',
+        'db:drop',
+        'generate',
+        'db:migrate',
+        'db:migrate:create'
+      ]
+    },
+    'Plugins',
+    {
+      name: 'Upgrading Guides',
+      menu: [
+        'Upgrading to 2.0'
+      ]
+    },
   ],
   title: 'Warthog',
   description: ''

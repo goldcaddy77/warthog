@@ -1,6 +1,6 @@
 ---
 name: Config
-menu: Overview
+menu: Constructs
 ---
 
 ## Config

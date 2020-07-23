@@ -3,6 +3,5 @@ name: Authorization
 menu: Techniques
 ---
 
-## Authorization
 
-Coming soon
+#  COMING SOON

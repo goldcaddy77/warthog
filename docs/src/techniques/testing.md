@@ -3,6 +3,5 @@ name: Testing
 menu: Techniques
 ---
 
-## Testing
 
-Coming soon
+#  COMING SOON

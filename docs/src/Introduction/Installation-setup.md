@@ -1,7 +1,8 @@
 ---
-name: Getting Started
-menu: Overview
+name: Installation and Setup
+menu: Introduction
 ---
+import { Hint } from '@nejcm/docz-theme-extended';
 
 ## Installation
 
@@ -150,3 +151,4 @@ Note that the examples in the [examples](./examples/README.md) folder use relati
 
 </p>
 </details>
+

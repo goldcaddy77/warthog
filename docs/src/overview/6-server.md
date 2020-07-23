@@ -1,6 +1,6 @@
 ---
 name: Server
-menu: Overview
+menu: Constructs
 ---
 
 ## Server

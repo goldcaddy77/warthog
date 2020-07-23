@@ -21,6 +21,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "@nejcm/docz-theme-extended": "^2.0.2",
     "docz": "^2.0.0-rc.76",
     "gatsby": "^2.13.73",
     "gatsby-plugin-offline": "^2.2.7",
