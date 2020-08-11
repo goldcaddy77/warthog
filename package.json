@@ -186,5 +186,10 @@
   "resolutions": {
     "//": "Fixes security vulnerability",
     "set-value": "2.0.1"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
