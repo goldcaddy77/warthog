@@ -20,7 +20,7 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 // @ts-ignore
-import { BaseWhereInput, JsonObject, PaginationArgs } from "../../../src";
+import { BaseWhereInput, JsonObject, PaginationArgs } from "@warthog/core";
 import { StringEnum } from "../src/modules/user/user.model";
 // @ts-ignore
 import { User } from "../src/modules/user/user.model";
@@ -711,8 +711,8 @@ export class UserCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonFieldNoFilter?: JsonObject;
 
-  @TypeGraphQLField({ nullable: true })
-  stringField?: string;
+  @TypeGraphQLField()
+  stringField!: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;

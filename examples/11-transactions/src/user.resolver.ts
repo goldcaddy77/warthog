@@ -1,7 +1,6 @@
+import { BaseContext } from '@warthog/server-express';
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
-
-import { BaseContext } from '../../../src';
 
 import { UserCreateInput, UserWhereArgs, UserWhereInput } from '../generated';
 

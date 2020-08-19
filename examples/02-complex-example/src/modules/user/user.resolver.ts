@@ -2,7 +2,9 @@ import { Arg, Args, Authorized, Ctx, Mutation, Query, Resolver } from 'type-grap
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseResolver, StandardDeleteResponse } from '../../../../../src';
+import { BaseResolver, StandardDeleteResponse } from '@warthog/core';
+import { BaseContext } from '@warthog/server-express';
+
 import {
   UserCreateInput,
   UserUpdateArgs,

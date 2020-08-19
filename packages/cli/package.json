@@ -1,0 +1,67 @@
+{
+  "name": "@warthog/cli",
+  "version": "0.0.0",
+  "description": "Warthog CLI",
+  "main": "dist/cli.js",
+  "types": "dist/types/cli.d.ts",
+  "bin": {
+    "warthog": "bin/warthog"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "author": {
+    "name": "Dan Caddigan",
+    "url": "https://github.com/goldcaddy77"
+  },
+  "homepage": "https://github.com/goldcaddy77/warthog/tree/master/packages/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goldcaddy77/warthog.git"
+  },
+  "keywords": [
+    "graphql",
+    "typeorm",
+    "typescript"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goldcaddy77/warthog/issues"
+  },
+  "dependencies": {
+    "@warthog/core": "^0.0.0",
+    "cosmiconfig": "^6.0.0",
+    "gluegun": "^4.1.0",
+    "graphql": "^14.5.8",
+    "open": "^7.0.0",
+    "pgtools": "^0.3.0",
+    "prettier": "^1.19.1",
+    "reflect-metadata": "^0.1.12",
+    "ts-node": "^7.0.1",
+    "type-graphql": "^0.17.5",
+    "typedi": "^0.8.0",
+    "typeorm": "^0.2.20",
+    "typeorm-typedi-extensions": "^0.2.3",
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/cosmiconfig": "^6.0.0",
+    "@types/faker": "^4.1.5",
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/graphql": "^14.5.0",
+    "@types/jest": "^24.0.15",
+    "@types/prettier": "^1.15.2",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc -p tsconfig.build.json && copyfiles -u 1 src/**/*.ejs dist/",
+    "test": "jest --verbose --coverage --runInBand",
+    "//verbose": "--verbose flag must be used to accurately test the CLI writing to stdout",
+    "test:prod": "yarn jest --coverage --ci --detectOpenHandles --runInBand --verbose",
+    "test:watch": "jest --verbose --watch"
+  }
+}

@@ -1,4 +1,4 @@
-import { BaseModel, ManyToOne, Model, OneToMany, StringField } from '../../../../src';
+import { BaseModel, ManyToOne, Model, OneToMany, StringField } from '@warthog/core';
 
 // import { FeatureFlagSegment, FeatureFlagUser, Project, Segment, UserSegment } from '../models';
 import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';

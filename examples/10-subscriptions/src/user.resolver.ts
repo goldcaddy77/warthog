@@ -1,13 +1,13 @@
 // See also: https://github.com/MichalLytek/type-graphql/tree/master/examples/simple-subscriptions
 
+import { StandardDeleteResponse } from '@warthog/core';
+import { BaseContext } from '@warthog/server-express';
 import { PubSubEngine } from 'graphql-subscriptions';
 import {
   Arg,
   Args,
   Ctx,
-  // Field,
   Mutation,
-  // ObjectType,
   PubSub,
   Query,
   Resolver,
@@ -16,7 +16,6 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../src';
 import {
   UserCreateInput,
   UserUpdateArgs,

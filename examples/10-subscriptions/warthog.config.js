@@ -1,3 +1,3 @@
 module.exports = {
-  moduleImportPath: '../../../src'
+  moduleImportPath: '@warthog/core'
 };

@@ -1,4 +1,4 @@
-import { BaseModel, Model, StringField } from '../../../src';
+import { BaseModel, Model, StringField } from '@warthog/core';
 
 @Model()
 export class User extends BaseModel {

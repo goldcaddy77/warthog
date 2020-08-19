@@ -1,8 +1,10 @@
+import { BaseResolver } from '@warthog/core';
+import { BaseContext } from '@warthog/server-express';
+
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseResolver } from '../../../../src';
 import { RoleCreateInput, RoleWhereArgs, RoleWhereInput } from '../../generated';
 import { Role } from './role.model';
 

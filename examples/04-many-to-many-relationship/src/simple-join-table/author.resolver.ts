@@ -2,7 +2,8 @@ import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from '
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseResolver } from '../../../../src';
+import { BaseResolver } from '@warthog/core';
+import { BaseContext } from '@warthog/server-express';
 import { AuthorCreateInput, AuthorWhereArgs, AuthorWhereInput } from '../../generated';
 import { Author } from './author.model';
 import { Post } from './post.model';

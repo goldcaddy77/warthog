@@ -1,4 +1,4 @@
-import { BaseModel, ManyToOne, Model, StringField } from '../../../../../src';
+import { BaseModel, ManyToOne, Model, StringField } from '@warthog/core';
 
 import { User } from '../user/user.model';
 

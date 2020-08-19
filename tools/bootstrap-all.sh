@@ -1,5 +1,8 @@
 set -e
 
+yarn
+yarn build
+
 for d in examples/*/
 do
     cd $d

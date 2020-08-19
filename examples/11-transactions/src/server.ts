@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { Server } from '../../../src';
+import { Server } from '@warthog/server-express';
 
 export function getServer(appOptions = {}, dbOptions = {}) {
   return new Server(

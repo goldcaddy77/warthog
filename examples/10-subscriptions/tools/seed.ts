@@ -1,6 +1,5 @@
+import { getBindingError, logger } from '@warthog/core';
 import * as Faker from 'faker';
-
-import { getBindingError, logger } from '../../../src';
 
 import { getServer } from '../src/server';
 

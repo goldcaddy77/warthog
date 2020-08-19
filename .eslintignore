@@ -1,5 +1,6 @@
-/**/node_modules/**/*
-/examples/**/coverage/**/*
-/examples/**/node_modules/**/*
-/**/generated/**/*
+**/node_modules/**/*
+**/coverage/**/*
+**/generated/**/*
+**/dist/**/*
+**/tmp/**/*
 !.eslintrc.js

@@ -2,6 +2,6 @@
   // eslint complains that the example folders aren't in our tsconfig path,
   // so we give eslint it's own config file
   "extends": "./tsconfig.json",
-  "include": ["src/**/*", "examples/**/*"],
+  "include": ["packages/*/src/**/*", "examples/**/*"],
   "exclude": ["node_modules/**/*", "**/generated/*"]
 }

@@ -12,7 +12,8 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';
+import { StandardDeleteResponse, UserId } from '@warthog/core';
+import { BaseContext } from '@warthog/server-express';
 import {
   FeatureFlagCreateInput,
   FeatureFlagUpdateArgs,
@@ -66,9 +67,9 @@ export class FeatureFlagResolver {
   }
 
   @Query(() => [FeatureFlag])
-  async featureFlags(
-    @Args() { where, orderBy, limit, offset }: FeatureFlagWhereArgs
-  ): Promise<FeatureFlag[]> {
+  async featureFlags(@Args() { where, orderBy, limit, offset }: FeatureFlagWhereArgs): Promise<
+    FeatureFlag[]
+  > {
     return this.service.find<FeatureFlagWhereInput>(where, orderBy, limit, offset);
   }
 
