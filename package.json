@@ -62,7 +62,8 @@
   },
   "resolutions": {
     "//": "Fixes security vulnerability",
-    "set-value": "2.0.1"
+    "set-value": "2.0.1",
+    "graphql": "^14.5.8"
   },
   "release": {
     "branches": [

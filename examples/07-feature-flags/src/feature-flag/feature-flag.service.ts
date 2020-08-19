@@ -42,14 +42,7 @@ export class FeatureFlagService extends BaseService<FeatureFlag> {
         AND us.env_key = $3;
     `;
 
-    const results = await this.repository.query(query, [
-      data.userKey,
-      data.projKey,
-      data.envKey,
-      data.userKey,
-      data.projKey,
-      data.envKey
-    ]);
+    const results = await this.repository.query(query, [data.userKey, data.projKey, data.envKey]);
 
     return results.map(item => item.feature_key);
   }

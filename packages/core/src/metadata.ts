@@ -1,8 +1,8 @@
 import { GraphQLEnumType } from 'graphql';
 import { Container, Inject, Service } from 'typedi';
 
-import { ColumnType } from '../torm';
-import { Config } from '../core';
+import { ColumnType } from './torm';
+import { Config } from './core';
 
 export type FieldType =
   | 'boolean'

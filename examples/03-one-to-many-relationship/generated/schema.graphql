@@ -73,6 +73,14 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): StandardDeleteResponse!
 }
 
+type PageInfo {
+  limit: Float!
+  offset: Float!
+  totalCount: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type Post implements BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!

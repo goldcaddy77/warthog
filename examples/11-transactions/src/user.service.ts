@@ -1,8 +1,7 @@
+import { BaseService } from '@warthog/core';
 import { Service } from 'typedi';
 import { DeepPartial, Repository, Transaction, TransactionManager, EntityManager } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-
-import { BaseService } from '../../../src';
 
 import { User } from './user.model';
 

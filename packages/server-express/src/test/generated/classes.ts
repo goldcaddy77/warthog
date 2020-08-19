@@ -3,8 +3,8 @@
 // new TypeGraphQL objects
 // @ts-ignore
 import { GraphQLDateTime as DateTime } from "graphql-iso-date";
+// @ts-ignore
 import { GraphQLID as ID } from "graphql";
-
 // @ts-ignore
 import {
   ArgsType,
@@ -20,7 +20,8 @@ import { registerEnumType } from "type-graphql";
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 // @ts-ignore
-import { BaseWhereInput, JsonObject, PaginationArgs } from "@warthog/core";
+import { BaseWhereInput, JsonObject, PaginationArgs } from "../../";
+import { StringEnum } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
 import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
 // @ts-ignore
@@ -57,6 +58,12 @@ export enum KitchenSinkOrderByEnum {
   floatField_ASC = "floatField_ASC",
   floatField_DESC = "floatField_DESC",
 
+  idField_ASC = "idField_ASC",
+  idField_DESC = "idField_DESC",
+
+  stringEnumField_ASC = "stringEnumField_ASC",
+  stringEnumField_DESC = "stringEnumField_DESC",
+
   numericField_ASC = "numericField_ASC",
   numericField_DESC = "numericField_DESC",
 
@@ -67,7 +74,13 @@ export enum KitchenSinkOrderByEnum {
   noFilterField_DESC = "noFilterField_DESC",
 
   characterField_ASC = "characterField_ASC",
-  characterField_DESC = "characterField_DESC"
+  characterField_DESC = "characterField_DESC",
+
+  readonlyField_ASC = "readonlyField_ASC",
+  readonlyField_DESC = "readonlyField_DESC",
+
+  apiOnlyField_ASC = "apiOnlyField_ASC",
+  apiOnlyField_DESC = "apiOnlyField_DESC"
 }
 
 registerEnumType(KitchenSinkOrderByEnum, {
@@ -76,68 +89,77 @@ registerEnumType(KitchenSinkOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class KitchenSinkWhereInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id_eq?: string;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_eq?: String;
+  createdAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lt?: String;
+  createdAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lte?: String;
+  createdAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gt?: String;
+  createdAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gte?: String;
+  createdAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   createdById_eq?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  updatedAt_eq?: String;
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lt?: String;
+  updatedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lte?: String;
+  updatedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gt?: String;
+  updatedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gte?: String;
+  updatedAt_gt?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
   updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_eq?: String;
+  deletedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lt?: String;
+  deletedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lte?: String;
+  deletedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gt?: String;
+  deletedAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gte?: String;
+  deletedAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   stringField_eq?: string;
@@ -241,6 +263,21 @@ export class KitchenSinkWhereInput {
   @TypeGraphQLField(() => [Float], { nullable: true })
   floatField_in?: number[];
 
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  jsonField_json?: JsonObject;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  idField_in?: string[];
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField_eq?: StringEnum;
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  stringEnumField_in?: StringEnum[];
+
   @TypeGraphQLField(() => Float, { nullable: true })
   numericField_eq?: number;
 
@@ -306,11 +343,41 @@ export class KitchenSinkWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   characterField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  readonlyField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  readonlyField_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  apiOnlyField_in?: string[];
 }
 
 @TypeGraphQLInputType()
 export class KitchenSinkWhereUniqueInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id?: string;
 
   @TypeGraphQLField(() => String, { nullable: true })
@@ -343,6 +410,12 @@ export class KitchenSinkCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
 
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField?: string;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
+
   @TypeGraphQLField({ nullable: true })
   numericField?: number;
 
@@ -363,6 +436,12 @@ export class KitchenSinkCreateInput {
 
   @TypeGraphQLField({ nullable: true })
   customTextFieldNoSortOrFilter?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  writeonlyField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField?: string;
 }
 
 @TypeGraphQLInputType()
@@ -391,6 +470,12 @@ export class KitchenSinkUpdateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField?: JsonObject;
 
+  @TypeGraphQLField(() => ID, { nullable: true })
+  idField?: string;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
+
   @TypeGraphQLField({ nullable: true })
   numericField?: number;
 
@@ -411,6 +496,12 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   customTextFieldNoSortOrFilter?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  writeonlyField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  apiOnlyField?: string;
 }
 
 @ArgsType()
@@ -457,68 +548,77 @@ registerEnumType(DishOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class DishWhereInput {
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   id_eq?: string;
 
-  @TypeGraphQLField(() => [String], { nullable: true })
+  @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_eq?: String;
+  createdAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lt?: String;
+  createdAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_lte?: String;
+  createdAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gt?: String;
+  createdAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  createdAt_gte?: String;
+  createdAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   createdById_eq?: string;
 
-  @TypeGraphQLField({ nullable: true })
-  updatedAt_eq?: String;
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lt?: String;
+  updatedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_lte?: String;
+  updatedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gt?: String;
+  updatedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  updatedAt_gte?: String;
+  updatedAt_gt?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField({ nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
   updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_eq?: String;
+  deletedAt_eq?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lt?: String;
+  deletedAt_lt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_lte?: String;
+  deletedAt_lte?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gt?: String;
+  deletedAt_gt?: Date;
 
   @TypeGraphQLField({ nullable: true })
-  deletedAt_gte?: String;
+  deletedAt_gte?: Date;
 
-  @TypeGraphQLField(() => String, { nullable: true })
+  @TypeGraphQLField(() => ID, { nullable: true })
   deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   name_eq?: string;
@@ -544,7 +644,7 @@ export class DishWhereInput {
 
 @TypeGraphQLInputType()
 export class DishWhereUniqueInput {
-  @TypeGraphQLField(() => String)
+  @TypeGraphQLField(() => ID)
   id?: string;
 }
 

@@ -1,10 +1,7 @@
+import { BaseService } from '@warthog/core';
 import { Inject, Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-
-import { BaseService } from '@warthog/core';
-
-import { FeatureFlagUserCreateInput } from '../../generated';
 
 import { FeatureFlagUserCreateInput } from '../../generated';
 

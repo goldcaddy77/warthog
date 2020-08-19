@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { EntityMetadata } from 'typeorm';
 
 /* eslint-disable @typescript-eslint/camelcase */
-import { getBindingError, logger, cleanUpTestData } from '@warthog/core';
+import { callAPIError, callAPISuccess, getBindingError, logger } from '@warthog/core';
 import { get, GetResponse } from '../../http';
 import { Server } from '../../server';
 
@@ -13,7 +13,6 @@ import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
 import { KITCHEN_SINKS } from './fixtures';
-import { callAPIError, callAPISuccess } from '../utils';
 
 import express = require('express');
 import * as request from 'supertest';

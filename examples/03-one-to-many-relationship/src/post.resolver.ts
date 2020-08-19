@@ -2,7 +2,8 @@ import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from '
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseResolver, StandardDeleteResponse } from '@warthog/core';
+import { BaseResolver, StandardDeleteResponse } from '@warthog/core';
+import { BaseContext } from '@warthog/server-express';
 import {
   PostCreateInput,
   PostUpdateArgs,
