@@ -29,7 +29,7 @@
     "playground": "warthog playground",
     "prettier": "prettier ./{src,test,tools}/**/*.ts --write",
     "start": "yarn start:prod",
-    "start:dev": "ts-node-dev --type-check src/index.ts",
+    "start:dev": "ts-node-dev src/index.ts",
     "start:dev:watch": "nodemon -e ts,graphql -x ts-node --type-check src/index.ts",
     "start:prod": "WARTHOG_ENV=production yarn dotenv:generate && node dist/src/index.js",
     "test": "DEBUG= jest --verbose --coverage",
@@ -57,19 +57,17 @@
     ]
   },
   "dependencies": {
-    "@types/sqlite3": "^3.1.5",
-    "dotenv": "^8.0.0",
-    "dotenvi": "^0.6.0",
-    "reflect-metadata": "^0.1.13",
-    "warthog": "^1.49.4"
+    "dotenv": "<%= props.packageJson.devDependencies["dotenv"] %>",
+    "reflect-metadata": "<%= props.packageJson.dependencies["reflect-metadata"] %>",
+    "warthog": "^<%= props.warthogVersion %>"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.15",
-    "jest": "^24.8.0",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^7.0.1",
-    "ts-node-dev": "^1.0.0-pre.40",
-    "typescript": "3.5.2"
+    "@types/jest": "<%= props.packageJson.devDependencies["@types/jest"] %>",
+    "dotenvi": "^0.9.0",
+    "jest": "<%= props.packageJson.devDependencies["jest"] %>",
+    "ts-jest": "<%= props.packageJson.devDependencies["ts-jest"] %>",
+    "ts-node": "^8.10",
+    "typescript": "<%= props.packageJson.dependencies["typescript"] %>"
   },
   "jest": {
     "globals": {
@@ -88,11 +86,6 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "\\.test\\.ts$"
-    ],
-    "globalSetup": "<rootDir>/test/globalSetup.ts",
-    "globalTeardown": "<rootDir>/test/globalTeardown.ts",
-    "setupFilesAfterEnv": [
-      "./test/setupFilesAfterEnv.ts"
     ]
   },
   "prettier": {

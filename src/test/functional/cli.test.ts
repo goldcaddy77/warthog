@@ -302,6 +302,27 @@ describe('cli functional tests', () => {
     filesystem.remove(folder);
     done();
   });
+
+  test('warthog new', async (done: Function) => {
+    const tmpFolder = path.join(__dirname, 'tmp');
+    // delete folder first
+    await callWarthogCLI('new foo', { WARTHOG_CLI_GENERATE_PATH: tmpFolder });
+
+    const packageJson = require(path.join(__dirname, 'tmp', 'package.json')); // eslint-disable-line
+    const caretDep = /^\^\d+/; // ex: "^4"
+    expect(packageJson.dependencies['dotenv']).toMatch(caretDep);
+    expect(packageJson.dependencies['reflect-metadata']).toMatch(caretDep);
+    expect(packageJson.dependencies['warthog']).toMatch(caretDep);
+
+    expect(packageJson.devDependencies['@types/jest']).toMatch(caretDep);
+    expect(packageJson.devDependencies['dotenvi']).toMatch(caretDep);
+    expect(packageJson.devDependencies['jest']).toMatch(caretDep);
+    expect(packageJson.devDependencies['ts-jest']).toMatch(caretDep);
+    expect(packageJson.devDependencies['ts-node']).toMatch(caretDep);
+    expect(packageJson.devDependencies['typescript']).toMatch(caretDep);
+
+    done();
+  });
 });
 
 async function allowError(promise: Promise<unknown>, msg: string) {

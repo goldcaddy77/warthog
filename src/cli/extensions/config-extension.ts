@@ -1,4 +1,4 @@
-import { Config } from '../../';
+import { Config } from '../../core';
 
 import { WarthogGluegunToolbox } from '../types';
 
