@@ -18,7 +18,7 @@
     "url": "https://github.com/goldcaddy77"
   },
   "scripts": {
-    "build": "rm -rf ./dist && yarn tsc && copyfiles src/cli/templates/**/*.ejs dist/",
+    "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/cli/**/*.ejs dist/",
     "bootstrap": "./tools/bootstrap-all.sh",
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "circle:build": "rm ./tmp/circle.build.yml 2> /dev/null && circleci config process .circleci/config.yml > ./tmp/circle.build.yml && circleci local execute -c ./tmp/circle.build.yml --job build",
@@ -119,7 +119,7 @@
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
-    "copyfiles": "^2.1.1",
+    "copyfiles": "^2.3.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
