@@ -18,7 +18,7 @@
     "url": "https://github.com/goldcaddy77"
   },
   "scripts": {
-    "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/cli/templates/**/*.ejs dist/cli/templates && cp package.json ./dist",
+    "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/cli/templates/**/*.ejs dist/",
     "bootstrap": "./tools/bootstrap-all.sh",
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "circle:build": "rm ./tmp/circle.build.yml 2> /dev/null && circleci config process .circleci/config.yml > ./tmp/circle.build.yml && circleci local execute -c ./tmp/circle.build.yml --job build",
