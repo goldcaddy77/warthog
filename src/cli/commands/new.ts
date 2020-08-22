@@ -4,7 +4,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { promisify } from 'util';
 
-import * as packageJson from '../../../package.json';
+const packageJson = require('../../../package.json'); // eslint-disable-line
+
 import { WarthogGluegunToolbox } from '../types';
 
 const readdir = promisify(fs.readdir);
