@@ -1,0 +1,36 @@
+{
+  "name": "warthog",
+  "private": true,
+  "description": "Code-first Node.js GraphQL Framework with auto-generated schema",
+  "version": "2.0.0-rc.41",
+  "keywords": [
+    "gatsby",
+    "docz"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goldcaddy77/warthog/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goldcaddy77/warthog.git"
+  },
+  "scripts": {
+    "dev": "rm -rf .docz .cache && gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "@nejcm/docz-theme-extended": "^2.0.2",
+    "docz": "^2.0.0-rc.76",
+    "gatsby": "^2.13.73",
+    "gatsby-plugin-offline": "^2.2.7",
+    "gatsby-plugin-sharp": "^2.2.18",
+    "gatsby-theme-docz": "latest",
+    "gatsby-transformer-sharp": "^2.2.7",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet-async": "^1.0.4"
+  }
+}

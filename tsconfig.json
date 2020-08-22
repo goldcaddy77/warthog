@@ -25,6 +25,6 @@
     "typeRoots": ["node_modules/@types", "./typings", "./typings/typings.d.ts"],
     "types": ["jest", "isomorphic-fetch", "node"]
   },
-  "exclude": ["node_modules", "**/node_modules/*", "src/**/*.test.ts", "**/generated/*"],
-  "include": ["src/**/*", "typings"]
+  "exclude": ["docs", "node_modules", "**/node_modules/*", "src/**/*.test.ts", "**/generated/*"],
+  "include": ["src/**/*", "typings", "docs/src/gatsby-theme-docz"]
 }
