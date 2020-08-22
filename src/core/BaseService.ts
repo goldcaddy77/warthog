@@ -3,10 +3,10 @@ import { ArgumentValidationError } from 'type-graphql';
 import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
-import { StandardDeleteResponse } from '../tgql';
+import { ConnectionResult, StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
-import { BaseModel, ConnectionResult } from '..';
+import { BaseModel } from './';
 import { StringMap, WhereInput } from './types';
 
 interface BaseOptions {

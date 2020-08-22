@@ -17,14 +17,21 @@
     "noUnusedLocals": false,
     "outDir": "./dist",
     "pretty": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
     "target": "es5",
     "typeRoots": ["node_modules/@types", "./typings", "./typings/typings.d.ts"],
-    "types": ["jest", "isomorphic-fetch", "node"]
+    "types": ["isomorphic-fetch", "node", "jest"]
   },
-  "exclude": ["node_modules", "**/node_modules/*", "src/**/*.test.ts", "**/generated/*"],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "src/**/*.test.ts",
+    "**/generated/*",
+    "src/test/**/*"
+  ],
   "include": ["src/**/*", "typings"]
 }

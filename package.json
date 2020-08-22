@@ -2,8 +2,8 @@
   "name": "warthog",
   "version": "0.0.0-development",
   "description": "Opinionated set of tools for setting up GraphQL backed by TypeORM",
-  "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/types/src/index.d.ts",
   "bin": {
     "warthog": "bin/warthog"
   },
@@ -18,7 +18,7 @@
     "url": "https://github.com/goldcaddy77"
   },
   "scripts": {
-    "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/**/*.ejs dist/",
+    "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/cli/templates/**/*.ejs dist/src/cli/templates",
     "bootstrap": "./tools/bootstrap-all.sh",
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "circle:build": "rm ./tmp/circle.build.yml 2> /dev/null && circleci config process .circleci/config.yml > ./tmp/circle.build.yml && circleci local execute -c ./tmp/circle.build.yml --job build",
@@ -28,6 +28,7 @@
     "prettify": "yarn prettier './+(examples|src|test|tools)/**/*.ts' --write",
     "semantic-release": "semantic-release",
     "test": "./tools/test.sh",
+    "test:prod": "NODE_ENV=production ./tools/test.sh",
     "test:watch": "./tools/test.sh --watch"
   },
   "husky": {
@@ -84,6 +85,7 @@
     "cross-fetch": "^3.0.4",
     "dataloader": "^1.4.0",
     "debug": "^4.1.1",
+    "execa": "^4.0.3",
     "express": "^4.17.1",
     "gluegun": "^4.1.0",
     "graphql": "^14.5.8",
@@ -111,6 +113,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@types/execa": "^2.0.0",
     "@types/faker": "^4.1.7",
     "@types/jest": "^24.0.23",
     "@types/supertest": "^2.0.8",

@@ -1,4 +1,4 @@
-import { StringMap } from '../';
+import { StringMap } from '../core';
 
 export function setTestServerEnvironmentVariables(overrides?: StringMap) {
   clearConfig();

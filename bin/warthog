@@ -26,5 +26,5 @@ if (devMode || (commandRequiresTS && srcFileExists)) {
   // run the CLI with the current process arguments
   require(`${srcFolder}/cli`).run(process.argv);
 } else {
-  require(`${__dirname}/../dist/cli/cli`).run(process.argv);
+  require(`${__dirname}/../dist/src/cli/cli`).run(process.argv);
 }

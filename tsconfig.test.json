@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.json",
+  "types": ["jest", "isomorphic-fetch", "node"],
   "compilerOptions": {
     "strict": false
   },
