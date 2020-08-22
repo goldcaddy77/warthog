@@ -18,7 +18,7 @@
     "url": "https://github.com/goldcaddy77"
   },
   "scripts": {
-    "build": "rm -rf ./dist && yarn tsc && copyfiles -u 1 src/cli/templates/**/*.ejs dist/",
+    "build": "rm -rf ./dist && yarn tsc && copyfiles src/cli/templates/**/*.ejs dist/",
     "bootstrap": "./tools/bootstrap-all.sh",
     "check:code": "tsc --noEmit && yarn lint && yarn prettify",
     "circle:build": "rm ./tmp/circle.build.yml 2> /dev/null && circleci config process .circleci/config.yml > ./tmp/circle.build.yml && circleci local execute -c ./tmp/circle.build.yml --job build",
@@ -132,7 +132,8 @@
     "semantic-release": "^16.0.0-beta.31",
     "supertest": "^4.0.2",
     "ts-jest": "^24.1.0",
-    "ts-node": "^8.5.2"
+    "ts-node": "^8.5.2",
+    "ts-node-dev": "^1.0.0-pre.60"
   },
   "lint-staged": {
     "*.ts": [
