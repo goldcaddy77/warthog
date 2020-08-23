@@ -577,6 +577,24 @@ export class KitchenSinkWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   apiOnlyField_in?: string[];
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  arrayOfStrings_containsAll?: [string];
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  arrayOfStrings_containsNone?: [string];
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  arrayOfStrings_containsAny?: [string];
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  arrayOfInts_containsAll?: [number];
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  arrayOfInts_containsNone?: [number];
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  arrayOfInts_containsAny?: [number];
 }
 
 @TypeGraphQLInputType()
@@ -653,11 +671,20 @@ export class KitchenSinkCreateInput {
   @TypeGraphQLField({ nullable: true })
   customTextFieldNoSortOrFilter?: string;
 
+  @TypeGraphQLField(() => [String], { nullable: true })
+  customFieldArrayColumn?: string[];
+
   @TypeGraphQLField({ nullable: true })
   writeonlyField?: string;
 
   @TypeGraphQLField({ nullable: true })
   apiOnlyField?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  arrayOfStrings?: string[];
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  arrayOfInts?: number[];
 }
 
 @TypeGraphQLInputType()
@@ -725,11 +752,20 @@ export class KitchenSinkUpdateInput {
   @TypeGraphQLField({ nullable: true })
   customTextFieldNoSortOrFilter?: string;
 
+  @TypeGraphQLField(() => [String], { nullable: true })
+  customFieldArrayColumn?: string[];
+
   @TypeGraphQLField({ nullable: true })
   writeonlyField?: string;
 
   @TypeGraphQLField({ nullable: true })
   apiOnlyField?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  arrayOfStrings?: string[];
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  arrayOfInts?: number[];
 }
 
 @ArgsType()

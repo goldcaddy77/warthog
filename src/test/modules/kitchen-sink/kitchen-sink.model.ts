@@ -108,6 +108,12 @@ export class KitchenSink extends BaseModel {
   })
   customTextFieldNoSortOrFilter?: string;
 
+  @CustomField({
+    api: { type: 'string', nullable: true, sort: false, filter: false },
+    db: { type: 'text', nullable: true, array: true }
+  })
+  customFieldArrayColumn?: string[];
+
   @StringField({ readonly: true, nullable: true })
   readonlyField?: string;
 
@@ -119,4 +125,10 @@ export class KitchenSink extends BaseModel {
 
   @StringField({ apiOnly: true, nullable: true })
   apiOnlyField?: string;
+
+  @StringField({ array: true, nullable: true })
+  arrayOfStrings!: string[];
+
+  @IntField({ array: true, nullable: true })
+  arrayOfInts!: number[];
 }

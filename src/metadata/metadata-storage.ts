@@ -38,6 +38,7 @@ export interface ColumnMetadata extends DecoratorCommonOptions {
   enum?: GraphQLEnumType;
   enumName?: string;
   unique?: boolean;
+  array?: boolean;
 }
 
 export type ColumnOptions = Partial<ColumnMetadata>;

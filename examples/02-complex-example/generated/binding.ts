@@ -178,6 +178,8 @@ export interface UserCreateInput {
   password?: String | null
   writeonlyField?: String | null
   apiOnlyField?: String | null
+  arrayOfStrings?: String[] | String | null
+  arrayOfInts?: Int[] | Int | null
 }
 
 export interface UserUpdateInput {
@@ -220,6 +222,8 @@ export interface UserUpdateInput {
   password?: String | null
   writeonlyField?: String | null
   apiOnlyField?: String | null
+  arrayOfStrings?: String[] | String | null
+  arrayOfInts?: Int[] | Int | null
 }
 
 export interface UserWhereInput {
@@ -413,6 +417,12 @@ export interface UserWhereInput {
   apiOnlyField_startsWith?: String | null
   apiOnlyField_endsWith?: String | null
   apiOnlyField_in?: String[] | String | null
+  arrayOfStrings_containsAll?: String[] | String | null
+  arrayOfStrings_containsNone?: String[] | String | null
+  arrayOfStrings_containsAny?: String[] | String | null
+  arrayOfInts_containsAll?: Int[] | Int | null
+  arrayOfInts_containsNone?: Int[] | Int | null
+  arrayOfInts_containsAny?: Int[] | Int | null
 }
 
 export interface UserWhereUniqueInput {
@@ -518,6 +528,8 @@ export interface User extends BaseGraphQLObject {
   doublePrecisionField?: Float | null
   readonlyField?: String | null
   apiOnlyField?: String | null
+  arrayOfStrings?: Array<String> | null
+  arrayOfInts?: Array<Int> | null
 }
 
 /*

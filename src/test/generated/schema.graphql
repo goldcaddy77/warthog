@@ -257,8 +257,11 @@ type KitchenSink implements BaseGraphQLObject {
   intFieldFilterLteGte: Int
   characterField: String
   customTextFieldNoSortOrFilter: String
+  customFieldArrayColumn: [String!]
   readonlyField: String
   apiOnlyField: String
+  arrayOfStrings: [String!]
+  arrayOfInts: [Int!]
 }
 
 input KitchenSinkCreateInput {
@@ -283,8 +286,11 @@ input KitchenSinkCreateInput {
   intFieldFilterLteGte: Float
   characterField: String
   customTextFieldNoSortOrFilter: String
+  customFieldArrayColumn: [String!]
   writeonlyField: String
   apiOnlyField: String
+  arrayOfStrings: [String!]
+  arrayOfInts: [Int!]
 }
 
 enum KitchenSinkOrderByInput {
@@ -352,8 +358,11 @@ input KitchenSinkUpdateInput {
   intFieldFilterLteGte: Float
   characterField: String
   customTextFieldNoSortOrFilter: String
+  customFieldArrayColumn: [String!]
   writeonlyField: String
   apiOnlyField: String
+  arrayOfStrings: [String!]
+  arrayOfInts: [Int!]
 }
 
 input KitchenSinkWhereInput {
@@ -466,6 +475,12 @@ input KitchenSinkWhereInput {
   apiOnlyField_startsWith: String
   apiOnlyField_endsWith: String
   apiOnlyField_in: [String!]
+  arrayOfStrings_containsAll: [String!]
+  arrayOfStrings_containsNone: [String!]
+  arrayOfStrings_containsAny: [String!]
+  arrayOfInts_containsAll: [Int!]
+  arrayOfInts_containsNone: [Int!]
+  arrayOfInts_containsAny: [Int!]
 }
 
 input KitchenSinkWhereUniqueInput {

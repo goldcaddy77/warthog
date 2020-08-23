@@ -1,44 +1,6 @@
-// import * as Faker from 'faker';
+import { KitchenSinkCreateInput } from '../generated/binding';
 
-// import * as fs from 'fs';
-
-// const results = [];
-
-// for (let index = 0; index < 100; index++) {
-//   const random = new Date()
-//     .getTime()
-//     .toString()
-//     .substring(8, 13);
-
-//   const lorem = Faker.lorem.words(2);
-//   const name = Faker.name.firstName();
-//   const last = Faker.name.lastName();
-//   const string = Faker.random.arrayElement([
-//     lorem,
-//     lorem.toUpperCase(),
-//     lorem.toLowerCase(),
-//     name,
-//     name.toUpperCase(),
-//     name.toLowerCase(),
-//     last,
-//     last.toUpperCase(),
-//     last.toLowerCase()
-//   ]);
-
-//   results.push({
-//     dateField: Faker.date.between('2000-01-01', '2020-01-01').toISOString(),
-//     stringField: string,
-//     emailField: `${Faker.lorem.word()}-${random}@${Faker.lorem.word()}.com`,
-//     integerField: Faker.random.number({ min: -100, max: 100 }),
-//     stringEnumField: 'BAR'
-//     booleanField: Faker.random.arrayElement([true, false]),
-//     floatField: parseFloat(Faker.random.number({ min: -2, max: 2, precision: 0.0001 }).toFixed(4))
-//   });
-// }
-
-// fs.writeFileSync('./sinks.json', JSON.stringify(results, undefined, 2));
-
-export const KITCHEN_SINKS = [
+export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
   {
     dateField: '2000-03-26T19:39:08.597Z',
     stringField: 'Trantow',

@@ -13,13 +13,14 @@ interface StringFieldOptions extends DecoratorCommonOptions {
   default?: string;
   unique?: boolean;
   filter?: boolean | StringWhereOperator[];
+  array?: boolean;
 }
 
 export function StringField(options: StringFieldOptions = {}): any {
   const maxLenOption = options.maxLength ? { length: options.maxLength } : {};
   const uniqueOption = options.unique ? { unique: true } : {};
 
-  const factories = getCombinedDecorator({
+  const factories = getCombinedDecorator<StringFieldOptions>({
     fieldType: 'string',
     warthogColumnMeta: options,
     gqlFieldType: String,
