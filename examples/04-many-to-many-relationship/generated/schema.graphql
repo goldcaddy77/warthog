@@ -141,6 +141,14 @@ type Mutation {
   createPost(data: PostCreateInput!): Post!
 }
 
+type PageInfo {
+  limit: Float!
+  offset: Float!
+  totalCount: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type Post implements BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!

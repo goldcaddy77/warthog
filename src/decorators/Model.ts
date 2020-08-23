@@ -28,7 +28,7 @@ export function Model({ api = {}, db = {} }: ModelOptions = {}) {
     getMetadataStorage().addModel(target.name, target, relativeFilePath);
   };
 
-  const factories = [];
+  const factories: any[] = [];
   if (db !== false) {
     factories.push(Entity(db) as ClassDecoratorFactory);
   }

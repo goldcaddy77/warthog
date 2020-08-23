@@ -43,7 +43,7 @@ export function getCombinedDecorator({
 
   // Warthog: start with the Warthog decorator that adds metadata for generating the GraphQL schema
   // for sorting, filtering, args, where inputs, etc...
-  const decorators = [];
+  const decorators: any[] = [];
 
   if (exposeAPI) {
     decorators.push(WarthogField(fieldType, warthogColumnMeta));
