@@ -548,6 +548,14 @@ type Mutation {
   deleteUserSegment(where: UserSegmentWhereUniqueInput!): StandardDeleteResponse!
 }
 
+type PageInfo {
+  limit: Float!
+  offset: Float!
+  totalCount: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type Project implements BaseGraphQLObject {
   id: ID!
   createdAt: DateTime!

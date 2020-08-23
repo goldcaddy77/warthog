@@ -166,7 +166,7 @@ export class BaseService<E extends BaseModel> {
     return qb;
   }
 
-  async findOne<W extends Partial<E>>(where: W): Promise<E> {
+  async findOne<W>(where: W): Promise<E> {
     const items = await this.find(where);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
@@ -259,7 +259,7 @@ export class BaseService<E extends BaseModel> {
       deletedById: userId
     };
 
-    const found = await manager.findOneOrFail<E>(this.entityClass, where);
+    const found = await manager.findOneOrFail<E>(this.entityClass, where as any);
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
     const entity = manager.merge<E>(this.entityClass, new this.entityClass(), data as any, idData);
 
