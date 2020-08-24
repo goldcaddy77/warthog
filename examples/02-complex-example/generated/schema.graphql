@@ -56,6 +56,13 @@ input BaseWhereInput {
 }
 
 """
+A date string, such as 2007-12-03, compliant with the `full-date` format
+outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
+representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+"""
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
@@ -108,6 +115,8 @@ type User implements BaseGraphQLObject {
   version: Int!
   booleanField: Boolean
   dateField: DateTime
+  dateOnlyField: Date
+  dateTimeField: DateTime
   emailField: String
   enumField: StringEnum
   floatField: Float
@@ -147,6 +156,8 @@ type User implements BaseGraphQLObject {
 input UserCreateInput {
   booleanField: Boolean
   dateField: DateTime
+  dateOnlyField: Date
+  dateTimeField: DateTime
   emailField: String
   enumField: StringEnum
   floatField: Float
@@ -193,6 +204,10 @@ enum UserOrderByInput {
   booleanField_DESC
   dateField_ASC
   dateField_DESC
+  dateOnlyField_ASC
+  dateOnlyField_DESC
+  dateTimeField_ASC
+  dateTimeField_DESC
   emailField_ASC
   emailField_DESC
   enumField_ASC
@@ -252,6 +267,8 @@ enum UserOrderByInput {
 input UserUpdateInput {
   booleanField: Boolean
   dateField: DateTime
+  dateOnlyField: Date
+  dateTimeField: DateTime
   emailField: String
   enumField: StringEnum
   floatField: Float
@@ -319,6 +336,16 @@ input UserWhereInput {
   dateField_lte: DateTime
   dateField_gt: DateTime
   dateField_gte: DateTime
+  dateOnlyField_eq: Date
+  dateOnlyField_lt: Date
+  dateOnlyField_lte: Date
+  dateOnlyField_gt: Date
+  dateOnlyField_gte: Date
+  dateTimeField_eq: DateTime
+  dateTimeField_lt: DateTime
+  dateTimeField_lte: DateTime
+  dateTimeField_gt: DateTime
+  dateTimeField_gte: DateTime
   emailField_eq: String
   emailField_contains: String
   emailField_startsWith: String

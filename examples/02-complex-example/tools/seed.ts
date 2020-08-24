@@ -44,6 +44,8 @@ async function seedDatabase() {
       emptyArray: []
     };
     const dateField = new Date().toISOString();
+    const dateOnlyField = new Date().toISOString().substring(0, 10);
+    const dateTimeField = new Date().toISOString();
 
     try {
       const user = await binding.mutation.createUser(
@@ -53,6 +55,8 @@ async function seedDatabase() {
             stringField,
             jsonField,
             dateField,
+            dateOnlyField,
+            dateTimeField,
             enumField: 'FOO',
             geometryField: {
               type: 'Point',

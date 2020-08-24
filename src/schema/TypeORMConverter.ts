@@ -314,32 +314,30 @@ export function entityToWhereInput(model: ModelMetadata): string {
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
-    } else if (column.type === 'date') {
+    } else if (column.type === 'date' || column.type === 'datetime' || column.type === 'dateonly') {
       // I really don't like putting this magic here, but it has to go somewhere
       // This deletedAt_all turns off the default filtering of soft-deleted items
       if (column.propertyName === 'deletedAt') {
         fieldTemplates += `
-          @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField({ nullable: true })
           deletedAt_all?: Boolean;
         `;
       }
 
-      const tsType = 'Date';
-
       fieldTemplates += `
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_eq?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_lt?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_lte?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_gt?: ${tsType};
 
-        @TypeGraphQLField({ nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_gte?: ${tsType};
       `;
     } else if (column.type === 'enum') {
@@ -429,5 +427,12 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
 }
 
 function columnRequiresExplicitGQLType(column: ColumnMetadata) {
-  return column.enum || column.type === 'json' || column.type === 'id';
+  return (
+    column.enum ||
+    column.type === 'json' ||
+    column.type === 'id' ||
+    column.type === 'date' ||
+    column.type === 'datetime' ||
+    column.type === 'dateonly'
+  );
 }

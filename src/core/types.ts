@@ -7,7 +7,8 @@ export interface StringMapOptional {
   [key: string]: string | undefined;
 }
 
-export type DateTime = string;
+export type DateOnlyString = string;
+export type DateTimeString = string;
 export type IDType = string;
 
 export interface BaseEntity {

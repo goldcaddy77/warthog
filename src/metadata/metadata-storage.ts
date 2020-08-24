@@ -7,6 +7,8 @@ import { Config } from '../core';
 export type FieldType =
   | 'boolean'
   | 'date'
+  | 'dateonly'
+  | 'datetime'
   | 'email'
   | 'enum'
   | 'float'
