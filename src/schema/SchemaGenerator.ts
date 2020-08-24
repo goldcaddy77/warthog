@@ -30,19 +30,19 @@ export class SchemaGenerator {
       // will be re-written.  If you need to change this file, update models or add
       // new TypeGraphQL objects
       // @ts-ignore
-      import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
+      import { DateResolver as Date } from 'graphql-scalars';
       // @ts-ignore
       import { GraphQLID as ID } from 'graphql';
       // @ts-ignore
       import { ArgsType, Field as TypeGraphQLField, Float, InputType as TypeGraphQLInputType, Int } from 'type-graphql';
       // @ts-ignore
-      import { registerEnumType } from 'type-graphql';
+      import { registerEnumType, GraphQLISODateTime as DateTime } from "type-graphql";
 
       // @ts-ignore eslint-disable-next-line @typescript-eslint/no-var-requires
       const { GraphQLJSONObject } = require('graphql-type-json');
 
       // @ts-ignore
-      import { BaseWhereInput, JsonObject, PaginationArgs } from '${warthogImportPath}';
+      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '${warthogImportPath}';
       ${generateEnumMapImports().join('')}
     `;
 

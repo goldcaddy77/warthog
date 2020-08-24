@@ -4,6 +4,10 @@ import {
   BooleanField,
   CustomField,
   DateField,
+  DateOnlyField,
+  DateOnlyString,
+  DateTimeField,
+  DateTimeString,
   EmailField,
   EnumField,
   IdField,
@@ -32,8 +36,14 @@ export class User extends BaseModel {
   @DateField({ nullable: true })
   dateField: Date;
 
+  @DateOnlyField({ nullable: true })
+  dateOnlyField?: DateOnlyString;
+
+  @DateTimeField({ nullable: true })
+  dateTimeField?: DateTimeString;
+
   @EmailField({ nullable: true })
-  emailField: string;
+  emailField?: string;
 
   @EnumField('StringEnum', StringEnum, { nullable: true })
   enumField: StringEnum;

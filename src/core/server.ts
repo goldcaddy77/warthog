@@ -6,6 +6,7 @@ import { Request } from 'express';
 import express = require('express');
 import { GraphQLID, GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
+import { DateResolver } from 'graphql-scalars';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
@@ -166,6 +167,11 @@ export class Server<C extends BaseContext> {
           {
             type: 'ID' as any,
             scalar: GraphQLID
+          },
+          // Note: DateTime already included in type-graphql
+          {
+            type: 'DateOnlyString' as any,
+            scalar: DateResolver
           }
         ],
         container: this.container as any,

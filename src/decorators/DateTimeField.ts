@@ -1,26 +1,26 @@
+// https://www.postgresql.org/docs/10/datatype-datetime.html
 import { GraphQLISODateTime } from 'type-graphql';
 
 import { DecoratorCommonOptions } from '../metadata';
-import { ColumnType } from '../torm';
+import { DateTimeString } from '../core';
 import { composeMethodDecorators } from '../utils';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface DateFieldOptions extends DecoratorCommonOptions {
-  dataType?: ColumnType; // int16, jsonb, etc...
-  default?: Date;
+interface DateTimeFieldOptions extends DecoratorCommonOptions {
+  default?: DateTimeString;
 }
 
 // V3: Deprecate this usage in favor of DateTimeField
-export function DateField(options: DateFieldOptions = {}): any {
+export function DateTimeField(options: DateTimeFieldOptions = {}): any {
   const nullableOption = options.nullable === true ? { nullable: true } : {};
   const defaultOption = options.default ? { default: options.default } : {};
 
   const factories = getCombinedDecorator({
-    fieldType: 'date',
+    fieldType: 'datetime',
     warthogColumnMeta: options,
     gqlFieldType: GraphQLISODateTime,
-    dbType: options.dataType || 'timestamp',
+    dbType: 'timestamp',
     dbColumnOptions: { ...nullableOption, ...defaultOption }
   });
 

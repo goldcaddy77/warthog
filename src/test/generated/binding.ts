@@ -75,6 +75,10 @@ export type KitchenSinkOrderByInput =   'createdAt_ASC' |
   'nullableStringField_DESC' |
   'dateField_ASC' |
   'dateField_DESC' |
+  'dateOnlyField_ASC' |
+  'dateOnlyField_DESC' |
+  'dateTimeField_ASC' |
+  'dateTimeField_DESC' |
   'emailField_ASC' |
   'emailField_DESC' |
   'integerField_ASC' |
@@ -223,6 +227,8 @@ export interface KitchenSinkCreateInput {
   stringField: String
   nullableStringField?: String | null
   dateField?: DateTime | null
+  dateOnlyField?: Date | null
+  dateTimeField?: DateTime | null
   emailField: String
   integerField: Float
   booleanField: Boolean
@@ -245,6 +251,8 @@ export interface KitchenSinkUpdateInput {
   stringField?: String | null
   nullableStringField?: String | null
   dateField?: DateTime | null
+  dateOnlyField?: Date | null
+  dateTimeField?: DateTime | null
   emailField?: String | null
   integerField?: Float | null
   booleanField?: Boolean | null
@@ -303,6 +311,16 @@ export interface KitchenSinkWhereInput {
   dateField_lte?: DateTime | null
   dateField_gt?: DateTime | null
   dateField_gte?: DateTime | null
+  dateOnlyField_eq?: Date | null
+  dateOnlyField_lt?: Date | null
+  dateOnlyField_lte?: Date | null
+  dateOnlyField_gt?: Date | null
+  dateOnlyField_gte?: Date | null
+  dateTimeField_eq?: DateTime | null
+  dateTimeField_lt?: DateTime | null
+  dateTimeField_lte?: DateTime | null
+  dateTimeField_gt?: DateTime | null
+  dateTimeField_gte?: DateTime | null
   emailField_eq?: String | null
   emailField_contains?: String | null
   emailField_startsWith?: String | null
@@ -446,6 +464,8 @@ export interface KitchenSink extends BaseGraphQLObject {
   stringField: String
   nullableStringField?: String | null
   dateField?: DateTime | null
+  dateOnlyField?: Date | null
+  dateTimeField?: DateTime | null
   emailField: String
   integerField: Int
   booleanField: Boolean
@@ -481,6 +501,13 @@ export interface StandardDeleteResponse {
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean
+
+/*
+A date string, such as 2007-12-03, compliant with the `full-date` format
+outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
+representation of dates and times using the Gregorian calendar.
+*/
+export type Date = string
 
 /*
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
