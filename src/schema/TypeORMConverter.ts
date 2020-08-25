@@ -8,6 +8,7 @@ import {
   columnTypeToGraphQLDataType,
   columnInfoToTypeScriptType
 } from './type-conversion';
+import { WhereOperator } from '../torm';
 
 const ignoreBaseModels = ['BaseModel', 'BaseModelUUID'];
 
@@ -249,6 +250,17 @@ export function entityToWhereInput(model: ModelMetadata): string {
       return;
     }
 
+    function allowFilter(op: WhereOperator) {
+      if (column.filter === true) {
+        return true;
+      }
+      if (column.filter === false) {
+        return false;
+      }
+
+      return !!column.filter?.includes(op);
+    }
+
     const { tsType } = columnToTypes(column);
 
     const graphQLDataType = columnToGraphQLDataType(column);
@@ -258,62 +270,108 @@ export function entityToWhereInput(model: ModelMetadata): string {
     if (column.type === 'id') {
       const graphQlType = 'ID';
 
-      fieldTemplates += `
-        @TypeGraphQLField(() => ${graphQlType},{ nullable: true })
-        ${column.propertyName}_eq?: string;
-      `;
+      if (allowFilter('eq')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => ${graphQlType},{ nullable: true })
+          ${column.propertyName}_eq?: string;
+        `;
+      }
 
-      fieldTemplates += `
+      if (allowFilter('in')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => [${graphQlType}], { nullable: true })
         ${column.propertyName}_in?: string[];
         `;
+      }
     } else if (column.type === 'boolean') {
-      fieldTemplates += `
+      if (allowFilter('eq')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType},{ nullable: true })
         ${column.propertyName}_eq?: Boolean;
+        `;
+      }
 
+      // V3: kill the boolean "in" clause
+      if (allowFilter('in')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: Boolean[];
       `;
+      }
     } else if (column.type === 'string' || column.type === 'email') {
       // TODO: do we need NOT?
       // `${column.propertyName}_not`
-      fieldTemplates += `
-        @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_eq?: ${tsType};
+      if (allowFilter('eq')) {
+        fieldTemplates += `
+          @TypeGraphQLField({ nullable: true })
+          ${column.propertyName}_eq?: ${tsType};
+        `;
+      }
 
-        @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_contains?: ${tsType};
+      if (allowFilter('contains')) {
+        fieldTemplates += `
+          @TypeGraphQLField({ nullable: true })
+          ${column.propertyName}_contains?: ${tsType};
+        `;
+      }
 
-        @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_startsWith?: ${tsType};
+      if (allowFilter('startsWith')) {
+        fieldTemplates += `
+          @TypeGraphQLField({ nullable: true })
+          ${column.propertyName}_startsWith?: ${tsType};
+        `;
+      }
 
-        @TypeGraphQLField({ nullable: true })
-        ${column.propertyName}_endsWith?: ${tsType};
+      if (allowFilter('endsWith')) {
+        fieldTemplates += `
+          @TypeGraphQLField({ nullable: true })
+          ${column.propertyName}_endsWith?: ${tsType};
+        `;
+      }
 
-        @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
-        ${column.propertyName}_in?: ${tsType}[];
+      if (allowFilter('in')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
+          ${column.propertyName}_in?: ${tsType}[];
       `;
+      }
     } else if (column.type === 'float' || column.type === 'integer' || column.type === 'numeric') {
-      fieldTemplates += `
+      if (allowFilter('eq')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_eq?: ${tsType};
-
+      `;
+      }
+      if (allowFilter('gt')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_gt?: ${tsType};
-
+      `;
+      }
+      if (allowFilter('gte')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_gte?: ${tsType};
-
+      `;
+      }
+      if (allowFilter('lt')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_lt?: ${tsType};
-
+      `;
+      }
+      if (allowFilter('lte')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_lte?: ${tsType};
-
+      `;
+      }
+      if (allowFilter('in')) {
+        fieldTemplates += `
         @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
         ${column.propertyName}_in?: ${tsType}[];
       `;
+      }
     } else if (column.type === 'date' || column.type === 'datetime' || column.type === 'dateonly') {
       // I really don't like putting this magic here, but it has to go somewhere
       // This deletedAt_all turns off the default filtering of soft-deleted items
@@ -324,30 +382,52 @@ export function entityToWhereInput(model: ModelMetadata): string {
         `;
       }
 
-      fieldTemplates += `
-        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
-        ${column.propertyName}_eq?: ${tsType};
+      if (allowFilter('eq')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
+          ${column.propertyName}_eq?: ${tsType};
+        `;
+      }
+      if (allowFilter('lt')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
+          ${column.propertyName}_lt?: ${tsType};
+        `;
+      }
 
-        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
-        ${column.propertyName}_lt?: ${tsType};
+      if (allowFilter('lte')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
+          ${column.propertyName}_lte?: ${tsType};
+        `;
+      }
 
-        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
-        ${column.propertyName}_lte?: ${tsType};
-
-        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
-        ${column.propertyName}_gt?: ${tsType};
-
-        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
-        ${column.propertyName}_gte?: ${tsType};
+      if (allowFilter('gt')) {
+        fieldTemplates += `   
+          @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
+          ${column.propertyName}_gt?: ${tsType};
+        `;
+      }
+      if (allowFilter('gte')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
+          ${column.propertyName}_gte?: ${tsType};
       `;
+      }
     } else if (column.type === 'enum') {
-      fieldTemplates += `
-        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
-        ${column.propertyName}_eq?: ${graphQLDataType};
-
-        @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
-        ${column.propertyName}_in?: ${graphQLDataType}[];
+      if (allowFilter('eq')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
+          ${column.propertyName}_eq?: ${graphQLDataType};
       `;
+      }
+
+      if (allowFilter('in')) {
+        fieldTemplates += `
+          @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
+          ${column.propertyName}_in?: ${graphQLDataType}[];
+      `;
+      }
     } else if (column.type === 'json') {
       fieldTemplates += `
         @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })

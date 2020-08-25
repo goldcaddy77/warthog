@@ -101,6 +101,12 @@ export class User extends BaseModel {
   @StringField({ filter: false, sort: false, nullable: true })
   noFilterOrSortField?: string;
 
+  @StringField({ filter: ['eq', 'contains'], sort: false, nullable: true })
+  stringFieldFilterEqContains?: string;
+
+  @IntField({ filter: ['lte', 'gte'], sort: false, nullable: true })
+  intFieldFilterLteGte?: number;
+
   // See https://github.com/typeorm/typeorm/blob/a4dec02cc59d3219a29c7be0322af2253e1452dc/test/functional/database-schema/column-types/postgres/entity/PostWithOptions.ts
   // Numeric fields (exact precision)
   @NumericField({ nullable: true })

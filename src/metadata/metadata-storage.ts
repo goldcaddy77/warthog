@@ -1,7 +1,7 @@
 import { GraphQLEnumType } from 'graphql';
 import { Container, Inject, Service } from 'typedi';
 
-import { ColumnType } from '../torm';
+import { ColumnType, WhereOperator } from '../torm';
 import { Config } from '../core';
 
 export type FieldType =
@@ -23,7 +23,7 @@ export interface DecoratorCommonOptions {
   dbOnly?: boolean;
   description?: string;
   editable?: boolean;
-  filter?: boolean;
+  filter?: boolean | WhereOperator[];
   nullable?: boolean;
   readonly?: boolean;
   sort?: boolean;

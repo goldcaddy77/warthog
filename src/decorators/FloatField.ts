@@ -2,13 +2,14 @@ import { Float } from 'type-graphql';
 
 import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
-import { FloatColumnType } from '../torm';
+import { FloatColumnType, FloatWhereOperator } from '../torm';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface FloatFieldOptions extends DecoratorCommonOptions {
   dataType?: FloatColumnType; // int16, jsonb, etc...
   default?: number;
+  filter?: boolean | FloatWhereOperator[];
 }
 
 export function FloatField(options: FloatFieldOptions = {}): any {

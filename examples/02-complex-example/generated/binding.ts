@@ -157,6 +157,8 @@ export interface UserCreateInput {
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
+  stringFieldFilterEqContains?: String | null
+  intFieldFilterLteGte?: Float | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   charField?: String | null
@@ -197,6 +199,8 @@ export interface UserUpdateInput {
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
+  stringFieldFilterEqContains?: String | null
+  intFieldFilterLteGte?: Float | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   charField?: String | null
@@ -310,6 +314,10 @@ export interface UserWhereInput {
   noSortField_startsWith?: String | null
   noSortField_endsWith?: String | null
   noSortField_in?: String[] | String | null
+  stringFieldFilterEqContains_eq?: String | null
+  stringFieldFilterEqContains_contains?: String | null
+  intFieldFilterLteGte_gte?: Int | null
+  intFieldFilterLteGte_lte?: Int | null
   numericField_eq?: Float | null
   numericField_gt?: Float | null
   numericField_gte?: Float | null
@@ -490,6 +498,8 @@ export interface User extends BaseGraphQLObject {
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
+  stringFieldFilterEqContains?: String | null
+  intFieldFilterLteGte?: Int | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   charField?: String | null
