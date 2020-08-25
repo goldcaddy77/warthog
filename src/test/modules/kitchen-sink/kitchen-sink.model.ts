@@ -93,6 +93,12 @@ export class KitchenSink extends BaseModel {
   @StringField({ filter: false, sort: false, nullable: true })
   noFilterOrSortField?: string;
 
+  @StringField({ filter: ['eq', 'contains'], sort: false, nullable: true })
+  stringFieldFilterEqContains?: string;
+
+  @IntField({ filter: ['lte', 'gte'], sort: false, nullable: true })
+  intFieldFilterLteGte?: number;
+
   @StringField({ dataType: 'character', nullable: true })
   characterField?: string;
 

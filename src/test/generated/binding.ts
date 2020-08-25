@@ -241,6 +241,8 @@ export interface KitchenSinkCreateInput {
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
+  stringFieldFilterEqContains?: String | null
+  intFieldFilterLteGte?: Float | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
   writeonlyField?: String | null
@@ -265,6 +267,8 @@ export interface KitchenSinkUpdateInput {
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
+  stringFieldFilterEqContains?: String | null
+  intFieldFilterLteGte?: Float | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
   writeonlyField?: String | null
@@ -362,6 +366,10 @@ export interface KitchenSinkWhereInput {
   noSortField_startsWith?: String | null
   noSortField_endsWith?: String | null
   noSortField_in?: String[] | String | null
+  stringFieldFilterEqContains_eq?: String | null
+  stringFieldFilterEqContains_contains?: String | null
+  intFieldFilterLteGte_gte?: Int | null
+  intFieldFilterLteGte_lte?: Int | null
   characterField_eq?: String | null
   characterField_contains?: String | null
   characterField_startsWith?: String | null
@@ -479,6 +487,8 @@ export interface KitchenSink extends BaseGraphQLObject {
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
+  stringFieldFilterEqContains?: String | null
+  intFieldFilterLteGte?: Int | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
   readonlyField?: String | null

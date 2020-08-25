@@ -5,9 +5,11 @@ import { Column } from 'typeorm';
 
 import { getMetadataStorage, DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
+import { EnumWhereOperator } from '../torm';
 
 interface EnumFieldOptions extends DecoratorCommonOptions {
   default?: any;
+  filter?: boolean | EnumWhereOperator[];
 }
 
 export function EnumField(name: string, enumeration: object, options: EnumFieldOptions = {}): any {

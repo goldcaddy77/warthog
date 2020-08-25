@@ -2,7 +2,7 @@ import { MaxLength, MinLength } from 'class-validator';
 
 import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
-import { StringColumnType } from '../torm';
+import { StringColumnType, StringWhereOperator } from '../torm';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
@@ -12,6 +12,7 @@ interface StringFieldOptions extends DecoratorCommonOptions {
   minLength?: number;
   default?: string;
   unique?: boolean;
+  filter?: boolean | StringWhereOperator[];
 }
 
 export function StringField(options: StringFieldOptions = {}): any {

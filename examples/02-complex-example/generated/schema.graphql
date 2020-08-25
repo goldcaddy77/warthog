@@ -133,6 +133,8 @@ type User implements BaseGraphQLObject {
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  stringFieldFilterEqContains: String
+  intFieldFilterLteGte: Int
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   charField: String
@@ -172,6 +174,8 @@ input UserCreateInput {
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  stringFieldFilterEqContains: String
+  intFieldFilterLteGte: Float
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   charField: String
@@ -283,6 +287,8 @@ input UserUpdateInput {
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  stringFieldFilterEqContains: String
+  intFieldFilterLteGte: Float
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   charField: String
@@ -396,6 +402,10 @@ input UserWhereInput {
   noSortField_startsWith: String
   noSortField_endsWith: String
   noSortField_in: [String!]
+  stringFieldFilterEqContains_eq: String
+  stringFieldFilterEqContains_contains: String
+  intFieldFilterLteGte_gte: Int
+  intFieldFilterLteGte_lte: Int
   numericField_eq: Float
   numericField_gt: Float
   numericField_gte: Float

@@ -4,7 +4,7 @@ import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptio
 
 import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';
-import { NumericColumnType } from '../torm';
+import { NumericColumnType, NumericWhereOperator } from '../torm';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
@@ -13,6 +13,7 @@ interface NumericFieldOptions
     ColumnNumericOptions,
     DecoratorCommonOptions {
   dataType?: NumericColumnType;
+  filter?: boolean | NumericWhereOperator[];
 }
 
 export function NumericField(options: NumericFieldOptions = {}): any {

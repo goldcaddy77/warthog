@@ -3,12 +3,14 @@ import { GraphQLISODateTime } from 'type-graphql';
 
 import { DecoratorCommonOptions } from '../metadata';
 import { DateTimeString } from '../core';
+import { DateTimeWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface DateTimeFieldOptions extends DecoratorCommonOptions {
   default?: DateTimeString;
+  filter?: boolean | DateTimeWhereOperator[];
 }
 
 // V3: Deprecate this usage in favor of DateTimeField

@@ -244,6 +244,8 @@ type KitchenSink implements BaseGraphQLObject {
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  stringFieldFilterEqContains: String
+  intFieldFilterLteGte: Int
   characterField: String
   customTextFieldNoSortOrFilter: String
   readonlyField: String
@@ -268,6 +270,8 @@ input KitchenSinkCreateInput {
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  stringFieldFilterEqContains: String
+  intFieldFilterLteGte: Float
   characterField: String
   customTextFieldNoSortOrFilter: String
   writeonlyField: String
@@ -335,6 +339,8 @@ input KitchenSinkUpdateInput {
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
+  stringFieldFilterEqContains: String
+  intFieldFilterLteGte: Float
   characterField: String
   customTextFieldNoSortOrFilter: String
   writeonlyField: String
@@ -432,6 +438,10 @@ input KitchenSinkWhereInput {
   noSortField_startsWith: String
   noSortField_endsWith: String
   noSortField_in: [String!]
+  stringFieldFilterEqContains_eq: String
+  stringFieldFilterEqContains_contains: String
+  intFieldFilterLteGte_gte: Int
+  intFieldFilterLteGte_lte: Int
   characterField_eq: String
   characterField_contains: String
   characterField_startsWith: String

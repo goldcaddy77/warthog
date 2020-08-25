@@ -1,12 +1,14 @@
 import { IsEmail } from 'class-validator';
 
 import { DecoratorCommonOptions } from '../metadata';
+import { EmailWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
 
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface EmailFieldOptions extends DecoratorCommonOptions {
   unique?: boolean;
+  filter?: boolean | EmailWhereOperator[];
 }
 
 export function EmailField(options: EmailFieldOptions = {}): any {

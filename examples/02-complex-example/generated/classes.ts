@@ -414,6 +414,18 @@ export class UserWhereInput {
   @TypeGraphQLField(() => [String], { nullable: true })
   noSortField_in?: string[];
 
+  @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains_contains?: string;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldFilterLteGte_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldFilterLteGte_lte?: number;
+
   @TypeGraphQLField(() => Float, { nullable: true })
   numericField_eq?: number;
 
@@ -772,6 +784,12 @@ export class UserCreateInput {
   noFilterOrSortField?: string;
 
   @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  intFieldFilterLteGte?: number;
+
+  @TypeGraphQLField({ nullable: true })
   numericField?: number;
 
   @TypeGraphQLField({ nullable: true })
@@ -884,6 +902,12 @@ export class UserUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   noFilterOrSortField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  intFieldFilterLteGte?: number;
 
   @TypeGraphQLField({ nullable: true })
   numericField?: number;

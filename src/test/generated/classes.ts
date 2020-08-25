@@ -521,6 +521,18 @@ export class KitchenSinkWhereInput {
   noSortField_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains_contains?: string;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldFilterLteGte_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  intFieldFilterLteGte_lte?: number;
+
+  @TypeGraphQLField({ nullable: true })
   characterField_eq?: string;
 
   @TypeGraphQLField({ nullable: true })
@@ -629,6 +641,12 @@ export class KitchenSinkCreateInput {
   noFilterOrSortField?: string;
 
   @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  intFieldFilterLteGte?: number;
+
+  @TypeGraphQLField({ nullable: true })
   characterField?: string;
 
   @TypeGraphQLField({ nullable: true })
@@ -693,6 +711,12 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField({ nullable: true })
   noFilterOrSortField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  stringFieldFilterEqContains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  intFieldFilterLteGte?: number;
 
   @TypeGraphQLField({ nullable: true })
   characterField?: string;
