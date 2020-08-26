@@ -34,9 +34,8 @@ export function Model({ api = {}, db = {} }: ModelOptions = {}) {
   }
   if (api !== false) {
     factories.push(ObjectType(api) as ClassDecoratorFactory);
+    factories.push(registerModelWithWarthog as ClassDecoratorFactory);
   }
-
-  factories.push(registerModelWithWarthog as ClassDecoratorFactory);
 
   return composeClassDecorators(...factories);
 }
