@@ -147,8 +147,6 @@ describe('server', () => {
         }`
     );
 
-    console.log('test', nodes, pageInfo);
-
     expect(nodes).toMatchSnapshot();
     expect(pageInfo.offset).toEqual(0);
     expect(pageInfo.limit).toEqual(1);

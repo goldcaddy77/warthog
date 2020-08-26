@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 
 import { logger, Logger } from '../core/logger';
 import {
+  generateClassImports,
   generateEnumMapImports,
   entityToCreateInput,
   entityToCreateManyArgs,
@@ -42,12 +43,18 @@ export class SchemaGenerator {
       const { GraphQLJSONObject } = require('graphql-type-json');
 
       // @ts-ignore
-      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '${warthogImportPath}';
+      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '${warthogImportPath}';      
       ${generateEnumMapImports().join('')}
+      ${generateClassImports().join('')}
     `;
 
     Object.keys(metadata.getModels()).forEach((modelName: string) => {
       const model: ModelMetadata = metadata.getModel(modelName);
+
+      // If model is listed as dbOnly, don't generate any schema
+      if (model.dbOnly === true) {
+        return;
+      }
 
       template += `
         ${entityToOrderByEnum(model)}
