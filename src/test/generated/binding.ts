@@ -441,6 +441,18 @@ export interface BaseModelUUID extends BaseGraphQLObject {
   version: Int
 }
 
+export interface DbOnly extends BaseGraphQLObject {
+  id: ID_Output
+  createdAt: DateTime
+  createdById: String
+  updatedAt?: DateTime | null
+  updatedById?: String | null
+  deletedAt?: DateTime | null
+  deletedById?: String | null
+  version: Int
+  stringField: String
+}
+
 export interface Dish extends BaseGraphQLObject {
   id: ID_Output
   createdAt: DateTime

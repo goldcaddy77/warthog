@@ -56,6 +56,11 @@ export function generateEnumMapImports(): string[] {
 `);
     });
   });
+  return imports;
+}
+
+export function generateClassImports(): string[] {
+  const imports: string[] = [];
 
   const classMap = getMetadataStorage().classMap;
   Object.keys(classMap).forEach((tableName: string) => {

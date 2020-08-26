@@ -48,6 +48,8 @@ export interface ModelMetadata {
   klass?: any; // optional because Class decorators added after field decorators
   name: string;
   columns: ColumnMetadata[];
+  apiOnly?: boolean;
+  dbOnly?: boolean;
 }
 
 @Service('MetadataStorage')
@@ -156,7 +158,7 @@ export class MetadataStorage {
     ];
   }
 
-  addModel(name: string, klass: any, filename: string, options = {}) {
+  addModel(name: string, klass: any, filename: string, options: Partial<ModelMetadata> = {}) {
     if (this.interfaces.indexOf(name) > -1) {
       return; // Don't add interface types to model list
     }
