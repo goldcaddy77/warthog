@@ -47,9 +47,12 @@ export function Model({ api = {}, db = {}, apiOnly = false, dbOnly = false }: Mo
   if (!apiOnly) {
     factories.push(Entity(db as EntityOptions) as ClassDecoratorFactory);
   }
-  if (!dbOnly) {
-    factories.push(registerModelWithWarthog as ClassDecoratorFactory);
-  }
+
+  // We add our own Warthog decorator regardless of dbOnly and apiOnly
+  factories.push(registerModelWithWarthog as ClassDecoratorFactory);
+
+  // We shouldn't add this as it creates the GraphQL type, but there is a
+  // bug if we don't add it because we end up adding the Field decorators in the models
   factories.push(ObjectType(api as ObjectOptions) as ClassDecoratorFactory);
 
   return composeClassDecorators(...factories);
