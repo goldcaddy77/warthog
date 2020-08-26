@@ -2,7 +2,7 @@
 // will be re-written.  If you need to change this file, update models or add
 // new TypeGraphQL objects
 // @ts-ignore
-import { GraphQLDateTime as DateTime } from "graphql-iso-date";
+import { DateResolver as Date } from "graphql-scalars";
 // @ts-ignore
 import { GraphQLID as ID } from "graphql";
 // @ts-ignore
@@ -14,13 +14,19 @@ import {
   Int
 } from "type-graphql";
 // @ts-ignore
-import { registerEnumType } from "type-graphql";
+import { registerEnumType, GraphQLISODateTime as DateTime } from "type-graphql";
 
 // @ts-ignore eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");
 
 // @ts-ignore
-import { BaseWhereInput, JsonObject, PaginationArgs } from "../../../src";
+import {
+  BaseWhereInput,
+  JsonObject,
+  PaginationArgs,
+  DateOnlyString,
+  DateTimeString
+} from "../../../src";
 // @ts-ignore
 import { User } from "../src/modules/user/user.model";
 // @ts-ignore
@@ -52,19 +58,19 @@ export class UserWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_lt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_lte?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_gt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_gte?: Date;
 
   @TypeGraphQLField(() => ID, { nullable: true })
@@ -73,19 +79,19 @@ export class UserWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   createdById_in?: string[];
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_eq?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_lt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_lte?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_gt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_gte?: Date;
 
   @TypeGraphQLField(() => ID, { nullable: true })
@@ -97,19 +103,19 @@ export class UserWhereInput {
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_eq?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_lt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_lte?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_gt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_gte?: Date;
 
   @TypeGraphQLField(() => ID, { nullable: true })
@@ -202,19 +208,19 @@ export class PostWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_lt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_lte?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_gt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_gte?: Date;
 
   @TypeGraphQLField(() => ID, { nullable: true })
@@ -223,19 +229,19 @@ export class PostWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   createdById_in?: string[];
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_eq?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_lt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_lte?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_gt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   updatedAt_gte?: Date;
 
   @TypeGraphQLField(() => ID, { nullable: true })
@@ -247,19 +253,19 @@ export class PostWhereInput {
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_eq?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_lt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_lte?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_gt?: Date;
 
-  @TypeGraphQLField({ nullable: true })
+  @TypeGraphQLField(() => DateTime, { nullable: true })
   deletedAt_gte?: Date;
 
   @TypeGraphQLField(() => ID, { nullable: true })
