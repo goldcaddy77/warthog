@@ -197,10 +197,6 @@ export class Config {
 
     (this.container as any).set('warthog.logger', this.logger); // Save for later so we can pull globally
 
-    if (this.logger && this.logger.debug) {
-      this.logger.debug('loadSync complete', this.get());
-    }
-
     return this;
   }
 
