@@ -11,11 +11,12 @@ jobs:
           PGUSER: postgres
           PG_USER: postgres
           PG_HOST: localhost
-      - image: mdillon/postgis:11-alpine
+      - image: postgis/postgis:12-3.0-alpine
         environment:
           PGUSER: postgres
           POSTGRES_USER: postgres
           POSTGRES_DB: warthog-test
+          POSTGRES_PASSWORD: postgres
     steps:
       - checkout
       - run:
