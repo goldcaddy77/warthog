@@ -9,7 +9,7 @@ import { addQueryBuilderWhereItem } from '../torm';
 import { BaseModel } from './';
 import { StringMap, WhereInput } from './types';
 
-interface BaseOptions {
+export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
 }
 

@@ -1322,123 +1322,123 @@ Array [
 exports[`server find: dateOnlyField greater than or equal 2020-01-01 1`] = `
 Array [
   Object {
-    "dateOnlyField": "2020-02-26",
+    "dateOnlyField": "2020-02-27",
     "stringField": "BOSCO",
   },
   Object {
-    "dateOnlyField": "2020-12-02",
+    "dateOnlyField": "2020-12-03",
     "stringField": "VOLUPTATUM NULLA",
   },
   Object {
-    "dateOnlyField": "2020-02-24",
+    "dateOnlyField": "2020-02-25",
     "stringField": "Wisoky",
   },
   Object {
-    "dateOnlyField": "2020-08-17",
+    "dateOnlyField": "2020-08-18",
     "stringField": "SCHINNER",
   },
   Object {
-    "dateOnlyField": "2020-09-30",
+    "dateOnlyField": "2020-10-01",
     "stringField": "koelpin",
   },
   Object {
-    "dateOnlyField": "2020-07-09",
+    "dateOnlyField": "2020-07-10",
     "stringField": "inventore velit",
   },
   Object {
-    "dateOnlyField": "2020-03-30",
+    "dateOnlyField": "2020-03-31",
     "stringField": "QUAM CULPA",
   },
   Object {
-    "dateOnlyField": "2020-06-19",
+    "dateOnlyField": "2020-06-20",
     "stringField": "NAKIA",
   },
   Object {
-    "dateOnlyField": "2020-10-27",
+    "dateOnlyField": "2020-10-28",
     "stringField": "nakia",
   },
   Object {
-    "dateOnlyField": "2020-09-20",
+    "dateOnlyField": "2020-09-21",
     "stringField": "sed praesentium",
   },
   Object {
-    "dateOnlyField": "2020-08-23",
+    "dateOnlyField": "2020-08-24",
     "stringField": "LUEILWITZ",
   },
   Object {
-    "dateOnlyField": "2020-03-29",
+    "dateOnlyField": "2020-03-30",
     "stringField": "RYLEIGH",
   },
   Object {
-    "dateOnlyField": "2020-05-14",
+    "dateOnlyField": "2020-05-15",
     "stringField": "delfinaz",
   },
   Object {
-    "dateOnlyField": "2020-12-12",
+    "dateOnlyField": "2020-12-13",
     "stringField": "elda",
   },
   Object {
-    "dateOnlyField": "2020-06-01",
+    "dateOnlyField": "2020-06-02",
     "stringField": "Damien",
   },
   Object {
-    "dateOnlyField": "2020-11-20",
+    "dateOnlyField": "2020-11-21",
     "stringField": "KAELYN",
   },
   Object {
-    "dateOnlyField": "2020-10-10",
+    "dateOnlyField": "2020-10-11",
     "stringField": "iste in",
   },
   Object {
-    "dateOnlyField": "2020-07-06",
+    "dateOnlyField": "2020-07-07",
     "stringField": "ut consequatur",
   },
   Object {
-    "dateOnlyField": "2020-09-25",
+    "dateOnlyField": "2020-09-26",
     "stringField": "eum reiciendis",
   },
   Object {
-    "dateOnlyField": "2020-09-17",
+    "dateOnlyField": "2020-09-18",
     "stringField": "iusto perspiciatis",
   },
   Object {
-    "dateOnlyField": "2020-10-13",
+    "dateOnlyField": "2020-10-14",
     "stringField": "VERITATIS EIUS",
   },
   Object {
-    "dateOnlyField": "2020-12-02",
+    "dateOnlyField": "2020-12-03",
     "stringField": "macy",
   },
   Object {
-    "dateOnlyField": "2020-02-09",
+    "dateOnlyField": "2020-02-10",
     "stringField": "GERLACH",
   },
   Object {
-    "dateOnlyField": "2020-07-07",
+    "dateOnlyField": "2020-07-08",
     "stringField": "ENIM DICTA",
   },
   Object {
-    "dateOnlyField": "2020-12-10",
+    "dateOnlyField": "2020-12-11",
     "stringField": "amalia",
   },
   Object {
-    "dateOnlyField": "2020-03-03",
+    "dateOnlyField": "2020-03-04",
     "stringField": "schamberger",
   },
   Object {
-    "dateOnlyField": "2020-09-06",
+    "dateOnlyField": "2020-09-07",
     "stringField": "MAGNAM REICIENDIS",
   },
   Object {
-    "dateOnlyField": "2020-09-30",
+    "dateOnlyField": "2020-10-01",
     "stringField": "DESTIN",
   },
   Object {
-    "dateOnlyField": "2020-12-29",
+    "dateOnlyField": "2020-12-30",
     "stringField": "eius necessitatibus",
   },
   Object {
-    "dateOnlyField": "2020-12-19",
+    "dateOnlyField": "2020-12-20",
     "stringField": "RICE",
   },
 ]
