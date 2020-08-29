@@ -113,6 +113,19 @@ export function addQueryBuilderWhereItem<E>(
 
       return qb;
     }
+    // Postgres array functions: https://www.postgresql.org/docs/10/functions-array.html
+    case 'containsAll':
+      return qb.andWhere(`${columnWithAlias} @> :${parameterKey}`, {
+        [parameterKey]: value
+      });
+    case 'containsNone':
+      return qb.andWhere(`NOT (${columnWithAlias} && :${parameterKey})`, {
+        [parameterKey]: value
+      });
+    case 'containsAny':
+      return qb.andWhere(`${columnWithAlias} && :${parameterKey}`, {
+        [parameterKey]: value
+      });
     default:
       throw new Error(`Can't find operator ${operator}`);
   }

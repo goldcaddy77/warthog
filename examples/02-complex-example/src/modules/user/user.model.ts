@@ -193,5 +193,11 @@ export class User extends BaseModel {
   @StringField({ dbOnly: true, nullable: true })
   dbOnlyField!: string;
 
+  @StringField({ array: true, nullable: true })
+  arrayOfStrings!: string[];
+
+  @IntField({ array: true, nullable: true })
+  arrayOfInts!: number[];
+
   // TODO: ForeignKeyField
 }

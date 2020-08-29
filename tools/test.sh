@@ -1,5 +1,8 @@
 set -e 
 
+# Make sure dates are imported in UTC so that we don't have off-by-one issues
+export TZ=utc
+
 if [ -z "$SKIP_DB_CREATION" ]
 then
   NODE_ENV=test PGUSER=postgres ./bin/warthog db:drop

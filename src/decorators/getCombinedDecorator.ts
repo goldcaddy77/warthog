@@ -7,22 +7,22 @@ import { MethodDecoratorFactory } from '../utils';
 import { WarthogField } from './WarthogField';
 
 // Combine TypeORM, TypeGraphQL and Warthog decorators
-export interface WarthogCombinedDecoratorOptions {
+export interface WarthogCombinedDecoratorOptions<T> {
   fieldType: FieldType; // This is the warthog field type
-  warthogColumnMeta: Partial<ColumnMetadata>; // Warthog options like sort, filter, nullable
+  warthogColumnMeta: T; // Warthog options like sort, filter, nullable
   gqlFieldType?: any; // This is the Type that will land in the GraphQL schmea
   dbType?: ColumnType;
   dbColumnOptions?: any; // Passed to TypeORM `Column` decorator
 }
 
 //
-export function getCombinedDecorator({
+export function getCombinedDecorator<T extends Partial<ColumnMetadata>>({
   fieldType,
   warthogColumnMeta,
   gqlFieldType = String,
   dbType = 'varchar',
   dbColumnOptions: columnOptions = {}
-}: WarthogCombinedDecoratorOptions) {
+}: WarthogCombinedDecoratorOptions<T>) {
   const nullableOption = warthogColumnMeta.nullable === true ? { nullable: true } : {};
   const defaultOption =
     typeof warthogColumnMeta.default !== 'undefined' ? { default: warthogColumnMeta.default } : {};
@@ -32,6 +32,8 @@ export function getCombinedDecorator({
     typeof warthogColumnMeta.description !== 'undefined'
       ? { description: warthogColumnMeta.description }
       : {};
+  const arrayOption = (warthogColumnMeta as any).array ? { array: true } : {};
+
   // TODO: Enable this when TypeORM is fixed: https://github.com/typeorm/typeorm/issues/5906
   // const typeOrmColumnOption =
   //   typeof warthogColumnMeta.description !== 'undefined'
@@ -69,7 +71,8 @@ export function getCombinedDecorator({
         ...nullableOption,
         ...defaultOption,
         ...columnOptions,
-        ...uniqueOption
+        ...uniqueOption,
+        ...arrayOption
         // ...typeOrmColumnOption: // TODO: Enable this when TypeORM is fixed: https://github.com/typeorm/typeorm/issues/5906
       }) as MethodDecoratorFactory
     );

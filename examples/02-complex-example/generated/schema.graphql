@@ -153,6 +153,8 @@ type User implements BaseGraphQLObject {
   doublePrecisionField: Float
   readonlyField: String
   apiOnlyField: String
+  arrayOfStrings: [String!]
+  arrayOfInts: [Int!]
 }
 
 input UserCreateInput {
@@ -195,6 +197,8 @@ input UserCreateInput {
   password: String
   writeonlyField: String
   apiOnlyField: String
+  arrayOfStrings: [String!]
+  arrayOfInts: [Int!]
 }
 
 enum UserOrderByInput {
@@ -308,6 +312,8 @@ input UserUpdateInput {
   password: String
   writeonlyField: String
   apiOnlyField: String
+  arrayOfStrings: [String!]
+  arrayOfInts: [Int!]
 }
 
 input UserWhereInput {
@@ -501,6 +507,12 @@ input UserWhereInput {
   apiOnlyField_startsWith: String
   apiOnlyField_endsWith: String
   apiOnlyField_in: [String!]
+  arrayOfStrings_containsAll: [String!]
+  arrayOfStrings_containsNone: [String!]
+  arrayOfStrings_containsAny: [String!]
+  arrayOfInts_containsAll: [Int!]
+  arrayOfInts_containsNone: [Int!]
+  arrayOfInts_containsAny: [Int!]
 }
 
 input UserWhereUniqueInput {

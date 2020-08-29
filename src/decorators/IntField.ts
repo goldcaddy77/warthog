@@ -10,6 +10,7 @@ interface IntFieldOptions extends DecoratorCommonOptions {
   dataType?: IntColumnType;
   default?: number;
   filter?: boolean | IntWhereOperator[];
+  array?: boolean;
 }
 
 export function IntField(options: IntFieldOptions = {}): any {

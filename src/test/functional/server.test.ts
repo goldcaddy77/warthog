@@ -68,9 +68,13 @@ describe('server', () => {
       throw new Error(error);
     }
 
-    kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
-    await createManyDishes(binding, kitchenSink.id);
-    await createManyKitchenSinks(binding);
+    // sinksExist skips recreating seed data so that we can re-run tests in watch mode
+    const sinksExist = (await binding.query.kitchenSinks({ limit: 1 }, '{ id }')).length > 0;
+    if (!sinksExist) {
+      kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
+      await createManyDishes(binding, kitchenSink.id);
+      await createManyKitchenSinks(binding);
+    }
 
     done();
   });
@@ -341,6 +345,113 @@ describe('server', () => {
     expect(result.length).toEqual(56);
     expect(result).toMatchSnapshot();
   });
+
+  test('find: dateOnlyField greater than or equal 2020-01-01', async () => {
+    expect.assertions(3);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { dateOnlyField_gte: '2020-01-01' }, limit: 100 },
+      '{ stringField dateOnlyField }'
+    );
+
+    expect(result.length).toEqual(30);
+    expect(result[0].dateOnlyField!.length).toBe(10);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: dateTimeField less than or equal 2020-01-01', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { dateTimeField_lte: '2020-01-01' }, limit: 100 },
+      '{ stringField dateTimeField }'
+    );
+
+    expect(result.length).toEqual(69);
+    expect(result[0].dateTimeField!.length).toBe(24);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: jsonField foo_eq: bar', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { jsonField_json: { foo_eq: 'bar' } }, limit: 100 },
+      '{ stringField jsonField }'
+    );
+
+    expect(result.length).toEqual(29);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: arrayOfInts_containsAll: [1, 2, 7]', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { arrayOfInts_containsAll: [1, 2, 7] }, limit: 100 },
+      '{ stringField arrayOfInts }'
+    );
+
+    expect(result.length).toEqual(1);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: arrayOfInts_containsAny: [1, 2, 7]', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { arrayOfInts_containsAny: [1, 2, 7] }, limit: 100 },
+      '{ stringField arrayOfInts }'
+    );
+
+    expect(result.length).toEqual(46);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: arrayOfInts_containsNone: [1, 2, 7]', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { arrayOfInts_containsNone: [1, 2, 7] }, limit: 100 },
+      '{ stringField arrayOfInts }'
+    );
+
+    expect(result.length).toEqual(54);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: arrayOfStrings_containsAll: [dog, cat]', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { arrayOfStrings_containsAll: ['dog', 'cat'] }, limit: 100 },
+      '{ stringField arrayOfStrings }'
+    );
+
+    expect(result.length).toEqual(3);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: arrayOfStrings_containsAny: [dog, cat]', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { arrayOfStrings_containsAny: ['dog', 'cat'] }, limit: 100 },
+      '{ stringField arrayOfStrings }'
+    );
+
+    expect(result.length).toEqual(29);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('find: arrayOfStrings_containsNone: [dog, cat]', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { arrayOfStrings_containsNone: ['dog', 'cat'] }, limit: 100 },
+      '{ stringField arrayOfStrings }'
+    );
+
+    expect(result.length).toEqual(71);
+    expect(result).toMatchSnapshot();
+  });
+
+  //
+  //
+
+  // jsonField: {
+  //   foo: 'bar',
+  //   quia: 'autem'
+  // },
+  // arrayOfInts: [1],
+  // arrayOfStrings: []
+
+  //
+  //
 
   test('findOne: consequuntur-94489@a.com', async () => {
     expect.assertions(1);

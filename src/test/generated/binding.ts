@@ -245,8 +245,11 @@ export interface KitchenSinkCreateInput {
   intFieldFilterLteGte?: Float | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
+  customFieldArrayColumn?: String[] | String | null
   writeonlyField?: String | null
   apiOnlyField?: String | null
+  arrayOfStrings?: String[] | String | null
+  arrayOfInts?: Int[] | Int | null
 }
 
 export interface KitchenSinkUpdateInput {
@@ -271,8 +274,11 @@ export interface KitchenSinkUpdateInput {
   intFieldFilterLteGte?: Float | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
+  customFieldArrayColumn?: String[] | String | null
   writeonlyField?: String | null
   apiOnlyField?: String | null
+  arrayOfStrings?: String[] | String | null
+  arrayOfInts?: Int[] | Int | null
 }
 
 export interface KitchenSinkWhereInput {
@@ -385,6 +391,12 @@ export interface KitchenSinkWhereInput {
   apiOnlyField_startsWith?: String | null
   apiOnlyField_endsWith?: String | null
   apiOnlyField_in?: String[] | String | null
+  arrayOfStrings_containsAll?: String[] | String | null
+  arrayOfStrings_containsNone?: String[] | String | null
+  arrayOfStrings_containsAny?: String[] | String | null
+  arrayOfInts_containsAll?: Int[] | Int | null
+  arrayOfInts_containsNone?: Int[] | Int | null
+  arrayOfInts_containsAny?: Int[] | Int | null
 }
 
 export interface KitchenSinkWhereUniqueInput {
@@ -503,8 +515,11 @@ export interface KitchenSink extends BaseGraphQLObject {
   intFieldFilterLteGte?: Int | null
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
+  customFieldArrayColumn?: Array<String> | null
   readonlyField?: String | null
   apiOnlyField?: String | null
+  arrayOfStrings?: Array<String> | null
+  arrayOfInts?: Array<Int> | null
 }
 
 export interface PageInfo {

@@ -28,9 +28,9 @@
   "exclude": [
     "node_modules",
     "**/node_modules/*",
-    "src/**/*.test.ts",
-    "**/generated/*",
-    "src/test/**/*"
+    // "src/**/*.test.ts",
+    "**/generated/*"
+    // "src/test/**/*"
   ],
   "include": ["src/**/*", "typings"]
 }

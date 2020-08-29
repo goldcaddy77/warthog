@@ -107,8 +107,13 @@ export function entityToWhereUniqueInput(model: ModelMetadata): string {
     }
 
     const nullable = uniqueFieldsAreNullable ? ', { nullable: true }' : '';
-    const graphQLDataType = columnToGraphQLDataType(column);
-    const tsType = columnToTypeScriptType(column);
+    let graphQLDataType = columnToGraphQLDataType(column);
+    let tsType = columnToTypeScriptType(column);
+
+    if (column.array) {
+      tsType = tsType.concat('[]');
+      graphQLDataType = `[${graphQLDataType}]`;
+    }
 
     fieldsTemplate += `
         @TypeGraphQLField(() => ${graphQLDataType}${nullable})
@@ -151,10 +156,15 @@ export function entityToCreateInput(model: ModelMetadata): string {
     if (!column.editable || column.readonly) {
       return;
     }
-    const graphQLDataType = columnToGraphQLDataType(column);
+    let graphQLDataType = columnToGraphQLDataType(column);
     const nullable = column.nullable ? '{ nullable: true }' : '';
     const tsRequired = column.nullable ? '?' : '!';
-    const tsType = columnToTypeScriptType(column);
+    let tsType = columnToTypeScriptType(column);
+
+    if (column.array) {
+      tsType = tsType.concat('[]');
+      graphQLDataType = `[${graphQLDataType}]`;
+    }
 
     if (columnRequiresExplicitGQLType(column)) {
       fieldTemplates += `
@@ -195,8 +205,13 @@ export function entityToUpdateInput(model: ModelMetadata): string {
 
     // TODO: also don't allow updated foreign key fields
     // Example: photo.userId: String
-    const graphQLDataType = columnToGraphQLDataType(column);
-    const tsType = columnToTypeScriptType(column);
+    let graphQLDataType = columnToGraphQLDataType(column);
+    let tsType = columnToTypeScriptType(column);
+
+    if (column.array) {
+      tsType = tsType.concat('[]');
+      graphQLDataType = `[${graphQLDataType}]`;
+    }
 
     if (columnRequiresExplicitGQLType(column)) {
       fieldTemplates += `
@@ -272,7 +287,18 @@ export function entityToWhereInput(model: ModelMetadata): string {
 
     // TODO: for foreign key fields, only allow the same filters as ID below
     // Example: photo.userId: String
-    if (column.type === 'id') {
+    if (column.array) {
+      fieldTemplates += `
+        @TypeGraphQLField(() => [${graphQLDataType}],{ nullable: true })
+        ${column.propertyName}_containsAll?: [${tsType}];
+
+        @TypeGraphQLField(() => [${graphQLDataType}],{ nullable: true })
+        ${column.propertyName}_containsNone?: [${tsType}];
+
+        @TypeGraphQLField(() => [${graphQLDataType}],{ nullable: true })
+        ${column.propertyName}_containsAny?: [${tsType}];
+      `;
+    } else if (column.type === 'id') {
       const graphQlType = 'ID';
 
       if (allowFilter('eq')) {
@@ -492,7 +518,8 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
 
     // If user says this is not sortable, then don't allow sorting
     // Also, if the column is "write only", therefore it cannot be read and shouldn't be sortable
-    if (column.sort && !column.writeonly) {
+    // Also, doesn't make sense to sort arrays
+    if (column.sort && !column.writeonly && !column.array) {
       fieldsTemplate += `
         ${column.propertyName}_ASC = '${column.propertyName}_ASC',
         ${column.propertyName}_DESC = '${column.propertyName}_DESC',
@@ -514,6 +541,7 @@ export function entityToOrderByEnum(model: ModelMetadata): string {
 function columnRequiresExplicitGQLType(column: ColumnMetadata) {
   return (
     column.enum ||
+    column.array ||
     column.type === 'json' ||
     column.type === 'id' ||
     column.type === 'date' ||
