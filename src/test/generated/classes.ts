@@ -802,6 +802,9 @@ export enum DishOrderByEnum {
   name_ASC = "name_ASC",
   name_DESC = "name_DESC",
 
+  stringEnumField_ASC = "stringEnumField_ASC",
+  stringEnumField_DESC = "stringEnumField_DESC",
+
   kitchenSinkId_ASC = "kitchenSinkId_ASC",
   kitchenSinkId_DESC = "kitchenSinkId_DESC"
 }
@@ -899,6 +902,12 @@ export class DishWhereInput {
   @TypeGraphQLField(() => [String], { nullable: true })
   name_in?: string[];
 
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField_eq?: StringEnum;
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  stringEnumField_in?: StringEnum[];
+
   @TypeGraphQLField(() => ID, { nullable: true })
   kitchenSinkId_eq?: string;
 
@@ -917,6 +926,9 @@ export class DishCreateInput {
   @TypeGraphQLField()
   name!: string;
 
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
+
   @TypeGraphQLField(() => ID)
   kitchenSinkId!: string;
 }
@@ -925,6 +937,9 @@ export class DishCreateInput {
 export class DishUpdateInput {
   @TypeGraphQLField({ nullable: true })
   name?: string;
+
+  @TypeGraphQLField(() => StringEnum, { nullable: true })
+  stringEnumField?: StringEnum;
 
   @TypeGraphQLField(() => ID, { nullable: true })
   kitchenSinkId?: string;
