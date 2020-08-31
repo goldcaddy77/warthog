@@ -152,6 +152,7 @@ type Dish implements BaseGraphQLObject {
   deletedById: String
   version: Int!
   name: String!
+  stringEnumField: StringEnum
   kitchenSink: KitchenSink!
   kitchenSinkId: String!
 }
@@ -163,6 +164,7 @@ type DishConnection {
 
 input DishCreateInput {
   name: String!
+  stringEnumField: StringEnum
   kitchenSinkId: ID!
 }
 
@@ -175,12 +177,15 @@ enum DishOrderByInput {
   deletedAt_DESC
   name_ASC
   name_DESC
+  stringEnumField_ASC
+  stringEnumField_DESC
   kitchenSinkId_ASC
   kitchenSinkId_DESC
 }
 
 input DishUpdateInput {
   name: String
+  stringEnumField: StringEnum
   kitchenSinkId: ID
 }
 
@@ -214,6 +219,8 @@ input DishWhereInput {
   name_startsWith: String
   name_endsWith: String
   name_in: [String!]
+  stringEnumField_eq: StringEnum
+  stringEnumField_in: [StringEnum!]
   kitchenSinkId_eq: ID
   kitchenSinkId_in: [ID!]
 }

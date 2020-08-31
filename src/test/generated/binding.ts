@@ -60,6 +60,8 @@ export type DishOrderByInput =   'createdAt_ASC' |
   'deletedAt_DESC' |
   'name_ASC' |
   'name_DESC' |
+  'stringEnumField_ASC' |
+  'stringEnumField_DESC' |
   'kitchenSinkId_ASC' |
   'kitchenSinkId_DESC'
 
@@ -177,11 +179,13 @@ export interface BaseWhereInput {
 
 export interface DishCreateInput {
   name: String
+  stringEnumField?: StringEnum | null
   kitchenSinkId: ID_Output
 }
 
 export interface DishUpdateInput {
   name?: String | null
+  stringEnumField?: StringEnum | null
   kitchenSinkId?: ID_Input | null
 }
 
@@ -215,6 +219,8 @@ export interface DishWhereInput {
   name_startsWith?: String | null
   name_endsWith?: String | null
   name_in?: String[] | String | null
+  stringEnumField_eq?: StringEnum | null
+  stringEnumField_in?: StringEnum[] | StringEnum | null
   kitchenSinkId_eq?: ID_Input | null
   kitchenSinkId_in?: ID_Output[] | ID_Output | null
 }
@@ -475,6 +481,7 @@ export interface Dish extends BaseGraphQLObject {
   deletedById?: String | null
   version: Int
   name: String
+  stringEnumField?: StringEnum | null
   kitchenSink: KitchenSink
   kitchenSinkId: String
 }

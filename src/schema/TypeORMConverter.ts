@@ -47,10 +47,18 @@ export function columnToTypeScriptType(column: ColumnMetadata): string {
 export function generateEnumMapImports(): string[] {
   const imports: string[] = [];
   const enumMap = getMetadataStorage().enumMap;
+  // Keep track of already imported items so that we don't attempt to import twice in the event the
+  // enum is used in multiple models
+  const imported = new Set();
 
   Object.keys(enumMap).forEach((tableName: string) => {
     Object.keys(enumMap[tableName]).forEach((columnName: string) => {
       const enumColumn = enumMap[tableName][columnName];
+      if (imported.has(enumColumn.name)) {
+        return;
+      }
+      imported.add(enumColumn.name);
+
       const filename = filenameToImportPath(enumColumn.filename);
       imports.push(`import { ${enumColumn.name} } from '${filename}'
 `);

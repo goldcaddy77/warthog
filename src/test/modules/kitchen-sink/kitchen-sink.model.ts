@@ -24,12 +24,8 @@ import {
 
 import { Dish } from '../dish/dish.model';
 
-// Note: this must be exported and in the same file where it's attached with @EnumField
-// Also - must use string enums
-export enum StringEnum {
-  FOO = 'FOO',
-  BAR = 'BAR'
-}
+import { StringEnum } from '../shared';
+export { StringEnum }; // Warthog requires this
 
 @Model()
 export class KitchenSink extends BaseModel {
