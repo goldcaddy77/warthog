@@ -53,6 +53,15 @@ export interface ModelMetadata {
   dbOnly?: boolean;
 }
 
+type EndpointType =
+  | 'find'
+  | 'findOne'
+  | 'connection'
+  | 'create'
+  | 'createMany'
+  | 'update'
+  | 'delete';
+
 @Service('MetadataStorage')
 export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
@@ -63,11 +72,8 @@ export class MetadataStorage {
 
   decoratorDefaults: Partial<ColumnMetadata>;
 
-  constructor(@Inject('Config') readonly config?: Config) {
-    if (!config) {
-      config = Container.get('Config');
-    }
-    config = config as Config; // `config` needs to be optional in the constructor for the global instantiation below
+  constructor(@Inject('Config') readonly config: Config) {
+    const filterByDefault = this.config.get('FILTER_BY_DEFAULT') !== 'false';
 
     this.decoratorDefaults = {
       apiOnly: false,
@@ -75,10 +81,10 @@ export class MetadataStorage {
       editable: true, // Deprecated
       // `true` by default, provide opt-out for backward compatability
       // V3: make this false by default
-      filter: config.get('FILTER_BY_DEFAULT') !== 'false',
+      filter: filterByDefault,
       nullable: false,
       readonly: false,
-      sort: config.get('FILTER_BY_DEFAULT') !== 'false',
+      sort: filterByDefault,
       unique: false,
       writeonly: false
     };
@@ -87,7 +93,8 @@ export class MetadataStorage {
       {
         propertyName: 'id',
         type: 'id',
-        filter: true,
+        // Either give all filters or at least give id_in as a best practice
+        filter: filterByDefault || ['in'],
         nullable: false,
         sort: false,
         unique: true,
@@ -97,16 +104,16 @@ export class MetadataStorage {
         propertyName: 'createdAt',
         type: 'date',
         editable: false,
-        filter: true,
+        filter: filterByDefault,
         nullable: false,
-        sort: true,
+        sort: filterByDefault,
         unique: false
       },
       {
         propertyName: 'createdById',
         type: 'id',
         editable: false,
-        filter: true,
+        filter: filterByDefault,
         nullable: false,
         sort: false,
         unique: false
@@ -115,16 +122,16 @@ export class MetadataStorage {
         propertyName: 'updatedAt',
         type: 'date',
         editable: false,
-        filter: true,
+        filter: filterByDefault,
         nullable: true,
-        sort: true,
+        sort: filterByDefault,
         unique: false
       },
       {
         propertyName: 'updatedById',
         type: 'id',
         editable: false,
-        filter: true,
+        filter: filterByDefault,
         nullable: true,
         sort: false,
         unique: false
@@ -133,16 +140,16 @@ export class MetadataStorage {
         propertyName: 'deletedAt',
         type: 'date',
         editable: false,
-        filter: true,
+        filter: filterByDefault,
         nullable: true,
-        sort: true,
+        sort: filterByDefault,
         unique: false
       },
       {
         propertyName: 'deletedById',
         type: 'id',
         editable: false,
-        filter: true,
+        filter: filterByDefault,
         nullable: true,
         sort: false,
         unique: false
@@ -169,6 +176,9 @@ export class MetadataStorage {
       klass,
       name
     };
+
+    // We shouldn't need to do this as a field decorator will almost certainly have called this
+    this.ensureModelExists(name);
 
     // Just add `klass` and `filename` to the model object
     this.models[name] = {
@@ -214,6 +224,20 @@ export class MetadataStorage {
     }
     return this.enumMap[modelName][columnName] || undefined;
   }
+
+  ensureModelExists(modelName: string) {
+    if (!this.models[modelName]) {
+      this.models[modelName] = {
+        name: modelName,
+        columns: Array.from(this.baseColumns)
+        // endpoints: []
+      };
+    }
+  }
+
+  // addEndpont(modelName: string, endpointType: EndpointType) {
+  //   this.ensureModelExists(modelName);
+  // }
 
   addField(
     type: FieldType,

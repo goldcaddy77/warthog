@@ -28,7 +28,9 @@ import {
   DateTimeString
 } from "../../../src";
 import { StringEnum } from "../src/modules/user/user.model";
+
 // @ts-ignore
+
 import { User } from "../src/modules/user/user.model";
 
 export enum UserOrderByEnum {
