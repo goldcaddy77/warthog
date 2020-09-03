@@ -368,7 +368,13 @@ export class SchemaGenerator {
         `;
       } else if (column.type === 'id') {
         const graphQlType = 'ID';
-        // V3: BREAKING CHANGE: no longer allow single id filtering in where clause
+
+        if (allowFilter('eq')) {
+          fieldTemplates += `
+          @TypeGraphQLField(() => ${graphQlType},{ nullable: true })
+          ${column.propertyName}_eq?: string;
+        `;
+        }
 
         if (allowFilter('in')) {
           fieldTemplates += `

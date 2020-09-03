@@ -24,6 +24,7 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_APP_PROTOCOL: 'http',
     WARTHOG_AUTO_GENERATE_FILES: 'false',
     WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
+    WARTHOG_DB_CONNECTION: 'postgres',
     WARTHOG_DB_DATABASE: 'warthog-test',
     WARTHOG_DB_ENTITIES: 'src/test/modules/**/*.model.ts',
     WARTHOG_DB_HOST: 'localhost',
