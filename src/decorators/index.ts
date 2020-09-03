@@ -3,6 +3,7 @@ export * from './CustomField';
 export * from './DateField';
 export * from './DateOnlyField';
 export * from './DateTimeField';
+export * from './debug';
 export * from './EmailField';
 export * from './EnumField';
 export * from './Fields';
