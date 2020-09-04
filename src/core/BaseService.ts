@@ -1,22 +1,32 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
+import { Container, Inject, Service } from 'typedi';
 import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
+import { MetadataStorage } from '../metadata';
 import { ConnectionResult, StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
-import { BaseModel } from './';
 import { StringMap, WhereInput } from './types';
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
 }
 
-export class BaseService<E extends BaseModel> {
+export interface Node {
+  id: string;
+}
+
+Container.import([MetadataStorage]);
+
+@Service('BaseService')
+export class BaseService<E extends Node> {
   manager: EntityManager;
   columnMap: StringMap;
   klass: string;
+
+  @Inject('MetadataStorage') metadata!: MetadataStorage;
 
   // TODO: any -> ObjectType<E> (or something close)
   // V3: Only ask for entityClass, we can get repository and manager from that
@@ -48,7 +58,12 @@ export class BaseService<E extends BaseModel> {
       },
       {}
     );
+
     this.klass = this.repository.metadata.name.toLowerCase();
+  }
+
+  hasColumn(name: string) {
+    return typeof this.columnMap[name] !== 'undefined';
   }
 
   getPageInfo(limit: number, offset: number, totalCount: number) {
@@ -60,6 +75,11 @@ export class BaseService<E extends BaseModel> {
       totalCount
     };
   }
+
+  // getMetadata(): MetadataStorage {
+  //   this.getMetadata().getModelColumns(entityClass.name);
+  //   return Container.get('MetadataStorage') as MetadataStorage;
+  // }
 
   async find<W extends WhereInput>(
     where?: any,
@@ -130,9 +150,14 @@ export class BaseService<E extends BaseModel> {
     where = where || {};
 
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
-    const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
-    // If no deletedAt filters specified, hide them by default
-    if (!hasDeletedAts) {
+    const hasDeletedAtFilter = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
+
+    // If there is no deletedAt column, don't add this default filter
+    // TODO: don't just look at "deleteAt" column, look for metadata from a DeletedDate decorator
+    if (!this.hasColumn('deletedAt')) {
+      // Don't do anything
+    } else if (!hasDeletedAtFilter) {
+      // If no deletedAt filters specified, hide them by default
       // eslint-disable-next-line @typescript-eslint/camelcase
       where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
     } else if (typeof where.deletedAt_all !== 'undefined') {
@@ -181,7 +206,8 @@ export class BaseService<E extends BaseModel> {
 
   async create(data: DeepPartial<E>, userId: string, options?: BaseOptions): Promise<E> {
     const manager = options?.manager ?? this.manager;
-    const entity = manager.create(this.entityClass, { ...data, createdById: userId });
+    const createdByIdObject = this.hasColumn('createdById') ? { createdById: userId } : {};
+    const entity = manager.create(this.entityClass, { ...data, ...createdByIdObject });
 
     // Validate against the the data model
     // Without `skipMissingProperties`, some of the class-validator validations (like MinLength)
@@ -199,9 +225,10 @@ export class BaseService<E extends BaseModel> {
 
   async createMany(data: DeepPartial<E>[], userId: string, options?: BaseOptions): Promise<E[]> {
     const manager = options?.manager ?? this.manager;
+    const createdByIdObject = this.hasColumn('createdById') ? { createdById: userId } : {};
 
     data = data.map(item => {
-      return { ...item, createdById: userId };
+      return { ...item, ...createdByIdObject };
     });
 
     const results = manager.create(this.entityClass, data);
@@ -234,7 +261,8 @@ export class BaseService<E extends BaseModel> {
   ): Promise<E> {
     const manager = options?.manager ?? this.manager;
     const found = await this.findOne(where);
-    const mergeData = ({ id: found.id, updatedById: userId } as any) as DeepPartial<E>;
+    const updatedByIdObject = this.hasColumn('updatedById') ? { updatedById: userId } : {};
+    const mergeData: DeepPartial<E> = { id: found.id, ...updatedByIdObject } as any;
     const entity = manager.merge<E>(this.entityClass, new this.entityClass(), data, mergeData);
 
     // skipMissingProperties -> partial validation of only supplied props
@@ -253,10 +281,10 @@ export class BaseService<E extends BaseModel> {
     options?: BaseOptions
   ): Promise<StandardDeleteResponse> {
     const manager = options?.manager ?? this.manager;
-
+    const deletedByObject = this.hasColumn('deletedById') ? { deletedById: userId } : {};
     const data = {
       deletedAt: new Date().toISOString(),
-      deletedById: userId
+      ...deletedByObject
     };
 
     const found = await manager.findOneOrFail<E>(this.entityClass, where as any);

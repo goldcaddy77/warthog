@@ -21,4 +21,5 @@ export * from './NumericField';
 export * from './OneToMany';
 export * from './StringField';
 export * from './UserId';
+export * from './UpdateDateField';
 export * from './WarthogField';

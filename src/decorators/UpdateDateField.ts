@@ -4,14 +4,11 @@ import { UpdateDateColumn } from 'typeorm';
 import { getMetadataStorage } from '../metadata';
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
-interface DateFieldOptions {}
-
-export function UpdateDateField(args: DateFieldOptions = {}): any {
+export function UpdateDateField(): any {
   const registerWithWarthog = (target: object, propertyKey: string): any => {
     getMetadataStorage().addField('date', target.constructor.name, propertyKey);
   };
 
-  // These are the 2 required decorators to get type-graphql and typeorm working
   const factories = [
     registerWithWarthog,
     Field(() => GraphQLISODateTime, {

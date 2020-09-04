@@ -39,6 +39,7 @@ export interface ColumnMetadata extends DecoratorCommonOptions {
   enumName?: string;
   unique?: boolean;
   array?: boolean;
+  addedByDecorator?: boolean;
 }
 
 export type ColumnOptions = Partial<ColumnMetadata>;
@@ -99,70 +100,70 @@ export class MetadataStorage {
         sort: false,
         unique: true,
         editable: false
-      },
-      {
-        propertyName: 'createdAt',
-        type: 'date',
-        editable: false,
-        filter: filterByDefault,
-        nullable: false,
-        sort: filterByDefault,
-        unique: false
-      },
-      {
-        propertyName: 'createdById',
-        type: 'id',
-        editable: false,
-        filter: filterByDefault,
-        nullable: false,
-        sort: false,
-        unique: false
-      },
-      {
-        propertyName: 'updatedAt',
-        type: 'date',
-        editable: false,
-        filter: filterByDefault,
-        nullable: true,
-        sort: filterByDefault,
-        unique: false
-      },
-      {
-        propertyName: 'updatedById',
-        type: 'id',
-        editable: false,
-        filter: filterByDefault,
-        nullable: true,
-        sort: false,
-        unique: false
-      },
-      {
-        propertyName: 'deletedAt',
-        type: 'date',
-        editable: false,
-        filter: filterByDefault,
-        nullable: true,
-        sort: filterByDefault,
-        unique: false
-      },
-      {
-        propertyName: 'deletedById',
-        type: 'id',
-        editable: false,
-        filter: filterByDefault,
-        nullable: true,
-        sort: false,
-        unique: false
-      },
-      {
-        type: 'integer',
-        propertyName: 'version',
-        editable: false,
-        filter: false,
-        nullable: false,
-        sort: false,
-        unique: false
       }
+      // {
+      //   propertyName: 'createdAt',
+      //   type: 'date',
+      //   editable: false,
+      //   filter: filterByDefault,
+      //   nullable: false,
+      //   sort: filterByDefault,
+      //   unique: false
+      // },
+      // {
+      //   propertyName: 'createdById',
+      //   type: 'id',
+      //   editable: false,
+      //   filter: filterByDefault,
+      //   nullable: false,
+      //   sort: false,
+      //   unique: false
+      // },
+      // {
+      //   propertyName: 'updatedAt',
+      //   type: 'date',
+      //   editable: false,
+      //   filter: filterByDefault,
+      //   nullable: true,
+      //   sort: filterByDefault,
+      //   unique: false
+      // },
+      // {
+      //   propertyName: 'updatedById',
+      //   type: 'id',
+      //   editable: false,
+      //   filter: filterByDefault,
+      //   nullable: true,
+      //   sort: false,
+      //   unique: false
+      // },
+      // {
+      //   propertyName: 'deletedAt',
+      //   type: 'date',
+      //   editable: false,
+      //   filter: filterByDefault,
+      //   nullable: true,
+      //   sort: filterByDefault,
+      //   unique: false
+      // },
+      // {
+      //   propertyName: 'deletedById',
+      //   type: 'id',
+      //   editable: false,
+      //   filter: filterByDefault,
+      //   nullable: true,
+      //   sort: false,
+      //   unique: false
+      // },
+      // {
+      //   type: 'integer',
+      //   propertyName: 'version',
+      //   editable: false,
+      //   filter: false,
+      //   nullable: false,
+      //   sort: false,
+      //   unique: false
+      // }
     ];
   }
 
@@ -218,6 +219,11 @@ export class MetadataStorage {
     return this.models[name];
   }
 
+  getModelColumns(modelName: string) {
+    const model = this.getModel(modelName);
+    return model.columns.map((column: ColumnMetadata) => column.propertyName);
+  }
+
   getEnum(modelName: string, columnName: string) {
     if (!this.enumMap[modelName]) {
       return undefined;
@@ -230,6 +236,7 @@ export class MetadataStorage {
       this.models[modelName] = {
         name: modelName,
         columns: Array.from(this.baseColumns)
+        // columns: []
         // endpoints: []
       };
     }
@@ -249,12 +256,7 @@ export class MetadataStorage {
       return; // Don't add interfaces
     }
 
-    if (!this.models[modelName]) {
-      this.models[modelName] = {
-        name: modelName,
-        columns: Array.from(this.baseColumns)
-      };
-    }
+    this.ensureModelExists(modelName);
 
     this.models[modelName].columns.push({
       type,

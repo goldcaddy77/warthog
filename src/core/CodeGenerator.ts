@@ -6,7 +6,7 @@ import * as mkdirp from 'mkdirp';
 import * as path from 'path';
 import { Container, Inject, Service } from 'typedi';
 
-import { Config, logger } from '../core';
+import { Config, logger } from '.';
 import { debug } from '../decorators';
 import { generateBindingFile } from '../gql';
 import { SchemaBuilder, SchemaGenerator } from '../schema';

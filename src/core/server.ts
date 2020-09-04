@@ -20,9 +20,11 @@ import { healthCheckMiddleware } from '../middleware';
 import { SchemaBuilder } from '../schema';
 import { createDBConnection } from '../torm';
 
-import { CodeGenerator } from './code-generator';
+import { CodeGenerator } from './CodeGenerator';
 import { Config } from './config';
 import { BaseContext } from './Context';
+
+Container.import([Config, SchemaBuilder]);
 
 export interface ServerOptions<T> {
   container?: Container;
