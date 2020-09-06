@@ -6,7 +6,6 @@ import {
   EnvironmentCreateInput,
   EnvironmentUpdateArgs,
   EnvironmentWhereArgs,
-  EnvironmentWhereInput,
   EnvironmentWhereUniqueInput
 } from '../../generated';
 
@@ -59,7 +58,7 @@ export class EnvironmentResolver {
   async environments(
     @Args() { where, orderBy, limit, offset }: EnvironmentWhereArgs
   ): Promise<Environment[]> {
-    return this.service.find<EnvironmentWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Query(() => Environment)

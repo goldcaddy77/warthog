@@ -5,9 +5,7 @@ import {
   Arg,
   Args,
   Ctx,
-  // Field,
   Mutation,
-  // ObjectType,
   PubSub,
   Query,
   Resolver,
@@ -17,13 +15,7 @@ import {
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse } from '../../../src';
-import {
-  UserCreateInput,
-  UserUpdateArgs,
-  UserWhereArgs,
-  UserWhereInput,
-  UserWhereUniqueInput
-} from '../generated';
+import { UserCreateInput, UserUpdateArgs, UserWhereArgs, UserWhereUniqueInput } from '../generated';
 
 import { User } from './user.model';
 import { UserService } from './user.service';
@@ -43,7 +35,7 @@ export class UserResolver {
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Query(() => User)

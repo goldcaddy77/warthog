@@ -17,7 +17,6 @@ import {
   FeatureFlagCreateInput,
   FeatureFlagUpdateArgs,
   FeatureFlagWhereArgs,
-  FeatureFlagWhereInput,
   FeatureFlagWhereUniqueInput
 } from '../../generated';
 
@@ -69,7 +68,7 @@ export class FeatureFlagResolver {
   async featureFlags(
     @Args() { where, orderBy, limit, offset }: FeatureFlagWhereArgs
   ): Promise<FeatureFlag[]> {
-    return this.service.find<FeatureFlagWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   // Custom resolver that has it's own InputType and calls into custom service method

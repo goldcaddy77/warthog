@@ -1,12 +1,32 @@
-import { BaseModel, EnumField, ManyToOne, Model, StringField } from '../../../';
-
+import { BeforeInsert } from 'typeorm';
+import {
+  EnumField,
+  generateId,
+  CreatedAtField,
+  DateTimeString,
+  IDType,
+  ManyToOne,
+  Model,
+  PrimaryIdField,
+  StringField
+} from '../../../';
 import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
-
 import { StringEnum } from '../shared';
 export { StringEnum }; // Warthog requires this
 
 @Model()
-export class Dish extends BaseModel {
+export class Dish {
+  @PrimaryIdField({ sort: false, filter: ['in'] })
+  id!: IDType;
+
+  @BeforeInsert()
+  setId() {
+    this.id = this.id || generateId();
+  }
+
+  @CreatedAtField({ sort: true })
+  createdAt!: DateTimeString;
+
   @StringField({ maxLength: 40 })
   name?: string;
 
