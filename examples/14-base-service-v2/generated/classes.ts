@@ -32,6 +32,9 @@ import {
 import { User } from "../src/user.model";
 
 export enum UserOrderByEnum {
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+
   firstName_ASC = "firstName_ASC",
   firstName_DESC = "firstName_DESC",
 
@@ -48,9 +51,6 @@ registerEnumType(UserOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class UserWhereInput {
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
   @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 
@@ -59,15 +59,6 @@ export class UserWhereInput {
 
   @TypeGraphQLField({ nullable: true })
   firstName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  firstName_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  firstName_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   updatedById_eq?: string;
@@ -108,6 +99,9 @@ export class UserWhereUniqueInput {
 
 @TypeGraphQLInputType()
 export class UserCreateInput {
+  @TypeGraphQLField(() => ID)
+  id!: string;
+
   @TypeGraphQLField()
   firstName!: string;
 
@@ -120,6 +114,9 @@ export class UserCreateInput {
 
 @TypeGraphQLInputType()
 export class UserUpdateInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id?: string;
+
   @TypeGraphQLField({ nullable: true })
   firstName?: string;
 

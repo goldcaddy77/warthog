@@ -6,7 +6,6 @@ import {
   SegmentCreateInput,
   SegmentUpdateArgs,
   SegmentWhereArgs,
-  SegmentWhereInput,
   SegmentWhereUniqueInput
 } from '../../generated';
 
@@ -49,7 +48,7 @@ export class SegmentResolver {
 
   @Query(() => [Segment])
   async segments(@Args() { where, orderBy, limit, offset }: SegmentWhereArgs): Promise<Segment[]> {
-    return this.service.find<SegmentWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Query(() => Segment)

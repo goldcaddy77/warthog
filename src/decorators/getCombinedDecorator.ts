@@ -13,6 +13,7 @@ export interface WarthogCombinedDecoratorOptions<T> {
   gqlFieldType?: any; // This is the Type that will land in the GraphQL schmea
   dbType?: ColumnType;
   dbColumnOptions?: any; // Passed to TypeORM `Column` decorator
+  dbDecorator?: any;
 }
 
 //
@@ -21,7 +22,8 @@ export function getCombinedDecorator<T extends Partial<ColumnMetadata>>({
   warthogColumnMeta,
   gqlFieldType = String,
   dbType = 'varchar',
-  dbColumnOptions: columnOptions = {}
+  dbColumnOptions: columnOptions = {},
+  dbDecorator = TypeORMColumn
 }: WarthogCombinedDecoratorOptions<T>) {
   const nullableOption = warthogColumnMeta.nullable === true ? { nullable: true } : {};
   const defaultOption =
@@ -66,7 +68,7 @@ export function getCombinedDecorator<T extends Partial<ColumnMetadata>>({
   // TypeORM: finally add the TypeORM decorator to describe the DB field
   if (exposeDB) {
     decorators.push(
-      TypeORMColumn({
+      dbDecorator({
         type: dbType,
         ...nullableOption,
         ...defaultOption,

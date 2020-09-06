@@ -26,7 +26,6 @@ import {
   DishCreateManyArgs,
   DishUpdateArgs,
   DishWhereArgs,
-  DishWhereInput,
   DishWhereUniqueInput
 } from '../../generated';
 
@@ -34,7 +33,6 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
-import { NestedFields } from '../../../decorators';
 
 @ObjectType()
 export class DishConnection implements ConnectionResult<Dish> {
@@ -61,7 +59,7 @@ export class DishResolver {
     @Args() { where, orderBy, limit, offset }: DishWhereArgs,
     @Fields() fields: string[]
   ): Promise<Dish[]> {
-    return this.service.find<DishWhereInput>(where, orderBy, limit, offset, fields);
+    return this.service.find(where, orderBy, limit, offset, fields);
   }
 
   @Authorized('dish:read')
@@ -69,7 +67,7 @@ export class DishResolver {
   async dishConnection(
     @Args() { where, orderBy, limit, offset }: DishWhereArgs
   ): Promise<DishConnection> {
-    return this.service.findConnection<DishWhereInput>(where, orderBy, limit, offset);
+    return this.service.findConnection(where, orderBy, limit, offset);
   }
 
   @Authorized('dish:read')

@@ -12,7 +12,8 @@ export interface Query {
 
 export interface Mutation {
     createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateUser: <T = User>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
+    updateUser: <T = User>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteUser: <T = StandardDeleteResponse>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Subscription {}
@@ -41,7 +42,9 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: s
  * Types
 */
 
-export type UserOrderByInput =   'firstName_ASC' |
+export type UserOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'firstName_ASC' |
   'firstName_DESC' |
   'updatedById_ASC' |
   'updatedById_DESC' |
@@ -73,25 +76,23 @@ export interface BaseWhereInput {
 }
 
 export interface UserCreateInput {
+  id: ID_Output
   firstName: String
   updatedById?: String | null
   lastName: String
 }
 
 export interface UserUpdateInput {
+  id?: ID_Input | null
   firstName?: String | null
   updatedById?: String | null
   lastName?: String | null
 }
 
 export interface UserWhereInput {
-  id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
   firstName_eq?: String | null
   firstName_contains?: String | null
-  firstName_startsWith?: String | null
-  firstName_endsWith?: String | null
-  firstName_in?: String[] | String | null
   updatedById_eq?: String | null
   updatedById_contains?: String | null
   updatedById_startsWith?: String | null

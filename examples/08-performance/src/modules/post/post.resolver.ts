@@ -7,7 +7,6 @@ import {
   PostCreateManyArgs,
   PostUpdateArgs,
   PostWhereArgs,
-  PostWhereInput,
   PostWhereUniqueInput
 } from '../../../generated';
 
@@ -30,7 +29,7 @@ export class PostResolver {
     @Args() { where, orderBy, limit, offset }: PostWhereArgs,
     @Fields() fields: string[]
   ): Promise<Post[]> {
-    return this.service.find<PostWhereInput>(where, orderBy, limit, offset, fields);
+    return this.service.find(where, orderBy, limit, offset, fields);
   }
 
   @Query(() => Post)

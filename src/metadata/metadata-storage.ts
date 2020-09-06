@@ -37,9 +37,17 @@ export interface ColumnMetadata extends DecoratorCommonOptions {
   default?: any;
   enum?: GraphQLEnumType;
   enumName?: string;
+  specialType?:
+    | 'primary'
+    | 'created-at'
+    | 'created-by'
+    | 'updated-at'
+    | 'updated-by'
+    | 'deleted-at'
+    | 'deleted-by'
+    | 'version';
   unique?: boolean;
   array?: boolean;
-  addedByDecorator?: boolean;
 }
 
 export type ColumnOptions = Partial<ColumnMetadata>;
@@ -69,7 +77,6 @@ export class MetadataStorage {
   classMap: { [table: string]: any } = {};
   models: { [table: string]: ModelMetadata } = {};
   interfaces: string[] = [];
-  baseColumns: ColumnMetadata[];
 
   decoratorDefaults: Partial<ColumnMetadata>;
 
@@ -90,81 +97,7 @@ export class MetadataStorage {
       writeonly: false
     };
 
-    this.baseColumns = [
-      {
-        propertyName: 'id',
-        type: 'id',
-        // Either give all filters or at least give id_in as a best practice
-        filter: filterByDefault || ['in'],
-        nullable: false,
-        sort: false,
-        unique: true,
-        editable: false
-      }
-      // {
-      //   propertyName: 'createdAt',
-      //   type: 'date',
-      //   editable: false,
-      //   filter: filterByDefault,
-      //   nullable: false,
-      //   sort: filterByDefault,
-      //   unique: false
-      // },
-      // {
-      //   propertyName: 'createdById',
-      //   type: 'id',
-      //   editable: false,
-      //   filter: filterByDefault,
-      //   nullable: false,
-      //   sort: false,
-      //   unique: false
-      // },
-      // {
-      //   propertyName: 'updatedAt',
-      //   type: 'date',
-      //   editable: false,
-      //   filter: filterByDefault,
-      //   nullable: true,
-      //   sort: filterByDefault,
-      //   unique: false
-      // },
-      // {
-      //   propertyName: 'updatedById',
-      //   type: 'id',
-      //   editable: false,
-      //   filter: filterByDefault,
-      //   nullable: true,
-      //   sort: false,
-      //   unique: false
-      // },
-      // {
-      //   propertyName: 'deletedAt',
-      //   type: 'date',
-      //   editable: false,
-      //   filter: filterByDefault,
-      //   nullable: true,
-      //   sort: filterByDefault,
-      //   unique: false
-      // },
-      // {
-      //   propertyName: 'deletedById',
-      //   type: 'id',
-      //   editable: false,
-      //   filter: filterByDefault,
-      //   nullable: true,
-      //   sort: false,
-      //   unique: false
-      // },
-      // {
-      //   type: 'integer',
-      //   propertyName: 'version',
-      //   editable: false,
-      //   filter: false,
-      //   nullable: false,
-      //   sort: false,
-      //   unique: false
-      // }
-    ];
+    // TODO: we need to ensure there is an ID field on the model
   }
 
   addModel(name: string, klass: any, filename: string, options: Partial<ModelMetadata> = {}) {
@@ -235,8 +168,7 @@ export class MetadataStorage {
     if (!this.models[modelName]) {
       this.models[modelName] = {
         name: modelName,
-        columns: Array.from(this.baseColumns)
-        // columns: []
+        columns: []
         // endpoints: []
       };
     }

@@ -4,13 +4,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseContext, BaseService, StandardDeleteResponse } from '../../../src';
-import {
-  UserCreateInput,
-  UserUpdateArgs,
-  UserWhereArgs,
-  UserWhereInput,
-  UserWhereUniqueInput
-} from '../generated';
+import { UserCreateInput, UserUpdateArgs, UserWhereArgs, UserWhereUniqueInput } from '../generated';
 
 import { User } from './user.model';
 import { UserService } from './user.service';
@@ -36,7 +30,7 @@ export class UserResolver {
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.injectedService.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.injectedService.find(where, orderBy, limit, offset);
   }
 
   @Query(() => User)

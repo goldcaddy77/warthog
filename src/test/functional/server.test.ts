@@ -353,9 +353,12 @@ describe('server', () => {
       { where: { dateOnlyField_gte: '2020-01-01' }, limit: 100 },
       '{ stringField dateOnlyField }'
     );
+    if (!result[0].dateOnlyField) {
+      throw 'Expected dateOnlyField to be populated';
+    }
 
     expect(result.length).toEqual(30);
-    expect(result[0].dateOnlyField!.length).toBe(10);
+    expect(result[0].dateOnlyField.length).toBe(10);
     expect(result).toMatchSnapshot();
   });
 
@@ -366,7 +369,12 @@ describe('server', () => {
     );
 
     expect(result.length).toEqual(69);
-    expect(result[0].dateTimeField!.length).toBe(24);
+
+    if (!result[0].dateTimeField) {
+      throw 'Expected dateTimeField to be populated';
+    }
+
+    expect(result[0].dateTimeField.length).toBe(24);
     expect(result).toMatchSnapshot();
   });
 
@@ -563,48 +571,34 @@ describe('server', () => {
     expect(result.id).toBeTruthy();
 
     // Get error when trying to find a single deleted item by ID
-    let error = '';
-    try {
-      result = await binding.query.kitchenSink({ where: { id: sink.id } }, '{ stringField }');
-    } catch (err) {
-      error = err.message;
-    }
-    expect(error).toContain('Unable to find KitchenSink where');
+    result = await callAPIError(
+      binding.query.kitchenSink({ where: { id: sink.id } }, '{ stringField }')
+    );
+    expect(result.message).toContain('Unable to find KitchenSink where');
 
     // Get no results when trying to find deleted record by ID
-    try {
-      result = await binding.query.kitchenSinks({ where: { id_eq: sink.id } }, '{ stringField }');
-      expect(result).toBeTruthy();
-      expect(result.length).toEqual(0);
-    } catch (err) {
-      error = err.message;
-    }
+    result = await callAPISuccess(
+      binding.query.kitchenSinks({ where: { id_eq: sink.id } }, '{ stringField }')
+    );
+    expect(result).toBeTruthy();
+    expect(result.length).toEqual(0);
 
     // Able to find deleted record with list endpoint and deletedAt_all specified
-    try {
-      result = await binding.query.kitchenSinks(
+    result = await callAPISuccess(
+      binding.query.kitchenSinks(
         { where: { id_eq: sink.id, deletedAt_all: true } },
         '{ stringField }'
-      );
-
-      expect(result).toBeTruthy();
-      expect(result.length).toEqual(1);
-    } catch (err) {
-      error = err.message;
-    }
+      )
+    );
+    expect(result).toBeTruthy();
+    expect(result.length).toEqual(1);
 
     // Able to find deleted record with deletedAt_gt
-    try {
-      result = await binding.query.kitchenSinks(
-        { where: { deletedAt_gt: '2000-01-01' } },
-        '{ stringField }'
-      );
-
-      expect(result).toBeTruthy();
-      expect(result.length).toEqual(1);
-    } catch (err) {
-      error = err.message;
-    }
+    result = await callAPISuccess(
+      binding.query.kitchenSinks({ where: { deletedAt_gt: '2000-01-01' } }, '{ stringField }')
+    );
+    expect(result).toBeTruthy();
+    expect(result.length).toEqual(1);
   });
 
   test('Send request to /foo via passed in custom express app', async () => {
@@ -789,7 +783,7 @@ async function createManyDishes(binding: any, kitchenSinkId: string): Promise<Ki
   let dishes;
 
   try {
-    dishes = await binding.mutation.createManyDishs({ data }, `{ id name createdById }`);
+    dishes = await binding.mutation.createManyDishs({ data }, `{ id name  }`);
   } catch (error) {
     logger.error(error);
   }

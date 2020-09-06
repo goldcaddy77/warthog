@@ -1,3 +1,5 @@
+import * as shortid from 'shortid';
+
 export class StringUtil {
   // Ex: HelloWorld -> HELLO_WORLD
   static constantize(str: string) {
@@ -12,4 +14,8 @@ export class StringUtil {
         .toUpperCase()
     );
   }
+}
+
+export function generateId(): string {
+  return shortid.generate();
 }

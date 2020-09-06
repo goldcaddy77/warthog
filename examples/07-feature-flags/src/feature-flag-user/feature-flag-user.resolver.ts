@@ -6,7 +6,6 @@ import {
   FeatureFlagUserCreateInput,
   FeatureFlagUserUpdateArgs,
   FeatureFlagUserWhereArgs,
-  FeatureFlagUserWhereInput,
   FeatureFlagUserWhereUniqueInput
 } from '../../generated';
 
@@ -31,7 +30,7 @@ export class FeatureFlagUserResolver {
     @Args()
     { where, orderBy, limit, offset }: FeatureFlagUserWhereArgs
   ): Promise<FeatureFlagUser[]> {
-    return this.service.find<FeatureFlagUserWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Query(() => FeatureFlagUser)

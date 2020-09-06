@@ -67,6 +67,7 @@ interface DeleteResponse {
 type Mutation {
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): StandardDeleteResponse!
 }
 
 type PageInfo {
@@ -94,12 +95,15 @@ type User {
 }
 
 input UserCreateInput {
+  id: ID!
   firstName: String!
   updatedById: String
   lastName: String!
 }
 
 enum UserOrderByInput {
+  id_ASC
+  id_DESC
   firstName_ASC
   firstName_DESC
   updatedById_ASC
@@ -109,19 +113,16 @@ enum UserOrderByInput {
 }
 
 input UserUpdateInput {
+  id: ID
   firstName: String
   updatedById: String
   lastName: String
 }
 
 input UserWhereInput {
-  id_eq: ID
   id_in: [ID!]
   firstName_eq: String
   firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
   updatedById_eq: String
   updatedById_contains: String
   updatedById_startsWith: String

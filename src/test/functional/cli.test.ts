@@ -113,7 +113,7 @@ describe('cli functional tests', () => {
 
     expect(stdout).toContain(`Generated file at ${GENERATED_FOLDER}/user.resolver.ts`);
     fileContents = filesystem.read(`${GENERATED_FOLDER}/user.resolver.ts`);
-    expect(fileContents).toContain('this.service.find<UserWhereInput>');
+    expect(fileContents).toContain('this.service.find');
 
     done();
   });

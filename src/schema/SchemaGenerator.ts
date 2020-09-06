@@ -188,6 +188,10 @@ export class SchemaGenerator {
         `;
     });
 
+    if (!fieldsTemplate.length) {
+      return ''; // If there are no uniques, don't generate the input
+    }
+
     const superName = model.klass ? model.klass.__proto__.name : null;
 
     const classDeclaration =
