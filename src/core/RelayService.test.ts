@@ -164,7 +164,7 @@ describe('RelayService', () => {
     // TODO: Add tests for last/before
   });
 
-  describe.only('sortFromStrings', () => {
+  describe('sortFromStrings', () => {
     test('defaults to ID ASC', () => {
       expect(relay.sortFromStrings()).toEqual([sortIdASC]);
     });
@@ -190,6 +190,15 @@ describe('RelayService', () => {
         sortFooDESC,
         sortIdASC
       ]);
+    });
+  });
+
+  describe.only('getFilters', () => {
+    test('works for base ID case', () => {
+      const cursor = relay.encodeCursor(foo, { column: 'id', direction: 'ASC' });
+      expect(relay.getFilters(undefined, cursor)).toEqual({
+        OR: [{ id_gt: '1' }]
+      });
     });
   });
 });

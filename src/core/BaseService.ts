@@ -10,13 +10,7 @@ import { addQueryBuilderWhereItem } from '../torm';
 import { BaseModel } from './';
 import { StringMap } from './types';
 import { isArray } from 'util';
-import {
-  RelayFirstAfter,
-  RelayLastBefore,
-  RelayService,
-  RelayPageOptions,
-  RelayPageOptionsInput
-} from './RelayService';
+import { RelayFirstAfter, RelayLastBefore, RelayService, RelayPageOptions } from './RelayService';
 import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
 
 export interface BaseOptions {
@@ -28,8 +22,8 @@ interface WhereExpression {
 }
 
 type WhereInput = {
-  AND?: WhereExpression[];
-  OR?: WhereExpression[];
+  AND?: WhereInput[];
+  OR?: WhereInput[];
 } & WhereExpression;
 
 export type LimitOffset = {
@@ -39,11 +33,18 @@ export type LimitOffset = {
 
 export type PaginationOptions = LimitOffset | RelayPageOptions;
 
-function isFirstAfter(
-  pageType: PaginationOptions | RelayPageOptionsInput
-): pageType is RelayFirstAfter {
-  return (pageType as RelayFirstAfter).first !== undefined;
-}
+// function isFirstAfter(
+//   pageType: PaginationOptions | RelayPageOptionsInput
+// ): pageType is RelayFirstAfter {
+//   return (pageType as RelayFirstAfter).first !== undefined;
+// }
+
+export type RelayPageOptionsInput = {
+  first?: number;
+  after?: string;
+  last?: number;
+  before?: string;
+};
 
 function isLastBefore(
   pageType: PaginationOptions | RelayPageOptionsInput
@@ -51,9 +52,9 @@ function isLastBefore(
   return (pageType as RelayLastBefore).last !== undefined;
 }
 
-function isLimitOffset(pageType: PaginationOptions): pageType is LimitOffset {
-  return (pageType as LimitOffset).limit !== undefined;
-}
+// function isLimitOffset(pageType: PaginationOptions): pageType is LimitOffset {
+//   return (pageType as LimitOffset).limit !== undefined;
+// }
 
 export class BaseService<E extends BaseModel> {
   manager: EntityManager;
@@ -100,7 +101,7 @@ export class BaseService<E extends BaseModel> {
   }
 
   async find<W extends WhereInput>(
-    where?: WhereInput,
+    whereExpression: WhereExpression = {},
     orderBy?: string,
     limit?: number,
     offset?: number,
@@ -108,12 +109,12 @@ export class BaseService<E extends BaseModel> {
   ): Promise<E[]> {
     // TODO: FEATURE - make the default limit configurable
     limit = limit ?? 20;
-    return this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields).getMany();
+    return this.buildFindQuery<W>(whereExpression, orderBy, { limit, offset }, fields).getMany();
   }
 
   @debug('base-service:findConnection')
   async findConnection<W extends WhereInput>(
-    where?: WhereInput,
+    whereExpression: WhereExpression = {},
     orderBy?: string,
     _pageOptions: RelayPageOptionsInput = {},
     fields?: ConnectionInputFields
@@ -122,35 +123,37 @@ export class BaseService<E extends BaseModel> {
     const DEFAULT_LIMIT = 20;
     const { first, after, last, before } = _pageOptions;
 
-    let pageOptions;
+    let relayPageOptions;
+    let limit;
+    let cursor;
     if (isLastBefore(_pageOptions)) {
-      pageOptions = {
-        last: (last || DEFAULT_LIMIT) + 1, // We ask for 1 too many so that we know if there is an additional page
+      limit = (last || DEFAULT_LIMIT) + 1; // We ask for 1 too many so that we know if there is an additional page
+      cursor = before;
+      relayPageOptions = {
+        last,
         before
       } as RelayLastBefore;
     } else {
-      pageOptions = {
-        first: (first || DEFAULT_LIMIT) + 1, // We ask for 1 too many so that we know if there is an additional page
+      limit = (first || DEFAULT_LIMIT) + 1; // We ask for 1 too many so that we know if there is an additional page
+      cursor = after;
+      relayPageOptions = {
+        first,
         after
       } as RelayFirstAfter;
     }
 
-    const order = this.relayService.sortFromStrings(orderBy);
-    console.log('order', order);
+    const sorts = this.relayService.sortFromStrings(orderBy);
     const options = this.graphQLInfoService.connectionOptions(fields);
-    console.log('options', options);
-
-    
-
-
-
-
-
+    let whereCursor = {};
+    if (cursor) {
+      whereCursor = this.relayService.getFilters(orderBy, cursor);
+    }
+    const whereCombined: any = { AND: [whereExpression, whereCursor] };
 
     const qb = this.buildFindQuery<W>(
-      where,
-      order as any, // TODO: need to allow a more complex query shape for Relay wheres
-      pageOptions,
+      whereCombined,
+      this.relayService.normalizeStrings(orderBy), // TODO: need to allow a more complex query shape for Relay wheres
+      { limit },
       options.selectFields
     );
 
@@ -169,18 +172,18 @@ export class BaseService<E extends BaseModel> {
       edges: data.map((item: E) => {
         return {
           node: item,
-          cursor: this.relayService.encodeCursor(item, order)
+          cursor: this.relayService.encodeCursor(item, sorts)
         };
       }),
-      pageInfo: this.relayService.getPageInfo(data, order, pageOptions)
+      pageInfo: this.relayService.getPageInfo(data, sorts, relayPageOptions)
     };
   }
 
   @debug('base-service:buildFindQuery')
   private buildFindQuery<W extends WhereInput>(
-    where?: WhereInput,
+    where: WhereInput,
     orderBy?: string | string[],
-    pageOptions?: PaginationOptions,
+    pageOptions?: LimitOffset,
     fields?: string[]
   ): SelectQueryBuilder<E> {
     const DEFAULT_LIMIT = 20;
@@ -191,28 +194,11 @@ export class BaseService<E extends BaseModel> {
       };
     }
 
-    // There are 3 styles of pagination
-    // first-after: relay style
-    // last-before: relay style
-    // limit-offset: paged
-    let limit;
-    let decodedCursor;
-    if (isFirstAfter(pageOptions)) {
-      limit = pageOptions.first;
-      decodedCursor = this.relayService.decodeCursor(pageOptions.after as string);
-    } else if (isLastBefore(pageOptions)) {
-      limit = pageOptions.last;
-      decodedCursor = this.relayService.decodeCursor(pageOptions.before as string);
-    } else if (isLimitOffset(pageOptions)) {
-      limit = pageOptions.limit;
+    qb = qb.take(pageOptions.limit || DEFAULT_LIMIT);
 
-      if (pageOptions.offset) {
-        qb = qb.skip(pageOptions.offset);
-      }
-    } else {
-      limit = 20; // TODO: this should be configurable
+    if (pageOptions.offset) {
+      qb = qb.skip(pageOptions.offset);
     }
-    qb = qb.take(limit);
 
     if (fields) {
       // We always need to select ID or dataloaders will not function properly
@@ -245,14 +231,12 @@ export class BaseService<E extends BaseModel> {
       });
     }
 
-    where = where || {};
-
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
     const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
     // If no deletedAt filters specified, hide them by default
     if (!hasDeletedAts) {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
+      where.deletedAt_eq = null; // Filter out soft-deleted items
     } else if (typeof where.deletedAt_all !== 'undefined') {
       // Delete this param so that it doesn't try to filter on the magic `all` param
       // Put this here so that we delete it even if `deletedAt_all: false` specified
@@ -263,6 +247,10 @@ export class BaseService<E extends BaseModel> {
     }
 
     if (Object.keys(where).length) {
+      const { AND, OR, ...rest } = where;
+      // Look for AND, OR, ...rest
+      // Put brackets around each of them and AND them
+
       // where is of shape { userName_contains: 'a' }
       Object.keys(where).forEach((k: string, i: number) => {
         const paramKey = BaseService.buildParamKey(i);
@@ -284,7 +272,7 @@ export class BaseService<E extends BaseModel> {
     return qb;
   }
 
-  async findOne<W>(where: W): Promise<E> {
+  async findOne(where: WhereExpression): Promise<E> {
     const items = await this.find(where);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
@@ -346,7 +334,7 @@ export class BaseService<E extends BaseModel> {
   // W extends Partial<E>
   async update<W extends any>(
     data: DeepPartial<E>,
-    where: W,
+    where: WhereExpression,
     userId: string,
     options?: BaseOptions
   ): Promise<E> {

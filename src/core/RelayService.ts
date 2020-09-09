@@ -23,20 +23,13 @@ type PageInfo = {
   endCursor: Cursor;
 };
 
-export type RelayPageOptionsInput = {
-  first?: number;
-  after?: string;
-  last?: number;
-  before?: string;
-};
-
 export type RelayFirstAfter = {
-  first: number;
+  first: number; // this is required here so that we can do pagination
   after?: string;
 };
 
 export type RelayLastBefore = {
-  last: number;
+  last: number; // this is required here so that we can do pagination
   before?: string;
 };
 
@@ -53,8 +46,17 @@ type SortAndValueArray = Array<SortAndValue>;
 export type RelayPageOptions = RelayFirstAfter | RelayLastBefore;
 
 function isFirstAfter(pageType: RelayFirstAfter | RelayLastBefore): pageType is RelayFirstAfter {
-  return (pageType as RelayFirstAfter).first !== undefined;
+  return (pageType as RelayFirstAfter).after !== undefined;
 }
+
+interface WhereExpression {
+  [key: string]: string | number | null;
+}
+
+type WhereInput = {
+  AND?: WhereInput[];
+  OR?: WhereInput[];
+} & WhereExpression;
 
 @Service()
 export class RelayService {
@@ -117,16 +119,16 @@ export class RelayService {
     if (!record) {
       throw new Error(`Record is not defined`);
     }
-    if (!record.getString) {
+    if (!record.getValue) {
       throw new Error(`Record is not a BaseModel: ${JSON.stringify(record, null, 2)}`);
     }
 
     const sortArray = this.normalizeSort(sortOrSortArray);
 
     const payload: SortAndValueArray = sortArray.map(sort => {
-      const value = record.getString(sort.column); // `Dan`
-
-      return [sort.column, sort.direction as SortDirection, value]; // ['name', 'ASC', 'Dan']
+      // const value = record.getValue(sort.column); // `Dan`
+      // return [sort.column, sort.direction as SortDirection, value]; // ['name', 'ASC', 'Dan']
+      return record.getValue(sort.column);
     });
 
     return this.encoding.encode(payload);
@@ -160,6 +162,12 @@ export class RelayService {
     return sort;
   }
 
+  normalizeStrings(strings?: string | string[]): string[] {
+    return this.sortFromStrings(strings).map((sort: Sort) => {
+      return [sort.column, sort.direction].join('_');
+    });
+  }
+
   // Takes sorts of the form ["name_DESC", "startAt_ASC"] and converts to relay service's internal
   // representation  [{ column: 'name', direction: 'DESC' }, { column: 'startAt', direction: 'ASC' }]
   sortFromStrings(stringOrStringArray: string | string[] = []): Sort[] {
@@ -177,8 +185,6 @@ export class RelayService {
   }
 
   /*
-    e.g. 
-    
     decodedCursor = ['three', 2, 7]
     order = [['c', 'ASC'], ['b', 'DESC'], ['id', 'ASC']]
     
@@ -186,33 +192,35 @@ export class RelayService {
     
     WHERE c > 'three' OR (c = 'three' AND b < 2) OR (c = 'three' AND b = 2 AND id > 7)
     */
-
-  orderByCursor(order: Sort[], cursor: Cursor): SortAndValueArray[] {
+  getFilters(orderBy: string | string[] | undefined, cursor: Cursor): WhereInput {
+    const sorts = this.sortFromStrings(orderBy);
     const decodedCursor = this.decodeCursor(cursor);
+    const comparisonOperator = (sortDirection: string) => (sortDirection == 'ASC' ? 'gt' : 'lt');
 
     /*
-      Result in shape
-      [
-        [ [ 'c', 'gt', 'three'] ],
-        [ [ 'c', 'eq', 'three'], [ 'b', 'lt', 2] ],
-        [ [ 'c', 'eq', 'three'], [ 'b', 'eq', 2], [ 'id', 'gt', 7] ]
-      ]      
-      */
+        e.g.
 
-    return decodedCursor as any;
-    //   const validOrderings = order.map(([columnName, sortDirection], i: number) => {
-    //   const result: SortAndValueArray[];
+        decodedCursor = ['three', 2, 7]
+        order = [['c', 'ASC'], ['b', 'DESC'], ['id', 'ASC']]
 
-    //   result[columnName] = { [sortDirection]: decodedCursor[i] };
+        =>
 
-    //   order.slice(0, i).forEach((item: Sort, j: number) => {
-    //     const column = item[0];
-    //     result[column] = { eq: decodedCursor[j][2] };
-    //   });
+        WHERE c > 'three' OR (c = 'three' AND b < 2) OR (c = 'three' AND b = 2 AND id > 7)
+        */
 
-    //   return result;
-    // });
+    return {
+      OR: sorts.map(({ column, direction }, i) => {
+        const allOthersEqual = sorts
+          .slice(0, i)
+          .map((other, j) => ({ [other.column]: decodedCursor[j] }));
 
-    // return { or: validOrderings };
+        return Object.assign(
+          {
+            [`${column}_${comparisonOperator(direction)}`]: decodedCursor[i]
+          },
+          ...allOthersEqual
+        );
+      }) as any // TODO: fix
+    };
   }
 }
