@@ -42,7 +42,10 @@ export type RelayLastBefore = {
 
 export type SortColumn = string;
 export type SortDirection = 'ASC' | 'DESC';
-export type Sort = [SortColumn, SortDirection];
+export type Sort = {
+  column: SortColumn;
+  direction: SortDirection;
+};
 
 type SortAndValue = [SortColumn, SortDirection, string | number];
 type SortAndValueArray = Array<SortAndValue>;
@@ -51,11 +54,6 @@ export type RelayPageOptions = RelayFirstAfter | RelayLastBefore;
 
 function isFirstAfter(pageType: RelayFirstAfter | RelayLastBefore): pageType is RelayFirstAfter {
   return (pageType as RelayFirstAfter).first !== undefined;
-}
-
-function isSortArray(sort: any[]): sort is Sort[] {
-  sort = sort as Sort[];
-  return sort && sort[0] && sort[0][0] && typeof (sort as Sort[])[0][0] === 'string';
 }
 
 @Service()
@@ -101,7 +99,7 @@ export class RelayService {
 
   // Given an array of items, return the first and last
   // Note that this isn't as simple as returning the first and last as we've
-  // asked for limit+1 items
+  // asked for limit+1 items (to know if there is a next page)
   firstAndLast<E>(items: E[], limit: number) {
     if (!items.length) {
       throw new Error('Items is empty');
@@ -126,50 +124,44 @@ export class RelayService {
     const sortArray = this.normalizeSort(sortOrSortArray);
 
     const payload: SortAndValueArray = sortArray.map(sort => {
-      const value = record.getString(sort[0]); // `Dan`
+      const value = record.getString(sort.column); // `Dan`
 
-      return [sort[0], sort[1] as SortDirection, value]; // ['name', 'ASC', 'Dan']
+      return [sort.column, sort.direction as SortDirection, value]; // ['name', 'ASC', 'Dan']
     });
 
     return this.encoding.encode(payload);
   }
 
   decodeCursor(cursor: Cursor): SortAndValueArray {
-    const decoded: SortAndValueArray = this.encoding.decode<SortAndValueArray>(cursor);
-
-    return decoded;
+    return this.encoding.decode<SortAndValueArray>(cursor);
   }
 
   toSortArray(sort?: Sort | Sort[]): Sort[] {
     if (!sort) {
       return [];
     }
-    return isSortArray(sort) ? sort : [sort];
+    return Array.isArray(sort) ? sort : [sort];
   }
 
   normalizeSort(sortOrSortArray?: Sort | Sort[]): Sort[] {
     const sort = this.toSortArray(sortOrSortArray);
 
-    console.log(sort.length);
-
     if (!sort.length) {
-      return [['id', 'ASC']];
+      return [{ column: 'id', direction: 'ASC' }];
     }
 
-    const hasIdSort = sort.find(item => item[0] === 'id');
-
-    console.log('hasIdSort', hasIdSort);
+    const hasIdSort = sort.find(item => item.column === 'id');
 
     // If we're not already sorting by ID, add this to sort to make cursor work
     // When the user-specified sort isn't unique
     if (!hasIdSort) {
-      sort.push(['id', 'ASC']);
+      sort.push({ column: 'id', direction: 'ASC' });
     }
     return sort;
   }
 
   // Takes sorts of the form ["name_DESC", "startAt_ASC"] and converts to relay service's internal
-  // representation  [ ['name', 'DESC'], ['startAt', 'ASC'] ]
+  // representation  [{ column: 'name', direction: 'DESC' }, { column: 'startAt', direction: 'ASC' }]
   sortFromStrings(stringOrStringArray: string | string[] = []): Sort[] {
     const stringArray = Array.isArray(stringOrStringArray)
       ? stringOrStringArray
@@ -178,7 +170,7 @@ export class RelayService {
     const sorts: Sort[] = stringArray.map((str: string) => {
       const sorts = str.split('_');
 
-      return [sorts[0], sorts[1] as SortDirection];
+      return { column: sorts[0], direction: sorts[1] as SortDirection };
     });
 
     return this.normalizeSort(sorts);

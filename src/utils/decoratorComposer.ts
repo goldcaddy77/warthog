@@ -16,7 +16,7 @@ export type ClassDecoratorFactory = (target: ClassType) => any;
 
 // any[] -> ClassDecoratorFactory[]
 export function composeClassDecorators(...factories: any[]) {
-  return (target: Constructor): any => {
+  return (target: ClassType): any => {
     // Do NOT return anything here or it will take over the class it's decorating
     // See: https://www.typescriptlang.org/docs/handbook/decorators.html
     factories.forEach(factory => {

@@ -61,6 +61,7 @@ export abstract class BaseModel implements BaseGraphQLObject {
     return this.id || shortid.generate();
   }
 
+  // V3: DateTime should use getter to return ISO8601 string
   getString(field: any) {
     const self = this as any;
     if (self[field] instanceof Date) {

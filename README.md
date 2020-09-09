@@ -491,7 +491,7 @@ See the [warthog-starter](https://github.com/goldcaddy77/warthog-starter/blob/ma
 The `generate` command will create a new resolver, service and model for a given resource. Let's start with a complex example and we'll break it down:
 
 ```bash
-yarn warthog generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:! float--folder my_generated_folder
+yarn warthog generate user name! nickname numLogins:int! verified:bool! registeredAt:date balance:float! --folder my_generated_folder
 ```
 
 - `user` - this is the name of the new resource (required)

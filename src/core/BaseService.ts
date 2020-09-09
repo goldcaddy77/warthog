@@ -3,11 +3,12 @@ import { ArgumentValidationError } from 'type-graphql';
 import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
+import { debug } from '../decorators';
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
 import { BaseModel } from './';
-import { StringMap, WhereInput } from './types';
+import { StringMap } from './types';
 import { isArray } from 'util';
 import {
   RelayFirstAfter,
@@ -22,6 +23,15 @@ export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
 }
 
+interface WhereExpression {
+  [key: string]: string | number | null;
+}
+
+type WhereInput = {
+  AND?: WhereExpression[];
+  OR?: WhereExpression[];
+} & WhereExpression;
+
 export type LimitOffset = {
   limit: number;
   offset?: number;
@@ -29,11 +39,15 @@ export type LimitOffset = {
 
 export type PaginationOptions = LimitOffset | RelayPageOptions;
 
-function isFirstAfter(pageType: PaginationOptions): pageType is RelayFirstAfter {
+function isFirstAfter(
+  pageType: PaginationOptions | RelayPageOptionsInput
+): pageType is RelayFirstAfter {
   return (pageType as RelayFirstAfter).first !== undefined;
 }
 
-function isLastBefore(pageType: PaginationOptions): pageType is RelayLastBefore {
+function isLastBefore(
+  pageType: PaginationOptions | RelayPageOptionsInput
+): pageType is RelayLastBefore {
   return (pageType as RelayLastBefore).last !== undefined;
 }
 
@@ -86,7 +100,7 @@ export class BaseService<E extends BaseModel> {
   }
 
   async find<W extends WhereInput>(
-    where?: any,
+    where?: WhereInput,
     orderBy?: string,
     limit?: number,
     offset?: number,
@@ -97,22 +111,46 @@ export class BaseService<E extends BaseModel> {
     return this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields).getMany();
   }
 
+  @debug('base-service:findConnection')
   async findConnection<W extends WhereInput>(
-    where?: any,
+    where?: WhereInput,
     orderBy?: string,
-    pageOptions: RelayPageOptionsInput = {},
+    _pageOptions: RelayPageOptionsInput = {},
     fields?: ConnectionInputFields
   ): Promise<any> {
     // TODO: FEATURE - make the default limit configurable
-    const { after, last, before } = pageOptions;
-    const first = pageOptions.first ?? 20;
+    const DEFAULT_LIMIT = 20;
+    const { first, after, last, before } = _pageOptions;
+
+    let pageOptions;
+    if (isLastBefore(_pageOptions)) {
+      pageOptions = {
+        last: (last || DEFAULT_LIMIT) + 1, // We ask for 1 too many so that we know if there is an additional page
+        before
+      } as RelayLastBefore;
+    } else {
+      pageOptions = {
+        first: (first || DEFAULT_LIMIT) + 1, // We ask for 1 too many so that we know if there is an additional page
+        after
+      } as RelayFirstAfter;
+    }
+
     const order = this.relayService.sortFromStrings(orderBy);
+    console.log('order', order);
     const options = this.graphQLInfoService.connectionOptions(fields);
+    console.log('options', options);
+
+    
+
+
+
+
+
 
     const qb = this.buildFindQuery<W>(
       where,
       order as any, // TODO: need to allow a more complex query shape for Relay wheres
-      { limit: first + 1, after, last, before },
+      pageOptions,
       options.selectFields
     );
 
@@ -134,20 +172,22 @@ export class BaseService<E extends BaseModel> {
           cursor: this.relayService.encodeCursor(item, order)
         };
       }),
-      pageInfo: this.relayService.getPageInfo(data, order, { first, after, last, before })
+      pageInfo: this.relayService.getPageInfo(data, order, pageOptions)
     };
   }
 
+  @debug('base-service:buildFindQuery')
   private buildFindQuery<W extends WhereInput>(
-    where?: any,
+    where?: WhereInput,
     orderBy?: string | string[],
     pageOptions?: PaginationOptions,
     fields?: string[]
   ): SelectQueryBuilder<E> {
+    const DEFAULT_LIMIT = 20;
     let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
     if (!pageOptions) {
       pageOptions = {
-        limit: 20
+        limit: DEFAULT_LIMIT
       };
     }
 
@@ -156,13 +196,13 @@ export class BaseService<E extends BaseModel> {
     // last-before: relay style
     // limit-offset: paged
     let limit;
-    let cursor;
+    let decodedCursor;
     if (isFirstAfter(pageOptions)) {
       limit = pageOptions.first;
-      cursor = pageOptions.after;
+      decodedCursor = this.relayService.decodeCursor(pageOptions.after as string);
     } else if (isLastBefore(pageOptions)) {
       limit = pageOptions.last;
-      cursor = pageOptions.before;
+      decodedCursor = this.relayService.decodeCursor(pageOptions.before as string);
     } else if (isLimitOffset(pageOptions)) {
       limit = pageOptions.limit;
 
@@ -184,6 +224,9 @@ export class BaseService<E extends BaseModel> {
       const selection = fields.map(field => `${this.klass}.${field}`);
       qb = qb.select(selection);
     }
+
+    // V3: pull orderBy out of decodedCursor and make sure it matches the input
+    // if(decodedCursor) {}
 
     if (orderBy) {
       if (!isArray(orderBy)) {
