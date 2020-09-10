@@ -114,7 +114,7 @@ export class BaseService<E extends BaseModel> {
 
   @debug('base-service:findConnection')
   async findConnection<W extends WhereInput>(
-    whereExpression: WhereExpression = {},
+    whereUserInput: WhereExpression = {},
     orderBy?: string,
     _pageOptions: RelayPageOptionsInput = {},
     fields?: ConnectionInputFields
@@ -142,17 +142,17 @@ export class BaseService<E extends BaseModel> {
       } as RelayFirstAfter;
     }
 
-    const sorts = this.relayService.sortFromStrings(orderBy);
     const options = this.graphQLInfoService.connectionOptions(fields);
-    let whereCursor = {};
+    const sorts = this.relayService.normalizeSort(orderBy);
+    let whereFromCursor = {};
     if (cursor) {
-      whereCursor = this.relayService.getFilters(orderBy, cursor);
+      whereFromCursor = this.relayService.getFilters(orderBy, cursor);
     }
-    const whereCombined: any = { AND: [whereExpression, whereCursor] };
+    const whereCombined: any = { AND: [whereUserInput, whereFromCursor] };
 
     const qb = this.buildFindQuery<W>(
       whereCombined,
-      this.relayService.normalizeStrings(orderBy), // TODO: need to allow a more complex query shape for Relay wheres
+      this.relayService.effectiveOrderStrings(sorts, relayPageOptions), // TODO: need to allow a more complex query shape for Relay wheres
       { limit },
       options.selectFields
     );

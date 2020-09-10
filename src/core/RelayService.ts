@@ -1,3 +1,5 @@
+const assert = require('assert').strict;
+
 import { Service } from 'typedi';
 
 import { BaseModel } from './BaseModel';
@@ -33,6 +35,8 @@ export type RelayLastBefore = {
   before?: string;
 };
 
+export type RelayPageOptions = RelayFirstAfter | RelayLastBefore;
+
 export type SortColumn = string;
 export type SortDirection = 'ASC' | 'DESC';
 export type Sort = {
@@ -43,11 +47,20 @@ export type Sort = {
 type SortAndValue = [SortColumn, SortDirection, string | number];
 type SortAndValueArray = Array<SortAndValue>;
 
-export type RelayPageOptions = RelayFirstAfter | RelayLastBefore;
-
 function isFirstAfter(pageType: RelayFirstAfter | RelayLastBefore): pageType is RelayFirstAfter {
-  return (pageType as RelayFirstAfter).after !== undefined;
+  return (pageType as RelayLastBefore).last === undefined;
 }
+
+function isSort(sort: Sortable): sort is Sort {
+  return (sort as Sort).column !== undefined;
+}
+
+function isSortArray(sort: Sortable): sort is Sort[] {
+  const arr = sort as Sort[];
+  return Array.isArray(arr) && arr.length > 0 && arr[0].column !== undefined;
+}
+
+type Sortable = string | string[] | Sort | Sort[] | undefined;
 
 interface WhereExpression {
   [key: string]: string | number | null;
@@ -69,7 +82,7 @@ export class RelayService {
 
   getPageInfo<E extends BaseModel>(
     items: E[],
-    sortOrSortArray: Sort | Sort[],
+    sortable: Sortable,
     pageOptions: RelayPageOptions
   ): PageInfo {
     if (!items.length) {
@@ -87,7 +100,7 @@ export class RelayService {
     }
 
     const [firstItem, lastItem] = this.firstAndLast<E>(items, limit);
-    const sort = this.normalizeSort(sortOrSortArray);
+    const sort = this.normalizeSort(sortable);
 
     return {
       hasNextPage: items.length > limit,
@@ -103,9 +116,7 @@ export class RelayService {
   // Note that this isn't as simple as returning the first and last as we've
   // asked for limit+1 items (to know if there is a next page)
   firstAndLast<E>(items: E[], limit: number) {
-    if (!items.length) {
-      throw new Error('Items is empty');
-    }
+    assert(items.length, 'Items cannot be empty');
 
     const onLastPage = items.length <= limit;
     const lastItemIndex = onLastPage ? items.length - 1 : limit - 1;
@@ -115,15 +126,11 @@ export class RelayService {
     return [firstItem, lastItem];
   }
 
-  encodeCursor<E extends BaseModel>(record: E, sortOrSortArray: Sort | Sort[]): Cursor {
-    if (!record) {
-      throw new Error(`Record is not defined`);
-    }
-    if (!record.getValue) {
-      throw new Error(`Record is not a BaseModel: ${JSON.stringify(record, null, 2)}`);
-    }
+  encodeCursor<E extends BaseModel>(record: E, sortable: Sortable): Cursor {
+    assert(record, 'Record is not defined');
+    assert(record.getValue, `Record must be a BaseModel: ${JSON.stringify(record, null, 2)}`);
 
-    const sortArray = this.normalizeSort(sortOrSortArray);
+    const sortArray = this.normalizeSort(sortable);
 
     const payload: SortAndValueArray = sortArray.map(sort => {
       // const value = record.getValue(sort.column); // `Dan`
@@ -138,15 +145,28 @@ export class RelayService {
     return this.encoding.decode<SortAndValueArray>(cursor);
   }
 
-  toSortArray(sort?: Sort | Sort[]): Sort[] {
+  toSortArray(sort?: Sortable): Sort[] {
     if (!sort) {
       return [];
+    } else if (isSortArray(sort)) {
+      return sort;
+    } else if (isSort(sort)) {
+      return [sort];
     }
-    return Array.isArray(sort) ? sort : [sort];
+
+    // Takes sorts of the form ["name_DESC", "startAt_ASC"] and converts to relay service's internal
+    // representation  [{ column: 'name', direction: 'DESC' }, { column: 'startAt', direction: 'ASC' }]
+    const stringArray = Array.isArray(sort) ? sort : [sort];
+
+    return stringArray.map((str: string) => {
+      const sorts = str.split('_');
+
+      return { column: sorts[0], direction: sorts[1] as SortDirection } as Sort;
+    });
   }
 
-  normalizeSort(sortOrSortArray?: Sort | Sort[]): Sort[] {
-    const sort = this.toSortArray(sortOrSortArray);
+  normalizeSort(sortable?: Sortable): Sort[] {
+    const sort = this.toSortArray(sortable);
 
     if (!sort.length) {
       return [{ column: 'id', direction: 'ASC' }];
@@ -162,38 +182,34 @@ export class RelayService {
     return sort;
   }
 
-  normalizeStrings(strings?: string | string[]): string[] {
-    return this.sortFromStrings(strings).map((sort: Sort) => {
+  flipDirection(direction: SortDirection): SortDirection {
+    return direction === 'ASC' ? 'DESC' : 'ASC';
+  }
+
+  effectiveOrder(sortable: Sortable, pageOptions: RelayPageOptions): Sort[] {
+    const sorts = this.normalizeSort(sortable);
+    if (isFirstAfter(pageOptions)) {
+      return sorts;
+    }
+
+    return sorts.map(({ column, direction }) => {
+      return { column, direction: this.flipDirection(direction) };
+    });
+  }
+
+  effectiveOrderStrings(sortable: Sortable, pageOptions: RelayPageOptions): string[] {
+    const sorts = this.effectiveOrder(sortable, pageOptions);
+    return this.toSortStrings(sorts);
+  }
+
+  toSortStrings(sorts: Sort[]): string[] {
+    return sorts.map((sort: Sort) => {
       return [sort.column, sort.direction].join('_');
     });
   }
 
-  // Takes sorts of the form ["name_DESC", "startAt_ASC"] and converts to relay service's internal
-  // representation  [{ column: 'name', direction: 'DESC' }, { column: 'startAt', direction: 'ASC' }]
-  sortFromStrings(stringOrStringArray: string | string[] = []): Sort[] {
-    const stringArray = Array.isArray(stringOrStringArray)
-      ? stringOrStringArray
-      : [stringOrStringArray];
-
-    const sorts: Sort[] = stringArray.map((str: string) => {
-      const sorts = str.split('_');
-
-      return { column: sorts[0], direction: sorts[1] as SortDirection };
-    });
-
-    return this.normalizeSort(sorts);
-  }
-
-  /*
-    decodedCursor = ['three', 2, 7]
-    order = [['c', 'ASC'], ['b', 'DESC'], ['id', 'ASC']]
-    
-    =>
-    
-    WHERE c > 'three' OR (c = 'three' AND b < 2) OR (c = 'three' AND b = 2 AND id > 7)
-    */
-  getFilters(orderBy: string | string[] | undefined, cursor: Cursor): WhereInput {
-    const sorts = this.sortFromStrings(orderBy);
+  getFilters(sortable: Sortable, cursor: Cursor): WhereInput {
+    const sorts = this.normalizeSort(sortable);
     const decodedCursor = this.decodeCursor(cursor);
     const comparisonOperator = (sortDirection: string) => (sortDirection == 'ASC' ? 'gt' : 'lt');
 
@@ -212,7 +228,7 @@ export class RelayService {
       OR: sorts.map(({ column, direction }, i) => {
         const allOthersEqual = sorts
           .slice(0, i)
-          .map((other, j) => ({ [other.column]: decodedCursor[j] }));
+          .map((other, j) => ({ [`${other.column}_eq`]: decodedCursor[j] }));
 
         return Object.assign(
           {

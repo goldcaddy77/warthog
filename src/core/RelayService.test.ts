@@ -18,6 +18,7 @@ describe('RelayService', () => {
   const sortIdASC = { column: 'id', direction: 'ASC' as SortDirection };
   const sortIdDESC = { column: 'id', direction: 'DESC' as SortDirection };
   const sortCreatedAtASC = { column: 'createdAt', direction: 'ASC' as SortDirection };
+  const sortCreatedAtDESC = { column: 'createdAt', direction: 'DESC' as SortDirection };
   const sortFooDESC = { column: 'foo', direction: 'DESC' as SortDirection };
 
   const foo = new Foo();
@@ -31,8 +32,34 @@ describe('RelayService', () => {
   bar.createdAt = new Date('1989-11-20');
 
   describe('toSortArray', () => {
+    test('defaults to empty array', () => {
+      expect(relay.toSortArray()).toEqual([]);
+    });
+
     test('turns a sort into a Sort array', () => {
       expect(relay.toSortArray(sortIdASC)).toStrictEqual([sortIdASC]);
+    });
+
+    test('works with ID sort DESC', () => {
+      expect(relay.toSortArray('id_DESC')).toEqual([sortIdDESC]);
+    });
+
+    test('works with non-ID sorts', () => {
+      expect(relay.toSortArray('createdAt_ASC')).toEqual([sortCreatedAtASC]);
+    });
+
+    test('works with an array input including ID', () => {
+      expect(relay.toSortArray(['createdAt_ASC', 'id_DESC'])).toEqual([
+        sortCreatedAtASC,
+        sortIdDESC
+      ]);
+    });
+
+    test('works with an array input not including ID', () => {
+      expect(relay.toSortArray(['createdAt_ASC', 'foo_DESC'])).toEqual([
+        sortCreatedAtASC,
+        sortFooDESC
+      ]);
     });
   });
 
@@ -53,29 +80,19 @@ describe('RelayService', () => {
 
   describe('encodeCursorItem', () => {
     test('Works with Dates', () => {
-      const sortCreatedAtDESC = { column: 'createdAt', direction: 'DESC' as SortDirection };
-
       expect(relay.encodeCursor(foo, sortCreatedAtDESC)).toBe(
-        e.encode([
-          ['createdAt', 'DESC', '1981-10-15T00:00:00.000Z'],
-          ['id', 'ASC', '1']
-        ])
+        e.encode(['1981-10-15T00:00:00.000Z', '1'])
       );
     });
   });
 
   describe('encodeCursor', () => {
     test('Works with multiple sorts', () => {
-      const sortCreatedAtDESC = { column: 'createdAt', direction: 'DESC' as SortDirection };
       const sortNameASC = { column: 'name', direction: 'ASC' as SortDirection };
 
-      const expected = e.encode([
-        ['createdAt', 'DESC', '1981-10-15T00:00:00.000Z'],
-        ['name', 'ASC', 'Foo'],
-        ['id', 'ASC', '1']
-      ]);
-
-      expect(relay.encodeCursor(foo, [sortCreatedAtDESC, sortNameASC])).toBe(expected);
+      expect(relay.encodeCursor(foo, [sortCreatedAtDESC, sortNameASC])).toBe(
+        e.encode(['1981-10-15T00:00:00.000Z', 'Foo', '1'])
+      );
     });
   });
 
@@ -132,14 +149,8 @@ describe('RelayService', () => {
 
       expect(result.hasNextPage).toEqual(false);
       expect(result.hasPreviousPage).toEqual(false);
-      expect(startDecoded).toEqual([
-        ['createdAt', 'ASC', '1981-10-15T00:00:00.000Z'],
-        ['id', 'ASC', '1']
-      ]);
-      expect(endDecoded).toEqual([
-        ['createdAt', 'ASC', '1981-10-15T00:00:00.000Z'],
-        ['id', 'ASC', '1']
-      ]);
+      expect(startDecoded).toEqual(['1981-10-15T00:00:00.000Z', '1']);
+      expect(endDecoded).toEqual(['1981-10-15T00:00:00.000Z', '1']);
     });
 
     test('Works properly if youre on the last page', () => {
@@ -151,53 +162,52 @@ describe('RelayService', () => {
 
       expect(result.hasNextPage).toEqual(true);
       expect(result.hasPreviousPage).toEqual(false);
-      expect(startDecoded).toEqual([
-        ['createdAt', 'ASC', '1981-10-15T00:00:00.000Z'],
-        ['id', 'ASC', '1']
-      ]);
-      expect(endDecoded).toEqual([
-        ['createdAt', 'ASC', '1989-11-20T00:00:00.000Z'],
-        ['id', 'ASC', '2']
-      ]);
+      expect(startDecoded).toEqual(['1981-10-15T00:00:00.000Z', '1']);
+      expect(endDecoded).toEqual(['1989-11-20T00:00:00.000Z', '2']);
     });
 
     // TODO: Add tests for last/before
   });
 
-  describe('sortFromStrings', () => {
-    test('defaults to ID ASC', () => {
-      expect(relay.sortFromStrings()).toEqual([sortIdASC]);
+  describe('effectiveOrder', () => {
+    test('works with no sorts and first', () => {
+      expect(relay.effectiveOrder(undefined, { first: 10 })).toEqual([sortIdASC]);
     });
 
-    test('works with ID sort DESC', () => {
-      expect(relay.sortFromStrings('id_DESC')).toEqual([sortIdDESC]);
+    test('works with multiple sorts and first', () => {
+      expect(relay.effectiveOrder('foo_DESC', { first: 10 })).toEqual([sortFooDESC, sortIdASC]);
     });
 
-    test('works with non-ID sorts', () => {
-      expect(relay.sortFromStrings('createdAt_ASC')).toEqual([sortCreatedAtASC, sortIdASC]);
+    test('works with no sorts and last (reversed)', () => {
+      expect(relay.effectiveOrder(undefined, { last: 10 })).toEqual([sortIdDESC]);
     });
 
-    test('works with an array input including ID', () => {
-      expect(relay.sortFromStrings(['createdAt_ASC', 'id_DESC'])).toEqual([
-        sortCreatedAtASC,
-        sortIdDESC
-      ]);
-    });
-
-    test('works with an array input not including ID', () => {
-      expect(relay.sortFromStrings(['createdAt_ASC', 'foo_DESC'])).toEqual([
-        sortCreatedAtASC,
-        sortFooDESC,
-        sortIdASC
-      ]);
+    test('works with multiple sorts and last (reversed)', () => {
+      expect(relay.effectiveOrder('foo_ASC', { last: 10 })).toEqual([sortFooDESC, sortIdDESC]);
     });
   });
 
   describe.only('getFilters', () => {
     test('works for base ID case', () => {
-      const cursor = relay.encodeCursor(foo, { column: 'id', direction: 'ASC' });
+      const cursor = relay.encodeCursor(foo, 'id_ASC');
       expect(relay.getFilters(undefined, cursor)).toEqual({
         OR: [{ id_gt: '1' }]
+      });
+    });
+
+    test('works with non-id sort', () => {
+      const sorts = 'name_DESC';
+      const cursor = relay.encodeCursor({ c: 'three', b: 2, id: '7' }, sorts);
+      expect(relay.getFilters(sorts, cursor)).toEqual({
+        OR: [{ name_lt: 'Foo' }, { id_gt: '1', name_eq: 'Foo' }]
+      });
+    });
+
+    test('works several sorts', () => {
+      const sorts = ['c_ASC', 'b_DESC', 'id_ASC'];
+      const cursor = relay.encodeCursor(foo, sorts);
+      expect(relay.getFilters(sorts, cursor)).toEqual({
+        OR: [{ name_lt: 'Foo' }, { id_gt: '1', name_eq: 'Foo' }]
       });
     });
   });
