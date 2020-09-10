@@ -166,29 +166,29 @@ export class BaseService<E extends BaseModel> {
       options.selectFields
     );
 
-    let data;
+    let rawData;
     let totalCountOption = {};
     if (options.totalCount) {
       let totalCount;
-      [data, totalCount] = await qb.getManyAndCount();
+      [rawData, totalCount] = await qb.getManyAndCount();
       totalCountOption = { totalCount };
     } else {
-      data = await qb.getMany();
+      rawData = await qb.getMany();
     }
+    console.log('rawData', rawData);
 
-    if (data.length > limit) {
-      data = data.slice(0, limit);
-    }
+    // If we got the n+1 that we requested, pluck the last item off
+    const returnData = rawData.length > limit ? rawData.slice(0, limit) : rawData;
 
     return {
       ...totalCountOption,
-      edges: data.map((item: E) => {
+      edges: returnData.map((item: E) => {
         return {
           node: item,
           cursor: this.relayService.encodeCursor(item, sorts)
         };
       }),
-      pageInfo: this.relayService.getPageInfo(data, sorts, relayPageOptions)
+      pageInfo: this.relayService.getPageInfo(rawData, sorts, relayPageOptions)
     };
   }
 

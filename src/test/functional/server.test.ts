@@ -9,7 +9,6 @@ import { Server } from '../../core/server';
 
 import { Binding, KitchenSinkWhereInput } from '../generated/binding';
 import { KitchenSink, StringEnum, Dish } from '../modules';
-import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
 import { KITCHEN_SINKS } from './fixtures';
@@ -152,10 +151,12 @@ describe('server', () => {
     );
 
     const encodingService = new EncodingService();
+    const decodedCursor: [string, string] = encodingService.decode(edges[0].cursor);
 
-    expect(encodingService.decode(edges[0].cursor)).toMatch(
-      /name_ASC:Dish \d+,id_ASC:[A-Za-z0-9_-]{7,14}/
-    );
+    console.log(totalCount, edges, pageInfo);
+
+    expect(decodedCursor[0]).toMatch(/Dish [0-9]+/);
+    expect(decodedCursor[1]).toMatch(/[A-Za-z0-9_-]{7,14}/);
     expect(edges[0].node.name).toBeTruthy();
     expect(edges[0].node.kitchenSink.emailField).toBeTruthy();
     expect(pageInfo.hasNextPage).toEqual(true);

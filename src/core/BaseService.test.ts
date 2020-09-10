@@ -12,8 +12,8 @@ describe('BaseService', () => {
   let service: MyBaseService;
   beforeAll(async () => {
     connection = await createDBConnection({
-      entities: [__dirname + '/tests/entity/*{.js,.ts}'],
-      logging: 'all'
+      entities: [__dirname + '/tests/entity/*{.js,.ts}']
+      // logging: 'all'
     });
 
     service = Container.get('MyBaseService');
