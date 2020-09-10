@@ -1,6 +1,13 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
-import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
+import {
+  Brackets,
+  DeepPartial,
+  EntityManager,
+  getRepository,
+  Repository,
+  SelectQueryBuilder
+} from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { debug } from '../decorators';
@@ -127,17 +134,17 @@ export class BaseService<E extends BaseModel> {
     let limit;
     let cursor;
     if (isLastBefore(_pageOptions)) {
-      limit = (last || DEFAULT_LIMIT) + 1; // We ask for 1 too many so that we know if there is an additional page
+      limit = last || DEFAULT_LIMIT;
       cursor = before;
       relayPageOptions = {
-        last,
+        last: limit,
         before
       } as RelayLastBefore;
     } else {
-      limit = (first || DEFAULT_LIMIT) + 1; // We ask for 1 too many so that we know if there is an additional page
+      limit = first || DEFAULT_LIMIT;
       cursor = after;
       relayPageOptions = {
-        first,
+        first: limit,
         after
       } as RelayFirstAfter;
     }
@@ -149,11 +156,13 @@ export class BaseService<E extends BaseModel> {
       whereFromCursor = this.relayService.getFilters(orderBy, cursor);
     }
     const whereCombined: any = { AND: [whereUserInput, whereFromCursor] };
+    console.log('whereCombined', whereCombined);
 
+    const limitRequest = limit + 1; // We ask for 1 too many so that we know if there is an additional page
     const qb = this.buildFindQuery<W>(
       whereCombined,
       this.relayService.effectiveOrderStrings(sorts, relayPageOptions), // TODO: need to allow a more complex query shape for Relay wheres
-      { limit },
+      { limit: limitRequest },
       options.selectFields
     );
 
@@ -165,6 +174,10 @@ export class BaseService<E extends BaseModel> {
       totalCountOption = { totalCount };
     } else {
       data = await qb.getMany();
+    }
+
+    if (data.length > limit) {
+      data = data.slice(0, limit);
     }
 
     return {
@@ -180,7 +193,7 @@ export class BaseService<E extends BaseModel> {
   }
 
   @debug('base-service:buildFindQuery')
-  private buildFindQuery<W extends WhereInput>(
+  buildFindQuery<W extends WhereInput>(
     where: WhereInput,
     orderBy?: string | string[],
     pageOptions?: LimitOffset,
@@ -246,20 +259,24 @@ export class BaseService<E extends BaseModel> {
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    if (Object.keys(where).length) {
-      const { AND, OR, ...rest } = where;
-      // Look for AND, OR, ...rest
-      // Put brackets around each of them and AND them
+    console.log('where', where);
 
+    const params = { counter: 0 };
+    const processWheres = (
+      qb: SelectQueryBuilder<E>,
+      where: WhereExpression
+    ): SelectQueryBuilder<E> => {
       // where is of shape { userName_contains: 'a' }
-      Object.keys(where).forEach((k: string, i: number) => {
-        const paramKey = BaseService.buildParamKey(i);
+      Object.keys(where).forEach((k: string) => {
+        const paramKey = `param${params.counter}`;
+        // increment counter each time we add a new where clause so that TypeORM doesn't reuse our input variables
+        params.counter = params.counter + 1;
         const key = k as keyof W; // userName_contains
         const parts = key.toString().split('_'); // ['userName', 'contains']
         const attr = parts[0]; // userName
         const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
 
-        qb = addQueryBuilderWhereItem(
+        return addQueryBuilderWhereItem(
           qb,
           paramKey,
           this.attrToDBColumn(attr),
@@ -267,6 +284,71 @@ export class BaseService<E extends BaseModel> {
           where[key]
         );
       });
+      return qb;
+    };
+
+    // type WhereInput = {
+    //   AND?: WhereInput[];
+    //   OR?: WhereInput[];
+    //   [key: string]: string | number | null;
+    // }
+    const processWhereInput = (
+      qb: SelectQueryBuilder<E>,
+      where: WhereInput
+    ): SelectQueryBuilder<E> => {
+      const { AND, OR, ...rest } = where;
+
+      if (AND && AND.length) {
+        const ands = AND.filter(value => JSON.stringify(value) !== '{}');
+        if (ands.length) {
+          qb.andWhere(
+            new Brackets(qb2 => {
+              ands.forEach((where: WhereInput) => {
+                if (Object.keys(where).length === 0) {
+                  return; // disregard empty where objects
+                }
+                qb2.andWhere(
+                  new Brackets(qb3 => {
+                    processWhereInput(qb3 as SelectQueryBuilder<any>, where);
+                    return qb3;
+                  })
+                );
+              });
+            })
+          );
+        }
+      }
+
+      if (OR && OR.length) {
+        const ors = OR.filter(value => JSON.stringify(value) !== '{}');
+        if (ors.length) {
+          qb.andWhere(
+            new Brackets(qb2 => {
+              ors.forEach((where: WhereInput) => {
+                if (Object.keys(where).length === 0) {
+                  return; // disregard empty where objects
+                }
+
+                qb2.orWhere(
+                  new Brackets(qb3 => {
+                    processWhereInput(qb3 as SelectQueryBuilder<any>, where);
+                    return qb3;
+                  })
+                );
+              });
+            })
+          );
+        }
+      }
+
+      if (rest) {
+        processWheres(qb, rest);
+      }
+      return qb;
+    };
+
+    if (Object.keys(where).length) {
+      processWhereInput(qb, where);
     }
 
     return qb;
@@ -380,6 +462,4 @@ export class BaseService<E extends BaseModel> {
   attrToDBColumn = (attr: string): string => {
     return `"${this.klass}"."${this.columnMap[attr]}"`;
   };
-
-  static buildParamKey = (i: number): string => `param${i}`;
 }

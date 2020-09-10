@@ -187,7 +187,7 @@ describe('RelayService', () => {
     });
   });
 
-  describe.only('getFilters', () => {
+  describe('getFilters', () => {
     test('works for base ID case', () => {
       const cursor = relay.encodeCursor(foo, 'id_ASC');
       expect(relay.getFilters(undefined, cursor)).toEqual({
@@ -197,17 +197,21 @@ describe('RelayService', () => {
 
     test('works with non-id sort', () => {
       const sorts = 'name_DESC';
-      const cursor = relay.encodeCursor({ c: 'three', b: 2, id: '7' }, sorts);
+      const cursor = relay.encodeCursor(foo, sorts);
       expect(relay.getFilters(sorts, cursor)).toEqual({
         OR: [{ name_lt: 'Foo' }, { id_gt: '1', name_eq: 'Foo' }]
       });
     });
 
-    test('works several sorts', () => {
-      const sorts = ['c_ASC', 'b_DESC', 'id_ASC'];
+    test.only('works several sorts', () => {
+      const sorts = ['createdAt_ASC', 'name_DESC', 'id_ASC'];
       const cursor = relay.encodeCursor(foo, sorts);
       expect(relay.getFilters(sorts, cursor)).toEqual({
-        OR: [{ name_lt: 'Foo' }, { id_gt: '1', name_eq: 'Foo' }]
+        OR: [
+          { createdAt_gt: '1981-10-15T00:00:00.000Z' },
+          { createdAt_eq: '1981-10-15T00:00:00.000Z', name_lt: 'Foo' },
+          { createdAt_eq: '1981-10-15T00:00:00.000Z', name_eq: 'Foo', id_gt: '1' }
+        ]
       });
     });
   });

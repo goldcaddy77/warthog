@@ -117,6 +117,7 @@ export class RelayService {
   // asked for limit+1 items (to know if there is a next page)
   firstAndLast<E>(items: E[], limit: number) {
     assert(items.length, 'Items cannot be empty');
+    assert(limit > 0, 'Limit must be greater than 0');
 
     const onLastPage = items.length <= limit;
     const lastItemIndex = onLastPage ? items.length - 1 : limit - 1;
@@ -209,22 +210,26 @@ export class RelayService {
   }
 
   getFilters(sortable: Sortable, cursor: Cursor): WhereInput {
+    // Ex: [ { column: 'createdAt', direction: 'ASC' }, { column: 'name', direction: 'DESC' }, { column: 'id', direction: 'ASC' } ]
     const sorts = this.normalizeSort(sortable);
-    const decodedCursor = this.decodeCursor(cursor);
+    const decodedCursor = this.decodeCursor(cursor); // Ex: ['1981-10-15T00:00:00.000Z', 'Foo', '1']
     const comparisonOperator = (sortDirection: string) => (sortDirection == 'ASC' ? 'gt' : 'lt');
 
     /*
-        e.g.
+      Given:
+        sorts = [['c', 'ASC'], ['b', 'DESC'], ['id', 'ASC']]
+        decodedCursor = ['1981-10-15T00:00:00.000Z', 'Foo', '1']
 
-        decodedCursor = ['three', 2, 7]
-        order = [['c', 'ASC'], ['b', 'DESC'], ['id', 'ASC']]
-
-        =>
-
-        WHERE c > 'three' OR (c = 'three' AND b < 2) OR (c = 'three' AND b = 2 AND id > 7)
-        */
-
-    return {
+      Output:
+        {
+          OR: [
+            { createdAt_gt: '1981-10-15T00:00:00.000Z' },
+            { createdAt_eq: '1981-10-15T00:00:00.000Z', name_lt: 'Foo' },
+            { createdAt_eq: '1981-10-15T00:00:00.000Z', name_eq: 'Foo', id_gt: '1' }
+          ]
+        } 
+     */
+    return ({
       OR: sorts.map(({ column, direction }, i) => {
         const allOthersEqual = sorts
           .slice(0, i)
@@ -236,7 +241,7 @@ export class RelayService {
           },
           ...allOthersEqual
         );
-      }) as any // TODO: fix
-    };
+      })
+    } as unknown) as WhereInput;
   }
 }
