@@ -112,7 +112,6 @@ export class DishResolver {
     @Args() { where, orderBy, ...pageOptions }: DishConnectionWhereArgs,
     @RawFields() fields: object
   ): Promise<DishConnection> {
-    console.log('dishConnection fields', fields);
     return this.service.findConnection<DishWhereInput>(where, orderBy, pageOptions, fields) as any;
   }
 

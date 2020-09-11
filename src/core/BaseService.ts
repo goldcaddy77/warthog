@@ -46,12 +46,6 @@ export type LimitOffset = {
 
 export type PaginationOptions = LimitOffset | RelayPageOptions;
 
-// function isFirstAfter(
-//   pageType: PaginationOptions | RelayPageOptionsInput
-// ): pageType is RelayFirstAfter {
-//   return (pageType as RelayFirstAfter).first !== undefined;
-// }
-
 export type RelayPageOptionsInput = {
   first?: number;
   after?: string;
@@ -64,10 +58,6 @@ function isLastBefore(
 ): pageType is RelayLastBefore {
   return (pageType as RelayLastBefore).last !== undefined;
 }
-
-// function isLimitOffset(pageType: PaginationOptions): pageType is LimitOffset {
-//   return (pageType as LimitOffset).limit !== undefined;
-// }
 
 export class BaseService<E extends BaseModel> {
   manager: EntityManager;
@@ -135,7 +125,7 @@ export class BaseService<E extends BaseModel> {
     // TODO: if the orderby items aren't included in `fields`, should we automatically include?
 
     // TODO: FEATURE - make the default limit configurable
-    const DEFAULT_LIMIT = 20;
+    const DEFAULT_LIMIT = 50;
     const { first, after, last, before } = _pageOptions;
 
     let relayPageOptions;
@@ -157,33 +147,30 @@ export class BaseService<E extends BaseModel> {
       } as RelayFirstAfter;
     }
 
-    const options = this.graphQLInfoService.connectionOptions(fields);
+    const requestedFields = this.graphQLInfoService.connectionOptions(fields);
     const sorts = this.relayService.normalizeSort(orderBy);
     let whereFromCursor = {};
     if (cursor) {
       whereFromCursor = this.relayService.getFilters(orderBy, relayPageOptions);
     }
     const whereCombined: any = { AND: [whereUserInput, whereFromCursor] };
-    // console.log('whereCombined', whereCombined);
 
-    const limitRequest = limit + 1; // We ask for 1 too many so that we know if there is an additional page
     const qb = this.buildFindQuery<W>(
       whereCombined,
-      this.relayService.effectiveOrderStrings(sorts, relayPageOptions), // TODO: need to allow a more complex query shape for Relay wheres
-      { limit: limitRequest },
-      options.selectFields
+      this.relayService.effectiveOrderStrings(sorts, relayPageOptions),
+      { limit: limit + 1 }, // We ask for 1 too many so that we know if there is an additional page
+      requestedFields.selectFields
     );
 
     let rawData;
     let totalCountOption = {};
-    if (options.totalCount) {
+    if (requestedFields.totalCount) {
       let totalCount;
       [rawData, totalCount] = await qb.getManyAndCount();
       totalCountOption = { totalCount };
     } else {
       rawData = await qb.getMany();
     }
-    // console.log('rawData', rawData);
 
     // If we got the n+1 that we requested, pluck the last item off
     const returnData = rawData.length > limit ? rawData.slice(0, limit) : rawData;
@@ -207,7 +194,7 @@ export class BaseService<E extends BaseModel> {
     pageOptions?: LimitOffset,
     fields?: string[]
   ): SelectQueryBuilder<E> {
-    const DEFAULT_LIMIT = 20;
+    const DEFAULT_LIMIT = 50;
     let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
     if (!pageOptions) {
       pageOptions = {
@@ -232,18 +219,12 @@ export class BaseService<E extends BaseModel> {
       qb = qb.select(selection);
     }
 
-    // V3: pull orderBy out of decodedCursor and make sure it matches the input
-    // if(decodedCursor) {}
-
-    // console.log('orderBy', orderBy);
     if (orderBy) {
       if (!isArray(orderBy)) {
         orderBy = [orderBy];
       }
 
       orderBy.forEach((orderByItem: string) => {
-        // TODO: allow multiple sorts
-        // See https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#adding-order-by-expression
         const parts = orderByItem.toString().split('_');
         // TODO: ensure attr is one of the properties on the model
         const attr = parts[0];
@@ -268,18 +249,18 @@ export class BaseService<E extends BaseModel> {
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    // console.log('where', where);
-
-    const params = { counter: 0 };
+    // Keep track of a counter so that TypeORM doesn't reuse our variables that get passed into the query if they
+    // happen to reference the same column
+    const paramKeyCounter = { counter: 0 };
     const processWheres = (
       qb: SelectQueryBuilder<E>,
       where: WhereFilterAttributes
     ): SelectQueryBuilder<E> => {
       // where is of shape { userName_contains: 'a' }
       Object.keys(where).forEach((k: string) => {
-        const paramKey = `param${params.counter}`;
+        const paramKey = `param${paramKeyCounter.counter}`;
         // increment counter each time we add a new where clause so that TypeORM doesn't reuse our input variables
-        params.counter = params.counter + 1;
+        paramKeyCounter.counter = paramKeyCounter.counter + 1;
         const key = k as keyof W; // userName_contains
         const parts = key.toString().split('_'); // ['userName', 'contains']
         const attr = parts[0]; // userName
@@ -296,7 +277,8 @@ export class BaseService<E extends BaseModel> {
       return qb;
     };
 
-    // type WhereInput = {
+    // WhereExpression comes in the following shape:
+    // {
     //   AND?: WhereInput[];
     //   OR?: WhereInput[];
     //   [key: string]: string | number | null;

@@ -1,3 +1,6 @@
+// TODO:
+//   - test totalCount
+//
 // Good test example: https://github.com/typeorm/typeorm/blob/master/test/functional/query-builder/brackets/query-builder-brackets.ts
 import 'reflect-metadata';
 import { Brackets, Connection } from 'typeorm';

@@ -132,12 +132,7 @@ export class RelayService {
     assert(record.getValue, `Record must be a BaseModel: ${JSON.stringify(record, null, 2)}`);
 
     const sortArray = this.normalizeSort(sortable);
-
-    const payload: SortAndValueArray = sortArray.map(sort => {
-      // const value = record.getValue(sort.column); // `Dan`
-      // return [sort.column, sort.direction as SortDirection, value]; // ['name', 'ASC', 'Dan']
-      return record.getValue(sort.column);
-    });
+    const payload: SortAndValueArray = sortArray.map(sort => record.getValue(sort.column));
 
     return this.encoding.encode(payload);
   }

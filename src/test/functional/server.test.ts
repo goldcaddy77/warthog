@@ -153,8 +153,6 @@ describe('server', () => {
     const encodingService = new EncodingService();
     const decodedCursor: [string, string] = encodingService.decode(edges[0].cursor);
 
-    console.log(totalCount, edges, pageInfo);
-
     expect(decodedCursor[0]).toMatch(/Dish [0-9]+/);
     expect(decodedCursor[1]).toMatch(/[A-Za-z0-9_-]{7,14}/);
     expect(edges[0].node.name).toBeTruthy();
@@ -717,7 +715,6 @@ describe('server', () => {
     // TypeORM comment support is currently broken
     // See: https://github.com/typeorm/typeorm/issues/5906
     test.skip('description maps to comment DB metadata', async done => {
-      console.log('stringFieldColumn', stringFieldColumn);
       expect(stringFieldColumn.comment).toEqual('This is a string field');
       done();
     });

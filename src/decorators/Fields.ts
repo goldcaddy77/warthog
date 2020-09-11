@@ -1,7 +1,6 @@
 import * as graphqlFields from 'graphql-fields';
 import { createParamDecorator } from 'type-graphql';
 
-//
 export function Fields(): ParameterDecorator {
   return createParamDecorator(({ info }) => {
     // This object will be of the form:

@@ -12,7 +12,7 @@ import { setTestServerEnvironmentVariables } from '../server-vars';
 
 const root = filesystem.path(__dirname, '../../../');
 
-const GENERATED_FOLDER = 'tmp/generated';
+const GENERATED_FOLDER = path.join(__dirname, '../../../tmp/cli-tests');
 
 describe('cli functional tests', () => {
   const spy = spyOnStd(); // Gives us access to whatever is written to stdout as part of the CLI command
