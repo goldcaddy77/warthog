@@ -12,7 +12,7 @@ import { setTestServerEnvironmentVariables } from '../server-vars';
 
 const root = filesystem.path(__dirname, '../../../');
 
-const GENERATED_FOLDER = 'tmp/generated';
+const GENERATED_FOLDER = path.join(__dirname, '../../../tmp/cli-tests');
 
 describe('cli functional tests', () => {
   const spy = spyOnStd(); // Gives us access to whatever is written to stdout as part of the CLI command
@@ -24,13 +24,13 @@ describe('cli functional tests', () => {
   });
 
   beforeEach(() => {
-    jest.setTimeout(20000);
     setTestServerEnvironmentVariables();
     spy.clear();
   });
 
   afterAll(() => {
     filesystem.remove(GENERATED_FOLDER); // cleanup test artifacts
+    filesystem.remove(path.join(__dirname, 'tmp'));
     openMock.mockReset();
   });
 
@@ -230,9 +230,6 @@ describe('cli functional tests', () => {
   });
 
   test('generates and runs migrations', async done => {
-    // jest.setTimeout(8000);
-
-    // expect.assertions(6);
     const migrationDBName = 'warthog-test-generate-migrations';
 
     // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files
@@ -321,6 +318,7 @@ describe('cli functional tests', () => {
     expect(packageJson.devDependencies['ts-node']).toMatch(caretDep);
     expect(packageJson.devDependencies['typescript']).toMatch(caretDep);
 
+    filesystem.remove(tmpFolder);
     done();
   });
 });

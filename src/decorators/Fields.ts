@@ -19,6 +19,12 @@ export function Fields(): ParameterDecorator {
   });
 }
 
+export function RawFields(): ParameterDecorator {
+  return createParamDecorator(({ info }) => {
+    return graphqlFields(info);
+  });
+}
+
 export function NestedFields(): ParameterDecorator {
   return createParamDecorator(({ info }) => {
     // This object will be of the form:

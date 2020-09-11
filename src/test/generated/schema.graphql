@@ -155,7 +155,8 @@ type Dish implements BaseGraphQLObject {
 }
 
 type DishConnection {
-  nodes: [Dish!]!
+  totalCount: Int!
+  edges: [DishEdge!]!
   pageInfo: PageInfo!
 }
 
@@ -163,6 +164,11 @@ input DishCreateInput {
   name: String!
   stringEnumField: StringEnum
   kitchenSinkId: ID!
+}
+
+type DishEdge {
+  node: Dish!
+  cursor: String!
 }
 
 enum DishOrderByInput {
@@ -509,16 +515,15 @@ type Mutation {
 }
 
 type PageInfo {
-  limit: Float!
-  offset: Float!
-  totalCount: Float!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type Query {
   dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
-  dishConnection(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): DishConnection!
+  dishConnection(first: Int, after: String, last: Int, before: String, where: DishWhereInput, orderBy: DishOrderByInput): DishConnection!
   dish(where: DishWhereUniqueInput!): Dish!
   kitchenSinks(offset: Int, limit: Int = 50, where: KitchenSinkWhereInput, orderBy: KitchenSinkOrderByInput): [KitchenSink!]!
   kitchenSink(where: KitchenSinkWhereUniqueInput!): KitchenSink!

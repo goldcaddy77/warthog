@@ -1,9 +1,11 @@
 import {
   Arg,
   Args,
+  ArgsType,
   Authorized,
   Ctx,
   FieldResolver,
+  Int,
   Mutation,
   Query,
   Resolver,
@@ -12,18 +14,21 @@ import {
   Field
 } from 'type-graphql';
 import { Inject } from 'typedi';
+import { Min } from 'class-validator';
 
 import {
   BaseContext,
-  ConnectionResult,
   Fields,
+  RawFields,
   PageInfo,
   StandardDeleteResponse,
   UserId
 } from '../../../';
+
 import {
   DishCreateInput,
   DishCreateManyArgs,
+  DishOrderByEnum,
   DishUpdateArgs,
   DishWhereArgs,
   DishWhereInput,
@@ -34,15 +39,52 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
-import { NestedFields } from '../../../decorators';
 
 @ObjectType()
-export class DishConnection implements ConnectionResult<Dish> {
-  @Field(() => [Dish], { nullable: false })
-  nodes!: Dish[];
+export class DishEdge {
+  @Field(() => Dish, { nullable: false })
+  node!: Dish;
+
+  @Field(() => String, { nullable: false })
+  cursor!: string;
+}
+
+@ObjectType()
+export class DishConnection {
+  @Field(() => Int, { nullable: false })
+  totalCount!: number;
+
+  @Field(() => [DishEdge], { nullable: false })
+  edges!: DishEdge[];
 
   @Field(() => PageInfo, { nullable: false })
   pageInfo!: PageInfo;
+}
+
+@ArgsType()
+export class ConnectionPageInputOptions {
+  @Field(() => Int, { nullable: true })
+  @Min(0)
+  first?: number;
+
+  @Field(() => String, { nullable: true })
+  after?: string; // V3: TODO: should we make a RelayCursor scalar?
+
+  @Field(() => Int, { nullable: true })
+  @Min(0)
+  last?: number;
+
+  @Field(() => String, { nullable: true })
+  before?: string;
+}
+
+@ArgsType()
+export class DishConnectionWhereArgs extends ConnectionPageInputOptions {
+  @Field(() => DishWhereInput, { nullable: true })
+  where?: DishWhereInput;
+
+  @Field(() => DishOrderByEnum, { nullable: true })
+  orderBy?: DishOrderByEnum;
 }
 
 @Resolver(Dish)
@@ -67,9 +109,10 @@ export class DishResolver {
   @Authorized('dish:read')
   @Query(() => DishConnection)
   async dishConnection(
-    @Args() { where, orderBy, limit, offset }: DishWhereArgs
+    @Args() { where, orderBy, ...pageOptions }: DishConnectionWhereArgs,
+    @RawFields() fields: object
   ): Promise<DishConnection> {
-    return this.service.findConnection<DishWhereInput>(where, orderBy, limit, offset);
+    return this.service.findConnection<DishWhereInput>(where, orderBy, pageOptions, fields) as any;
   }
 
   @Authorized('dish:read')

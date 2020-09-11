@@ -9,7 +9,6 @@ import { Server } from '../../core/server';
 
 import { Binding, KitchenSinkWhereInput } from '../generated/binding';
 import { KitchenSink, StringEnum, Dish } from '../modules';
-import { setTestServerEnvironmentVariables } from '../server-vars';
 import { getTestServer } from '../test-server';
 
 import { KITCHEN_SINKS } from './fixtures';
@@ -18,6 +17,7 @@ import { callAPIError, callAPISuccess } from '../utils';
 import express = require('express');
 import * as request from 'supertest';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
+import { EncodingService } from '../../core/encoding';
 
 let runKey: string;
 let server: Server<any>;
@@ -30,14 +30,9 @@ let onAfterCalled = false;
 let kitchenSink: KitchenSink;
 
 describe('server', () => {
-  beforeEach(() => {
-    jest.setTimeout(20000);
-  });
-
   // Make sure to clean up server
   beforeAll(async done => {
-    jest.setTimeout(20000);
-    setTestServerEnvironmentVariables();
+    // setTestServerEnvironmentVariables();
 
     runKey = String(new Date().getTime()); // used to ensure test runs create unique data
 
@@ -131,32 +126,44 @@ describe('server', () => {
   });
 
   test('queries for dishes with pagination', async () => {
-    expect.assertions(6);
-    const { nodes, pageInfo } = await binding.query.dishConnection(
-      { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
-      `{
-          nodes {
-            name
-            kitchenSink {
-              emailField
-            }
-          }
-          pageInfo {
-            limit
-            offset
+    const { totalCount, edges, pageInfo } = await callAPISuccess(
+      binding.query.dishConnection(
+        { orderBy: 'name_ASC', first: 1 },
+        `{
             totalCount
-            hasNextPage
-            hasPreviousPage
-          }
-        }`
+            edges {
+              node {
+                name
+                kitchenSink {
+                  emailField
+                }
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }`
+      )
     );
 
-    expect(nodes).toMatchSnapshot();
-    expect(pageInfo.offset).toEqual(0);
-    expect(pageInfo.limit).toEqual(1);
+    const encodingService = new EncodingService();
+    const decodedCursor: [string, string] = encodingService.decode(edges[0].cursor);
+
+    expect(decodedCursor[0]).toMatch(/Dish [0-9]+/);
+    expect(decodedCursor[1]).toMatch(/[A-Za-z0-9_-]{7,14}/);
+    expect(edges[0].node.name).toBeTruthy();
+    expect(edges[0].node.kitchenSink.emailField).toBeTruthy();
     expect(pageInfo.hasNextPage).toEqual(true);
     expect(pageInfo.hasPreviousPage).toEqual(false);
-    expect(pageInfo.totalCount).toEqual(20);
+    expect(totalCount).toEqual(20);
+  });
+
+  test.skip('Does not perform expensive totalCount operation if not needed', async () => {
+    //
   });
 
   test('throws errors when given bad input on a single create', async done => {
@@ -708,7 +715,6 @@ describe('server', () => {
     // TypeORM comment support is currently broken
     // See: https://github.com/typeorm/typeorm/issues/5906
     test.skip('description maps to comment DB metadata', async done => {
-      console.log('stringFieldColumn', stringFieldColumn);
       expect(stringFieldColumn.comment).toEqual('This is a string field');
       done();
     });
@@ -810,5 +816,3 @@ function noSupertestRequestErrors(result: request.Response) {
   expect(result.clientError).toBe(false);
   expect(result.serverError).toBe(false);
 }
-
-/* eslint-enable @typescript-eslint/camelcase */
