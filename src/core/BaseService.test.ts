@@ -23,38 +23,6 @@ describe('BaseService', () => {
   });
   afterAll(() => connection.close());
 
-  test('should put brackets correctly into WHERE expression', async () => {
-    await service.createMany(
-      [
-        { firstName: 'Timber', lastName: 'Saw' },
-        { firstName: 'Pleerock', lastName: 'Pleerock' },
-        { firstName: 'Alex', lastName: 'Messer' }
-      ],
-      '1'
-    );
-
-    const bases = await connection
-      .createQueryBuilder(MyBase, 'user')
-      .where('user.lastName = :lastName0', { lastName0: 'Pleerock' })
-      .orWhere(
-        new Brackets(qb => {
-          qb.where('user.firstName = :firstName1', {
-            firstName1: 'Timber'
-          }).andWhere('user.lastName = :lastName1', { lastName1: 'Saw' });
-        })
-      )
-      .orWhere(
-        new Brackets(qb => {
-          qb.where('user.firstName = :firstName2', {
-            firstName2: 'Alex'
-          }).andWhere('user.lastName = :lastName2', { lastName2: 'Messer' });
-        })
-      )
-      .getMany();
-
-    expect(bases.length).toEqual(3);
-  });
-
   test('buildFindQuery', async () => {
     await service.createMany(
       [
@@ -106,7 +74,7 @@ describe('BaseService', () => {
 
       const results = await service.findConnection();
 
-      expect(results.edges.length).toEqual(3);
+      expect(results.edges?.length).toEqual(3);
     });
 
     test('returns a limited number of items if asked', async () => {
@@ -119,9 +87,190 @@ describe('BaseService', () => {
         '1'
       );
 
-      const results = await service.findConnection(undefined, undefined, { first: 2 });
+      const results = await service.findConnection(
+        undefined,
+        'firstName_ASC',
+        { first: 2 },
+        { edges: { node: { firstName: true } } }
+      );
 
-      expect(results.edges.length).toEqual(2);
+      expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['AA', 'BB']);
     });
+
+    test('returns a limited number of items (using last)', async () => {
+      await service.createMany(
+        [
+          { firstName: 'AA', lastName: '01' },
+          { firstName: 'BB', lastName: '02' },
+          { firstName: 'CC', lastName: '03' }
+        ],
+        '1'
+      );
+
+      const results = await service.findConnection(
+        undefined,
+        'firstName_ASC',
+        { last: 2 },
+        { edges: { node: { firstName: true } } }
+      );
+
+      expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['CC', 'BB']);
+    });
+
+    test('query with first, grab cursor and refetch', async () => {
+      await service.createMany(
+        [
+          { firstName: 'AA', lastName: '01' },
+          { firstName: 'BB', lastName: '02' },
+          { firstName: 'CC', lastName: '03' },
+          { firstName: 'DD', lastName: '04' },
+          { firstName: 'EE', lastName: '05' },
+          { firstName: 'FF', lastName: '06' },
+          { firstName: 'GG', lastName: '07' }
+        ],
+        '1'
+      );
+
+      let results = await service.findConnection(
+        undefined,
+        'firstName_ASC',
+        { first: 3 },
+        {
+          edges: { node: { firstName: true } },
+          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+        }
+      );
+
+      expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['AA', 'BB', 'CC']);
+
+      const cursor = results.pageInfo?.endCursor;
+
+      results = await service.findConnection(
+        undefined,
+        'firstName_ASC',
+        { first: 3, after: cursor },
+        {
+          edges: { node: { firstName: true } },
+          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+        }
+      );
+
+      expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['DD', 'EE', 'FF']);
+    });
+
+    test('query with last, grab cursor and refetch', async () => {
+      await service.createMany(
+        [
+          { firstName: 'AA', lastName: '01' },
+          { firstName: 'BB', lastName: '02' },
+          { firstName: 'CC', lastName: '03' },
+          { firstName: 'DD', lastName: '04' },
+          { firstName: 'EE', lastName: '05' },
+          { firstName: 'FF', lastName: '06' },
+          { firstName: 'GG', lastName: '07' }
+        ],
+        '1'
+      );
+
+      let results = await service.findConnection(
+        undefined,
+        'firstName_ASC',
+        { last: 3 },
+        {
+          edges: { node: { firstName: true } },
+          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+        }
+      );
+
+      expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['GG', 'FF', 'EE']);
+
+      const cursor = results.pageInfo?.endCursor;
+
+      results = await service.findConnection(
+        undefined,
+        'firstName_ASC',
+        { last: 3, before: cursor },
+        {
+          edges: { node: { firstName: true } },
+          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+        }
+      );
+
+      expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['DD', 'CC', 'BB']);
+    });
+  });
+
+  test('multiple sorts, query with first, grab cursor and refetch', async () => {
+    await service.createMany(
+      [
+        { registered: true, firstName: 'AA', lastName: '01' },
+        { registered: false, firstName: 'BB', lastName: '02' },
+        { registered: true, firstName: 'CC', lastName: '03' },
+        { registered: false, firstName: 'DD', lastName: '04' },
+        { registered: true, firstName: 'EE', lastName: '05' },
+        { registered: false, firstName: 'FF', lastName: '06' },
+        { registered: true, firstName: 'GG', lastName: '07' }
+      ],
+      '1'
+    );
+
+    let results = await service.findConnection(
+      undefined,
+      ['registered_ASC', 'firstName_ASC'],
+      { first: 4 },
+      {
+        edges: { node: { firstName: true, registered: true } },
+        pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+      }
+    );
+
+    expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['BB', 'DD', 'FF', 'AA']);
+    expect(results.pageInfo?.hasNextPage).toEqual(true);
+
+    const cursor = results.pageInfo?.endCursor;
+
+    results = await service.findConnection(
+      undefined,
+      ['registered_ASC', 'firstName_ASC'],
+      { first: 3, after: cursor },
+      {
+        edges: { node: { firstName: true } },
+        pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+      }
+    );
+
+    expect(results.edges?.map(edge => edge.node?.firstName)).toEqual(['CC', 'EE', 'GG']);
+  });
+
+  test.skip('fun with brackets', async () => {
+    await service.createMany(
+      [
+        { firstName: 'Timber', lastName: 'Saw' },
+        { firstName: 'Pleerock', lastName: 'Pleerock' },
+        { firstName: 'Alex', lastName: 'Messer' }
+      ],
+      '1'
+    );
+
+    const bases = await connection
+      .createQueryBuilder(MyBase, 'user')
+      .where('user.lastName = :lastName0', { lastName0: 'Pleerock' })
+      .orWhere(
+        new Brackets(qb => {
+          qb.where('user.firstName = :firstName1', {
+            firstName1: 'Timber'
+          }).andWhere('user.lastName = :lastName1', { lastName1: 'Saw' });
+        })
+      )
+      .orWhere(
+        new Brackets(qb => {
+          qb.where('user.firstName = :firstName2', {
+            firstName2: 'Alex'
+          }).andWhere('user.lastName = :lastName2', { lastName2: 'Messer' });
+        })
+      )
+      .getMany();
+
+    expect(bases.length).toEqual(3);
   });
 });

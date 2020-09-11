@@ -6,6 +6,9 @@ import { BaseModel, BaseService } from '../../';
 
 @Entity()
 export class MyBase extends BaseModel {
+  @Column({ nullable: true })
+  registered?: boolean;
+
   @Column()
   firstName!: string;
 
