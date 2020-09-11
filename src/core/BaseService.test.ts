@@ -137,7 +137,7 @@ describe('BaseService', () => {
         { first: 3 },
         {
           edges: { node: { firstName: true } },
-          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+          pageInfo: { endCursor: {}, hasNextPage: {}, hasPreviousPage: {} }
         }
       );
 
@@ -151,7 +151,7 @@ describe('BaseService', () => {
         { first: 3, after: cursor },
         {
           edges: { node: { firstName: true } },
-          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+          pageInfo: { endCursor: {}, hasNextPage: {}, hasPreviousPage: {} }
         }
       );
 
@@ -178,7 +178,7 @@ describe('BaseService', () => {
         { last: 3 },
         {
           edges: { node: { firstName: true } },
-          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+          pageInfo: { endCursor: {}, hasNextPage: {}, hasPreviousPage: {} }
         }
       );
 
@@ -192,7 +192,7 @@ describe('BaseService', () => {
         { last: 3, before: cursor },
         {
           edges: { node: { firstName: true } },
-          pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+          pageInfo: { endCursor: {}, hasNextPage: {}, hasPreviousPage: {} }
         }
       );
 
@@ -220,7 +220,7 @@ describe('BaseService', () => {
       { first: 4 },
       {
         edges: { node: { firstName: true, registered: true } },
-        pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+        pageInfo: { endCursor: {}, hasNextPage: {}, hasPreviousPage: {} }
       }
     );
 
@@ -235,7 +235,7 @@ describe('BaseService', () => {
       { first: 3, after: cursor },
       {
         edges: { node: { firstName: true } },
-        pageInfo: { endCursor: 'true', hasNextPage: true, hasPreviousPage: true }
+        pageInfo: { endCursor: {}, hasNextPage: {}, hasPreviousPage: {} }
       }
     );
 

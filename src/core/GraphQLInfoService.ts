@@ -3,20 +3,17 @@ import * as graphqlFields from 'graphql-fields';
 
 import { Service } from 'typedi';
 
-// DRY this up and move somewhere with copies in RelayService
-type Cursor = string;
-
 export type ConnectionInputFields = {
-  totalCount?: number;
+  totalCount?: object;
   edges?: {
     node?: object;
-    cursor?: Cursor;
+    cursor?: object;
   };
   pageInfo?: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor?: Cursor;
-    endCursor?: Cursor;
+    hasNextPage: object;
+    hasPreviousPage: object;
+    startCursor?: object;
+    endCursor?: object;
   };
 };
 
@@ -62,14 +59,6 @@ export class GraphQLInfoService {
     return scalars;
   }
 }
-
-// { totalCount: {},
-// edges: { node: { name: {}, kitchenSink: [Object] }, cursor: {} },
-// pageInfo:
-//  { hasNextPage: {},
-//    hasPreviousPage: {},
-//    startCursor: {},
-//    endCursor: {} } }
 
 function isDefined(obj: unknown): boolean {
   return typeof obj !== 'undefined';

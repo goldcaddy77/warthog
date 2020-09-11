@@ -30,6 +30,7 @@ describe('cli functional tests', () => {
 
   afterAll(() => {
     filesystem.remove(GENERATED_FOLDER); // cleanup test artifacts
+    filesystem.remove(path.join(__dirname, 'tmp'));
     openMock.mockReset();
   });
 
@@ -317,6 +318,7 @@ describe('cli functional tests', () => {
     expect(packageJson.devDependencies['ts-node']).toMatch(caretDep);
     expect(packageJson.devDependencies['typescript']).toMatch(caretDep);
 
+    filesystem.remove(tmpFolder);
     done();
   });
 });

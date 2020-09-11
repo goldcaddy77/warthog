@@ -188,9 +188,13 @@ describe('RelayService', () => {
   });
 
   describe('getFilters', () => {
+    test('returns empty object if there is no cursor', () => {
+      expect(relay.getFilters(undefined, { first: 1 })).toEqual({});
+    });
+
     test('works for base ID case', () => {
       const cursor = relay.encodeCursor(foo, 'id_ASC');
-      expect(relay.getFilters(undefined, cursor)).toEqual({
+      expect(relay.getFilters(undefined, { first: 1, after: cursor })).toEqual({
         OR: [{ id_gt: '1' }]
       });
     });
@@ -198,7 +202,7 @@ describe('RelayService', () => {
     test('works with non-id sort', () => {
       const sorts = 'name_DESC';
       const cursor = relay.encodeCursor(foo, sorts);
-      expect(relay.getFilters(sorts, cursor)).toEqual({
+      expect(relay.getFilters(sorts, { first: 1, after: cursor })).toEqual({
         OR: [{ name_lt: 'Foo' }, { id_gt: '1', name_eq: 'Foo' }]
       });
     });
@@ -206,7 +210,7 @@ describe('RelayService', () => {
     test.only('works several sorts', () => {
       const sorts = ['createdAt_ASC', 'name_DESC', 'id_ASC'];
       const cursor = relay.encodeCursor(foo, sorts);
-      expect(relay.getFilters(sorts, cursor)).toEqual({
+      expect(relay.getFilters(sorts, { first: 1, after: cursor })).toEqual({
         OR: [
           { createdAt_gt: '1981-10-15T00:00:00.000Z' },
           { createdAt_eq: '1981-10-15T00:00:00.000Z', name_lt: 'Foo' },

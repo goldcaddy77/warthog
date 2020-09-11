@@ -209,10 +209,15 @@ export class RelayService {
     });
   }
 
-  getFilters(sortable: Sortable, cursor: Cursor, pageOptions: RelayPageOptions): WhereInput {
+  getFilters(sortable: Sortable, pageOptions: RelayPageOptions): WhereInput {
     // Ex: [ { column: 'createdAt', direction: 'ASC' }, { column: 'name', direction: 'DESC' }, { column: 'id', direction: 'ASC' } ]
-    const sorts = this.effectiveOrder(sortable, pageOptions);
+    const cursor = isFirstAfter(pageOptions) ? pageOptions.after : pageOptions.before;
+    if (!cursor) {
+      return {};
+    }
+
     const decodedCursor = this.decodeCursor(cursor); // Ex: ['1981-10-15T00:00:00.000Z', 'Foo', '1']
+    const sorts = this.effectiveOrder(sortable, pageOptions);
     const comparisonOperator = (sortDirection: string) => (sortDirection == 'ASC' ? 'gt' : 'lt');
 
     /*

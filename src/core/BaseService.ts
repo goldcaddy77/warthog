@@ -161,7 +161,7 @@ export class BaseService<E extends BaseModel> {
     const sorts = this.relayService.normalizeSort(orderBy);
     let whereFromCursor = {};
     if (cursor) {
-      whereFromCursor = this.relayService.getFilters(orderBy, cursor, relayPageOptions);
+      whereFromCursor = this.relayService.getFilters(orderBy, relayPageOptions);
     }
     const whereCombined: any = { AND: [whereUserInput, whereFromCursor] };
     // console.log('whereCombined', whereCombined);
@@ -202,7 +202,7 @@ export class BaseService<E extends BaseModel> {
 
   @debug('base-service:buildFindQuery')
   buildFindQuery<W extends WhereInput>(
-    where: WhereExpression,
+    where: WhereExpression = {},
     orderBy?: string | string[],
     pageOptions?: LimitOffset,
     fields?: string[]

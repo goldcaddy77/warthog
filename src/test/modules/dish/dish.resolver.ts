@@ -68,7 +68,7 @@ export class ConnectionPageInputOptions {
   first?: number;
 
   @Field(() => String, { nullable: true })
-  after?: string; // TODO: should we make a RelayCursor scalar?
+  after?: string; // V3: TODO: should we make a RelayCursor scalar?
 
   @Field(() => Int, { nullable: true })
   @Min(0)
@@ -112,7 +112,8 @@ export class DishResolver {
     @Args() { where, orderBy, ...pageOptions }: DishConnectionWhereArgs,
     @RawFields() fields: object
   ): Promise<DishConnection> {
-    return this.service.findConnection<DishWhereInput>(where, orderBy, pageOptions, fields);
+    console.log('dishConnection fields', fields);
+    return this.service.findConnection<DishWhereInput>(where, orderBy, pageOptions, fields) as any;
   }
 
   @Authorized('dish:read')

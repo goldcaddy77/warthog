@@ -4,6 +4,6 @@
   "compilerOptions": {
     "strict": false
   },
-  "exclude": ["node_modules", "**/node_modules/*", "examples"],
+  "exclude": ["node_modules", "**/node_modules/*", "examples", "**/tmp/*"],
   "include": ["src/**/*", "test/**/*", "typings"]
 }
