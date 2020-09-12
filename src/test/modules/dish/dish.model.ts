@@ -1,9 +1,8 @@
-import { BeforeInsert } from 'typeorm';
 import {
   EnumField,
-  generateId,
   CreatedAtField,
   DateTimeString,
+  IdModel,
   IDType,
   ManyToOne,
   Model,
@@ -15,14 +14,9 @@ import { StringEnum } from '../shared';
 export { StringEnum }; // Warthog requires this
 
 @Model()
-export class Dish {
+export class Dish extends IdModel {
   @PrimaryIdField({ sort: false, filter: ['in'] })
   id!: IDType;
-
-  @BeforeInsert()
-  setId() {
-    this.id = this.id || generateId();
-  }
 
   @CreatedAtField({ sort: true })
   createdAt!: DateTimeString;

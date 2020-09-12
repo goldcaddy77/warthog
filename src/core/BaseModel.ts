@@ -61,6 +61,15 @@ export abstract class BaseModel implements BaseGraphQLObject {
     return this.id || shortid.generate();
   }
 
+  // V3: DateTime should use getter to return ISO8601 string
+  getValue(field: any) {
+    const self = this as any;
+    if (self[field] instanceof Date) {
+      return self[field].toISOString();
+    }
+    return self[field];
+  }
+
   @BeforeInsert()
   setId() {
     this.id = this.getId();
@@ -87,4 +96,29 @@ export abstract class BaseModelUUID implements BaseGraphQLObject {
   deletedById?: IDType;
 
   @VersionColumn() version!: number;
+}
+
+@ObjectType({ isAbstract: true })
+export abstract class IdModel {
+  @Field(() => ID)
+  @PrimaryColumn({ type: String })
+  id!: IDType;
+
+  getId(): string {
+    // If settings allow ID to be specified on create, use the specified ID
+    return this.id || shortid.generate();
+  }
+
+  @BeforeInsert()
+  setId(): void {
+    this.id = this.getId();
+  }
+
+  getValue(field: string): string | number {
+    const self = this as any;
+    if (self[field] instanceof Date) {
+      return self[field].toISOString();
+    }
+    return self[field];
+  }
 }

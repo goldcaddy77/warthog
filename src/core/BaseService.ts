@@ -1,21 +1,39 @@
 import { validate } from 'class-validator';
 import { ArgumentValidationError } from 'type-graphql';
 import { Container, Inject, Service } from 'typedi';
-import { DeepPartial, EntityManager, getRepository, Repository, SelectQueryBuilder } from 'typeorm';
+import {
+  Brackets,
+  DeepPartial,
+  EntityManager,
+  getRepository,
+  Repository,
+  SelectQueryBuilder
+} from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 import { MetadataStorage } from '../metadata';
-import { ConnectionResult, StandardDeleteResponse } from '../tgql';
+import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
 
+import { debug } from '../decorators';
 import { StringMap, DateTimeString, IDType } from './types';
+
+import {
+  RelayFirstAfter,
+  RelayLastBefore,
+  RelayService,
+  RelayPageOptions,
+  ConnectionResult
+} from './RelayService';
+import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
 }
 
 export interface Node {
-  id: string;
+  id?: string | number;
+  getValue(field: string): string | number;
 }
 
 interface WarthogSpecialModel {
@@ -29,11 +47,43 @@ interface WarthogSpecialModel {
 
 Container.import([MetadataStorage]);
 
+interface WhereFilterAttributes {
+  [key: string]: string | number | null;
+}
+
+type WhereExpression = {
+  AND?: Array<WhereExpression | {}>;
+  OR?: Array<WhereExpression | {}>;
+  id?: string | number;
+} & WhereFilterAttributes;
+
+export type LimitOffset = {
+  limit: number;
+  offset?: number;
+};
+
+export type PaginationOptions = LimitOffset | RelayPageOptions;
+
+export type RelayPageOptionsInput = {
+  first?: number;
+  after?: string;
+  last?: number;
+  before?: string;
+};
+
+function isLastBefore(
+  pageType: PaginationOptions | RelayPageOptionsInput
+): pageType is RelayLastBefore {
+  return (pageType as RelayLastBefore).last !== undefined;
+}
+
 @Service('BaseService')
 export class BaseService<E extends Node> {
   manager: EntityManager;
   columnMap: StringMap;
   klass: string;
+  relayService: RelayService;
+  graphQLInfoService: GraphQLInfoService;
 
   @Inject('MetadataStorage') metadata!: MetadataStorage;
 
@@ -43,6 +93,10 @@ export class BaseService<E extends Node> {
     if (!entityClass) {
       throw new Error('BaseService requires an entity Class');
     }
+
+    // TODO: use DI
+    this.relayService = new RelayService();
+    this.graphQLInfoService = new GraphQLInfoService();
 
     // V3: remove the need to inject a repository, we simply need the entityClass and then we can do
     // everything we need to do.
@@ -86,48 +140,113 @@ export class BaseService<E extends Node> {
   }
 
   async find(
-    where?: any,
+    where: any = {}, // TODO: fix any
     orderBy?: string,
     limit?: number,
     offset?: number,
     fields?: string[]
   ): Promise<E[]> {
-    return this.buildFindQuery(where, orderBy, limit, offset, fields).getMany();
+    const DEFAULT_LIMIT = 50;
+    return this.buildFindQuery(
+      where as WhereExpression,
+      orderBy,
+      { limit: limit || DEFAULT_LIMIT, offset },
+      fields
+    ).getMany();
   }
 
+  @debug('base-service:findConnection')
   async findConnection(
-    where?: any,
-    orderBy?: string,
-    limit?: number,
-    offset?: number,
-    fields?: string[]
+    whereUserInput: any = {}, // V3: WhereExpression = {},
+    orderBy?: string | string[],
+    _pageOptions: RelayPageOptionsInput = {},
+    fields?: ConnectionInputFields
   ): Promise<ConnectionResult<E>> {
-    const qb = this.buildFindQuery(where, orderBy, limit, offset, fields);
-    const [nodes, totalCount] = await qb.getManyAndCount();
+    // TODO: if the orderby items aren't included in `fields`, should we automatically include?
     // TODO: FEATURE - make the default limit configurable
-    limit = limit ?? 50;
-    offset = offset ?? 0;
+    const DEFAULT_LIMIT = 50;
+    const { first, after, last, before } = _pageOptions;
+
+    let relayPageOptions;
+    let limit;
+    let cursor;
+    if (isLastBefore(_pageOptions)) {
+      limit = last || DEFAULT_LIMIT;
+      cursor = before;
+      relayPageOptions = {
+        last: limit,
+        before
+      } as RelayLastBefore;
+    } else {
+      limit = first || DEFAULT_LIMIT;
+      cursor = after;
+      relayPageOptions = {
+        first: limit,
+        after
+      } as RelayFirstAfter;
+    }
+
+    const requestedFields = this.graphQLInfoService.connectionOptions(fields);
+    const sorts = this.relayService.normalizeSort(orderBy);
+    let whereFromCursor = {};
+    if (cursor) {
+      whereFromCursor = this.relayService.getFilters(orderBy, relayPageOptions);
+    }
+    const whereCombined = {
+      AND: [whereUserInput, whereFromCursor]
+    } as WhereExpression;
+
+    const qb = this.buildFindQuery(
+      whereCombined,
+      this.relayService.effectiveOrderStrings(sorts, relayPageOptions),
+      { limit: limit + 1 }, // We ask for 1 too many so that we know if there is an additional page
+      requestedFields.selectFields
+    );
+
+    let rawData;
+    let totalCountOption = {};
+    if (requestedFields.totalCount) {
+      let totalCount;
+      [rawData, totalCount] = await qb.getManyAndCount();
+      totalCountOption = { totalCount };
+    } else {
+      rawData = await qb.getMany();
+    }
+
+    // If we got the n+1 that we requested, pluck the last item off
+    const returnData = rawData.length > limit ? rawData.slice(0, limit) : rawData;
 
     return {
-      nodes,
-      pageInfo: this.getPageInfo(limit, offset, totalCount)
+      ...totalCountOption,
+      edges: returnData.map((item: E) => {
+        return {
+          node: item,
+          cursor: this.relayService.encodeCursor(item, sorts)
+        };
+      }),
+      pageInfo: this.relayService.getPageInfo(rawData, sorts, relayPageOptions)
     };
   }
 
-  private buildFindQuery(
-    where: any = {},
-    orderBy?: string,
-    limit?: number,
-    offset?: number,
+  @debug('base-service:buildFindQuery')
+  buildFindQuery<W>(
+    where: any = {}, // W | WhereExpression
+    orderBy?: string | string[],
+    pageOptions?: LimitOffset,
     fields?: string[]
   ): SelectQueryBuilder<E> {
+    const DEFAULT_LIMIT = 50;
     let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
-
-    if (limit) {
-      qb = qb.take(limit);
+    if (!pageOptions) {
+      pageOptions = {
+        limit: DEFAULT_LIMIT
+      };
     }
-    if (offset) {
-      qb = qb.skip(offset);
+
+    qb = qb.take(pageOptions.limit || DEFAULT_LIMIT);
+
+    if (pageOptions.offset) {
+      qb = qb.skip(pageOptions.offset);
     }
 
     if (fields) {
@@ -140,18 +259,21 @@ export class BaseService<E extends Node> {
       const selection = fields.map(field => `${this.klass}.${field}`);
       qb = qb.select(selection);
     }
+
     if (orderBy) {
-      // TODO: allow multiple sorts
-      // See https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#adding-order-by-expression
-      const parts = orderBy.toString().split('_');
-      // TODO: ensure attr is one of the properties on the model
-      const attr = parts[0];
-      const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
+      if (!Array.isArray(orderBy)) {
+        orderBy = [orderBy];
+      }
 
-      qb = qb.orderBy(this.attrToDBColumn(attr), direction);
+      orderBy.forEach((orderByItem: string) => {
+        const parts = orderByItem.toString().split('_');
+        // TODO: ensure attr is one of the properties on the model
+        const attr = parts[0];
+        const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
+
+        qb = qb.addOrderBy(this.attrToDBColumn(attr), direction);
+      });
     }
-
-    where = where || {};
 
     // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
     const hasDeletedAtFilter = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
@@ -163,26 +285,34 @@ export class BaseService<E extends Node> {
     } else if (!hasDeletedAtFilter) {
       // If no deletedAt filters specified, hide them by default
       // eslint-disable-next-line @typescript-eslint/camelcase
-      where = { ...where, deletedAt_eq: null }; // Filter out soft-deleted items
-    } else if (typeof where.deletedAt_all !== 'undefined') {
+      (where as any).deletedAt_eq = null; // Filter out soft-deleted items
+    } else if (typeof (where as any).deletedAt_all !== 'undefined') {
       // Delete this param so that it doesn't try to filter on the magic `all` param
       // Put this here so that we delete it even if `deletedAt_all: false` specified
-      delete where.deletedAt_all;
+      delete (where as any).deletedAt_all;
     } else {
       // If we get here, the user has added a different deletedAt filter, like deletedAt_gt: <date>
       // do nothing because the specific deleted at filters will be added by processWhereOptions
     }
 
-    if (Object.keys(where).length) {
+    // Keep track of a counter so that TypeORM doesn't reuse our variables that get passed into the query if they
+    // happen to reference the same column
+    const paramKeyCounter = { counter: 0 };
+    const processWheres = (
+      qb: SelectQueryBuilder<E>,
+      where: WhereFilterAttributes
+    ): SelectQueryBuilder<E> => {
       // where is of shape { userName_contains: 'a' }
-      Object.keys(where).forEach((k: string, i: number) => {
-        const paramKey = BaseService.buildParamKey(i);
+      Object.keys(where).forEach((k: string) => {
+        const paramKey = `param${paramKeyCounter.counter}`;
+        // increment counter each time we add a new where clause so that TypeORM doesn't reuse our input variables
+        paramKeyCounter.counter = paramKeyCounter.counter + 1;
         const key = k; // userName_contains
         const parts = key.toString().split('_'); // ['userName', 'contains']
         const attr = parts[0]; // userName
         const operator = parts.length > 1 ? parts[1] : 'eq'; // ex: contains.  Default operator to equals
 
-        qb = addQueryBuilderWhereItem(
+        return addQueryBuilderWhereItem(
           qb,
           paramKey,
           this.attrToDBColumn(attr),
@@ -190,13 +320,79 @@ export class BaseService<E extends Node> {
           where[key]
         );
       });
+      return qb;
+    };
+
+    // WhereExpression comes in the following shape:
+    // {
+    //   AND?: WhereInput[];
+    //   OR?: WhereInput[];
+    //   [key: string]: string | number | null;
+    // }
+    const processWhereInput = (
+      qb: SelectQueryBuilder<E>,
+      where: WhereExpression
+    ): SelectQueryBuilder<E> => {
+      const { AND, OR, ...rest } = where;
+
+      if (AND && AND.length) {
+        const ands = AND.filter(value => JSON.stringify(value) !== '{}');
+        if (ands.length) {
+          qb.andWhere(
+            new Brackets(qb2 => {
+              ands.forEach((where: WhereExpression) => {
+                if (Object.keys(where).length === 0) {
+                  return; // disregard empty where objects
+                }
+                qb2.andWhere(
+                  new Brackets(qb3 => {
+                    processWhereInput(qb3 as SelectQueryBuilder<any>, where);
+                    return qb3;
+                  })
+                );
+              });
+            })
+          );
+        }
+      }
+
+      if (OR && OR.length) {
+        const ors = OR.filter(value => JSON.stringify(value) !== '{}');
+        if (ors.length) {
+          qb.andWhere(
+            new Brackets(qb2 => {
+              ors.forEach((where: WhereExpression) => {
+                if (Object.keys(where).length === 0) {
+                  return; // disregard empty where objects
+                }
+
+                qb2.orWhere(
+                  new Brackets(qb3 => {
+                    processWhereInput(qb3 as SelectQueryBuilder<any>, where);
+                    return qb3;
+                  })
+                );
+              });
+            })
+          );
+        }
+      }
+
+      if (rest) {
+        processWheres(qb, rest);
+      }
+      return qb;
+    };
+
+    if (Object.keys(where).length) {
+      processWhereInput(qb, where);
     }
 
     return qb;
   }
 
-  async findOne<W extends object>(where: W): Promise<E> {
-    const items = await this.find(where);
+  async findOne<W>(where: W): Promise<E> {
+    const items = await this.find(where as any);
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
     } else if (items.length > 1) {
@@ -264,9 +460,9 @@ export class BaseService<E extends Node> {
   //   - Return the full object
   // NOTE: assumes all models have a unique `id` field
   // W extends Partial<E>
-  async update(
+  async update<W>(
     data: DeepPartial<E>,
-    where: any,
+    where: W,
     userId: string,
     options?: BaseOptions
   ): Promise<E> {
@@ -297,8 +493,8 @@ export class BaseService<E extends Node> {
     // model with a DeletedDate decorator
     // If there is no deletedAt column, actually delete the record
     if (!this.hasColumn('deletedAt')) {
-      await this.manager.delete(this.entityClass, where);
-      return { id: found.id };
+      await this.manager.delete<E>(this.entityClass, where);
+      return { id: String(found.id) };
     }
 
     const deletedAtObject = this.hasColumn('deletedAt')
@@ -318,7 +514,7 @@ export class BaseService<E extends Node> {
     const entity = manager.merge<E>(this.entityClass, new this.entityClass(), data as any, idData);
 
     await manager.save(entity as any);
-    return { id: found.id };
+    return { id: String(found.id) };
   }
 
   attrsToDBColumns = (attrs: string[]): string[] => {
@@ -328,6 +524,4 @@ export class BaseService<E extends Node> {
   attrToDBColumn = (attr: string): string => {
     return `"${this.klass}"."${this.columnMap[attr]}"`;
   };
-
-  static buildParamKey = (i: number): string => `param${i}`;
 }

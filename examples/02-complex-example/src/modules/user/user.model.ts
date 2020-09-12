@@ -131,6 +131,7 @@ export class User extends BaseModel {
   @StringField({ dataType: 'varchar', nullable: true })
   varcharField: string;
 
+  // DOCUMENTATION TODO
   // Spacial fields
   // https://github.com/typeorm/typeorm/blob/master/test/functional/spatial/postgres/entity/Post.ts
   @CustomField({

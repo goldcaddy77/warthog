@@ -1,4 +1,4 @@
-import { BeforeInsert, Column } from 'typeorm';
+import { Column } from 'typeorm';
 
 import {
   BooleanField,
@@ -16,6 +16,7 @@ import {
   EnumField,
   FloatField,
   IdField,
+  IdModel,
   IDType,
   IntField,
   JSONField,
@@ -33,18 +34,12 @@ import {
 import { Dish } from '../dish/dish.model';
 
 import { StringEnum } from '../shared';
-import { generateId } from '../../../utils';
 export { StringEnum }; // Warthog requires this
 
 @Model()
-export class KitchenSink {
+export class KitchenSink extends IdModel {
   @PrimaryIdField({ filter: ['eq', 'in'] })
   id!: IDType;
-
-  @BeforeInsert()
-  setId() {
-    this.id = this.id || generateId();
-  }
 
   @CreatedAtField()
   createdAt!: DateTimeString;
