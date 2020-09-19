@@ -71,15 +71,15 @@ type Mutation {
 }
 
 type PageInfo {
-  limit: Float!
-  offset: Float!
-  totalCount: Float!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type Query {
   users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
+  UserConnection: [User!]!
   user(where: UserWhereUniqueInput!): User!
 }
 
@@ -94,11 +94,21 @@ type User {
   lastName: String!
 }
 
+type UserConnection {
+  totalCount: Int!
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+
 input UserCreateInput {
-  id: ID!
   firstName: String!
   updatedById: String
   lastName: String!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
 }
 
 enum UserOrderByInput {
@@ -113,7 +123,6 @@ enum UserOrderByInput {
 }
 
 input UserUpdateInput {
-  id: ID
   firstName: String
   updatedById: String
   lastName: String

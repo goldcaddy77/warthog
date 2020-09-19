@@ -71,10 +71,23 @@ type EndpointType =
   | 'update'
   | 'delete';
 
+interface EndpointObject {
+  find?: string;
+  findOne?: string;
+  connection?: string;
+  create?: string;
+  createMany?: string;
+  update?: string;
+  delete?: string;
+}
+
 @Service('MetadataStorage')
 export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
   classMap: { [table: string]: any } = {};
+  endpoints: {
+    [table: string]: EndpointObject;
+  } = {};
   models: { [table: string]: ModelMetadata } = {};
   interfaces: string[] = [];
 
@@ -174,9 +187,25 @@ export class MetadataStorage {
     }
   }
 
-  // addEndpont(modelName: string, endpointType: EndpointType) {
-  //   this.ensureModelExists(modelName);
-  // }
+  // @debug('metadata-storage')
+  addEndpont(
+    type: EndpointType,
+    modelGetter: Function,
+    constructorName: string,
+    propertyKey: string
+  ) {
+    const got = modelGetter();
+    const model = Array.isArray(got) ? got[0] : got;
+
+    console.log(type, model.name, constructorName, propertyKey);
+
+    if (!this.endpoints[model.name]) {
+      this.endpoints[model.name] = {};
+    }
+    if (!this.endpoints[model.name][type]) {
+      this.endpoints[model.name][type] = propertyKey;
+    }
+  }
 
   addField(
     type: FieldType,

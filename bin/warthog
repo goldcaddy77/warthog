@@ -17,7 +17,10 @@ if (commandRequiresTS) {
     process.exit(1);
   }
 
-  require('ts-node').register({ project: path.join(process.cwd(), 'tsconfig.json') });
+  require('ts-node').register({
+    // typeCheck: false,
+    project: path.join(process.cwd(), 'tsconfig.json')
+  });
 }
 
 if (devMode || (commandRequiresTS && srcFileExists)) {

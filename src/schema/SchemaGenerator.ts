@@ -33,13 +33,16 @@ export class SchemaGenerator {
       // new TypeGraphQL objects
       // prettier-ignore
       // @ts-ignore
+      import { Min } from 'class-validator';
+      // prettier-ignore
+      // @ts-ignore
       import { DateResolver as Date } from 'graphql-scalars';
       // prettier-ignore
       // @ts-ignore
       import { GraphQLID as ID } from 'graphql';
       // prettier-ignore
       // @ts-ignore
-      import { ArgsType, Field as TypeGraphQLField, Float, InputType as TypeGraphQLInputType, Int } from 'type-graphql';
+      import { ArgsType, Field as TypeGraphQLField, Float, InputType as TypeGraphQLInputType, Int, ObjectType} from 'type-graphql';
       // prettier-ignore
       // @ts-ignore
       import { registerEnumType, GraphQLISODateTime as DateTime } from "type-graphql";
@@ -50,7 +53,7 @@ export class SchemaGenerator {
       // prettier-ignore
       // @ts-ignore
 
-      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '${warthogImportPath}';
+      import { BaseWhereInput, JsonObject, PageInfo, PaginationArgs, DateOnlyString, DateTimeString } from '${warthogImportPath}';
       `
     ];
 
@@ -73,6 +76,7 @@ export class SchemaGenerator {
       templateArr.push(this.entityToWhereArgs(model));
       templateArr.push(this.entityToCreateManyArgs(model));
       templateArr.push(this.entityToUpdateInputArgs(model));
+      templateArr.push(this.entityToConnectionTypes(model));
     });
 
     return this.format(templateArr.join('\n'));
@@ -631,6 +635,62 @@ export class SchemaGenerator {
         name: '${model.name}OrderByInput'
       });
     `;
+  }
+
+  entityToConnectionTypes(model: ModelMetadata): string {
+    console.log('entityToConnectionTypes');
+    const endpoints = this.metadata.endpoints[model.name];
+    if (!Object.keys(endpoints).length || !endpoints['connection']) {
+      return ''; // Doesn't have connection query
+    }
+
+    return `
+      @ObjectType()
+      export class ${model.name}Edge {
+        @TypeGraphQLField(() => ${model.name}, { nullable: false })
+        node!: ${model.name};
+      
+        @TypeGraphQLField(() => String, { nullable: false })
+        cursor!: string;
+      }
+      
+      @ObjectType()
+      export class ${model.name}Connection {
+        @TypeGraphQLField(() => Int, { nullable: false })
+        totalCount!: number;
+      
+        @TypeGraphQLField(() => [${model.name}Edge], { nullable: false })
+        edges!: ${model.name}Edge[];
+      
+        @TypeGraphQLField(() => PageInfo, { nullable: false })
+        pageInfo!: PageInfo;
+      }
+      
+      @ArgsType()
+      export class ConnectionPageInputOptions {
+        @TypeGraphQLField(() => Int, { nullable: true })
+        @Min(0)
+        first?: number;
+      
+        @TypeGraphQLField(() => String, { nullable: true })
+        after?: string; // V3: TODO: should we make a RelayCursor scalar?
+      
+        @TypeGraphQLField(() => Int, { nullable: true })
+        @Min(0)
+        last?: number;
+      
+        @TypeGraphQLField(() => String, { nullable: true })
+        before?: string;
+      }
+      
+      @ArgsType()
+      export class ${model.name}ConnectionWhereArgs extends ConnectionPageInputOptions {
+        @TypeGraphQLField(() => ${model.name}WhereInput, { nullable: true })
+        where?: ${model.name}WhereInput;
+      
+        @TypeGraphQLField(() => ${model.name}OrderByEnum, { nullable: true })
+        orderBy?: ${model.name}OrderByEnum;
+      }`;
   }
 
   columnRequiresExplicitGQLType(column: ColumnMetadata) {

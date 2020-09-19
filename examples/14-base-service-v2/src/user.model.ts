@@ -1,15 +1,9 @@
-import { generateId, IDType, Model, PrimaryIdField, StringField } from '../../../src';
-import { BeforeInsert } from 'typeorm';
+import { IdModel, IDType, Model, PrimaryIdField, StringField } from '../../../src';
 
 @Model()
-export class User {
+export class User extends IdModel {
   @PrimaryIdField({ filter: ['in'] })
   id!: IDType;
-
-  @BeforeInsert()
-  setId() {
-    this.id = this.id || generateId();
-  }
 
   @StringField({ maxLength: 30, sort: true, filter: ['eq', 'contains'] })
   firstName?: string;

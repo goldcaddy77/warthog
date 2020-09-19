@@ -1,4 +1,5 @@
 export * from './BooleanField';
+export * from './ConnectionQuery';
 export * from './CreatedAtField';
 export * from './CreatedByField';
 export * from './CustomField';
@@ -11,6 +12,7 @@ export * from './DeletedByField';
 export * from './EmailField';
 export * from './EnumField';
 export * from './Fields';
+export * from './FindOneQuery';
 export * from './FloatField';
 export * from './ForeignKeyField';
 export * from './IdField';

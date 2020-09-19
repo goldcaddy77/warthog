@@ -1,5 +1,17 @@
-import { Arg, Args, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
-import { Repository } from 'typeorm';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+// import { Query } from 'type-graphql';
+import { ReturnTypeFunc } from 'type-graphql/dist/decorators/types';
 
-// @Query(() => User)
+import { getMetadataStorage } from '../metadata';
+
+export function FindOneQuery(returnTypeFunc: ReturnTypeFunc): any {
+  //   @Query(modelGetter)
+
+  return (target: object, propertyKey: string): any => {
+    getMetadataStorage().addEndpont(
+      'findOne',
+      returnTypeFunc,
+      target.constructor.name,
+      propertyKey
+    );
+  };
+}

@@ -29,6 +29,7 @@ export class CodeGenerator {
     this.createGeneratedFolder();
 
     loadFromGlobArray(this.config.get('DB_ENTITIES'));
+    loadFromGlobArray(this.config.get('RESOLVERS_PATH'));
   }
 
   createGeneratedFolder() {

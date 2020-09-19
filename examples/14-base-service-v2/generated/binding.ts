@@ -7,6 +7,7 @@ import * as schema from  './schema.graphql'
 
 export interface Query {
     users: <T = Array<User>>(args: { offset?: Int | null, limit?: Int | null, where?: UserWhereInput | null, orderBy?: UserOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    UserConnection: <T = Array<User>>(args?: {}, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     user: <T = User>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
@@ -76,14 +77,12 @@ export interface BaseWhereInput {
 }
 
 export interface UserCreateInput {
-  id: ID_Output
   firstName: String
   updatedById?: String | null
   lastName: String
 }
 
 export interface UserUpdateInput {
-  id?: ID_Input | null
   firstName?: String | null
   updatedById?: String | null
   lastName?: String | null
@@ -147,11 +146,10 @@ export interface BaseModelUUID extends BaseGraphQLObject {
 }
 
 export interface PageInfo {
-  limit: Float
-  offset: Float
-  totalCount: Float
   hasNextPage: Boolean
   hasPreviousPage: Boolean
+  startCursor?: String | null
+  endCursor?: String | null
 }
 
 export interface StandardDeleteResponse {
@@ -165,6 +163,17 @@ export interface User {
   lastName: String
 }
 
+export interface UserConnection {
+  totalCount: Int
+  edges: Array<UserEdge>
+  pageInfo: PageInfo
+}
+
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
@@ -174,11 +183,6 @@ export type Boolean = boolean
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 */
 export type DateTime = Date | string
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
-*/
-export type Float = number
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
