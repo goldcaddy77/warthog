@@ -12,41 +12,23 @@ import { GraphQLISODateTime } from 'type-graphql';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
 
-import { FieldType } from '../metadata';
+import { ColumnMetadata, FieldType } from '../metadata';
 
+type GraphQLCustomType = any;
+
+// TODO: need to figure out how to type a custom GraphQLField type
 export function columnToGraphQLType(
-  type: FieldType,
-  enumName?: string
-): GraphQLScalarType | string {
-  if (typeof enumName !== undefined && enumName) {
-    return String(enumName);
+  column: ColumnMetadata
+): GraphQLScalarType | string | GraphQLCustomType {
+  if (typeof column.enumName !== undefined && column.enumName) {
+    return String(column.enumName);
   }
 
-  switch (type) {
-    case 'id':
-      return GraphQLID;
-    case 'email':
-    case 'string':
-      return GraphQLString;
-    case 'boolean':
-      return GraphQLBoolean;
-    case 'float':
-    case 'numeric':
-      return GraphQLFloat;
-    case 'integer':
-      return GraphQLInt;
-    case 'date':
-      return GraphQLISODateTime;
-    case 'datetime':
-      return GraphQLISODateTime;
-    case 'dateonly':
-      return DateResolver;
-    case 'json':
-      return GraphQLJSONObject;
-    case 'enum':
-      // This is to make TS happy and so that we'll get a compile time error if a new type is added
-      throw new Error("Will never get here because it's handled above");
+  if (column.type === 'json' && typeof column.gqlFieldType !== 'undefined') {
+    return column.gqlFieldType;
   }
+
+  return columnTypeToGraphQLType(column.type);
 }
 
 export function columnTypeToGraphQLType(type: FieldType): GraphQLScalarType {
@@ -77,8 +59,8 @@ export function columnTypeToGraphQLType(type: FieldType): GraphQLScalarType {
   }
 }
 
-export function columnTypeToGraphQLDataType(type: FieldType, enumName?: string): string {
-  const graphQLType = columnToGraphQLType(type, enumName);
+export function columnToGraphQLDataType(column: ColumnMetadata): string {
+  const graphQLType = columnToGraphQLType(column);
 
   // Sometimes we want to return the full blow GraphQL data type, but sometimes we want to return
   // the more readable name.  Ex:
@@ -92,17 +74,22 @@ export function columnTypeToGraphQLDataType(type: FieldType, enumName?: string):
   }
 }
 
-export function columnInfoToTypeScriptType(type: FieldType, enumName?: string): string {
-  if (type === 'id') {
+export function columnToTypeScriptType(column: ColumnMetadata): string {
+  // TODO: clean this up.  Ideally we'd deduce the TS type from the GraphQL type
+  if (column.type === 'json' && typeof column.gqlFieldType !== 'undefined') {
+    return column.gqlFieldType.name;
+  }
+
+  if (column.type === 'id') {
     return 'string'; // TODO: should this be ID_TYPE?
-  } else if (type === 'dateonly') {
+  } else if (column.type === 'dateonly') {
     return 'DateOnlyString';
-  } else if (type === 'datetime') {
+  } else if (column.type === 'datetime') {
     return 'DateTimeString';
-  } else if (enumName) {
-    return String(enumName);
+  } else if (column.enumName) {
+    return String(column.enumName);
   } else {
-    const graphqlType = columnTypeToGraphQLDataType(type, enumName);
+    const graphqlType = columnToGraphQLDataType(column);
     const typeMap: any = {
       Boolean: 'boolean',
       DateTime: 'Date',
