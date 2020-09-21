@@ -111,7 +111,7 @@ export class User extends BaseModel {
   @StringField({
     maxLength: 50,
     minLength: 2,
-    nullable: false,
+    nullable: true,
     description: 'This is a string field'
   })
   stringField: string;

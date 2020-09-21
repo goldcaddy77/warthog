@@ -164,7 +164,7 @@ export interface UserCreateInput {
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
   typedJsonField?: EventObjectInput | null
-  stringField: String
+  stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
@@ -527,7 +527,7 @@ export interface User extends BaseGraphQLObject {
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
   typedJsonField?: EventObject | null
-  stringField: String
+  stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null

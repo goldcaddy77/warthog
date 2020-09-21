@@ -794,8 +794,8 @@ export class UserCreateInput {
   @TypeGraphQLField(() => EventObject, { nullable: true })
   typedJsonField?: EventObject;
 
-  @TypeGraphQLField()
-  stringField!: string;
+  @TypeGraphQLField({ nullable: true })
+  stringField?: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;

@@ -149,7 +149,7 @@ type User implements BaseGraphQLObject {
   typedJsonField: EventObject
 
   """This is a string field"""
-  stringField: String!
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -193,7 +193,7 @@ input UserCreateInput {
   jsonField: JSONObject
   jsonFieldNoFilter: JSONObject
   typedJsonField: EventObjectInput
-  stringField: String!
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
