@@ -112,7 +112,7 @@ Further, it covers the following concerns by hooking into best-in-class open sou
 
 ## Prerequisites
 
-Warthog currently only supports PostgreSQL as a DB engine, so you must have Postgres installed before getting Warthog set up. (Note: Postgres 12 is not currently supported)
+Warthog currently only supports PostgreSQL as a DB engine, so you must have Postgres installed before getting Warthog set up.
 
 <details>
 <summary>Expand for Postgres installation options</summary>
