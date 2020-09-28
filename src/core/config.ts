@@ -16,6 +16,8 @@ interface ConfigOptions {
   logger?: Logger;
 }
 
+type ConfigObj = any;
+
 const debug = Debug('warthog:config');
 
 const CONFIG_VALUE_VALID_KEYS = [
@@ -53,8 +55,7 @@ export class Config {
   logger?: Logger;
   NODE_ENV?: string;
 
-  // The full config object
-  config: any;
+  config: ConfigObj;
 
   constructor(private options: ConfigOptions = {}) {
     this.PROJECT_ROOT = process.cwd();
@@ -79,6 +80,7 @@ export class Config {
       WARTHOG_DB_SUBSCRIBERS: ['src/subscribers/**/*.ts'],
       WARTHOG_DB_SUBSCRIBERS_DIR: 'src/subscribers',
       WARTHOG_DB_SYNCHRONIZE: 'false',
+      WARTHOG_DB_URL: '',
       WARTHOG_FILTER_BY_DEFAULT: 'true',
       WARTHOG_MODULE_IMPORT_PATH: 'warthog',
       // TODO: eventually we should do this path resolution when we ask for the variable with `get`
@@ -158,27 +160,19 @@ export class Config {
     const testOptions = this.NODE_ENV === 'test' ? this.testDefaults : {};
     const configFile = this.loadStaticConfigSync();
 
-    // Config is loaded as a waterfall.  Items at the top of the object are overwritten by those below, so the order is:
-    // - Add application-wide defaults
-    // - Add development defaults (if we're runnign in DEV mode)
-    // - Load config from config file
-    // - Load environment variables
+    // Config is loaded as a waterfall.  Items at the top of the object are overwritten by those below
+
     // - Override with locked options
     const combined = {
-      ...this.defaults,
-      ...devOptions,
-      ...testOptions,
-      ...configFile,
-      ...this.typeORMToWarthogEnvVariables(),
-      ...this.warthogEnvVariables()
+      ...this.defaults, // - Add application-wide defaults
+      ...devOptions, // - Add development defaults (if we're runnign in DEV mode)
+      ...testOptions, // - Add test defaults (if we're runnign in tests)
+      ...configFile, // - Load config from config file
+      ...this.typeORMToWarthogEnvVariables(), // - Load TypeORM environment variables if set
+      ...this.warthogEnvVariables() // - Load Warthog environment variables
     };
 
-    // If Jest is running, be smart and don't open playground
-    if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
-      (combined as any).WARTHOG_AUTO_OPEN_PLAYGROUND = 'false';
-    }
-
-    this.config = combined;
+    this.config = this.finalizeConfig(combined);
     debug('Config', this.config);
 
     // Must be after config is set above
@@ -199,6 +193,54 @@ export class Config {
     (this.container as any).set('warthog.logger', this.logger); // Save for later so we can pull globally
 
     return this;
+  }
+
+  finalizeConfig(config: ConfigObj) {
+    // If Jest is running, be smart and don't open playground
+    if (typeof process.env.JEST_WORKER_ID !== 'undefined') {
+      config.WARTHOG_AUTO_OPEN_PLAYGROUND = 'false';
+    }
+
+    const dbUrl = String(config.WARTHOG_DB_URL);
+    if (!dbUrl) {
+      return config;
+    }
+
+    debug(`Using WARTHOG_DB_URL: ${config.WARTHOG_DB_URL}`);
+
+    const pattern = /^(?:([^:/?#\s]+):\/{2})?(?:([^@/?#\s]+)@)?([^/?#\s]+)?(?:\/([^?#\s]*))?(?:[?]([^#\s]+))?\S*$/;
+    const matches = dbUrl.match(pattern);
+    const params: any = {};
+
+    if (matches && matches.length === 6) {
+      const parts = {
+        protocol: matches[1],
+        user: matches[2] != undefined ? matches[2].split(':')[0] : undefined,
+        password: matches[2] != undefined ? matches[2].split(':')[1] : undefined,
+        host: matches[3],
+        hostname: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[0] : undefined,
+        port: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[1] : undefined,
+        database: matches[4] != undefined ? matches[4] : undefined,
+        params: params
+      };
+      if (parts.user) {
+        config.WARTHOG_DB_USERNAME = parts.user;
+      }
+      if (parts.password) {
+        config.WARTHOG_DB_PASSWORD = parts.password;
+      }
+      if (parts.host) {
+        config.WARTHOG_DB_HOST = parts.hostname;
+      }
+      if (parts.port) {
+        config.WARTHOG_DB_PORT = parts.port;
+      }
+      if (parts.database) {
+        config.WARTHOG_DB_DATABASE = parts.database;
+      }
+    }
+
+    return config;
   }
 
   public get(key?: string) {

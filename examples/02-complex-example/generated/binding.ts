@@ -45,13 +45,7 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: s
 export type StringEnum =   'FOO' |
   'BAR'
 
-export type UserOrderByInput =   'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'deletedAt_ASC' |
-  'deletedAt_DESC' |
-  'booleanField_ASC' |
+export type UserOrderByInput =   'booleanField_ASC' |
   'booleanField_DESC' |
   'dateField_ASC' |
   'dateField_DESC' |
@@ -153,7 +147,7 @@ export interface UserCreateInput {
   bigIntField?: Float | null
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
-  stringField?: String | null
+  stringField: String
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
@@ -227,30 +221,6 @@ export interface UserUpdateInput {
 }
 
 export interface UserWhereInput {
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
-  createdAt_eq?: DateTime | null
-  createdAt_lt?: DateTime | null
-  createdAt_lte?: DateTime | null
-  createdAt_gt?: DateTime | null
-  createdAt_gte?: DateTime | null
-  createdById_eq?: ID_Input | null
-  createdById_in?: ID_Output[] | ID_Output | null
-  updatedAt_eq?: DateTime | null
-  updatedAt_lt?: DateTime | null
-  updatedAt_lte?: DateTime | null
-  updatedAt_gt?: DateTime | null
-  updatedAt_gte?: DateTime | null
-  updatedById_eq?: ID_Input | null
-  updatedById_in?: ID_Output[] | ID_Output | null
-  deletedAt_all?: Boolean | null
-  deletedAt_eq?: DateTime | null
-  deletedAt_lt?: DateTime | null
-  deletedAt_lte?: DateTime | null
-  deletedAt_gt?: DateTime | null
-  deletedAt_gte?: DateTime | null
-  deletedById_eq?: ID_Input | null
-  deletedById_in?: ID_Output[] | ID_Output | null
   booleanField_eq?: Boolean | null
   booleanField_in?: Boolean[] | Boolean | null
   dateField_eq?: DateTime | null
@@ -426,7 +396,6 @@ export interface UserWhereInput {
 }
 
 export interface UserWhereUniqueInput {
-  id?: ID_Input | null
   emailField?: String | null
   enumField?: StringEnum | null
   stringField?: String | null
@@ -470,11 +439,10 @@ export interface BaseModelUUID extends BaseGraphQLObject {
 }
 
 export interface PageInfo {
-  limit: Float
-  offset: Float
-  totalCount: Float
   hasNextPage: Boolean
   hasPreviousPage: Boolean
+  startCursor?: String | null
+  endCursor?: String | null
 }
 
 export interface StandardDeleteResponse {
@@ -504,7 +472,7 @@ export interface User extends BaseGraphQLObject {
   bigIntField?: Int | null
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
-  stringField?: String | null
+  stringField: String
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null

@@ -83,11 +83,10 @@ type Mutation {
 }
 
 type PageInfo {
-  limit: Float!
-  offset: Float!
-  totalCount: Float!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type Query {
@@ -129,7 +128,7 @@ type User implements BaseGraphQLObject {
   jsonFieldNoFilter: JSONObject
 
   """This is a string field"""
-  stringField: String
+  stringField: String!
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -172,7 +171,7 @@ input UserCreateInput {
   bigIntField: Float
   jsonField: JSONObject
   jsonFieldNoFilter: JSONObject
-  stringField: String
+  stringField: String!
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -202,12 +201,6 @@ input UserCreateInput {
 }
 
 enum UserOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
   booleanField_ASC
   booleanField_DESC
   dateField_ASC
@@ -317,30 +310,6 @@ input UserUpdateInput {
 }
 
 input UserWhereInput {
-  id_eq: ID
-  id_in: [ID!]
-  createdAt_eq: DateTime
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
-  deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
   booleanField_eq: Boolean
   booleanField_in: [Boolean!]
   dateField_eq: DateTime
@@ -516,7 +485,6 @@ input UserWhereInput {
 }
 
 input UserWhereUniqueInput {
-  id: ID
   emailField: String
   enumField: StringEnum
   stringField: String

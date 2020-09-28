@@ -19,6 +19,7 @@ import { registerEnumType, GraphQLISODateTime as DateTime } from "type-graphql";
 const { GraphQLJSONObject } = require('graphql-type-json');
 // prettier-ignore
 // @ts-ignore
+
 import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '../../../src';
 
 import { StringEnum } from "../src/modules/user/user.model";
@@ -28,15 +29,6 @@ import { StringEnum } from "../src/modules/user/user.model";
 import { User } from "../src/modules/user/user.model";
 
 export enum UserOrderByEnum {
-  createdAt_ASC = "createdAt_ASC",
-  createdAt_DESC = "createdAt_DESC",
-
-  updatedAt_ASC = "updatedAt_ASC",
-  updatedAt_DESC = "updatedAt_DESC",
-
-  deletedAt_ASC = "deletedAt_ASC",
-  deletedAt_DESC = "deletedAt_DESC",
-
   booleanField_ASC = "booleanField_ASC",
   booleanField_DESC = "booleanField_DESC",
 
@@ -137,78 +129,6 @@ registerEnumType(UserOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class UserWhereInput {
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_eq?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_lt?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_lte?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_gt?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_gte?: Date;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  createdById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  createdById_in?: string[];
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_eq?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_lt?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_lte?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_gt?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_gte?: Date;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  updatedById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  updatedById_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  deletedAt_all?: Boolean;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_eq?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_lt?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_lte?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_gt?: Date;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_gte?: Date;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  deletedById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  deletedById_in?: string[];
-
   @TypeGraphQLField(() => Boolean, { nullable: true })
   booleanField_eq?: Boolean;
 
@@ -728,9 +648,6 @@ export class UserWhereInput {
 
 @TypeGraphQLInputType()
 export class UserWhereUniqueInput {
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id?: string;
-
   @TypeGraphQLField(() => String, { nullable: true })
   emailField?: string;
 
@@ -785,8 +702,8 @@ export class UserCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonFieldNoFilter?: JsonObject;
 
-  @TypeGraphQLField({ nullable: true })
-  stringField?: string;
+  @TypeGraphQLField()
+  stringField!: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;
