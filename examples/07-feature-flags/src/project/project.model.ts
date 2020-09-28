@@ -1,4 +1,4 @@
-import { BaseModel, Model, OneToMany, StringField } from '../../../../src';
+import { BaseModel, Model, OneToMany, StringField } from 'warthog';
 
 import { Environment } from '../environment/environment.model';
 import { FeatureFlagSegment } from '../feature-flag-segment/feature-flag-segment.model';

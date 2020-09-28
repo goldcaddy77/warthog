@@ -2,7 +2,7 @@ import { Args, Query, Resolver } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseResolver } from '../../../src';
+import { BaseResolver } from 'warthog';
 import { UserWhereArgs, UserWhereInput } from '../generated';
 
 import { User } from './user.model';

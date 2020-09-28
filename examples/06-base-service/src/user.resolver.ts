@@ -3,7 +3,7 @@ import { Container, Inject } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseService, StandardDeleteResponse } from '../../../src';
+import { BaseContext, BaseService, StandardDeleteResponse } from 'warthog';
 import {
   UserCreateInput,
   UserUpdateArgs,

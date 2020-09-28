@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { BaseContext, Server, ServerOptions } from '../../../src';
+import { BaseContext, Server, ServerOptions } from 'warthog';
 
 interface Context extends BaseContext {
   user: {

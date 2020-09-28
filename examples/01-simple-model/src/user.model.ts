@@ -7,7 +7,7 @@ import {
   IntField,
   Model,
   StringField
-} from '../../../src';
+} from 'warthog';
 
 // Note: this must be exported and in the same file where it's attached with @EnumField
 // Also - must use string enums
@@ -34,7 +34,7 @@ export class User extends BaseModel {
   isRequired?: boolean;
 
   @EnumField('StringEnum', StringEnum)
-  stringEnumField: StringEnum;
+  stringEnumField!: StringEnum;
 
   @FloatField()
   rating?: number;

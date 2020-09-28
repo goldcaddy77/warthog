@@ -1,4 +1,4 @@
-import { BaseModel, Model, OneToMany, StringField } from '../../../../src';
+import { BaseModel, Model, OneToMany, StringField } from 'warthog';
 
 import { Author } from './author.model';
 

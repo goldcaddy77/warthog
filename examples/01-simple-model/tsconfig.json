@@ -1,24 +1,40 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
-    "lib": ["dom", "es5", "es6", "es7", "esnext", "esnext.asynciterable"],
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "dist/types",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
     "keyofStringsOnly": true,
+    "lib": ["es2016", "dom", "es5", "scripthost", "esnext", "esnext.asynciterable"],
+    "module": "commonjs",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": false, // Avoid noise in our resolvers when we use DI
+    "noUnusedLocals": false,
+    "outDir": "./dist",
+    "paths": {
+      "warthog": ["../../src"]
+    },
+    "pretty": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "types": ["jest", "isomorphic-fetch", "node"]
+    "target": "es5",
+    "typeRoots": ["node_modules/@types", "./typings", "./typings/typings.d.ts"],
+    "types": ["isomorphic-fetch", "node", "jest"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/**/*", "generated/**/*"]
+  "exclude": [
+    "node_modules",
+    "tmp",
+    "**/node_modules/*",
+    // "src/**/*.test.ts",
+    "**/generated/*"
+    // "src/test/**/*"
+  ],
+  "include": ["src/**/*", "typings"]
 }

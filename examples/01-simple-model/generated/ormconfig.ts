@@ -1,3 +1,3 @@
-import { getBaseConfig } from '../../../src';
+import { getBaseConfig } from 'warthog';
 
 module.exports = getBaseConfig();

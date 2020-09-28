@@ -16,7 +16,7 @@ import {
 } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext, StandardDeleteResponse } from '../../../src';
+import { BaseContext, StandardDeleteResponse } from 'warthog';
 import {
   UserCreateInput,
   UserUpdateArgs,

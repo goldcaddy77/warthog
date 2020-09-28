@@ -19,7 +19,7 @@ import { registerEnumType, GraphQLISODateTime as DateTime } from "type-graphql";
 const { GraphQLJSONObject } = require('graphql-type-json');
 // prettier-ignore
 // @ts-ignore
-import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '../../../src';
+import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from 'warthog';
 
 import { StringEnum } from "../src/user.model";
 

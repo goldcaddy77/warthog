@@ -2,7 +2,7 @@ import { Inject, Service } from 'typedi';
 import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseService } from '../../../../src';
+import { BaseService } from 'warthog';
 
 import { EnvironmentService } from '../environment/environment.service';
 import { ProjectService } from '../project/project.service';

@@ -2,7 +2,7 @@ import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from '
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseResolver } from '../../../../src';
+import { BaseContext, BaseResolver } from 'warthog';
 import { UserCreateInput, UserWhereArgs, UserWhereInput } from '../../generated';
 import { UserRole } from './user-role.model';
 import { User } from './user.model';

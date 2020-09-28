@@ -1,7 +1,7 @@
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
-import { BaseContext } from '../../../src';
+import { BaseContext } from 'warthog';
 
 import { UserCreateInput, UserWhereArgs, UserWhereInput } from '../generated';
 

@@ -16,6 +16,9 @@
     "noImplicitThis": true,
     "noUnusedLocals": false,
     "outDir": "./dist",
+    "paths": {
+      "warthog": ["."]
+    },
     "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,

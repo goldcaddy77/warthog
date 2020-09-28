@@ -1,4 +1,4 @@
-import { getBindingError } from '../../../src';
+import { getBindingError } from 'warthog';
 
 import { Binding } from '../generated/binding';
 import { Logger } from '../src/logger';

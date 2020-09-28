@@ -2,7 +2,7 @@ import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
-import { BaseContext, BaseResolver } from '../../../../src';
+import { BaseContext, BaseResolver } from 'warthog';
 import { RoleCreateInput, RoleWhereArgs, RoleWhereInput } from '../../generated';
 import { Role } from './role.model';
 
