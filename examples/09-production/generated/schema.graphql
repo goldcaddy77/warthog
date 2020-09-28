@@ -65,101 +65,19 @@ interface DeleteResponse {
 }
 
 type Mutation {
-  createPost(data: PostCreateInput!): Post!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post!
-  createManyPosts(data: [PostCreateInput!]!): [Post!]!
-  deletePost(where: PostWhereUniqueInput!): StandardDeleteResponse!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
   deleteUser(where: UserWhereUniqueInput!): StandardDeleteResponse!
 }
 
 type PageInfo {
-  limit: Float!
-  offset: Float!
-  totalCount: Float!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
-}
-
-type Post implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-  title: String!
-  user: User!
-  userId: String!
-}
-
-input PostCreateInput {
-  title: String!
-  userId: ID!
-}
-
-enum PostOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  title_ASC
-  title_DESC
-  userId_ASC
-  userId_DESC
-}
-
-input PostUpdateInput {
-  title: String
-  userId: ID
-}
-
-input PostWhereInput {
-  id_eq: ID
-  id_in: [ID!]
-  createdAt_eq: DateTime
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
-  deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
-  title_eq: String
-  title_contains: String
-  title_startsWith: String
-  title_endsWith: String
-  title_in: [String!]
-  userId_eq: ID
-  userId_in: [ID!]
-}
-
-input PostWhereUniqueInput {
-  id: ID!
+  startCursor: String
+  endCursor: String
 }
 
 type Query {
-  posts(offset: Int, limit: Int = 50, where: PostWhereInput, orderBy: PostOrderByInput): [Post!]!
-  post(where: PostWhereUniqueInput!): Post!
   users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
   user(where: UserWhereUniqueInput!): User!
 }
@@ -168,17 +86,10 @@ type StandardDeleteResponse {
   id: ID!
 }
 
-type User implements BaseGraphQLObject {
+type User {
   id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
   firstName: String!
-  posts: [Post!]
+  createdAt: DateTime!
 }
 
 input UserCreateInput {
@@ -186,14 +97,8 @@ input UserCreateInput {
 }
 
 enum UserOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  firstName_ASC
-  firstName_DESC
+  id_ASC
+  id_DESC
 }
 
 input UserUpdateInput {
@@ -201,35 +106,7 @@ input UserUpdateInput {
 }
 
 input UserWhereInput {
-  id_eq: ID
   id_in: [ID!]
-  createdAt_eq: DateTime
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
-  deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
 }
 
 input UserWhereUniqueInput {
