@@ -1,15 +1,21 @@
-import { BaseModel, Model, OneToMany, StringField } from '../../../../../src';
-
-import { Post } from '../post/post.model';
+import {
+  CreatedAtField,
+  DateTimeString,
+  IDType,
+  IdModel,
+  Model,
+  PrimaryIdField,
+  StringField
+} from '../../../../../src';
 
 @Model()
-export class User extends BaseModel {
+export class User extends IdModel {
+  @PrimaryIdField({ filter: ['in'] })
+  id!: IDType;
+
   @StringField()
   firstName?: string;
 
-  @OneToMany(
-    () => Post,
-    (post: Post) => post.user
-  )
-  posts?: Post[];
+  @CreatedAtField()
+  createdAt!: DateTimeString;
 }

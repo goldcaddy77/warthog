@@ -1,7 +1,8 @@
-import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse, UserId } from '../../../../../src';
+
 import {
   UserCreateInput,
   UserUpdateArgs,
@@ -9,19 +10,12 @@ import {
   UserWhereUniqueInput
 } from '../../../generated';
 
-import { Post } from '../post/post.model';
-
 import { User } from './user.model';
 import { UserService } from './user.service';
 
 @Resolver(User)
 export class UserResolver {
-  constructor(@Inject('UserService') public readonly service: UserService) {}
-
-  @FieldResolver()
-  posts(@Root() user: User, @Ctx() ctx: BaseContext): Promise<Post[]> {
-    return ctx.dataLoader.loaders.User.posts.load(user);
-  }
+  constructor(@Inject('UserService') readonly service: UserService) {}
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
