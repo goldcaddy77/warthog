@@ -90,7 +90,12 @@ export class RelayService {
     pageOptions: RelayPageOptions
   ): PageInfo {
     if (!items.length) {
-      throw new Error('Items is empty');
+      return {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: '',
+        endCursor: ''
+      };
     }
     let limit;
     let cursor;
