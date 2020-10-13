@@ -9,7 +9,7 @@ import {
   Query,
   Resolver,
   Root
-} from 'type-graphql';
+} from '@nestjs/graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse, UserId } from '../../../../src';

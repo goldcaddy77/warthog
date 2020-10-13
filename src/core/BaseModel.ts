@@ -1,5 +1,5 @@
 import * as shortid from 'shortid';
-import { Field, ID, Int, InterfaceType, ObjectType } from 'type-graphql';
+import { Field, ID, Int, InterfaceType, ObjectType } from '@nestjs/graphql';
 import {
   BeforeInsert,
   Column,
@@ -12,7 +12,7 @@ import {
 
 import { IDType } from './types';
 
-// This interface adds all of the base type-graphql fields to our BaseClass
+// This interface adds all of the base @nestjs/graphql fields to our BaseClass
 @InterfaceType()
 export abstract class BaseGraphQLObject {
   @Field(() => ID)

@@ -1,4 +1,4 @@
-// See also: https://github.com/MichalLytek/type-graphql/tree/master/examples/simple-subscriptions
+// See also: https://github.com/MichalLytek/@nestjs/graphql/tree/master/examples/simple-subscriptions
 
 import { PubSubEngine } from 'graphql-subscriptions';
 import {
@@ -11,7 +11,7 @@ import {
   Resolver,
   Root,
   Subscription
-} from 'type-graphql';
+} from '@nestjs/graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext, StandardDeleteResponse } from '../../../src';

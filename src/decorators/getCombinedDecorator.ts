@@ -1,4 +1,4 @@
-import { Field as TypeGraphQLField } from 'type-graphql';
+import { Field as TypeGraphQLField } from '@nestjs/graphql';
 import { Column as TypeORMColumn, ColumnType } from 'typeorm';
 
 import { ColumnMetadata, FieldType } from '../metadata';
@@ -53,7 +53,7 @@ export function getCombinedDecorator<T extends Partial<ColumnMetadata>>({
     decorators.push(WarthogField(fieldType, warthogColumnMeta));
   }
 
-  // TypeGraphQL: next add the type-graphql decorator that generates the GraphQL type (or field within that type)
+  // TypeGraphQL: next add the @nestjs/graphql decorator that generates the GraphQL type (or field within that type)
   // If an object is only writeable, don't add the `Field` decorators that will add it to the GraphQL type
   if (exposeAPI && !warthogColumnMeta.writeonly) {
     decorators.push(

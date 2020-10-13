@@ -1,4 +1,5 @@
-import { Args, Authorized, Query, Resolver } from 'type-graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Authorized } from 'type-graphql';
 import { Inject } from 'typedi';
 
 import { Fields } from '../../..';

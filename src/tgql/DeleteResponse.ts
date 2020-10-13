@@ -1,4 +1,4 @@
-import { Field, ID, InterfaceType, ObjectType } from 'type-graphql';
+import { Field, ID, InterfaceType, ObjectType } from '@nestjs/graphql';
 
 import { IDType } from '../core';
 

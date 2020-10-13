@@ -1,9 +1,9 @@
-// type-graphql is hooked into class-validator: https://github.com/typestack/class-validator
+// @nestjs/graphql is hooked into class-validator: https://github.com/typestack/class-validator
 //              so we can have it automatically validate that args coming in are valid
 // See https://github.com/typestack/class-validator#validation-decorators for list of decorators
 // See https://github.com/typestack/class-validator/tree/master/sample for examples
 import { Min } from 'class-validator';
-import { ArgsType, Field, Int } from 'type-graphql';
+import { ArgsType, Field, Int } from '@nestjs/graphql';
 
 @ArgsType()
 export class PaginationArgs {

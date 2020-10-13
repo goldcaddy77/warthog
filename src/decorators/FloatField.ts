@@ -1,4 +1,4 @@
-import { Float } from 'type-graphql';
+import { Float } from '@nestjs/graphql';
 
 import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators } from '../utils';

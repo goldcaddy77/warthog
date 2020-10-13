@@ -19,7 +19,7 @@ export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
 
       const loaders = context.dataLoader.loaders;
 
-      context.connection.entityMetadatas.forEach(entityMetadata => {
+      context.connection.entityMetadatas.forEach((entityMetadata: any) => {
         const resolverName = entityMetadata.targetName;
         if (!resolverName) {
           return;
@@ -29,7 +29,7 @@ export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
           loaders[resolverName] = {};
         }
 
-        entityMetadata.relations.forEach(relation => {
+        entityMetadata.relations.forEach((relation: any) => {
           // define data loader for this method if it was not defined yet
           if (!loaders[resolverName][relation.propertyName]) {
             loaders[resolverName][relation.propertyName] = new DataLoader((entities: any[]) => {
@@ -38,8 +38,8 @@ export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
               }
               return context.connection.relationIdLoader
                 .loadManyToManyRelationIdsAndGroup(relation, entities)
-                .then(groups => {
-                  return groups.map(group => {
+                .then((groups: any) => {
+                  return groups.map((group: any) => {
                     if (Array.isArray(group.related)) {
                       return group.related.filter((item: Deleteable) => !item.deletedAt);
                     }

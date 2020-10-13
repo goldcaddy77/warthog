@@ -1,4 +1,4 @@
-import { Int } from 'type-graphql';
+import { Int } from '@nestjs/graphql';
 import { VersionColumn } from 'typeorm';
 
 import { DecoratorCommonOptions } from '../metadata';

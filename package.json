@@ -53,6 +53,9 @@
   "homepage": "https://github.com/goldcaddy77/warthog#readme",
   "//": "TODO: figure out which of these are dependencies, devDeps or peerDeps",
   "dependencies": {
+    "@nestjs/common": "^7.4.4",
+    "@nestjs/core": "^7.4.4",
+    "@nestjs/graphql": "^7.7.0",
     "@types/app-root-path": "^1.2.4",
     "@types/caller": "^1.0.0",
     "@types/cosmiconfig": "^6.0.0",
@@ -105,7 +108,7 @@
     "prettier": "^1.19.1",
     "reflect-metadata": "^0.1.13",
     "shortid": "^2.2.15",
-    "type-graphql": "^0.17.5",
+    "type-graphql": "^1.1.0",
     "typedi": "^0.8.0",
     "typeorm": "^0.2.25",
     "typeorm-typedi-extensions": "^0.2.3",

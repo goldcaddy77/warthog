@@ -1,5 +1,5 @@
-import { Field } from 'type-graphql';
-import { AdvancedOptions } from 'type-graphql/dist/decorators/types';
+import { Field } from '@nestjs/graphql';
+import { AdvancedOptions } from 'type-graphql/dist/decorators/types'; // https://github.com/MichalLytek/type-graphql/blob/3df214916af9e90c181509578eadf375672d87b0/src/decorators/types.ts
 import { Column, ColumnType } from 'typeorm';
 import { ColumnOptions } from 'typeorm/decorator/options/ColumnOptions';
 

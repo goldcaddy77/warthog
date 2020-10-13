@@ -1,5 +1,5 @@
 // https://www.postgresql.org/docs/10/datatype-datetime.html
-import { GraphQLISODateTime } from 'type-graphql';
+import { GraphQLISODateTime } from '@nestjs/graphql';
 
 import { DecoratorCommonOptions } from '../metadata';
 import { DateTimeString } from '../core';

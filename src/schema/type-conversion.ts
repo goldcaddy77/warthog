@@ -7,7 +7,7 @@ import {
   GraphQLScalarType,
   GraphQLString
 } from 'graphql';
-import { GraphQLISODateTime } from 'type-graphql';
+import { GraphQLISODateTime } from '@nestjs/graphql';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');

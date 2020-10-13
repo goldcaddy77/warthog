@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from 'type-graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 

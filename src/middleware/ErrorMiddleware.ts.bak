@@ -1,4 +1,4 @@
-import { ArgumentValidationError, MiddlewareInterface, NextFn, ResolverData } from 'type-graphql';
+import { ArgumentValidationError, MiddlewareInterface, NextFn, ResolverData } from '@nestjs/graphql';
 import { Service } from 'typedi';
 
 import { BaseContext, logger } from '../core';

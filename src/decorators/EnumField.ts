@@ -1,6 +1,6 @@
 const caller = require('caller'); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as path from 'path';
-import { Field, registerEnumType } from 'type-graphql';
+import { Field, registerEnumType } from '@nestjs/graphql';
 import { Column } from 'typeorm';
 
 import { getMetadataStorage, DecoratorCommonOptions } from '../metadata';

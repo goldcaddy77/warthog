@@ -9,7 +9,7 @@ import { Binding } from 'graphql-binding';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
-import { AuthChecker } from 'type-graphql'; // formatArgumentValidationError
+import { AuthChecker } from 'type-graphql'; // TODO: replace this
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 

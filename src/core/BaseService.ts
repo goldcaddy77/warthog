@@ -1,5 +1,5 @@
 import { validate } from 'class-validator';
-import { ArgumentValidationError } from 'type-graphql';
+import { ArgumentValidationError } from 'type-graphql'; // TODO: need to NestJS'ify this
 import { Container, Inject, Service } from 'typedi';
 import {
   Brackets,

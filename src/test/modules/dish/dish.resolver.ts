@@ -12,7 +12,7 @@ import {
   Root,
   ObjectType,
   Field
-} from 'type-graphql';
+} from '@nestjs/graphql';
 import { Inject } from 'typedi';
 import { Min } from 'class-validator';
 

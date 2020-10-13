@@ -1,4 +1,4 @@
-import { InterfaceType as TypeGraphQLInterfaceType } from 'type-graphql';
+import { InterfaceType as TypeGraphQLInterfaceType } from '@nestjs/graphql';
 
 import { Constructor } from '../core';
 import { getMetadataStorage } from '../metadata';

@@ -1,4 +1,4 @@
-import { Field } from 'type-graphql';
+import { Field } from '@nestjs/graphql';
 import { ManyToMany as TypeORMManyToMany } from 'typeorm';
 
 import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';

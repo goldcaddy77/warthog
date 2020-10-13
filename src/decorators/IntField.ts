@@ -1,4 +1,4 @@
-import { Int } from 'type-graphql';
+import { Int } from '@nestjs/graphql';
 
 import { DecoratorCommonOptions } from '../metadata';
 import { IntColumnType, IntWhereOperator } from '../torm';

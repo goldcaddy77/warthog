@@ -1,4 +1,4 @@
-import { GraphQLISODateTime } from 'type-graphql';
+import { GraphQLISODateTime } from '@nestjs/graphql';
 
 import { DecoratorCommonOptions } from '../metadata';
 import { ColumnType, DateWhereOperator } from '../torm';

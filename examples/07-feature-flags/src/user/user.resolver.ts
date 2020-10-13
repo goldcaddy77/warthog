@@ -1,5 +1,5 @@
 // import { GraphQLResolveInfo } from 'graphql';
-import { Arg, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Ctx, FieldResolver, Query, Resolver, Root } from '@nestjs/graphql';
 import { Inject } from 'typedi';
 
 import { BaseContext } from '../../../../src';

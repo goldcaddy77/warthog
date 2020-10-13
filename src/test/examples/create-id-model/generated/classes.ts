@@ -5,8 +5,8 @@ import {
   ArgsType,
   Field as TypeGraphQLField,
   InputType as TypeGraphQLInputType
-} from "type-graphql";
-import { registerEnumType } from "type-graphql";
+} from "@nestjs/graphql";
+import { registerEnumType } from "@nestjs/graphql";
 
 import { BaseWhereInput, PaginationArgs } from "../../../../";
 

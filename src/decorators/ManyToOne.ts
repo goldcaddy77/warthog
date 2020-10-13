@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { Field } from 'type-graphql';
+import { Field } from '@nestjs/graphql';
 import { JoinColumn, ManyToOne as TypeORMManyToOne } from 'typeorm';
 
 import { IdField } from '../decorators';

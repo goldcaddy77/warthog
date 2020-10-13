@@ -1,5 +1,5 @@
 import * as graphqlFields from 'graphql-fields';
-import { createParamDecorator } from 'type-graphql';
+import { createParamDecorator } from 'type-graphql'; // TODO: remove
 
 export function Fields(): ParameterDecorator {
   return createParamDecorator(({ info }) => {

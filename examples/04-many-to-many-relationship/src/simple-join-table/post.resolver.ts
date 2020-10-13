@@ -1,4 +1,4 @@
-import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from '@nestjs/graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 

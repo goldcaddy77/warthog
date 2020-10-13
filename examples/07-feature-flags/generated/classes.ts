@@ -9,10 +9,10 @@ import { DateResolver as Date } from 'graphql-scalars';
 import { GraphQLID as ID } from 'graphql';
 // prettier-ignore
 // @ts-ignore
-import { ArgsType, Field as TypeGraphQLField, Float, InputType as TypeGraphQLInputType, Int } from 'type-graphql';
+import { ArgsType, Field as TypeGraphQLField, Float, InputType as TypeGraphQLInputType, Int } from '@nestjs/graphql';
 // prettier-ignore
 // @ts-ignore
-import { registerEnumType, GraphQLISODateTime as DateTime } from "type-graphql";
+import { registerEnumType, GraphQLISODateTime as DateTime } from "@nestjs/graphql";
 
 // prettier-ignore
 // @ts-ignore eslint-disable-next-line @typescript-eslint/no-var-requires

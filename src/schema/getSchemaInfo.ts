@@ -1,11 +1,11 @@
-// Borrowed from https://github.com/19majkel94/type-graphql/blob/9778f9fab9e7f50363f2023b7ea366668e3d0ec9/tests/helpers/getSchemaInfo.ts
+// Borrowed from https://github.com/19majkel94/@nestjs/graphql/blob/9778f9fab9e7f50363f2023b7ea366668e3d0ec9/tests/helpers/getSchemaInfo.ts
 import {
   getIntrospectionQuery,
   graphql,
   IntrospectionObjectType,
   IntrospectionSchema
 } from 'graphql';
-import { buildSchema, BuildSchemaOptions } from 'type-graphql';
+import { buildSchema, BuildSchemaOptions } from 'type-graphql'; // TODO: need to remove this
 
 export async function getSchemaInfo(options: BuildSchemaOptions) {
   // build schema from definitions

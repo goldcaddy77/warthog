@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLSchema } from 'graphql';
 import { DateResolver } from 'graphql-scalars';
-import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
-import { Middleware } from 'type-graphql/dist/interfaces/Middleware';
+import { AuthChecker, buildSchema } from 'type-graphql'; // TODO: need to replace this
+import { Middleware } from 'type-graphql/dist/interfaces/Middleware'; // TODO: need to replace this
 import { Container, Inject, Service } from 'typedi';
 
 import { Config } from '../core';
@@ -24,7 +24,7 @@ export class SchemaBuilder {
           type: 'ID' as any,
           scalar: GraphQLID
         },
-        // Note: DateTime already included in type-graphql
+        // Note: DateTime already included in @nestjs/graphql
         {
           type: 'DateOnlyString' as any,
           scalar: DateResolver

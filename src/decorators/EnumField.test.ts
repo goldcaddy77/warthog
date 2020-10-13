@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { IntrospectionEnumType, IntrospectionSchema } from 'graphql';
-import { ObjectType, Query, Resolver } from 'type-graphql';
+import { ObjectType, Query, Resolver } from '@nestjs/graphql';
 
 import { getSchemaInfo } from '../schema';
 

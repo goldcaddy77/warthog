@@ -277,7 +277,7 @@ export class Config {
     const pathTypes = ['WARTHOG_GENERATED_FOLDER'];
 
     // Should be able to do this, but TypeGraphQL has an issue with relative requires
-    // https://github.com/19majkel94/type-graphql/blob/a212fd19f28d3095244c44381617f03e97ec4db3/src/helpers/loadResolversFromGlob.ts#L4
+    // https://github.com/19majkel94/@nestjs/graphql/blob/a212fd19f28d3095244c44381617f03e97ec4db3/src/helpers/loadResolversFromGlob.ts#L4
     // const paths = value.split(',');
 
     if (arrayTypes.indexOf(key) > -1) {

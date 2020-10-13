@@ -1,4 +1,4 @@
-import { ID } from 'type-graphql';
+import { ID } from '@nestjs/graphql';
 import { PrimaryColumn } from 'typeorm';
 
 import { DecoratorCommonOptions } from '../metadata';

@@ -12,9 +12,9 @@ import {
   Float,
   InputType as TypeGraphQLInputType,
   Int
-} from "type-graphql";
+} from "@nestjs/graphql";
 // @ts-ignore
-import { registerEnumType, GraphQLISODateTime as DateTime } from "type-graphql";
+import { registerEnumType, GraphQLISODateTime as DateTime } from "@nestjs/graphql";
 
 // @ts-ignore eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require("graphql-type-json");

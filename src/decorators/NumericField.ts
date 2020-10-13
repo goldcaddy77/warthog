@@ -1,4 +1,4 @@
-import { Float } from 'type-graphql';
+import { Float } from '@nestjs/graphql';
 import { ColumnNumericOptions } from 'typeorm/decorator/options/ColumnNumericOptions';
 import { ColumnCommonOptions } from 'typeorm/decorator/options/ColumnCommonOptions';
 

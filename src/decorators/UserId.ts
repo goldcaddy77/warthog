@@ -1,4 +1,4 @@
-import { createParamDecorator } from 'type-graphql';
+import { createParamDecorator } from 'type-graphql'; // TODO: need to NestJS'ify this
 
 export function UserId(): ParameterDecorator {
   return createParamDecorator(({ context }: { context: { user?: { id?: string } } }) => {
