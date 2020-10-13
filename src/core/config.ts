@@ -190,8 +190,6 @@ export class Config {
     // NOTE: this is likely a bad idea and we should use Containers
     this.writeWarthogEnvVars();
 
-    (this.container as any).set('warthog.logger', this.logger); // Save for later so we can pull globally
-
     return this;
   }
 
