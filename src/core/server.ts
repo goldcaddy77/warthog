@@ -17,7 +17,7 @@ import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } fr
 import { logger, Logger } from '../core/logger';
 import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-import { createDBConnection } from '../torm';
+import { createDBConnection, createReplicatedDBConnection } from '../torm';
 
 import { CodeGenerator } from './code-generator';
 import { Config } from './config';
@@ -47,6 +47,7 @@ export interface ServerOptions<T> {
   bodyParserConfig?: OptionsJson;
   onBeforeGraphQLMiddleware?: (app: express.Application) => void;
   onAfterGraphQLMiddleware?: (app: express.Application) => void;
+  connectDBReplica?: boolean;
 }
 
 export class Server<C extends BaseContext> {
@@ -54,6 +55,7 @@ export class Server<C extends BaseContext> {
   apolloConfig?: ApolloServerExpressConfig;
   authChecker?: AuthChecker<C>;
   connection!: Connection;
+  allConnections!: Connection[];
   container: Container;
   expressApp!: express.Application;
   graphQLServer!: ApolloServer;
@@ -64,7 +66,8 @@ export class Server<C extends BaseContext> {
 
   constructor(
     private appOptions: ServerOptions<C>,
-    private dbOptions: Partial<ConnectionOptions> = {}
+    private dbOptions: Partial<ConnectionOptions> = {},
+    private dbReplicaOptions: Partial<ConnectionOptions> = {}
   ) {
     if (typeof this.appOptions.host !== 'undefined') {
       process.env.WARTHOG_APP_HOST = this.appOptions.host;
@@ -89,6 +92,11 @@ export class Server<C extends BaseContext> {
       process.env.WARTHOG_AUTO_GENERATE_FILES = this.appOptions.autoGenerateFiles
         ? 'true'
         : 'false';
+    }
+    if (typeof this.appOptions.connectDBReplica !== 'undefined') {
+      process.env.WARTHOG_DB_CONNECT_REPLICA = this.appOptions.connectDBReplica ? 'true' : 'false';
+    } else {
+      process.env.WARTHOG_DB_CONNECT_REPLICA = 'false';
     }
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
@@ -124,7 +132,13 @@ export class Server<C extends BaseContext> {
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
       debug('establishDBConnection:start');
-      this.connection = await createDBConnection(this.dbOptions);
+      if (this.config.get('WARTHOG_DB_CONNECT_REPLICA')) {
+        this.connection = await createReplicatedDBConnection(this.dbOptions);
+        this.allConnections = [this.connection];
+      } else {
+        this.connection = await createDBConnection(this.dbOptions);
+        this.allConnections = [this.connection];
+      }
       debug('establishDBConnection:end');
     }
 
@@ -293,8 +307,10 @@ export class Server<C extends BaseContext> {
   async stop() {
     this.logger.info('Stopping HTTP Server');
     this.httpServer.close();
-    this.logger.info('Closing DB Connection');
-    await this.connection.close();
+    this.logger.info('Closing DB Connection(s)');
+    for (const connection of this.allConnections) {
+      await connection.close();
+    }
   }
 }
 

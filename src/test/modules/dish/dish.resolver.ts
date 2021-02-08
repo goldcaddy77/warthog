@@ -39,6 +39,7 @@ import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
 
 import { Dish } from './dish.model';
 import { DishService } from './dish.service';
+import { logger } from '../../../core';
 
 @ObjectType()
 export class DishEdge {
@@ -103,7 +104,12 @@ export class DishResolver {
     @Args() { where, orderBy, limit, offset }: DishWhereArgs,
     @Fields() fields: string[]
   ): Promise<Dish[]> {
-    return this.service.find<DishWhereInput>(where, orderBy, limit, offset, fields);
+    try {
+      return this.service.find<DishWhereInput>(where, orderBy, limit, offset, fields);
+    } catch (e) {
+      logger.error('failed on find', e);
+      throw e;
+    }
   }
 
   @Authorized('dish:read')

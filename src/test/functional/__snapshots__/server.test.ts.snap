@@ -1,5 +1,3311 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`server - no replica Use 2 different operators on same attribute 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+]
+`;
+
+exports[`server - no replica find: allows client to ask for __typename 1`] = `
+Array [
+  Object {
+    "__typename": "KitchenSink",
+  },
+]
+`;
+
+exports[`server - no replica find: arrayOfInts_containsAll: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      5,
+      7,
+    ],
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server - no replica find: arrayOfInts_containsAny: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      1,
+    ],
+    "stringField": "Trantow",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      0,
+      5,
+      2,
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      0,
+      1,
+    ],
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      4,
+      4,
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      0,
+    ],
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+    ],
+    "stringField": "maximillia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      0,
+      7,
+    ],
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      2,
+      1,
+      6,
+    ],
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      4,
+      7,
+    ],
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "nakia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+    ],
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      0,
+      0,
+      3,
+    ],
+    "stringField": "BERENICE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      1,
+      7,
+      0,
+    ],
+    "stringField": "amber",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      2,
+      0,
+      7,
+    ],
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "delfinaz",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      3,
+      4,
+      2,
+    ],
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      1,
+    ],
+    "stringField": "schowalter",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      7,
+      8,
+    ],
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      3,
+    ],
+    "stringField": "rerum et",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      4,
+      6,
+      1,
+    ],
+    "stringField": "alias sint",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      7,
+      8,
+      5,
+    ],
+    "stringField": "hartmann",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      7,
+      1,
+    ],
+    "stringField": "quas fugit",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      3,
+      0,
+    ],
+    "stringField": "quia et",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+      2,
+      1,
+    ],
+    "stringField": "VON",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+    ],
+    "stringField": "HAMILL",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      7,
+    ],
+    "stringField": "o'reilly",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      1,
+      7,
+    ],
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      7,
+      6,
+      8,
+    ],
+    "stringField": "billie",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      2,
+      5,
+    ],
+    "stringField": "winston",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      2,
+    ],
+    "stringField": "DOVIE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      8,
+      1,
+      3,
+    ],
+    "stringField": "linnea",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+    ],
+    "stringField": "madison",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      0,
+      6,
+      1,
+    ],
+    "stringField": "macy",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      1,
+      4,
+      3,
+    ],
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      7,
+      6,
+    ],
+    "stringField": "Williamson",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      5,
+      1,
+      4,
+    ],
+    "stringField": "DESTIN",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      4,
+    ],
+    "stringField": "Block",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      2,
+      8,
+    ],
+    "stringField": "jaskolski",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      7,
+      6,
+      7,
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      5,
+      3,
+    ],
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      2,
+      6,
+      4,
+    ],
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      0,
+      0,
+      2,
+    ],
+    "stringField": "pagac",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      5,
+      1,
+      3,
+    ],
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      7,
+    ],
+    "stringField": "RICE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      5,
+      7,
+    ],
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server - no replica find: arrayOfInts_containsNone: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      5,
+      4,
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      5,
+    ],
+    "stringField": "koelpin",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "inventore velit",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+    ],
+    "stringField": "Madeline",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "NAKIA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      0,
+      8,
+    ],
+    "stringField": "Nakia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "JEROMY",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Wilmer",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "stark",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+      5,
+      5,
+    ],
+    "stringField": "elda",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "Damien",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      6,
+    ],
+    "stringField": "illum atque",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      4,
+      6,
+    ],
+    "stringField": "horowitz",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "devin",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      6,
+    ],
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      4,
+      3,
+      6,
+    ],
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      5,
+      3,
+      8,
+    ],
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+    ],
+    "stringField": "erling",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+    ],
+    "stringField": "KAELYN",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Okuneva",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "raquel",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      0,
+      4,
+    ],
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+    ],
+    "stringField": "iste in",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "HOPPE",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "korey",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "neque tempore",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      0,
+    ],
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "fermin",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+    ],
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "HELGA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      3,
+      0,
+    ],
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      6,
+      5,
+    ],
+    "stringField": "luettgen",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "dietrich",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      5,
+      8,
+    ],
+    "stringField": "GERLACH",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "padberg",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      6,
+    ],
+    "stringField": "amalia",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      8,
+      3,
+      3,
+    ],
+    "stringField": "schamberger",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Jared",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+    ],
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      3,
+    ],
+    "stringField": "BAUCH",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "paucek",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      6,
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      4,
+      8,
+    ],
+    "stringField": "WITTING",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      6,
+      6,
+    ],
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server - no replica find: arrayOfStrings_containsAll: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "padberg",
+  },
+]
+`;
+
+exports[`server - no replica find: arrayOfStrings_containsAny: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "inventore velit",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "nakia",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "Wilmer",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "cat",
+    ],
+    "stringField": "elda",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "dog",
+    ],
+    "stringField": "illum atque",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "cat",
+    ],
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "pony",
+    ],
+    "stringField": "rerum et",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "dog",
+    ],
+    "stringField": "erling",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "KAELYN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "alias sint",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "hartmann",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "HOPPE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "neque tempore",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "dog",
+    ],
+    "stringField": "HAMILL",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "dog",
+    ],
+    "stringField": "HELGA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "linnea",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "macy",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "padberg",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "dog",
+    ],
+    "stringField": "Jared",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "dog",
+    ],
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "pagac",
+  },
+]
+`;
+
+exports[`server - no replica find: arrayOfStrings_containsNone: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Trantow",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "turtle",
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "maximillia",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "koelpin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "turtle",
+    ],
+    "stringField": "Madeline",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "NAKIA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "pony",
+    ],
+    "stringField": "Nakia",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "BERENICE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "amber",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "JEROMY",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "delfinaz",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "turtle",
+    ],
+    "stringField": "stark",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Damien",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "horowitz",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "schowalter",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "devin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "Okuneva",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "raquel",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "quas fugit",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "iste in",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "quia et",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "korey",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VON",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "fermin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "o'reilly",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "billie",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "winston",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "luettgen",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "dietrich",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "DOVIE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "madison",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "GERLACH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "amalia",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "Williamson",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "schamberger",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "pony",
+    ],
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "DESTIN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "Block",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "jaskolski",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "BAUCH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "paucek",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "fox",
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "WITTING",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "RICE",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Mortimer",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server - no replica find: dateOnlyField greater than or equal 2020-01-01 1`] = `
+Array [
+  Object {
+    "dateOnlyField": "2020-02-27",
+    "stringField": "BOSCO",
+  },
+  Object {
+    "dateOnlyField": "2020-12-03",
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "dateOnlyField": "2020-02-25",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateOnlyField": "2020-08-18",
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "dateOnlyField": "2020-10-01",
+    "stringField": "koelpin",
+  },
+  Object {
+    "dateOnlyField": "2020-07-10",
+    "stringField": "inventore velit",
+  },
+  Object {
+    "dateOnlyField": "2020-03-31",
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "dateOnlyField": "2020-06-20",
+    "stringField": "NAKIA",
+  },
+  Object {
+    "dateOnlyField": "2020-10-28",
+    "stringField": "nakia",
+  },
+  Object {
+    "dateOnlyField": "2020-09-21",
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "dateOnlyField": "2020-08-24",
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "dateOnlyField": "2020-03-30",
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "dateOnlyField": "2020-05-15",
+    "stringField": "delfinaz",
+  },
+  Object {
+    "dateOnlyField": "2020-12-13",
+    "stringField": "elda",
+  },
+  Object {
+    "dateOnlyField": "2020-06-02",
+    "stringField": "Damien",
+  },
+  Object {
+    "dateOnlyField": "2020-11-21",
+    "stringField": "KAELYN",
+  },
+  Object {
+    "dateOnlyField": "2020-10-11",
+    "stringField": "iste in",
+  },
+  Object {
+    "dateOnlyField": "2020-07-07",
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "dateOnlyField": "2020-09-26",
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "dateOnlyField": "2020-09-18",
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "dateOnlyField": "2020-10-14",
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "dateOnlyField": "2020-12-03",
+    "stringField": "macy",
+  },
+  Object {
+    "dateOnlyField": "2020-02-10",
+    "stringField": "GERLACH",
+  },
+  Object {
+    "dateOnlyField": "2020-07-08",
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "dateOnlyField": "2020-12-11",
+    "stringField": "amalia",
+  },
+  Object {
+    "dateOnlyField": "2020-03-04",
+    "stringField": "schamberger",
+  },
+  Object {
+    "dateOnlyField": "2020-09-07",
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "dateOnlyField": "2020-10-01",
+    "stringField": "DESTIN",
+  },
+  Object {
+    "dateOnlyField": "2020-12-30",
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "dateOnlyField": "2020-12-20",
+    "stringField": "RICE",
+  },
+]
+`;
+
+exports[`server - no replica find: dateTimeField less than or equal 2020-01-01 1`] = `
+Array [
+  Object {
+    "dateTimeField": "2019-11-25T22:03:38.286Z",
+    "stringField": "Trantow",
+  },
+  Object {
+    "dateTimeField": "2019-02-14T08:01:37.290Z",
+    "stringField": "BOSCO",
+  },
+  Object {
+    "dateTimeField": "2018-09-03T00:38:19.337Z",
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "dateTimeField": "2018-05-31T19:22:05.341Z",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateTimeField": "2018-07-05T11:32:01.838Z",
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "dateTimeField": "2018-04-28T06:17:13.736Z",
+    "stringField": "inventore velit",
+  },
+  Object {
+    "dateTimeField": "2019-03-30T19:45:37.259Z",
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "dateTimeField": "2019-04-26T22:33:32.962Z",
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "dateTimeField": "2019-11-11T20:22:39.955Z",
+    "stringField": "Madeline",
+  },
+  Object {
+    "dateTimeField": "2019-04-17T01:25:34.424Z",
+    "stringField": "NAKIA",
+  },
+  Object {
+    "dateTimeField": "2018-06-21T08:52:15.890Z",
+    "stringField": "Nakia",
+  },
+  Object {
+    "dateTimeField": "2018-03-10T17:25:14.892Z",
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "dateTimeField": "2018-10-26T12:04:40.017Z",
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "dateTimeField": "2018-08-13T16:06:07.214Z",
+    "stringField": "amber",
+  },
+  Object {
+    "dateTimeField": "2018-12-11T07:56:46.405Z",
+    "stringField": "JEROMY",
+  },
+  Object {
+    "dateTimeField": "2018-01-11T01:58:14.032Z",
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "dateTimeField": "2018-03-09T14:25:42.617Z",
+    "stringField": "delfinaz",
+  },
+  Object {
+    "dateTimeField": "2019-12-29T20:30:17.183Z",
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "dateTimeField": "2018-10-25T06:53:58.190Z",
+    "stringField": "Wilmer",
+  },
+  Object {
+    "dateTimeField": "2018-06-10T11:31:29.657Z",
+    "stringField": "stark",
+  },
+  Object {
+    "dateTimeField": "2018-03-13T18:09:40.750Z",
+    "stringField": "elda",
+  },
+  Object {
+    "dateTimeField": "2019-06-19T04:58:36.438Z",
+    "stringField": "Damien",
+  },
+  Object {
+    "dateTimeField": "2018-06-06T19:52:48.715Z",
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "dateTimeField": "2018-07-29T01:17:45.596Z",
+    "stringField": "horowitz",
+  },
+  Object {
+    "dateTimeField": "2018-03-24T06:41:17.641Z",
+    "stringField": "schowalter",
+  },
+  Object {
+    "dateTimeField": "2018-12-25T17:14:31.792Z",
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "dateTimeField": "2019-11-13T18:22:51.055Z",
+    "stringField": "devin",
+  },
+  Object {
+    "dateTimeField": "2019-11-20T11:42:01.432Z",
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "dateTimeField": "2018-02-23T17:27:00.987Z",
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "dateTimeField": "2019-10-15T13:37:32.192Z",
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "dateTimeField": "2019-02-11T05:37:09.516Z",
+    "stringField": "rerum et",
+  },
+  Object {
+    "dateTimeField": "2019-02-08T16:41:13.768Z",
+    "stringField": "erling",
+  },
+  Object {
+    "dateTimeField": "2019-05-02T11:56:08.871Z",
+    "stringField": "alias sint",
+  },
+  Object {
+    "dateTimeField": "2018-12-23T05:29:36.961Z",
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "dateTimeField": "2018-02-21T06:42:38.139Z",
+    "stringField": "hartmann",
+  },
+  Object {
+    "dateTimeField": "2018-04-28T05:35:05.513Z",
+    "stringField": "raquel",
+  },
+  Object {
+    "dateTimeField": "2019-10-12T02:20:37.708Z",
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "dateTimeField": "2019-05-27T03:22:02.440Z",
+    "stringField": "quia et",
+  },
+  Object {
+    "dateTimeField": "2018-02-06T23:50:49.092Z",
+    "stringField": "HOPPE",
+  },
+  Object {
+    "dateTimeField": "2019-02-25T02:47:46.670Z",
+    "stringField": "VON",
+  },
+  Object {
+    "dateTimeField": "2019-09-09T21:30:46.841Z",
+    "stringField": "neque tempore",
+  },
+  Object {
+    "dateTimeField": "2018-08-07T10:43:25.410Z",
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "dateTimeField": "2018-07-02T03:09:42.268Z",
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "dateTimeField": "2018-04-04T22:09:44.507Z",
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "dateTimeField": "2018-01-25T05:43:10.415Z",
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "dateTimeField": "2018-04-05T21:24:11.767Z",
+    "stringField": "billie",
+  },
+  Object {
+    "dateTimeField": "2018-04-15T06:49:17.394Z",
+    "stringField": "HELGA",
+  },
+  Object {
+    "dateTimeField": "2019-11-05T13:56:17.060Z",
+    "stringField": "dietrich",
+  },
+  Object {
+    "dateTimeField": "2018-07-22T09:57:28.210Z",
+    "stringField": "DOVIE",
+  },
+  Object {
+    "dateTimeField": "2019-12-27T01:42:13.975Z",
+    "stringField": "linnea",
+  },
+  Object {
+    "dateTimeField": "2018-04-23T20:20:23.845Z",
+    "stringField": "madison",
+  },
+  Object {
+    "dateTimeField": "2019-07-18T17:41:43.042Z",
+    "stringField": "macy",
+  },
+  Object {
+    "dateTimeField": "2019-02-13T01:58:53.948Z",
+    "stringField": "GERLACH",
+  },
+  Object {
+    "dateTimeField": "2018-09-22T19:08:17.847Z",
+    "stringField": "padberg",
+  },
+  Object {
+    "dateTimeField": "2018-08-14T06:26:06.480Z",
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "dateTimeField": "2019-08-03T23:12:04.505Z",
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "dateTimeField": "2019-02-01T23:53:26.248Z",
+    "stringField": "Williamson",
+  },
+  Object {
+    "dateTimeField": "2018-01-07T06:38:48.310Z",
+    "stringField": "schamberger",
+  },
+  Object {
+    "dateTimeField": "2019-06-11T23:31:27.825Z",
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "dateTimeField": "2018-08-22T05:05:10.761Z",
+    "stringField": "jaskolski",
+  },
+  Object {
+    "dateTimeField": "2019-09-09T03:24:37.315Z",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateTimeField": "2018-08-28T10:28:33.206Z",
+    "stringField": "paucek",
+  },
+  Object {
+    "dateTimeField": "2018-10-20T06:13:15.849Z",
+    "stringField": "kuhic",
+  },
+  Object {
+    "dateTimeField": "2019-04-12T20:45:07.338Z",
+    "stringField": "WITTING",
+  },
+  Object {
+    "dateTimeField": "2018-03-27T22:53:48.958Z",
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "dateTimeField": "2019-03-07T05:12:30.173Z",
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "dateTimeField": "2019-07-20T05:45:49.910Z",
+    "stringField": "pagac",
+  },
+  Object {
+    "dateTimeField": "2018-05-17T00:44:29.364Z",
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "dateTimeField": "2019-10-21T19:02:03.628Z",
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server - no replica find: enum field = BAR 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server - no replica find: integer query: greater than 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server - no replica find: integer query: greater than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server - no replica find: integer query: less than 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server - no replica find: integer query: less than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server - no replica find: jsonField foo_eq: bar 1`] = `
+Array [
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "quia": "autem",
+    },
+    "stringField": "Trantow",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "repellat": "autem",
+    },
+    "stringField": "BOSCO",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "omnis": "laboriosam",
+    },
+    "stringField": "maximillia",
+  },
+  Object {
+    "jsonField": Object {
+      "blanditiis": "eligendi",
+      "foo": "bar",
+    },
+    "stringField": "Madeline",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ut": "expedita",
+    },
+    "stringField": "nakia",
+  },
+  Object {
+    "jsonField": Object {
+      "earum": "in",
+      "foo": "bar",
+    },
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "voluptatem": "quasi",
+    },
+    "stringField": "Damien",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "qui": "quis",
+    },
+    "stringField": "devin",
+  },
+  Object {
+    "jsonField": Object {
+      "corrupti": "sit",
+      "foo": "bar",
+    },
+    "stringField": "erling",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "nisi": "aut",
+    },
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "molestias": "quo",
+    },
+    "stringField": "Okuneva",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "incidunt",
+      "foo": "bar",
+    },
+    "stringField": "quia et",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "quisquam": "perspiciatis",
+    },
+    "stringField": "korey",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ut": "enim",
+    },
+    "stringField": "neque tempore",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "nobis": "recusandae",
+    },
+    "stringField": "HAMILL",
+  },
+  Object {
+    "jsonField": Object {
+      "eum": "tenetur",
+      "foo": "bar",
+    },
+    "stringField": "o'reilly",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "incidunt": "placeat",
+    },
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "jsonField": Object {
+      "exercitationem": "natus",
+      "foo": "bar",
+    },
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "praesentium": "rerum",
+    },
+    "stringField": "dietrich",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "laboriosam": "ipsum",
+    },
+    "stringField": "DOVIE",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "natus": "dolores",
+    },
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "omnis",
+      "foo": "bar",
+    },
+    "stringField": "macy",
+  },
+  Object {
+    "jsonField": Object {
+      "autem": "consectetur",
+      "foo": "bar",
+    },
+    "stringField": "amalia",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "repellat": "id",
+    },
+    "stringField": "Williamson",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "eos",
+      "foo": "bar",
+    },
+    "stringField": "DESTIN",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "et",
+      "foo": "bar",
+    },
+    "stringField": "paucek",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "illum": "eum",
+    },
+    "stringField": "kuhic",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "non": "voluptatem",
+    },
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ipsum": "nihil",
+    },
+    "stringField": "RICE",
+  },
+]
+`;
+
+exports[`server - no replica find: string query: contains \`A\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+]
+`;
+
+exports[`server - no replica find: string query: contains \`a\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+]
+`;
+
+exports[`server - no replica find: string query: ends with \`z\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+]
+`;
+
+exports[`server - no replica find: string query: exact match (Nakia) 1`] = `
+Array [
+  Object {
+    "stringField": "Nakia",
+  },
+]
+`;
+
+exports[`server - no replica find: string query: in list { devin, erling, KAELYN, raquel } 1`] = `
+Array [
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+]
+`;
+
+exports[`server - no replica find: string query: starts with \`b\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+]
+`;
+
+exports[`server - no replica getBindingError pulls correct info from binding error 1`] = `
+Object {
+  "emailField": Object {
+    "isEmail": "emailField must be an email",
+  },
+}
+`;
+
+exports[`server - no replica queries deeply nested objects without an ID 1`] = `
+Array [
+  Object {
+    "booleanField": true,
+    "createdById": "abc123",
+    "dateField": "2019-10-15T00:00:00.000Z",
+    "dishes": Array [
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 0",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 1",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 2",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 3",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 4",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 5",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 6",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 7",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 8",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 9",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 10",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 11",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 12",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 13",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 14",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 15",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 16",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 17",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 18",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 19",
+      },
+    ],
+    "emailField": "hi@warthog.com",
+    "floatField": 123.456,
+    "integerField": 123,
+    "jsonField": Object {
+      "hello": "world",
+    },
+    "stringField": "My String",
+    "updatedById": null,
+    "version": 1,
+  },
+]
+`;
+
+exports[`server - with replica getBindingError pulls correct info from binding error 1`] = `
+Object {
+  "emailField": Object {
+    "isEmail": "emailField must be an email",
+  },
+}
+`;
+
 exports[`server Use 2 different operators on same attribute 1`] = `
 Array [
   Object {
@@ -3157,6 +6463,3445 @@ Object {
 }
 `;
 
+exports[`server no replica IAN queries deeply nested objects without an ID 1`] = `
+Array [
+  Object {
+    "booleanField": true,
+    "createdById": "abc123",
+    "dateField": "2019-10-15T00:00:00.000Z",
+    "dishes": Array [
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 0",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 1",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 2",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 3",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 4",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 5",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 6",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 7",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 8",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 9",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 10",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 11",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 12",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 13",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 14",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 15",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 16",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 17",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 18",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 19",
+      },
+    ],
+    "emailField": "hi@warthog.com",
+    "floatField": 123.456,
+    "integerField": 123,
+    "jsonField": Object {
+      "hello": "world",
+    },
+    "stringField": "My String",
+    "updatedById": null,
+    "version": 1,
+  },
+]
+`;
+
+exports[`server no replica Use 2 different operators on same attribute 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+]
+`;
+
+exports[`server no replica find: allows client to ask for __typename 1`] = `
+Array [
+  Object {
+    "__typename": "KitchenSink",
+  },
+]
+`;
+
+exports[`server no replica find: arrayOfInts_containsAll: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      5,
+      7,
+    ],
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server no replica find: arrayOfInts_containsAny: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      1,
+    ],
+    "stringField": "Trantow",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      0,
+      5,
+      2,
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      0,
+      1,
+    ],
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      4,
+      4,
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      0,
+    ],
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+    ],
+    "stringField": "maximillia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      0,
+      7,
+    ],
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      2,
+      1,
+      6,
+    ],
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      4,
+      7,
+    ],
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "nakia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+    ],
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      0,
+      0,
+      3,
+    ],
+    "stringField": "BERENICE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      1,
+      7,
+      0,
+    ],
+    "stringField": "amber",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      2,
+      0,
+      7,
+    ],
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "delfinaz",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      3,
+      4,
+      2,
+    ],
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      1,
+    ],
+    "stringField": "schowalter",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      7,
+      8,
+    ],
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      3,
+    ],
+    "stringField": "rerum et",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      4,
+      6,
+      1,
+    ],
+    "stringField": "alias sint",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      7,
+      8,
+      5,
+    ],
+    "stringField": "hartmann",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      7,
+      1,
+    ],
+    "stringField": "quas fugit",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      3,
+      0,
+    ],
+    "stringField": "quia et",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+      2,
+      1,
+    ],
+    "stringField": "VON",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+    ],
+    "stringField": "HAMILL",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      7,
+    ],
+    "stringField": "o'reilly",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      1,
+      7,
+    ],
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      7,
+      6,
+      8,
+    ],
+    "stringField": "billie",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      2,
+      5,
+    ],
+    "stringField": "winston",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      2,
+    ],
+    "stringField": "DOVIE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      8,
+      1,
+      3,
+    ],
+    "stringField": "linnea",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+    ],
+    "stringField": "madison",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      0,
+      6,
+      1,
+    ],
+    "stringField": "macy",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      1,
+      4,
+      3,
+    ],
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      7,
+      6,
+    ],
+    "stringField": "Williamson",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      5,
+      1,
+      4,
+    ],
+    "stringField": "DESTIN",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      4,
+    ],
+    "stringField": "Block",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      2,
+      8,
+    ],
+    "stringField": "jaskolski",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      7,
+      6,
+      7,
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      5,
+      3,
+    ],
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      2,
+      6,
+      4,
+    ],
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      0,
+      0,
+      2,
+    ],
+    "stringField": "pagac",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      5,
+      1,
+      3,
+    ],
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      7,
+    ],
+    "stringField": "RICE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      5,
+      7,
+    ],
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server no replica find: arrayOfInts_containsNone: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      5,
+      4,
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      5,
+    ],
+    "stringField": "koelpin",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "inventore velit",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+    ],
+    "stringField": "Madeline",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "NAKIA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      0,
+      8,
+    ],
+    "stringField": "Nakia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "JEROMY",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Wilmer",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "stark",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+      5,
+      5,
+    ],
+    "stringField": "elda",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "Damien",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      6,
+    ],
+    "stringField": "illum atque",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      4,
+      6,
+    ],
+    "stringField": "horowitz",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "devin",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      6,
+    ],
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      4,
+      3,
+      6,
+    ],
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      5,
+      3,
+      8,
+    ],
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+    ],
+    "stringField": "erling",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+    ],
+    "stringField": "KAELYN",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Okuneva",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "raquel",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      0,
+      4,
+    ],
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+    ],
+    "stringField": "iste in",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "HOPPE",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "korey",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "neque tempore",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      0,
+    ],
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "fermin",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+    ],
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "HELGA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      3,
+      0,
+    ],
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      6,
+      5,
+    ],
+    "stringField": "luettgen",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "dietrich",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      5,
+      8,
+    ],
+    "stringField": "GERLACH",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "padberg",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      6,
+    ],
+    "stringField": "amalia",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      8,
+      3,
+      3,
+    ],
+    "stringField": "schamberger",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Jared",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+    ],
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      3,
+    ],
+    "stringField": "BAUCH",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "paucek",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      6,
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      4,
+      8,
+    ],
+    "stringField": "WITTING",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      6,
+      6,
+    ],
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server no replica find: arrayOfStrings_containsAll: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "padberg",
+  },
+]
+`;
+
+exports[`server no replica find: arrayOfStrings_containsAny: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "inventore velit",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "nakia",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "Wilmer",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "cat",
+    ],
+    "stringField": "elda",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "dog",
+    ],
+    "stringField": "illum atque",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "cat",
+    ],
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "pony",
+    ],
+    "stringField": "rerum et",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "dog",
+    ],
+    "stringField": "erling",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "KAELYN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "alias sint",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "hartmann",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "HOPPE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "neque tempore",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "dog",
+    ],
+    "stringField": "HAMILL",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "dog",
+    ],
+    "stringField": "HELGA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "linnea",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "macy",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "padberg",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "dog",
+    ],
+    "stringField": "Jared",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "dog",
+    ],
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "pagac",
+  },
+]
+`;
+
+exports[`server no replica find: arrayOfStrings_containsNone: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Trantow",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "turtle",
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "maximillia",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "koelpin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "turtle",
+    ],
+    "stringField": "Madeline",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "NAKIA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "pony",
+    ],
+    "stringField": "Nakia",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "BERENICE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "amber",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "JEROMY",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "delfinaz",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "turtle",
+    ],
+    "stringField": "stark",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Damien",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "horowitz",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "schowalter",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "devin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "Okuneva",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "raquel",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "quas fugit",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "iste in",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "quia et",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "korey",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VON",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "fermin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "o'reilly",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "billie",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "winston",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "luettgen",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "dietrich",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "DOVIE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "madison",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "GERLACH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "amalia",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "Williamson",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "schamberger",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "pony",
+    ],
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "DESTIN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "Block",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "jaskolski",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "BAUCH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "paucek",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "fox",
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "WITTING",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "RICE",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Mortimer",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server no replica find: dateOnlyField greater than or equal 2020-01-01 1`] = `
+Array [
+  Object {
+    "dateOnlyField": "2020-02-27",
+    "stringField": "BOSCO",
+  },
+  Object {
+    "dateOnlyField": "2020-12-03",
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "dateOnlyField": "2020-02-25",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateOnlyField": "2020-08-18",
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "dateOnlyField": "2020-10-01",
+    "stringField": "koelpin",
+  },
+  Object {
+    "dateOnlyField": "2020-07-10",
+    "stringField": "inventore velit",
+  },
+  Object {
+    "dateOnlyField": "2020-03-31",
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "dateOnlyField": "2020-06-20",
+    "stringField": "NAKIA",
+  },
+  Object {
+    "dateOnlyField": "2020-10-28",
+    "stringField": "nakia",
+  },
+  Object {
+    "dateOnlyField": "2020-09-21",
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "dateOnlyField": "2020-08-24",
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "dateOnlyField": "2020-03-30",
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "dateOnlyField": "2020-05-15",
+    "stringField": "delfinaz",
+  },
+  Object {
+    "dateOnlyField": "2020-12-13",
+    "stringField": "elda",
+  },
+  Object {
+    "dateOnlyField": "2020-06-02",
+    "stringField": "Damien",
+  },
+  Object {
+    "dateOnlyField": "2020-11-21",
+    "stringField": "KAELYN",
+  },
+  Object {
+    "dateOnlyField": "2020-10-11",
+    "stringField": "iste in",
+  },
+  Object {
+    "dateOnlyField": "2020-07-07",
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "dateOnlyField": "2020-09-26",
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "dateOnlyField": "2020-09-18",
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "dateOnlyField": "2020-10-14",
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "dateOnlyField": "2020-12-03",
+    "stringField": "macy",
+  },
+  Object {
+    "dateOnlyField": "2020-02-10",
+    "stringField": "GERLACH",
+  },
+  Object {
+    "dateOnlyField": "2020-07-08",
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "dateOnlyField": "2020-12-11",
+    "stringField": "amalia",
+  },
+  Object {
+    "dateOnlyField": "2020-03-04",
+    "stringField": "schamberger",
+  },
+  Object {
+    "dateOnlyField": "2020-09-07",
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "dateOnlyField": "2020-10-01",
+    "stringField": "DESTIN",
+  },
+  Object {
+    "dateOnlyField": "2020-12-30",
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "dateOnlyField": "2020-12-20",
+    "stringField": "RICE",
+  },
+]
+`;
+
+exports[`server no replica find: dateTimeField less than or equal 2020-01-01 1`] = `
+Array [
+  Object {
+    "dateTimeField": "2019-11-25T22:03:38.286Z",
+    "stringField": "Trantow",
+  },
+  Object {
+    "dateTimeField": "2019-02-14T08:01:37.290Z",
+    "stringField": "BOSCO",
+  },
+  Object {
+    "dateTimeField": "2018-09-03T00:38:19.337Z",
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "dateTimeField": "2018-05-31T19:22:05.341Z",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateTimeField": "2018-07-05T11:32:01.838Z",
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "dateTimeField": "2018-04-28T06:17:13.736Z",
+    "stringField": "inventore velit",
+  },
+  Object {
+    "dateTimeField": "2019-03-30T19:45:37.259Z",
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "dateTimeField": "2019-04-26T22:33:32.962Z",
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "dateTimeField": "2019-11-11T20:22:39.955Z",
+    "stringField": "Madeline",
+  },
+  Object {
+    "dateTimeField": "2019-04-17T01:25:34.424Z",
+    "stringField": "NAKIA",
+  },
+  Object {
+    "dateTimeField": "2018-06-21T08:52:15.890Z",
+    "stringField": "Nakia",
+  },
+  Object {
+    "dateTimeField": "2018-03-10T17:25:14.892Z",
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "dateTimeField": "2018-10-26T12:04:40.017Z",
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "dateTimeField": "2018-08-13T16:06:07.214Z",
+    "stringField": "amber",
+  },
+  Object {
+    "dateTimeField": "2018-12-11T07:56:46.405Z",
+    "stringField": "JEROMY",
+  },
+  Object {
+    "dateTimeField": "2018-01-11T01:58:14.032Z",
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "dateTimeField": "2018-03-09T14:25:42.617Z",
+    "stringField": "delfinaz",
+  },
+  Object {
+    "dateTimeField": "2019-12-29T20:30:17.183Z",
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "dateTimeField": "2018-10-25T06:53:58.190Z",
+    "stringField": "Wilmer",
+  },
+  Object {
+    "dateTimeField": "2018-06-10T11:31:29.657Z",
+    "stringField": "stark",
+  },
+  Object {
+    "dateTimeField": "2018-03-13T18:09:40.750Z",
+    "stringField": "elda",
+  },
+  Object {
+    "dateTimeField": "2019-06-19T04:58:36.438Z",
+    "stringField": "Damien",
+  },
+  Object {
+    "dateTimeField": "2018-06-06T19:52:48.715Z",
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "dateTimeField": "2018-07-29T01:17:45.596Z",
+    "stringField": "horowitz",
+  },
+  Object {
+    "dateTimeField": "2018-03-24T06:41:17.641Z",
+    "stringField": "schowalter",
+  },
+  Object {
+    "dateTimeField": "2018-12-25T17:14:31.792Z",
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "dateTimeField": "2019-11-13T18:22:51.055Z",
+    "stringField": "devin",
+  },
+  Object {
+    "dateTimeField": "2019-11-20T11:42:01.432Z",
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "dateTimeField": "2018-02-23T17:27:00.987Z",
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "dateTimeField": "2019-10-15T13:37:32.192Z",
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "dateTimeField": "2019-02-11T05:37:09.516Z",
+    "stringField": "rerum et",
+  },
+  Object {
+    "dateTimeField": "2019-02-08T16:41:13.768Z",
+    "stringField": "erling",
+  },
+  Object {
+    "dateTimeField": "2019-05-02T11:56:08.871Z",
+    "stringField": "alias sint",
+  },
+  Object {
+    "dateTimeField": "2018-12-23T05:29:36.961Z",
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "dateTimeField": "2018-02-21T06:42:38.139Z",
+    "stringField": "hartmann",
+  },
+  Object {
+    "dateTimeField": "2018-04-28T05:35:05.513Z",
+    "stringField": "raquel",
+  },
+  Object {
+    "dateTimeField": "2019-10-12T02:20:37.708Z",
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "dateTimeField": "2019-05-27T03:22:02.440Z",
+    "stringField": "quia et",
+  },
+  Object {
+    "dateTimeField": "2018-02-06T23:50:49.092Z",
+    "stringField": "HOPPE",
+  },
+  Object {
+    "dateTimeField": "2019-02-25T02:47:46.670Z",
+    "stringField": "VON",
+  },
+  Object {
+    "dateTimeField": "2019-09-09T21:30:46.841Z",
+    "stringField": "neque tempore",
+  },
+  Object {
+    "dateTimeField": "2018-08-07T10:43:25.410Z",
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "dateTimeField": "2018-07-02T03:09:42.268Z",
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "dateTimeField": "2018-04-04T22:09:44.507Z",
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "dateTimeField": "2018-01-25T05:43:10.415Z",
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "dateTimeField": "2018-04-05T21:24:11.767Z",
+    "stringField": "billie",
+  },
+  Object {
+    "dateTimeField": "2018-04-15T06:49:17.394Z",
+    "stringField": "HELGA",
+  },
+  Object {
+    "dateTimeField": "2019-11-05T13:56:17.060Z",
+    "stringField": "dietrich",
+  },
+  Object {
+    "dateTimeField": "2018-07-22T09:57:28.210Z",
+    "stringField": "DOVIE",
+  },
+  Object {
+    "dateTimeField": "2019-12-27T01:42:13.975Z",
+    "stringField": "linnea",
+  },
+  Object {
+    "dateTimeField": "2018-04-23T20:20:23.845Z",
+    "stringField": "madison",
+  },
+  Object {
+    "dateTimeField": "2019-07-18T17:41:43.042Z",
+    "stringField": "macy",
+  },
+  Object {
+    "dateTimeField": "2019-02-13T01:58:53.948Z",
+    "stringField": "GERLACH",
+  },
+  Object {
+    "dateTimeField": "2018-09-22T19:08:17.847Z",
+    "stringField": "padberg",
+  },
+  Object {
+    "dateTimeField": "2018-08-14T06:26:06.480Z",
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "dateTimeField": "2019-08-03T23:12:04.505Z",
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "dateTimeField": "2019-02-01T23:53:26.248Z",
+    "stringField": "Williamson",
+  },
+  Object {
+    "dateTimeField": "2018-01-07T06:38:48.310Z",
+    "stringField": "schamberger",
+  },
+  Object {
+    "dateTimeField": "2019-06-11T23:31:27.825Z",
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "dateTimeField": "2018-08-22T05:05:10.761Z",
+    "stringField": "jaskolski",
+  },
+  Object {
+    "dateTimeField": "2019-09-09T03:24:37.315Z",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateTimeField": "2018-08-28T10:28:33.206Z",
+    "stringField": "paucek",
+  },
+  Object {
+    "dateTimeField": "2018-10-20T06:13:15.849Z",
+    "stringField": "kuhic",
+  },
+  Object {
+    "dateTimeField": "2019-04-12T20:45:07.338Z",
+    "stringField": "WITTING",
+  },
+  Object {
+    "dateTimeField": "2018-03-27T22:53:48.958Z",
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "dateTimeField": "2019-03-07T05:12:30.173Z",
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "dateTimeField": "2019-07-20T05:45:49.910Z",
+    "stringField": "pagac",
+  },
+  Object {
+    "dateTimeField": "2018-05-17T00:44:29.364Z",
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "dateTimeField": "2019-10-21T19:02:03.628Z",
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server no replica find: enum field = BAR 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server no replica find: integer query: greater than 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server no replica find: integer query: greater than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server no replica find: integer query: less than 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server no replica find: integer query: less than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server no replica find: jsonField foo_eq: bar 1`] = `
+Array [
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "quia": "autem",
+    },
+    "stringField": "Trantow",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "repellat": "autem",
+    },
+    "stringField": "BOSCO",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "omnis": "laboriosam",
+    },
+    "stringField": "maximillia",
+  },
+  Object {
+    "jsonField": Object {
+      "blanditiis": "eligendi",
+      "foo": "bar",
+    },
+    "stringField": "Madeline",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ut": "expedita",
+    },
+    "stringField": "nakia",
+  },
+  Object {
+    "jsonField": Object {
+      "earum": "in",
+      "foo": "bar",
+    },
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "voluptatem": "quasi",
+    },
+    "stringField": "Damien",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "qui": "quis",
+    },
+    "stringField": "devin",
+  },
+  Object {
+    "jsonField": Object {
+      "corrupti": "sit",
+      "foo": "bar",
+    },
+    "stringField": "erling",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "nisi": "aut",
+    },
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "molestias": "quo",
+    },
+    "stringField": "Okuneva",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "incidunt",
+      "foo": "bar",
+    },
+    "stringField": "quia et",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "quisquam": "perspiciatis",
+    },
+    "stringField": "korey",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ut": "enim",
+    },
+    "stringField": "neque tempore",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "nobis": "recusandae",
+    },
+    "stringField": "HAMILL",
+  },
+  Object {
+    "jsonField": Object {
+      "eum": "tenetur",
+      "foo": "bar",
+    },
+    "stringField": "o'reilly",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "incidunt": "placeat",
+    },
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "jsonField": Object {
+      "exercitationem": "natus",
+      "foo": "bar",
+    },
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "praesentium": "rerum",
+    },
+    "stringField": "dietrich",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "laboriosam": "ipsum",
+    },
+    "stringField": "DOVIE",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "natus": "dolores",
+    },
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "omnis",
+      "foo": "bar",
+    },
+    "stringField": "macy",
+  },
+  Object {
+    "jsonField": Object {
+      "autem": "consectetur",
+      "foo": "bar",
+    },
+    "stringField": "amalia",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "repellat": "id",
+    },
+    "stringField": "Williamson",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "eos",
+      "foo": "bar",
+    },
+    "stringField": "DESTIN",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "et",
+      "foo": "bar",
+    },
+    "stringField": "paucek",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "illum": "eum",
+    },
+    "stringField": "kuhic",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "non": "voluptatem",
+    },
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ipsum": "nihil",
+    },
+    "stringField": "RICE",
+  },
+]
+`;
+
+exports[`server no replica find: string query: contains \`A\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+]
+`;
+
+exports[`server no replica find: string query: contains \`a\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+]
+`;
+
+exports[`server no replica find: string query: ends with \`z\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+]
+`;
+
+exports[`server no replica find: string query: exact match (Nakia) 1`] = `
+Array [
+  Object {
+    "stringField": "Nakia",
+  },
+]
+`;
+
+exports[`server no replica find: string query: in list { devin, erling, KAELYN, raquel } 1`] = `
+Array [
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+]
+`;
+
+exports[`server no replica find: string query: starts with \`b\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+]
+`;
+
+exports[`server no replica getBindingError pulls correct info from binding error 1`] = `
+Object {
+  "emailField": Object {
+    "isEmail": "emailField must be an email",
+  },
+}
+`;
+
+exports[`server no replica queries deeply nested objects without an ID 1`] = `
+Array [
+  Object {
+    "booleanField": true,
+    "createdById": "abc123",
+    "dateField": "2019-10-15T00:00:00.000Z",
+    "dishes": Array [
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 0",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 1",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 2",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 3",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 4",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 5",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 6",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 7",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 8",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 9",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 10",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 11",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 12",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 13",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 14",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 15",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 16",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 17",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 18",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 19",
+      },
+    ],
+    "emailField": "hi@warthog.com",
+    "floatField": 123.456,
+    "integerField": 123,
+    "jsonField": Object {
+      "hello": "world",
+    },
+    "stringField": "My String",
+    "updatedById": null,
+    "version": 1,
+  },
+]
+`;
+
 exports[`server queries deeply nested objects without an ID 1`] = `
 Array [
   Object {
@@ -3296,4 +10041,3302 @@ Array [
     "version": 1,
   },
 ]
+`;
+
+exports[`server with replica IAN queries deeply nested objects without an ID 1`] = `
+Array [
+  Object {
+    "booleanField": true,
+    "createdById": "abc123",
+    "dateField": "2019-10-15T00:00:00.000Z",
+    "dishes": Array [
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 0",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 1",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 2",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 3",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 4",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 5",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 6",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 7",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 8",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 9",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 10",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 11",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 12",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 13",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 14",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 15",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 16",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 17",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 18",
+      },
+      Object {
+        "kitchenSink": Object {
+          "stringField": "My String",
+        },
+        "name": "Dish 19",
+      },
+    ],
+    "emailField": "hi@warthog.com",
+    "floatField": 123.456,
+    "integerField": 123,
+    "jsonField": Object {
+      "hello": "world",
+    },
+    "stringField": "My String",
+    "updatedById": null,
+    "version": 1,
+  },
+]
+`;
+
+exports[`server with replica Use 2 different operators on same attribute 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+]
+`;
+
+exports[`server with replica find: allows client to ask for __typename 1`] = `
+Array [
+  Object {
+    "__typename": "KitchenSink",
+  },
+]
+`;
+
+exports[`server with replica find: arrayOfInts_containsAll: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      5,
+      7,
+    ],
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server with replica find: arrayOfInts_containsAny: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      1,
+    ],
+    "stringField": "Trantow",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      0,
+      5,
+      2,
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      0,
+      1,
+    ],
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      4,
+      4,
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      0,
+    ],
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+    ],
+    "stringField": "maximillia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      0,
+      7,
+    ],
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      2,
+      1,
+      6,
+    ],
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      4,
+      7,
+    ],
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "nakia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+    ],
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      0,
+      0,
+      3,
+    ],
+    "stringField": "BERENICE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      1,
+      7,
+      0,
+    ],
+    "stringField": "amber",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      2,
+      0,
+      7,
+    ],
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "delfinaz",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      3,
+      4,
+      2,
+    ],
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      1,
+    ],
+    "stringField": "schowalter",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      7,
+      8,
+    ],
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      3,
+    ],
+    "stringField": "rerum et",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      4,
+      6,
+      1,
+    ],
+    "stringField": "alias sint",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+    ],
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      7,
+      8,
+      5,
+    ],
+    "stringField": "hartmann",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      7,
+      1,
+    ],
+    "stringField": "quas fugit",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      3,
+      0,
+    ],
+    "stringField": "quia et",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+      2,
+      1,
+    ],
+    "stringField": "VON",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+    ],
+    "stringField": "HAMILL",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      7,
+    ],
+    "stringField": "o'reilly",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      1,
+      7,
+    ],
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      7,
+      6,
+      8,
+    ],
+    "stringField": "billie",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      2,
+      5,
+    ],
+    "stringField": "winston",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      2,
+    ],
+    "stringField": "DOVIE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      8,
+      1,
+      3,
+    ],
+    "stringField": "linnea",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+    ],
+    "stringField": "madison",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      0,
+      6,
+      1,
+    ],
+    "stringField": "macy",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      1,
+      4,
+      3,
+    ],
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      7,
+      6,
+    ],
+    "stringField": "Williamson",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      5,
+      1,
+      4,
+    ],
+    "stringField": "DESTIN",
+  },
+  Object {
+    "arrayOfInts": Array [
+      1,
+      8,
+      4,
+    ],
+    "stringField": "Block",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      2,
+      8,
+    ],
+    "stringField": "jaskolski",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      7,
+      6,
+      7,
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      5,
+      3,
+    ],
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      7,
+      2,
+      6,
+      4,
+    ],
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      0,
+      0,
+      2,
+    ],
+    "stringField": "pagac",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+      5,
+      1,
+      3,
+    ],
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      7,
+    ],
+    "stringField": "RICE",
+  },
+  Object {
+    "arrayOfInts": Array [
+      2,
+      1,
+      5,
+      7,
+    ],
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server with replica find: arrayOfInts_containsNone: [1, 2, 7] 1`] = `
+Array [
+  Object {
+    "arrayOfInts": Array [
+      5,
+      4,
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      5,
+    ],
+    "stringField": "koelpin",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "inventore velit",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+    ],
+    "stringField": "Madeline",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "NAKIA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      0,
+      8,
+    ],
+    "stringField": "Nakia",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "JEROMY",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Wilmer",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "stark",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+      5,
+      5,
+    ],
+    "stringField": "elda",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "Damien",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      6,
+    ],
+    "stringField": "illum atque",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      4,
+      6,
+    ],
+    "stringField": "horowitz",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "devin",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      6,
+    ],
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      4,
+      3,
+      6,
+    ],
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      5,
+      3,
+      8,
+    ],
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "arrayOfInts": Array [
+      6,
+    ],
+    "stringField": "erling",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+    ],
+    "stringField": "KAELYN",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Okuneva",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "raquel",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      0,
+      4,
+    ],
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      8,
+    ],
+    "stringField": "iste in",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "HOPPE",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "korey",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "neque tempore",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      0,
+    ],
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "fermin",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+    ],
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "HELGA",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      3,
+      0,
+    ],
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      6,
+      5,
+    ],
+    "stringField": "luettgen",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+    ],
+    "stringField": "dietrich",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      5,
+      8,
+    ],
+    "stringField": "GERLACH",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "padberg",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+      6,
+    ],
+    "stringField": "amalia",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+      8,
+      3,
+      3,
+    ],
+    "stringField": "schamberger",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "Jared",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+    ],
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "arrayOfInts": Array [
+      4,
+      3,
+    ],
+    "stringField": "BAUCH",
+  },
+  Object {
+    "arrayOfInts": Array [
+      5,
+    ],
+    "stringField": "paucek",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      6,
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
+    "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
+    "arrayOfInts": Array [
+      0,
+      4,
+      8,
+    ],
+    "stringField": "WITTING",
+  },
+  Object {
+    "arrayOfInts": Array [],
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "arrayOfInts": Array [
+      8,
+      6,
+      6,
+    ],
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server with replica find: arrayOfStrings_containsAll: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "padberg",
+  },
+]
+`;
+
+exports[`server with replica find: arrayOfStrings_containsAny: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "BOSCO",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "inventore velit",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "nakia",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "Wilmer",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "cat",
+    ],
+    "stringField": "elda",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "dog",
+    ],
+    "stringField": "illum atque",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "cat",
+    ],
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "pony",
+    ],
+    "stringField": "rerum et",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "dog",
+    ],
+    "stringField": "erling",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "KAELYN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "alias sint",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "hartmann",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "HOPPE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "neque tempore",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "dog",
+    ],
+    "stringField": "HAMILL",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+    ],
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "dog",
+    ],
+    "stringField": "HELGA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "dog",
+      "fox",
+    ],
+    "stringField": "linnea",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "macy",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+      "dog",
+    ],
+    "stringField": "padberg",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "dog",
+    ],
+    "stringField": "Jared",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "dog",
+    ],
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "cat",
+    ],
+    "stringField": "pagac",
+  },
+]
+`;
+
+exports[`server with replica find: arrayOfStrings_containsNone: [dog, cat] 1`] = `
+Array [
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Trantow",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "turtle",
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "maximillia",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "koelpin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "turtle",
+    ],
+    "stringField": "Madeline",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "NAKIA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+      "pony",
+    ],
+    "stringField": "Nakia",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "BERENICE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "amber",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "JEROMY",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "delfinaz",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "turtle",
+    ],
+    "stringField": "stark",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Damien",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "horowitz",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "schowalter",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "devin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "Okuneva",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "raquel",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "quas fugit",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "iste in",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "quia et",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "korey",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "VON",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "fermin",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "o'reilly",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+    ],
+    "stringField": "billie",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "winston",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "luettgen",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "dietrich",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "DOVIE",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "madison",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "GERLACH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "amalia",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+    ],
+    "stringField": "Williamson",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "schamberger",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "pony",
+    ],
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "DESTIN",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "Block",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "jaskolski",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "BAUCH",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "turtle",
+      "fox",
+    ],
+    "stringField": "Wisoky",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "paucek",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "fox",
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "WITTING",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "RICE",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "Mortimer",
+  },
+  Object {
+    "arrayOfStrings": Array [],
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server with replica find: dateOnlyField greater than or equal 2020-01-01 1`] = `
+Array [
+  Object {
+    "dateOnlyField": "2020-02-27",
+    "stringField": "BOSCO",
+  },
+  Object {
+    "dateOnlyField": "2020-12-03",
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "dateOnlyField": "2020-02-25",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateOnlyField": "2020-08-18",
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "dateOnlyField": "2020-10-01",
+    "stringField": "koelpin",
+  },
+  Object {
+    "dateOnlyField": "2020-07-10",
+    "stringField": "inventore velit",
+  },
+  Object {
+    "dateOnlyField": "2020-03-31",
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "dateOnlyField": "2020-06-20",
+    "stringField": "NAKIA",
+  },
+  Object {
+    "dateOnlyField": "2020-10-28",
+    "stringField": "nakia",
+  },
+  Object {
+    "dateOnlyField": "2020-09-21",
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "dateOnlyField": "2020-08-24",
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "dateOnlyField": "2020-03-30",
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "dateOnlyField": "2020-05-15",
+    "stringField": "delfinaz",
+  },
+  Object {
+    "dateOnlyField": "2020-12-13",
+    "stringField": "elda",
+  },
+  Object {
+    "dateOnlyField": "2020-06-02",
+    "stringField": "Damien",
+  },
+  Object {
+    "dateOnlyField": "2020-11-21",
+    "stringField": "KAELYN",
+  },
+  Object {
+    "dateOnlyField": "2020-10-11",
+    "stringField": "iste in",
+  },
+  Object {
+    "dateOnlyField": "2020-07-07",
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "dateOnlyField": "2020-09-26",
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "dateOnlyField": "2020-09-18",
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "dateOnlyField": "2020-10-14",
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "dateOnlyField": "2020-12-03",
+    "stringField": "macy",
+  },
+  Object {
+    "dateOnlyField": "2020-02-10",
+    "stringField": "GERLACH",
+  },
+  Object {
+    "dateOnlyField": "2020-07-08",
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "dateOnlyField": "2020-12-11",
+    "stringField": "amalia",
+  },
+  Object {
+    "dateOnlyField": "2020-03-04",
+    "stringField": "schamberger",
+  },
+  Object {
+    "dateOnlyField": "2020-09-07",
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "dateOnlyField": "2020-10-01",
+    "stringField": "DESTIN",
+  },
+  Object {
+    "dateOnlyField": "2020-12-30",
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "dateOnlyField": "2020-12-20",
+    "stringField": "RICE",
+  },
+]
+`;
+
+exports[`server with replica find: dateTimeField less than or equal 2020-01-01 1`] = `
+Array [
+  Object {
+    "dateTimeField": "2019-11-25T22:03:38.286Z",
+    "stringField": "Trantow",
+  },
+  Object {
+    "dateTimeField": "2019-02-14T08:01:37.290Z",
+    "stringField": "BOSCO",
+  },
+  Object {
+    "dateTimeField": "2018-09-03T00:38:19.337Z",
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "dateTimeField": "2018-05-31T19:22:05.341Z",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateTimeField": "2018-07-05T11:32:01.838Z",
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "dateTimeField": "2018-04-28T06:17:13.736Z",
+    "stringField": "inventore velit",
+  },
+  Object {
+    "dateTimeField": "2019-03-30T19:45:37.259Z",
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "dateTimeField": "2019-04-26T22:33:32.962Z",
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "dateTimeField": "2019-11-11T20:22:39.955Z",
+    "stringField": "Madeline",
+  },
+  Object {
+    "dateTimeField": "2019-04-17T01:25:34.424Z",
+    "stringField": "NAKIA",
+  },
+  Object {
+    "dateTimeField": "2018-06-21T08:52:15.890Z",
+    "stringField": "Nakia",
+  },
+  Object {
+    "dateTimeField": "2018-03-10T17:25:14.892Z",
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "dateTimeField": "2018-10-26T12:04:40.017Z",
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "dateTimeField": "2018-08-13T16:06:07.214Z",
+    "stringField": "amber",
+  },
+  Object {
+    "dateTimeField": "2018-12-11T07:56:46.405Z",
+    "stringField": "JEROMY",
+  },
+  Object {
+    "dateTimeField": "2018-01-11T01:58:14.032Z",
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "dateTimeField": "2018-03-09T14:25:42.617Z",
+    "stringField": "delfinaz",
+  },
+  Object {
+    "dateTimeField": "2019-12-29T20:30:17.183Z",
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "dateTimeField": "2018-10-25T06:53:58.190Z",
+    "stringField": "Wilmer",
+  },
+  Object {
+    "dateTimeField": "2018-06-10T11:31:29.657Z",
+    "stringField": "stark",
+  },
+  Object {
+    "dateTimeField": "2018-03-13T18:09:40.750Z",
+    "stringField": "elda",
+  },
+  Object {
+    "dateTimeField": "2019-06-19T04:58:36.438Z",
+    "stringField": "Damien",
+  },
+  Object {
+    "dateTimeField": "2018-06-06T19:52:48.715Z",
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "dateTimeField": "2018-07-29T01:17:45.596Z",
+    "stringField": "horowitz",
+  },
+  Object {
+    "dateTimeField": "2018-03-24T06:41:17.641Z",
+    "stringField": "schowalter",
+  },
+  Object {
+    "dateTimeField": "2018-12-25T17:14:31.792Z",
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "dateTimeField": "2019-11-13T18:22:51.055Z",
+    "stringField": "devin",
+  },
+  Object {
+    "dateTimeField": "2019-11-20T11:42:01.432Z",
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "dateTimeField": "2018-02-23T17:27:00.987Z",
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "dateTimeField": "2019-10-15T13:37:32.192Z",
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "dateTimeField": "2019-02-11T05:37:09.516Z",
+    "stringField": "rerum et",
+  },
+  Object {
+    "dateTimeField": "2019-02-08T16:41:13.768Z",
+    "stringField": "erling",
+  },
+  Object {
+    "dateTimeField": "2019-05-02T11:56:08.871Z",
+    "stringField": "alias sint",
+  },
+  Object {
+    "dateTimeField": "2018-12-23T05:29:36.961Z",
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "dateTimeField": "2018-02-21T06:42:38.139Z",
+    "stringField": "hartmann",
+  },
+  Object {
+    "dateTimeField": "2018-04-28T05:35:05.513Z",
+    "stringField": "raquel",
+  },
+  Object {
+    "dateTimeField": "2019-10-12T02:20:37.708Z",
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "dateTimeField": "2019-05-27T03:22:02.440Z",
+    "stringField": "quia et",
+  },
+  Object {
+    "dateTimeField": "2018-02-06T23:50:49.092Z",
+    "stringField": "HOPPE",
+  },
+  Object {
+    "dateTimeField": "2019-02-25T02:47:46.670Z",
+    "stringField": "VON",
+  },
+  Object {
+    "dateTimeField": "2019-09-09T21:30:46.841Z",
+    "stringField": "neque tempore",
+  },
+  Object {
+    "dateTimeField": "2018-08-07T10:43:25.410Z",
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "dateTimeField": "2018-07-02T03:09:42.268Z",
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "dateTimeField": "2018-04-04T22:09:44.507Z",
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "dateTimeField": "2018-01-25T05:43:10.415Z",
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "dateTimeField": "2018-04-05T21:24:11.767Z",
+    "stringField": "billie",
+  },
+  Object {
+    "dateTimeField": "2018-04-15T06:49:17.394Z",
+    "stringField": "HELGA",
+  },
+  Object {
+    "dateTimeField": "2019-11-05T13:56:17.060Z",
+    "stringField": "dietrich",
+  },
+  Object {
+    "dateTimeField": "2018-07-22T09:57:28.210Z",
+    "stringField": "DOVIE",
+  },
+  Object {
+    "dateTimeField": "2019-12-27T01:42:13.975Z",
+    "stringField": "linnea",
+  },
+  Object {
+    "dateTimeField": "2018-04-23T20:20:23.845Z",
+    "stringField": "madison",
+  },
+  Object {
+    "dateTimeField": "2019-07-18T17:41:43.042Z",
+    "stringField": "macy",
+  },
+  Object {
+    "dateTimeField": "2019-02-13T01:58:53.948Z",
+    "stringField": "GERLACH",
+  },
+  Object {
+    "dateTimeField": "2018-09-22T19:08:17.847Z",
+    "stringField": "padberg",
+  },
+  Object {
+    "dateTimeField": "2018-08-14T06:26:06.480Z",
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "dateTimeField": "2019-08-03T23:12:04.505Z",
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "dateTimeField": "2019-02-01T23:53:26.248Z",
+    "stringField": "Williamson",
+  },
+  Object {
+    "dateTimeField": "2018-01-07T06:38:48.310Z",
+    "stringField": "schamberger",
+  },
+  Object {
+    "dateTimeField": "2019-06-11T23:31:27.825Z",
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "dateTimeField": "2018-08-22T05:05:10.761Z",
+    "stringField": "jaskolski",
+  },
+  Object {
+    "dateTimeField": "2019-09-09T03:24:37.315Z",
+    "stringField": "Wisoky",
+  },
+  Object {
+    "dateTimeField": "2018-08-28T10:28:33.206Z",
+    "stringField": "paucek",
+  },
+  Object {
+    "dateTimeField": "2018-10-20T06:13:15.849Z",
+    "stringField": "kuhic",
+  },
+  Object {
+    "dateTimeField": "2019-04-12T20:45:07.338Z",
+    "stringField": "WITTING",
+  },
+  Object {
+    "dateTimeField": "2018-03-27T22:53:48.958Z",
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "dateTimeField": "2019-03-07T05:12:30.173Z",
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "dateTimeField": "2019-07-20T05:45:49.910Z",
+    "stringField": "pagac",
+  },
+  Object {
+    "dateTimeField": "2018-05-17T00:44:29.364Z",
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "dateTimeField": "2019-10-21T19:02:03.628Z",
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server with replica find: enum field = BAR 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+]
+`;
+
+exports[`server with replica find: integer query: greater than 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server with replica find: integer query: greater than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "My String",
+  },
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "SCHOEN",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "SCHINNER",
+  },
+  Object {
+    "stringField": "DELENITI SUNT",
+  },
+  Object {
+    "stringField": "inventore velit",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "rerum et",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "HOPPE",
+  },
+  Object {
+    "stringField": "fermin",
+  },
+  Object {
+    "stringField": "o'reilly",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "dietrich",
+  },
+  Object {
+    "stringField": "DOVIE",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "OMNIS ERROR",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "Wisoky",
+  },
+  Object {
+    "stringField": "sed quod",
+  },
+  Object {
+    "stringField": "kuhic",
+  },
+]
+`;
+
+exports[`server with replica find: integer query: less than 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server with replica find: integer query: less than or equal to 21 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "koelpin",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "SCHIMMEL",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "JEROMY",
+  },
+  Object {
+    "stringField": "RYLEIGH",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "Wilmer",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "ODIO ID",
+  },
+  Object {
+    "stringField": "iste in",
+  },
+  Object {
+    "stringField": "korey",
+  },
+  Object {
+    "stringField": "VON",
+  },
+  Object {
+    "stringField": "neque tempore",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "eum reiciendis",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "winston",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "luettgen",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "DESTIN",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "WITTING",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "SIT ODIO",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "stringField": "RICE",
+  },
+  Object {
+    "stringField": "Mortimer",
+  },
+  Object {
+    "stringField": "EX POSSIMUS",
+  },
+]
+`;
+
+exports[`server with replica find: jsonField foo_eq: bar 1`] = `
+Array [
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "quia": "autem",
+    },
+    "stringField": "Trantow",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "repellat": "autem",
+    },
+    "stringField": "BOSCO",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "omnis": "laboriosam",
+    },
+    "stringField": "maximillia",
+  },
+  Object {
+    "jsonField": Object {
+      "blanditiis": "eligendi",
+      "foo": "bar",
+    },
+    "stringField": "Madeline",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ut": "expedita",
+    },
+    "stringField": "nakia",
+  },
+  Object {
+    "jsonField": Object {
+      "earum": "in",
+      "foo": "bar",
+    },
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "voluptatem": "quasi",
+    },
+    "stringField": "Damien",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "qui": "quis",
+    },
+    "stringField": "devin",
+  },
+  Object {
+    "jsonField": Object {
+      "corrupti": "sit",
+      "foo": "bar",
+    },
+    "stringField": "erling",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "nisi": "aut",
+    },
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "molestias": "quo",
+    },
+    "stringField": "Okuneva",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "incidunt",
+      "foo": "bar",
+    },
+    "stringField": "quia et",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "quisquam": "perspiciatis",
+    },
+    "stringField": "korey",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ut": "enim",
+    },
+    "stringField": "neque tempore",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "nobis": "recusandae",
+    },
+    "stringField": "HAMILL",
+  },
+  Object {
+    "jsonField": Object {
+      "eum": "tenetur",
+      "foo": "bar",
+    },
+    "stringField": "o'reilly",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "incidunt": "placeat",
+    },
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "jsonField": Object {
+      "exercitationem": "natus",
+      "foo": "bar",
+    },
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "praesentium": "rerum",
+    },
+    "stringField": "dietrich",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "laboriosam": "ipsum",
+    },
+    "stringField": "DOVIE",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "natus": "dolores",
+    },
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "omnis",
+      "foo": "bar",
+    },
+    "stringField": "macy",
+  },
+  Object {
+    "jsonField": Object {
+      "autem": "consectetur",
+      "foo": "bar",
+    },
+    "stringField": "amalia",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "repellat": "id",
+    },
+    "stringField": "Williamson",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "eos",
+      "foo": "bar",
+    },
+    "stringField": "DESTIN",
+  },
+  Object {
+    "jsonField": Object {
+      "et": "et",
+      "foo": "bar",
+    },
+    "stringField": "paucek",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "illum": "eum",
+    },
+    "stringField": "kuhic",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "non": "voluptatem",
+    },
+    "stringField": "eius necessitatibus",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
+      "ipsum": "nihil",
+    },
+    "stringField": "RICE",
+  },
+]
+`;
+
+exports[`server with replica find: string query: contains \`A\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+]
+`;
+
+exports[`server with replica find: string query: contains \`a\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "Trantow",
+  },
+  Object {
+    "stringField": "VOLUPTATUM NULLA",
+  },
+  Object {
+    "stringField": "maximillia",
+  },
+  Object {
+    "stringField": "QUAM CULPA",
+  },
+  Object {
+    "stringField": "Madeline",
+  },
+  Object {
+    "stringField": "NAKIA",
+  },
+  Object {
+    "stringField": "nakia",
+  },
+  Object {
+    "stringField": "Nakia",
+  },
+  Object {
+    "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "amber",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "SHEMAR",
+  },
+  Object {
+    "stringField": "stark",
+  },
+  Object {
+    "stringField": "elda",
+  },
+  Object {
+    "stringField": "Damien",
+  },
+  Object {
+    "stringField": "earum nesciunt",
+  },
+  Object {
+    "stringField": "illum atque",
+  },
+  Object {
+    "stringField": "schowalter",
+  },
+  Object {
+    "stringField": "MAIORES ADIPISCI",
+  },
+  Object {
+    "stringField": "VELIT ADIPISCI",
+  },
+  Object {
+    "stringField": "AMET QUI",
+  },
+  Object {
+    "stringField": "maiores praesentium",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "alias sint",
+  },
+  Object {
+    "stringField": "molestiae praesentium",
+  },
+  Object {
+    "stringField": "Okuneva",
+  },
+  Object {
+    "stringField": "hartmann",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+  Object {
+    "stringField": "quas fugit",
+  },
+  Object {
+    "stringField": "quia et",
+  },
+  Object {
+    "stringField": "ut consequatur",
+  },
+  Object {
+    "stringField": "iusto perspiciatis",
+  },
+  Object {
+    "stringField": "HAMILL",
+  },
+  Object {
+    "stringField": "LABORE CULPA",
+  },
+  Object {
+    "stringField": "VERITATIS EIUS",
+  },
+  Object {
+    "stringField": "HELGA",
+  },
+  Object {
+    "stringField": "ipsum voluptas",
+  },
+  Object {
+    "stringField": "linnea",
+  },
+  Object {
+    "stringField": "madison",
+  },
+  Object {
+    "stringField": "NUMQUAM ALIQUAM",
+  },
+  Object {
+    "stringField": "macy",
+  },
+  Object {
+    "stringField": "GERLACH",
+  },
+  Object {
+    "stringField": "padberg",
+  },
+  Object {
+    "stringField": "ENIM DICTA",
+  },
+  Object {
+    "stringField": "amalia",
+  },
+  Object {
+    "stringField": "QUAS PERSPICIATIS",
+  },
+  Object {
+    "stringField": "Williamson",
+  },
+  Object {
+    "stringField": "schamberger",
+  },
+  Object {
+    "stringField": "Jared",
+  },
+  Object {
+    "stringField": "QUIDEM FUGIAT",
+  },
+  Object {
+    "stringField": "MAGNAM REICIENDIS",
+  },
+  Object {
+    "stringField": "jaskolski",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+  Object {
+    "stringField": "paucek",
+  },
+  Object {
+    "stringField": "VOLUPTATE ATQUE",
+  },
+  Object {
+    "stringField": "placeat voluptate",
+  },
+  Object {
+    "stringField": "pagac",
+  },
+  Object {
+    "stringField": "eius necessitatibus",
+  },
+]
+`;
+
+exports[`server with replica find: string query: ends with \`z\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "LUEILWITZ",
+  },
+  Object {
+    "stringField": "delfinaz",
+  },
+  Object {
+    "stringField": "horowitz",
+  },
+]
+`;
+
+exports[`server with replica find: string query: exact match (Nakia) 1`] = `
+Array [
+  Object {
+    "stringField": "Nakia",
+  },
+]
+`;
+
+exports[`server with replica find: string query: in list { devin, erling, KAELYN, raquel } 1`] = `
+Array [
+  Object {
+    "stringField": "devin",
+  },
+  Object {
+    "stringField": "erling",
+  },
+  Object {
+    "stringField": "KAELYN",
+  },
+  Object {
+    "stringField": "raquel",
+  },
+]
+`;
+
+exports[`server with replica find: string query: starts with \`b\` (upper or lower) 1`] = `
+Array [
+  Object {
+    "stringField": "BOSCO",
+  },
+  Object {
+    "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "billie",
+  },
+  Object {
+    "stringField": "Block",
+  },
+  Object {
+    "stringField": "BAUCH",
+  },
+]
+`;
+
+exports[`server with replica getBindingError pulls correct info from binding error 1`] = `
+Object {
+  "emailField": Object {
+    "isEmail": "emailField must be an email",
+  },
+}
 `;

@@ -153,7 +153,7 @@ export interface UserCreateInput {
   bigIntField?: Float | null
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
-  stringField?: String | null
+  stringField: String
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
@@ -470,11 +470,10 @@ export interface BaseModelUUID extends BaseGraphQLObject {
 }
 
 export interface PageInfo {
-  limit: Float
-  offset: Float
-  totalCount: Float
   hasNextPage: Boolean
   hasPreviousPage: Boolean
+  startCursor?: String | null
+  endCursor?: String | null
 }
 
 export interface StandardDeleteResponse {
@@ -504,7 +503,7 @@ export interface User extends BaseGraphQLObject {
   bigIntField?: Int | null
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
-  stringField?: String | null
+  stringField: String
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null

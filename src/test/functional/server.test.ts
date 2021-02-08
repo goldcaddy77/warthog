@@ -18,6 +18,7 @@ import express = require('express');
 import * as request from 'supertest';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 import { EncodingService } from '../../core/encoding';
+import { setTestServerEnvironmentVariables } from '../server-vars';
 
 let runKey: string;
 let server: Server<any>;
@@ -29,57 +30,52 @@ let onBeforeCalled = false;
 let onAfterCalled = false;
 let kitchenSink: KitchenSink;
 
-describe('server', () => {
-  // Make sure to clean up server
-  beforeAll(async done => {
-    // setTestServerEnvironmentVariables();
+const beforeAllLogic = async (connectDBReplica = true) => {
+  // setTestServerEnvironmentVariables();
 
-    runKey = String(new Date().getTime()); // used to ensure test runs create unique data
+  runKey = String(new Date().getTime()); // used to ensure test runs create unique data
 
-    // build a custom express app with a dummy endpoint
-    customExpressApp = buildCustomExpressApp();
+  const WARTHOG_DB_CONNECT_REPLICA = connectDBReplica ? 'true' : 'false';
+  setTestServerEnvironmentVariables({ WARTHOG_DB_CONNECT_REPLICA });
 
-    try {
-      // TODO: before you attempt to start the server, we need to generate the code so that we don't get TS compiler issues
+  // build a custom express app with a dummy endpoint
+  customExpressApp = buildCustomExpressApp();
 
-      server = getTestServer({
-        apolloConfig: { playground: false },
-        expressApp: customExpressApp,
-        onBeforeGraphQLMiddleware: (app: express.Application) => {
-          app;
-          onBeforeCalled = true;
-        },
-        onAfterGraphQLMiddleware: (app: express.Application) => {
-          app;
-          onAfterCalled = true;
-        }
-      });
+  try {
+    // TODO: before you attempt to start the server, we need to generate the code so that we don't get TS compiler issues
 
-      await server.start();
+    server = getTestServer({
+      apolloConfig: { playground: false },
+      expressApp: customExpressApp,
+      onBeforeGraphQLMiddleware: (app: express.Application) => {
+        app;
+        onBeforeCalled = true;
+      },
+      onAfterGraphQLMiddleware: (app: express.Application) => {
+        app;
+        onAfterCalled = true;
+      },
+      connectDBReplica
+    });
 
-      binding = ((await server.getBinding()) as unknown) as Binding;
-    } catch (error) {
-      logger.error(error);
-      throw new Error(error);
-    }
+    await server.start();
 
-    // sinksExist skips recreating seed data so that we can re-run tests in watch mode
-    const sinksExist = (await binding.query.kitchenSinks({ limit: 1 }, '{ id }')).length > 0;
-    if (!sinksExist) {
-      kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
-      await createManyDishes(binding, kitchenSink.id);
-      await createManyKitchenSinks(binding);
-    }
+    binding = ((await server.getBinding()) as unknown) as Binding;
+  } catch (error) {
+    logger.error('failed to start server or setup binding', error);
+    throw new Error(error);
+  }
 
-    done();
-  });
+  // sinksExist skips recreating seed data so that we can re-run tests in watch mode
+  const sinksExist = (await binding.query.kitchenSinks({ limit: 1 }, '{ id }')).length > 0;
+  if (!sinksExist) {
+    kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
+    await createManyDishes(binding, kitchenSink.id);
+    await createManyKitchenSinks(binding);
+  }
+};
 
-  // Make sure to clean up server
-  afterAll(async done => {
-    await server.stop();
-    done();
-  });
-
+const runTests = () => {
   test('before and after middleware hooks called', async () => {
     expect(onBeforeCalled).toEqual(true);
     expect(onAfterCalled).toEqual(true);
@@ -95,7 +91,7 @@ describe('server', () => {
 
   // Previously, dataloader bombed out if you didn't ask for id, because postgres didn't
   // return it and we couldn't batch IDs to query lower
-  test('queries deeply nested objects without an ID', async () => {
+  test('IAN queries deeply nested objects without an ID', async () => {
     expect.assertions(2);
     const results = await binding.query.kitchenSinks(
       { offset: 0, orderBy: 'createdAt_ASC', limit: 1 },
@@ -739,6 +735,40 @@ describe('server', () => {
 
       expect(schema).toContain('ApiOnly');
       expect(schema).toContain('ApiOnlyWhereInput');
+    });
+  });
+};
+
+describe('server', () => {
+  xdescribe('no replica', () => {
+    // Make sure to clean up server
+    beforeAll(async done => {
+      await beforeAllLogic(false);
+      done();
+    });
+
+    runTests();
+
+    // Make sure to clean up server
+    afterAll(async done => {
+      await server.stop();
+      done();
+    });
+  });
+
+  describe('with replica', () => {
+    // Make sure to clean up server
+    beforeAll(async done => {
+      await beforeAllLogic(true);
+      done();
+    });
+
+    runTests();
+
+    // Make sure to clean up server
+    afterAll(async done => {
+      await server.stop();
+      done();
     });
   });
 });
