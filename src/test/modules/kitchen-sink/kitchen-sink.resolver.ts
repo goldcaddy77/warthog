@@ -1,3 +1,4 @@
+import { logger } from '../../../core';
 import {
   Arg,
   Args,
@@ -42,7 +43,12 @@ export class KitchenSinkResolver {
     @Args() { where, orderBy, limit, offset }: KitchenSinkWhereArgs,
     @Fields() fields: string[]
   ): Promise<KitchenSink[]> {
-    return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset, fields);
+    try {
+      return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset, fields);
+    } catch (e) {
+      logger.error('failed on find', e);
+      throw e;
+    }
   }
 
   @Authorized('kitchenSink:read')

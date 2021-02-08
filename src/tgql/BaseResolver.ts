@@ -7,7 +7,6 @@ import { StandardDeleteResponse } from './DeleteResponse';
 export class BaseResolver<E extends BaseModel> {
   service: any;
 
-  // TODO: need to figure out why we couldn't type this as Repository<E>
   constructor(protected entityClass: any, protected repository: Repository<E>) {
     this.service = new BaseService<E>(entityClass, this.repository);
   }
