@@ -30,13 +30,12 @@ let onBeforeCalled = false;
 let onAfterCalled = false;
 let kitchenSink: KitchenSink;
 
-const beforeAllLogic = async (connectDBReplica = true) => {
+const beforeAllLogic = async () => {
   // setTestServerEnvironmentVariables();
 
   runKey = String(new Date().getTime()); // used to ensure test runs create unique data
 
-  const WARTHOG_DB_CONNECT_REPLICA = connectDBReplica ? 'true' : 'false';
-  setTestServerEnvironmentVariables({ WARTHOG_DB_CONNECT_REPLICA });
+  setTestServerEnvironmentVariables();
 
   // build a custom express app with a dummy endpoint
   customExpressApp = buildCustomExpressApp();

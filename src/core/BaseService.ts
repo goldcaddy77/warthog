@@ -5,6 +5,8 @@ import {
   DeepPartial,
   EntityManager,
   getRepository,
+  QueryBuilder,
+  ReplicationMode,
   Repository,
   SelectQueryBuilder
 } from 'typeorm';
@@ -32,6 +34,10 @@ const debugStatement = Debug('warthog:base-service');
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
+}
+
+export interface AdvancedFindOptions {
+  replicationMode?: ReplicationMode;
 }
 
 interface WhereFilterAttributes {
@@ -114,12 +120,13 @@ export class BaseService<E extends BaseModel> {
     orderBy?: string,
     limit?: number,
     offset?: number,
-    fields?: string[]
+    fields?: string[],
+    options: AdvancedFindOptions = {}
   ): Promise<E[]> {
     // TODO: FEATURE - make the default limit configurable
     limit = limit ?? 20;
     debugStatement('find:buildQuery');
-    const qb = this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields);
+    const qb = this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields, options);
     try {
       debugStatement('find:gettingMany');
       const records = await qb.getMany();
@@ -129,6 +136,8 @@ export class BaseService<E extends BaseModel> {
       debugStatement('find:error');
       logger.error('failed on getMany', e);
       throw e;
+    } finally {
+      this.cleanUpQueryBuilder(qb);
     }
   }
 
@@ -137,7 +146,8 @@ export class BaseService<E extends BaseModel> {
     whereUserInput: any = {}, // V3: WhereExpression = {},
     orderBy?: string | string[],
     _pageOptions: RelayPageOptionsInput = {},
-    fields?: ConnectionInputFields
+    fields?: ConnectionInputFields,
+    options: AdvancedFindOptions = {}
   ): Promise<ConnectionResult<E>> {
     // TODO: if the orderby items aren't included in `fields`, should we automatically include?
 
@@ -176,7 +186,8 @@ export class BaseService<E extends BaseModel> {
       whereCombined,
       this.relayService.effectiveOrderStrings(sorts, relayPageOptions),
       { limit: limit + 1 }, // We ask for 1 too many so that we know if there is an additional page
-      requestedFields.selectFields
+      requestedFields.selectFields,
+      options
     );
 
     let rawData;
@@ -188,6 +199,8 @@ export class BaseService<E extends BaseModel> {
     } else {
       rawData = await qb.getMany();
     }
+
+    this.cleanUpQueryBuilder(qb);
 
     // If we got the n+1 that we requested, pluck the last item off
     const returnData = rawData.length > limit ? rawData.slice(0, limit) : rawData;
@@ -209,13 +222,19 @@ export class BaseService<E extends BaseModel> {
     where: WhereExpression = {},
     orderBy?: string | string[],
     pageOptions?: LimitOffset,
-    fields?: string[]
+    fields?: string[],
+    options: AdvancedFindOptions = {}
   ): SelectQueryBuilder<E> {
     try {
       const DEFAULT_LIMIT = 50;
-      let qb = this.manager.connection
-        .createQueryBuilder<E>(this.entityClass, this.klass)
-        .setQueryRunner(this.manager.connection.createQueryRunner('slave'));
+      let qb = this.manager.connection.createQueryBuilder<E>(this.entityClass, this.klass);
+      if (options.replicationMode) {
+        const queryRunner = this.manager.connection.createQueryRunner(options.replicationMode);
+        qb.setQueryRunner(queryRunner);
+        (qb as any).warthogQueryRunnerOverride = queryRunner;
+      }
+
+      //
       if (!pageOptions) {
         pageOptions = {
           limit: DEFAULT_LIMIT
@@ -474,6 +493,15 @@ export class BaseService<E extends BaseModel> {
 
     await manager.save(entity as any);
     return { id: found.id };
+  }
+
+  // This is really ugly.  Shouldn't be attaching to the querybuilder, but need to keep track of whether this
+  // instance of the queryBuilder was created with a custom query runner so that it can be cleaned up
+  cleanUpQueryBuilder(qb: QueryBuilder<E>) {
+    console.log(qb);
+    if ((qb as any).warthogQueryRunnerOverride) {
+      (qb as any).warthogQueryRunnerOverride.release();
+    }
   }
 
   attrsToDBColumns = (attrs: string[]): string[] => {

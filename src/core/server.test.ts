@@ -50,8 +50,14 @@ describe('Server', () => {
     const customExpressApp: express.Application = express();
     const appListenSpy = jest.spyOn(customExpressApp, 'listen');
     server = buildServer(
-      { expressApp: customExpressApp, connectDBReplica: true },
-      { WARTHOG_DB_CONNECT_REPLICA: 'true' }
+      { expressApp: customExpressApp },
+      {
+        WARTHOG_DB_REPLICA_HOST: 'localhost',
+        WARTHOG_DB_REPLICA_DATABASE: 'warthog-test',
+        WARTHOG_DB_REPLICA_PORT: '5432',
+        WARTHOG_DB_REPLICA_USERNAME: 'postgres',
+        WARTHOG_DB_REPLICA_PASSWORD: ''
+      }
     );
     await server.start();
     const binding = await server.getBinding();
