@@ -30,13 +30,10 @@ let onBeforeCalled = false;
 let onAfterCalled = false;
 let kitchenSink: KitchenSink;
 
-const beforeAllLogic = async (connectDBReplica = true) => {
-  // setTestServerEnvironmentVariables();
-
+const beforeAllLogic = async () => {
   runKey = String(new Date().getTime()); // used to ensure test runs create unique data
 
-  const WARTHOG_DB_CONNECT_REPLICA = connectDBReplica ? 'true' : 'false';
-  setTestServerEnvironmentVariables({ WARTHOG_DB_CONNECT_REPLICA });
+  setTestServerEnvironmentVariables();
 
   // build a custom express app with a dummy endpoint
   customExpressApp = buildCustomExpressApp();
@@ -54,8 +51,7 @@ const beforeAllLogic = async (connectDBReplica = true) => {
       onAfterGraphQLMiddleware: (app: express.Application) => {
         app;
         onAfterCalled = true;
-      },
-      connectDBReplica
+      }
     });
 
     await server.start();
@@ -358,7 +354,7 @@ const runTests = () => {
     );
 
     expect(result.length).toEqual(30);
-    expect(result[0].dateOnlyField!.length).toBe(10);
+    expect((result[0].dateOnlyField as string).length).toBe(10);
     expect(result).toMatchSnapshot();
   });
 
@@ -369,7 +365,7 @@ const runTests = () => {
     );
 
     expect(result.length).toEqual(69);
-    expect(result[0].dateTimeField!.length).toBe(24);
+    expect((result[0].dateTimeField as string).length).toBe(24);
     expect(result).toMatchSnapshot();
   });
 
@@ -442,19 +438,6 @@ const runTests = () => {
     expect(result.length).toEqual(71);
     expect(result).toMatchSnapshot();
   });
-
-  //
-  //
-
-  // jsonField: {
-  //   foo: 'bar',
-  //   quia: 'autem'
-  // },
-  // arrayOfInts: [1],
-  // arrayOfStrings: []
-
-  //
-  //
 
   test('findOne: consequuntur-94489@a.com', async () => {
     expect.assertions(1);
@@ -769,41 +752,43 @@ const runTests = () => {
       });
     });
   });
+};
 
-  describe('server', () => {
-    xdescribe('no replica', () => {
-      // Make sure to clean up server
-      beforeAll(async done => {
-        await beforeAllLogic(false);
-        done();
-      });
-
-      runTests();
-
-      // Make sure to clean up server
-      afterAll(async done => {
-        await server.stop();
-        done();
-      });
+// TODO: FIX THESE TESTS
+describe('server', () => {
+  xdescribe('no replica', () => {
+    // Make sure to clean up server
+    beforeAll(async done => {
+      await beforeAllLogic();
+      done();
     });
 
-    describe('with replica', () => {
-      // Make sure to clean up server
-      beforeAll(async done => {
-        await beforeAllLogic(true);
-        done();
-      });
+    runTests();
 
-      runTests();
-
-      // Make sure to clean up server
-      afterAll(async done => {
-        await server.stop();
-        done();
-      });
+    // Make sure to clean up server
+    afterAll(async done => {
+      await server.stop();
+      done();
     });
   });
-};
+
+  describe('with replica', () => {
+    // Make sure to clean up server
+    beforeAll(async done => {
+      // TODO: FIX THIS TEST
+      await beforeAllLogic();
+      done();
+    });
+
+    runTests();
+
+    // Make sure to clean up server
+    afterAll(async done => {
+      await server.stop();
+      done();
+    });
+  });
+});
 
 async function createKitchenSink(
   binding: any,

@@ -22,7 +22,6 @@ export function getTestServer(options: ServerOptions<any> = {}) {
     },
     introspection: true,
     openPlayground: false,
-    connectDBReplica: true,
     ...options
   });
 }

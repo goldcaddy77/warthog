@@ -27,9 +27,6 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_DB_DATABASE: 'warthog-test',
     WARTHOG_DB_ENTITIES: 'src/test/modules/**/*.model.ts',
     WARTHOG_DB_HOST: 'localhost',
-    WARTHOG_DB_REPLICA_HOST: 'localhost',
-    WARTHOG_DB_REPLICA_PORT: '5432',
-    WARTHOG_DB_CONNECT_REPLICA: 'false',
     WARTHOG_DB_LOGGING: 'none',
     WARTHOG_DB_MIGRATIONS_DIR: './tmp/test/migrations',
     WARTHOG_DB_OVERRIDE: 'true', // Set so that we can do DB stuff outside of NODE_ENV=development

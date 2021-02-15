@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
 import { BaseService } from '../../../src';
@@ -12,11 +12,10 @@ export class UserService extends BaseService<User> {
     super(User, repository);
   }
 
-  async create(data: DeepPartial<User>, userId: string): Promise<User> {
-    const newUser = await super.create(data, userId);
-
-    // Perform some side effects
-
-    return newUser;
+  // This query will use the "master" server, even though it would typically use "slave" by default for doing a find
+  async findFromMaster(): Promise<User[]> {
+    return super.find(undefined, undefined, undefined, undefined, undefined, {
+      replicationMode: 'master'
+    });
   }
 }

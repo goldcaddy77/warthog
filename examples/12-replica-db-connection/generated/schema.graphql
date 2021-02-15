@@ -79,6 +79,7 @@ type PageInfo {
 
 type Query {
   users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
+  usersFromMaster: [User!]!
   user(where: UserWhereUniqueInput!): User!
 }
 

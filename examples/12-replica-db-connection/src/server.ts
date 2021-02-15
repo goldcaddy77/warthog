@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { AdvancedConsoleLogger, Logger, QueryRunner } from 'typeorm';
 
 import { BaseContext, Server } from '../../../src';
 
@@ -8,6 +9,16 @@ interface Context extends BaseContext {
     id: string;
     permissions: string;
   };
+}
+
+export class CustomLogger extends AdvancedConsoleLogger implements Logger {
+  logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
+    if (!queryRunner) {
+      return console.log(query);
+    }
+
+    console.log(`[${(queryRunner as any).mode}] ${query}`);
+  }
 }
 
 export function getServer(AppOptions = {}, dbOptions = {}) {
@@ -23,9 +34,8 @@ export function getServer(AppOptions = {}, dbOptions = {}) {
           }
         };
       },
-      connectDBReplica: true,
       ...AppOptions
     },
-    dbOptions
+    { ...dbOptions, logger: new CustomLogger() }
   );
 }

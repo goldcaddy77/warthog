@@ -17,7 +17,7 @@ import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } fr
 import { logger, Logger } from '../core/logger';
 import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-import { createDBConnection, createReplicatedDBConnection } from '../torm';
+import { createDBConnection, WarthogDBConnectionOptions } from '../torm';
 
 import { CodeGenerator } from './code-generator';
 import { Config } from './config';
@@ -47,7 +47,6 @@ export interface ServerOptions<T> {
   bodyParserConfig?: OptionsJson;
   onBeforeGraphQLMiddleware?: (app: express.Application) => void;
   onAfterGraphQLMiddleware?: (app: express.Application) => void;
-  connectDBReplica?: boolean;
 }
 
 export class Server<C extends BaseContext> {
@@ -66,8 +65,7 @@ export class Server<C extends BaseContext> {
 
   constructor(
     private appOptions: ServerOptions<C>,
-    private dbOptions: Partial<ConnectionOptions> = {},
-    private dbReplicaOptions: Partial<ConnectionOptions> = {}
+    private dbOptions: Partial<WarthogDBConnectionOptions> = {}
   ) {
     if (typeof this.appOptions.host !== 'undefined') {
       process.env.WARTHOG_APP_HOST = this.appOptions.host;
@@ -92,11 +90,6 @@ export class Server<C extends BaseContext> {
       process.env.WARTHOG_AUTO_GENERATE_FILES = this.appOptions.autoGenerateFiles
         ? 'true'
         : 'false';
-    }
-    if (typeof this.appOptions.connectDBReplica !== 'undefined') {
-      process.env.WARTHOG_DB_CONNECT_REPLICA = this.appOptions.connectDBReplica ? 'true' : 'false';
-    } else {
-      process.env.WARTHOG_DB_CONNECT_REPLICA = 'false';
     }
 
     // Ensure that Warthog, TypeORM and TypeGraphQL are all using the same typedi container
@@ -132,13 +125,8 @@ export class Server<C extends BaseContext> {
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
       debug('establishDBConnection:start');
-      if (this.config.get('WARTHOG_DB_CONNECT_REPLICA')) {
-        this.connection = await createReplicatedDBConnection(this.dbOptions);
-        this.allConnections = [this.connection];
-      } else {
-        this.connection = await createDBConnection(this.dbOptions);
-        this.allConnections = [this.connection];
-      }
+      this.connection = await createDBConnection(this.dbOptions);
+      this.allConnections = [this.connection];
       debug('establishDBConnection:end');
     }
 

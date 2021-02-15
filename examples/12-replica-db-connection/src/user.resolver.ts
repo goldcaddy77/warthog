@@ -22,6 +22,12 @@ export class UserResolver {
     return this.userService.find<UserWhereInput>(where, orderBy, limit, offset);
   }
 
+  // This query will use the "master" server, even though it would typically use "slave" by default for doing a find
+  @Query(() => [User])
+  async usersFromMaster(): Promise<User[]> {
+    return this.userService.findFromMaster();
+  }
+
   @Query(() => User)
   async user(@Arg('where') where: UserWhereUniqueInput): Promise<User> {
     return this.userService.findOne<UserWhereUniqueInput>(where);

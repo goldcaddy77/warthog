@@ -7,6 +7,7 @@ import * as schema from  './schema.graphql'
 
 export interface Query {
     users: <T = Array<User>>(args: { offset?: Int | null, limit?: Int | null, where?: UserWhereInput | null, orderBy?: UserOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    usersFromMaster: <T = Array<User>>(args?: {}, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     user: <T = User>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
