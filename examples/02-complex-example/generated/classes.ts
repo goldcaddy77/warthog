@@ -532,6 +532,9 @@ export class UserWhereInput {
   @TypeGraphQLField(() => [String], { nullable: true })
   varcharField_in?: string[];
 
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geometryField_json?: JsonObject;
+
   @TypeGraphQLField(() => Int, { nullable: true })
   intField_eq?: number;
 
@@ -784,8 +787,8 @@ export class UserCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonFieldNoFilter?: JsonObject;
 
-  @TypeGraphQLField({ nullable: true })
-  stringField?: string;
+  @TypeGraphQLField()
+  stringField!: string;
 
   @TypeGraphQLField({ nullable: true })
   noFilterField?: string;

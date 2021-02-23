@@ -274,6 +274,7 @@ type KitchenSink implements BaseGraphQLObject {
   characterField: String
   customTextFieldNoSortOrFilter: String
   customFieldArrayColumn: [String!]
+  customTextFieldReadOnly: String
   readonlyField: String
   apiOnlyField: String
   arrayOfStrings: [String!]
