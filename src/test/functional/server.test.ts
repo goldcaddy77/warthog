@@ -696,6 +696,10 @@ describe('server', () => {
       }
 
       kitchenSinkDBColumns = kitchenSinkTableMeta.columns.map(column => column.propertyName);
+
+      stringFieldColumn = kitchenSinkTableMeta.columns.find(
+        column => column.propertyName === 'stringField'
+      ) as ColumnMetadata;
     });
 
     test('apiOnly column does not exist in the DB', async done => {
