@@ -529,6 +529,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   characterField?: String | null
   customTextFieldNoSortOrFilter?: String | null
   customFieldArrayColumn?: Array<String> | null
+  customTextFieldReadOnly?: String | null
   readonlyField?: String | null
   apiOnlyField?: String | null
   arrayOfStrings?: Array<String> | null
