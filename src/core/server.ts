@@ -2,6 +2,7 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
+import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 import { Request } from 'express';
 import express = require('express');
 import { GraphQLID, GraphQLSchema } from 'graphql';
@@ -39,6 +40,7 @@ export interface ServerOptions<T> {
   generatedFolder?: string;
   logger?: Logger;
   middlewares?: any[]; // TODO: fix
+  pubSub?: PubSubEngine | PubSubOptions;
   openPlayground?: boolean;
   port?: string | number;
   resolversPath?: string[];
@@ -179,7 +181,8 @@ export class Server<C extends BaseContext> {
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
         resolvers: this.config.get('RESOLVERS_PATH'),
         // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
-        validate: this.config.get('VALIDATE_RESOLVERS') === 'true'
+        validate: this.config.get('VALIDATE_RESOLVERS') === 'true',
+        pubSub: this.appOptions.pubSub
       });
       debug('server:buildGraphQLSchema:end');
     }
