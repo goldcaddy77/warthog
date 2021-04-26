@@ -18,6 +18,7 @@ export * from './ManyToManyJoin';
 export * from './ManyToOne';
 export * from './Model';
 export * from './NumericField';
+export * from './ObjectType';
 export * from './OneToMany';
 export * from './StringField';
 export * from './UserId';

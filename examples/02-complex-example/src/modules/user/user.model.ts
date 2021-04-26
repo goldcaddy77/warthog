@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { GraphQLJSONObject } = require('graphql-type-json');
+import { Field, InputType } from 'type-graphql';
 import { Column, Unique } from 'typeorm';
 import {
   BaseModel,
@@ -16,6 +19,7 @@ import {
   JsonObject,
   Model,
   NumericField,
+  ObjectType,
   StringField,
   FloatField
 } from '../../../../../src';
@@ -25,6 +29,26 @@ import {
 export enum StringEnum {
   FOO = 'FOO',
   BAR = 'BAR'
+}
+
+@InputType('EventParamInput')
+@ObjectType()
+export class EventParam {
+  @Field()
+  type!: string;
+
+  @Field()
+  name?: string;
+
+  @Field(() => GraphQLJSONObject)
+  value!: JsonObject;
+}
+
+@InputType('EventObjectInput')
+@ObjectType()
+export class EventObject {
+  @Field(() => [EventParam])
+  params!: EventParam[];
 }
 
 @Model()
@@ -81,10 +105,13 @@ export class User extends BaseModel {
   @JSONField({ filter: false, nullable: true })
   jsonFieldNoFilter?: JsonObject;
 
+  @JSONField({ filter: false, nullable: true, gqlFieldType: EventObject })
+  typedJsonField?: EventObject;
+
   @StringField({
     maxLength: 50,
     minLength: 2,
-    nullable: false,
+    nullable: true,
     description: 'This is a string field'
   })
   stringField: string;

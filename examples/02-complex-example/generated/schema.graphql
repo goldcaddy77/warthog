@@ -71,6 +71,26 @@ interface DeleteResponse {
   id: ID!
 }
 
+type EventObject {
+  params: [EventParam!]!
+}
+
+input EventObjectInput {
+  params: [EventParamInput!]!
+}
+
+type EventParam {
+  type: String!
+  name: String!
+  value: JSONObject!
+}
+
+input EventParamInput {
+  type: String!
+  name: String!
+  value: JSONObject!
+}
+
 """
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -126,9 +146,10 @@ type User implements BaseGraphQLObject {
   bigIntField: Int
   jsonField: JSONObject
   jsonFieldNoFilter: JSONObject
+  typedJsonField: EventObject
 
   """This is a string field"""
-  stringField: String!
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -171,7 +192,8 @@ input UserCreateInput {
   bigIntField: Float
   jsonField: JSONObject
   jsonFieldNoFilter: JSONObject
-  stringField: String!
+  typedJsonField: EventObjectInput
+  stringField: String
   noFilterField: String
   noSortField: String
   noFilterOrSortField: String
@@ -286,6 +308,7 @@ input UserUpdateInput {
   bigIntField: Float
   jsonField: JSONObject
   jsonFieldNoFilter: JSONObject
+  typedJsonField: EventObjectInput
   stringField: String
   noFilterField: String
   noSortField: String

@@ -138,6 +138,16 @@ export interface BaseWhereInput {
   deletedById_eq?: String | null
 }
 
+export interface EventObjectInput {
+  params: Array<EventParamInput>
+}
+
+export interface EventParamInput {
+  type: String
+  name: String
+  value: JSONObject
+}
+
 export interface UserCreateInput {
   booleanField?: Boolean | null
   dateField?: DateTime | null
@@ -153,7 +163,8 @@ export interface UserCreateInput {
   bigIntField?: Float | null
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
-  stringField: String
+  typedJsonField?: EventObjectInput | null
+  stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null
@@ -197,6 +208,7 @@ export interface UserUpdateInput {
   bigIntField?: Float | null
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
+  typedJsonField?: EventObjectInput | null
   stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
@@ -470,6 +482,16 @@ export interface BaseModelUUID extends BaseGraphQLObject {
   version: Int
 }
 
+export interface EventObject {
+  params: Array<EventParam>
+}
+
+export interface EventParam {
+  type: String
+  name: String
+  value: JSONObject
+}
+
 export interface PageInfo {
   hasNextPage: Boolean
   hasPreviousPage: Boolean
@@ -504,7 +526,8 @@ export interface User extends BaseGraphQLObject {
   bigIntField?: Int | null
   jsonField?: JSONObject | null
   jsonFieldNoFilter?: JSONObject | null
-  stringField: String
+  typedJsonField?: EventObject | null
+  stringField?: String | null
   noFilterField?: String | null
   noSortField?: String | null
   noFilterOrSortField?: String | null

@@ -65,6 +65,18 @@ async function seedDatabase() {
             emailField,
             stringField,
             jsonField,
+            typedJsonField: {
+              params: [
+                {
+                  name: 'Foo',
+                  type: 'Bar',
+                  value: {
+                    one: 1,
+                    two: 'TWO'
+                  }
+                }
+              ]
+            },
             dateField,
             dateOnlyField,
             dateTimeField,

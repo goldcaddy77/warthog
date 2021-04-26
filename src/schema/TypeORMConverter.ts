@@ -5,8 +5,8 @@ import { ColumnMetadata, getMetadataStorage, ModelMetadata } from '../metadata';
 
 import {
   columnToGraphQLType,
-  columnTypeToGraphQLDataType,
-  columnInfoToTypeScriptType
+  columnToGraphQLDataType,
+  columnToTypeScriptType
 } from './type-conversion';
 import { WhereOperator } from '../torm';
 
@@ -34,14 +34,6 @@ export function getColumnsForModel(model: ModelMetadata) {
 
 export function filenameToImportPath(filename: string): string {
   return filename.replace(/\.(j|t)s$/, '').replace(/\\/g, '/');
-}
-
-export function columnToGraphQLDataType(column: ColumnMetadata): string {
-  return columnTypeToGraphQLDataType(column.type, column.enumName);
-}
-
-export function columnToTypeScriptType(column: ColumnMetadata): string {
-  return columnInfoToTypeScriptType(column.type, column.enumName);
 }
 
 export function generateEnumMapImports(): string[] {
@@ -261,7 +253,7 @@ export function entityToUpdateInputArgs(model: ModelMetadata): string {
 }
 
 function columnToTypes(column: ColumnMetadata) {
-  const graphqlType = columnToGraphQLType(column.type, column.enumName);
+  const graphqlType = columnToGraphQLType(column);
   const tsType = columnToTypeScriptType(column);
 
   return { graphqlType, tsType };
@@ -469,7 +461,7 @@ export function entityToWhereInput(model: ModelMetadata): string {
       }
     } else if (column.type === 'json') {
       fieldTemplates += `
-        @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+        @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
         ${column.propertyName}_json?: JsonObject;
       `;
     }
