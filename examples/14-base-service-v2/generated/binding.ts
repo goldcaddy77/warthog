@@ -42,14 +42,31 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: s
  * Types
 */
 
-export type UserOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'firstName_ASC' |
+export type Status =   'ACTIVE' |
+  'INACTIVE'
+
+export type UserOrderByInput =   'firstName_ASC' |
   'firstName_DESC' |
+  'lastName_ASC' |
+  'lastName_DESC' |
+  'status_ASC' |
+  'status_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
   'updatedById_ASC' |
   'updatedById_DESC' |
-  'lastName_ASC' |
-  'lastName_DESC'
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -76,82 +93,72 @@ export interface BaseWhereInput {
 }
 
 export interface UserCreateInput {
-  id: ID_Output
   firstName: String
-  updatedById?: String | null
   lastName: String
+  status: Status
 }
 
 export interface UserUpdateInput {
-  id?: ID_Input | null
   firstName?: String | null
-  updatedById?: String | null
   lastName?: String | null
+  status?: Status | null
 }
 
 export interface UserWhereInput {
-  id_in?: ID_Output[] | ID_Output | null
   firstName_eq?: String | null
   firstName_contains?: String | null
-  updatedById_eq?: String | null
-  updatedById_contains?: String | null
-  updatedById_startsWith?: String | null
-  updatedById_endsWith?: String | null
-  updatedById_in?: String[] | String | null
   lastName_eq?: String | null
   lastName_contains?: String | null
   lastName_startsWith?: String | null
   lastName_endsWith?: String | null
   lastName_in?: String[] | String | null
+  status_eq?: Status | null
+  status_in?: Status[] | Status | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface UserWhereUniqueInput {
   id: ID_Output
 }
 
-export interface BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
 export interface DeleteResponse {
   id: ID_Output
 }
 
-export interface BaseModel extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
-export interface BaseModelUUID extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
 export interface PageInfo {
-  limit: Float
-  offset: Float
-  totalCount: Float
   hasNextPage: Boolean
   hasPreviousPage: Boolean
+  startCursor?: String | null
+  endCursor?: String | null
 }
 
 export interface StandardDeleteResponse {
@@ -160,9 +167,16 @@ export interface StandardDeleteResponse {
 
 export interface User {
   id: ID_Output
-  firstName: String
+  createdAt: DateTime
+  createdById: String
+  updatedAt?: DateTime | null
   updatedById?: String | null
+  deletedAt?: DateTime | null
+  deletedById?: String | null
+  version: Int
+  firstName: String
   lastName: String
+  status: Status
 }
 
 /*
@@ -174,11 +188,6 @@ export type Boolean = boolean
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 */
 export type DateTime = Date | string
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
-*/
-export type Float = number
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.

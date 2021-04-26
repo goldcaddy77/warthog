@@ -382,17 +382,6 @@ export interface KitchenSinkWhereUniqueInput {
   emailField?: String | null
 }
 
-export interface BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
 export interface DeleteResponse {
   id: ID_Output
 }
@@ -400,28 +389,6 @@ export interface DeleteResponse {
 export interface ApiOnly {
   id: ID_Output
   name: String
-}
-
-export interface BaseModel extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
-export interface BaseModelUUID extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
 }
 
 export interface DbOnly {

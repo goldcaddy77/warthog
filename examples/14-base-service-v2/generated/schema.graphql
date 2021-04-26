@@ -1,36 +1,3 @@
-interface BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModel implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModelUUID implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
 input BaseWhereInput {
   id_eq: String
   id_in: [String!]
@@ -71,11 +38,10 @@ type Mutation {
 }
 
 type PageInfo {
-  limit: Float!
-  offset: Float!
-  totalCount: Float!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type Query {
@@ -87,52 +53,102 @@ type StandardDeleteResponse {
   id: ID!
 }
 
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
 type User {
   id: ID!
-  firstName: String!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
   updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  firstName: String!
   lastName: String!
+  status: Status!
 }
 
 input UserCreateInput {
-  id: ID!
   firstName: String!
-  updatedById: String
   lastName: String!
+  status: Status!
 }
 
 enum UserOrderByInput {
-  id_ASC
-  id_DESC
   firstName_ASC
   firstName_DESC
-  updatedById_ASC
-  updatedById_DESC
   lastName_ASC
   lastName_DESC
+  status_ASC
+  status_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
 }
 
 input UserUpdateInput {
-  id: ID
   firstName: String
-  updatedById: String
   lastName: String
+  status: Status
 }
 
 input UserWhereInput {
-  id_in: [ID!]
   firstName_eq: String
   firstName_contains: String
-  updatedById_eq: String
-  updatedById_contains: String
-  updatedById_startsWith: String
-  updatedById_endsWith: String
-  updatedById_in: [String!]
   lastName_eq: String
   lastName_contains: String
   lastName_startsWith: String
   lastName_endsWith: String
   lastName_in: [String!]
+  status_eq: Status
+  status_in: [Status!]
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
 }
 
 input UserWhereUniqueInput {

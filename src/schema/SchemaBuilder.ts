@@ -1,7 +1,8 @@
 import { GraphQLID, GraphQLSchema } from 'graphql';
-import { DateResolver } from 'graphql-scalars';
+// import { DateResolver } from 'graphql-scalars';
 import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
 import { Middleware } from 'type-graphql/dist/interfaces/Middleware';
+import { ScalarsTypeMap } from 'type-graphql/dist/schema/build-context';
 import { Container, Inject, Service } from 'typedi';
 
 import { Config } from '../core';
@@ -10,6 +11,7 @@ import { DataLoaderMiddleware } from '../middleware';
 interface BuildOptions<C> {
   authChecker?: AuthChecker<C>;
   middlewares?: Middleware[];
+  scalers?: ScalarsTypeMap[];
 }
 
 @Service('SchemaBuilder')
@@ -23,14 +25,10 @@ export class SchemaBuilder {
         {
           type: 'ID' as any,
           scalar: GraphQLID
-        },
-        // Note: DateTime already included in type-graphql
-        {
-          type: 'DateOnlyString' as any,
-          scalar: DateResolver
         }
       ],
       container: Container,
+      dateScalarMode: 'isoDate',
       // TODO: ErrorLoggerMiddleware
       globalMiddlewares: [DataLoaderMiddleware, ...(options.middlewares || [])],
       resolvers: this.config.get('RESOLVERS_PATH'),
