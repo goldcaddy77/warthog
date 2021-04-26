@@ -10,7 +10,7 @@ if (!(global as any).__warthog_config__) {
   // Tell TypeORM to use our typedi instance
   typeOrmUseContainer(Container);
 
-  setTestServerEnvironmentVariables();
+  setTestServerEnvironmentVariables({ WARTHOG_DB_CONNECT_REPLICA: 'true' });
 
   const config = new Config({ container: Container });
 

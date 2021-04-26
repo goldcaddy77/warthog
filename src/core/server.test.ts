@@ -3,6 +3,7 @@ import { getTestServer } from '../test/test-server';
 
 import express = require('express');
 import { setTestServerEnvironmentVariables } from '../test/server-vars';
+import { StringMap } from './types';
 
 describe('Server', () => {
   let server: Server<any>;
@@ -44,10 +45,32 @@ describe('Server', () => {
     expect(appListenSpy).toHaveBeenCalledTimes(1);
     expect(hasGraphQlRoute(server.expressApp._router)).toBeTruthy();
   });
+
+  test('start a server with a replica DB connection', async () => {
+    const customExpressApp: express.Application = express();
+    const appListenSpy = jest.spyOn(customExpressApp, 'listen');
+    server = buildServer(
+      { expressApp: customExpressApp },
+      {
+        WARTHOG_DB_REPLICA_HOST: 'localhost',
+        WARTHOG_DB_REPLICA_DATABASE: 'warthog-test',
+        WARTHOG_DB_REPLICA_PORT: '5432',
+        WARTHOG_DB_REPLICA_USERNAME: 'postgres',
+        WARTHOG_DB_REPLICA_PASSWORD: ''
+      }
+    );
+    await server.start();
+    const binding = await server.getBinding();
+
+    expect(binding).toBeTruthy();
+    expect(server.schema).toBeTruthy();
+    expect(appListenSpy).toHaveBeenCalledTimes(1);
+    expect(hasGraphQlRoute(server.expressApp._router)).toBeTruthy();
+  });
 });
 
-function buildServer(options: ServerOptions<any>): Server<any> {
-  setTestServerEnvironmentVariables();
+function buildServer(options: ServerOptions<any>, configOverides?: StringMap): Server<any> {
+  setTestServerEnvironmentVariables(configOverides);
   return getTestServer({
     apolloConfig: { playground: false },
     ...options

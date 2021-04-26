@@ -5,10 +5,13 @@ import {
   DeepPartial,
   EntityManager,
   getRepository,
+  QueryBuilder,
+  ReplicationMode,
   Repository,
   SelectQueryBuilder
 } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
+import * as Debug from 'debug';
 
 import { debug } from '../decorators';
 import { StandardDeleteResponse } from '../tgql';
@@ -25,9 +28,16 @@ import {
   ConnectionResult
 } from './RelayService';
 import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
+import { logger } from './logger';
+
+const debugStatement = Debug('warthog:base-service');
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
+}
+
+export interface AdvancedFindOptions {
+  replicationMode?: ReplicationMode;
 }
 
 interface WhereFilterAttributes {
@@ -77,19 +87,20 @@ export class BaseService<E extends BaseModel> {
     this.relayService = new RelayService();
     this.graphQLInfoService = new GraphQLInfoService();
 
-    // V3: remove the need to inject a repository, we simply need the entityClass and then we can do
-    // everything we need to do.
-    // For now, we'll keep the API the same so that there are no breaking changes
-    this.manager = this.repository.manager;
-
     // TODO: This handles an issue with typeorm-typedi-extensions where it is unable to
     // Inject the proper repository
     if (!repository) {
+      console.warn(`we're generating the repository from scratch...`);
       this.repository = getRepository(entityClass);
     }
     if (!repository) {
       throw new Error(`BaseService requires a valid repository, class ${entityClass}`);
     }
+
+    // V3: remove the need to inject a repository, we simply need the entityClass and then we can do
+    // everything we need to do.
+    // For now, we'll keep the API the same so that there are no breaking changes
+    this.manager = this.repository.manager;
 
     // Need a mapping of camelCase field name to the modified case using the naming strategy.  For the standard
     // SnakeNamingStrategy this would be something like { id: 'id', stringField: 'string_field' }
@@ -103,16 +114,31 @@ export class BaseService<E extends BaseModel> {
     this.klass = this.repository.metadata.name.toLowerCase();
   }
 
+  @debug('base-service:find')
   async find<W extends WhereInput>(
     where?: any, // V3: WhereExpression = {},
     orderBy?: string,
     limit?: number,
     offset?: number,
-    fields?: string[]
+    fields?: string[],
+    options: AdvancedFindOptions = {}
   ): Promise<E[]> {
     // TODO: FEATURE - make the default limit configurable
     limit = limit ?? 20;
-    return this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields).getMany();
+    debugStatement('find:buildQuery');
+    const qb = this.buildFindQuery<W>(where, orderBy, { limit, offset }, fields, options);
+    try {
+      debugStatement('find:gettingMany');
+      const records = await qb.getMany();
+      debugStatement('find:end');
+      return records;
+    } catch (e) {
+      debugStatement('find:error');
+      logger.error('failed on getMany', e);
+      throw e;
+    } finally {
+      this.cleanUpQueryBuilder(qb);
+    }
   }
 
   @debug('base-service:findConnection')
@@ -120,7 +146,8 @@ export class BaseService<E extends BaseModel> {
     whereUserInput: any = {}, // V3: WhereExpression = {},
     orderBy?: string | string[],
     _pageOptions: RelayPageOptionsInput = {},
-    fields?: ConnectionInputFields
+    fields?: ConnectionInputFields,
+    options: AdvancedFindOptions = {}
   ): Promise<ConnectionResult<E>> {
     // TODO: if the orderby items aren't included in `fields`, should we automatically include?
 
@@ -159,7 +186,8 @@ export class BaseService<E extends BaseModel> {
       whereCombined,
       this.relayService.effectiveOrderStrings(sorts, relayPageOptions),
       { limit: limit + 1 }, // We ask for 1 too many so that we know if there is an additional page
-      requestedFields.selectFields
+      requestedFields.selectFields,
+      options
     );
 
     let rawData;
@@ -171,6 +199,8 @@ export class BaseService<E extends BaseModel> {
     } else {
       rawData = await qb.getMany();
     }
+
+    this.cleanUpQueryBuilder(qb);
 
     // If we got the n+1 that we requested, pluck the last item off
     const returnData = rawData.length > limit ? rawData.slice(0, limit) : rawData;
@@ -192,157 +222,171 @@ export class BaseService<E extends BaseModel> {
     where: WhereExpression = {},
     orderBy?: string | string[],
     pageOptions?: LimitOffset,
-    fields?: string[]
+    fields?: string[],
+    options: AdvancedFindOptions = {}
   ): SelectQueryBuilder<E> {
-    const DEFAULT_LIMIT = 50;
-    let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
-    if (!pageOptions) {
-      pageOptions = {
-        limit: DEFAULT_LIMIT
+    try {
+      const DEFAULT_LIMIT = 50;
+      let qb = this.manager.connection.createQueryBuilder<E>(this.entityClass, this.klass);
+      if (options.replicationMode) {
+        const queryRunner = this.manager.connection.createQueryRunner(options.replicationMode);
+        qb.setQueryRunner(queryRunner);
+        (qb as any).warthogQueryRunnerOverride = queryRunner;
+      }
+
+      //
+      if (!pageOptions) {
+        pageOptions = {
+          limit: DEFAULT_LIMIT
+        };
+      }
+
+      qb = qb.take(pageOptions.limit || DEFAULT_LIMIT);
+
+      if (pageOptions.offset) {
+        qb = qb.skip(pageOptions.offset);
+      }
+
+      if (fields) {
+        // We always need to select ID or dataloaders will not function properly
+        if (fields.indexOf('id') === -1) {
+          fields.push('id');
+        }
+        // Querybuilder requires you to prefix all fields with the table alias.  It also requires you to
+        // specify the field name using it's TypeORM attribute name, not the camel-cased DB column name
+        const selection = fields.map(field => `${this.klass}.${field}`);
+        qb = qb.select(selection);
+      }
+
+      if (orderBy) {
+        if (!isArray(orderBy)) {
+          orderBy = [orderBy];
+        }
+
+        orderBy.forEach((orderByItem: string) => {
+          const parts = orderByItem.toString().split('_');
+          // TODO: ensure attr is one of the properties on the model
+          const attr = parts[0];
+          const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
+
+          qb = qb.addOrderBy(this.attrToDBColumn(attr), direction);
+        });
+      }
+
+      // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
+      const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
+      // If no deletedAt filters specified, hide them by default
+      if (!hasDeletedAts) {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        where.deletedAt_eq = null; // Filter out soft-deleted items
+      } else if (typeof where.deletedAt_all !== 'undefined') {
+        // Delete this param so that it doesn't try to filter on the magic `all` param
+        // Put this here so that we delete it even if `deletedAt_all: false` specified
+        delete where.deletedAt_all;
+      } else {
+        // If we get here, the user has added a different deletedAt filter, like deletedAt_gt: <date>
+        // do nothing because the specific deleted at filters will be added by processWhereOptions
+      }
+
+      // Keep track of a counter so that TypeORM doesn't reuse our variables that get passed into the query if they
+      // happen to reference the same column
+      const paramKeyCounter = { counter: 0 };
+      const processWheres = (
+        qb: SelectQueryBuilder<E>,
+        where: WhereFilterAttributes
+      ): SelectQueryBuilder<E> => {
+        // where is of shape { userName_contains: 'a' }
+        Object.keys(where).forEach((k: string) => {
+          const paramKey = `param${paramKeyCounter.counter}`;
+          // increment counter each time we add a new where clause so that TypeORM doesn't reuse our input variables
+          paramKeyCounter.counter = paramKeyCounter.counter + 1;
+          const key = k as keyof W; // userName_contains
+          const parts = key.toString().split('_'); // ['userName', 'contains']
+          const attr = parts[0]; // userName
+          const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
+
+          return addQueryBuilderWhereItem(
+            qb,
+            paramKey,
+            this.attrToDBColumn(attr),
+            operator,
+            where[key]
+          );
+        });
+        return qb;
       };
-    }
 
-    qb = qb.take(pageOptions.limit || DEFAULT_LIMIT);
+      // WhereExpression comes in the following shape:
+      // {
+      //   AND?: WhereInput[];
+      //   OR?: WhereInput[];
+      //   [key: string]: string | number | null;
+      // }
+      const processWhereInput = (
+        qb: SelectQueryBuilder<E>,
+        where: WhereExpression
+      ): SelectQueryBuilder<E> => {
+        const { AND, OR, ...rest } = where;
 
-    if (pageOptions.offset) {
-      qb = qb.skip(pageOptions.offset);
-    }
-
-    if (fields) {
-      // We always need to select ID or dataloaders will not function properly
-      if (fields.indexOf('id') === -1) {
-        fields.push('id');
-      }
-      // Querybuilder requires you to prefix all fields with the table alias.  It also requires you to
-      // specify the field name using it's TypeORM attribute name, not the camel-cased DB column name
-      const selection = fields.map(field => `${this.klass}.${field}`);
-      qb = qb.select(selection);
-    }
-
-    if (orderBy) {
-      if (!isArray(orderBy)) {
-        orderBy = [orderBy];
-      }
-
-      orderBy.forEach((orderByItem: string) => {
-        const parts = orderByItem.toString().split('_');
-        // TODO: ensure attr is one of the properties on the model
-        const attr = parts[0];
-        const direction: 'ASC' | 'DESC' = parts[1] as 'ASC' | 'DESC';
-
-        qb = qb.addOrderBy(this.attrToDBColumn(attr), direction);
-      });
-    }
-
-    // Soft-deletes are filtered out by default, setting `deletedAt_all` is the only way to turn this off
-    const hasDeletedAts = Object.keys(where).find(key => key.indexOf('deletedAt_') === 0);
-    // If no deletedAt filters specified, hide them by default
-    if (!hasDeletedAts) {
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      where.deletedAt_eq = null; // Filter out soft-deleted items
-    } else if (typeof where.deletedAt_all !== 'undefined') {
-      // Delete this param so that it doesn't try to filter on the magic `all` param
-      // Put this here so that we delete it even if `deletedAt_all: false` specified
-      delete where.deletedAt_all;
-    } else {
-      // If we get here, the user has added a different deletedAt filter, like deletedAt_gt: <date>
-      // do nothing because the specific deleted at filters will be added by processWhereOptions
-    }
-
-    // Keep track of a counter so that TypeORM doesn't reuse our variables that get passed into the query if they
-    // happen to reference the same column
-    const paramKeyCounter = { counter: 0 };
-    const processWheres = (
-      qb: SelectQueryBuilder<E>,
-      where: WhereFilterAttributes
-    ): SelectQueryBuilder<E> => {
-      // where is of shape { userName_contains: 'a' }
-      Object.keys(where).forEach((k: string) => {
-        const paramKey = `param${paramKeyCounter.counter}`;
-        // increment counter each time we add a new where clause so that TypeORM doesn't reuse our input variables
-        paramKeyCounter.counter = paramKeyCounter.counter + 1;
-        const key = k as keyof W; // userName_contains
-        const parts = key.toString().split('_'); // ['userName', 'contains']
-        const attr = parts[0]; // userName
-        const operator = parts.length > 1 ? parts[1] : 'eq'; // contains
-
-        return addQueryBuilderWhereItem(
-          qb,
-          paramKey,
-          this.attrToDBColumn(attr),
-          operator,
-          where[key]
-        );
-      });
-      return qb;
-    };
-
-    // WhereExpression comes in the following shape:
-    // {
-    //   AND?: WhereInput[];
-    //   OR?: WhereInput[];
-    //   [key: string]: string | number | null;
-    // }
-    const processWhereInput = (
-      qb: SelectQueryBuilder<E>,
-      where: WhereExpression
-    ): SelectQueryBuilder<E> => {
-      const { AND, OR, ...rest } = where;
-
-      if (AND && AND.length) {
-        const ands = AND.filter(value => JSON.stringify(value) !== '{}');
-        if (ands.length) {
-          qb.andWhere(
-            new Brackets(qb2 => {
-              ands.forEach((where: WhereExpression) => {
-                if (Object.keys(where).length === 0) {
-                  return; // disregard empty where objects
-                }
-                qb2.andWhere(
-                  new Brackets(qb3 => {
-                    processWhereInput(qb3 as SelectQueryBuilder<any>, where);
-                    return qb3;
-                  })
-                );
-              });
-            })
-          );
+        if (AND && AND.length) {
+          const ands = AND.filter(value => JSON.stringify(value) !== '{}');
+          if (ands.length) {
+            qb.andWhere(
+              new Brackets(qb2 => {
+                ands.forEach((where: WhereExpression) => {
+                  if (Object.keys(where).length === 0) {
+                    return; // disregard empty where objects
+                  }
+                  qb2.andWhere(
+                    new Brackets(qb3 => {
+                      processWhereInput(qb3 as SelectQueryBuilder<any>, where);
+                      return qb3;
+                    })
+                  );
+                });
+              })
+            );
+          }
         }
-      }
 
-      if (OR && OR.length) {
-        const ors = OR.filter(value => JSON.stringify(value) !== '{}');
-        if (ors.length) {
-          qb.andWhere(
-            new Brackets(qb2 => {
-              ors.forEach((where: WhereExpression) => {
-                if (Object.keys(where).length === 0) {
-                  return; // disregard empty where objects
-                }
+        if (OR && OR.length) {
+          const ors = OR.filter(value => JSON.stringify(value) !== '{}');
+          if (ors.length) {
+            qb.andWhere(
+              new Brackets(qb2 => {
+                ors.forEach((where: WhereExpression) => {
+                  if (Object.keys(where).length === 0) {
+                    return; // disregard empty where objects
+                  }
 
-                qb2.orWhere(
-                  new Brackets(qb3 => {
-                    processWhereInput(qb3 as SelectQueryBuilder<any>, where);
-                    return qb3;
-                  })
-                );
-              });
-            })
-          );
+                  qb2.orWhere(
+                    new Brackets(qb3 => {
+                      processWhereInput(qb3 as SelectQueryBuilder<any>, where);
+                      return qb3;
+                    })
+                  );
+                });
+              })
+            );
+          }
         }
+
+        if (rest) {
+          processWheres(qb, rest);
+        }
+        return qb;
+      };
+
+      if (Object.keys(where).length) {
+        processWhereInput(qb, where);
       }
 
-      if (rest) {
-        processWheres(qb, rest);
-      }
+      debugStatement('buildFindQuery:end');
       return qb;
-    };
-
-    if (Object.keys(where).length) {
-      processWhereInput(qb, where);
+    } catch (e) {
+      logger.error(`Hit this error while building find query`, e);
+      throw e;
     }
-
-    return qb;
   }
 
   async findOne<W>(
@@ -362,7 +406,10 @@ export class BaseService<E extends BaseModel> {
 
   async create(data: DeepPartial<E>, userId: string, options?: BaseOptions): Promise<E> {
     const manager = options?.manager ?? this.manager;
-    const entity = manager.create(this.entityClass, { ...data, createdById: userId });
+    // const entity = manager.create(this.entityClass, { ...data, createdById: userId });
+    const entity = manager.create(this.entityClass, { ...data, createdById: userId } as DeepPartial<
+      E
+    >);
 
     // Validate against the the data model
     // Without `skipMissingProperties`, some of the class-validator validations (like MinLength)
@@ -451,6 +498,15 @@ export class BaseService<E extends BaseModel> {
 
     await manager.save(entity as any);
     return { id: found.id };
+  }
+
+  // This is really ugly.  Shouldn't be attaching to the querybuilder, but need to keep track of whether this
+  // instance of the queryBuilder was created with a custom query runner so that it can be cleaned up
+  cleanUpQueryBuilder(qb: QueryBuilder<E>) {
+    // console.log(qb);
+    if ((qb as any).warthogQueryRunnerOverride) {
+      (qb as any).warthogQueryRunnerOverride.release();
+    }
   }
 
   attrsToDBColumns = (attrs: string[]): string[] => {
