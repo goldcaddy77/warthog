@@ -2,7 +2,6 @@ const assert = require('assert').strict;
 
 import { Service } from 'typedi';
 
-import { BaseModel } from './BaseModel';
 import { EncodingService } from './encoding';
 
 export type Cursor = string;
@@ -47,6 +46,11 @@ export type Sort = {
 type SortAndValue = [SortColumn, SortDirection, string | number];
 type SortAndValueArray = Array<SortAndValue>;
 
+interface Node {
+  id?: string | number;
+  getValue(field: string): string | number;
+}
+
 function isFirstAfter(pageType: RelayFirstAfter | RelayLastBefore): pageType is RelayFirstAfter {
   return (pageType as RelayLastBefore).last === undefined;
 }
@@ -80,13 +84,18 @@ export class RelayService {
     this.encoding = new EncodingService();
   }
 
-  getPageInfo<E extends BaseModel>(
+  getPageInfo<E extends Node>(
     items: E[],
     sortable: Sortable,
     pageOptions: RelayPageOptions
   ): PageInfo {
     if (!items.length) {
-      throw new Error('Items is empty');
+      return {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: '',
+        endCursor: ''
+      };
     }
     let limit;
     let cursor;
@@ -127,12 +136,12 @@ export class RelayService {
     return [firstItem, lastItem];
   }
 
-  encodeCursor<E extends BaseModel>(record: E, sortable: Sortable): Cursor {
+  encodeCursor<E extends Node>(record: E, sortable: Sortable): Cursor {
     assert(record, 'Record is not defined');
-    assert(record.getValue, `Record must be a BaseModel: ${JSON.stringify(record, null, 2)}`);
+    assert(record.getValue, `Record must be a Node: ${JSON.stringify(record, null, 2)}`);
 
     const sortArray = this.normalizeSort(sortable);
-    const payload: SortAndValueArray = sortArray.map(sort => record.getValue(sort.column));
+    const payload: Array<string | number> = sortArray.map(sort => record.getValue(sort.column));
 
     return this.encoding.encode(payload);
   }

@@ -6,7 +6,6 @@ import {
   UserCreateInput,
   UserUpdateArgs,
   UserWhereArgs,
-  UserWhereInput,
   UserWhereUniqueInput
 } from '../../../generated';
 
@@ -26,7 +25,7 @@ export class UserResolver {
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Query(() => User)

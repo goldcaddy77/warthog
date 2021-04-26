@@ -44,16 +44,26 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: s
  * Types
 */
 
-export type UserOrderByInput =   'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'deletedAt_ASC' |
-  'deletedAt_DESC' |
-  'firstName_ASC' |
+export type UserOrderByInput =   'firstName_ASC' |
   'firstName_DESC' |
   'lastName_ASC' |
-  'lastName_DESC'
+  'lastName_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'updatedById_ASC' |
+  'updatedById_DESC' |
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC'
 
 export interface BaseWhereInput {
   id_eq?: String | null
@@ -90,6 +100,16 @@ export interface UserUpdateInput {
 }
 
 export interface UserWhereInput {
+  firstName_eq?: String | null
+  firstName_contains?: String | null
+  firstName_startsWith?: String | null
+  firstName_endsWith?: String | null
+  firstName_in?: String[] | String | null
+  lastName_eq?: String | null
+  lastName_contains?: String | null
+  lastName_startsWith?: String | null
+  lastName_endsWith?: String | null
+  lastName_in?: String[] | String | null
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
@@ -114,57 +134,20 @@ export interface UserWhereInput {
   deletedAt_gte?: DateTime | null
   deletedById_eq?: ID_Input | null
   deletedById_in?: ID_Output[] | ID_Output | null
-  firstName_eq?: String | null
-  firstName_contains?: String | null
-  firstName_startsWith?: String | null
-  firstName_endsWith?: String | null
-  firstName_in?: String[] | String | null
-  lastName_eq?: String | null
-  lastName_contains?: String | null
-  lastName_startsWith?: String | null
-  lastName_endsWith?: String | null
-  lastName_in?: String[] | String | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface UserWhereUniqueInput {
   id: ID_Output
 }
 
-export interface BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
 export interface DeleteResponse {
   id: ID_Output
-}
-
-export interface BaseModel extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
-export interface BaseModelUUID extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
 }
 
 export interface PageInfo {
@@ -178,7 +161,7 @@ export interface StandardDeleteResponse {
   id: ID_Output
 }
 
-export interface User extends BaseGraphQLObject {
+export interface User {
   id: ID_Output
   createdAt: DateTime
   createdById: String

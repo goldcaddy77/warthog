@@ -110,7 +110,7 @@ describe('RelayService', () => {
     });
   });
 
-  describe('getFirstAndLast', () => {
+  describe('firstAndLast', () => {
     test('throws if data has no items', () => {
       expect(() => {
         return relay.firstAndLast([], 10);
@@ -136,10 +136,13 @@ describe('RelayService', () => {
   });
 
   describe('getPageInfo', () => {
-    test('throws if data has no items', () => {
-      expect(() => {
-        return relay.getPageInfo([], sortCreatedAtASC, { first: 1 });
-      }).toThrow();
+    test('Returns empty object if no records supplied', () => {
+      expect(relay.getPageInfo([], sortCreatedAtASC, { first: 1 })).toEqual({
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: '',
+        endCursor: ''
+      });
     });
 
     test('Returns the same for first and last if 1 item', () => {
@@ -207,7 +210,7 @@ describe('RelayService', () => {
       });
     });
 
-    test.only('works several sorts', () => {
+    test('works several sorts', () => {
       const sorts = ['createdAt_ASC', 'name_DESC', 'id_ASC'];
       const cursor = relay.encodeCursor(foo, sorts);
       expect(relay.getFilters(sorts, { first: 1, after: cursor })).toEqual({

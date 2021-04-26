@@ -1,36 +1,3 @@
-interface BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModel implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModelUUID implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
 input BaseWhereInput {
   id_eq: String
   id_in: [String!]
@@ -90,7 +57,7 @@ type Subscription {
   createUserSubscription: User!
 }
 
-type User implements BaseGraphQLObject {
+type User {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -109,16 +76,26 @@ input UserCreateInput {
 }
 
 enum UserOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
   firstName_ASC
   firstName_DESC
   lastName_ASC
   lastName_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
 }
 
 input UserUpdateInput {
@@ -127,6 +104,16 @@ input UserUpdateInput {
 }
 
 input UserWhereInput {
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
+  lastName_eq: String
+  lastName_contains: String
+  lastName_startsWith: String
+  lastName_endsWith: String
+  lastName_in: [String!]
   id_eq: ID
   id_in: [ID!]
   createdAt_eq: DateTime
@@ -151,16 +138,12 @@ input UserWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
-  lastName_eq: String
-  lastName_contains: String
-  lastName_startsWith: String
-  lastName_endsWith: String
-  lastName_in: [String!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
 }
 
 input UserWhereUniqueInput {

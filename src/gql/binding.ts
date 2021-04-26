@@ -67,7 +67,6 @@ export async function getRemoteBinding(endpoint: string, options: LinkOptions) {
 }
 
 export async function generateBindingFile(inputSchemaPath: string, outputBindingFile: string) {
-  logger.debug('generateBindingFile:start');
   const sdl = fs.readFileSync(path.resolve(inputSchemaPath), 'utf-8');
   const schema = buildSchema(sdl);
 
