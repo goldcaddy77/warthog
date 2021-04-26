@@ -507,9 +507,6 @@ export class BaseService<E extends Node> {
       ...deletedByObject
     };
 
-    console.log("this.hasColumn('deletedAt')", this.hasColumn('deletedAt'));
-    console.log('data', data);
-
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
     const entity = manager.merge<E>(this.entityClass, new this.entityClass(), data as any, idData);
 

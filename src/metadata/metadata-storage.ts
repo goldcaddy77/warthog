@@ -2,7 +2,7 @@ import { GraphQLEnumType } from 'graphql';
 import { Container, Inject, Service } from 'typedi';
 
 import { ColumnType, WhereOperator } from '../torm';
-import { Config } from '../core';
+import { ClassType, Config } from '../core';
 
 export type FieldType =
   | 'boolean'
@@ -112,25 +112,30 @@ export class MetadataStorage {
     };
 
     // We shouldn't need to do this as a field decorator will almost certainly have called this
-    this.ensureModelExists(name);
+    this.ensureModelExists(name, klass);
 
     // Just add `klass` and `filename` to the model object
     this.models[name] = {
       ...this.models[name],
-      klass,
       filename,
       ...options
     };
+
+    // Only add klass if it wasn't already added by `addField`
+    if (!this.models[name].klass) {
+      this.models[name].klass = klass;
+    }
   }
 
   addEnum(
-    modelName: string,
+    target: ClassType,
     columnName: string,
     enumName: string,
     enumValues: any,
     filename: string,
     options: ColumnOptions
   ) {
+    const modelName = target.name;
     this.enumMap[modelName] = this.enumMap[modelName] || {};
     this.enumMap[modelName][columnName] = {
       enumeration: enumValues,
@@ -141,11 +146,41 @@ export class MetadataStorage {
     // the enum needs to be passed so that it can be bound to column metadata
     options.enum = enumValues;
     options.enumName = enumName;
-    this.addField('enum', modelName, columnName, options);
+    this.addField('enum', target, columnName, options);
   }
 
   getModels() {
     return this.models;
+  }
+
+  // https://stackoverflow.com/questions/42281045/can-typescript-property-decorators-set-metadata-for-the-class
+  // https://stackoverflow.com/questions/55117125/typescript-decorators-reflect-metadata/55117327#55117327
+  collect() {
+    Object.keys(this.models).forEach(modelName => {
+      const target = this.models[modelName].klass;
+      const keys: string[] = Reflect.getMetadataKeys(target);
+
+      keys.forEach(item => {
+        if (!item.startsWith('warthog:field')) {
+          return;
+        }
+        const metadata = Reflect.getMetadata(item, target);
+
+        if (metadata.type === 'enum') {
+          this.addEnum(
+            target,
+            metadata.propertyKey,
+            metadata.name,
+            metadata.enumeration,
+            metadata.relativeFilePath,
+            metadata.options
+          );
+        } else {
+          this.addField(metadata.type, target, metadata.propertyKey, metadata.options);
+        }
+      });
+    });
+    return this;
   }
 
   getModel(name: string): ModelMetadata {
@@ -164,11 +199,12 @@ export class MetadataStorage {
     return this.enumMap[modelName][columnName] || undefined;
   }
 
-  ensureModelExists(modelName: string) {
+  ensureModelExists(modelName: string, klass: ClassType) {
     if (!this.models[modelName]) {
       this.models[modelName] = {
         name: modelName,
-        columns: []
+        columns: [],
+        klass
         // endpoints: []
       };
     }
@@ -180,15 +216,20 @@ export class MetadataStorage {
 
   addField(
     type: FieldType,
-    modelName: string,
+    target: ClassType,
     columnName: string,
     options: Partial<ColumnMetadata> = {}
   ) {
+    const modelName = target.name;
+    if (!modelName) {
+      return; // Not sure if this is needed anymore.  Previously this prevented base classes from registering
+    }
+
     if (this.interfaces.indexOf(modelName) > -1) {
       return; // Don't add interfaces
     }
 
-    this.ensureModelExists(modelName);
+    this.ensureModelExists(modelName, target);
 
     this.models[modelName].columns.push({
       type,

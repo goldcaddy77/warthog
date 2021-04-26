@@ -13,6 +13,7 @@ interface UpdatedAtFieldOptions extends DecoratorCommonOptions {
 export function UpdatedAtField(options: UpdatedAtFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'datetime',
+    dbType: 'timestamp',
     gqlFieldType: GraphQLISODateTime,
     warthogColumnMeta: { specialType: 'updated-at', nullable: true, readonly: true, ...options },
     dbDecorator: UpdateDateColumn

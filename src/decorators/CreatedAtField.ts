@@ -13,6 +13,7 @@ interface CreatedAtFieldOptions extends DecoratorCommonOptions {
 export function CreatedAtField(options: CreatedAtFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'datetime',
+    dbType: 'timestamp',
     gqlFieldType: GraphQLISODateTime,
     warthogColumnMeta: { specialType: 'created-at', readonly: true, ...options },
     dbDecorator: CreateDateColumn
