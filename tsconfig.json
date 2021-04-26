@@ -30,7 +30,8 @@
     "tmp",
     "**/node_modules/*",
     // "src/**/*.test.ts",
-    "**/generated/*"
+    "**/generated/*",
+    "**/tmp/*"
     // "src/test/**/*"
   ],
   "include": ["src/**/*", "typings"]

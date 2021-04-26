@@ -6,7 +6,7 @@ import 'reflect-metadata';
 import { Brackets, Connection } from 'typeorm';
 import { Container } from 'typedi';
 
-import { createDBConnection } from '../torm';
+import { Database } from '../torm';
 
 import { MyBase, MyBaseService } from './tests/entity/MyBase.model';
 
@@ -14,7 +14,9 @@ describe('BaseService', () => {
   let connection: Connection;
   let service: MyBaseService;
   beforeAll(async () => {
-    connection = await createDBConnection({
+    const database = Container.get('Database') as Database;
+
+    connection = await database.createDBConnection({
       entities: [__dirname + '/tests/entity/*{.js,.ts}']
       // logging: 'all'
     });

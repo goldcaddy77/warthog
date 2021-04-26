@@ -6,7 +6,6 @@ import {
   ProjectCreateInput,
   ProjectUpdateArgs,
   ProjectWhereArgs,
-  ProjectWhereInput,
   ProjectWhereUniqueInput
 } from '../../generated';
 
@@ -62,7 +61,7 @@ export class ProjectResolver {
 
   @Query(() => [Project])
   async projects(@Args() { where, orderBy, limit, offset }: ProjectWhereArgs): Promise<Project[]> {
-    return this.service.find<ProjectWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Query(() => Project)

@@ -1,15 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`schema test schema doesn't change 1`] = `
-"type ApiOnly implements BaseGraphQLObject {
+"type ApiOnly {
   id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
   name: String!
 }
 
@@ -24,28 +17,6 @@ input ApiOnlyUpdateInput {
 input ApiOnlyWhereInput {
   id_eq: ID
   id_in: [ID!]
-  createdAt_eq: DateTime
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
-  deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
@@ -55,39 +26,6 @@ input ApiOnlyWhereInput {
 
 input ApiOnlyWhereUniqueInput {
   id: ID!
-}
-
-interface BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModel implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModelUUID implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
 }
 
 input BaseWhereInput {
@@ -126,15 +64,7 @@ The javascript \`Date\` as string. Type represents date and time as the ISO Date
 \\"\\"\\"
 scalar DateTime
 
-type DbOnly implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
+type DbOnly {
   stringField: String!
 }
 
@@ -142,15 +72,9 @@ interface DeleteResponse {
   id: ID!
 }
 
-type Dish implements BaseGraphQLObject {
+type Dish {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
   name: String!
   stringEnumField: StringEnum
   kitchenSink: KitchenSink!
@@ -177,10 +101,6 @@ type DishEdge {
 enum DishOrderByInput {
   createdAt_ASC
   createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
   name_ASC
   name_DESC
   stringEnumField_ASC
@@ -196,30 +116,12 @@ input DishUpdateInput {
 }
 
 input DishWhereInput {
-  id_eq: ID
   id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
-  deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
   name_eq: String
   name_contains: String
   name_startsWith: String
@@ -240,7 +142,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 \\"\\"\\"
 scalar JSONObject
 
-type KitchenSink implements BaseGraphQLObject {
+type KitchenSink {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -311,12 +213,22 @@ input KitchenSinkCreateInput {
 }
 
 enum KitchenSinkOrderByInput {
+  id_ASC
+  id_DESC
   createdAt_ASC
   createdAt_DESC
+  createdById_ASC
+  createdById_DESC
   updatedAt_ASC
   updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
   deletedAt_ASC
   deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
   stringField_ASC
   stringField_DESC
   nullableStringField_ASC
@@ -407,6 +319,12 @@ input KitchenSinkWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String

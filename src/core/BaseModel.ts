@@ -1,68 +1,47 @@
 import * as shortid from 'shortid';
-import { Field, ID, Int, InterfaceType, ObjectType } from 'type-graphql';
+import { ObjectType } from 'type-graphql';
+import { BeforeInsert } from 'typeorm';
+
 import {
-  BeforeInsert,
-  Column,
-  CreateDateColumn,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn
-} from 'typeorm';
+  CreatedAtField,
+  CreatedByField,
+  DeletedAtField,
+  DeletedByField,
+  PrimaryIdField,
+  UpdatedAtField,
+  UpdatedByField,
+  VersionField
+} from '../decorators';
+import { IDType } from '../core';
 
-import { IDType } from './types';
-
-// This interface adds all of the base type-graphql fields to our BaseClass
-@InterfaceType()
-export abstract class BaseGraphQLObject {
-  @Field(() => ID)
+// type-graphql requires you set this as ObjectType for it's inheritance to work
+@ObjectType({ isAbstract: true })
+export class BaseModel {
+  @PrimaryIdField()
   id!: IDType;
 
-  @Field() createdAt!: Date;
-  @Field() createdById?: IDType;
+  @CreatedAtField()
+  createdAt!: Date;
 
-  @Field({ nullable: true })
-  updatedAt?: Date;
-  @Field({ nullable: true })
-  updatedById?: IDType;
+  @CreatedByField()
+  createdById!: IDType;
 
-  @Field({ nullable: true })
-  deletedAt?: Date;
-  @Field({ nullable: true })
+  @UpdatedAtField()
+  updatedAt!: Date;
+
+  @UpdatedByField()
+  updatedById!: IDType;
+
+  @DeletedAtField()
+  deletedAt!: Date;
+
+  @DeletedByField()
   deletedById?: IDType;
 
-  @Field(() => Int)
+  @VersionField()
   version!: number;
-}
 
-// This class adds all of the TypeORM decorators needed to create the DB table
-@ObjectType({ implements: BaseGraphQLObject })
-export abstract class BaseModel implements BaseGraphQLObject {
-  @PrimaryColumn({ type: String })
-  id!: IDType;
-
-  @CreateDateColumn() createdAt!: Date;
-  @Column() createdById!: IDType;
-
-  @UpdateDateColumn({ nullable: true })
-  updatedAt?: Date;
-  @Column({ nullable: true })
-  updatedById?: IDType;
-
-  @Column({ nullable: true })
-  deletedAt?: Date;
-  @Column({ nullable: true })
-  deletedById?: IDType;
-
-  @VersionColumn() version!: number;
-
-  getId() {
-    // If settings allow ID to be specified on create, use the specified ID
-    return this.id || shortid.generate();
-  }
-
-  // V3: DateTime should use getter to return ISO8601 string
-  getValue(field: any) {
+  getValue(field: string): string | number {
     const self = this as any;
     if (self[field] instanceof Date) {
       return self[field].toISOString();
@@ -70,30 +49,38 @@ export abstract class BaseModel implements BaseGraphQLObject {
     return self[field];
   }
 
+  getId(): string {
+    // If settings allow ID to be specified on create, use the specified ID
+    return this.id || shortid.generate();
+  }
+
   @BeforeInsert()
-  setId() {
+  setId(): void {
     this.id = this.getId();
   }
 }
 
-// This class adds all of the TypeORM decorators needed to create the DB table
-@ObjectType({ implements: BaseGraphQLObject })
-export abstract class BaseModelUUID implements BaseGraphQLObject {
-  @PrimaryGeneratedColumn('uuid')
+// type-graphql requires you set this as ObjectType for it's inheritance to work
+@ObjectType({ isAbstract: true })
+export abstract class IdModel {
+  @PrimaryIdField()
   id!: IDType;
 
-  @CreateDateColumn() createdAt!: Date;
-  @Column() createdById!: IDType;
+  getId(): string {
+    // If settings allow ID to be specified on create, use the specified ID
+    return this.id || shortid.generate();
+  }
 
-  @UpdateDateColumn({ nullable: true })
-  updatedAt?: Date;
-  @Column({ nullable: true })
-  updatedById?: IDType;
+  @BeforeInsert()
+  setId(): void {
+    this.id = this.getId();
+  }
 
-  @Column({ nullable: true })
-  deletedAt?: Date;
-  @Column({ nullable: true })
-  deletedById?: IDType;
-
-  @VersionColumn() version!: number;
+  getValue(field: string): string | number {
+    const self = this as any;
+    if (self[field] instanceof Date) {
+      return self[field].toISOString();
+    }
+    return self[field];
+  }
 }

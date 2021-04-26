@@ -3,7 +3,7 @@ import { Inject } from 'typedi';
 
 import { BaseContext } from '../../../src';
 
-import { UserCreateInput, UserWhereArgs, UserWhereInput } from '../generated';
+import { UserCreateInput, UserWhereArgs } from '../generated';
 
 import { User } from './user.model';
 import { UserService } from './user.service';
@@ -14,7 +14,7 @@ export class UserResolver {
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.service.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   // If this was User instead of [User] you get "Cannot return null for non-nullable field User.id"

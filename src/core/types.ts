@@ -16,6 +16,7 @@ export interface BaseEntity {
   [key: string]: any;
 }
 
+// V3: remove this
 export interface WhereInput {
   id_eq?: IDType;
   id_in?: IDType[];

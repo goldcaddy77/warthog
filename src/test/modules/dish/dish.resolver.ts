@@ -103,7 +103,7 @@ export class DishResolver {
     @Args() { where, orderBy, limit, offset }: DishWhereArgs,
     @Fields() fields: string[]
   ): Promise<Dish[]> {
-    return this.service.find<DishWhereInput>(where, orderBy, limit, offset, fields);
+    return this.service.find(where, orderBy, limit, offset, fields);
   }
 
   @Authorized('dish:read')
@@ -112,13 +112,13 @@ export class DishResolver {
     @Args() { where, orderBy, ...pageOptions }: DishConnectionWhereArgs,
     @RawFields() fields: object
   ): Promise<DishConnection> {
-    return this.service.findConnection<DishWhereInput>(where, orderBy, pageOptions, fields) as any;
+    return this.service.findConnection(where, orderBy, pageOptions, fields) as any;
   }
 
   @Authorized('dish:read')
   @Query(() => Dish)
   async dish(@Arg('where') where: DishWhereUniqueInput): Promise<Dish> {
-    return this.service.findOne<DishWhereUniqueInput>(where);
+    return this.service.findOne(where);
   }
 
   @Authorized('dish:create')
@@ -133,7 +133,7 @@ export class DishResolver {
     @Args() { data, where }: DishUpdateArgs,
     @UserId() userId: string
   ): Promise<Dish> {
-    return this.service.update(data, where, userId);
+    return this.service.update<DishWhereUniqueInput>(data, where, userId);
   }
 
   @Authorized('dish:create')

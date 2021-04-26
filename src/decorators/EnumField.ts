@@ -3,7 +3,8 @@ import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
 import { Column } from 'typeorm';
 
-import { getMetadataStorage, DecoratorCommonOptions } from '../metadata';
+import { ClassType } from '../core';
+import { DecoratorCommonOptions } from '../metadata';
 import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 import { EnumWhereOperator } from '../torm';
 
@@ -23,19 +24,23 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
   // Use relative paths in the source files so that they can be used on different machines
   const relativeFilePath = path.relative(generatedFolderPath(), decoratorSourceFile);
 
-  const registerWithWarthog = (target: object, propertyKey: string): any => {
-    getMetadataStorage().addEnum(
-      target.constructor.name,
-      propertyKey,
-      name,
-      enumeration,
-      relativeFilePath,
-      options
+  const registerWithWarthog = (target: ClassType, propertyKey: string): any => {
+    Reflect.defineMetadata(
+      `warthog:field:${propertyKey}`,
+      {
+        type: 'enum',
+        propertyKey,
+        name,
+        enumeration,
+        relativeFilePath,
+        options
+      },
+      target.constructor // Access contructor instead of class instance
     );
   };
 
   const factories = [
-    registerWithWarthog,
+    registerWithWarthog as MethodDecoratorFactory,
     Field(() => enumeration, options),
     Column({ enum: enumeration, ...options }) as MethodDecoratorFactory
   ];

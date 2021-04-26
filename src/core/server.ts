@@ -5,29 +5,27 @@ import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-ser
 import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 import { Request } from 'express';
 import express = require('express');
-import { GraphQLID, GraphQLSchema } from 'graphql';
+import { GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
-import { DateResolver } from 'graphql-scalars';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
 const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
-import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
+import { AuthChecker } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
 
 import { logger, Logger } from '../core/logger';
+import { debug } from '../decorators';
 import { getRemoteBinding } from '../gql';
-import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
-import { createDBConnection } from '../torm';
+import { healthCheckMiddleware } from '../middleware';
+import { SchemaBuilder } from '../schema';
+import { Database } from '../torm';
 
-import { CodeGenerator } from './code-generator';
+import { CodeGenerator } from './CodeGenerator';
 import { Config } from './config';
-
 import { BaseContext } from './Context';
 
-import * as Debug from 'debug';
-
-const debug = Debug('warthog:server');
+Container.import([Config, SchemaBuilder]);
 
 export interface ServerOptions<T> {
   container?: Container;
@@ -63,6 +61,7 @@ export class Server<C extends BaseContext> {
   logger: Logger;
   schema?: GraphQLSchema;
   bodyParserConfig?: OptionsJson;
+  schemaBuilder: SchemaBuilder;
 
   constructor(
     private appOptions: ServerOptions<C>,
@@ -105,7 +104,8 @@ export class Server<C extends BaseContext> {
 
     // NOTE: this should be after we hard-code the WARTHOG_ env vars above because we want the config
     // module to think they were set by the user
-    this.config = new Config({ container: this.container, logger: this.logger });
+    this.config = Container.get('Config') as Config;
+    this.schemaBuilder = Container.get('SchemaBuilder') as SchemaBuilder;
 
     this.expressApp = this.appOptions.expressApp || express();
 
@@ -123,11 +123,12 @@ export class Server<C extends BaseContext> {
     return logger;
   }
 
+  @debug('warthog:server')
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
-      debug('establishDBConnection:start');
-      this.connection = await createDBConnection(this.dbOptions);
-      debug('establishDBConnection:end');
+      const database = Container.get('Database') as Database;
+
+      this.connection = await database.createDBConnection(this.dbOptions);
     }
 
     return this.connection;
@@ -160,10 +161,10 @@ export class Server<C extends BaseContext> {
     }
   }
 
+  @debug('warthog:server')
   async buildGraphQLSchema(): Promise<GraphQLSchema> {
     if (!this.schema) {
-      debug('server:buildGraphQLSchema:start');
-      this.schema = await buildSchema({
+      this.schema = await this.schemaBuilder.build({
         authChecker: this.authChecker,
         scalarsMap: [
           {
@@ -179,26 +180,21 @@ export class Server<C extends BaseContext> {
         container: this.container as any,
         // TODO: ErrorLoggerMiddleware
         globalMiddlewares: [DataLoaderMiddleware, ...(this.appOptions.middlewares || [])],
+        middlewares: this.appOptions.middlewares
         resolvers: this.config.get('RESOLVERS_PATH'),
         // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
         validate: this.config.get('VALIDATE_RESOLVERS') === 'true',
         pubSub: this.appOptions.pubSub
       });
-      debug('server:buildGraphQLSchema:end');
     }
 
     return this.schema;
   }
 
+  // @debug
   async generateFiles(): Promise<void> {
-    debug('start:generateFiles:start');
-    await new CodeGenerator(this.config.get('GENERATED_FOLDER'), this.config.get('DB_ENTITIES'), {
-      resolversPath: this.config.get('RESOLVERS_PATH'),
-      validateResolvers: this.config.get('VALIDATE_RESOLVERS') === 'true',
-      warthogImportPath: this.config.get('MODULE_IMPORT_PATH')
-    }).generate();
-
-    debug('start:generateFiles:end');
+    const generator = Container.get('CodeGenerator') as CodeGenerator;
+    return generator.generate();
   }
 
   private startHttpServer(url: string): void {
@@ -213,8 +209,8 @@ export class Server<C extends BaseContext> {
     this.httpServer.headersTimeout = headersTimeout;
   }
 
+  @debug('warthog:server')
   async start() {
-    debug('start:start');
     await this.establishDBConnection();
     if (this.config.get('AUTO_GENERATE_FILES') === 'true') {
       await this.generateFiles();
@@ -227,7 +223,6 @@ export class Server<C extends BaseContext> {
         return {};
       });
 
-    debug('start:ApolloServerAllocation:start');
     // See all options here: https://github.com/apollographql/apollo-server/blob/9ffb4a847e1503ea2ab1f3fcd47837daacf40870/packages/apollo-server-core/src/types.ts#L69
     const playgroundOption = this.config.get('PLAYGROUND') === 'true' ? { playground: true } : {};
     const introspectionOption =
@@ -254,21 +249,17 @@ export class Server<C extends BaseContext> {
       ...this.apolloConfig
     });
 
-    debug('start:ApolloServerAllocation:end');
-
     this.expressApp.use('/health', healthCheckMiddleware);
 
     if (this.appOptions.onBeforeGraphQLMiddleware) {
       this.appOptions.onBeforeGraphQLMiddleware(this.expressApp);
     }
 
-    debug('start:applyMiddleware:start');
     this.graphQLServer.applyMiddleware({
       app: this.expressApp,
       bodyParserConfig: this.bodyParserConfig,
       path: '/graphql'
     });
-    debug('start:applyMiddleware:end');
 
     if (this.appOptions.onAfterGraphQLMiddleware) {
       this.appOptions.onAfterGraphQLMiddleware(this.expressApp);
@@ -285,11 +276,9 @@ export class Server<C extends BaseContext> {
     // Open playground in the browser
     if (this.config.get('AUTO_OPEN_PLAYGROUND') === 'true') {
       // Assigning to variable and logging to appease linter
-      const process = open(url, { wait: false });
-      debug('process', process);
+      open(url, { wait: false });
     }
 
-    debug('start:end');
     return this;
   }
 

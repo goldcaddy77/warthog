@@ -1,12 +1,26 @@
-import { BaseModel, EnumField, ManyToOne, Model, StringField } from '../../../';
-
+import {
+  EnumField,
+  CreatedAtField,
+  DateTimeString,
+  IdModel,
+  IDType,
+  ManyToOne,
+  Model,
+  PrimaryIdField,
+  StringField
+} from '../../../';
 import { KitchenSink } from '../kitchen-sink/kitchen-sink.model';
-
 import { StringEnum } from '../shared';
 export { StringEnum }; // Warthog requires this
 
 @Model()
-export class Dish extends BaseModel {
+export class Dish extends IdModel {
+  @PrimaryIdField({ sort: false, filter: ['in'] })
+  id!: IDType;
+
+  @CreatedAtField({ sort: true })
+  createdAt!: DateTimeString;
+
   @StringField({ maxLength: 40 })
   name?: string;
 

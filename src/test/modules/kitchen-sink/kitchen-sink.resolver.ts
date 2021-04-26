@@ -17,7 +17,6 @@ import {
   KitchenSinkCreateManyArgs,
   KitchenSinkUpdateArgs,
   KitchenSinkWhereArgs,
-  KitchenSinkWhereInput,
   KitchenSinkWhereUniqueInput
 } from '../../generated';
 
@@ -42,7 +41,7 @@ export class KitchenSinkResolver {
     @Args() { where, orderBy, limit, offset }: KitchenSinkWhereArgs,
     @Fields() fields: string[]
   ): Promise<KitchenSink[]> {
-    return this.service.find<KitchenSinkWhereInput>(where, orderBy, limit, offset, fields);
+    return this.service.find(where, orderBy, limit, offset, fields);
   }
 
   @Authorized('kitchenSink:read')

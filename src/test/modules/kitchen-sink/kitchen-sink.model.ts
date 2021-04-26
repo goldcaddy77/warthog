@@ -1,25 +1,34 @@
 import { Column } from 'typeorm';
 
 import {
-  BaseModel,
   BooleanField,
+  CreatedAtField,
+  CreatedByField,
   CustomField,
   DateField,
   DateOnlyField,
   DateOnlyString,
   DateTimeField,
   DateTimeString,
+  DeletedAtField,
+  DeletedByField,
   EmailField,
   EnumField,
   FloatField,
   IdField,
+  IdModel,
+  IDType,
   IntField,
   JSONField,
+  JsonObject,
   OneToMany,
   Model,
   NumericField,
+  PrimaryIdField,
   StringField,
-  JsonObject
+  UpdatedAtField,
+  UpdatedByField,
+  VersionField
 } from '../../../';
 
 import { Dish } from '../dish/dish.model';
@@ -28,7 +37,31 @@ import { StringEnum } from '../shared';
 export { StringEnum }; // Warthog requires this
 
 @Model()
-export class KitchenSink extends BaseModel {
+export class KitchenSink extends IdModel {
+  @PrimaryIdField({ filter: ['eq', 'in'] })
+  id!: IDType;
+
+  @CreatedAtField()
+  createdAt!: DateTimeString;
+
+  @CreatedByField()
+  createdById!: IDType;
+
+  @UpdatedAtField()
+  updatedAt!: DateTimeString;
+
+  @UpdatedByField()
+  updatedById!: IDType;
+
+  @DeletedAtField()
+  deletedAt!: DateTimeString;
+
+  @DeletedByField()
+  deletedById?: IDType;
+
+  @VersionField()
+  version!: number;
+
   @StringField({ description: 'This is a string field' })
   stringField?: string;
 
