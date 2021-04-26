@@ -1,5 +1,3 @@
-export * from './createConnection';
-// export * from './EverythingSubscriber';
+export * from './database.service';
 export * from './operators';
 export * from './SnakeNamingStrategy';
-export * from './types';

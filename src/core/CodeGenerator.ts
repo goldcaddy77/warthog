@@ -89,9 +89,13 @@ export class CodeGenerator {
   }
 
   private async writeOrmConfig() {
-    const contents = `import { getBaseConfig } from '${this.config.get('MODULE_IMPORT_PATH')}';
+    const contents = `import {Container} from 'typedi';
+import { Database } from '${this.config.get('MODULE_IMPORT_PATH')}';
+Container.import([Database]);
+const database = Container.get('Database') as Database;
 
-module.exports = getBaseConfig();`;
+module.exports = database.getBaseConfig();    
+`;
 
     return this.writeToGeneratedFolder('ormconfig.ts', contents);
   }

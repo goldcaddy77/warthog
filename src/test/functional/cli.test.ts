@@ -291,7 +291,7 @@ describe('cli functional tests', () => {
     expect(indexContents).toContain("export * from './classes';");
 
     const ormConfigContents = filesystem.read(`${folder}/ormconfig.ts`);
-    expect(ormConfigContents).toContain('module.exports = getBaseConfig();');
+    expect(ormConfigContents).toContain('module.exports = database.getBaseConfig();');
 
     const schemaContents = filesystem.read(`${folder}/schema.graphql`);
     expect(schemaContents).toContain('input KitchenSinkWhereInput');
