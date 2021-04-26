@@ -1,0 +1,16 @@
+query {
+  UserConnection(where: { firstName_contains: "a" }, orderBy: createdAt_DESC) {
+    nodes {
+      id
+      firstName
+      lastName
+    }
+    pageInfo {
+      limit
+      offset
+      totalCount
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
