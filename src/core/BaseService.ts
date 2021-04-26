@@ -428,7 +428,7 @@ export class BaseService<E extends BaseModel> {
     return manager.findOneOrFail(this.entityClass, result.id);
   }
 
-  async delete<W extends any>(
+  async delete<W extends object>(
     where: W,
     userId: string,
     options?: BaseOptions
@@ -440,7 +440,12 @@ export class BaseService<E extends BaseModel> {
       deletedById: userId
     };
 
-    const found = await manager.findOneOrFail<E>(this.entityClass, where as any);
+    const whereNotDeleted = {
+      ...where,
+      deletedAt: null
+    };
+
+    const found = await manager.findOneOrFail<E>(this.entityClass, whereNotDeleted as any);
     const idData = ({ id: found.id } as any) as DeepPartial<E>;
     const entity = manager.merge<E>(this.entityClass, new this.entityClass(), data as any, idData);
 
