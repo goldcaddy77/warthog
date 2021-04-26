@@ -487,15 +487,21 @@ export class BaseService<E extends Node> {
   async delete(where: any, userId: string, options?: BaseOptions): Promise<StandardDeleteResponse> {
     const manager = options?.manager ?? this.manager;
 
-    const found = await manager.findOneOrFail<E>(this.entityClass, where);
-
     // V3: TODO: we shouldn't look for the column name, we should see if they've decorated the
     // model with a DeletedDate decorator
     // If there is no deletedAt column, actually delete the record
     if (!this.hasColumn('deletedAt')) {
-      await this.manager.delete<E>(this.entityClass, where);
+      const found = await manager.findOneOrFail<E>(this.entityClass, where);
+      await manager.delete<E>(this.entityClass, where);
       return { id: String(found.id) };
     }
+
+    const whereNotDeleted = {
+      ...where,
+      deletedAt: null
+    };
+
+    const found = await manager.findOneOrFail<E>(this.entityClass, whereNotDeleted as any);
 
     const deletedAtObject = this.hasColumn('deletedAt')
       ? { deletedAt: new Date().toISOString() }

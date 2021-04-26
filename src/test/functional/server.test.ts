@@ -735,6 +735,38 @@ describe('server', () => {
       expect(schema).toContain('ApiOnlyWhereInput');
     });
   });
+
+  describe('CustomField Validations', () => {
+    let kitchenSinkDBColumns: string[];
+    beforeEach(() => {
+      const kitchenSinkTableMeta = server.connection.entityMetadatas.find(
+        entity => entity.name === 'KitchenSink'
+      ) as EntityMetadata;
+
+      if (!kitchenSinkTableMeta) {
+        throw new Error('Expected to find the KitchenSink TypeORM metadata');
+      }
+
+      kitchenSinkDBColumns = kitchenSinkTableMeta.columns.map(column => column.propertyName);
+    });
+
+    describe('readonly flag', () => {
+      test('readonly column does exist in the DB', async done => {
+        expect(kitchenSinkDBColumns).toContain('customTextFieldReadOnly');
+        done();
+      });
+
+      test('readonly column exists once in the schema (on the KitchenSink model)', () => {
+        const file = path.join(__dirname, '..', 'generated', 'schema.graphql');
+        const schema = fs.readFileSync(file, 'utf-8');
+
+        const re = /customTextFieldReadOnly/g;
+        const numberOfInstances = ((schema || '').match(re) || []).length;
+        expect(schema).toContain('customTextFieldReadOnly');
+        expect(numberOfInstances).toEqual(1);
+      });
+    });
+  });
 });
 
 async function createKitchenSink(

@@ -418,6 +418,7 @@ input UserWhereInput {
   varcharField_startsWith: String
   varcharField_endsWith: String
   varcharField_in: [String!]
+  geometryField_json: JSONObject
   intField_eq: Int
   intField_gt: Int
   intField_gte: Int

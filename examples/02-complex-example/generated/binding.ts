@@ -329,6 +329,7 @@ export interface UserWhereInput {
   varcharField_startsWith?: String | null
   varcharField_endsWith?: String | null
   varcharField_in?: String[] | String | null
+  geometryField_json?: JSONObject | null
   intField_eq?: Int | null
   intField_gt?: Int | null
   intField_gte?: Int | null

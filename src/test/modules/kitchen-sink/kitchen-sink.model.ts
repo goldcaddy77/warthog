@@ -143,6 +143,12 @@ export class KitchenSink extends IdModel {
   })
   customFieldArrayColumn?: string[];
 
+  @CustomField({
+    api: { type: 'string', nullable: true, sort: false, filter: false, readonly: true },
+    db: { type: 'text', nullable: true, default: 'foobar' }
+  })
+  customTextFieldReadOnly?: string;
+
   @StringField({ readonly: true, nullable: true })
   readonlyField?: string;
 

@@ -2,6 +2,7 @@
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
 import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
+import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 import { Request } from 'express';
 import express = require('express');
 import { GraphQLSchema } from 'graphql';
@@ -37,6 +38,7 @@ export interface ServerOptions<T> {
   generatedFolder?: string;
   logger?: Logger;
   middlewares?: any[]; // TODO: fix
+  pubSub?: PubSubEngine | PubSubOptions;
   openPlayground?: boolean;
   port?: string | number;
   resolversPath?: string[];
@@ -164,7 +166,8 @@ export class Server<C extends BaseContext> {
     if (!this.schema) {
       this.schema = await this.schemaBuilder.build({
         authChecker: this.authChecker,
-        middlewares: this.appOptions.middlewares
+        middlewares: this.appOptions.middlewares,
+        pubSub: this.appOptions.pubSub
       });
     }
 

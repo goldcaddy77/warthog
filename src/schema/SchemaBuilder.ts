@@ -1,4 +1,5 @@
 import { GraphQLID, GraphQLSchema } from 'graphql';
+import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 // import { DateResolver } from 'graphql-scalars';
 import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
 import { Middleware } from 'type-graphql/dist/interfaces/Middleware';
@@ -11,6 +12,7 @@ import { DataLoaderMiddleware } from '../middleware';
 interface BuildOptions<C> {
   authChecker?: AuthChecker<C>;
   middlewares?: Middleware[];
+  pubSub?: PubSubEngine | PubSubOptions;
   scalers?: ScalarsTypeMap[];
 }
 
@@ -31,6 +33,7 @@ export class SchemaBuilder {
       dateScalarMode: 'isoDate',
       // TODO: ErrorLoggerMiddleware
       globalMiddlewares: [DataLoaderMiddleware, ...(options.middlewares || [])],
+      pubSub: options.pubSub,
       resolvers: this.config.get('RESOLVERS_PATH'),
       // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
       validate: this.config.get('VALIDATE_RESOLVERS') === 'true'
