@@ -18,7 +18,7 @@ import { debug } from '../decorators';
 import { getRemoteBinding } from '../gql';
 import { healthCheckMiddleware } from '../middleware';
 import { SchemaBuilder } from '../schema';
-import { createDBConnection } from '../torm';
+import { Database } from '../torm';
 
 import { CodeGenerator } from './CodeGenerator';
 import { Config } from './config';
@@ -124,7 +124,9 @@ export class Server<C extends BaseContext> {
   @debug('warthog:server')
   async establishDBConnection(): Promise<Connection> {
     if (!this.connection) {
-      this.connection = await createDBConnection(this.dbOptions);
+      const database = Container.get('Database') as Database;
+
+      this.connection = await database.createDBConnection(this.dbOptions);
     }
 
     return this.connection;
