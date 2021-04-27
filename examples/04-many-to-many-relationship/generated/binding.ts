@@ -47,45 +47,85 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: s
  * Types
 */
 
-export type AuthorOrderByInput =   'createdAt_ASC' |
+export type AuthorOrderByInput =   'firstName_ASC' |
+  'firstName_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
   'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
+  'updatedById_ASC' |
+  'updatedById_DESC' |
   'deletedAt_ASC' |
   'deletedAt_DESC' |
-  'firstName_ASC' |
-  'firstName_DESC'
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC'
 
-export type PostOrderByInput =   'createdAt_ASC' |
+export type PostOrderByInput =   'name_ASC' |
+  'name_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
   'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
+  'updatedById_ASC' |
+  'updatedById_DESC' |
   'deletedAt_ASC' |
   'deletedAt_DESC' |
-  'name_ASC' |
-  'name_DESC'
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC'
 
-export type UserOrderByInput =   'createdAt_ASC' |
+export type UserOrderByInput =   'firstName_ASC' |
+  'firstName_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
   'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
+  'updatedById_ASC' |
+  'updatedById_DESC' |
   'deletedAt_ASC' |
   'deletedAt_DESC' |
-  'firstName_ASC' |
-  'firstName_DESC'
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC'
 
-export type UserRoleOrderByInput =   'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'deletedAt_ASC' |
-  'deletedAt_DESC' |
-  'userId_ASC' |
+export type UserRoleOrderByInput =   'userId_ASC' |
   'userId_DESC' |
   'roleId_ASC' |
   'roleId_DESC' |
   'otherMetadata_ASC' |
-  'otherMetadata_DESC'
+  'otherMetadata_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'updatedById_ASC' |
+  'updatedById_DESC' |
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC'
 
 export interface AuthorCreateInput {
   firstName: String
@@ -96,6 +136,11 @@ export interface AuthorUpdateInput {
 }
 
 export interface AuthorWhereInput {
+  firstName_eq?: String | null
+  firstName_contains?: String | null
+  firstName_startsWith?: String | null
+  firstName_endsWith?: String | null
+  firstName_in?: String[] | String | null
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
@@ -120,39 +165,16 @@ export interface AuthorWhereInput {
   deletedAt_gte?: DateTime | null
   deletedById_eq?: ID_Input | null
   deletedById_in?: ID_Output[] | ID_Output | null
-  firstName_eq?: String | null
-  firstName_contains?: String | null
-  firstName_startsWith?: String | null
-  firstName_endsWith?: String | null
-  firstName_in?: String[] | String | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface AuthorWhereUniqueInput {
   id: ID_Output
-}
-
-export interface BaseWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
-  deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
 }
 
 export interface PostCreateInput {
@@ -164,6 +186,11 @@ export interface PostUpdateInput {
 }
 
 export interface PostWhereInput {
+  name_eq?: String | null
+  name_contains?: String | null
+  name_startsWith?: String | null
+  name_endsWith?: String | null
+  name_in?: String[] | String | null
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
@@ -188,11 +215,12 @@ export interface PostWhereInput {
   deletedAt_gte?: DateTime | null
   deletedById_eq?: ID_Input | null
   deletedById_in?: ID_Output[] | ID_Output | null
-  name_eq?: String | null
-  name_contains?: String | null
-  name_startsWith?: String | null
-  name_endsWith?: String | null
-  name_in?: String[] | String | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface PostWhereUniqueInput {
@@ -208,6 +236,11 @@ export interface RoleUpdateInput {
 }
 
 export interface RoleWhereInput {
+  name_eq?: String | null
+  name_contains?: String | null
+  name_startsWith?: String | null
+  name_endsWith?: String | null
+  name_in?: String[] | String | null
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
@@ -232,11 +265,12 @@ export interface RoleWhereInput {
   deletedAt_gte?: DateTime | null
   deletedById_eq?: ID_Input | null
   deletedById_in?: ID_Output[] | ID_Output | null
-  name_eq?: String | null
-  name_contains?: String | null
-  name_startsWith?: String | null
-  name_endsWith?: String | null
-  name_in?: String[] | String | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface RoleWhereUniqueInput {
@@ -260,6 +294,15 @@ export interface UserRoleUpdateInput {
 }
 
 export interface UserRoleWhereInput {
+  userId_eq?: ID_Input | null
+  userId_in?: ID_Output[] | ID_Output | null
+  roleId_eq?: ID_Input | null
+  roleId_in?: ID_Output[] | ID_Output | null
+  otherMetadata_eq?: String | null
+  otherMetadata_contains?: String | null
+  otherMetadata_startsWith?: String | null
+  otherMetadata_endsWith?: String | null
+  otherMetadata_in?: String[] | String | null
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
@@ -284,15 +327,12 @@ export interface UserRoleWhereInput {
   deletedAt_gte?: DateTime | null
   deletedById_eq?: ID_Input | null
   deletedById_in?: ID_Output[] | ID_Output | null
-  userId_eq?: ID_Input | null
-  userId_in?: ID_Output[] | ID_Output | null
-  roleId_eq?: ID_Input | null
-  roleId_in?: ID_Output[] | ID_Output | null
-  otherMetadata_eq?: String | null
-  otherMetadata_contains?: String | null
-  otherMetadata_startsWith?: String | null
-  otherMetadata_endsWith?: String | null
-  otherMetadata_in?: String[] | String | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface UserRoleWhereUniqueInput {
@@ -304,6 +344,11 @@ export interface UserUpdateInput {
 }
 
 export interface UserWhereInput {
+  firstName_eq?: String | null
+  firstName_contains?: String | null
+  firstName_startsWith?: String | null
+  firstName_endsWith?: String | null
+  firstName_in?: String[] | String | null
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
@@ -328,33 +373,23 @@ export interface UserWhereInput {
   deletedAt_gte?: DateTime | null
   deletedById_eq?: ID_Input | null
   deletedById_in?: ID_Output[] | ID_Output | null
-  firstName_eq?: String | null
-  firstName_contains?: String | null
-  firstName_startsWith?: String | null
-  firstName_endsWith?: String | null
-  firstName_in?: String[] | String | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface UserWhereUniqueInput {
   id: ID_Output
 }
 
-export interface BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
 export interface DeleteResponse {
   id: ID_Output
 }
 
-export interface Author extends BaseGraphQLObject {
+export interface Author {
   id: ID_Output
   createdAt: DateTime
   createdById: String
@@ -367,28 +402,6 @@ export interface Author extends BaseGraphQLObject {
   posts?: Array<Post> | null
 }
 
-export interface BaseModel extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
-export interface BaseModelUUID extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
 export interface PageInfo {
   hasNextPage: Boolean
   hasPreviousPage: Boolean
@@ -396,7 +409,7 @@ export interface PageInfo {
   endCursor?: String | null
 }
 
-export interface Post extends BaseGraphQLObject {
+export interface Post {
   id: ID_Output
   createdAt: DateTime
   createdById: String
@@ -410,7 +423,7 @@ export interface Post extends BaseGraphQLObject {
   posts: Array<Post>
 }
 
-export interface Role extends BaseGraphQLObject {
+export interface Role {
   id: ID_Output
   createdAt: DateTime
   createdById: String
@@ -427,7 +440,7 @@ export interface StandardDeleteResponse {
   id: ID_Output
 }
 
-export interface User extends BaseGraphQLObject {
+export interface User {
   id: ID_Output
   createdAt: DateTime
   createdById: String
@@ -440,7 +453,7 @@ export interface User extends BaseGraphQLObject {
   userRoles?: Array<UserRole> | null
 }
 
-export interface UserRole extends BaseGraphQLObject {
+export interface UserRole {
   id: ID_Output
   createdAt: DateTime
   createdById: String

@@ -1,22 +1,19 @@
 import { Args, Query, Resolver } from 'type-graphql';
-import { Repository } from 'typeorm';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Inject } from 'typedi';
 
-import { BaseResolver } from '../../../src';
-import { UserWhereArgs, UserWhereInput } from '../generated';
+import { UserWhereArgs } from '../generated';
 
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 // Note: we have to specify `User` here instead of (() => User) because for some reason this
 // changes the object reference when it's trying to add the FieldResolver and things break
 @Resolver(User)
-export class UserResolver extends BaseResolver<User> {
-  constructor(@InjectRepository(User) public readonly userRepository: Repository<User>) {
-    super(User, userRepository);
-  }
+export class UserResolver {
+  constructor(@Inject('UserService') public readonly service: UserService) {}
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 }

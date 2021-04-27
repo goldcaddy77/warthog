@@ -229,7 +229,7 @@ describe('cli functional tests', () => {
     done();
   });
 
-  test.only('generates and runs migrations', async done => {
+  test('generates and runs migrations', async done => {
     const migrationDBName = 'warthog-test-generate-migrations';
 
     // Set environment variables for a test server that writes to a separate test DB and does NOT autogenerate files

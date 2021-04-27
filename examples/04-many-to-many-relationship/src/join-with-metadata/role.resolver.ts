@@ -1,24 +1,22 @@
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
-import { Repository } from 'typeorm';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Inject } from 'typedi';
 
-import { BaseContext, BaseResolver } from '../../../../src';
-import { RoleCreateInput, RoleWhereArgs, RoleWhereInput } from '../../generated';
+import { BaseContext } from '../../../../src';
+import { RoleCreateInput, RoleWhereArgs } from '../../generated';
 import { Role } from './role.model';
+import { RoleService } from './role.service';
 
 @Resolver(Role)
-export class RoleResolver extends BaseResolver<Role> {
-  constructor(@InjectRepository(Role) public readonly roleRepository: Repository<Role>) {
-    super(Role, roleRepository);
-  }
+export class RoleResolver {
+  constructor(@Inject('RoleService') public readonly service: RoleService) {}
 
   @Query(() => [Role])
   async roles(@Args() { where, orderBy, limit, offset }: RoleWhereArgs): Promise<Role[]> {
-    return this.find<RoleWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Mutation(() => Role)
   async createRole(@Arg('data') data: RoleCreateInput, @Ctx() ctx: BaseContext): Promise<Role> {
-    return this.create(data, ctx.user.id);
+    return this.service.create(data, ctx.user.id);
   }
 }
