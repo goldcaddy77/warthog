@@ -7,11 +7,15 @@ import { composeMethodDecorators } from '../utils';
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface PrimaryIdFieldOptions extends DecoratorCommonOptions {
-  filter?: true | IdWhereOperator[];
+  filter?: boolean | IdWhereOperator[];
   readonly?: boolean;
 }
 
 export function PrimaryIdField(options: PrimaryIdFieldOptions = {}): any {
+  if (typeof options.filter === 'undefined') {
+    options.filter = ['eq', 'in'];
+  }
+
   const factories = getCombinedDecorator({
     fieldType: 'id',
     gqlFieldType: ID,
