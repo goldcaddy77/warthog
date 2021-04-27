@@ -1,8 +1,8 @@
 import {
   CreatedAtField,
   DateTimeString,
-  IDType,
   IdModel,
+  IDType,
   Model,
   PrimaryIdField,
   StringField

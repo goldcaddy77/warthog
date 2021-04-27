@@ -1,17 +1,15 @@
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
-import { Repository } from 'typeorm';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Inject } from 'typedi';
 
-import { BaseContext, BaseResolver } from '../../../../src';
-import { UserCreateInput, UserWhereArgs, UserWhereInput } from '../../generated';
+import { BaseContext } from '../../../../src';
+import { UserCreateInput, UserWhereArgs } from '../../generated';
 import { UserRole } from './user-role.model';
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 @Resolver(User)
-export class UserResolver extends BaseResolver<User> {
-  constructor(@InjectRepository(User) public readonly userRepository: Repository<User>) {
-    super(User, userRepository);
-  }
+export class UserResolver {
+  constructor(@Inject('UserService') public readonly service: UserService) {}
 
   @FieldResolver(() => [UserRole])
   userRoles(@Root() user: User, @Ctx() ctx: BaseContext): Promise<UserRole[]> {
@@ -20,11 +18,11 @@ export class UserResolver extends BaseResolver<User> {
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Mutation(() => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
-    return this.create(data, ctx.user.id);
+    return this.service.create(data, ctx.user.id);
   }
 }

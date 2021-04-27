@@ -1,39 +1,36 @@
 import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql';
-import { Repository } from 'typeorm';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Inject } from 'typedi';
 
-import { BaseContext, BaseResolver, StandardDeleteResponse } from '../../../src';
+import { BaseContext, StandardDeleteResponse } from '../../../src';
 import {
   UserCreateInput,
   UserUpdateArgs,
   UserWhereArgs,
-  UserWhereInput,
   UserWhereUniqueInput
 } from '../generated/classes';
 
 import { User } from './user.model';
+import { UserService } from './user.service';
 
 // Note: we have to specify `User` here instead of (() => User) because for some reason this
 // changes the object reference when it's trying to add the FieldResolver and things break
 @Resolver(User)
-export class UserResolver extends BaseResolver<User> {
-  constructor(@InjectRepository(User) public readonly userRepository: Repository<User>) {
-    super(User, userRepository);
-  }
+export class UserResolver {
+  constructor(@Inject('UserService') public readonly service: UserService) {}
 
   @Query(() => [User])
   async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.find<UserWhereInput>(where, orderBy, limit, offset);
+    return this.service.find(where, orderBy, limit, offset);
   }
 
   @Query(() => User)
   async user(@Arg('where') where: UserWhereUniqueInput): Promise<User> {
-    return this.findOne<UserWhereUniqueInput>(where);
+    return this.service.findOne<UserWhereUniqueInput>(where);
   }
 
   @Mutation(() => User)
   async createUser(@Arg('data') data: UserCreateInput, @Ctx() ctx: BaseContext): Promise<User> {
-    return this.create(data, ctx.user.id);
+    return this.service.create(data, ctx.user.id);
   }
 
   @Mutation(() => User)
@@ -41,7 +38,7 @@ export class UserResolver extends BaseResolver<User> {
     @Args() { data, where }: UserUpdateArgs,
     @Ctx() ctx: BaseContext
   ): Promise<User> {
-    return this.update(data, where, ctx.user.id);
+    return this.service.update(data, where, ctx.user.id);
   }
 
   @Mutation(() => StandardDeleteResponse)
@@ -49,6 +46,6 @@ export class UserResolver extends BaseResolver<User> {
     @Arg('where') where: UserWhereUniqueInput,
     @Ctx() ctx: BaseContext
   ): Promise<StandardDeleteResponse> {
-    return this.delete(where, ctx.user.id);
+    return this.service.delete(where, ctx.user.id);
   }
 }

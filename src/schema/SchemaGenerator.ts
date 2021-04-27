@@ -53,7 +53,7 @@ export class SchemaGenerator {
       // prettier-ignore
       // @ts-ignore
 
-      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '${warthogImportPath}';
+      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '${warthogImportPath}';
       `
     ];
 
@@ -229,7 +229,7 @@ export class SchemaGenerator {
     if (idsOnCreate) {
       fieldTemplates += `
         @TypeGraphQLField({ nullable: true })
-        id?: ID; ${'' /* V3 breaking change: this was type string */}
+        id?: IDType; ${'' /* V3 breaking change: this was type string */}
       `;
     }
 

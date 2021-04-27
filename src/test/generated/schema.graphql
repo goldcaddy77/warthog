@@ -25,30 +25,6 @@ input ApiOnlyWhereUniqueInput {
   id: ID!
 }
 
-input BaseWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
-  deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
-}
-
 """
 A date string, such as 2007-12-03, compliant with the `full-date` format
 outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for

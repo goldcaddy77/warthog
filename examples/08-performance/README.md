@@ -1,4 +1,4 @@
-# Example 3 - Relationships
+## Example 8 - Performance
 
 ## Setup
 
@@ -13,7 +13,7 @@ Running `yarn bootstrap` will do the following:
 
 ## Running the App
 
-To run the project, run `yarn start`.  This will:
+To run the project, run `yarn start`. This will:
 
 - Run the API server
 - Open GraphQL Playground

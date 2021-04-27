@@ -8,7 +8,7 @@ import {
 } from "type-graphql";
 import { registerEnumType } from "type-graphql";
 
-import { BaseWhereInput, PaginationArgs } from "../../../../";
+import { PaginationArgs } from "../../../../";
 
 export enum CreateIDTestOrderByEnum {
   createdAt_ASC = "createdAt_ASC",
@@ -29,7 +29,7 @@ registerEnumType(CreateIDTestOrderByEnum, {
 });
 
 @TypeGraphQLInputType()
-export class CreateIDTestWhereInput extends BaseWhereInput {
+export class CreateIDTestWhereInput {
   @TypeGraphQLField({ nullable: true })
   stringField_eq?: string;
 

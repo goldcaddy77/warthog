@@ -1,4 +1,4 @@
-type Author implements BaseGraphQLObject {
+type Author {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -16,14 +16,24 @@ input AuthorCreateInput {
 }
 
 enum AuthorOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
   firstName_ASC
   firstName_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
 }
 
 input AuthorUpdateInput {
@@ -31,6 +41,11 @@ input AuthorUpdateInput {
 }
 
 input AuthorWhereInput {
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
   id_eq: ID
   id_in: [ID!]
   createdAt_eq: DateTime
@@ -55,72 +70,16 @@ input AuthorWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
 }
 
 input AuthorWhereUniqueInput {
   id: ID!
-}
-
-interface BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModel implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-type BaseModelUUID implements BaseGraphQLObject {
-  id: ID!
-  createdAt: DateTime!
-  createdById: String!
-  updatedAt: DateTime
-  updatedById: String
-  deletedAt: DateTime
-  deletedById: String
-  version: Int!
-}
-
-input BaseWhereInput {
-  id_eq: String
-  id_in: [String!]
-  createdAt_eq: String
-  createdAt_lt: String
-  createdAt_lte: String
-  createdAt_gt: String
-  createdAt_gte: String
-  createdById_eq: String
-  updatedAt_eq: String
-  updatedAt_lt: String
-  updatedAt_lte: String
-  updatedAt_gt: String
-  updatedAt_gte: String
-  updatedById_eq: String
-  deletedAt_all: Boolean
-  deletedAt_eq: String
-  deletedAt_lt: String
-  deletedAt_lte: String
-  deletedAt_gt: String
-  deletedAt_gte: String
-  deletedById_eq: String
 }
 
 """
@@ -148,7 +107,7 @@ type PageInfo {
   endCursor: String
 }
 
-type Post implements BaseGraphQLObject {
+type Post {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -167,14 +126,24 @@ input PostCreateInput {
 }
 
 enum PostOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
   name_ASC
   name_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
 }
 
 input PostUpdateInput {
@@ -182,6 +151,11 @@ input PostUpdateInput {
 }
 
 input PostWhereInput {
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
   id_eq: ID
   id_in: [ID!]
   createdAt_eq: DateTime
@@ -206,11 +180,12 @@ input PostWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
-  name_eq: String
-  name_contains: String
-  name_startsWith: String
-  name_endsWith: String
-  name_in: [String!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
 }
 
 input PostWhereUniqueInput {
@@ -224,7 +199,7 @@ type Query {
   authors(offset: Int, limit: Int = 50, where: AuthorWhereInput, orderBy: AuthorOrderByInput): [Author!]!
 }
 
-type Role implements BaseGraphQLObject {
+type Role {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -246,6 +221,11 @@ input RoleUpdateInput {
 }
 
 input RoleWhereInput {
+  name_eq: String
+  name_contains: String
+  name_startsWith: String
+  name_endsWith: String
+  name_in: [String!]
   id_eq: ID
   id_in: [ID!]
   createdAt_eq: DateTime
@@ -270,11 +250,12 @@ input RoleWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
-  name_eq: String
-  name_contains: String
-  name_startsWith: String
-  name_endsWith: String
-  name_in: [String!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
 }
 
 input RoleWhereUniqueInput {
@@ -285,7 +266,7 @@ type StandardDeleteResponse {
   id: ID!
 }
 
-type User implements BaseGraphQLObject {
+type User {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -303,17 +284,27 @@ input UserCreateInput {
 }
 
 enum UserOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
   firstName_ASC
   firstName_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
 }
 
-type UserRole implements BaseGraphQLObject {
+type UserRole {
   id: ID!
   createdAt: DateTime!
   createdById: String!
@@ -336,18 +327,28 @@ input UserRoleCreateInput {
 }
 
 enum UserRoleOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
   userId_ASC
   userId_DESC
   roleId_ASC
   roleId_DESC
   otherMetadata_ASC
   otherMetadata_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
 }
 
 input UserRoleUpdateInput {
@@ -357,6 +358,15 @@ input UserRoleUpdateInput {
 }
 
 input UserRoleWhereInput {
+  userId_eq: ID
+  userId_in: [ID!]
+  roleId_eq: ID
+  roleId_in: [ID!]
+  otherMetadata_eq: String
+  otherMetadata_contains: String
+  otherMetadata_startsWith: String
+  otherMetadata_endsWith: String
+  otherMetadata_in: [String!]
   id_eq: ID
   id_in: [ID!]
   createdAt_eq: DateTime
@@ -381,15 +391,12 @@ input UserRoleWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
-  userId_eq: ID
-  userId_in: [ID!]
-  roleId_eq: ID
-  roleId_in: [ID!]
-  otherMetadata_eq: String
-  otherMetadata_contains: String
-  otherMetadata_startsWith: String
-  otherMetadata_endsWith: String
-  otherMetadata_in: [String!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
 }
 
 input UserRoleWhereUniqueInput {
@@ -401,6 +408,11 @@ input UserUpdateInput {
 }
 
 input UserWhereInput {
+  firstName_eq: String
+  firstName_contains: String
+  firstName_startsWith: String
+  firstName_endsWith: String
+  firstName_in: [String!]
   id_eq: ID
   id_in: [ID!]
   createdAt_eq: DateTime
@@ -425,11 +437,12 @@ input UserWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
-  firstName_eq: String
-  firstName_contains: String
-  firstName_startsWith: String
-  firstName_endsWith: String
-  firstName_in: [String!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
 }
 
 input UserWhereUniqueInput {

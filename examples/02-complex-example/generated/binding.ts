@@ -106,31 +106,23 @@ export type UserOrderByInput =   'booleanField_ASC' |
   'readonlyField_ASC' |
   'readonlyField_DESC' |
   'apiOnlyField_ASC' |
-  'apiOnlyField_DESC'
-
-export interface BaseWhereInput {
-  id_eq?: String | null
-  id_in?: String[] | String | null
-  createdAt_eq?: String | null
-  createdAt_lt?: String | null
-  createdAt_lte?: String | null
-  createdAt_gt?: String | null
-  createdAt_gte?: String | null
-  createdById_eq?: String | null
-  updatedAt_eq?: String | null
-  updatedAt_lt?: String | null
-  updatedAt_lte?: String | null
-  updatedAt_gt?: String | null
-  updatedAt_gte?: String | null
-  updatedById_eq?: String | null
-  deletedAt_all?: Boolean | null
-  deletedAt_eq?: String | null
-  deletedAt_lt?: String | null
-  deletedAt_lte?: String | null
-  deletedAt_gt?: String | null
-  deletedAt_gte?: String | null
-  deletedById_eq?: String | null
-}
+  'apiOnlyField_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'updatedById_ASC' |
+  'updatedById_DESC' |
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC'
 
 export interface UserCreateInput {
   booleanField?: Boolean | null
@@ -394,49 +386,47 @@ export interface UserWhereInput {
   arrayOfInts_containsAll?: Int[] | Int | null
   arrayOfInts_containsNone?: Int[] | Int | null
   arrayOfInts_containsAny?: Int[] | Int | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
 }
 
 export interface UserWhereUniqueInput {
   emailField?: String | null
   enumField?: StringEnum | null
   stringField?: String | null
-}
-
-export interface BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
+  id?: ID_Input | null
 }
 
 export interface DeleteResponse {
   id: ID_Output
-}
-
-export interface BaseModel extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
-}
-
-export interface BaseModelUUID extends BaseGraphQLObject {
-  id: ID_Output
-  createdAt: DateTime
-  createdById: String
-  updatedAt?: DateTime | null
-  updatedById?: String | null
-  deletedAt?: DateTime | null
-  deletedById?: String | null
-  version: Int
 }
 
 export interface PageInfo {
@@ -450,7 +440,7 @@ export interface StandardDeleteResponse {
   id: ID_Output
 }
 
-export interface User extends BaseGraphQLObject {
+export interface User {
   id: ID_Output
   createdAt: DateTime
   createdById: String
