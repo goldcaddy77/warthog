@@ -152,7 +152,8 @@
   },
   "prettier": {
     "printWidth": 100,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "none"
   },
   "jest": {
     "setupFiles": [

@@ -39,6 +39,7 @@ export function EnumField(name: string, enumeration: object, options: EnumFieldO
     );
   };
 
+  // FIX THIS - SHOULD USE getCombinedDecorator
   const factories = [
     registerWithWarthog as MethodDecoratorFactory,
     Field(() => enumeration, options),

@@ -32,21 +32,23 @@ export class DataLoaderMiddleware implements MiddlewareInterface<BaseContext> {
         entityMetadata.relations.forEach(relation => {
           // define data loader for this method if it was not defined yet
           if (!loaders[resolverName][relation.propertyName]) {
-            loaders[resolverName][relation.propertyName] = new DataLoader((entities: any[]) => {
-              if (Array.isArray(entities) && entities[0] && Array.isArray(entities[0])) {
-                throw new Error('You must flatten arrays of arrays of entities');
-              }
-              return context.connection.relationIdLoader
-                .loadManyToManyRelationIdsAndGroup(relation, entities)
-                .then(groups => {
-                  return groups.map(group => {
-                    if (Array.isArray(group.related)) {
-                      return group.related.filter((item: Deleteable) => !item.deletedAt);
-                    }
-                    return group.related;
+            loaders[resolverName][relation.propertyName] = new DataLoader(
+              (entities: readonly any[]) => {
+                if (Array.isArray(entities) && entities[0] && Array.isArray(entities[0])) {
+                  throw new Error('You must flatten arrays of arrays of entities');
+                }
+                return context.connection.relationIdLoader
+                  .loadManyToManyRelationIdsAndGroup(relation, entities)
+                  .then(groups => {
+                    return groups.map(group => {
+                      if (Array.isArray(group.related)) {
+                        return group.related.filter((item: Deleteable) => !item.deletedAt);
+                      }
+                      return group.related;
+                    });
                   });
-                });
-            });
+              }
+            );
           }
         });
       });
