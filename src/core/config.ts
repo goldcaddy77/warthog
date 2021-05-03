@@ -26,7 +26,7 @@ const CONFIG_VALUE_VALID_KEYS = [
   'cliGeneratePath',
   'moduleImportPath',
   'resolversPath',
-  'validateResolvers'
+  'validateResolvers',
 ];
 
 interface StaticConfigFile {
@@ -41,6 +41,8 @@ interface StaticConfigResponse {
   config: StaticConfigFile;
 }
 
+type NodeENV = 'development' | 'test' | 'production' | 'none';
+
 @Service('Config')
 export class Config {
   readonly WARTHOG_ENV_PREFIX = 'WARTHOG_';
@@ -49,11 +51,12 @@ export class Config {
 
   defaults: Record<string, any>;
   devDefaults: Record<string, any>;
+  prodDefaults: Record<string, any>;
   testDefaults: Record<string, any>;
   PROJECT_ROOT: string;
   container: Container;
   logger?: Logger;
-  NODE_ENV?: string;
+  NODE_ENV?: NodeENV;
 
   config: ConfigObj;
 
@@ -81,18 +84,19 @@ export class Config {
       WARTHOG_DB_SUBSCRIBERS_DIR: 'src/subscribers',
       WARTHOG_DB_SYNCHRONIZE: 'false',
       WARTHOG_DB_URL: '',
-      WARTHOG_FILTER_BY_DEFAULT: 'true',
+      WARTHOG_FILTER_BY_DEFAULT: 'false',
       WARTHOG_MODULE_IMPORT_PATH: 'warthog',
       // TODO: eventually we should do this path resolution when we ask for the variable with `get`
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
+      WARTHOG_SERVICES_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.service.ts')],
       WARTHOG_SUBSCRIPTIONS: 'false',
       WARTHOG_VALIDATE_RESOLVERS: 'false',
       // Prevent 502s from happening in AWS and GCP (and probably other Production ENVs)
       // See https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
       WARTHOG_KEEP_ALIVE_TIMEOUT_MS: 30000,
       WARTHOG_HEADERS_TIMEOUT_MS: 60000,
-      WARTHOG_EXPLICIT_ENDPOINT_GENERATION: false
+      WARTHOG_EXPLICIT_ENDPOINT_GENERATION: false,
     };
 
     this.devDefaults = {
@@ -102,7 +106,18 @@ export class Config {
       WARTHOG_AUTO_GENERATE_FILES: 'true',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'true',
       WARTHOG_DB_HOST: 'localhost',
-      WARTHOG_DB_LOGGING: 'all'
+      WARTHOG_DB_LOGGING: 'all',
+    };
+
+    this.prodDefaults = {
+      WARTHOG_DB_ENTITIES: 'dist/src/**/*.model.js',
+      WARTHOG_DB_ENTITIES_DIR: 'dist/src/models',
+      WARTHOG_DB_SUBSCRIBERS: 'dist/src/**/*.model.js',
+      WARTHOG_DB_SUBSCRIBERS_DIR: 'dist/src/subscribers',
+      WARTHOG_RESOLVERS_PATH: 'dist/src/**/*.resolver.js',
+      WARTHOG_DB_MIGRATIONS: 'dist/db/migrations/**/*.js',
+      WARTHOG_DB_MIGRATIONS_DIR: 'dist/db/migrations',
+      WARTHOG_SERVICES_PATH: 'dist/src/**/*.service.js',
     };
 
     this.testDefaults = {
@@ -113,7 +128,7 @@ export class Config {
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
       WARTHOG_DB_DATABASE: 'warthog-test',
       WARTHOG_DB_HOST: 'localhost',
-      WARTHOG_DB_USERNAME: 'postgres'
+      WARTHOG_DB_USERNAME: 'postgres',
     };
 
     const dotenvPath = options.dotenvPath || this.PROJECT_ROOT;
@@ -127,18 +142,18 @@ export class Config {
   // the environment variable.  The reason we do this is because using dotenvi will allow us to switch
   // between environments.  If we require an actual environment variable to be set then we'll have to set
   // and unset the value in the current terminal buffer.
-  determineNodeEnv(dotenvPath: string) {
-    let nodeEnv = process.env.NODE_ENV;
+  determineNodeEnv(dotenvPath: string): NodeENV {
+    let nodeEnv = process.env.NODE_ENV as NodeENV;
 
     const filepath = path.join(dotenvPath, '.env');
     if (fs.existsSync(filepath)) {
       const config = dotenv.parse(fs.readFileSync(filepath));
       if (config.NODE_ENV) {
-        nodeEnv = config.NODE_ENV;
+        nodeEnv = config.NODE_ENV as NodeENV;
       }
     }
 
-    return (this.NODE_ENV = process.env.NODE_ENV = nodeEnv);
+    return (this.NODE_ENV = (process.env.NODE_ENV as NodeENV) = nodeEnv);
   }
 
   loadDotenvFiles(dotenvPath: string) {
@@ -149,15 +164,21 @@ export class Config {
       const filepath = path.join(dotenvPath, filename);
       if (fs.existsSync(filepath)) {
         dotenv.config({
-          path: filepath
+          path: filepath,
         });
       }
     });
   }
 
   loadSync(): Config {
-    const devOptions = this.NODE_ENV === 'development' ? this.devDefaults : {};
-    const testOptions = this.NODE_ENV === 'test' ? this.testDefaults : {};
+    const nodeEnv = this.NODE_ENV as 'development' | 'test' | 'production' | 'none';
+    const envDefaults = {
+      development: this.devDefaults,
+      test: this.testDefaults,
+      production: this.prodDefaults,
+      none: {},
+    }[nodeEnv];
+
     const configFile = this.loadStaticConfigSync();
 
     // Config is loaded as a waterfall.  Items at the top of the object are overwritten by those below
@@ -165,11 +186,10 @@ export class Config {
     // - Override with locked options
     const combined = {
       ...this.defaults, // - Add application-wide defaults
-      ...devOptions, // - Add development defaults (if we're runnign in DEV mode)
-      ...testOptions, // - Add test defaults (if we're runnign in tests)
+      ...envDefaults, // - Add environment-specific defaults
       ...configFile, // - Load config from config file
       ...this.typeORMToWarthogEnvVariables(), // - Load TypeORM environment variables if set
-      ...this.warthogEnvVariables() // - Load Warthog environment variables
+      ...this.warthogEnvVariables(), // - Load Warthog environment variables
     };
 
     this.config = this.finalizeConfig(combined);
@@ -219,7 +239,7 @@ export class Config {
         hostname: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[0] : undefined,
         port: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[1] : undefined,
         database: matches[4] != undefined ? matches[4] : undefined,
-        params: params
+        params: params,
       };
       if (parts.user) {
         config.WARTHOG_DB_USERNAME = parts.user;
@@ -271,7 +291,7 @@ export class Config {
       'WARTHOG_DB_ENTITIES',
       'WARTHOG_DB_MIGRATIONS',
       'WARTHOG_DB_SUBSCRIBERS',
-      'WARTHOG_RESOLVERS_PATH'
+      'WARTHOG_RESOLVERS_PATH',
     ];
 
     const pathTypes = ['WARTHOG_GENERATED_FOLDER'];
@@ -377,7 +397,7 @@ export class Config {
     }
 
     const userConfigKeys = Object.keys(results.config);
-    const badKeys = userConfigKeys.filter(x => !CONFIG_VALUE_VALID_KEYS.includes(x));
+    const badKeys = userConfigKeys.filter((x) => !CONFIG_VALUE_VALID_KEYS.includes(x));
     if (badKeys.length) {
       throw new Error(
         `Config: invalid keys specified in ${results.filepath}: [${badKeys.join(', ')}]`

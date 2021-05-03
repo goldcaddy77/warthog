@@ -7,6 +7,8 @@ import { getBindingError, logger } from '../../';
 import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
 
+import { setTestServerEnvironmentVariables } from '../../test/server-vars';
+
 import { Binding, KitchenSinkWhereInput } from '../generated/binding';
 import { KitchenSink, StringEnum, Dish } from '../modules';
 import { getTestServer } from '../test-server';
@@ -32,7 +34,7 @@ let kitchenSink: KitchenSink;
 describe('server', () => {
   // Make sure to clean up server
   beforeAll(async done => {
-    // setTestServerEnvironmentVariables();
+    setTestServerEnvironmentVariables();
 
     runKey = String(new Date().getTime()); // used to ensure test runs create unique data
 

@@ -34,6 +34,7 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_DB_USERNAME: 'postgres',
     WARTHOG_DB_PASSWORD: '',
     WARTHOG_DB_SYNCHRONIZE: 'true',
+    WARTHOG_FILTER_BY_DEFAULT: 'true',
     WARTHOG_GENERATED_FOLDER: './src/test/generated',
     WARTHOG_RESOLVERS_PATH: './src/test/modules/**/*.resolver.ts',
     WARTHOG_MODULE_IMPORT_PATH: '../../',
