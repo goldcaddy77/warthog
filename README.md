@@ -20,9 +20,116 @@
 
 Warthog is a [Node.js](http://nodejs.org) GraphQL API framework for quickly building consistent GraphQL APIs that have sorting, filtering and pagination out of the box. It is written in [TypeScript](http://www.typescriptlang.org) and makes heavy use of decorators for concise, declarative code.
 
-## Note: Upgrading from 2.0 to 3.0
+## Warthog is now V3
 
-Warthog is now on version 3.0! There were a few breaking changes that you should consider while upgrading. Also, we tried to keep all new features development on v1, but did end up adding JSON filtering directly to 2.0 as it was much easier given some foundation refactors.
+SEE:
+
+https://github.com/goldcaddy77/warthog/issues/339#issuecomment-835441861
+
+
+TODO:
+
+- Fix this: `test.only('generates and runs migrations', async done => {`
+- Merge read replica
+- Add docs site
+- Monorepo
+
+Warthog is now on version 3.0!
+
+WARTHOG_EXPLICIT_ENDPOINT_GENERATION
+Add FILTER_BY_DEFAULT - this will be false, meaning you have to explicitly set your filters
+
+- Note: basemodel will still add id_eq and id_in
+
+Fix this - need to type it correctly [BaseService `find` no longer takes a <X>WhereInput]
+
+---
+
+Features:
+
+- Read replica
+
+---
+
+BaseModel
+
+The old BaseModel is dead and has been replaced by a new version that uses Warthog decorators under the hood.
+There is also no longer an expectation that you inherit from BaseModel
+
+---
+
+Decorators
+
+- Add PrimaryIdField decorator - default filters: 'eq', 'in'
+- CreatedAtField.ts
+- CreatedByField.ts
+  src/decorators/DeletedAtField.ts
+  src/decorators/DeletedByField.ts
+
+src/decorators/UpdatedAtField.ts
+src/decorators/UpdatedByField.ts
+src/decorators/VersionField.ts
+
+---
+
+Update to ConfigService
+
+- Add sane production defaults:
+
+WARTHOG*DB_ENTITIES: 'dist/src/**/\*.model.js',
+WARTHOG_DB_ENTITIES_DIR: 'dist/src/models',
+WARTHOG_DB_SUBSCRIBERS: 'dist/src/**/*.model.js',
+WARTHOG DB_SUBSCRIBERS_DIR: 'dist/src/subscribers',
+WARTHOG_RESOLVERS_PATH: 'dist/src/\*\*/*.resolver.js',
+WARTHOG_DB_MIGRATIONS: 'dist/db/migrations/**/\*.js',
+WARTHOG_DB_MIGRATIONS_DIR: 'dist/db/migrations',
+WARTHOG_SERVICES_PATH: 'dist/src/**/\*.service.js',
+
+---
+
+Updates to BaseService
+
+- No longer expects all of the recommended warthog columns
+  - i.e. will look for deletedAt before adding base "where deletedAt IS NULL" filter
+
+---
+
+Utility methods
+
+- generateId()
+
+---
+
+New Config:
+
+- WARTHOG_DB_URL - set all DB fields at once
+
+---
+
+Breaking change:
+
+- PageInfo signature changed from [limit, offset, totalCount, hasNextPage, hasPreviousPage] to relay stuff [hasNextPage, hasPreviousPage, startCursor, endCursor]
+- Remove `createConnection` export - use Database class
+- Removed `BaseResolver` - antipattern
+- Old BaseModel and BaseModelUUID GraphQL types are gone. Recreate yourself and add to schema if needed
+
+---
+
+Update to generated schema output:
+
+- WhereUniqueInput
+  - if there are no unique fields, it's not output
+- deletedAt_gte?: Date -> DateTimeString
+- Types will no longer implement from BaseGraphQLObject
+
+Add SchemaBuilder class
+Add Database Service to create DB connection
+Refactored the codebase to use a DI'd Config module most places
+Add test utility methods
+Clean up all examples to be on latest
+Testing - callAPISuccess + callAPIFailure
+
+Metadata service has been overhauled to write metadata to our classes and then reading it back during schema builder. This improves testability and will make it ease
 
 <details>
 <summary>Expand for Breaking change details</summary>
