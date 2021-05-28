@@ -13,8 +13,6 @@ export default {
       parameters: { options }
     } = toolbox;
 
-    console.log('options :>> ', options);
-
     const generateOptions = options.binding ? { generateBinding: true } : {};
 
     try {

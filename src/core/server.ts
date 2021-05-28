@@ -195,6 +195,8 @@ export class Server<C extends BaseContext> {
 
   @debug('warthog:server')
   async start() {
+    console.log('this.config.get() :>> ', this.config.get());
+
     await this.establishDBConnection();
     if (this.config.get('AUTO_GENERATE_FILES') === 'true') {
       await this.generateFiles();

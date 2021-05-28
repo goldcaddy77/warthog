@@ -1,8 +1,8 @@
-import { Server, ServerOptions } from './server';
+import { setTestServerEnvironmentVariables } from '../test/server-vars';
 import { getTestServer } from '../test/test-server';
+import { Server, ServerOptions } from './server';
 
 import express = require('express');
-import { setTestServerEnvironmentVariables } from '../test/server-vars';
 
 describe('Server', () => {
   let server: Server<any>;

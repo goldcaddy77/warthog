@@ -2,6 +2,7 @@ import * as path from 'path';
 import Container, { Service } from 'typedi';
 import { Connection } from 'typeorm';
 import { CodeGenerator, Config, getContainer } from '../../core';
+import { SchemaGenerator } from '../../schema';
 import { Database } from '../../torm';
 import { getStandardEnvironmentVariables } from '../server-vars';
 import { MyBaseModelTestService } from './my-base-model.model';
@@ -28,9 +29,6 @@ class MockConfig {
   }
 
   public get(key: string) {
-    // console.log('this.config :>> ', this.config);
-    console.log('key :>> ', key, this.config[key]);
-
     if (typeof this.config[key] !== 'undefined') {
       return this.config[key];
     }
@@ -52,7 +50,8 @@ describe('MyBaseModel', () => {
     connection = await database.createDBConnection();
     service = getContainer(MyBaseModelTestService);
 
-    const codeGenerator = getContainer(CodeGenerator);
+    const schemaGenerator = new SchemaGenerator(config);
+    const codeGenerator = new CodeGenerator(config, schemaGenerator);
     await codeGenerator.generate({ generateBinding: false });
 
     done();

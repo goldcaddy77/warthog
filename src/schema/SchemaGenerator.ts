@@ -1,5 +1,5 @@
 import * as prettier from 'prettier';
-import { Container, Inject, Service } from 'typedi';
+import { Inject, Service } from 'typedi';
 import { getMetadataArgsStorage } from 'typeorm';
 import { Config } from '../core';
 import { ColumnMetadata, getMetadataStorage, MetadataStorage, ModelMetadata } from '../metadata';
@@ -219,8 +219,7 @@ export class SchemaGenerator {
   }
 
   entityToCreateInput(model: ModelMetadata): string {
-    const idsOnCreate =
-      (Container.get('Config') as Config).get('ALLOW_OPTIONAL_ID_ON_CREATE') === 'true';
+    const idsOnCreate = this.config.get('ALLOW_OPTIONAL_ID_ON_CREATE') === 'true';
 
     let fieldTemplates = '';
 
@@ -234,7 +233,7 @@ export class SchemaGenerator {
     const modelColumns = this.getColumnsForModel(model);
 
     modelColumns.forEach((column: ColumnMetadata) => {
-      if (!column.editable || column.readonly) {
+      if (column.readonly) {
         return;
       }
       let graphQLDataType = this.columnToGraphQLDataType(column);
@@ -280,7 +279,7 @@ export class SchemaGenerator {
 
     const modelColumns = this.getColumnsForModel(model);
     modelColumns.forEach((column: ColumnMetadata) => {
-      if (!column.editable || column.readonly) {
+      if (column.readonly) {
         return;
       }
 
@@ -341,25 +340,28 @@ export class SchemaGenerator {
   }
 
   entityToWhereInput(model: ModelMetadata): string {
+    const filterByDefault = this.config.get('FILTER_BY_DEFAULT') === 'true';
+    console.log('entityToWhereInput :>> ', filterByDefault);
     let fieldTemplates = '';
+
+    function allowFilter(column: ColumnMetadata, op: WhereOperator) {
+      if (column.filter === true) {
+        return true;
+      } else if (column.filter === false) {
+        return false;
+      } else if (Array.isArray(column.filter)) {
+        return column.filter.includes(op);
+      } else {
+        return filterByDefault;
+      }
+    }
 
     const modelColumns = this.getColumnsForModel(model);
     modelColumns.forEach((column: ColumnMetadata) => {
       // If user specifically says not to filter (filter: false), then don't provide where inputs
       // Also, if the columns is "write only", then it cannot therefore be read and shouldn't have filters
-      if (!column.filter || column.writeonly) {
+      if (column.filter === false || column.writeonly === true) {
         return;
-      }
-
-      function allowFilter(op: WhereOperator) {
-        if (column.filter === true) {
-          return true;
-        }
-        if (column.filter === false) {
-          return false;
-        }
-
-        return !!column.filter?.includes(op);
       }
 
       const { tsType } = this.columnToTypes(column);
@@ -382,21 +384,21 @@ export class SchemaGenerator {
       } else if (column.type === 'id') {
         const graphQlType = 'ID';
 
-        if (allowFilter('eq')) {
+        if (allowFilter(column, 'eq')) {
           fieldTemplates += `
           @TypeGraphQLField(() => ${graphQlType},{ nullable: true })
           ${column.propertyName}_eq?: string;
         `;
         }
 
-        if (allowFilter('in')) {
+        if (allowFilter(column, 'in')) {
           fieldTemplates += `
           @TypeGraphQLField(() => [${graphQlType}], { nullable: true })
           ${column.propertyName}_in?: string[];
           `;
         }
       } else if (column.type === 'boolean') {
-        if (allowFilter('eq')) {
+        if (allowFilter(column, 'eq')) {
           fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType},{ nullable: true })
           ${column.propertyName}_eq?: Boolean;
@@ -404,7 +406,7 @@ export class SchemaGenerator {
         }
 
         // V3: kill the boolean "in" clause
-        if (allowFilter('in')) {
+        if (allowFilter(column, 'in')) {
           fieldTemplates += `
           @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
           ${column.propertyName}_in?: Boolean[];
@@ -413,35 +415,35 @@ export class SchemaGenerator {
       } else if (column.type === 'string' || column.type === 'email') {
         // TODO: do we need NOT?
         // `${column.propertyName}_not`
-        if (allowFilter('eq')) {
+        if (allowFilter(column, 'eq')) {
           fieldTemplates += `
             @TypeGraphQLField({ nullable: true })
             ${column.propertyName}_eq?: ${tsType};
           `;
         }
 
-        if (allowFilter('contains')) {
+        if (allowFilter(column, 'contains')) {
           fieldTemplates += `
             @TypeGraphQLField({ nullable: true })
             ${column.propertyName}_contains?: ${tsType};
           `;
         }
 
-        if (allowFilter('startsWith')) {
+        if (allowFilter(column, 'startsWith')) {
           fieldTemplates += `
             @TypeGraphQLField({ nullable: true })
             ${column.propertyName}_startsWith?: ${tsType};
           `;
         }
 
-        if (allowFilter('endsWith')) {
+        if (allowFilter(column, 'endsWith')) {
           fieldTemplates += `
             @TypeGraphQLField({ nullable: true })
             ${column.propertyName}_endsWith?: ${tsType};
           `;
         }
 
-        if (allowFilter('in')) {
+        if (allowFilter(column, 'in')) {
           fieldTemplates += `
             @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
             ${column.propertyName}_in?: ${tsType}[];
@@ -452,37 +454,37 @@ export class SchemaGenerator {
         column.type === 'integer' ||
         column.type === 'numeric'
       ) {
-        if (allowFilter('eq')) {
+        if (allowFilter(column, 'eq')) {
           fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
           ${column.propertyName}_eq?: ${tsType};
         `;
         }
-        if (allowFilter('gt')) {
+        if (allowFilter(column, 'gt')) {
           fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
           ${column.propertyName}_gt?: ${tsType};
         `;
         }
-        if (allowFilter('gte')) {
+        if (allowFilter(column, 'gte')) {
           fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
           ${column.propertyName}_gte?: ${tsType};
         `;
         }
-        if (allowFilter('lt')) {
+        if (allowFilter(column, 'lt')) {
           fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
           ${column.propertyName}_lt?: ${tsType};
         `;
         }
-        if (allowFilter('lte')) {
+        if (allowFilter(column, 'lte')) {
           fieldTemplates += `
           @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
           ${column.propertyName}_lte?: ${tsType};
         `;
         }
-        if (allowFilter('in')) {
+        if (allowFilter(column, 'in')) {
           fieldTemplates += `
           @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
           ${column.propertyName}_in?: ${tsType}[];
@@ -502,47 +504,47 @@ export class SchemaGenerator {
           `;
         }
 
-        if (allowFilter('eq')) {
+        if (allowFilter(column, 'eq')) {
           fieldTemplates += `
             @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
             ${column.propertyName}_eq?: ${tsType};
           `;
         }
-        if (allowFilter('lt')) {
+        if (allowFilter(column, 'lt')) {
           fieldTemplates += `
             @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
             ${column.propertyName}_lt?: ${tsType};
           `;
         }
 
-        if (allowFilter('lte')) {
+        if (allowFilter(column, 'lte')) {
           fieldTemplates += `
             @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
             ${column.propertyName}_lte?: ${tsType};
           `;
         }
 
-        if (allowFilter('gt')) {
+        if (allowFilter(column, 'gt')) {
           fieldTemplates += `   
             @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
             ${column.propertyName}_gt?: ${tsType};
           `;
         }
-        if (allowFilter('gte')) {
+        if (allowFilter(column, 'gte')) {
           fieldTemplates += `
             @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
             ${column.propertyName}_gte?: ${tsType};
         `;
         }
       } else if (column.type === 'enum') {
-        if (allowFilter('eq')) {
+        if (allowFilter(column, 'eq')) {
           fieldTemplates += `
             @TypeGraphQLField(() => ${graphQLDataType}, { nullable: true })
             ${column.propertyName}_eq?: ${graphQLDataType};
         `;
         }
 
-        if (allowFilter('in')) {
+        if (allowFilter(column, 'in')) {
           fieldTemplates += `
             @TypeGraphQLField(() => [${graphQLDataType}], { nullable: true })
             ${column.propertyName}_in?: ${graphQLDataType}[];
@@ -597,6 +599,9 @@ export class SchemaGenerator {
   }
 
   entityToOrderByEnum(model: ModelMetadata): string {
+    // user FILTER_BY_DEFAULT for both sort and filter
+    const sortByDefault = this.config.get('FILTER_BY_DEFAULT') === 'true';
+
     const modelColumns = this.getColumnsForModel(model);
     const sortable = modelColumns
       .filter((column: ColumnMetadata) => {
@@ -605,10 +610,15 @@ export class SchemaGenerator {
         // If column is type json
         // Also, if the column is "write only", therefore it cannot be read and shouldn't be sortable
         // Also, doesn't make sense to sort arrays
-        if (!column.sort || column.type === 'json' || column.writeonly || column.array) {
+        if (column.sort === true) {
+          return true;
+        }
+        if (column.sort === false || column.type === 'json' || column.writeonly || column.array) {
           return false;
         }
-        return true;
+
+        // If sorting hasn't been explicitly turned on or off, just use the default based on the ENV var
+        return sortByDefault;
       })
       .map((column: ColumnMetadata) => column.propertyName);
 

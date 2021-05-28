@@ -435,24 +435,6 @@ input MyBaseModelTestCreateInput {
 }
 
 enum MyBaseModelTestOrderByInput {
-  stringField_ASC
-  stringField_DESC
-  createdAt_ASC
-  createdAt_DESC
-  createdById_ASC
-  createdById_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  updatedById_ASC
-  updatedById_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deletedById_ASC
-  deletedById_DESC
-  version_ASC
-  version_DESC
-  ownerId_ASC
-  ownerId_DESC
   id_ASC
   id_DESC
 }
@@ -462,41 +444,7 @@ input MyBaseModelTestUpdateInput {
 }
 
 input MyBaseModelTestWhereInput {
-  stringField_eq: String
-  stringField_contains: String
-  stringField_startsWith: String
-  stringField_endsWith: String
-  stringField_in: [String!]
-  createdAt_eq: DateTime
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
   deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
-  version_eq: Int
-  version_gt: Int
-  version_gte: Int
-  version_lt: Int
-  version_lte: Int
-  version_in: [Int!]
-  ownerId_eq: ID
-  ownerId_in: [ID!]
   id_in: [ID!]
 }
 
