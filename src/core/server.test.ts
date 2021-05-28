@@ -1,8 +1,10 @@
-import { Server, ServerOptions } from './server';
+import { Database } from 'torm';
+import Container from 'typedi';
+import { setTestServerEnvironmentVariables } from '../test/server-vars';
 import { getTestServer } from '../test/test-server';
+import { Server, ServerOptions } from './server';
 
 import express = require('express');
-import { setTestServerEnvironmentVariables } from '../test/server-vars';
 
 describe('Server', () => {
   let server: Server<any>;
@@ -43,6 +45,22 @@ describe('Server', () => {
     expect(server.schema).toBeTruthy();
     expect(appListenSpy).toHaveBeenCalledTimes(1);
     expect(hasGraphQlRoute(server.expressApp._router)).toBeTruthy();
+  });
+
+  test('start a server with a custom DB connection', async () => {
+    const testConnectionName = 'custom-test-connection';
+    const database = Container.get('Database') as Database;
+    const connection = await database.createDBConnection({ name: testConnectionName });
+
+    const connectionGetter = () => {
+      return Promise.resolve(connection);
+    };
+
+    server = buildServer({ connectionGetter });
+    await server.start();
+
+    expect(server.getConnection().name).toEqual(testConnectionName);
+    expect(server.getConnection()).toEqual(connection);
   });
 });
 

@@ -1,29 +1,27 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
-import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
+import { ApolloServer, ApolloServerExpressConfig, OptionsJson } from 'apollo-server-express';
 import { Request } from 'express';
-import express = require('express');
 import { GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
+import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
-const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 import { AuthChecker } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
-
 import { logger, Logger } from '../core/logger';
 import { debug } from '../decorators';
 import { getRemoteBinding } from '../gql';
 import { healthCheckMiddleware } from '../middleware';
 import { SchemaBuilder } from '../schema';
 import { Database } from '../torm';
-
 import { CodeGenerator } from './CodeGenerator';
 import { Config } from './config';
 import { BaseContext } from './Context';
+import express = require('express');
+const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 
 Container.import([Config, SchemaBuilder]);
 
@@ -32,6 +30,7 @@ export interface ServerOptions<T> {
   apolloConfig?: ApolloServerExpressConfig;
   authChecker?: AuthChecker<T>;
   autoGenerateFiles?: boolean;
+  connectionGetter?: (config: Config) => Connection | Promise<Connection>;
   context?: (request: Request) => object;
   expressApp?: express.Application;
   host?: string;
@@ -125,9 +124,14 @@ export class Server<C extends BaseContext> {
 
   @debug('warthog:server')
   async establishDBConnection(): Promise<Connection> {
-    if (!this.connection) {
-      const database = Container.get('Database') as Database;
+    if (this.connection) {
+      return this.connection;
+    }
 
+    if (this.appOptions.connectionGetter) {
+      this.connection = await this.appOptions.connectionGetter(this.config);
+    } else {
+      const database = Container.get('Database') as Database;
       this.connection = await database.createDBConnection(this.dbOptions);
     }
 
@@ -142,6 +146,10 @@ export class Server<C extends BaseContext> {
 
   getGraphQLServerUrl() {
     return `${this.getServerUrl()}/graphql`;
+  }
+
+  getConnection(): Connection {
+    return this.connection;
   }
 
   async getBinding(options: { origin?: string; token?: string } = {}): Promise<Binding> {
