@@ -32,12 +32,13 @@ type StandardDeleteResponse {
 type User {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   firstName: String!
   lastName: String!
 }
@@ -52,8 +53,6 @@ enum UserOrderByInput {
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -68,6 +67,10 @@ enum UserOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input UserUpdateInput {
@@ -86,8 +89,6 @@ input UserWhereInput {
   lastName_startsWith: String
   lastName_endsWith: String
   lastName_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -116,6 +117,9 @@ input UserWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input UserWhereUniqueInput {

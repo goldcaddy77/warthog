@@ -21,3 +21,61 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 // @ts-ignore
 
 import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '../../../src';
+
+// @ts-ignore
+
+import { User } from "../dist/examples/09-production/src/modules/user/user.model";
+
+export enum UserOrderByEnum {
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
+}
+
+registerEnumType(UserOrderByEnum, {
+  name: "UserOrderByInput"
+});
+
+@TypeGraphQLInputType()
+export class UserWhereInput {
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+}
+
+@TypeGraphQLInputType()
+export class UserWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class UserCreateInput {
+  @TypeGraphQLField()
+  firstName!: string;
+}
+
+@TypeGraphQLInputType()
+export class UserUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  firstName?: string;
+}
+
+@ArgsType()
+export class UserWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
+  where?: UserWhereInput;
+
+  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
+  orderBy?: UserOrderByEnum;
+}
+
+@ArgsType()
+export class UserCreateManyArgs {
+  @TypeGraphQLField(() => [UserCreateInput])
+  data!: UserCreateInput[];
+}
+
+@ArgsType()
+export class UserUpdateArgs {
+  @TypeGraphQLField() data!: UserUpdateInput;
+  @TypeGraphQLField() where!: UserWhereUniqueInput;
+}

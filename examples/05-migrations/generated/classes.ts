@@ -20,7 +20,7 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 // prettier-ignore
 // @ts-ignore
 
-import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '../../../src';
+import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '../../../src';
 
 // @ts-ignore
 
@@ -35,9 +35,6 @@ export enum UserOrderByEnum {
 
   email_ASC = "email_ASC",
   email_DESC = "email_DESC",
-
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
 
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
@@ -58,7 +55,13 @@ export enum UserOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -111,12 +114,6 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   email_in?: string[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
@@ -201,6 +198,15 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()

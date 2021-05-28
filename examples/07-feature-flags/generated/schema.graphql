@@ -10,17 +10,18 @@ interface DeleteResponse {
 type Environment {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   name: String!
   key: String!
   projKey: String!
   project: Project
-  projectId: String
+  projectId: ID
   segments: [Segment!]
   featureFlagUsers: [FeatureFlagUser!]
   featureFlagSegments: [FeatureFlagSegment!]
@@ -43,8 +44,6 @@ enum EnvironmentOrderByInput {
   projKey_DESC
   projectId_ASC
   projectId_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -59,6 +58,10 @@ enum EnvironmentOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input EnvironmentUpdateInput {
@@ -86,8 +89,6 @@ input EnvironmentWhereInput {
   projKey_in: [String!]
   projectId_eq: ID
   projectId_in: [ID!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -116,6 +117,9 @@ input EnvironmentWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input EnvironmentWhereUniqueInput {
@@ -125,17 +129,18 @@ input EnvironmentWhereUniqueInput {
 type FeatureFlag {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   name: String!
   key: String!
   projKey: String!
   project: Project
-  projectId: String
+  projectId: ID
   featureFlagUsers: [FeatureFlagUser!]
   featureFlagSegments: [FeatureFlagSegment!]
 }
@@ -156,8 +161,6 @@ enum FeatureFlagOrderByInput {
   projKey_DESC
   projectId_ASC
   projectId_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -172,29 +175,34 @@ enum FeatureFlagOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 type FeatureFlagSegment {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   projKey: String!
   project: Project
-  projectId: String
+  projectId: ID
   envKey: String!
   environment: Environment
-  environmentId: String
+  environmentId: ID
   featureKey: String!
   featureFlag: FeatureFlag
-  featureFlagId: String
+  featureFlagId: ID
   segmentKey: String!
   segment: Segment
-  segmentId: String
+  segmentId: ID
 }
 
 input FeatureFlagSegmentCreateInput {
@@ -225,8 +233,6 @@ enum FeatureFlagSegmentOrderByInput {
   segmentKey_DESC
   segmentId_ASC
   segmentId_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -241,6 +247,10 @@ enum FeatureFlagSegmentOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input FeatureFlagSegmentUpdateInput {
@@ -283,8 +293,6 @@ input FeatureFlagSegmentWhereInput {
   segmentKey_in: [String!]
   segmentId_eq: ID
   segmentId_in: [ID!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -313,6 +321,9 @@ input FeatureFlagSegmentWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input FeatureFlagSegmentWhereUniqueInput {
@@ -335,24 +346,25 @@ input FeatureFlagUpdateInput {
 type FeatureFlagUser {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   featureKey: String!
   featureFlag: FeatureFlag
-  featureFlagId: String
+  featureFlagId: ID
   userKey: String!
   user: User
-  userId: String
+  userId: ID
   projKey: String!
   project: Project
-  projectId: String
+  projectId: ID
   envKey: String!
   environment: Environment
-  environmentId: String
+  environmentId: ID
 }
 
 input FeatureFlagUserCreateInput {
@@ -383,8 +395,6 @@ enum FeatureFlagUserOrderByInput {
   envKey_DESC
   environmentId_ASC
   environmentId_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -399,6 +409,10 @@ enum FeatureFlagUserOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input FeatureFlagUserUpdateInput {
@@ -441,8 +455,6 @@ input FeatureFlagUserWhereInput {
   envKey_in: [String!]
   environmentId_eq: ID
   environmentId_in: [ID!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -471,6 +483,9 @@ input FeatureFlagUserWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input FeatureFlagUserWhereUniqueInput {
@@ -495,8 +510,6 @@ input FeatureFlagWhereInput {
   projKey_in: [String!]
   projectId_eq: ID
   projectId_in: [ID!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -525,6 +538,9 @@ input FeatureFlagWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input FeatureFlagWhereUniqueInput {
@@ -565,12 +581,13 @@ type PageInfo {
 type Project {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   name: String!
   key: String!
   environments: [Environment!]
@@ -591,8 +608,6 @@ enum ProjectOrderByInput {
   name_DESC
   key_ASC
   key_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -607,6 +622,10 @@ enum ProjectOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input ProjectUpdateInput {
@@ -625,8 +644,6 @@ input ProjectWhereInput {
   key_startsWith: String
   key_endsWith: String
   key_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -655,6 +672,9 @@ input ProjectWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input ProjectWhereUniqueInput {
@@ -684,21 +704,22 @@ type Query {
 type Segment {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   name: String!
   key: String!
   description: String!
   projKey: String!
   project: Project
-  projectId: String
+  projectId: ID
   envKey: String!
   environment: Environment
-  environmentId: String
+  environmentId: ID
   featureFlagSegments: [FeatureFlagSegment!]
   userSegments: [UserSegment!]
 }
@@ -728,8 +749,6 @@ enum SegmentOrderByInput {
   envKey_DESC
   environmentId_ASC
   environmentId_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -744,6 +763,10 @@ enum SegmentOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input SegmentUpdateInput {
@@ -786,8 +809,6 @@ input SegmentWhereInput {
   envKey_in: [String!]
   environmentId_eq: ID
   environmentId_in: [ID!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -816,6 +837,9 @@ input SegmentWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input SegmentWhereUniqueInput {
@@ -829,12 +853,13 @@ type StandardDeleteResponse {
 type User {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   key: String!
   featureFlagUsers: [FeatureFlagUser!]
   userSegments: [UserSegment!]
@@ -847,24 +872,25 @@ input UserCreateInput {
 type UserSegment {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   projKey: String!
   project: Project
-  projectId: String
+  projectId: ID
   envKey: String!
   environment: Environment
-  environmentId: String
+  environmentId: ID
   userKey: String!
   user: User
-  userId: String
+  userId: ID
   segmentKey: String!
   segment: Segment
-  segmentId: String
+  segmentId: ID
 }
 
 input UserSegmentCreateInput {
@@ -895,8 +921,6 @@ enum UserSegmentOrderByInput {
   segmentKey_DESC
   segmentId_ASC
   segmentId_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -911,6 +935,10 @@ enum UserSegmentOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input UserSegmentUpdateInput {
@@ -953,8 +981,6 @@ input UserSegmentWhereInput {
   segmentKey_in: [String!]
   segmentId_eq: ID
   segmentId_in: [ID!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -983,6 +1009,9 @@ input UserSegmentWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input UserSegmentWhereUniqueInput {
@@ -999,8 +1028,6 @@ input UserWhereInput {
   key_startsWith: String
   key_endsWith: String
   key_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -1029,6 +1056,9 @@ input UserWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input UserWhereUniqueInput {
