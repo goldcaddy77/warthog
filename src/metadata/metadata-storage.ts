@@ -1,8 +1,7 @@
 import { GraphQLEnumType } from 'graphql';
-import { Container, Inject, Service } from 'typedi';
-
+import { Container, Service } from 'typedi';
+import { ClassType } from '../core';
 import { ColumnType, WhereOperator } from '../torm';
-import { ClassType, Config } from '../core';
 
 export type FieldType =
   | 'boolean'
@@ -45,6 +44,7 @@ export interface ColumnMetadata extends DecoratorCommonOptions {
     | 'updated-by'
     | 'deleted-at'
     | 'deleted-by'
+    | 'owner'
     | 'version';
   unique?: boolean;
   array?: boolean;
@@ -71,34 +71,15 @@ type EndpointType =
   | 'update'
   | 'delete';
 
+// TODO: we need to ensure there is an ID field on the model
+// MetadataStorage class is only responsible for capturing raw metadata, not additional business logic or other defaults
+// Consumers should work off of this raw data
 @Service('MetadataStorage')
 export class MetadataStorage {
   enumMap: { [table: string]: { [column: string]: any } } = {};
   classMap: { [table: string]: any } = {};
   models: { [table: string]: ModelMetadata } = {};
   interfaces: string[] = [];
-
-  decoratorDefaults: Partial<ColumnMetadata>;
-
-  constructor(@Inject('Config') readonly config: Config) {
-    const filterByDefault = this.config.get('FILTER_BY_DEFAULT') !== 'false';
-
-    this.decoratorDefaults = {
-      apiOnly: false,
-      dbOnly: false,
-      editable: true, // Deprecated
-      // `true` by default, provide opt-out for backward compatability
-      // V3: make this false by default
-      filter: filterByDefault,
-      nullable: false,
-      readonly: false,
-      sort: filterByDefault,
-      unique: false,
-      writeonly: false
-    };
-
-    // TODO: we need to ensure there is an ID field on the model
-  }
 
   addModel(name: string, klass: any, filename: string, options: Partial<ModelMetadata> = {}) {
     if (this.interfaces.indexOf(name) > -1) {
@@ -234,7 +215,6 @@ export class MetadataStorage {
     this.models[modelName].columns.push({
       type,
       propertyName: columnName,
-      ...this.decoratorDefaults,
       ...options
     });
   }

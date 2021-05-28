@@ -20,7 +20,7 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 // prettier-ignore
 // @ts-ignore
 
-import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString } from '../../../src';
+import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '../../../src';
 
 // @ts-ignore
 
@@ -76,9 +76,6 @@ export enum SegmentOrderByEnum {
   environmentId_ASC = "environmentId_ASC",
   environmentId_DESC = "environmentId_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -98,7 +95,13 @@ export enum SegmentOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(SegmentOrderByEnum, {
@@ -194,12 +197,6 @@ export class SegmentWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   environmentId_in?: string[];
 
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
-
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
 
@@ -283,6 +280,15 @@ export class SegmentWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -385,9 +391,6 @@ export enum UserSegmentOrderByEnum {
   segmentId_ASC = "segmentId_ASC",
   segmentId_DESC = "segmentId_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -407,7 +410,13 @@ export enum UserSegmentOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(UserSegmentOrderByEnum, {
@@ -500,12 +509,6 @@ export class UserSegmentWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   segmentId_in?: string[];
 
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
-
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
 
@@ -589,6 +592,15 @@ export class UserSegmentWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -676,9 +688,6 @@ export enum UserOrderByEnum {
   key_ASC = "key_ASC",
   key_DESC = "key_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -698,7 +707,13 @@ export enum UserOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -721,12 +736,6 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   key_in?: string[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
@@ -811,6 +820,15 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -880,9 +898,6 @@ export enum FeatureFlagUserOrderByEnum {
   environmentId_ASC = "environmentId_ASC",
   environmentId_DESC = "environmentId_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -902,7 +917,13 @@ export enum FeatureFlagUserOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(FeatureFlagUserOrderByEnum, {
@@ -995,12 +1016,6 @@ export class FeatureFlagUserWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   environmentId_in?: string[];
 
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
-
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
 
@@ -1084,6 +1099,15 @@ export class FeatureFlagUserWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -1174,9 +1198,6 @@ export enum ProjectOrderByEnum {
   key_ASC = "key_ASC",
   key_DESC = "key_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -1196,7 +1217,13 @@ export enum ProjectOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(ProjectOrderByEnum, {
@@ -1234,12 +1261,6 @@ export class ProjectWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   key_in?: string[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
@@ -1324,6 +1345,15 @@ export class ProjectWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -1387,9 +1417,6 @@ export enum FeatureFlagOrderByEnum {
   projectId_ASC = "projectId_ASC",
   projectId_DESC = "projectId_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -1409,7 +1436,13 @@ export enum FeatureFlagOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(FeatureFlagOrderByEnum, {
@@ -1468,12 +1501,6 @@ export class FeatureFlagWhereInput {
 
   @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
@@ -1558,6 +1585,15 @@ export class FeatureFlagWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -1642,9 +1678,6 @@ export enum FeatureFlagSegmentOrderByEnum {
   segmentId_ASC = "segmentId_ASC",
   segmentId_DESC = "segmentId_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -1664,7 +1697,13 @@ export enum FeatureFlagSegmentOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(FeatureFlagSegmentOrderByEnum, {
@@ -1757,12 +1796,6 @@ export class FeatureFlagSegmentWhereInput {
   @TypeGraphQLField(() => [ID], { nullable: true })
   segmentId_in?: string[];
 
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
-
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
 
@@ -1846,6 +1879,15 @@ export class FeatureFlagSegmentWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -1942,9 +1984,6 @@ export enum EnvironmentOrderByEnum {
   projectId_ASC = "projectId_ASC",
   projectId_DESC = "projectId_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -1964,7 +2003,13 @@ export enum EnvironmentOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(EnvironmentOrderByEnum, {
@@ -2023,12 +2068,6 @@ export class EnvironmentWhereInput {
 
   @TypeGraphQLField(() => [ID], { nullable: true })
   projectId_in?: string[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
@@ -2113,6 +2152,15 @@ export class EnvironmentWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()

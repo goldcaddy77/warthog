@@ -30,6 +30,10 @@ import { ApiOnly } from "../modules/api-only/api-only.model";
 
 // @ts-ignore
 
+import { DbOnly } from "../modules/db-only/db-only.model";
+
+// @ts-ignore
+
 import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
 
 // @ts-ignore
@@ -115,27 +119,6 @@ export enum KitchenSinkOrderByEnum {
   id_ASC = "id_ASC",
   id_DESC = "id_DESC",
 
-  createdAt_ASC = "createdAt_ASC",
-  createdAt_DESC = "createdAt_DESC",
-
-  createdById_ASC = "createdById_ASC",
-  createdById_DESC = "createdById_DESC",
-
-  updatedAt_ASC = "updatedAt_ASC",
-  updatedAt_DESC = "updatedAt_DESC",
-
-  updatedById_ASC = "updatedById_ASC",
-  updatedById_DESC = "updatedById_DESC",
-
-  deletedAt_ASC = "deletedAt_ASC",
-  deletedAt_DESC = "deletedAt_DESC",
-
-  deletedById_ASC = "deletedById_ASC",
-  deletedById_DESC = "deletedById_DESC",
-
-  version_ASC = "version_ASC",
-  version_DESC = "version_DESC",
-
   stringField_ASC = "stringField_ASC",
   stringField_DESC = "stringField_DESC",
 
@@ -185,7 +168,31 @@ export enum KitchenSinkOrderByEnum {
   readonlyField_DESC = "readonlyField_DESC",
 
   apiOnlyField_ASC = "apiOnlyField_ASC",
-  apiOnlyField_DESC = "apiOnlyField_DESC"
+  apiOnlyField_DESC = "apiOnlyField_DESC",
+
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  createdById_ASC = "createdById_ASC",
+  createdById_DESC = "createdById_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  updatedById_ASC = "updatedById_ASC",
+  updatedById_DESC = "updatedById_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  deletedById_ASC = "deletedById_ASC",
+  deletedById_DESC = "deletedById_DESC",
+
+  version_ASC = "version_ASC",
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC"
 }
 
 registerEnumType(KitchenSinkOrderByEnum, {
@@ -199,90 +206,6 @@ export class KitchenSinkWhereInput {
 
   @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_eq?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_lt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_lte?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_gt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_gte?: DateTimeString;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  createdById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  createdById_in?: string[];
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_eq?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_lt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_lte?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_gt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_gte?: DateTimeString;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  updatedById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  updatedById_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  deletedAt_all?: Boolean;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_eq?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_lt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_lte?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_gt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_gte?: DateTimeString;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  deletedById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  deletedById_in?: string[];
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_eq?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_gt?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_gte?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_lt?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_lte?: number;
-
-  @TypeGraphQLField(() => [Int], { nullable: true })
-  version_in?: number[];
 
   @TypeGraphQLField({ nullable: true })
   stringField_eq?: string;
@@ -556,6 +479,96 @@ export class KitchenSinkWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   arrayOfInts_containsAny?: [number];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  version_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  version_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  version_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  version_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  version_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
 }
 
 @TypeGraphQLInputType()

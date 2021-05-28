@@ -1,7 +1,6 @@
 import { Container } from 'typedi';
-
-import { logger } from '../../core';
-import { CodeGenerator } from '../../core';
+import { CodeGenerator, logger } from '../../core';
+import { WarthogGluegunToolbox } from '../types';
 
 Container.import([CodeGenerator]);
 
@@ -9,10 +8,16 @@ Container.import([CodeGenerator]);
 export default {
   // module.exports = {
   name: 'codegen',
-  run: async () => {
+  run: async (toolbox: WarthogGluegunToolbox) => {
+    const {
+      parameters: { options }
+    } = toolbox;
+
+    const generateOptions = options.binding ? { generateBinding: true } : {};
+
     try {
       const generator = Container.get('CodeGenerator') as CodeGenerator;
-      await generator.generate();
+      await generator.generate(generateOptions);
     } catch (error) {
       logger.error(error);
       if (error.name.indexOf('Cannot determine GraphQL input type') > -1) {

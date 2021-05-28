@@ -20,62 +20,65 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 // prettier-ignore
 // @ts-ignore
 
-import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '../../../src';
+import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '../../../';
 
 // @ts-ignore
 
-import { User } from "../dist/examples/09-production/src/modules/user/user.model";
+import { MyBaseModelTest } from "../base-model/my-base-model.model";
 
-export enum UserOrderByEnum {
+export enum MyBaseModelTestOrderByEnum {
   id_ASC = "id_ASC",
   id_DESC = "id_DESC"
 }
 
-registerEnumType(UserOrderByEnum, {
-  name: "UserOrderByInput"
+registerEnumType(MyBaseModelTestOrderByEnum, {
+  name: "MyBaseModelTestOrderByInput"
 });
 
 @TypeGraphQLInputType()
-export class UserWhereInput {
+export class MyBaseModelTestWhereInput {
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
   @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
 }
 
 @TypeGraphQLInputType()
-export class UserWhereUniqueInput {
+export class MyBaseModelTestWhereUniqueInput {
   @TypeGraphQLField(() => ID)
   id?: string;
 }
 
 @TypeGraphQLInputType()
-export class UserCreateInput {
+export class MyBaseModelTestCreateInput {
   @TypeGraphQLField()
-  firstName!: string;
+  stringField!: string;
 }
 
 @TypeGraphQLInputType()
-export class UserUpdateInput {
+export class MyBaseModelTestUpdateInput {
   @TypeGraphQLField({ nullable: true })
-  firstName?: string;
+  stringField?: string;
 }
 
 @ArgsType()
-export class UserWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(() => UserWhereInput, { nullable: true })
-  where?: UserWhereInput;
+export class MyBaseModelTestWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => MyBaseModelTestWhereInput, { nullable: true })
+  where?: MyBaseModelTestWhereInput;
 
-  @TypeGraphQLField(() => UserOrderByEnum, { nullable: true })
-  orderBy?: UserOrderByEnum;
+  @TypeGraphQLField(() => MyBaseModelTestOrderByEnum, { nullable: true })
+  orderBy?: MyBaseModelTestOrderByEnum;
 }
 
 @ArgsType()
-export class UserCreateManyArgs {
-  @TypeGraphQLField(() => [UserCreateInput])
-  data!: UserCreateInput[];
+export class MyBaseModelTestCreateManyArgs {
+  @TypeGraphQLField(() => [MyBaseModelTestCreateInput])
+  data!: MyBaseModelTestCreateInput[];
 }
 
 @ArgsType()
-export class UserUpdateArgs {
-  @TypeGraphQLField() data!: UserUpdateInput;
-  @TypeGraphQLField() where!: UserWhereUniqueInput;
+export class MyBaseModelTestUpdateArgs {
+  @TypeGraphQLField() data!: MyBaseModelTestUpdateInput;
+  @TypeGraphQLField() where!: MyBaseModelTestWhereUniqueInput;
 }

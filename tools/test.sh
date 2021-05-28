@@ -4,6 +4,7 @@ set -e
 export TZ=utc
 
 # Codegen for test files
+# V3: do the codegen as part of the test suite now
 NODE_ENV=test ./src/test/codegen-test-files.sh
 
 if [ -z "$SKIP_DB_CREATION" ]

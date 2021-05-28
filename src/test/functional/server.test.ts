@@ -1,25 +1,21 @@
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
+import * as request from 'supertest';
 import { EntityMetadata } from 'typeorm';
-
+import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 /* eslint-disable @typescript-eslint/camelcase */
 import { getBindingError, logger } from '../../';
+import { EncodingService } from '../../core/encoding';
 import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
-
 import { setTestServerEnvironmentVariables } from '../../test/server-vars';
-
 import { Binding, KitchenSinkWhereInput } from '../generated/binding';
-import { KitchenSink, StringEnum, Dish } from '../modules';
+import { Dish, KitchenSink, StringEnum } from '../modules';
 import { getTestServer } from '../test-server';
-
-import { KITCHEN_SINKS } from './fixtures';
 import { callAPIError, callAPISuccess } from '../utils';
+import { KITCHEN_SINKS } from './fixtures';
 
 import express = require('express');
-import * as request from 'supertest';
-import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-import { EncodingService } from '../../core/encoding';
 
 let runKey: string;
 let server: Server<any>;
@@ -68,9 +64,14 @@ describe('server', () => {
     // sinksExist skips recreating seed data so that we can re-run tests in watch mode
     const sinksExist = (await binding.query.kitchenSinks({ limit: 1 }, '{ id }')).length > 0;
     if (!sinksExist) {
-      kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
-      await createManyDishes(binding, kitchenSink.id);
-      await createManyKitchenSinks(binding);
+      try {
+        kitchenSink = await createKitchenSink(binding, 'hi@warthog.com');
+        await createManyDishes(binding, kitchenSink.id);
+        await createManyKitchenSinks(binding);
+      } catch (error) {
+        const bindingError = getBindingError(error);
+        console.log('bindingError :>> ', bindingError);
+      }
     }
 
     done();

@@ -54,7 +54,7 @@ type Dish {
   name: String!
   stringEnumField: StringEnum
   kitchenSink: KitchenSink!
-  kitchenSinkId: String!
+  kitchenSinkId: ID!
 }
 
 type DishConnection {
@@ -121,12 +121,13 @@ scalar JSONObject
 type KitchenSink {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
 
   \\"\\"\\"This is a string field\\"\\"\\"
   stringField: String!
@@ -139,7 +140,7 @@ type KitchenSink {
   booleanField: Boolean!
   floatField: Float!
   jsonField: JSONObject
-  idField: String
+  idField: ID
   stringEnumField: StringEnum
   dishes: [Dish!]
   numericField: Float
@@ -191,20 +192,6 @@ input KitchenSinkCreateInput {
 enum KitchenSinkOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  createdById_ASC
-  createdById_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  updatedById_ASC
-  updatedById_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deletedById_ASC
-  deletedById_DESC
-  version_ASC
-  version_DESC
   stringField_ASC
   stringField_DESC
   nullableStringField_ASC
@@ -239,6 +226,22 @@ enum KitchenSinkOrderByInput {
   readonlyField_DESC
   apiOnlyField_ASC
   apiOnlyField_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
+  ownerId_ASC
+  ownerId_DESC
 }
 
 input KitchenSinkUpdateInput {
@@ -273,34 +276,6 @@ input KitchenSinkUpdateInput {
 input KitchenSinkWhereInput {
   id_eq: ID
   id_in: [ID!]
-  createdAt_eq: DateTime
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
-  deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
-  version_eq: Int
-  version_gt: Int
-  version_gte: Int
-  version_lt: Int
-  version_lte: Int
-  version_in: [Int!]
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String
@@ -392,6 +367,36 @@ input KitchenSinkWhereInput {
   arrayOfInts_containsAll: [Int!]
   arrayOfInts_containsNone: [Int!]
   arrayOfInts_containsAny: [Int!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
 }
 
 input KitchenSinkWhereUniqueInput {
@@ -400,6 +405,7 @@ input KitchenSinkWhereUniqueInput {
 }
 
 type Mutation {
+  createMyBaseModels(data: MyBaseModelTestCreateInput!): MyBaseModelTest!
   createDish(data: DishCreateInput!): Dish!
   updateDish(data: DishUpdateInput!, where: DishWhereUniqueInput!): Dish!
   createManyDishs(data: [DishCreateInput!]!): [Dish!]!
@@ -412,6 +418,41 @@ type Mutation {
   deleteKitchenSink(where: KitchenSinkWhereUniqueInput!): StandardDeleteResponse!
 }
 
+type MyBaseModelTest {
+  id: ID!
+  createdAt: DateTime!
+  createdById: ID!
+  updatedAt: DateTime
+  updatedById: ID
+  deletedAt: DateTime
+  deletedById: ID
+  version: Int!
+  ownerId: ID!
+  stringField: String!
+}
+
+input MyBaseModelTestCreateInput {
+  stringField: String!
+}
+
+enum MyBaseModelTestOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+input MyBaseModelTestUpdateInput {
+  stringField: String
+}
+
+input MyBaseModelTestWhereInput {
+  deletedAt_all: Boolean
+  id_in: [ID!]
+}
+
+input MyBaseModelTestWhereUniqueInput {
+  id: ID!
+}
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -420,6 +461,7 @@ type PageInfo {
 }
 
 type Query {
+  myBaseModels(offset: Int, limit: Int = 50, where: MyBaseModelTestWhereInput, orderBy: MyBaseModelTestOrderByInput): [MyBaseModelTest!]!
   dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
   dishConnection(first: Int, after: String, last: Int, before: String, where: DishWhereInput, orderBy: DishOrderByInput): DishConnection!
   dish(where: DishWhereUniqueInput!): Dish!

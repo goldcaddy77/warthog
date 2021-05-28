@@ -34,9 +34,6 @@ export enum UserOrderByEnum {
   firstName_ASC = "firstName_ASC",
   firstName_DESC = "firstName_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -56,7 +53,13 @@ export enum UserOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -79,12 +82,6 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   firstName_in?: string[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
@@ -169,6 +166,15 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()
@@ -220,9 +226,6 @@ export enum PostOrderByEnum {
   userId_ASC = "userId_ASC",
   userId_DESC = "userId_DESC",
 
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -242,7 +245,13 @@ export enum PostOrderByEnum {
   deletedById_DESC = "deletedById_DESC",
 
   version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  version_DESC = "version_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
+
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC"
 }
 
 registerEnumType(PostOrderByEnum, {
@@ -271,12 +280,6 @@ export class PostWhereInput {
 
   @TypeGraphQLField(() => [ID], { nullable: true })
   userId_in?: string[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  id_in?: string[];
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
@@ -361,6 +364,15 @@ export class PostWhereInput {
 
   @TypeGraphQLField(() => [Int], { nullable: true })
   version_in?: number[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
 }
 
 @TypeGraphQLInputType()

@@ -49,12 +49,13 @@ enum StringEnum {
 type User {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   booleanField: Boolean
   dateField: DateTime
   dateOnlyField: Date
@@ -63,7 +64,7 @@ type User {
   enumField: StringEnum
   floatField: Float
   realField: Float
-  idField: String
+  idField: ID
   intFieldDefault: Int
   smallIntField: Int
   bigIntField: Int
@@ -206,8 +207,6 @@ enum UserOrderByInput {
   readonlyField_DESC
   apiOnlyField_ASC
   apiOnlyField_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -222,6 +221,10 @@ enum UserOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input UserUpdateInput {
@@ -442,8 +445,6 @@ input UserWhereInput {
   arrayOfInts_containsAll: [Int!]
   arrayOfInts_containsNone: [Int!]
   arrayOfInts_containsAny: [Int!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -472,6 +473,9 @@ input UserWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input UserWhereUniqueInput {

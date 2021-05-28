@@ -1,0 +1,62 @@
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+interface DeleteResponse {
+  id: ID!
+}
+
+type Mutation {
+  createMyBaseModels(data: MyBaseModelTestCreateInput!): MyBaseModelTest!
+}
+
+type MyBaseModelTest {
+  id: ID!
+  createdAt: DateTime!
+  createdById: ID!
+  updatedAt: DateTime
+  updatedById: ID
+  deletedAt: DateTime
+  deletedById: ID
+  version: Int!
+  ownerId: ID!
+  stringField: String!
+}
+
+input MyBaseModelTestCreateInput {
+  stringField: String!
+}
+
+enum MyBaseModelTestOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+input MyBaseModelTestUpdateInput {
+  stringField: String
+}
+
+input MyBaseModelTestWhereInput {
+  deletedAt_all: Boolean
+  id_in: [ID!]
+}
+
+input MyBaseModelTestWhereUniqueInput {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  myBaseModels(offset: Int, limit: Int = 50, where: MyBaseModelTestWhereInput, orderBy: MyBaseModelTestOrderByInput): [MyBaseModelTest!]!
+}
+
+type StandardDeleteResponse {
+  id: ID!
+}

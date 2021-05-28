@@ -49,8 +49,6 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: s
 
 export type AuthorOrderByInput =   'firstName_ASC' |
   'firstName_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -64,12 +62,14 @@ export type AuthorOrderByInput =   'firstName_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type PostOrderByInput =   'name_ASC' |
   'name_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -83,12 +83,14 @@ export type PostOrderByInput =   'name_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type UserOrderByInput =   'firstName_ASC' |
   'firstName_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -102,7 +104,11 @@ export type UserOrderByInput =   'firstName_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type UserRoleOrderByInput =   'userId_ASC' |
   'userId_DESC' |
@@ -110,8 +116,6 @@ export type UserRoleOrderByInput =   'userId_ASC' |
   'roleId_DESC' |
   'otherMetadata_ASC' |
   'otherMetadata_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -125,7 +129,11 @@ export type UserRoleOrderByInput =   'userId_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export interface AuthorCreateInput {
   firstName: String
@@ -141,8 +149,6 @@ export interface AuthorWhereInput {
   firstName_startsWith?: String | null
   firstName_endsWith?: String | null
   firstName_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -171,6 +177,9 @@ export interface AuthorWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface AuthorWhereUniqueInput {
@@ -191,8 +200,6 @@ export interface PostWhereInput {
   name_startsWith?: String | null
   name_endsWith?: String | null
   name_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -221,6 +228,9 @@ export interface PostWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface PostWhereUniqueInput {
@@ -241,8 +251,6 @@ export interface RoleWhereInput {
   name_startsWith?: String | null
   name_endsWith?: String | null
   name_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -271,6 +279,9 @@ export interface RoleWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface RoleWhereUniqueInput {
@@ -303,8 +314,6 @@ export interface UserRoleWhereInput {
   otherMetadata_startsWith?: String | null
   otherMetadata_endsWith?: String | null
   otherMetadata_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -333,6 +342,9 @@ export interface UserRoleWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface UserRoleWhereUniqueInput {
@@ -349,8 +361,6 @@ export interface UserWhereInput {
   firstName_startsWith?: String | null
   firstName_endsWith?: String | null
   firstName_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -379,6 +389,9 @@ export interface UserWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface UserWhereUniqueInput {
@@ -392,12 +405,13 @@ export interface DeleteResponse {
 export interface Author {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   firstName: String
   posts?: Array<Post> | null
 }
@@ -412,12 +426,13 @@ export interface PageInfo {
 export interface Post {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   name: String
   authors?: Array<Author> | null
   posts: Array<Post>
@@ -426,12 +441,13 @@ export interface Post {
 export interface Role {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   name: String
   userRoles?: Array<UserRole> | null
 }
@@ -443,12 +459,13 @@ export interface StandardDeleteResponse {
 export interface User {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   firstName: String
   userRoles?: Array<UserRole> | null
 }
@@ -456,16 +473,17 @@ export interface User {
 export interface UserRole {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   user?: User | null
-  userId: String
+  userId: ID_Output
   role?: Role | null
-  roleId: String
+  roleId: ID_Output
   otherMetadata?: String | null
 }
 

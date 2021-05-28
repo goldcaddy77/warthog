@@ -4,15 +4,15 @@ import { IdWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
 import { getCombinedDecorator } from './getCombinedDecorator';
 
-interface UpdatedByFieldOptions extends DecoratorCommonOptions {
+interface OwnerIdFieldOptions extends DecoratorCommonOptions {
   filter?: boolean | IdWhereOperator[];
 }
 
-export function UpdatedByField(options: UpdatedByFieldOptions = {}): any {
+export function OwnerIdField(options: OwnerIdFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'id',
     gqlFieldType: ID,
-    warthogColumnMeta: { specialType: 'updated-by', nullable: true, readonly: true, ...options }
+    warthogColumnMeta: { specialType: 'owner', nullable: false, readonly: true, ...options }
   });
 
   return composeMethodDecorators(...factories);

@@ -82,8 +82,6 @@ export type EnvironmentOrderByInput =   'name_ASC' |
   'projKey_DESC' |
   'projectId_ASC' |
   'projectId_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -97,7 +95,11 @@ export type EnvironmentOrderByInput =   'name_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type FeatureFlagOrderByInput =   'name_ASC' |
   'name_DESC' |
@@ -107,8 +109,6 @@ export type FeatureFlagOrderByInput =   'name_ASC' |
   'projKey_DESC' |
   'projectId_ASC' |
   'projectId_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -122,7 +122,11 @@ export type FeatureFlagOrderByInput =   'name_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type FeatureFlagSegmentOrderByInput =   'projKey_ASC' |
   'projKey_DESC' |
@@ -140,8 +144,6 @@ export type FeatureFlagSegmentOrderByInput =   'projKey_ASC' |
   'segmentKey_DESC' |
   'segmentId_ASC' |
   'segmentId_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -155,7 +157,11 @@ export type FeatureFlagSegmentOrderByInput =   'projKey_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type FeatureFlagUserOrderByInput =   'featureKey_ASC' |
   'featureKey_DESC' |
@@ -173,8 +179,6 @@ export type FeatureFlagUserOrderByInput =   'featureKey_ASC' |
   'envKey_DESC' |
   'environmentId_ASC' |
   'environmentId_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -188,14 +192,16 @@ export type FeatureFlagUserOrderByInput =   'featureKey_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type ProjectOrderByInput =   'name_ASC' |
   'name_DESC' |
   'key_ASC' |
   'key_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -209,7 +215,11 @@ export type ProjectOrderByInput =   'name_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type SegmentOrderByInput =   'name_ASC' |
   'name_DESC' |
@@ -225,8 +235,6 @@ export type SegmentOrderByInput =   'name_ASC' |
   'envKey_DESC' |
   'environmentId_ASC' |
   'environmentId_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -240,7 +248,11 @@ export type SegmentOrderByInput =   'name_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type UserSegmentOrderByInput =   'projKey_ASC' |
   'projKey_DESC' |
@@ -258,8 +270,6 @@ export type UserSegmentOrderByInput =   'projKey_ASC' |
   'segmentKey_DESC' |
   'segmentId_ASC' |
   'segmentId_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -273,7 +283,11 @@ export type UserSegmentOrderByInput =   'projKey_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export interface EnvironmentCreateInput {
   name: String
@@ -307,8 +321,6 @@ export interface EnvironmentWhereInput {
   projKey_in?: String[] | String | null
   projectId_eq?: ID_Input | null
   projectId_in?: ID_Output[] | ID_Output | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -337,6 +349,9 @@ export interface EnvironmentWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface EnvironmentWhereUniqueInput {
@@ -401,8 +416,6 @@ export interface FeatureFlagSegmentWhereInput {
   segmentKey_in?: String[] | String | null
   segmentId_eq?: ID_Input | null
   segmentId_in?: ID_Output[] | ID_Output | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -431,6 +444,9 @@ export interface FeatureFlagSegmentWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface FeatureFlagSegmentWhereUniqueInput {
@@ -501,8 +517,6 @@ export interface FeatureFlagUserWhereInput {
   envKey_in?: String[] | String | null
   environmentId_eq?: ID_Input | null
   environmentId_in?: ID_Output[] | ID_Output | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -531,6 +545,9 @@ export interface FeatureFlagUserWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface FeatureFlagUserWhereUniqueInput {
@@ -555,8 +572,6 @@ export interface FeatureFlagWhereInput {
   projKey_in?: String[] | String | null
   projectId_eq?: ID_Input | null
   projectId_in?: ID_Output[] | ID_Output | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -585,6 +600,9 @@ export interface FeatureFlagWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface FeatureFlagWhereUniqueInput {
@@ -612,8 +630,6 @@ export interface ProjectWhereInput {
   key_startsWith?: String | null
   key_endsWith?: String | null
   key_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -642,6 +658,9 @@ export interface ProjectWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface ProjectWhereUniqueInput {
@@ -699,8 +718,6 @@ export interface SegmentWhereInput {
   envKey_in?: String[] | String | null
   environmentId_eq?: ID_Input | null
   environmentId_in?: ID_Output[] | ID_Output | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -729,6 +746,9 @@ export interface SegmentWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface SegmentWhereUniqueInput {
@@ -790,8 +810,6 @@ export interface UserSegmentWhereInput {
   segmentKey_in?: String[] | String | null
   segmentId_eq?: ID_Input | null
   segmentId_in?: ID_Output[] | ID_Output | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -820,6 +838,9 @@ export interface UserSegmentWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface UserSegmentWhereUniqueInput {
@@ -836,8 +857,6 @@ export interface UserWhereInput {
   key_startsWith?: String | null
   key_endsWith?: String | null
   key_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -866,6 +885,9 @@ export interface UserWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface UserWhereUniqueInput {
@@ -880,17 +902,18 @@ export interface DeleteResponse {
 export interface Environment {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   name: String
   key: String
   projKey: String
   project?: Project | null
-  projectId?: String | null
+  projectId?: ID_Output | null
   segments?: Array<Segment> | null
   featureFlagUsers?: Array<FeatureFlagUser> | null
   featureFlagSegments?: Array<FeatureFlagSegment> | null
@@ -900,17 +923,18 @@ export interface Environment {
 export interface FeatureFlag {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   name: String
   key: String
   projKey: String
   project?: Project | null
-  projectId?: String | null
+  projectId?: ID_Output | null
   featureFlagUsers?: Array<FeatureFlagUser> | null
   featureFlagSegments?: Array<FeatureFlagSegment> | null
 }
@@ -918,47 +942,49 @@ export interface FeatureFlag {
 export interface FeatureFlagSegment {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   projKey: String
   project?: Project | null
-  projectId?: String | null
+  projectId?: ID_Output | null
   envKey: String
   environment?: Environment | null
-  environmentId?: String | null
+  environmentId?: ID_Output | null
   featureKey: String
   featureFlag?: FeatureFlag | null
-  featureFlagId?: String | null
+  featureFlagId?: ID_Output | null
   segmentKey: String
   segment?: Segment | null
-  segmentId?: String | null
+  segmentId?: ID_Output | null
 }
 
 export interface FeatureFlagUser {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   featureKey: String
   featureFlag?: FeatureFlag | null
-  featureFlagId?: String | null
+  featureFlagId?: ID_Output | null
   userKey: String
   user?: User | null
-  userId?: String | null
+  userId?: ID_Output | null
   projKey: String
   project?: Project | null
-  projectId?: String | null
+  projectId?: ID_Output | null
   envKey: String
   environment?: Environment | null
-  environmentId?: String | null
+  environmentId?: ID_Output | null
 }
 
 export interface PageInfo {
@@ -971,12 +997,13 @@ export interface PageInfo {
 export interface Project {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   name: String
   key: String
   environments?: Array<Environment> | null
@@ -990,21 +1017,22 @@ export interface Project {
 export interface Segment {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   name: String
   key: String
   description: String
   projKey: String
   project?: Project | null
-  projectId?: String | null
+  projectId?: ID_Output | null
   envKey: String
   environment?: Environment | null
-  environmentId?: String | null
+  environmentId?: ID_Output | null
   featureFlagSegments?: Array<FeatureFlagSegment> | null
   userSegments?: Array<UserSegment> | null
 }
@@ -1016,12 +1044,13 @@ export interface StandardDeleteResponse {
 export interface User {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   key: String
   featureFlagUsers?: Array<FeatureFlagUser> | null
   userSegments?: Array<UserSegment> | null
@@ -1030,24 +1059,25 @@ export interface User {
 export interface UserSegment {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   projKey: String
   project?: Project | null
-  projectId?: String | null
+  projectId?: ID_Output | null
   envKey: String
   environment?: Environment | null
-  environmentId?: String | null
+  environmentId?: ID_Output | null
   userKey: String
   user?: User | null
-  userId?: String | null
+  userId?: ID_Output | null
   segmentKey: String
   segment?: Segment | null
-  segmentId?: String | null
+  segmentId?: ID_Output | null
 }
 
 /*

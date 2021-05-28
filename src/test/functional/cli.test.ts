@@ -1,14 +1,13 @@
 import * as fs from 'fs';
+import { filesystem, system } from 'gluegun';
 import * as path from 'path';
-import { system, filesystem } from 'gluegun';
 // eslint-disable-next-line
 // @ts-ignore
 import * as pgtools from 'pgtools';
-const pgtoolsCreateDB = pgtools.createdb;
-const pgtoolsDropDB = pgtools.dropdb;
-
 import { callWarthogCLI, createDB, dropDB, spyOnStd } from '../helpers';
 import { setTestServerEnvironmentVariables } from '../server-vars';
+const pgtoolsCreateDB = pgtools.createdb;
+const pgtoolsDropDB = pgtools.dropdb;
 
 const root = filesystem.path(__dirname, '../../../');
 
@@ -278,7 +277,7 @@ describe('cli functional tests', () => {
     filesystem.remove(folder);
     process.env.WARTHOG_GENERATED_FOLDER = folder;
 
-    await callWarthogCLI('codegen');
+    await callWarthogCLI('codegen --binding');
 
     // TODO: how much file content validation should we do here?
     const bindingContents = filesystem.read(`${folder}/binding.ts`);

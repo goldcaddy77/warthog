@@ -1,18 +1,13 @@
 import 'reflect-metadata';
-
 import { Container } from 'typedi';
 import { useContainer as typeOrmUseContainer } from 'typeorm';
-
-import { Config } from '../';
 import { setTestServerEnvironmentVariables } from '../test/server-vars';
 
-if (!(global as any).__warthog_config__) {
+if (!(global as any).__warthog_loaded__) {
   // Tell TypeORM to use our typedi instance
   typeOrmUseContainer(Container);
 
   setTestServerEnvironmentVariables();
 
-  const config = new Config({ container: Container });
-
-  (global as any).__warthog_config__ = config.get();
+  (global as any).__warthog_loaded__ = true;
 }

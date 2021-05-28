@@ -1,12 +1,13 @@
 type Author {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   firstName: String!
   posts: [Post!]
 }
@@ -18,8 +19,6 @@ input AuthorCreateInput {
 enum AuthorOrderByInput {
   firstName_ASC
   firstName_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -34,6 +33,10 @@ enum AuthorOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input AuthorUpdateInput {
@@ -46,8 +49,6 @@ input AuthorWhereInput {
   firstName_startsWith: String
   firstName_endsWith: String
   firstName_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -76,6 +77,9 @@ input AuthorWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input AuthorWhereUniqueInput {
@@ -110,12 +114,13 @@ type PageInfo {
 type Post {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   name: String!
   authors: [Author!]
   posts: [Post!]!
@@ -128,8 +133,6 @@ input PostCreateInput {
 enum PostOrderByInput {
   name_ASC
   name_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -144,6 +147,10 @@ enum PostOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input PostUpdateInput {
@@ -156,8 +163,6 @@ input PostWhereInput {
   name_startsWith: String
   name_endsWith: String
   name_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -186,6 +191,9 @@ input PostWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input PostWhereUniqueInput {
@@ -202,12 +210,13 @@ type Query {
 type Role {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   name: String!
   userRoles: [UserRole!]
 }
@@ -226,8 +235,6 @@ input RoleWhereInput {
   name_startsWith: String
   name_endsWith: String
   name_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -256,6 +263,9 @@ input RoleWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input RoleWhereUniqueInput {
@@ -269,12 +279,13 @@ type StandardDeleteResponse {
 type User {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   firstName: String!
   userRoles: [UserRole!]
 }
@@ -286,8 +297,6 @@ input UserCreateInput {
 enum UserOrderByInput {
   firstName_ASC
   firstName_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -302,21 +311,26 @@ enum UserOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 type UserRole {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
   version: Int!
+  ownerId: ID!
   user: User
-  userId: String!
+  userId: ID!
   role: Role
-  roleId: String!
+  roleId: ID!
   otherMetadata: String
 }
 
@@ -333,8 +347,6 @@ enum UserRoleOrderByInput {
   roleId_DESC
   otherMetadata_ASC
   otherMetadata_DESC
-  id_ASC
-  id_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -349,6 +361,10 @@ enum UserRoleOrderByInput {
   deletedById_DESC
   version_ASC
   version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
 }
 
 input UserRoleUpdateInput {
@@ -367,8 +383,6 @@ input UserRoleWhereInput {
   otherMetadata_startsWith: String
   otherMetadata_endsWith: String
   otherMetadata_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -397,6 +411,9 @@ input UserRoleWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input UserRoleWhereUniqueInput {
@@ -413,8 +430,6 @@ input UserWhereInput {
   firstName_startsWith: String
   firstName_endsWith: String
   firstName_in: [String!]
-  id_eq: ID
-  id_in: [ID!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
@@ -443,6 +458,9 @@ input UserWhereInput {
   version_lt: Int
   version_lte: Int
   version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
 }
 
 input UserWhereUniqueInput {

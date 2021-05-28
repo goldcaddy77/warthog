@@ -1,31 +1,29 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
-import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
+import { ApolloServer, ApolloServerExpressConfig, OptionsJson } from 'apollo-server-express';
 import { Request } from 'express';
-import express = require('express');
 import { GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
+import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
-const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 import { AuthChecker } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
-
 import { logger, Logger } from '../core/logger';
 import { debug } from '../decorators';
 import { getRemoteBinding } from '../gql';
 import { healthCheckMiddleware } from '../middleware';
 import { SchemaBuilder } from '../schema';
 import { Database } from '../torm';
-
 import { CodeGenerator } from './CodeGenerator';
 import { Config } from './config';
 import { BaseContext } from './Context';
+import express = require('express');
+const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 
-Container.import([Config, SchemaBuilder]);
+Container.import([Config]);
 
 export interface ServerOptions<T> {
   container?: Container;
@@ -105,7 +103,10 @@ export class Server<C extends BaseContext> {
     // NOTE: this should be after we hard-code the WARTHOG_ env vars above because we want the config
     // module to think they were set by the user
     this.config = Container.get('Config') as Config;
-    this.schemaBuilder = Container.get('SchemaBuilder') as SchemaBuilder;
+    this.schemaBuilder = new SchemaBuilder({
+      resolvers: this.config.get('RESOLVERS_PATH'),
+      validate: this.config.get('VALIDATE_RESOLVERS') === 'true'
+    });
 
     this.expressApp = this.appOptions.expressApp || express();
 

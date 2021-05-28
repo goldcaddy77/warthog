@@ -4,9 +4,7 @@ import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
 import { Middleware } from 'type-graphql/dist/interfaces/Middleware';
 import { ScalarsTypeMap } from 'type-graphql/dist/schema/build-context';
-import { Container, Inject, Service } from 'typedi';
-
-import { Config } from '../core';
+import { Container } from 'typedi';
 import { DataLoaderMiddleware } from '../middleware';
 
 interface BuildOptions<C> {
@@ -16,9 +14,13 @@ interface BuildOptions<C> {
   scalers?: ScalarsTypeMap[];
 }
 
-@Service('SchemaBuilder')
+interface SchemaBuilderOptions {
+  resolvers: (string | Function)[];
+  validate?: boolean;
+}
+
 export class SchemaBuilder {
-  constructor(@Inject('Config') readonly config: Config) {}
+  constructor(private options: SchemaBuilderOptions) {}
 
   async build<C>(options: BuildOptions<C>): Promise<GraphQLSchema> {
     return buildSchema({
@@ -34,9 +36,9 @@ export class SchemaBuilder {
       // TODO: ErrorLoggerMiddleware
       globalMiddlewares: [DataLoaderMiddleware, ...(options.middlewares || [])],
       pubSub: options.pubSub,
-      resolvers: this.config.get('RESOLVERS_PATH'),
+      resolvers: this.options.resolvers,
       // TODO: scalarsMap: [{ type: GraphQLDate, scalar: GraphQLDate }]
-      validate: this.config.get('VALIDATE_RESOLVERS') === 'true'
+      validate: !!this.options.validate
     });
   }
 }
