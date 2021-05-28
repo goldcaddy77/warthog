@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn codegen && yarn db:seed:dev",
     "build": "./tools/scripts/build.sh",
-    "codegen": "yarn warthog codegen",
+    "codegen": "yarn warthog codegen --binding",
     "compile": "rm -rf ./dist && yarn tsc",
     "config": "dotenvi -s ${WARTHOG_ENV:-local}",
     "db:create": "WARTHOG_DB_OVERRIDE=true yarn warthog db:create",

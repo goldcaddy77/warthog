@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn codegen && yarn db:create",
-    "codegen": "yarn warthog codegen",
+    "codegen": "yarn warthog codegen --binding",
     "db:create": "yarn warthog db:create",
     "db:drop": "yarn warthog db:drop",
     "db:seed:dev": "ts-node tools/seed.ts",

@@ -126,8 +126,8 @@ type KitchenSink {
   updatedById: ID
   deletedAt: DateTime
   deletedById: ID
-  ownerId: ID!
   version: Int!
+  ownerId: ID!
 
   \\"\\"\\"This is a string field\\"\\"\\"
   stringField: String!
@@ -192,22 +192,6 @@ input KitchenSinkCreateInput {
 enum KitchenSinkOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  createdById_ASC
-  createdById_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  updatedById_ASC
-  updatedById_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  deletedById_ASC
-  deletedById_DESC
-  ownerId_ASC
-  ownerId_DESC
-  version_ASC
-  version_DESC
   stringField_ASC
   stringField_DESC
   nullableStringField_ASC
@@ -242,6 +226,22 @@ enum KitchenSinkOrderByInput {
   readonlyField_DESC
   apiOnlyField_ASC
   apiOnlyField_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
+  ownerId_ASC
+  ownerId_DESC
 }
 
 input KitchenSinkUpdateInput {
@@ -276,36 +276,6 @@ input KitchenSinkUpdateInput {
 input KitchenSinkWhereInput {
   id_eq: ID
   id_in: [ID!]
-  createdAt_eq: DateTime
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  createdById_eq: ID
-  createdById_in: [ID!]
-  updatedAt_eq: DateTime
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  updatedById_eq: ID
-  updatedById_in: [ID!]
-  deletedAt_all: Boolean
-  deletedAt_eq: DateTime
-  deletedAt_lt: DateTime
-  deletedAt_lte: DateTime
-  deletedAt_gt: DateTime
-  deletedAt_gte: DateTime
-  deletedById_eq: ID
-  deletedById_in: [ID!]
-  ownerId_eq: ID
-  ownerId_in: [ID!]
-  version_eq: Int
-  version_gt: Int
-  version_gte: Int
-  version_lt: Int
-  version_lte: Int
-  version_in: [Int!]
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String
@@ -397,6 +367,36 @@ input KitchenSinkWhereInput {
   arrayOfInts_containsAll: [Int!]
   arrayOfInts_containsNone: [Int!]
   arrayOfInts_containsAny: [Int!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
 }
 
 input KitchenSinkWhereUniqueInput {

@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "cd ../.. && yarn && cd - && yarn && yarn db:create && yarn codegen",
-    "codegen": "yarn warthog codegen",
+    "codegen": "yarn warthog codegen --binding",
     "db:create": "yarn warthog db:create",
     "db:drop": "yarn warthog db:drop",
     "db:migrate:generate": "warthog db:migrate:generate --name",

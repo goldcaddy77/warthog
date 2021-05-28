@@ -1,3 +1,4 @@
+import { IDType } from 'core';
 import { Column } from 'typeorm';
 import {
   BaseModel,
@@ -20,6 +21,7 @@ import {
   OneToMany,
   StringField
 } from '../../../';
+import { PrimaryIdField } from '../../../decorators';
 import { Dish } from '../dish/dish.model';
 import { StringEnum } from '../shared';
 
@@ -27,6 +29,9 @@ export { StringEnum }; // Warthog requires this
 
 @Model()
 export class KitchenSink extends BaseModel {
+  @PrimaryIdField({ filter: ['eq', 'in'] })
+  id!: IDType;
+
   @StringField({ description: 'This is a string field' })
   stringField?: string;
 
