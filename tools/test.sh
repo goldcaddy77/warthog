@@ -3,8 +3,8 @@ set -e
 # Make sure dates are imported in UTC so that we don't have off-by-one issues
 export TZ=utc
 
-# Codegen for test files
-NODE_ENV=test ./src/test/codegen-test-files.sh
+# UPDATE: do the codegen as part of the test suite now
+# NODE_ENV=test ./src/test/codegen-test-files.sh
 
 if [ -z "$SKIP_DB_CREATION" ]
 then

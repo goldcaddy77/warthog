@@ -1,15 +1,13 @@
 import * as prettier from 'prettier';
 import { Container, Inject, Service } from 'typedi';
 import { getMetadataArgsStorage } from 'typeorm';
-
 import { Config } from '../core';
 import { ColumnMetadata, getMetadataStorage, MetadataStorage, ModelMetadata } from '../metadata';
 import { WhereOperator } from '../torm';
-
 import {
+  columnInfoToTypeScriptType,
   columnToGraphQLType,
-  columnTypeToGraphQLDataType,
-  columnInfoToTypeScriptType
+  columnTypeToGraphQLDataType
 } from './type-conversion';
 
 const ignoreBaseModels = ['BaseModel', 'BaseModelUUID', 'IdModel'];

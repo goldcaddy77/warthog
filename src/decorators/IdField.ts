@@ -1,7 +1,7 @@
+import { ID } from 'type-graphql';
 import { DecoratorCommonOptions } from '../metadata';
 import { IdWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
-
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface IdFieldOptions extends DecoratorCommonOptions {
@@ -15,6 +15,7 @@ export function IdField(options: IdFieldOptions = {}): any {
 
   const factories = getCombinedDecorator({
     fieldType: 'id',
+    gqlFieldType: ID,
     warthogColumnMeta: options,
     dbColumnOptions: { ...nullableOption, ...uniqueOption }
   });

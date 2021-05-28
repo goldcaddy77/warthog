@@ -10,22 +10,19 @@ import {
   SelectQueryBuilder
 } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-
+import { debug } from '../decorators';
 import { MetadataStorage } from '../metadata';
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
-
-import { debug } from '../decorators';
-import { StringMap, DateTimeString, IDType } from './types';
-
+import { ConnectionInputFields, GraphQLInfoService } from './GraphQLInfoService';
 import {
+  ConnectionResult,
   RelayFirstAfter,
   RelayLastBefore,
-  RelayService,
   RelayPageOptions,
-  ConnectionResult
+  RelayService
 } from './RelayService';
-import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
+import { DateTimeString, IDType, StringMap } from './types';
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -43,6 +40,7 @@ interface WarthogSpecialModel {
   updatedById?: IDType;
   deletedAt?: DateTimeString;
   deletedById?: IDType;
+  ownerId?: IDType;
 }
 
 Container.import([MetadataStorage]);
@@ -409,9 +407,11 @@ export class BaseService<E extends Node> {
     const createdByIdObject: WarthogSpecialModel = this.hasColumn('createdById')
       ? { createdById: userId }
       : {};
+    const ownerIdObject: WarthogSpecialModel = this.hasColumn('ownerId') ? { ownerId: userId } : {};
     const entity = manager.create(this.entityClass, {
       ...data,
-      ...createdByIdObject
+      ...createdByIdObject,
+      ...ownerIdObject
     } as DeepPartial<E>);
 
     // Validate against the the data model
@@ -433,12 +433,15 @@ export class BaseService<E extends Node> {
     const createdByIdObject: WarthogSpecialModel = this.hasColumn('createdById')
       ? { createdById: userId }
       : {};
+    const ownerIdObject: WarthogSpecialModel = this.hasColumn('ownerId') ? { ownerId: userId } : {};
 
     data = data.map(item => {
-      return { ...item, ...createdByIdObject };
+      return { ...item, ...createdByIdObject, ...ownerIdObject };
     });
 
+    debug(`before create many: ${data.length}`);
     const results = manager.create(this.entityClass, data);
+    debug('after create many');
 
     // Validate against the the data model
     // Without `skipMissingProperties`, some of the class-validator validations (like MinLength)

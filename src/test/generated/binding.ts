@@ -7,6 +7,8 @@ import * as schema from  './schema.graphql'
 
 export interface Query {
     dishes: <T = Array<Dish>>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    MyBaseModels: <T = Array<MyBaseModel>>(args: { offset?: Int | null, limit?: Int | null, where?: MyBaseModelWhereInput | null, orderBy?: MyBaseModelOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    MyBaseModel: <T = MyBaseModel>(args: { where: MyBaseModelWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dishConnection: <T = DishConnection>(args: { first?: Int | null, after?: String | null, last?: Int | null, before?: String | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dish: <T = Dish>(args: { where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSinks: <T = Array<KitchenSink>>(args: { offset?: Int | null, limit?: Int | null, where?: KitchenSinkWhereInput | null, orderBy?: KitchenSinkOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -14,6 +16,10 @@ export interface Query {
   }
 
 export interface Mutation {
+    createMyBaseModel: <T = MyBaseModel>(args: { data: MyBaseModelCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createManyMyBaseModels: <T = Array<MyBaseModel>>(args: { data: Array<MyBaseModelCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateMyBaseModel: <T = MyBaseModel>(args: { data: MyBaseModelUpdateInput, where: MyBaseModelWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteMyBaseModel: <T = StandardDeleteResponse>(args: { where: MyBaseModelWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createDish: <T = Dish>(args: { data: DishCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateDish: <T = Dish>(args: { data: DishUpdateInput, where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createManyDishs: <T = Array<Dish>>(args: { data: Array<DishCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -75,6 +81,8 @@ export type KitchenSinkOrderByInput =   'id_ASC' |
   'deletedAt_DESC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
   'version_ASC' |
   'version_DESC' |
   'stringField_ASC' |
@@ -111,6 +119,27 @@ export type KitchenSinkOrderByInput =   'id_ASC' |
   'readonlyField_DESC' |
   'apiOnlyField_ASC' |
   'apiOnlyField_DESC'
+
+export type MyBaseModelOrderByInput =   'stringField_ASC' |
+  'stringField_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'createdById_ASC' |
+  'createdById_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'updatedById_ASC' |
+  'updatedById_DESC' |
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
+  'deletedById_ASC' |
+  'deletedById_DESC' |
+  'version_ASC' |
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export type StringEnum =   'FOO' |
   'BAR'
@@ -254,6 +283,8 @@ export interface KitchenSinkWhereInput {
   deletedAt_gte?: DateTime | null
   deletedById_eq?: ID_Input | null
   deletedById_in?: ID_Output[] | ID_Output | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
   version_eq?: Int | null
   version_gt?: Int | null
   version_gte?: Int | null
@@ -358,6 +389,58 @@ export interface KitchenSinkWhereUniqueInput {
   emailField?: String | null
 }
 
+export interface MyBaseModelCreateInput {
+  stringField: String
+}
+
+export interface MyBaseModelUpdateInput {
+  stringField?: String | null
+}
+
+export interface MyBaseModelWhereInput {
+  stringField_eq?: String | null
+  stringField_contains?: String | null
+  stringField_startsWith?: String | null
+  stringField_endsWith?: String | null
+  stringField_in?: String[] | String | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+}
+
+export interface MyBaseModelWhereUniqueInput {
+  id: ID_Output
+}
+
 export interface DeleteResponse {
   id: ID_Output
 }
@@ -399,6 +482,7 @@ export interface KitchenSink {
   updatedById?: String | null
   deletedAt?: DateTime | null
   deletedById?: String | null
+  ownerId: String
   version: Int
   stringField: String
   nullableStringField?: String | null
@@ -428,6 +512,19 @@ export interface KitchenSink {
   apiOnlyField?: String | null
   arrayOfStrings?: Array<String> | null
   arrayOfInts?: Array<Int> | null
+}
+
+export interface MyBaseModel {
+  id: ID_Output
+  createdAt: DateTime
+  createdById: String
+  updatedAt?: DateTime | null
+  updatedById?: String | null
+  deletedAt?: DateTime | null
+  deletedById?: String | null
+  version: Int
+  ownerId: String
+  stringField: String
 }
 
 export interface PageInfo {

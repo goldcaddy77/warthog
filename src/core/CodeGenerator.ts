@@ -4,8 +4,7 @@
 import { GraphQLSchema, printSchema } from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as path from 'path';
-import { Container, Inject, Service } from 'typedi';
-
+import { Inject, Service } from 'typedi';
 import { Config, logger } from '.';
 import { debug } from '../decorators';
 import { generateBindingFile } from '../gql';
@@ -13,20 +12,27 @@ import { SchemaBuilder, SchemaGenerator } from '../schema';
 import { authChecker, loadFromGlobArray } from '../tgql';
 import { writeFilePromise } from '../utils';
 
-Container.import([SchemaGenerator]);
+interface GenerateOptions {
+  generateBinding?: boolean;
+}
 
 @Service('CodeGenerator')
 export class CodeGenerator {
   generatedFolder: string;
   schema?: GraphQLSchema;
+  schemaBuilder: SchemaBuilder;
 
   constructor(
     @Inject('Config') readonly config: Config,
-    @Inject('SchemaGenerator') readonly schemaGenerator: SchemaGenerator,
-    @Inject('SchemaBuilder') readonly schemaBuilder: SchemaBuilder
+    @Inject('SchemaGenerator') readonly schemaGenerator: SchemaGenerator
   ) {
     this.generatedFolder = this.config.get('GENERATED_FOLDER');
     this.createGeneratedFolder();
+
+    this.schemaBuilder = new SchemaBuilder({
+      resolvers: this.config.get('RESOLVERS_PATH'),
+      validate: this.config.get('VALIDATE_RESOLVERS') === 'true'
+    });
 
     loadFromGlobArray(this.config.get('DB_ENTITIES'));
   }
@@ -36,13 +42,15 @@ export class CodeGenerator {
   }
 
   @debug('warthog:code-generator')
-  async generate() {
+  async generate(options: GenerateOptions = { generateBinding: false }) {
     try {
       await this.writeGeneratedIndexFile();
       await this.writeGeneratedTSTypes();
       await this.writeOrmConfig();
       await this.writeSchemaFile();
-      await this.generateBinding();
+      if (options.generateBinding) {
+        await this.generateBinding();
+      }
     } catch (error) {
       logger.error(error);
       debug(error); // this is required to log when run in a separate project

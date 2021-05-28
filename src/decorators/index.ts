@@ -23,6 +23,7 @@ export * from './ManyToOne';
 export * from './Model';
 export * from './NumericField';
 export * from './OneToMany';
+export * from './OwnerIdField';
 export * from './PrimaryIdField';
 export * from './StringField';
 export * from './UpdatedAtField';

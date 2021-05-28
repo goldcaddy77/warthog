@@ -30,6 +30,10 @@ Warthog is now on version 3.0! There were a few breaking changes that you should
 
 ### BaseModel has been overhauled
 
+- SchemaGenerator no longer generates a Binding by default, must now pass a param in and pass `--binding` in the CLI
+- All `__Id` fields are now properly `ID` fields in the GraphQL schema
+- BaseModel and IdModel default to only filtering on `id_in`, not `eq` since you could use `findOne` query to get a single item
+
 </p>
 </details>
 

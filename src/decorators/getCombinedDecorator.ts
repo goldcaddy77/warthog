@@ -1,16 +1,14 @@
 import { Field as TypeGraphQLField } from 'type-graphql';
 import { Column as TypeORMColumn, ColumnType } from 'typeorm';
-
 import { ColumnMetadata, FieldType } from '../metadata';
 import { MethodDecoratorFactory } from '../utils';
-
 import { WarthogField } from './WarthogField';
 
 // Combine TypeORM, TypeGraphQL and Warthog decorators
 export interface WarthogCombinedDecoratorOptions<T> {
   fieldType: FieldType; // This is the warthog field type
   warthogColumnMeta: T; // Warthog options like sort, filter, nullable
-  gqlFieldType?: any; // This is the Type that will land in the GraphQL schmea
+  gqlFieldType: any; // This is the Type that will land in the GraphQL schema
   dbType?: ColumnType;
   dbColumnOptions?: any; // Passed to TypeORM `Column` decorator
   dbDecorator?: any;
@@ -20,7 +18,7 @@ export interface WarthogCombinedDecoratorOptions<T> {
 export function getCombinedDecorator<T extends Partial<ColumnMetadata>>({
   fieldType,
   warthogColumnMeta,
-  gqlFieldType = String,
+  gqlFieldType,
   dbType = 'varchar',
   dbColumnOptions: columnOptions = {},
   dbDecorator = TypeORMColumn

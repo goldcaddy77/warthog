@@ -51,7 +51,7 @@ type Dish {
   name: String!
   stringEnumField: StringEnum
   kitchenSink: KitchenSink!
-  kitchenSinkId: String!
+  kitchenSinkId: ID!
 }
 
 type DishConnection {
@@ -118,11 +118,12 @@ scalar JSONObject
 type KitchenSink {
   id: ID!
   createdAt: DateTime!
-  createdById: String!
+  createdById: ID!
   updatedAt: DateTime
-  updatedById: String
+  updatedById: ID
   deletedAt: DateTime
-  deletedById: String
+  deletedById: ID
+  ownerId: ID!
   version: Int!
 
   """This is a string field"""
@@ -136,7 +137,7 @@ type KitchenSink {
   booleanField: Boolean!
   floatField: Float!
   jsonField: JSONObject
-  idField: String
+  idField: ID
   stringEnumField: StringEnum
   dishes: [Dish!]
   numericField: Float
@@ -200,6 +201,8 @@ enum KitchenSinkOrderByInput {
   deletedAt_DESC
   deletedById_ASC
   deletedById_DESC
+  ownerId_ASC
+  ownerId_DESC
   version_ASC
   version_DESC
   stringField_ASC
@@ -292,6 +295,8 @@ input KitchenSinkWhereInput {
   deletedAt_gte: DateTime
   deletedById_eq: ID
   deletedById_in: [ID!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
   version_eq: Int
   version_gt: Int
   version_gte: Int
@@ -397,16 +402,103 @@ input KitchenSinkWhereUniqueInput {
 }
 
 type Mutation {
+  createKitchenSink(data: KitchenSinkCreateInput!): KitchenSink!
   createDish(data: DishCreateInput!): Dish!
   updateDish(data: DishUpdateInput!, where: DishWhereUniqueInput!): Dish!
   createManyDishs(data: [DishCreateInput!]!): [Dish!]!
   deleteDish(where: DishWhereUniqueInput!): StandardDeleteResponse!
   successfulTransaction(data: DishCreateInput!): [Dish!]!
   failedTransaction(data: DishCreateInput!): [Dish!]!
-  createKitchenSink(data: KitchenSinkCreateInput!): KitchenSink!
   createManyKitchenSinks(data: [KitchenSinkCreateInput!]!): [KitchenSink!]!
   updateKitchenSink(data: KitchenSinkUpdateInput!, where: KitchenSinkWhereUniqueInput!): KitchenSink!
   deleteKitchenSink(where: KitchenSinkWhereUniqueInput!): StandardDeleteResponse!
+}
+
+type MyBaseModelTest {
+  id: ID!
+  createdAt: DateTime!
+  createdById: ID!
+  updatedAt: DateTime
+  updatedById: ID
+  deletedAt: DateTime
+  deletedById: ID
+  version: Int!
+  ownerId: ID!
+  stringField: String!
+}
+
+input MyBaseModelTestCreateInput {
+  stringField: String!
+}
+
+enum MyBaseModelTestOrderByInput {
+  stringField_ASC
+  stringField_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
+}
+
+input MyBaseModelTestUpdateInput {
+  stringField: String
+}
+
+input MyBaseModelTestWhereInput {
+  stringField_eq: String
+  stringField_contains: String
+  stringField_startsWith: String
+  stringField_endsWith: String
+  stringField_in: [String!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
+}
+
+input MyBaseModelTestWhereUniqueInput {
+  id: ID!
 }
 
 type PageInfo {
@@ -417,6 +509,7 @@ type PageInfo {
 }
 
 type Query {
+  users(offset: Int, limit: Int = 50, where: MyBaseModelTestWhereInput, orderBy: MyBaseModelTestOrderByInput): [MyBaseModelTest!]!
   dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
   dishConnection(first: Int, after: String, last: Int, before: String, where: DishWhereInput, orderBy: DishOrderByInput): DishConnection!
   dish(where: DishWhereUniqueInput!): Dish!

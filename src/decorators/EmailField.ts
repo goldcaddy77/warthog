@@ -1,9 +1,7 @@
 import { IsEmail } from 'class-validator';
-
 import { DecoratorCommonOptions } from '../metadata';
 import { EmailWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
-
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface EmailFieldOptions extends DecoratorCommonOptions {
@@ -16,6 +14,7 @@ export function EmailField(options: EmailFieldOptions = {}): any {
 
   const factories = getCombinedDecorator({
     fieldType: 'email',
+    gqlFieldType: String,
     warthogColumnMeta: optionsWithDefaults
   });
 

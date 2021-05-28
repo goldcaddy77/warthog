@@ -1,8 +1,7 @@
 import { GraphQLEnumType } from 'graphql';
 import { Container, Inject, Service } from 'typedi';
-
-import { ColumnType, WhereOperator } from '../torm';
 import { ClassType, Config } from '../core';
+import { ColumnType, WhereOperator } from '../torm';
 
 export type FieldType =
   | 'boolean'
@@ -45,6 +44,7 @@ export interface ColumnMetadata extends DecoratorCommonOptions {
     | 'updated-by'
     | 'deleted-at'
     | 'deleted-by'
+    | 'owner'
     | 'version';
   unique?: boolean;
   array?: boolean;
@@ -81,7 +81,7 @@ export class MetadataStorage {
   decoratorDefaults: Partial<ColumnMetadata>;
 
   constructor(@Inject('Config') readonly config: Config) {
-    const filterByDefault = this.config.get('FILTER_BY_DEFAULT') !== 'false';
+    const filterByDefault = this.config.get('FILTER_BY_DEFAULT') === 'true';
 
     this.decoratorDefaults = {
       apiOnly: false,

@@ -1,25 +1,47 @@
 import * as shortid from 'shortid';
 import { ObjectType } from 'type-graphql';
 import { BeforeInsert } from 'typeorm';
-
+import { IDType } from '../core';
 import {
   CreatedAtField,
   CreatedByField,
   DeletedAtField,
   DeletedByField,
+  OwnerIdField,
   PrimaryIdField,
   UpdatedAtField,
   UpdatedByField,
   VersionField
 } from '../decorators';
-import { IDType } from '../core';
 
 // type-graphql requires you set this as ObjectType for it's inheritance to work
 @ObjectType({ isAbstract: true })
-export class BaseModel {
-  @PrimaryIdField()
+export abstract class IdModel {
+  @PrimaryIdField({ filter: ['in'] })
   id!: IDType;
 
+  getId(): string {
+    // If settings allow ID to be specified on create, use the specified ID
+    return this.id || shortid.generate();
+  }
+
+  @BeforeInsert()
+  setId(): void {
+    this.id = this.getId();
+  }
+
+  getValue(field: string): string | number {
+    const self = this as any;
+    if (self[field] instanceof Date) {
+      return self[field].toISOString();
+    }
+    return self[field];
+  }
+}
+
+// type-graphql requires you set this as ObjectType for it's inheritance to work
+@ObjectType({ isAbstract: true })
+export class BaseModel extends IdModel {
   @CreatedAtField()
   createdAt!: Date;
 
@@ -41,46 +63,19 @@ export class BaseModel {
   @VersionField()
   version!: number;
 
-  getValue(field: string): string | number {
-    const self = this as any;
-    if (self[field] instanceof Date) {
-      return self[field].toISOString();
-    }
-    return self[field];
-  }
+  @OwnerIdField()
+  ownerId!: IDType;
 
-  getId(): string {
-    // If settings allow ID to be specified on create, use the specified ID
-    return this.id || shortid.generate();
-  }
-
-  @BeforeInsert()
-  setId(): void {
-    this.id = this.getId();
-  }
-}
-
-// type-graphql requires you set this as ObjectType for it's inheritance to work
-@ObjectType({ isAbstract: true })
-export abstract class IdModel {
-  @PrimaryIdField()
-  id!: IDType;
-
-  getId(): string {
-    // If settings allow ID to be specified on create, use the specified ID
-    return this.id || shortid.generate();
+  // In the base case, this will already be set by BaseModel
+  // Setting this up so that child classes can override the default behavior
+  // applying a separate owner than the logged in user
+  // Example of where this would be used: an admin or superuser could create items and assign owners
+  getOwnerId(): string {
+    return this.ownerId;
   }
 
   @BeforeInsert()
-  setId(): void {
-    this.id = this.getId();
-  }
-
-  getValue(field: string): string | number {
-    const self = this as any;
-    if (self[field] instanceof Date) {
-      return self[field].toISOString();
-    }
-    return self[field];
+  setOwnerId(): void {
+    this.ownerId = this.getOwnerId();
   }
 }

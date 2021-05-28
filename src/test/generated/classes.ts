@@ -30,6 +30,10 @@ import { ApiOnly } from "../modules/api-only/api-only.model";
 
 // @ts-ignore
 
+import { DbOnly } from "../modules/db-only/db-only.model";
+
+// @ts-ignore
+
 import { KitchenSink } from "../modules/kitchen-sink/kitchen-sink.model";
 
 // @ts-ignore
@@ -132,6 +136,9 @@ export enum KitchenSinkOrderByEnum {
 
   deletedById_ASC = "deletedById_ASC",
   deletedById_DESC = "deletedById_DESC",
+
+  ownerId_ASC = "ownerId_ASC",
+  ownerId_DESC = "ownerId_DESC",
 
   version_ASC = "version_ASC",
   version_DESC = "version_DESC",
@@ -265,6 +272,12 @@ export class KitchenSinkWhereInput {
 
   @TypeGraphQLField(() => [ID], { nullable: true })
   deletedById_in?: string[];
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  ownerId_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  ownerId_in?: string[];
 
   @TypeGraphQLField(() => Int, { nullable: true })
   version_eq?: number;

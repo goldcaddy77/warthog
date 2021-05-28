@@ -1,3 +1,4 @@
+import { ID } from 'type-graphql';
 import { DecoratorCommonOptions } from '../metadata';
 import { IdWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
@@ -10,6 +11,7 @@ interface CreatedByFieldOptions extends DecoratorCommonOptions {
 export function CreatedByField(options: CreatedByFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'id',
+    gqlFieldType: ID,
     warthogColumnMeta: { specialType: 'created-by', readonly: true, ...options }
   });
 

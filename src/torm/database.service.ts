@@ -1,8 +1,6 @@
 import { Inject, Service } from 'typedi';
 import { ConnectionOptions, createConnection as typeORMCreateConnection } from 'typeorm';
-
 import { Config } from '../core/';
-
 import { SnakeNamingStrategy } from './SnakeNamingStrategy';
 
 // See https://github.com/typeorm/typeorm/blob/master/test/functional/database-schema/column-types/postgres/entity/Post.ts
