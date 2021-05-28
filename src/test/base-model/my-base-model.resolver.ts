@@ -8,14 +8,16 @@ export class MyBaseModelTestResolver {
   constructor(@Inject('MyBaseModelTestService') public readonly service: MyBaseModelTestService) {}
 
   @Query(() => [MyBaseModelTest])
-  async users(
+  async myBaseModels(
     @Args() { where, orderBy, limit, offset }: MyBaseModelTestWhereArgs
   ): Promise<MyBaseModelTest[]> {
     return this.service.find(where, orderBy, limit, offset);
   }
 
   @Mutation(() => MyBaseModelTest)
-  async createKitchenSink(@Arg('data') data: MyBaseModelTestCreateInput): Promise<MyBaseModelTest> {
+  async createMyBaseModels(
+    @Arg('data') data: MyBaseModelTestCreateInput
+  ): Promise<MyBaseModelTest> {
     return this.service.create(data, '1');
   }
 }

@@ -42,7 +42,6 @@ describe('MyBaseModel', () => {
 
   // Make sure to clean up server
   beforeAll(async done => {
-    console.log('In Before All');
     const config = new MockConfig() as Config;
     Container.set('Config', config);
 

@@ -341,7 +341,6 @@ export class SchemaGenerator {
 
   entityToWhereInput(model: ModelMetadata): string {
     const filterByDefault = this.config.get('FILTER_BY_DEFAULT') === 'true';
-    console.log('entityToWhereInput :>> ', filterByDefault);
     let fieldTemplates = '';
 
     function allowFilter(column: ColumnMetadata, op: WhereOperator) {

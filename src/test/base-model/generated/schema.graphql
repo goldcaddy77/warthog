@@ -8,7 +8,7 @@ interface DeleteResponse {
 }
 
 type Mutation {
-  createKitchenSink(data: MyBaseModelTestCreateInput!): MyBaseModelTest!
+  createMyBaseModels(data: MyBaseModelTestCreateInput!): MyBaseModelTest!
 }
 
 type MyBaseModelTest {
@@ -54,7 +54,7 @@ type PageInfo {
 }
 
 type Query {
-  users(offset: Int, limit: Int = 50, where: MyBaseModelTestWhereInput, orderBy: MyBaseModelTestOrderByInput): [MyBaseModelTest!]!
+  myBaseModels(offset: Int, limit: Int = 50, where: MyBaseModelTestWhereInput, orderBy: MyBaseModelTestOrderByInput): [MyBaseModelTest!]!
 }
 
 type StandardDeleteResponse {

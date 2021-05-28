@@ -405,13 +405,14 @@ input KitchenSinkWhereUniqueInput {
 }
 
 type Mutation {
-  createKitchenSink(data: KitchenSinkCreateInput!): KitchenSink!
+  createMyBaseModels(data: MyBaseModelTestCreateInput!): MyBaseModelTest!
   createDish(data: DishCreateInput!): Dish!
   updateDish(data: DishUpdateInput!, where: DishWhereUniqueInput!): Dish!
   createManyDishs(data: [DishCreateInput!]!): [Dish!]!
   deleteDish(where: DishWhereUniqueInput!): StandardDeleteResponse!
   successfulTransaction(data: DishCreateInput!): [Dish!]!
   failedTransaction(data: DishCreateInput!): [Dish!]!
+  createKitchenSink(data: KitchenSinkCreateInput!): KitchenSink!
   createManyKitchenSinks(data: [KitchenSinkCreateInput!]!): [KitchenSink!]!
   updateKitchenSink(data: KitchenSinkUpdateInput!, where: KitchenSinkWhereUniqueInput!): KitchenSink!
   deleteKitchenSink(where: KitchenSinkWhereUniqueInput!): StandardDeleteResponse!
@@ -460,7 +461,7 @@ type PageInfo {
 }
 
 type Query {
-  users(offset: Int, limit: Int = 50, where: MyBaseModelTestWhereInput, orderBy: MyBaseModelTestOrderByInput): [MyBaseModelTest!]!
+  myBaseModels(offset: Int, limit: Int = 50, where: MyBaseModelTestWhereInput, orderBy: MyBaseModelTestOrderByInput): [MyBaseModelTest!]!
   dishes(offset: Int, limit: Int = 50, where: DishWhereInput, orderBy: DishOrderByInput): [Dish!]!
   dishConnection(first: Int, after: String, last: Int, before: String, where: DishWhereInput, orderBy: DishOrderByInput): DishConnection!
   dish(where: DishWhereUniqueInput!): Dish!

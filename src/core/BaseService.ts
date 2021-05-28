@@ -110,6 +110,7 @@ export class BaseService<E extends Node> {
       throw new Error(`BaseService requires a valid repository, class ${entityClass}`);
     }
 
+    // V3: we should use Warthog's metadata here instead of the TypeORM repository
     // Need a mapping of camelCase field name to the modified case using the naming strategy.  For the standard
     // SnakeNamingStrategy this would be something like { id: 'id', stringField: 'string_field' }
     this.columnMap = this.repository.metadata.columns.reduce(
@@ -123,6 +124,7 @@ export class BaseService<E extends Node> {
     this.klass = this.repository.metadata.name.toLowerCase();
   }
 
+  // V3: we shouln't be looking for specific column names, but rather at metadata-storage:specialType
   hasColumn(name: string) {
     return typeof this.columnMap[name] !== 'undefined';
   }
