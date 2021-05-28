@@ -287,15 +287,16 @@ When you start your server, there will be a new `generated` folder that Warthog 
 
 Most of the config in Warthog is done via environment variables (see `Config - Environment Variables` below). However, more complex/dynamic objects should be passed via the server config.
 
-| attribute                 | description                                                                                               | default                                       |
-| ------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| container                 | TypeDI container. Warthog uses dependency injection under the hood.                                       | empty container                               |
-| authChecker               | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers. |                                               |
-| context                   | Context getter of form `(request: Request) => Promise<object>`                                            | empty                                         |
-| logger                    | Logger                                                                                                    | [debug](https://github.com/visionmedia/debug) |
-| middlewares               | [TypeGraphQL](https://typegraphql.ml/docs/middlewares.html) middlewares to add to your server             | none                                          |
-| onBeforeGraphQLMiddleware | Callback executed just before the Graphql server is started. The Express app is passed.                   | none                                          |
-| onAfterGraphQLMiddleware  | Callback executed just after the Graphql server is started. The Express app is passed.                    | none                                          |
+| attribute                 | description                                                                                                                                                                                     | default                                       |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| container                 | TypeDI container. Warthog uses dependency injection under the hood.                                                                                                                             | empty container                               |
+| authChecker               | An instance of an [AuthChecker](https://typegraphql.ml/docs/authorization.html) to secure your resolvers.                                                                                       |                                               |
+| connectionGetter          | Connection getter of form `(config: Config) => Connection or Promise<Connection>`, asks for getter instead of raw connection in case we build in connection retries should a connection go down | none                                          |
+| context                   | Context getter of form `(request: Request) => Promise<object>`                                                                                                                                  | empty                                         |
+| logger                    | Logger                                                                                                                                                                                          | [debug](https://github.com/visionmedia/debug) |
+| middlewares               | [TypeGraphQL](https://typegraphql.ml/docs/middlewares.html) middlewares to add to your server                                                                                                   | none                                          |
+| onBeforeGraphQLMiddleware | Callback executed just before the Graphql server is started. The Express app is passed.                                                                                                         | none                                          |
+| onAfterGraphQLMiddleware  | Callback executed just after the Graphql server is started. The Express app is passed.                                                                                                          | none                                          |
 
 ## Config - Environment Variables
 
