@@ -1,6 +1,5 @@
 import { GraphQLISODateTime } from 'type-graphql';
 import { UpdateDateColumn } from 'typeorm';
-
 import { DecoratorCommonOptions } from '../metadata';
 import { DateTimeWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
@@ -13,7 +12,7 @@ interface UpdatedAtFieldOptions extends DecoratorCommonOptions {
 export function UpdatedAtField(options: UpdatedAtFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'datetime',
-    dbType: 'timestamp',
+    dbType: 'timestamptz',
     gqlFieldType: GraphQLISODateTime,
     warthogColumnMeta: { specialType: 'updated-at', nullable: true, readonly: true, ...options },
     dbDecorator: UpdateDateColumn

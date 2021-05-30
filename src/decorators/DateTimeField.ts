@@ -1,11 +1,9 @@
 // https://www.postgresql.org/docs/10/datatype-datetime.html
 import { GraphQLISODateTime } from 'type-graphql';
-
-import { DecoratorCommonOptions } from '../metadata';
 import { DateTimeString } from '../core';
+import { DecoratorCommonOptions } from '../metadata';
 import { DateTimeWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
-
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface DateTimeFieldOptions extends DecoratorCommonOptions {
@@ -22,7 +20,7 @@ export function DateTimeField(options: DateTimeFieldOptions = {}): any {
     fieldType: 'datetime',
     warthogColumnMeta: options,
     gqlFieldType: GraphQLISODateTime,
-    dbType: 'timestamp',
+    dbType: 'timestamptz',
     dbColumnOptions: { ...nullableOption, ...defaultOption }
   });
 
