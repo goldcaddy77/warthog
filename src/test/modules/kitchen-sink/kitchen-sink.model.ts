@@ -19,7 +19,8 @@ import {
   Model,
   NumericField,
   OneToMany,
-  StringField
+  StringField,
+  TextField
 } from '../../../';
 import { PrimaryIdField } from '../../../decorators';
 import { Dish } from '../dish/dish.model';
@@ -34,6 +35,9 @@ export class KitchenSink extends BaseModel {
 
   @StringField({ description: 'This is a string field' })
   stringField?: string;
+
+  @TextField({ nullable: true })
+  textField?: string;
 
   @StringField({ nullable: true })
   nullableStringField?: string;

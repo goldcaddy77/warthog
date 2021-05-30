@@ -612,7 +612,13 @@ export class SchemaGenerator {
         if (column.sort === true) {
           return true;
         }
-        if (column.sort === false || column.type === 'json' || column.writeonly || column.array) {
+        if (
+          column.sort === false ||
+          column.type === 'json' ||
+          column.type === 'text' ||
+          column.writeonly ||
+          column.array
+        ) {
           return false;
         }
 

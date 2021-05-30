@@ -10,6 +10,7 @@ import {
   DateTimeString,
   EmailField,
   EnumField,
+  FloatField,
   IdField,
   IntField,
   JSONField,
@@ -17,7 +18,7 @@ import {
   Model,
   NumericField,
   StringField,
-  FloatField
+  TextField
 } from '../../../../../src';
 
 // Note: this must be exported and in the same file where it's attached with @EnumField
@@ -125,8 +126,8 @@ export class User extends BaseModel {
   @StringField({ dataType: 'character varying', nullable: true })
   characterVaryingField: string;
 
-  @StringField({ dataType: 'text', nullable: true })
-  textField: string;
+  @TextField({ nullable: true })
+  textField?: string;
 
   @StringField({ dataType: 'varchar', nullable: true })
   varcharField: string;

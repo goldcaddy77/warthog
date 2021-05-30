@@ -16,6 +16,8 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
     nullableStringField: null,
     dateOnlyField: '2018-08-19',
     dateTimeField: '2019-11-25T22:03:38.286Z',
+    textField:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vulputate, arcu cursus egestas volutpat, diam purus lacinia ipsum, pretium tristique diam lectus a neque. Quisque eget auctor lorem. Aliquam vehicula mauris magna, vitae ultrices tortor vulputate ut. Duis eleifend justo sed leo scelerisque, vel posuere libero faucibus. Donec posuere, arcu et dapibus posuere, dolor quam accumsan libero, nec tristique sem orci vel libero. Pellentesque auctor at quam eu interdum. Ut quis ex vitae quam porta faucibus ullamcorper vel nisl. Phasellus lacinia eleifend rhoncus. Praesent porta erat vitae turpis aliquam, id sodales nunc fermentum. Nulla viverra commodo lacus et lacinia. Nam bibendum turpis at nibh commodo aliquet. Sed sit amet eros posuere turpis ornare rutrum sed sit amet elit. Praesent lobortis velit vitae volutpat efficitur. Duis finibus pretium risus. Proin mollis dolor est, eget elementum sapien dictum finibus. Quisque dui nisl, sagittis quis nisl sed, facilisis volutpat magna.',
     jsonField: {
       foo: 'bar',
       quia: 'autem'

@@ -586,6 +586,9 @@ export class KitchenSinkCreateInput {
   stringField!: string;
 
   @TypeGraphQLField({ nullable: true })
+  textField?: string;
+
+  @TypeGraphQLField({ nullable: true })
   nullableStringField?: string;
 
   @TypeGraphQLField(() => DateTime, { nullable: true })
@@ -665,6 +668,9 @@ export class KitchenSinkCreateInput {
 export class KitchenSinkUpdateInput {
   @TypeGraphQLField({ nullable: true })
   stringField?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  textField?: string;
 
   @TypeGraphQLField({ nullable: true })
   nullableStringField?: string;

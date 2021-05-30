@@ -1,4 +1,3 @@
-import { DateResolver } from 'graphql-scalars';
 import {
   GraphQLBoolean,
   GraphQLFloat,
@@ -7,12 +6,12 @@ import {
   GraphQLScalarType,
   GraphQLString
 } from 'graphql';
+import { DateResolver } from 'graphql-scalars';
 import { GraphQLISODateTime } from 'type-graphql';
+import { FieldType } from '../metadata';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
-
-import { FieldType } from '../metadata';
 
 export function columnToGraphQLType(
   type: FieldType,
@@ -43,6 +42,8 @@ export function columnToGraphQLType(
       return DateResolver;
     case 'json':
       return GraphQLJSONObject;
+    case 'text':
+      return GraphQLString;
     case 'enum':
       // This is to make TS happy and so that we'll get a compile time error if a new type is added
       throw new Error("Will never get here because it's handled above");
@@ -71,6 +72,8 @@ export function columnTypeToGraphQLType(type: FieldType): GraphQLScalarType {
       return DateResolver;
     case 'json':
       return GraphQLJSONObject;
+    case 'text':
+      return GraphQLString;
     case 'enum':
       // This is to make TS happy and so that we'll get a compile time error if a new type is added
       throw new Error("Will never get here because it's handled above");
