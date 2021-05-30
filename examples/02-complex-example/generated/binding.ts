@@ -83,8 +83,6 @@ export type UserOrderByInput =   'booleanField_ASC' |
   'characterField_DESC' |
   'characterVaryingField_ASC' |
   'characterVaryingField_DESC' |
-  'textField_ASC' |
-  'textField_DESC' |
   'varcharField_ASC' |
   'varcharField_DESC' |
   'intField_ASC' |
@@ -313,11 +311,6 @@ export interface UserWhereInput {
   characterVaryingField_startsWith?: String | null
   characterVaryingField_endsWith?: String | null
   characterVaryingField_in?: String[] | String | null
-  textField_eq?: String | null
-  textField_contains?: String | null
-  textField_startsWith?: String | null
-  textField_endsWith?: String | null
-  textField_in?: String[] | String | null
   varcharField_eq?: String | null
   varcharField_contains?: String | null
   varcharField_startsWith?: String | null

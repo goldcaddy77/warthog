@@ -12,6 +12,7 @@ interface TextFieldOptions {
 export function TextField(options: TextFieldOptions = {}): any {
   const factories = getCombinedDecorator({
     fieldType: 'text',
+    dbType: 'text',
     gqlFieldType: String,
     warthogColumnMeta: options
   });

@@ -86,9 +86,6 @@ export enum UserOrderByEnum {
   characterVaryingField_ASC = "characterVaryingField_ASC",
   characterVaryingField_DESC = "characterVaryingField_DESC",
 
-  textField_ASC = "textField_ASC",
-  textField_DESC = "textField_DESC",
-
   varcharField_ASC = "varcharField_ASC",
   varcharField_DESC = "varcharField_DESC",
 
@@ -449,21 +446,6 @@ export class UserWhereInput {
 
   @TypeGraphQLField(() => [String], { nullable: true })
   characterVaryingField_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  textField_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  textField_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  textField_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  textField_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  textField_in?: string[];
 
   @TypeGraphQLField({ nullable: true })
   varcharField_eq?: string;

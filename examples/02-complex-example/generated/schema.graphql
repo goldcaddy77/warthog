@@ -183,8 +183,6 @@ enum UserOrderByInput {
   characterField_DESC
   characterVaryingField_ASC
   characterVaryingField_DESC
-  textField_ASC
-  textField_DESC
   varcharField_ASC
   varcharField_DESC
   intField_ASC
@@ -370,11 +368,6 @@ input UserWhereInput {
   characterVaryingField_startsWith: String
   characterVaryingField_endsWith: String
   characterVaryingField_in: [String!]
-  textField_eq: String
-  textField_contains: String
-  textField_startsWith: String
-  textField_endsWith: String
-  textField_in: [String!]
   varcharField_eq: String
   varcharField_contains: String
   varcharField_startsWith: String
