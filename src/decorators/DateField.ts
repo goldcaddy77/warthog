@@ -1,9 +1,7 @@
 import { GraphQLISODateTime } from 'type-graphql';
-
 import { DecoratorCommonOptions } from '../metadata';
 import { ColumnType, DateWhereOperator } from '../torm';
 import { composeMethodDecorators } from '../utils';
-
 import { getCombinedDecorator } from './getCombinedDecorator';
 
 interface DateFieldOptions extends DecoratorCommonOptions {
@@ -21,7 +19,7 @@ export function DateField(options: DateFieldOptions = {}): any {
     fieldType: 'date',
     warthogColumnMeta: options,
     gqlFieldType: GraphQLISODateTime,
-    dbType: options.dataType || 'timestamp',
+    dbType: options.dataType || 'timestamptz',
     dbColumnOptions: { ...nullableOption, ...defaultOption }
   });
 
