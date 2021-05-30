@@ -6,9 +6,8 @@ import { IResolvers } from 'graphql-tools/dist/Interfaces'
 import * as schema from  './schema.graphql'
 
 export interface Query {
+    myBaseModels: <T = Array<MyBaseModelTest>>(args: { offset?: Int | null, limit?: Int | null, where?: MyBaseModelTestWhereInput | null, orderBy?: MyBaseModelTestOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dishes: <T = Array<Dish>>(args: { offset?: Int | null, limit?: Int | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    MyBaseModels: <T = Array<MyBaseModel>>(args: { offset?: Int | null, limit?: Int | null, where?: MyBaseModelWhereInput | null, orderBy?: MyBaseModelOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    MyBaseModel: <T = MyBaseModel>(args: { where: MyBaseModelWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dishConnection: <T = DishConnection>(args: { first?: Int | null, after?: String | null, last?: Int | null, before?: String | null, where?: DishWhereInput | null, orderBy?: DishOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     dish: <T = Dish>(args: { where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     kitchenSinks: <T = Array<KitchenSink>>(args: { offset?: Int | null, limit?: Int | null, where?: KitchenSinkWhereInput | null, orderBy?: KitchenSinkOrderByInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -16,10 +15,7 @@ export interface Query {
   }
 
 export interface Mutation {
-    createMyBaseModel: <T = MyBaseModel>(args: { data: MyBaseModelCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createManyMyBaseModels: <T = Array<MyBaseModel>>(args: { data: Array<MyBaseModelCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateMyBaseModel: <T = MyBaseModel>(args: { data: MyBaseModelUpdateInput, where: MyBaseModelWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteMyBaseModel: <T = StandardDeleteResponse>(args: { where: MyBaseModelWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createMyBaseModels: <T = MyBaseModelTest>(args: { data: MyBaseModelTestCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createDish: <T = Dish>(args: { data: DishCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateDish: <T = Dish>(args: { data: DishUpdateInput, where: DishWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createManyDishs: <T = Array<Dish>>(args: { data: Array<DishCreateInput> }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -69,22 +65,6 @@ export type DishOrderByInput =   'createdAt_ASC' |
 
 export type KitchenSinkOrderByInput =   'id_ASC' |
   'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'createdById_ASC' |
-  'createdById_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'updatedById_ASC' |
-  'updatedById_DESC' |
-  'deletedAt_ASC' |
-  'deletedAt_DESC' |
-  'deletedById_ASC' |
-  'deletedById_DESC' |
-  'ownerId_ASC' |
-  'ownerId_DESC' |
-  'version_ASC' |
-  'version_DESC' |
   'stringField_ASC' |
   'stringField_DESC' |
   'nullableStringField_ASC' |
@@ -118,10 +98,7 @@ export type KitchenSinkOrderByInput =   'id_ASC' |
   'readonlyField_ASC' |
   'readonlyField_DESC' |
   'apiOnlyField_ASC' |
-  'apiOnlyField_DESC'
-
-export type MyBaseModelOrderByInput =   'stringField_ASC' |
-  'stringField_DESC' |
+  'apiOnlyField_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -137,8 +114,9 @@ export type MyBaseModelOrderByInput =   'stringField_ASC' |
   'version_ASC' |
   'version_DESC' |
   'ownerId_ASC' |
-  'ownerId_DESC' |
-  'id_ASC' |
+  'ownerId_DESC'
+
+export type MyBaseModelTestOrderByInput =   'id_ASC' |
   'id_DESC'
 
 export type StringEnum =   'FOO' |
@@ -202,6 +180,7 @@ export interface DishWhereUniqueInput {
 
 export interface KitchenSinkCreateInput {
   stringField: String
+  textField?: String | null
   nullableStringField?: String | null
   dateField?: DateTime | null
   dateOnlyField?: Date | null
@@ -231,6 +210,7 @@ export interface KitchenSinkCreateInput {
 
 export interface KitchenSinkUpdateInput {
   stringField?: String | null
+  textField?: String | null
   nullableStringField?: String | null
   dateField?: DateTime | null
   dateOnlyField?: Date | null
@@ -261,36 +241,6 @@ export interface KitchenSinkUpdateInput {
 export interface KitchenSinkWhereInput {
   id_eq?: ID_Input | null
   id_in?: ID_Output[] | ID_Output | null
-  createdAt_eq?: DateTime | null
-  createdAt_lt?: DateTime | null
-  createdAt_lte?: DateTime | null
-  createdAt_gt?: DateTime | null
-  createdAt_gte?: DateTime | null
-  createdById_eq?: ID_Input | null
-  createdById_in?: ID_Output[] | ID_Output | null
-  updatedAt_eq?: DateTime | null
-  updatedAt_lt?: DateTime | null
-  updatedAt_lte?: DateTime | null
-  updatedAt_gt?: DateTime | null
-  updatedAt_gte?: DateTime | null
-  updatedById_eq?: ID_Input | null
-  updatedById_in?: ID_Output[] | ID_Output | null
-  deletedAt_all?: Boolean | null
-  deletedAt_eq?: DateTime | null
-  deletedAt_lt?: DateTime | null
-  deletedAt_lte?: DateTime | null
-  deletedAt_gt?: DateTime | null
-  deletedAt_gte?: DateTime | null
-  deletedById_eq?: ID_Input | null
-  deletedById_in?: ID_Output[] | ID_Output | null
-  ownerId_eq?: ID_Input | null
-  ownerId_in?: ID_Output[] | ID_Output | null
-  version_eq?: Int | null
-  version_gt?: Int | null
-  version_gte?: Int | null
-  version_lt?: Int | null
-  version_lte?: Int | null
-  version_in?: Int[] | Int | null
   stringField_eq?: String | null
   stringField_contains?: String | null
   stringField_startsWith?: String | null
@@ -382,27 +332,6 @@ export interface KitchenSinkWhereInput {
   arrayOfInts_containsAll?: Int[] | Int | null
   arrayOfInts_containsNone?: Int[] | Int | null
   arrayOfInts_containsAny?: Int[] | Int | null
-}
-
-export interface KitchenSinkWhereUniqueInput {
-  id?: ID_Input | null
-  emailField?: String | null
-}
-
-export interface MyBaseModelCreateInput {
-  stringField: String
-}
-
-export interface MyBaseModelUpdateInput {
-  stringField?: String | null
-}
-
-export interface MyBaseModelWhereInput {
-  stringField_eq?: String | null
-  stringField_contains?: String | null
-  stringField_startsWith?: String | null
-  stringField_endsWith?: String | null
-  stringField_in?: String[] | String | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -433,11 +362,27 @@ export interface MyBaseModelWhereInput {
   version_in?: Int[] | Int | null
   ownerId_eq?: ID_Input | null
   ownerId_in?: ID_Output[] | ID_Output | null
-  id_eq?: ID_Input | null
+}
+
+export interface KitchenSinkWhereUniqueInput {
+  id?: ID_Input | null
+  emailField?: String | null
+}
+
+export interface MyBaseModelTestCreateInput {
+  stringField: String
+}
+
+export interface MyBaseModelTestUpdateInput {
+  stringField?: String | null
+}
+
+export interface MyBaseModelTestWhereInput {
+  deletedAt_all?: Boolean | null
   id_in?: ID_Output[] | ID_Output | null
 }
 
-export interface MyBaseModelWhereUniqueInput {
+export interface MyBaseModelTestWhereUniqueInput {
   id: ID_Output
 }
 
@@ -460,7 +405,7 @@ export interface Dish {
   name: String
   stringEnumField?: StringEnum | null
   kitchenSink: KitchenSink
-  kitchenSinkId: String
+  kitchenSinkId: ID_Output
 }
 
 export interface DishConnection {
@@ -477,14 +422,15 @@ export interface DishEdge {
 export interface KitchenSink {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
-  ownerId: String
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   stringField: String
+  textField?: String | null
   nullableStringField?: String | null
   dateField?: DateTime | null
   dateOnlyField?: Date | null
@@ -494,7 +440,7 @@ export interface KitchenSink {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
-  idField?: String | null
+  idField?: ID_Output | null
   stringEnumField?: StringEnum | null
   dishes?: Array<Dish> | null
   numericField?: Float | null
@@ -514,16 +460,16 @@ export interface KitchenSink {
   arrayOfInts?: Array<Int> | null
 }
 
-export interface MyBaseModel {
+export interface MyBaseModelTest {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
-  ownerId: String
+  ownerId: ID_Output
   stringField: String
 }
 

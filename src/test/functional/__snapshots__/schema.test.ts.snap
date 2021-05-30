@@ -131,6 +131,7 @@ type KitchenSink {
 
   \\"\\"\\"This is a string field\\"\\"\\"
   stringField: String!
+  textField: String
   nullableStringField: String
   dateField: DateTime
   dateOnlyField: Date
@@ -162,6 +163,7 @@ type KitchenSink {
 
 input KitchenSinkCreateInput {
   stringField: String!
+  textField: String
   nullableStringField: String
   dateField: DateTime
   dateOnlyField: Date
@@ -246,6 +248,7 @@ enum KitchenSinkOrderByInput {
 
 input KitchenSinkUpdateInput {
   stringField: String
+  textField: String
   nullableStringField: String
   dateField: DateTime
   dateOnlyField: Date
