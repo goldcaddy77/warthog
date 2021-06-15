@@ -1,8 +1,6 @@
 import { Container } from 'typedi';
 import { Entity } from 'typeorm';
-
 import { BaseModel, StringField } from '../';
-
 import { EncodingService } from './encoding';
 import { RelayService, SortDirection } from './RelayService';
 
@@ -207,7 +205,7 @@ describe('RelayService', () => {
       });
     });
 
-    test.only('works several sorts', () => {
+    test('works several sorts', () => {
       const sorts = ['createdAt_ASC', 'name_DESC', 'id_ASC'];
       const cursor = relay.encodeCursor(foo, sorts);
       expect(relay.getFilters(sorts, { first: 1, after: cursor })).toEqual({

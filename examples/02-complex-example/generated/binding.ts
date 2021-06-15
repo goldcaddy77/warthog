@@ -139,13 +139,61 @@ export interface BaseWhereInput {
 }
 
 export interface EventObjectInput {
-  params: Array<EventParamInput>
+  params: EventParamInput
 }
 
 export interface EventParamInput {
   type: String
   name: String
   value: JSONObject
+}
+
+export interface PostCreateInput {
+  title: String
+  userId: ID_Output
+}
+
+export interface PostUpdateInput {
+  title?: String | null
+  userId?: ID_Input | null
+}
+
+export interface PostWhereInput {
+  id_eq?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
+  title_eq?: String | null
+  title_contains?: String | null
+  title_startsWith?: String | null
+  title_endsWith?: String | null
+  title_in?: String[] | String | null
+  userId_eq?: ID_Input | null
+  userId_in?: ID_Output[] | ID_Output | null
+}
+
+export interface PostWhereUniqueInput {
+  id: ID_Output
 }
 
 export interface UserCreateInput {
@@ -320,6 +368,7 @@ export interface UserWhereInput {
   bigIntField_lte?: Int | null
   bigIntField_in?: Int[] | Int | null
   jsonField_json?: JSONObject | null
+  typedJsonField_json?: JSONObject | null
   stringField_eq?: String | null
   stringField_contains?: String | null
   stringField_startsWith?: String | null
@@ -483,7 +532,7 @@ export interface BaseModelUUID extends BaseGraphQLObject {
 }
 
 export interface EventObject {
-  params: Array<EventParam>
+  params: EventParam
 }
 
 export interface EventParam {
@@ -497,6 +546,20 @@ export interface PageInfo {
   hasPreviousPage: Boolean
   startCursor?: String | null
   endCursor?: String | null
+}
+
+export interface Post extends BaseGraphQLObject {
+  id: ID_Output
+  createdAt: DateTime
+  createdById: String
+  updatedAt?: DateTime | null
+  updatedById?: String | null
+  deletedAt?: DateTime | null
+  deletedById?: String | null
+  version: Int
+  title: String
+  user: User
+  userId: String
 }
 
 export interface StandardDeleteResponse {
@@ -553,6 +616,7 @@ export interface User extends BaseGraphQLObject {
   apiOnlyField?: String | null
   arrayOfStrings?: Array<String> | null
   arrayOfInts?: Array<Int> | null
+  posts?: Array<Post> | null
 }
 
 /*

@@ -72,11 +72,11 @@ interface DeleteResponse {
 }
 
 type EventObject {
-  params: [EventParam!]!
+  params: EventParam!
 }
 
 input EventObjectInput {
-  params: [EventParamInput!]!
+  params: EventParamInput!
 }
 
 type EventParam {
@@ -107,6 +107,68 @@ type PageInfo {
   hasPreviousPage: Boolean!
   startCursor: String
   endCursor: String
+}
+
+type Post implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  title: String!
+  user: User!
+  userId: String!
+}
+
+input PostCreateInput {
+  title: String!
+  userId: ID!
+}
+
+input PostUpdateInput {
+  title: String
+  userId: ID
+}
+
+input PostWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  title_eq: String
+  title_contains: String
+  title_startsWith: String
+  title_endsWith: String
+  title_in: [String!]
+  userId_eq: ID
+  userId_in: [ID!]
+}
+
+input PostWhereUniqueInput {
+  id: ID!
 }
 
 type Query {
@@ -175,6 +237,7 @@ type User implements BaseGraphQLObject {
   apiOnlyField: String
   arrayOfStrings: [String!]
   arrayOfInts: [Int!]
+  posts: [Post!]
 }
 
 input UserCreateInput {
@@ -420,6 +483,7 @@ input UserWhereInput {
   bigIntField_lte: Int
   bigIntField_in: [Int!]
   jsonField_json: JSONObject
+  typedJsonField_json: JSONObject
   stringField_eq: String
   stringField_contains: String
   stringField_startsWith: String

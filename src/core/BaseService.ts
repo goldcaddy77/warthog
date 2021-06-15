@@ -213,7 +213,10 @@ export class BaseService<E extends BaseModel> {
       }
       // Querybuilder requires you to prefix all fields with the table alias.  It also requires you to
       // specify the field name using it's TypeORM attribute name, not the camel-cased DB column name
-      const selection = fields.map(field => `${this.klass}.${field}`);
+      const selection = fields
+        .filter(field => this.columnMap[field]) // This will filter out any association records that come in @Fields
+        .map(field => `${this.klass}.${field}`);
+
       qb = qb.select(selection);
     }
 

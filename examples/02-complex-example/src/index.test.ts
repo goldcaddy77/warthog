@@ -1,11 +1,8 @@
 /* eslint-disable no-console */
 
-import 'reflect-metadata';
-
 import { GraphQLError } from 'graphql';
-
+import 'reflect-metadata';
 import { Binding } from '../generated/binding';
-
 import { StringEnum, User } from './modules/user/user.model';
 import { getServer } from './server';
 
