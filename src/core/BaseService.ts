@@ -9,22 +9,20 @@ import {
   SelectQueryBuilder
 } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-
+import { isArray } from 'util';
 import { debug } from '../decorators';
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
-
 import { BaseModel } from './';
-import { StringMap, WhereInput } from './types';
-import { isArray } from 'util';
+import { ConnectionInputFields, GraphQLInfoService } from './GraphQLInfoService';
 import {
+  ConnectionResult,
   RelayFirstAfter,
   RelayLastBefore,
-  RelayService,
   RelayPageOptions,
-  ConnectionResult
+  RelayService
 } from './RelayService';
-import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
+import { StringMap, WhereInput } from './types';
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -362,7 +360,7 @@ export class BaseService<E extends BaseModel> {
 
   async create(data: DeepPartial<E>, userId: string, options?: BaseOptions): Promise<E> {
     const manager = options?.manager ?? this.manager;
-    const entity = manager.create(this.entityClass, { ...data, createdById: userId });
+    const entity = manager.create<E>(this.entityClass, { ...data, createdById: userId });
 
     // Validate against the the data model
     // Without `skipMissingProperties`, some of the class-validator validations (like MinLength)
