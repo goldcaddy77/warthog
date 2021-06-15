@@ -455,6 +455,13 @@ Array [
     "stringField": "JEROMY",
   },
   Object {
+    "arrayOfInts": Array [
+      8,
+      6,
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
     "arrayOfInts": Array [],
     "stringField": "SHEMAR",
   },
@@ -617,6 +624,12 @@ Array [
   },
   Object {
     "arrayOfInts": Array [
+      3,
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
+    "arrayOfInts": Array [
       0,
       6,
       5,
@@ -697,19 +710,6 @@ Array [
       5,
     ],
     "stringField": "paucek",
-  },
-  Object {
-    "arrayOfInts": Array [
-      8,
-      6,
-    ],
-    "stringField": "sed quod",
-  },
-  Object {
-    "arrayOfInts": Array [
-      3,
-    ],
-    "stringField": "kuhic",
   },
   Object {
     "arrayOfInts": Array [
@@ -1031,6 +1031,12 @@ Array [
   },
   Object {
     "arrayOfStrings": Array [
+      "fox",
+    ],
+    "stringField": "sed quod",
+  },
+  Object {
+    "arrayOfStrings": Array [
       "turtle",
     ],
     "stringField": "delfinaz",
@@ -1170,6 +1176,13 @@ Array [
     "stringField": "ipsum voluptas",
   },
   Object {
+    "arrayOfStrings": Array [
+      "pony",
+      "fox",
+    ],
+    "stringField": "kuhic",
+  },
+  Object {
     "arrayOfStrings": Array [],
     "stringField": "luettgen",
   },
@@ -1266,19 +1279,6 @@ Array [
       "fox",
     ],
     "stringField": "paucek",
-  },
-  Object {
-    "arrayOfStrings": Array [
-      "fox",
-    ],
-    "stringField": "sed quod",
-  },
-  Object {
-    "arrayOfStrings": Array [
-      "pony",
-      "fox",
-    ],
-    "stringField": "kuhic",
   },
   Object {
     "arrayOfStrings": Array [],
@@ -1635,6 +1635,10 @@ Array [
     "stringField": "HELGA",
   },
   Object {
+    "dateTimeField": "2018-10-20T06:13:15.849Z",
+    "stringField": "kuhic",
+  },
+  Object {
     "dateTimeField": "2019-11-05T13:56:17.060Z",
     "stringField": "dietrich",
   },
@@ -1693,10 +1697,6 @@ Array [
   Object {
     "dateTimeField": "2018-08-28T10:28:33.206Z",
     "stringField": "paucek",
-  },
-  Object {
-    "dateTimeField": "2018-10-20T06:13:15.849Z",
-    "stringField": "kuhic",
   },
   Object {
     "dateTimeField": "2019-04-12T20:45:07.338Z",
@@ -1762,6 +1762,9 @@ Array [
   },
   Object {
     "stringField": "sed praesentium",
+  },
+  Object {
+    "stringField": "sed quod",
   },
   Object {
     "stringField": "SHEMAR",
@@ -1878,9 +1881,6 @@ Array [
     "stringField": "paucek",
   },
   Object {
-    "stringField": "sed quod",
-  },
-  Object {
     "stringField": "placeat voluptate",
   },
   Object {
@@ -1931,6 +1931,9 @@ Array [
     "stringField": "BERENICE",
   },
   Object {
+    "stringField": "sed quod",
+  },
+  Object {
     "stringField": "stark",
   },
   Object {
@@ -1970,6 +1973,9 @@ Array [
     "stringField": "billie",
   },
   Object {
+    "stringField": "kuhic",
+  },
+  Object {
     "stringField": "dietrich",
   },
   Object {
@@ -1998,12 +2004,6 @@ Array [
   },
   Object {
     "stringField": "Wisoky",
-  },
-  Object {
-    "stringField": "sed quod",
-  },
-  Object {
-    "stringField": "kuhic",
   },
 ]
 `;
@@ -2039,6 +2039,9 @@ Array [
   },
   Object {
     "stringField": "BERENICE",
+  },
+  Object {
+    "stringField": "sed quod",
   },
   Object {
     "stringField": "delfinaz",
@@ -2083,6 +2086,9 @@ Array [
     "stringField": "billie",
   },
   Object {
+    "stringField": "kuhic",
+  },
+  Object {
     "stringField": "dietrich",
   },
   Object {
@@ -2111,12 +2117,6 @@ Array [
   },
   Object {
     "stringField": "Wisoky",
-  },
-  Object {
-    "stringField": "sed quod",
-  },
-  Object {
-    "stringField": "kuhic",
   },
 ]
 `;
@@ -2655,6 +2655,13 @@ Array [
   Object {
     "jsonField": Object {
       "foo": "bar",
+      "illum": "eum",
+    },
+    "stringField": "kuhic",
+  },
+  Object {
+    "jsonField": Object {
+      "foo": "bar",
       "praesentium": "rerum",
     },
     "stringField": "dietrich",
@@ -2707,13 +2714,6 @@ Array [
       "foo": "bar",
     },
     "stringField": "paucek",
-  },
-  Object {
-    "jsonField": Object {
-      "foo": "bar",
-      "illum": "eum",
-    },
-    "stringField": "kuhic",
   },
   Object {
     "jsonField": Object {
@@ -3145,6 +3145,296 @@ Array [
   },
   Object {
     "stringField": "BAUCH",
+  },
+]
+`;
+
+exports[`server find: typedJsonField_json: { params: { name_eq: "Bar" } } (Typed JSON field filtering) 1`] = `
+Array [
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "5",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+  Object {
+    "dishes": Array [],
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "8",
+        },
+      },
+    },
+  },
+]
+`;
+
+exports[`server find: typedJsonField_json: { params: { value: { deepParam_eq: "1"} } } (Typed JSON field deep nesting filtering) 1`] = `
+Array [
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": "Bar",
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": null,
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": null,
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": null,
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
+  },
+  Object {
+    "typedJsonField": Object {
+      "params": Object {
+        "name": null,
+        "type": "Baz",
+        "value": Object {
+          "deepParam": "1",
+        },
+      },
+    },
   },
 ]
 `;

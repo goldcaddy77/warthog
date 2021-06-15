@@ -1,5 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { GraphQLJSONObject } = require('graphql-type-json');
+import { Field, InputType } from 'type-graphql';
 import { Column } from 'typeorm';
-
 import {
   BaseModel,
   BooleanField,
@@ -15,17 +17,37 @@ import {
   IdField,
   IntField,
   JSONField,
-  OneToMany,
+  JsonObject,
   Model,
   NumericField,
-  StringField,
-  JsonObject
+  ObjectType,
+  OneToMany,
+  StringField
 } from '../../../';
-
 import { Dish } from '../dish/dish.model';
-
 import { StringEnum } from '../shared';
+
 export { StringEnum }; // Warthog requires this
+
+@InputType('EventParamInput')
+@ObjectType()
+export class EventParam {
+  @Field()
+  type?: string;
+
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field(() => GraphQLJSONObject)
+  value!: JsonObject;
+}
+
+@InputType('EventObjectInput')
+@ObjectType()
+export class EventObject {
+  @Field(() => EventParam)
+  params!: EventParam;
+}
 
 @Model()
 export class KitchenSink extends BaseModel {
@@ -58,6 +80,9 @@ export class KitchenSink extends BaseModel {
 
   @JSONField({ nullable: true })
   jsonField?: JsonObject;
+
+  @JSONField({ filter: true, nullable: true, gqlFieldType: EventObject })
+  typedJsonField?: EventObject;
 
   @IdField({ nullable: true })
   idField?: string;

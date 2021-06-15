@@ -5,14 +5,15 @@ export function Fields(): ParameterDecorator {
   return createParamDecorator(({ info }) => {
     // This object will be of the form:
     //   rawFields {
+    //     __objectType
     //     baseField: {},
     //     association: { subField: "foo"}
     //   }
-    // We need to pull out items with subFields
+    // We pull out items with subFields
     const rawFields = graphqlFields(info);
 
     const scalars = Object.keys(rawFields).filter(item => {
-      return Object.keys(rawFields[item]).length === 0 && !item.startsWith('__');
+      return !item.startsWith('__');
     });
 
     return scalars;

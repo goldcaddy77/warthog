@@ -229,6 +229,16 @@ export interface DishWhereUniqueInput {
   id: ID_Output
 }
 
+export interface EventObjectInput {
+  params: EventParamInput
+}
+
+export interface EventParamInput {
+  type: String
+  name?: String | null
+  value: JSONObject
+}
+
 export interface KitchenSinkCreateInput {
   stringField: String
   nullableStringField?: String | null
@@ -240,6 +250,7 @@ export interface KitchenSinkCreateInput {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
+  typedJsonField?: EventObjectInput | null
   idField?: ID_Input | null
   stringEnumField?: StringEnum | null
   numericField?: Float | null
@@ -269,6 +280,7 @@ export interface KitchenSinkUpdateInput {
   booleanField?: Boolean | null
   floatField?: Float | null
   jsonField?: JSONObject | null
+  typedJsonField?: EventObjectInput | null
   idField?: ID_Input | null
   stringEnumField?: StringEnum | null
   numericField?: Float | null
@@ -357,6 +369,7 @@ export interface KitchenSinkWhereInput {
   floatField_lte?: Float | null
   floatField_in?: Float[] | Float | null
   jsonField_json?: JSONObject | null
+  typedJsonField_json?: JSONObject | null
   idField_eq?: ID_Input | null
   idField_in?: ID_Output[] | ID_Output | null
   stringEnumField_eq?: StringEnum | null
@@ -497,6 +510,16 @@ export interface DishEdge {
   cursor: String
 }
 
+export interface EventObject {
+  params: EventParam
+}
+
+export interface EventParam {
+  type: String
+  name?: String | null
+  value: JSONObject
+}
+
 export interface KitchenSink extends BaseGraphQLObject {
   id: ID_Output
   createdAt: DateTime
@@ -516,6 +539,7 @@ export interface KitchenSink extends BaseGraphQLObject {
   booleanField: Boolean
   floatField: Float
   jsonField?: JSONObject | null
+  typedJsonField?: EventObject | null
   idField?: String | null
   stringEnumField?: StringEnum | null
   dishes?: Array<Dish> | null

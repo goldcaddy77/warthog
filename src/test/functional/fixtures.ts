@@ -21,7 +21,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       quia: 'autem'
     },
     arrayOfInts: [1],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2018-06-09T17:19:07.764Z',
@@ -39,7 +48,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       repellat: 'autem'
     },
     arrayOfInts: [5, 4],
-    arrayOfStrings: ['cat', 'dog']
+    arrayOfStrings: ['cat', 'dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2010-06-15T02:46:13.288Z',
@@ -57,7 +75,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ab: 'est'
     },
     arrayOfInts: [4, 0, 5, 2],
-    arrayOfStrings: ['cat', 'dog']
+    arrayOfStrings: ['cat', 'dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2015-09-20T05:30:11.138Z',
@@ -75,7 +102,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       voluptatum: 'dignissimos'
     },
     arrayOfInts: [6, 0, 1],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2007-11-02T14:52:54.467Z',
@@ -93,7 +129,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       molestias: 'repellat'
     },
     arrayOfInts: [2, 4, 4],
-    arrayOfStrings: ['pony', 'turtle']
+    arrayOfStrings: ['pony', 'turtle'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2019-11-07T04:11:01.926Z',
@@ -111,7 +156,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       blanditiis: 'perspiciatis'
     },
     arrayOfInts: [2, 0],
-    arrayOfStrings: ['dog']
+    arrayOfStrings: ['dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2006-12-02T23:23:07.874Z',
@@ -129,7 +183,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       omnis: 'laboriosam'
     },
     arrayOfInts: [1],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2013-07-23T13:06:48.326Z',
@@ -147,7 +210,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       et: 'voluptatum'
     },
     arrayOfInts: [5, 5],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2000-01-12T09:14:05.317Z',
@@ -165,7 +237,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       qui: 'asperiores'
     },
     arrayOfInts: [0, 0, 7],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2013-04-12T16:21:23.172Z',
@@ -183,7 +264,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ad: 'perspiciatis'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['dog', 'fox']
+    arrayOfStrings: ['dog', 'fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2007-12-19T04:35:25.042Z',
@@ -201,7 +291,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       et: 'est'
     },
     arrayOfInts: [1, 2, 1, 6],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2019-05-03T15:48:00.387Z',
@@ -219,7 +318,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       non: 'rerum'
     },
     arrayOfInts: [8, 4, 7],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2010-08-26T05:32:14.613Z',
@@ -237,7 +345,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       blanditiis: 'eligendi'
     },
     arrayOfInts: [4],
-    arrayOfStrings: ['fox', 'turtle']
+    arrayOfStrings: ['fox', 'turtle'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2008-06-23T01:50:57.367Z',
@@ -255,7 +372,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       hic: 'voluptatem'
     },
     arrayOfInts: [5],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2009-06-05T09:17:38.251Z',
@@ -273,7 +399,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ut: 'expedita'
     },
     arrayOfInts: [7],
-    arrayOfStrings: ['dog']
+    arrayOfStrings: ['dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2013-03-07T16:28:03.213Z',
@@ -291,7 +426,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       repellat: 'rem'
     },
     arrayOfInts: [3, 0, 8],
-    arrayOfStrings: ['fox', 'pony']
+    arrayOfStrings: ['fox', 'pony'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2010-03-21T16:34:30.420Z',
@@ -309,7 +453,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       et: 'laboriosam'
     },
     arrayOfInts: [5],
-    arrayOfStrings: ['dog', 'fox']
+    arrayOfStrings: ['dog', 'fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2019-03-15T10:02:32.875Z',
@@ -327,7 +480,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       doloremque: 'labore'
     },
     arrayOfInts: [1, 8],
-    arrayOfStrings: ['cat']
+    arrayOfStrings: ['cat'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '3'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2002-04-13T06:42:01.063Z',
@@ -345,7 +507,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       et: 'nulla'
     },
     arrayOfInts: [7, 0, 0, 3],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '3'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2015-11-13T18:10:22.996Z',
@@ -363,7 +534,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       perferendis: 'et'
     },
     arrayOfInts: [0, 1, 7, 0],
-    arrayOfStrings: ['turtle', 'fox']
+    arrayOfStrings: ['turtle', 'fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '4'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2003-10-28T14:00:51.027Z',
@@ -381,7 +561,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       earum: 'reiciendis'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2017-07-08T05:55:21.859Z',
@@ -399,7 +588,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       quaerat: 'dignissimos'
     },
     arrayOfInts: [6, 2, 0, 7],
-    arrayOfStrings: ['dog', 'fox']
+    arrayOfStrings: ['dog', 'fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2004-03-05T21:41:32.408Z',
@@ -417,7 +615,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       quia: 'assumenda'
     },
     arrayOfInts: [7],
-    arrayOfStrings: ['turtle']
+    arrayOfStrings: ['turtle'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2016-02-16T00:51:08.515Z',
@@ -435,7 +642,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       earum: 'in'
     },
     arrayOfInts: [],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2015-11-16T20:13:42.749Z',
@@ -453,7 +669,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       molestiae: 'voluptatem'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['cat']
+    arrayOfStrings: ['cat'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2001-12-22T04:20:50.000Z',
@@ -471,7 +696,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       hic: 'architecto'
     },
     arrayOfInts: [5],
-    arrayOfStrings: ['turtle', 'turtle']
+    arrayOfStrings: ['turtle', 'turtle'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2000-10-24T14:17:23.329Z',
@@ -489,7 +723,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       qui: 'aut'
     },
     arrayOfInts: [0, 8, 5, 5],
-    arrayOfStrings: ['turtle', 'cat']
+    arrayOfStrings: ['turtle', 'cat'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2011-07-27T20:53:06.011Z',
@@ -507,7 +750,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       voluptatem: 'quasi'
     },
     arrayOfInts: [0],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2012-06-19T19:25:51.258Z',
@@ -525,7 +777,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ipsum: 'eveniet'
     },
     arrayOfInts: [6, 3, 4, 2],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2007-01-23T16:37:38.001Z',
@@ -543,7 +804,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       atque: 'non'
     },
     arrayOfInts: [5, 6],
-    arrayOfStrings: ['pony', 'dog']
+    arrayOfStrings: ['pony', 'dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2009-10-01T13:30:44.281Z',
@@ -561,7 +831,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       nulla: 'explicabo'
     },
     arrayOfInts: [0, 4, 6],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2013-06-11T14:11:47.706Z',
@@ -579,7 +858,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       laborum: 'qui'
     },
     arrayOfInts: [2, 1, 1],
-    arrayOfStrings: ['pony']
+    arrayOfStrings: ['pony'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2002-03-26T22:04:29.419Z',
@@ -597,7 +885,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       corrupti: 'placeat'
     },
     arrayOfInts: [0, 7, 8],
-    arrayOfStrings: ['turtle']
+    arrayOfStrings: ['turtle'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2002-12-07T20:12:25.832Z',
@@ -615,7 +912,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       qui: 'quis'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2015-06-06T19:51:16.479Z',
@@ -633,7 +939,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       dolores: 'quia'
     },
     arrayOfInts: [3, 6],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2002-03-22T12:13:38.674Z',
@@ -651,7 +966,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       dolorem: 'ea'
     },
     arrayOfInts: [8, 4, 3, 6],
-    arrayOfStrings: ['pony', 'cat']
+    arrayOfStrings: ['pony', 'cat'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2012-11-07T20:20:21.500Z',
@@ -669,7 +993,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       officiis: 'ut'
     },
     arrayOfInts: [4, 5, 3, 8],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2006-06-24T23:17:19.558Z',
@@ -687,7 +1020,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       corrupti: 'quos'
     },
     arrayOfInts: [1, 8, 3],
-    arrayOfStrings: ['cat', 'pony']
+    arrayOfStrings: ['cat', 'pony'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2003-06-16T03:09:06.824Z',
@@ -705,7 +1047,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       corrupti: 'sit'
     },
     arrayOfInts: [6],
-    arrayOfStrings: ['turtle', 'dog']
+    arrayOfStrings: ['turtle', 'dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2019-01-25T19:47:42.092Z',
@@ -723,7 +1074,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       aliquid: 'ut'
     },
     arrayOfInts: [8],
-    arrayOfStrings: ['cat']
+    arrayOfStrings: ['cat'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2019-08-01T03:49:51.824Z',
@@ -741,7 +1101,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       quae: 'nemo'
     },
     arrayOfInts: [3, 4, 6, 1],
-    arrayOfStrings: ['cat']
+    arrayOfStrings: ['cat'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2009-01-09T09:22:12.609Z',
@@ -759,7 +1128,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       nisi: 'aut'
     },
     arrayOfInts: [7],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2003-05-03T23:37:31.552Z',
@@ -777,7 +1155,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       molestias: 'quo'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2013-01-05T06:08:23.118Z',
@@ -795,7 +1182,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       iusto: 'exercitationem'
     },
     arrayOfInts: [3, 7, 8, 5],
-    arrayOfStrings: ['dog']
+    arrayOfStrings: ['dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2006-12-21T16:26:17.369Z',
@@ -813,7 +1209,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       labore: 'nihil'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['turtle']
+    arrayOfStrings: ['turtle'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2008-02-09T14:54:40.128Z',
@@ -831,7 +1236,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       dolorem: 'ut'
     },
     arrayOfInts: [7, 7, 1],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '5'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2006-02-27T00:18:17.121Z',
@@ -849,7 +1263,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ipsum: 'consequuntur'
     },
     arrayOfInts: [3, 0, 4],
-    arrayOfStrings: ['dog']
+    arrayOfStrings: ['dog'],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2001-02-07T13:01:49.310Z',
@@ -867,7 +1290,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       est: 'corporis'
     },
     arrayOfInts: [0, 8],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2012-05-08T03:31:01.786Z',
@@ -885,7 +1317,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       et: 'incidunt'
     },
     arrayOfInts: [7, 3, 0],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2009-01-16T13:52:39.606Z',
@@ -903,7 +1344,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       nisi: 'est'
     },
     arrayOfInts: [0],
-    arrayOfStrings: ['dog']
+    arrayOfStrings: ['dog'],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2003-09-29T06:20:32.429Z',
@@ -921,7 +1371,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       quisquam: 'perspiciatis'
     },
     arrayOfInts: [],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2012-05-12T13:46:41.150Z',
@@ -939,7 +1398,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       nam: 'numquam'
     },
     arrayOfInts: [0, 8, 2, 1],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2008-10-03T07:03:20.899Z',
@@ -957,7 +1425,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ut: 'enim'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['cat']
+    arrayOfStrings: ['cat'],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2011-11-11T14:15:49.472Z',
@@ -975,7 +1452,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       accusamus: 'voluptatem'
     },
     arrayOfInts: [0, 0],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2006-03-23T09:17:56.199Z',
@@ -993,7 +1479,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       voluptatum: 'ullam'
     },
     arrayOfInts: [3],
-    arrayOfStrings: ['pony']
+    arrayOfStrings: ['pony'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2005-04-20T12:50:32.785Z',
@@ -1011,7 +1505,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       corporis: 'necessitatibus'
     },
     arrayOfInts: [],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2010-07-11T22:23:16.212Z',
@@ -1029,7 +1531,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       quo: 'ipsa'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['pony']
+    arrayOfStrings: ['pony'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2018-07-16T01:22:41.394Z',
@@ -1047,7 +1557,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       nobis: 'recusandae'
     },
     arrayOfInts: [2],
-    arrayOfStrings: ['dog', 'dog']
+    arrayOfStrings: ['dog', 'dog'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '1'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2006-07-08T19:12:18.422Z',
@@ -1065,7 +1583,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       eum: 'tenetur'
     },
     arrayOfInts: [6, 7],
-    arrayOfStrings: ['turtle']
+    arrayOfStrings: ['turtle'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2009-02-22T14:33:33.660Z',
@@ -1083,7 +1609,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       eveniet: 'placeat'
     },
     arrayOfInts: [4],
-    arrayOfStrings: ['dog']
+    arrayOfStrings: ['dog'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2014-05-23T17:56:47.416Z',
@@ -1101,7 +1635,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       incidunt: 'placeat'
     },
     arrayOfInts: [1, 8, 1, 7],
-    arrayOfStrings: ['turtle', 'fox']
+    arrayOfStrings: ['turtle', 'fox'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2008-06-13T19:50:17.111Z',
@@ -1119,7 +1661,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       voluptatem: 'debitis'
     },
     arrayOfInts: [3, 7, 6, 8],
-    arrayOfStrings: ['turtle']
+    arrayOfStrings: ['turtle'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2012-03-04T04:26:12.703Z',
@@ -1137,7 +1687,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       consequuntur: 'dicta'
     },
     arrayOfInts: [4, 2, 5],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2008-03-01T12:47:24.590Z',
@@ -1155,7 +1713,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       et: 'occaecati'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['fox', 'dog']
+    arrayOfStrings: ['fox', 'dog'],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2003-04-15T10:12:41.904Z',
@@ -1173,7 +1739,15 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       exercitationem: 'natus'
     },
     arrayOfInts: [4, 3, 0],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2008-06-18T10:28:28.356Z',
@@ -1191,7 +1765,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ex: 'alias'
     },
     arrayOfInts: [0, 6, 5],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2013-06-19T13:12:38.556Z',
@@ -1209,7 +1792,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       praesentium: 'rerum'
     },
     arrayOfInts: [0],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2018-03-05T11:05:35.164Z',
@@ -1227,7 +1819,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       laboriosam: 'ipsum'
     },
     arrayOfInts: [7, 2],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2011-08-25T12:17:02.677Z',
@@ -1245,7 +1846,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ipsa: 'quibusdam'
     },
     arrayOfInts: [5, 8, 1, 3],
-    arrayOfStrings: ['dog', 'fox']
+    arrayOfStrings: ['dog', 'fox'],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2003-01-04T16:15:21.008Z',
@@ -1263,7 +1873,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       omnis: 'a'
     },
     arrayOfInts: [2],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2010-10-31T21:19:02.009Z',
@@ -1281,7 +1900,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       natus: 'dolores'
     },
     arrayOfInts: [3],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2016-08-25T11:53:41.092Z',
@@ -1299,7 +1927,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       et: 'omnis'
     },
     arrayOfInts: [1, 0, 6, 1],
-    arrayOfStrings: ['cat']
+    arrayOfStrings: ['cat'],
+    typedJsonField: {
+      params: {
+        name: 'Bar',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2009-01-13T18:03:41.540Z',
@@ -1317,7 +1954,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       sint: 'quia'
     },
     arrayOfInts: [5, 5, 8],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2011-02-27T02:39:55.805Z',
@@ -1335,7 +1981,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       est: 'dignissimos'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['cat', 'dog']
+    arrayOfStrings: ['cat', 'dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2015-07-25T12:02:55.232Z',
@@ -1353,7 +2008,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       rerum: 'et'
     },
     arrayOfInts: [4, 1, 4, 3],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2004-11-09T21:46:40.870Z',
@@ -1371,7 +2035,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       autem: 'consectetur'
     },
     arrayOfInts: [3, 6],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2015-04-07T13:16:25.215Z',
@@ -1389,7 +2062,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       numquam: 'ut'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['fox']
+    arrayOfStrings: ['fox'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2019-03-12T06:06:42.021Z',
@@ -1407,7 +2089,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       ratione: 'ipsam'
     },
     arrayOfInts: [],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2007-03-20T05:22:37.593Z',
@@ -1425,7 +2116,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       repellat: 'id'
     },
     arrayOfInts: [1, 7, 6],
-    arrayOfStrings: ['pony']
+    arrayOfStrings: ['pony'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2013-05-18T19:08:26.697Z',
@@ -1443,7 +2143,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       rerum: 'aperiam'
     },
     arrayOfInts: [5, 8, 3, 3],
-    arrayOfStrings: []
+    arrayOfStrings: [],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2008-12-02T19:29:26.187Z',
@@ -1461,7 +2170,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       qui: 'incidunt'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['fox', 'dog']
+    arrayOfStrings: ['fox', 'dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2018-05-01T02:05:33.699Z',
@@ -1479,7 +2197,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       laborum: 'deserunt'
     },
     arrayOfInts: [8],
-    arrayOfStrings: ['pony', 'dog']
+    arrayOfStrings: ['pony', 'dog'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2002-02-16T10:44:45.995Z',
@@ -1497,7 +2224,16 @@ export const KITCHEN_SINKS: KitchenSinkCreateInput[] = [
       odit: 'assumenda'
     },
     arrayOfInts: [],
-    arrayOfStrings: ['turtle', 'pony']
+    arrayOfStrings: ['turtle', 'pony'],
+    typedJsonField: {
+      params: {
+        name: 'Foo',
+        value: {
+          deepParam: '8'
+        },
+        type: 'Baz'
+      }
+    }
   },
   {
     dateField: '2018-01-23T15:15:00.879Z',

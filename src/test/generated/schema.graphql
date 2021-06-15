@@ -232,6 +232,26 @@ input DishWhereUniqueInput {
   id: ID!
 }
 
+type EventObject {
+  params: EventParam!
+}
+
+input EventObjectInput {
+  params: EventParamInput!
+}
+
+type EventParam {
+  type: String!
+  name: String
+  value: JSONObject!
+}
+
+input EventParamInput {
+  type: String!
+  name: String
+  value: JSONObject!
+}
+
 """
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -258,6 +278,7 @@ type KitchenSink implements BaseGraphQLObject {
   booleanField: Boolean!
   floatField: Float!
   jsonField: JSONObject
+  typedJsonField: EventObject
   idField: String
   stringEnumField: StringEnum
   dishes: [Dish!]
@@ -289,6 +310,7 @@ input KitchenSinkCreateInput {
   booleanField: Boolean!
   floatField: Float!
   jsonField: JSONObject
+  typedJsonField: EventObjectInput
   idField: ID
   stringEnumField: StringEnum
   numericField: Float
@@ -361,6 +383,7 @@ input KitchenSinkUpdateInput {
   booleanField: Boolean
   floatField: Float
   jsonField: JSONObject
+  typedJsonField: EventObjectInput
   idField: ID
   stringEnumField: StringEnum
   numericField: Float
@@ -449,6 +472,7 @@ input KitchenSinkWhereInput {
   floatField_lte: Float
   floatField_in: [Float!]
   jsonField_json: JSONObject
+  typedJsonField_json: JSONObject
   idField_eq: ID
   idField_in: [ID!]
   stringEnumField_eq: StringEnum

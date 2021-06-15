@@ -9,22 +9,20 @@ import {
   SelectQueryBuilder
 } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-
+import { isArray } from 'util';
 import { debug } from '../decorators';
 import { StandardDeleteResponse } from '../tgql';
 import { addQueryBuilderWhereItem } from '../torm';
-
 import { BaseModel } from './';
-import { StringMap, WhereInput } from './types';
-import { isArray } from 'util';
+import { ConnectionInputFields, GraphQLInfoService } from './GraphQLInfoService';
 import {
+  ConnectionResult,
   RelayFirstAfter,
   RelayLastBefore,
-  RelayService,
   RelayPageOptions,
-  ConnectionResult
+  RelayService
 } from './RelayService';
-import { GraphQLInfoService, ConnectionInputFields } from './GraphQLInfoService';
+import { StringMap, WhereInput } from './types';
 
 export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
@@ -215,7 +213,10 @@ export class BaseService<E extends BaseModel> {
       }
       // Querybuilder requires you to prefix all fields with the table alias.  It also requires you to
       // specify the field name using it's TypeORM attribute name, not the camel-cased DB column name
-      const selection = fields.map(field => `${this.klass}.${field}`);
+      const selection = fields
+        .filter(field => this.columnMap[field]) // This will filter out any association records that come in @Fields
+        .map(field => `${this.klass}.${field}`);
+
       qb = qb.select(selection);
     }
 

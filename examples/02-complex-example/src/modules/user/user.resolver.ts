@@ -1,8 +1,7 @@
 import { Arg, Args, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-
-import { BaseContext, BaseResolver, StandardDeleteResponse } from '../../../../../src';
+import { BaseContext, BaseResolver, Fields, StandardDeleteResponse } from '../../../../../src';
 import {
   UserCreateInput,
   UserUpdateArgs,
@@ -10,7 +9,6 @@ import {
   UserWhereInput,
   UserWhereUniqueInput
 } from '../../../generated';
-
 import { User } from './user.model';
 
 @Resolver(User)
@@ -20,8 +18,11 @@ export class UserResolver extends BaseResolver<User> {
   }
 
   @Query(() => [User])
-  async users(@Args() { where, orderBy, limit, offset }: UserWhereArgs): Promise<User[]> {
-    return this.find<UserWhereInput>(where, orderBy, limit, offset);
+  async users(
+    @Args() { where, orderBy, limit, offset }: UserWhereArgs,
+    @Fields() fields: string[]
+  ): Promise<User[]> {
+    return this.find<UserWhereInput>(where, orderBy, limit, offset, fields);
   }
 
   @Authorized('user:read')

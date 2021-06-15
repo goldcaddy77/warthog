@@ -1,23 +1,20 @@
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
+import * as request from 'supertest';
 import { EntityMetadata } from 'typeorm';
-
+import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 /* eslint-disable @typescript-eslint/camelcase */
 import { getBindingError, logger } from '../../';
+import { EncodingService } from '../../core/encoding';
 import { get, GetResponse } from '../../core/http';
 import { Server } from '../../core/server';
-
 import { Binding, KitchenSinkWhereInput } from '../generated/binding';
-import { KitchenSink, StringEnum, Dish } from '../modules';
+import { Dish, KitchenSink, StringEnum } from '../modules';
 import { getTestServer } from '../test-server';
-
-import { KITCHEN_SINKS } from './fixtures';
 import { callAPIError, callAPISuccess } from '../utils';
+import { KITCHEN_SINKS } from './fixtures';
 
 import express = require('express');
-import * as request from 'supertest';
-import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-import { EncodingService } from '../../core/encoding';
 
 let runKey: string;
 let server: Server<any>;
@@ -447,18 +444,26 @@ describe('server', () => {
     expect(result).toMatchSnapshot();
   });
 
-  //
-  //
+  test('find: typedJsonField_json: { params: { name_eq: "Bar" } } (Typed JSON field filtering)', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { typedJsonField_json: { params: { name_eq: 'Bar' } } }, limit: 100 },
+      // make sure to ask for dishes here to test out the fact that @Fields decorator removes associations when querying from the DB
+      '{  dishes { name } typedJsonField { params { name value type  } } }'
+    );
 
-  // jsonField: {
-  //   foo: 'bar',
-  //   quia: 'autem'
-  // },
-  // arrayOfInts: [1],
-  // arrayOfStrings: []
+    expect(result.length).toEqual(16);
+    expect(result).toMatchSnapshot();
+  });
 
-  //
-  //
+  test('find: typedJsonField_json: { params: { value: { deepParam_eq: "1"} } } (Typed JSON field deep nesting filtering)', async () => {
+    const result = await binding.query.kitchenSinks(
+      { where: { typedJsonField_json: { params: { value: { deepParam_eq: '1' } } } }, limit: 100 },
+      '{ typedJsonField { params { name value type  } } }'
+    );
+
+    expect(result.length).toEqual(8);
+    expect(result).toMatchSnapshot();
+  });
 
   test('findOne: consequuntur-94489@a.com', async () => {
     expect.assertions(1);

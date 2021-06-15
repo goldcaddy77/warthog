@@ -1,0 +1,13 @@
+query {
+  users(limit: 20, where: { typedJsonField_json: { params: { type_eq: "Bar" } } }) {
+    id
+    createdAt
+    typedJsonField {
+      params {
+        type
+        name
+        value
+      }
+    }
+  }
+}

@@ -10,7 +10,6 @@ import {
   Root
 } from 'type-graphql';
 import { Inject } from 'typedi';
-
 import { BaseContext, Fields, StandardDeleteResponse, UserId } from '../../../';
 import {
   KitchenSinkCreateInput,
@@ -20,9 +19,7 @@ import {
   KitchenSinkWhereInput,
   KitchenSinkWhereUniqueInput
 } from '../../generated';
-
 import { Dish } from '../dish/dish.model';
-
 import { KitchenSink } from './kitchen-sink.model';
 import { KitchenSinkService } from './kitchen-sink.service';
 
