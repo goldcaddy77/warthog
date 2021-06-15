@@ -1,31 +1,28 @@
 // TODO-MVP: Add custom scalars such as graphql-iso-date
 // import { GraphQLDate, GraphQLDateTime, GraphQLTime } from 'graphql-iso-date';
 
-import { ApolloServer, OptionsJson, ApolloServerExpressConfig } from 'apollo-server-express';
-import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
+import { ApolloServer, ApolloServerExpressConfig, OptionsJson } from 'apollo-server-express';
+import * as Debug from 'debug';
 import { Request } from 'express';
-import express = require('express');
 import { GraphQLID, GraphQLSchema } from 'graphql';
 import { Binding } from 'graphql-binding';
 import { DateResolver } from 'graphql-scalars';
+import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 import { Server as HttpServer } from 'http';
 import { Server as HttpsServer } from 'https';
-const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 import { AuthChecker, buildSchema } from 'type-graphql'; // formatArgumentValidationError
 import { Container } from 'typedi';
 import { Connection, ConnectionOptions, useContainer as TypeORMUseContainer } from 'typeorm';
-
 import { logger, Logger } from '../core/logger';
 import { getRemoteBinding } from '../gql';
 import { DataLoaderMiddleware, healthCheckMiddleware } from '../middleware';
 import { createDBConnection } from '../torm';
-
 import { CodeGenerator } from './code-generator';
 import { Config } from './config';
-
 import { BaseContext } from './Context';
 
-import * as Debug from 'debug';
+import express = require('express');
+const open = require('open'); // eslint-disable-line @typescript-eslint/no-var-requires
 
 const debug = Debug('warthog:server');
 
@@ -34,6 +31,7 @@ export interface ServerOptions<T> {
   apolloConfig?: ApolloServerExpressConfig;
   authChecker?: AuthChecker<T>;
   autoGenerateFiles?: boolean;
+  connectionGetter?: (config: Config) => Connection | Promise<Connection>;
   context?: (request: Request) => object;
   expressApp?: express.Application;
   host?: string;
@@ -124,10 +122,14 @@ export class Server<C extends BaseContext> {
   }
 
   async establishDBConnection(): Promise<Connection> {
-    if (!this.connection) {
-      debug('establishDBConnection:start');
+    if (this.connection) {
+      return this.connection;
+    }
+
+    if (this.appOptions.connectionGetter) {
+      this.connection = await this.appOptions.connectionGetter(this.config);
+    } else {
       this.connection = await createDBConnection(this.dbOptions);
-      debug('establishDBConnection:end');
     }
 
     return this.connection;
@@ -141,6 +143,10 @@ export class Server<C extends BaseContext> {
 
   getGraphQLServerUrl() {
     return `${this.getServerUrl()}/graphql`;
+  }
+
+  getConnection(): Connection {
+    return this.connection;
   }
 
   async getBinding(options: { origin?: string; token?: string } = {}): Promise<Binding> {
