@@ -1,0 +1,72 @@
+# Good example: https://github.com/nektos/act/blob/master/.github/workflows/checks.yml
+# https://docs.github.com/en/actions
+name: Node.js CI
+on:
+  [push, pull_request]
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x] # , 12.x, 14.x, 15.x
+
+    # https://github.com/actions/example-services/blob/main/.github/workflows/postgres-service.yml
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgis/postgis:12-3.0-alpine
+        # Provide the password for postgres
+        env:
+          PGUSER: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: warthog-test
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        # Maps tcp port 5432 on service container to the host
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # TODO: fix this - yarn is already installed somewhere on this image
+      #       https://github.com/actions/setup-node/issues/182
+      #       https://github.com/actions/setup-node/issues/85
+      - name: Install yarn
+        run: npm install -g yarn
+
+      # TODO: Add caching
+      # https://github.com/actions/cache/blob/main/examples.md#node---yarn
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn --prefer-offline --frozen-lockfile
+      - run: yarn build
+      - run: yarn test
+      - run: DEBUG=condition* yarn run semantic-release --debug || true
+      # TODO: codecov
