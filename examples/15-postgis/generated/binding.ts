@@ -62,16 +62,22 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'id_DESC'
 
 export interface UserCreateInput {
+  geometryPoint?: JSONObject | null
+  geographyPoint?: JSONObject | null
   customGeometryPoint?: JSONObject | null
   customGeographyPoint?: JSONObject | null
 }
 
 export interface UserUpdateInput {
+  geometryPoint?: JSONObject | null
+  geographyPoint?: JSONObject | null
   customGeometryPoint?: JSONObject | null
   customGeographyPoint?: JSONObject | null
 }
 
 export interface UserWhereInput {
+  geometryPoint_json?: JSONObject | null
+  geographyPoint_json?: JSONObject | null
   customGeometryPoint_json?: JSONObject | null
   customGeographyPoint_json?: JSONObject | null
   createdAt_eq?: DateTime | null
@@ -136,6 +142,8 @@ export interface User {
   deletedById?: ID_Output | null
   version: Int
   ownerId: ID_Output
+  geometryPoint?: JSONObject | null
+  geographyPoint?: JSONObject | null
   customGeometryPoint?: JSONObject | null
   customGeographyPoint?: JSONObject | null
 }

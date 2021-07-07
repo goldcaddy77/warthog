@@ -62,6 +62,12 @@ registerEnumType(UserOrderByEnum, {
 @TypeGraphQLInputType()
 export class UserWhereInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geometryPoint_json?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geographyPoint_json?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   customGeometryPoint_json?: JsonObject;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
@@ -170,6 +176,12 @@ export class UserWhereUniqueInput {
 @TypeGraphQLInputType()
 export class UserCreateInput {
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geometryPoint?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geographyPoint?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   customGeometryPoint?: JsonObject;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
@@ -178,6 +190,12 @@ export class UserCreateInput {
 
 @TypeGraphQLInputType()
 export class UserUpdateInput {
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geometryPoint?: JsonObject;
+
+  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
+  geographyPoint?: JsonObject;
+
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   customGeometryPoint?: JsonObject;
 

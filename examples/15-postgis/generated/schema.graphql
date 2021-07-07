@@ -44,11 +44,15 @@ type User {
   deletedById: ID
   version: Int!
   ownerId: ID!
+  geometryPoint: JSONObject
+  geographyPoint: JSONObject
   customGeometryPoint: JSONObject
   customGeographyPoint: JSONObject
 }
 
 input UserCreateInput {
+  geometryPoint: JSONObject
+  geographyPoint: JSONObject
   customGeometryPoint: JSONObject
   customGeographyPoint: JSONObject
 }
@@ -75,11 +79,15 @@ enum UserOrderByInput {
 }
 
 input UserUpdateInput {
+  geometryPoint: JSONObject
+  geographyPoint: JSONObject
   customGeometryPoint: JSONObject
   customGeographyPoint: JSONObject
 }
 
 input UserWhereInput {
+  geometryPoint_json: JSONObject
+  geographyPoint_json: JSONObject
   customGeometryPoint_json: JSONObject
   customGeographyPoint_json: JSONObject
   createdAt_eq: DateTime

@@ -13,6 +13,7 @@ export * from './EnumField';
 export * from './Fields';
 export * from './FloatField';
 export * from './ForeignKeyField';
+export * from './GeoPoint';
 export * from './IdField';
 export * from './InterfaceType';
 export * from './IntField';

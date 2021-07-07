@@ -1,23 +1,16 @@
 // Typeorm example: https://github.com/typeorm/typeorm/blob/master/test/functional/spatial/postgres/entity/Post.ts
 
 // import type { Point } from 'geojson';
-import { BaseModel, CustomField, Model } from '../../../../../src';
-
-type Longitude = number;
-type Latitude = number;
-type LatLng = {
-  latitude: Latitude;
-  longitude: Longitude;
-};
-
-type Position = number[];
-type Point = {
-  type: 'Point';
-  coordinates: Position;
-};
+import { BaseModel, CustomField, GeoJsonPoint, GeoPoint, LatLng, Model } from '../../../../../src';
 
 @Model()
 export class User extends BaseModel {
+  @GeoPoint({ dataType: 'geometry', nullable: true })
+  geometryPoint?: LatLng;
+
+  @GeoPoint({ nullable: true }) // Defaults to 'geography'
+  geographyPoint?: LatLng;
+
   @CustomField({
     api: { type: 'json', nullable: true },
     db: {
@@ -26,21 +19,19 @@ export class User extends BaseModel {
       nullable: true,
       transformer: {
         to: (latLng: LatLng) => {
-          console.log(`In transformer 'to': ${JSON.stringify(latLng, null, 2)}`);
           if (
             !latLng ||
             typeof latLng.latitude == 'undefined' ||
             typeof latLng.longitude == 'undefined'
           ) {
-            return;
+            return null;
           }
           return {
             type: 'Point',
             coordinates: [latLng.latitude, latLng.longitude]
           };
         },
-        from: (geoJsonPoint: Point) => {
-          console.log(`In transformer 'from': ${JSON.stringify(geoJsonPoint, null, 2)}`);
+        from: (geoJsonPoint: GeoJsonPoint) => {
           if (!geoJsonPoint || !geoJsonPoint.coordinates) {
             return null;
           }
@@ -62,21 +53,19 @@ export class User extends BaseModel {
       nullable: true,
       transformer: {
         to: (latLng: LatLng) => {
-          console.log(`In transformer 'to': ${JSON.stringify(latLng, null, 2)}`);
           if (
             !latLng ||
             typeof latLng.latitude == 'undefined' ||
             typeof latLng.longitude == 'undefined'
           ) {
-            return;
+            return null;
           }
           return {
             type: 'Point',
             coordinates: [latLng.latitude, latLng.longitude]
           };
         },
-        from: (geoJsonPoint: Point) => {
-          console.log(`In transformer 'from': ${JSON.stringify(geoJsonPoint, null, 2)}`);
+        from: (geoJsonPoint: GeoJsonPoint) => {
           if (!geoJsonPoint || !geoJsonPoint.coordinates) {
             return null;
           }
@@ -124,26 +113,6 @@ export class User extends BaseModel {
 
   // .orderBy("ST_Distance(post.geom, ST_GeomFromGeoJSON(:origin))", "DESC")
   // .setParameters({ origin: JSON.stringify(origin) })
-
-  // Column({
-  //   type: 'geometry',
-  //   srid: 4326,
-  //   nullable: true,
-  //   spatialFeatureType: 'Point',
-  //   transformer: {
-  //     to: (v: Point) => {
-  //       console.log(v);
-  //       console.log(JSON.stringify(v));
-  //       return eval(
-  //         `ST_GeomFromGeoJSON('{"type":"Point","coordinates":[39.807222,-76.984722]}')`,
-  //       );
-  //     },
-  //     from: (v: any) => {
-  //       return v;
-  //     },
-  //   },
-  // })
-  // current_location: string;
 
   // TypeORM tests
   // https://github.com/typeorm/typeorm/blob/master/test/functional/spatial/postgres/spatial-postgres.ts
