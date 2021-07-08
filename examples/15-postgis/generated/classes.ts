@@ -20,13 +20,19 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 // prettier-ignore
 // @ts-ignore
 
-import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '../../../src';
+import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType, LatLng, LatLngInput } from '../../../src';
 
 // @ts-ignore
 
 import { User } from "../src/modules/user/user.model";
 
 export enum UserOrderByEnum {
+  geometryPoint_ASC = "geometryPoint_ASC",
+  geometryPoint_DESC = "geometryPoint_DESC",
+
+  geographyPoint_ASC = "geographyPoint_ASC",
+  geographyPoint_DESC = "geographyPoint_DESC",
+
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
 
@@ -61,18 +67,6 @@ registerEnumType(UserOrderByEnum, {
 
 @TypeGraphQLInputType()
 export class UserWhereInput {
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  geometryPoint_json?: JsonObject;
-
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  geographyPoint_json?: JsonObject;
-
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  customGeometryPoint_json?: JsonObject;
-
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  customGeographyPoint_json?: JsonObject;
-
   @TypeGraphQLField(() => DateTime, { nullable: true })
   createdAt_eq?: DateTimeString;
 
@@ -175,11 +169,11 @@ export class UserWhereUniqueInput {
 
 @TypeGraphQLInputType()
 export class UserCreateInput {
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  geometryPoint?: JsonObject;
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geometryPoint?: LatLng;
 
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  geographyPoint?: JsonObject;
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geographyPoint?: LatLng;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   customGeometryPoint?: JsonObject;
@@ -190,11 +184,11 @@ export class UserCreateInput {
 
 @TypeGraphQLInputType()
 export class UserUpdateInput {
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  geometryPoint?: JsonObject;
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geometryPoint?: LatLng;
 
-  @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
-  geographyPoint?: JsonObject;
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geographyPoint?: LatLng;
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   customGeometryPoint?: JsonObject;

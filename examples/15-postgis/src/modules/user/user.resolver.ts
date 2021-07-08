@@ -1,6 +1,5 @@
 import { Arg, Args, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
-
 import { BaseContext, StandardDeleteResponse } from '../../../../../src';
 import {
   UserCreateInput,
@@ -8,7 +7,6 @@ import {
   UserWhereArgs,
   UserWhereUniqueInput
 } from '../../../generated';
-
 import { User } from './user.model';
 import { UserService } from './user.service';
 
@@ -24,7 +22,9 @@ export class UserResolver {
   @Authorized('user:read')
   @Query(() => User)
   async user(@Arg('where') where: UserWhereUniqueInput): Promise<User> {
-    return this.service.findOne<UserWhereUniqueInput>(where);
+    const result = await this.service.findOne<UserWhereUniqueInput>(where);
+    console.log(`result`, result);
+    return result;
   }
 
   @Authorized('user:create')

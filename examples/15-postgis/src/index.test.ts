@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
 
 import 'reflect-metadata';
-import { getBindingError, logger } from '../../../src';
+import { getBindingError, LatLng, logger } from '../../../src';
 import { Binding } from '../generated/binding';
 import { getServer } from './server';
 
-const server = getServer({}, { logging: false });
+const server = getServer({}, {});
 let binding: Binding;
-let key;
 
 beforeAll(async done => {
   await server.start();
@@ -16,8 +15,6 @@ beforeAll(async done => {
   } catch (error) {
     console.error(error);
   }
-
-  key = new Date().getTime();
 
   done();
 });
@@ -52,11 +49,17 @@ describe('Users', () => {
 
     expect(user.customGeographyPoint).toEqual(geoPoint);
 
-    user = await binding.query.user({ where: { id: user?.id } });
+    user = await binding.query.user(
+      { where: { id: user.id } },
+      `{ 
+        id
+        customGeographyPoint
+      }`
+    );
+
     // TODO: we should pass these numbers as strings so that precision is not lost in javascript
     // expect(typeof user.customGeographyPoint?.latitude).toEqual('string');
     expect(user.customGeographyPoint).toEqual(geoPoint);
-
     done();
   });
   test('Sets customGeometryPoint', async done => {
@@ -83,17 +86,21 @@ describe('Users', () => {
 
     expect(user.customGeometryPoint).toEqual(geoPoint);
 
-    user = await binding.query.user({ where: { id: user?.id } });
-    // TODO: we should pass these numbers as strings so that precision is not lost in javascript
-    // expect(typeof user.customGeometryPoint?.latitude).toEqual('string');
-    expect(user.customGeometryPoint).toEqual(geoPoint);
+    user = await binding.query.user(
+      { where: { id: user.id } },
+      `{ 
+        id
+        customGeometryPoint
+      }`
+    );
 
+    expect(user.customGeometryPoint).toEqual(geoPoint);
     done();
   });
 
   test('Sets geographyPoint', async done => {
     let user = null;
-    const geoPoint = {
+    const geoPoint: LatLng = {
       latitude: 100,
       longitude: 0
     };
@@ -105,7 +112,13 @@ describe('Users', () => {
             geographyPoint: geoPoint
           }
         },
-        `{ id geographyPoint }`
+        `{ 
+          id
+          geographyPoint {
+            latitude
+            longitude
+          }
+        }`
       );
     } catch (err) {
       const error = getBindingError(err);
@@ -115,11 +128,18 @@ describe('Users', () => {
 
     expect(user.geographyPoint).toEqual(geoPoint);
 
-    user = await binding.query.user({ where: { id: user?.id } });
-    // TODO: we should pass these numbers as strings so that precision is not lost in javascript
-    // expect(typeof user.geographyPoint?.latitude).toEqual('string');
-    expect(user.geographyPoint).toEqual(geoPoint);
+    const user2 = await binding.query.user(
+      { where: { id: user.id } },
+      `{ 
+         id
+         geographyPoint {
+           latitude
+           longitude
+         }
+       }`
+    );
 
+    expect(user2.geographyPoint).toEqual(geoPoint);
     done();
   });
 
@@ -137,7 +157,13 @@ describe('Users', () => {
             geometryPoint: geoPoint
           }
         },
-        `{ id geometryPoint }`
+        `{ 
+          id
+          geometryPoint {
+            latitude
+            longitude
+          }
+        }`
       );
     } catch (err) {
       const error = getBindingError(err);
@@ -147,11 +173,18 @@ describe('Users', () => {
 
     expect(user.geometryPoint).toEqual(geoPoint);
 
-    user = await binding.query.user({ where: { id: user?.id } });
-    // TODO: we should pass these numbers as strings so that precision is not lost in javascript
-    // expect(typeof user.geometryPoint?.latitude).toEqual('string');
-    expect(user.geometryPoint).toEqual(geoPoint);
+    user = await binding.query.user(
+      { where: { id: user.id } },
+      `{ 
+         id
+         geometryPoint {
+           latitude
+           longitude
+         }
+       }`
+    );
 
+    expect(user.geometryPoint).toEqual(geoPoint);
     done();
   });
 });

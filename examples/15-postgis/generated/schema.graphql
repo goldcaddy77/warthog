@@ -12,6 +12,16 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 """
 scalar JSONObject
 
+type LatLng {
+  latitude: Float!
+  longitude: Float!
+}
+
+input LatLngInput {
+  latitude: Float!
+  longitude: Float!
+}
+
 type Mutation {
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
@@ -44,20 +54,24 @@ type User {
   deletedById: ID
   version: Int!
   ownerId: ID!
-  geometryPoint: JSONObject
-  geographyPoint: JSONObject
+  geometryPoint: LatLng
+  geographyPoint: LatLng
   customGeometryPoint: JSONObject
   customGeographyPoint: JSONObject
 }
 
 input UserCreateInput {
-  geometryPoint: JSONObject
-  geographyPoint: JSONObject
+  geometryPoint: LatLngInput
+  geographyPoint: LatLngInput
   customGeometryPoint: JSONObject
   customGeographyPoint: JSONObject
 }
 
 enum UserOrderByInput {
+  geometryPoint_ASC
+  geometryPoint_DESC
+  geographyPoint_ASC
+  geographyPoint_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -79,17 +93,13 @@ enum UserOrderByInput {
 }
 
 input UserUpdateInput {
-  geometryPoint: JSONObject
-  geographyPoint: JSONObject
+  geometryPoint: LatLngInput
+  geographyPoint: LatLngInput
   customGeometryPoint: JSONObject
   customGeographyPoint: JSONObject
 }
 
 input UserWhereInput {
-  geometryPoint_json: JSONObject
-  geographyPoint_json: JSONObject
-  customGeometryPoint_json: JSONObject
-  customGeographyPoint_json: JSONObject
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime

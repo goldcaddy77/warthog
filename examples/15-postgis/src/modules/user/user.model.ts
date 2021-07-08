@@ -1,3 +1,4 @@
+// Hasura operators: https://hasura.io/blog/native-support-for-postgis-topology-operators-now-in-graphql-engine/
 // Typeorm example: https://github.com/typeorm/typeorm/blob/master/test/functional/spatial/postgres/entity/Post.ts
 
 // import type { Point } from 'geojson';
@@ -12,7 +13,7 @@ export class User extends BaseModel {
   geographyPoint?: LatLng;
 
   @CustomField({
-    api: { type: 'json', nullable: true },
+    api: { type: 'json', nullable: true, sort: false, filter: false },
     db: {
       type: 'geometry',
       spatialFeatureType: 'Point',
@@ -46,7 +47,7 @@ export class User extends BaseModel {
   customGeometryPoint?: LatLng;
 
   @CustomField({
-    api: { type: 'json', nullable: true },
+    api: { type: 'json', nullable: true, sort: false, filter: false },
     db: {
       type: 'geography',
       spatialFeatureType: 'Point',
@@ -79,28 +80,7 @@ export class User extends BaseModel {
   })
   customGeographyPoint?: LatLng;
 
-  // @Column("blob", {
-  //   transformer: {
-  //     to: (v: Point) => eval(`ST_GeomFromGeoJSON(${JSON.stringify(v)})`),
-  //     from: (v: any) => { return {type: "Point", coordinates: [ v.x, v.y ] } as Point }
-  //   }
-  // })
-  // location: Point;
-
-  // import { Point } from 'geojson';
-  // ...
-
-  // @Column("blob", {
-  //   transformer: {
-  //     to: (v: Point) => {
-  //       return function () { return `ST_GeomFromGeoJSON(${JSON.stringify(v)})` }
-  //     }
-  //   }
-  // })
-  // location: Point;
-
   ///////////
-
   //   .orderBy({"place.location": {
   //     distance: {
   //       type: "Point",
@@ -109,10 +89,25 @@ export class User extends BaseModel {
   //     order: 'ASC',
   //     nulls: 'NULLS LAST'
   // }})
-  // As @mojodna also said elsewhere, this should work also:
+  ///////////
+  //   const posts1 = await connection.manager
+  //   .createQueryBuilder(Post, "post")
+  //   .where("ST_Distance(post.geom, ST_GeomFromGeoJSON(:origin)) > 0")
+  //   .orderBy({
+  //       "ST_Distance(post.geom, ST_GeomFromGeoJSON(:origin))": {
+  //           order: "ASC",
+  //           nulls: "NULLS FIRST"
+  //       }
+  //   })
+  //   .setParameters({ origin: JSON.stringify(origin) })
+  //   .getMany();
 
-  // .orderBy("ST_Distance(post.geom, ST_GeomFromGeoJSON(:origin))", "DESC")
-  // .setParameters({ origin: JSON.stringify(origin) })
+  // const posts2 = await connection.manager
+  //   .createQueryBuilder(Post, "post")
+  //   .orderBy("ST_Distance(post.geom, ST_GeomFromGeoJSON(:origin))", "DESC")
+  //   .setParameters({ origin: JSON.stringify(origin) })
+  //   .getMany();
+  ///////////
 
   // TypeORM tests
   // https://github.com/typeorm/typeorm/blob/master/test/functional/spatial/postgres/spatial-postgres.ts

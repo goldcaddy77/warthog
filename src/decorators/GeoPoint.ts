@@ -1,15 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { GraphQLJSONObject } = require('graphql-type-json');
 import { DecoratorCommonOptions } from '../metadata';
+import { LatLng, LatLngInput } from '../tgql';
 import { composeMethodDecorators } from '../utils';
 import { getCombinedDecorator } from './getCombinedDecorator';
-
-export type Longitude = number;
-export type Latitude = number;
-export type LatLng = {
-  latitude: Latitude;
-  longitude: Longitude;
-};
 
 export type Position = number[];
 export type GeoJsonPoint = {
@@ -29,17 +21,17 @@ export function GeoPoint(options: GeoPointOptions = {}): any {
   const defaultOption = options.default ? { default: options.default } : {};
 
   const factories = getCombinedDecorator({
-    fieldType: 'json', // Should be geo-point
+    fieldType: 'lat-lng',
     warthogColumnMeta: options,
-    gqlFieldType: GraphQLJSONObject, // Should be LatLng
+    gqlFieldType: LatLng,
     dbType: options.dataType || 'geography',
     dbColumnOptions: {
       ...nullableOption,
       ...defaultOption,
       spatialFeatureType: 'Point',
       transformer: {
-        to: (latLng: LatLng) => {
-          console.log(`In decorator transformer 'to': ${JSON.stringify(latLng, null, 2)}`);
+        to: (latLng: LatLngInput) => {
+          // console.log(`In decorator transformer 'to': ${JSON.stringify(latLng, null, 2)}`);
           if (
             !latLng ||
             typeof latLng.latitude == 'undefined' ||
@@ -53,14 +45,14 @@ export function GeoPoint(options: GeoPointOptions = {}): any {
           };
         },
         from: (geoJsonPoint: GeoJsonPoint) => {
-          console.log(`In decorator transformer 'from': ${JSON.stringify(geoJsonPoint, null, 2)}`);
+          // console.log(`In decorator transformer 'from': ${JSON.stringify(geoJsonPoint, null, 2)}`);
           if (!geoJsonPoint || !geoJsonPoint.coordinates) {
             return null;
           }
           return {
             latitude: geoJsonPoint.coordinates[0],
             longitude: geoJsonPoint.coordinates[1]
-          } as LatLng;
+          } as LatLngInput;
         }
       }
     }

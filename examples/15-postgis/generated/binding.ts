@@ -42,7 +42,11 @@ export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema: s
  * Types
 */
 
-export type UserOrderByInput =   'createdAt_ASC' |
+export type UserOrderByInput =   'geometryPoint_ASC' |
+  'geometryPoint_DESC' |
+  'geographyPoint_ASC' |
+  'geographyPoint_DESC' |
+  'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
   'createdById_DESC' |
@@ -61,25 +65,26 @@ export type UserOrderByInput =   'createdAt_ASC' |
   'id_ASC' |
   'id_DESC'
 
+export interface LatLngInput {
+  latitude: Float
+  longitude: Float
+}
+
 export interface UserCreateInput {
-  geometryPoint?: JSONObject | null
-  geographyPoint?: JSONObject | null
+  geometryPoint?: LatLngInput | null
+  geographyPoint?: LatLngInput | null
   customGeometryPoint?: JSONObject | null
   customGeographyPoint?: JSONObject | null
 }
 
 export interface UserUpdateInput {
-  geometryPoint?: JSONObject | null
-  geographyPoint?: JSONObject | null
+  geometryPoint?: LatLngInput | null
+  geographyPoint?: LatLngInput | null
   customGeometryPoint?: JSONObject | null
   customGeographyPoint?: JSONObject | null
 }
 
 export interface UserWhereInput {
-  geometryPoint_json?: JSONObject | null
-  geographyPoint_json?: JSONObject | null
-  customGeometryPoint_json?: JSONObject | null
-  customGeographyPoint_json?: JSONObject | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -121,6 +126,11 @@ export interface DeleteResponse {
   id: ID_Output
 }
 
+export interface LatLng {
+  latitude: Float
+  longitude: Float
+}
+
 export interface PageInfo {
   hasNextPage: Boolean
   hasPreviousPage: Boolean
@@ -142,8 +152,8 @@ export interface User {
   deletedById?: ID_Output | null
   version: Int
   ownerId: ID_Output
-  geometryPoint?: JSONObject | null
-  geographyPoint?: JSONObject | null
+  geometryPoint?: LatLng | null
+  geographyPoint?: LatLng | null
   customGeometryPoint?: JSONObject | null
   customGeographyPoint?: JSONObject | null
 }
@@ -157,6 +167,11 @@ export type Boolean = boolean
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 */
 export type DateTime = Date | string
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+*/
+export type Float = number
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
