@@ -1,4 +1,4 @@
-# Example 2 - Complex Example
+# Example 15 - PostGis
 
 ## Setup
 
@@ -14,14 +14,7 @@ Running `DEBUG=* yarn bootstrap` will do the following:
 
 ## Running the App
 
-To run the project, run `yarn start`.  This will:
+To run the project, run `yarn start`. This will:
 
 - Run the API server
 - Open GraphQL Playground
-
-## Features in this example
-
-- Custom logger
-- Enums
-- Authorization
-- Validations
