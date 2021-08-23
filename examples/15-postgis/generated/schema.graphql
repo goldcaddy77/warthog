@@ -1,0 +1,138 @@
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+interface DeleteResponse {
+  id: ID!
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type LatLng {
+  latitude: Float!
+  longitude: Float!
+}
+
+input LatLngInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): StandardDeleteResponse!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
+  user(where: UserWhereUniqueInput!): User!
+}
+
+type StandardDeleteResponse {
+  id: ID!
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  createdById: ID!
+  updatedAt: DateTime
+  updatedById: ID
+  deletedAt: DateTime
+  deletedById: ID
+  version: Int!
+  ownerId: ID!
+  geometryPoint: LatLng
+  geographyPoint: LatLng
+  customGeometryPoint: JSONObject
+  customGeographyPoint: JSONObject
+}
+
+input UserCreateInput {
+  geometryPoint: LatLngInput
+  geographyPoint: LatLngInput
+  customGeometryPoint: JSONObject
+  customGeographyPoint: JSONObject
+}
+
+enum UserOrderByInput {
+  geometryPoint_ASC
+  geometryPoint_DESC
+  geographyPoint_ASC
+  geographyPoint_DESC
+  createdAt_ASC
+  createdAt_DESC
+  createdById_ASC
+  createdById_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  updatedById_ASC
+  updatedById_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  deletedById_ASC
+  deletedById_DESC
+  version_ASC
+  version_DESC
+  ownerId_ASC
+  ownerId_DESC
+  id_ASC
+  id_DESC
+}
+
+input UserUpdateInput {
+  geometryPoint: LatLngInput
+  geographyPoint: LatLngInput
+  customGeometryPoint: JSONObject
+  customGeographyPoint: JSONObject
+}
+
+input UserWhereInput {
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
+}
+
+input UserWhereUniqueInput {
+  id: ID!
+}

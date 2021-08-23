@@ -20,3 +20,7 @@ dist
 
 # Generated files
 tmp
+
+# Local files
+*.local
+local.*

@@ -20,7 +20,7 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 // prettier-ignore
 // @ts-ignore
 
-import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '../../';
+import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType, LatLng, LatLngInput } from '../../';
 
 import { StringEnum } from "../modules/kitchen-sink/kitchen-sink.model";
 

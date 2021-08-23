@@ -1,12 +1,11 @@
 import * as childProcess from 'child_process';
-
 import { GluegunToolbox } from 'gluegun';
+import { Toolbox } from 'gluegun/build/types/domain/toolbox';
 import * as path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import * as pgtools from 'pgtools';
 import * as util from 'util';
-import { Toolbox } from 'gluegun/build/types/domain/toolbox';
 
 const exec = util.promisify(childProcess.exec);
 
@@ -108,6 +107,7 @@ module.exports = (toolbox: GluegunToolbox) => {
 async function runTypeORMCommand(command: string, toolbox: Toolbox, additionalParams = '') {
   const tsNodePath = path.join(process.cwd(), './node_modules/.bin/ts-node');
   const typeORMPath = path.join(process.cwd(), './node_modules/.bin/typeorm');
+  // TODO: Allow overriding of ormconfig.ts path
   const ormConfigFullPath = path.join(String(process.env.WARTHOG_GENERATED_FOLDER), 'ormconfig.ts');
   const relativeOrmConfigPath = path.relative(process.cwd(), ormConfigFullPath);
 

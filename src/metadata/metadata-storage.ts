@@ -14,6 +14,7 @@ export type FieldType =
   | 'id'
   | 'integer'
   | 'json'
+  | 'lat-lng'
   | 'numeric'
   | 'string'
   | 'text';

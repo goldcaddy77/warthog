@@ -51,7 +51,7 @@ export class SchemaGenerator {
       // prettier-ignore
       // @ts-ignore
 
-      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType } from '${warthogImportPath}';
+      import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeString, IDType, LatLng, LatLngInput } from '${warthogImportPath}';
       `
     ];
 
@@ -654,6 +654,7 @@ export class SchemaGenerator {
     return (
       column.enum ||
       column.array ||
+      column.type === 'lat-lng' ||
       column.type === 'json' ||
       column.type === 'id' ||
       column.type === 'date' ||

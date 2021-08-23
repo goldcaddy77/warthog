@@ -667,7 +667,9 @@ describe('server', () => {
         )
       );
 
-      expect(result.message).toBe('null value in column "name" violates not-null constraint');
+      expect(result.message).toBe(
+        'null value in column "name" of relation "dishs" violates not-null constraint'
+      );
 
       let savedDishes: Dish[] = [];
       try {

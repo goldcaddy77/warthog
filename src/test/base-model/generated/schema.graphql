@@ -7,6 +7,16 @@ interface DeleteResponse {
   id: ID!
 }
 
+type LatLng {
+  latitude: Float!
+  longitude: Float!
+}
+
+input LatLngInput {
+  latitude: Float!
+  longitude: Float!
+}
+
 type Mutation {
   createMyBaseModels(data: MyBaseModelTestCreateInput!): MyBaseModelTest!
 }

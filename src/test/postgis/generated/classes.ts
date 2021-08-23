@@ -24,19 +24,19 @@ import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeStr
 
 // @ts-ignore
 
-import { MyBaseModelTest } from "../base-model/my-base-model.model";
+import { PostgisModelTest } from "../postgis/postgis.model";
 
-export enum MyBaseModelTestOrderByEnum {
+export enum PostgisModelTestOrderByEnum {
   id_ASC = "id_ASC",
   id_DESC = "id_DESC"
 }
 
-registerEnumType(MyBaseModelTestOrderByEnum, {
-  name: "MyBaseModelTestOrderByInput"
+registerEnumType(PostgisModelTestOrderByEnum, {
+  name: "PostgisModelTestOrderByInput"
 });
 
 @TypeGraphQLInputType()
-export class MyBaseModelTestWhereInput {
+export class PostgisModelTestWhereInput {
   @TypeGraphQLField({ nullable: true })
   deletedAt_all?: Boolean;
 
@@ -45,40 +45,46 @@ export class MyBaseModelTestWhereInput {
 }
 
 @TypeGraphQLInputType()
-export class MyBaseModelTestWhereUniqueInput {
+export class PostgisModelTestWhereUniqueInput {
   @TypeGraphQLField(() => ID)
   id?: string;
 }
 
 @TypeGraphQLInputType()
-export class MyBaseModelTestCreateInput {
-  @TypeGraphQLField()
-  stringField!: string;
+export class PostgisModelTestCreateInput {
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geometryPoint?: LatLng;
+
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geographyPoint?: LatLng;
 }
 
 @TypeGraphQLInputType()
-export class MyBaseModelTestUpdateInput {
-  @TypeGraphQLField({ nullable: true })
-  stringField?: string;
+export class PostgisModelTestUpdateInput {
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geometryPoint?: LatLng;
+
+  @TypeGraphQLField(() => LatLngInput, { nullable: true })
+  geographyPoint?: LatLng;
 }
 
 @ArgsType()
-export class MyBaseModelTestWhereArgs extends PaginationArgs {
-  @TypeGraphQLField(() => MyBaseModelTestWhereInput, { nullable: true })
-  where?: MyBaseModelTestWhereInput;
+export class PostgisModelTestWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => PostgisModelTestWhereInput, { nullable: true })
+  where?: PostgisModelTestWhereInput;
 
-  @TypeGraphQLField(() => MyBaseModelTestOrderByEnum, { nullable: true })
-  orderBy?: MyBaseModelTestOrderByEnum;
+  @TypeGraphQLField(() => PostgisModelTestOrderByEnum, { nullable: true })
+  orderBy?: PostgisModelTestOrderByEnum;
 }
 
 @ArgsType()
-export class MyBaseModelTestCreateManyArgs {
-  @TypeGraphQLField(() => [MyBaseModelTestCreateInput])
-  data!: MyBaseModelTestCreateInput[];
+export class PostgisModelTestCreateManyArgs {
+  @TypeGraphQLField(() => [PostgisModelTestCreateInput])
+  data!: PostgisModelTestCreateInput[];
 }
 
 @ArgsType()
-export class MyBaseModelTestUpdateArgs {
-  @TypeGraphQLField() data!: MyBaseModelTestUpdateInput;
-  @TypeGraphQLField() where!: MyBaseModelTestWhereUniqueInput;
+export class PostgisModelTestUpdateArgs {
+  @TypeGraphQLField() data!: PostgisModelTestUpdateInput;
+  @TypeGraphQLField() where!: PostgisModelTestWhereUniqueInput;
 }

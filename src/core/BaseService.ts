@@ -147,6 +147,7 @@ export class BaseService<E extends Node> {
     fields?: string[]
   ): Promise<E[]> {
     const DEFAULT_LIMIT = 50;
+    console.log(`fields`, fields);
     return this.buildFindQuery(
       where as WhereExpression,
       orderBy,
@@ -388,6 +389,7 @@ export class BaseService<E extends Node> {
       processWhereInput(qb, where);
     }
 
+    // return qb;
     return qb;
   }
 

@@ -369,6 +369,11 @@ export interface KitchenSinkWhereUniqueInput {
   emailField?: String | null
 }
 
+export interface LatLngInput {
+  latitude: Float
+  longitude: Float
+}
+
 export interface MyBaseModelTestCreateInput {
   stringField: String
 }
@@ -458,6 +463,11 @@ export interface KitchenSink {
   apiOnlyField?: String | null
   arrayOfStrings?: Array<String> | null
   arrayOfInts?: Array<Int> | null
+}
+
+export interface LatLng {
+  latitude: Float
+  longitude: Float
 }
 
 export interface MyBaseModelTest {

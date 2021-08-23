@@ -404,6 +404,16 @@ input KitchenSinkWhereUniqueInput {
   emailField: String
 }
 
+type LatLng {
+  latitude: Float!
+  longitude: Float!
+}
+
+input LatLngInput {
+  latitude: Float!
+  longitude: Float!
+}
+
 type Mutation {
   createMyBaseModels(data: MyBaseModelTestCreateInput!): MyBaseModelTest!
   createDish(data: DishCreateInput!): Dish!

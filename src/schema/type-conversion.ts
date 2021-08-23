@@ -8,7 +8,9 @@ import {
 } from 'graphql';
 import { DateResolver } from 'graphql-scalars';
 import { GraphQLISODateTime } from 'type-graphql';
+import { ClassType } from '../core';
 import { FieldType } from '../metadata';
+import { LatLngInput } from '../tgql';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { GraphQLJSONObject } = require('graphql-type-json');
@@ -16,7 +18,7 @@ const { GraphQLJSONObject } = require('graphql-type-json');
 export function columnToGraphQLType(
   type: FieldType,
   enumName?: string
-): GraphQLScalarType | string {
+): GraphQLScalarType | string | ClassType {
   if (typeof enumName !== undefined && enumName) {
     return String(enumName);
   }
@@ -42,6 +44,8 @@ export function columnToGraphQLType(
       return DateResolver;
     case 'json':
       return GraphQLJSONObject;
+    case 'lat-lng':
+      return LatLngInput;
     case 'text':
       return GraphQLString;
     case 'enum':
@@ -50,7 +54,7 @@ export function columnToGraphQLType(
   }
 }
 
-export function columnTypeToGraphQLType(type: FieldType): GraphQLScalarType {
+export function columnTypeToGraphQLType(type: FieldType): GraphQLScalarType | ClassType {
   switch (type) {
     case 'id':
       return GraphQLID;
@@ -72,6 +76,8 @@ export function columnTypeToGraphQLType(type: FieldType): GraphQLScalarType {
       return DateResolver;
     case 'json':
       return GraphQLJSONObject;
+    case 'lat-lng':
+      return LatLngInput;
     case 'text':
       return GraphQLString;
     case 'enum':
@@ -102,6 +108,8 @@ export function columnInfoToTypeScriptType(type: FieldType, enumName?: string): 
     return 'DateOnlyString';
   } else if (type === 'datetime') {
     return 'DateTimeString';
+  } else if (type === 'lat-lng') {
+    return 'LatLng';
   } else if (enumName) {
     return String(enumName);
   } else {
