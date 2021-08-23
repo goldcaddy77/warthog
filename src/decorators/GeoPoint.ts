@@ -3,6 +3,7 @@ import { LatLng, LatLngInput } from '../tgql';
 import { composeMethodDecorators } from '../utils';
 import { getCombinedDecorator } from './getCombinedDecorator';
 
+// TODO: import type { Point } from 'geojson';
 export type Position = number[];
 export type GeoJsonPoint = {
   type: 'Point';

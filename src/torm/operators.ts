@@ -17,6 +17,7 @@ type ExactWhereOperator = 'eq' | 'in';
 type NumberWhereOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'in';
 type TextWhereOperator = 'eq' | 'contains' | 'startsWith' | 'endsWith' | 'in';
 type DateGeneralWhereOperator = 'eq' | 'lt' | 'lte' | 'gt' | 'gte';
+type GeoWhereOperator = 'within';
 
 export type BooleanWhereOperator = ExactWhereOperator;
 export type DateWhereOperator = DateGeneralWhereOperator;
@@ -126,6 +127,19 @@ export function addQueryBuilderWhereItem<E>(
       return qb.andWhere(`${columnWithAlias} && :${parameterKey}`, {
         [parameterKey]: value
       });
+    // PostGIS query operators
+    case 'within':
+      return qb.andWhere(`ST_Distance(columnWithAlias, ST_GeomFromGeoJSON(:parameterKey)) < 0`, {
+        [parameterKey]: `%${value}`
+      });
+
+    // .orderBy({
+    //     "ST_Distance(post.geom, ST_GeomFromGeoJSON(:origin))": {
+    //         order: "ASC",
+    //         nulls: "NULLS FIRST"
+    //     }
+    // })
+
     default:
       throw new Error(`Can't find operator ${operator}`);
   }
