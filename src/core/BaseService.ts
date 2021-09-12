@@ -243,10 +243,10 @@ export class BaseService<E extends Node> {
       };
     }
 
-    qb = qb.take(pageOptions.limit || DEFAULT_LIMIT);
+    qb = qb.limit(pageOptions.limit || DEFAULT_LIMIT);
 
     if (pageOptions.offset) {
-      qb = qb.skip(pageOptions.offset);
+      qb = qb.offset(pageOptions.offset);
     }
 
     if (fields) {
