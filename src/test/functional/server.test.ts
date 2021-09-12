@@ -268,6 +268,18 @@ describe('server', () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('find: string query: contains `A` (upper or lower) with offset', async () => {
+    expect.assertions(2);
+
+    const result = await binding.query.kitchenSinks(
+      { where: { stringField_contains: 'A' }, limit: 100, offset: 20 },
+      '{ stringField }'
+    );
+
+    expect(result.length).toEqual(38);
+    expect(result).toMatchSnapshot();
+  });
+
   test('find: string query: starts with `b` (upper or lower)', async () => {
     expect.assertions(2);
 
@@ -667,7 +679,9 @@ describe('server', () => {
         )
       );
 
-      expect(result.message).toBe('null value in column "name" violates not-null constraint');
+      expect(result.message).toBe(
+        'null value in column "name" of relation "dishs" violates not-null constraint'
+      );
 
       let savedDishes: Dish[] = [];
       try {
