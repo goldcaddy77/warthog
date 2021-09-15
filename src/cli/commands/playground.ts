@@ -7,10 +7,6 @@ export default {
   run: async (toolbox: WarthogGluegunToolbox) => {
     const config: any = toolbox.config.load();
 
-    const host = config.get('APP_HOST');
-    const port = config.get('APP_PORT');
-    const url = `http://${host}:${port}/playground`;
-
-    return open(url, { wait: false });
+    return open(config.getApiUrl('/playground'), { wait: false });
   }
 };

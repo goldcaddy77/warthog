@@ -19,9 +19,7 @@ export function setTestServerEnvironmentVariables(overrides?: StringMap) {
 
 export function getStandardEnvironmentVariables(): StringMap {
   return {
-    WARTHOG_APP_HOST: 'localhost',
-    WARTHOG_APP_PORT: '4000',
-    WARTHOG_APP_PROTOCOL: 'http',
+    WARTHOG_API_BASE_URL: 'http://localhost:4000',
     WARTHOG_AUTO_GENERATE_FILES: 'false',
     WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
     WARTHOG_DB_CONNECTION: 'postgres',

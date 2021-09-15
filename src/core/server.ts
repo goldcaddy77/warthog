@@ -32,13 +32,11 @@ export interface ServerOptions<T> {
   autoGenerateFiles?: boolean;
   context?: (request: Request) => object;
   expressApp?: express.Application;
-  host?: string;
   generatedFolder?: string;
   logger?: Logger;
   middlewares?: any[]; // TODO: fix
   pubSub?: PubSubEngine | PubSubOptions;
   openPlayground?: boolean;
-  port?: string | number;
   resolversPath?: string[];
   warthogImportPath?: string;
   introspection?: boolean; // DEPRECATED
@@ -65,16 +63,6 @@ export class Server<C extends BaseContext> {
     private appOptions: ServerOptions<C>,
     private dbOptions: Partial<ConnectionOptions> = {}
   ) {
-    if (typeof this.appOptions.host !== 'undefined') {
-      process.env.WARTHOG_APP_HOST = this.appOptions.host;
-      // When we move to v2.0 we'll officially deprecate these config values in favor of ENV vars
-      // throw new Error(
-      //   '`host` option has been removed, please set `WARTHOG_APP_HOST` environment variable instead'
-      // );
-    }
-    if (typeof this.appOptions.port !== 'undefined') {
-      process.env.WARTHOG_APP_PORT = this.appOptions.port.toString();
-    }
     if (typeof this.appOptions.generatedFolder !== 'undefined') {
       process.env.WARTHOG_GENERATED_FOLDER = this.appOptions.generatedFolder;
     }
@@ -136,13 +124,11 @@ export class Server<C extends BaseContext> {
   }
 
   getServerUrl() {
-    return `${this.config.get('APP_PROTOCOL')}://${this.config.get('APP_HOST')}:${this.config.get(
-      'APP_PORT'
-    )}`;
+    return this.config.getApiUrl();
   }
 
   getGraphQLServerUrl() {
-    return `${this.getServerUrl()}/graphql`;
+    return this.config.getApiUrl('/graphql');
   }
 
   async getBinding(options: { origin?: string; token?: string } = {}): Promise<Binding> {
@@ -185,7 +171,7 @@ export class Server<C extends BaseContext> {
     const keepAliveTimeout = Number(this.config.get('WARTHOG_KEEP_ALIVE_TIMEOUT_MS'));
     const headersTimeout = Number(this.config.get('WARTHOG_HEADERS_TIMEOUT_MS'));
 
-    this.httpServer = this.expressApp.listen({ port: this.config.get('APP_PORT') }, () =>
+    this.httpServer = this.expressApp.listen({ port: this.config.getApiPort() }, () =>
       this.logger.info(`🚀 Server ready at ${url}`)
     );
 

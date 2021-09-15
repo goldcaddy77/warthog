@@ -6,8 +6,7 @@ describe('Config (valid file)', () => {
 
   test('loads static config', async () => {
     // Set some defaults or the constructor will blow up in CI
-    process.env.WARTHOG_APP_HOST = 'localhost';
-    process.env.WARTHOG_APP_PORT = '80';
+    process.env.WARTHOG_API_BASE_URL = 'http://localhost:4000';
     process.env.WARTHOG_DB_HOST = 'localhost';
     config = new Config({ configSearchPath: __dirname });
 

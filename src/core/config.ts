@@ -67,7 +67,7 @@ export class Config {
       WARTHOG_DB_CONNECTION: 'postgres',
       WARTHOG_ROOT_FOLDER: this.PROJECT_ROOT,
       WARTHOG_ALLOW_OPTIONAL_ID_ON_CREATE: 'false',
-      WARTHOG_APP_PROTOCOL: 'https',
+      WARTHOG_APP_PROTOCOL: 'https', // DEPRECATED
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
       WARTHOG_INTROSPECTION: 'true',
@@ -98,9 +98,10 @@ export class Config {
     };
 
     this.devDefaults = {
-      WARTHOG_APP_HOST: 'localhost',
-      WARTHOG_APP_PORT: '4000',
-      WARTHOG_APP_PROTOCOL: 'http',
+      WARTHOG_API_BASE_URL: 'http://localhost:4000',
+      WARTHOG_APP_HOST: 'localhost', // DEPRECATED
+      WARTHOG_APP_PORT: '4000', // DEPRECATED
+      WARTHOG_APP_PROTOCOL: 'http', // DEPRECATED
       WARTHOG_AUTO_GENERATE_FILES: 'true',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'true',
       WARTHOG_DB_HOST: 'localhost',
@@ -119,9 +120,10 @@ export class Config {
     };
 
     this.testDefaults = {
-      WARTHOG_APP_HOST: 'localhost',
-      WARTHOG_APP_PORT: '4000',
-      WARTHOG_APP_PROTOCOL: 'http',
+      WARTHOG_API_BASE_URL: 'http://localhost:4000',
+      WARTHOG_APP_HOST: 'localhost', // DEPRECATED
+      WARTHOG_APP_PORT: '4000', // DEPRECATED
+      WARTHOG_APP_PROTOCOL: 'http', // DEPRECATED
       WARTHOG_AUTO_GENERATE_FILES: 'false',
       WARTHOG_AUTO_OPEN_PLAYGROUND: 'false',
       WARTHOG_DB_DATABASE: 'warthog-test',
@@ -194,8 +196,6 @@ export class Config {
     debug('Config', this.config);
 
     // Must be after config is set above
-    this.validateEntryExists('WARTHOG_APP_HOST');
-    this.validateEntryExists('WARTHOG_APP_PORT');
     this.validateEntryExists('WARTHOG_GENERATED_FOLDER');
     this.validateEntryExists('WARTHOG_DB_CONNECTION');
     this.validateEntryExists('WARTHOG_DB_HOST');
@@ -257,6 +257,24 @@ export class Config {
     }
 
     return config;
+  }
+
+  public getApiBaseUrl() {
+    // Prefer the new API_BASE_URL variable
+    if (this.get('API_BASE_URL')) {
+      return this.get('API_BASE_URL');
+    }
+
+    // Continue to support passing variables as pieces (from v1 and v2)
+    return `${this.get('APP_PROTOCOL')}://${this.get('APP_HOST')}:${this.get('APP_PORT')}`;
+  }
+
+  public getApiUrl(path?: string) {
+    return new URL(path ?? '', this.getApiBaseUrl()).href;
+  }
+
+  public getApiPort() {
+    return new URL('', this.getApiBaseUrl()).port;
   }
 
   public get(key?: string) {

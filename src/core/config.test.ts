@@ -1,5 +1,4 @@
 import { clearConfig } from '../test/server-vars';
-
 import { Config } from './config';
 
 describe('Config', () => {
@@ -14,7 +13,7 @@ describe('Config', () => {
       try {
         new Config({ configSearchPath: __dirname });
       } catch (error) {
-        expect(error.message).toContain('WARTHOG_APP_HOST is required');
+        expect(error.message).toContain('WARTHOG_DB_HOST is required');
       }
     });
   });

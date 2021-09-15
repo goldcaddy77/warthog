@@ -669,7 +669,7 @@ describe('server', () => {
     });
 
     test('failed transaction should not save any items', async done => {
-      expect.assertions(2);
+      expect.assertions(3);
       const name = `Tx Fail ${runKey}`;
 
       const result = await callAPIError(
@@ -679,7 +679,8 @@ describe('server', () => {
         )
       );
 
-      expect(result.message).toBe('null value in column "name" violates not-null constraint');
+      expect(result.message).toContain('null value in column "name"');
+      expect(result.message).toContain('violates not-null constraint');
 
       let savedDishes: Dish[] = [];
       try {

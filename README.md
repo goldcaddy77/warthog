@@ -28,6 +28,10 @@ Warthog is now on version 3.0! There were a few breaking changes that you should
 <summary>Expand for Breaking change details</summary>
 <p>
 
+### Deprecated individual `WARTHOG_APP_*` variables in favor of `WARTHOG_API_BASE_URL`
+
+It's a pain to have to manage 3 separate environment variables for setting the base API URL. We still support this, but prefer the new `WARTHOG_API_BASE_URL` and will use it first if it's present when spinning up a server.
+
 ### BaseModel has been overhauled
 
 - SchemaGenerator no longer generates a Binding by default, must now pass a param in and pass `--binding` in the CLI
@@ -250,9 +254,7 @@ Almost all config in Warthog is driven by environment variables. The following i
 
 | variable                      | value                                                    | default                   |
 | ----------------------------- | -------------------------------------------------------- | ------------------------- |
-| WARTHOG_APP_HOST              | App server host                                          | _none_                    |
-| WARTHOG_APP_PORT              | App server port                                          | 4000                      |
-| WARTHOG_APP_PROTOCOL          | App server protocol                                      | DEV: http, PROD: https    |
+| WARTHOG_API_BASE_URL          | Api base url                                             | _none_                    |
 | WARTHOG_AUTO_GENERATE_FILES   | Auto-generate files                                      | DEV: true, PROD: false    |
 | WARTHOG_AUTO_OPEN_PLAYGROUND  | Open playground on server start                          | DEV: true, PROD: false    |
 | WARTHOG_CLI_GENERATE_PATH     | Where should CLI generate files                          | ./src                     |
@@ -273,6 +275,15 @@ Almost all config in Warthog is driven by environment variables. The following i
 | WARTHOG_RESOLVERS_PATH        | Where should Warthog look for resolvers                  | src/\*\*\/\*.resolver.ts  |
 | WARTHOG_SUBSCRIPTIONS         | Should we enable subscriptions and open a websocket port | false                     |
 | WARTHOG_VALIDATE_RESOLVERS    | TypeGraphQL validation enabled?                          | false                     |
+
+### Removed Environment Variables
+
+All of the `WARTHOG_APP_*` environment variables will still work, but it is strongly recommended you use the single variable `WARTHOG_API_BASE_URL`
+
+| variable | value |
+| WARTHOG_APP_HOST | App server host |
+| WARTHOG_APP_PORT | App server port |
+| WARTHOG_APP_PROTOCOL | App server protocol |
 
 ## Field/Column Decorators
 
