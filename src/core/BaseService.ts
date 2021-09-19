@@ -446,7 +446,11 @@ export class BaseService<E extends Node> {
     return manager.save(entity as any, { reload: true });
   }
 
-  async createMany(data: DeepPartial<E>[], userId: string, options?: BaseOptions): Promise<E[]> {
+  async createMany(
+    data: DeepPartial<E>[],
+    userId: string,
+    options?: BaseOptionsExtended
+  ): Promise<E[]> {
     const manager = this.extractManager(options);
     const createdByIdObject: WarthogSpecialModel = this.hasColumn('createdById')
       ? { createdById: userId }
@@ -485,7 +489,7 @@ export class BaseService<E extends Node> {
     data: DeepPartial<E>,
     where: W,
     userId: string,
-    options?: BaseOptions
+    options?: BaseOptionsExtended
   ): Promise<E> {
     const manager = this.extractManager(options);
     const found = await this.findOne(where);
@@ -505,7 +509,11 @@ export class BaseService<E extends Node> {
     return manager.findOneOrFail(this.entityClass, result.id);
   }
 
-  async delete(where: any, userId: string, options?: BaseOptions): Promise<StandardDeleteResponse> {
+  async delete(
+    where: any,
+    userId: string,
+    options?: BaseOptionsExtended
+  ): Promise<StandardDeleteResponse> {
     const manager = this.extractManager(options);
 
     // V3: TODO: we shouldn't look for the column name, we should see if they've decorated the
