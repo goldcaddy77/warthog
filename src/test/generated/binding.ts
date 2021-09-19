@@ -83,6 +83,8 @@ export type KitchenSinkOrderByInput =   'id_ASC' |
   'booleanField_DESC' |
   'floatField_ASC' |
   'floatField_DESC' |
+  'computedColumn_ASC' |
+  'computedColumn_DESC' |
   'idField_ASC' |
   'idField_DESC' |
   'stringEnumField_ASC' |
@@ -285,6 +287,11 @@ export interface KitchenSinkWhereInput {
   floatField_lt?: Float | null
   floatField_lte?: Float | null
   floatField_in?: Float[] | Float | null
+  computedColumn_eq?: String | null
+  computedColumn_contains?: String | null
+  computedColumn_startsWith?: String | null
+  computedColumn_endsWith?: String | null
+  computedColumn_in?: String[] | String | null
   jsonField_json?: JSONObject | null
   idField_eq?: ID_Input | null
   idField_in?: ID_Output[] | ID_Output | null
@@ -439,6 +446,7 @@ export interface KitchenSink {
   integerField: Int
   booleanField: Boolean
   floatField: Float
+  computedColumn: String
   jsonField?: JSONObject | null
   idField?: ID_Output | null
   stringEnumField?: StringEnum | null

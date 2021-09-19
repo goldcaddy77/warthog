@@ -137,6 +137,7 @@ type KitchenSink {
   integerField: Int!
   booleanField: Boolean!
   floatField: Float!
+  computedColumn: String!
   jsonField: JSONObject
   idField: ID
   stringEnumField: StringEnum
@@ -209,6 +210,8 @@ enum KitchenSinkOrderByInput {
   booleanField_DESC
   floatField_ASC
   floatField_DESC
+  computedColumn_ASC
+  computedColumn_DESC
   idField_ASC
   idField_DESC
   stringEnumField_ASC
@@ -320,6 +323,11 @@ input KitchenSinkWhereInput {
   floatField_lt: Float
   floatField_lte: Float
   floatField_in: [Float!]
+  computedColumn_eq: String
+  computedColumn_contains: String
+  computedColumn_startsWith: String
+  computedColumn_endsWith: String
+  computedColumn_in: [String!]
   jsonField_json: JSONObject
   idField_eq: ID
   idField_in: [ID!]

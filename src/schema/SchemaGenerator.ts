@@ -233,7 +233,7 @@ export class SchemaGenerator {
     const modelColumns = this.getColumnsForModel(model);
 
     modelColumns.forEach((column: ColumnMetadata) => {
-      if (column.readonly) {
+      if (column.readonly || column.computed) {
         return;
       }
       let graphQLDataType = this.columnToGraphQLDataType(column);
@@ -279,7 +279,7 @@ export class SchemaGenerator {
 
     const modelColumns = this.getColumnsForModel(model);
     modelColumns.forEach((column: ColumnMetadata) => {
-      if (column.readonly) {
+      if (column.readonly || column.computed) {
         return;
       }
 

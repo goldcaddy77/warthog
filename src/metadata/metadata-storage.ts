@@ -20,12 +20,13 @@ export type FieldType =
 
 export interface DecoratorCommonOptions {
   apiOnly?: boolean;
+  computed?: boolean; // Means the back end will manage this column fully.  Can read it, but no writing
   dbOnly?: boolean;
   description?: string;
   editable?: boolean;
   filter?: boolean | WhereOperator[];
   nullable?: boolean;
-  readonly?: boolean;
+  readonly?: boolean; // Setting this will set it readonly with TypeORM meaning you can't use update methods at all
   sort?: boolean;
   writeonly?: boolean;
 }

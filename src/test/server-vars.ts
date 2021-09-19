@@ -30,7 +30,7 @@ export function getStandardEnvironmentVariables(): StringMap {
     WARTHOG_DB_MIGRATIONS_DIR: './tmp/test/migrations',
     WARTHOG_DB_OVERRIDE: 'true', // Set so that we can do DB stuff outside of NODE_ENV=development
     WARTHOG_DB_USERNAME: 'postgres',
-    WARTHOG_DB_PASSWORD: '',
+    WARTHOG_DB_PASSWORD: 'postgres',
     WARTHOG_DB_SYNCHRONIZE: 'true',
     WARTHOG_FILTER_BY_DEFAULT: 'true',
     WARTHOG_GENERATED_FOLDER: './src/test/generated',

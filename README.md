@@ -28,6 +28,10 @@ Warthog is now on version 3.0! There were a few breaking changes that you should
 <summary>Expand for Breaking change details</summary>
 <p>
 
+### Adds `computed` attribute to models
+
+A `computed` property is one that is fully managed by the server. A good example is a status flag that is managed by a state machine in the backend. You should not be able to modify this on create or update, but should always be able to read it.
+
 ### Switch ID generation library from `shortid` (deprecated) to `nanoid`
 
 Per `shortid` [README](https://github.com/dylang/shortid/blob/master/README.md) it is deprecated.

@@ -146,6 +146,9 @@ export enum KitchenSinkOrderByEnum {
   floatField_ASC = "floatField_ASC",
   floatField_DESC = "floatField_DESC",
 
+  computedColumn_ASC = "computedColumn_ASC",
+  computedColumn_DESC = "computedColumn_DESC",
+
   idField_ASC = "idField_ASC",
   idField_DESC = "idField_DESC",
 
@@ -338,6 +341,21 @@ export class KitchenSinkWhereInput {
 
   @TypeGraphQLField(() => [Float], { nullable: true })
   floatField_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  computedColumn_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  computedColumn_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  computedColumn_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  computedColumn_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  computedColumn_in?: string[];
 
   @TypeGraphQLField(() => GraphQLJSONObject, { nullable: true })
   jsonField_json?: JsonObject;
