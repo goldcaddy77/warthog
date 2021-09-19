@@ -1,4 +1,4 @@
-import * as shortid from 'shortid';
+import { nanoid } from 'nanoid';
 
 export class StringUtil {
   // Ex: HelloWorld -> HELLO_WORLD
@@ -17,5 +17,5 @@ export class StringUtil {
 }
 
 export function generateId(): string {
-  return shortid.generate();
+  return nanoid();
 }

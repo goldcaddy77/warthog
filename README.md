@@ -28,6 +28,10 @@ Warthog is now on version 3.0! There were a few breaking changes that you should
 <summary>Expand for Breaking change details</summary>
 <p>
 
+### Switch ID generation library from `shortid` (deprecated) to `nanoid`
+
+Per `shortid` [README](https://github.com/dylang/shortid/blob/master/README.md) it is deprecated.
+
 ### Deprecated individual `WARTHOG_APP_*` variables in favor of `WARTHOG_API_BASE_URL`
 
 It's a pain to have to manage 3 separate environment variables for setting the base API URL. We still support this, but prefer the new `WARTHOG_API_BASE_URL` and will use it first if it's present when spinning up a server.

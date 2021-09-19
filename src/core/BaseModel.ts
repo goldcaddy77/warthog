@@ -1,4 +1,4 @@
-import * as shortid from 'shortid';
+import { nanoid } from 'nanoid';
 import { ObjectType } from 'type-graphql';
 import { BeforeInsert } from 'typeorm';
 import { IDType } from '../core';
@@ -22,7 +22,7 @@ export abstract class IdModel {
 
   getId(): string {
     // If settings allow ID to be specified on create, use the specified ID
-    return this.id || shortid.generate();
+    return this.id || nanoid();
   }
 
   @BeforeInsert()
