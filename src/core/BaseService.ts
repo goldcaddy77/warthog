@@ -28,6 +28,8 @@ export interface BaseOptions {
   manager?: EntityManager; // Allows consumers to pass in a TransactionManager
 }
 
+export type BaseOptionsExtended = BaseOptions | EntityManager;
+
 export interface Node {
   id?: string | number;
   getValue(field: string): string | number;
@@ -404,8 +406,22 @@ export class BaseService<E extends Node> {
     return items[0];
   }
 
-  async create(data: DeepPartial<E>, userId: string, options?: BaseOptions): Promise<E> {
-    const manager = options?.manager ?? this.manager;
+  extractManager(options?: BaseOptionsExtended) {
+    if (!options) {
+      return this.manager;
+    }
+    if (options instanceof EntityManager) {
+      return options;
+    }
+    if (options.manager && options.manager instanceof EntityManager) {
+      return options.manager;
+    }
+
+    return this.manager;
+  }
+
+  async create(data: DeepPartial<E>, userId: string, options?: BaseOptionsExtended): Promise<E> {
+    const manager = this.extractManager(options);
     const createdByIdObject: WarthogSpecialModel = this.hasColumn('createdById')
       ? { createdById: userId }
       : {};
@@ -431,7 +447,7 @@ export class BaseService<E extends Node> {
   }
 
   async createMany(data: DeepPartial<E>[], userId: string, options?: BaseOptions): Promise<E[]> {
-    const manager = options?.manager ?? this.manager;
+    const manager = this.extractManager(options);
     const createdByIdObject: WarthogSpecialModel = this.hasColumn('createdById')
       ? { createdById: userId }
       : {};
@@ -471,7 +487,7 @@ export class BaseService<E extends Node> {
     userId: string,
     options?: BaseOptions
   ): Promise<E> {
-    const manager = options?.manager ?? this.manager;
+    const manager = this.extractManager(options);
     const found = await this.findOne(where);
     const updatedByIdObject: WarthogSpecialModel = this.hasColumn('updatedById')
       ? { updatedById: userId }
@@ -490,7 +506,7 @@ export class BaseService<E extends Node> {
   }
 
   async delete(where: any, userId: string, options?: BaseOptions): Promise<StandardDeleteResponse> {
-    const manager = options?.manager ?? this.manager;
+    const manager = this.extractManager(options);
 
     // V3: TODO: we shouldn't look for the column name, we should see if they've decorated the
     // model with a DeletedDate decorator
