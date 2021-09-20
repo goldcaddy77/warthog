@@ -63,7 +63,7 @@ export class KitchenSink extends BaseModel {
   @FloatField()
   floatField?: number;
 
-  @StringField({ computed: true, default: 'computed' })
+  @StringField({ computed: true, default: 'computedc' })
   computedColumn?: string;
 
   @JSONField({ nullable: true })

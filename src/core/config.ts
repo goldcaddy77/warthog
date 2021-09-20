@@ -260,9 +260,11 @@ export class Config {
   }
 
   public getApiBaseUrl() {
+    const apiBaseUrl = this.get('API_BASE_URL');
     // Prefer the new API_BASE_URL variable
-    if (this.get('API_BASE_URL')) {
-      return this.get('API_BASE_URL');
+    if (apiBaseUrl) {
+      debug(`Found API_BASE_URL: ${apiBaseUrl}`);
+      return apiBaseUrl;
     }
 
     // Continue to support passing variables as pieces (from v1 and v2)
@@ -274,7 +276,19 @@ export class Config {
   }
 
   public getApiPort() {
-    return new URL('', this.getApiBaseUrl()).port;
+    const port = new URL('', this.getApiBaseUrl()).port;
+    if (port) {
+      debug(`Found port from getApiBaseUrl: ${port}`);
+      return port;
+    } else if (this.get('APP_PORT')) {
+      debug(`Found port from get APP_PORT: ${this.get('APP_PORT')}`);
+      return this.get('APP_PORT');
+    } else {
+      debug(`Using default port for NODE_ENV: ${this.NODE_ENV}`);
+      return this.NODE_ENV === 'development' ? '80' : '443';
+    }
+
+    return;
   }
 
   public get(key?: string) {
