@@ -141,6 +141,7 @@ type KitchenSink {
   jsonField: JSONObject
   idField: ID
   stringEnumField: StringEnum
+  enumArrayField: [StringEnum!]
   dishes: [Dish!]
   numericField: Float
   numericFieldCustomPrecisionScale: Float
@@ -173,6 +174,7 @@ input KitchenSinkCreateInput {
   jsonField: JSONObject
   idField: ID
   stringEnumField: StringEnum
+  enumArrayField: [StringEnum!]
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   noFilterField: String
@@ -260,6 +262,7 @@ input KitchenSinkUpdateInput {
   jsonField: JSONObject
   idField: ID
   stringEnumField: StringEnum
+  enumArrayField: [StringEnum!]
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   noFilterField: String
@@ -333,6 +336,9 @@ input KitchenSinkWhereInput {
   idField_in: [ID!]
   stringEnumField_eq: StringEnum
   stringEnumField_in: [StringEnum!]
+  enumArrayField_containsAll: [StringEnum!]
+  enumArrayField_containsNone: [StringEnum!]
+  enumArrayField_containsAny: [StringEnum!]
   numericField_eq: Float
   numericField_gt: Float
   numericField_gte: Float

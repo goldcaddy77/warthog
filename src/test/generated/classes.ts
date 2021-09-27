@@ -372,6 +372,15 @@ export class KitchenSinkWhereInput {
   @TypeGraphQLField(() => [StringEnum], { nullable: true })
   stringEnumField_in?: StringEnum[];
 
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  enumArrayField_containsAll?: [StringEnum];
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  enumArrayField_containsNone?: [StringEnum];
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  enumArrayField_containsAny?: [StringEnum];
+
   @TypeGraphQLField(() => Float, { nullable: true })
   numericField_eq?: number;
 
@@ -639,6 +648,9 @@ export class KitchenSinkCreateInput {
   @TypeGraphQLField(() => StringEnum, { nullable: true })
   stringEnumField?: StringEnum;
 
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  enumArrayField?: StringEnum[];
+
   @TypeGraphQLField({ nullable: true })
   numericField?: number;
 
@@ -722,6 +734,9 @@ export class KitchenSinkUpdateInput {
 
   @TypeGraphQLField(() => StringEnum, { nullable: true })
   stringEnumField?: StringEnum;
+
+  @TypeGraphQLField(() => [StringEnum], { nullable: true })
+  enumArrayField?: StringEnum[];
 
   @TypeGraphQLField({ nullable: true })
   numericField?: number;

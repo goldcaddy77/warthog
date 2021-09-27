@@ -2,15 +2,15 @@ const caller = require('caller'); // eslint-disable-line @typescript-eslint/no-v
 import * as path from 'path';
 import { Field, registerEnumType } from 'type-graphql';
 import { Column } from 'typeorm';
-
 import { ClassType } from '../core';
 import { DecoratorCommonOptions } from '../metadata';
-import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 import { EnumWhereOperator } from '../torm';
+import { composeMethodDecorators, generatedFolderPath, MethodDecoratorFactory } from '../utils';
 
 interface EnumFieldOptions extends DecoratorCommonOptions {
   default?: any;
   filter?: boolean | EnumWhereOperator[];
+  array?: boolean;
 }
 
 export function EnumField(name: string, enumeration: object, options: EnumFieldOptions = {}): any {

@@ -194,6 +194,7 @@ export interface KitchenSinkCreateInput {
   jsonField?: JSONObject | null
   idField?: ID_Input | null
   stringEnumField?: StringEnum | null
+  enumArrayField?: StringEnum[] | StringEnum | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -224,6 +225,7 @@ export interface KitchenSinkUpdateInput {
   jsonField?: JSONObject | null
   idField?: ID_Input | null
   stringEnumField?: StringEnum | null
+  enumArrayField?: StringEnum[] | StringEnum | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null
@@ -297,6 +299,9 @@ export interface KitchenSinkWhereInput {
   idField_in?: ID_Output[] | ID_Output | null
   stringEnumField_eq?: StringEnum | null
   stringEnumField_in?: StringEnum[] | StringEnum | null
+  enumArrayField_containsAll?: StringEnum[] | StringEnum | null
+  enumArrayField_containsNone?: StringEnum[] | StringEnum | null
+  enumArrayField_containsAny?: StringEnum[] | StringEnum | null
   numericField_eq?: Float | null
   numericField_gt?: Float | null
   numericField_gte?: Float | null
@@ -450,6 +455,7 @@ export interface KitchenSink {
   jsonField?: JSONObject | null
   idField?: ID_Output | null
   stringEnumField?: StringEnum | null
+  enumArrayField?: Array<StringEnum> | null
   dishes?: Array<Dish> | null
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null

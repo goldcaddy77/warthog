@@ -75,6 +75,9 @@ export class KitchenSink extends BaseModel {
   @EnumField('StringEnum', StringEnum, { nullable: true })
   stringEnumField?: StringEnum;
 
+  @EnumField('StringEnum', StringEnum, { nullable: true, array: true })
+  enumArrayField?: StringEnum;
+
   @OneToMany(
     () => Dish,
     (dish: Dish) => dish.kitchenSink
