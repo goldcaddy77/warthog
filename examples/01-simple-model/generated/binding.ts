@@ -59,6 +59,8 @@ export type UserOrderByInput =   'firstName_ASC' |
   'stringEnumField_DESC' |
   'rating_ASC' |
   'rating_DESC' |
+  'profileId_ASC' |
+  'profileId_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -78,6 +80,57 @@ export type UserOrderByInput =   'firstName_ASC' |
   'id_ASC' |
   'id_DESC'
 
+export interface ProfileCreateInput {
+  body: String
+}
+
+export interface ProfileUpdateInput {
+  body?: String | null
+}
+
+export interface ProfileWhereInput {
+  body_eq?: String | null
+  body_contains?: String | null
+  body_startsWith?: String | null
+  body_endsWith?: String | null
+  body_in?: String[] | String | null
+  createdAt_eq?: DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  createdById_eq?: ID_Input | null
+  createdById_in?: ID_Output[] | ID_Output | null
+  updatedAt_eq?: DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  updatedById_eq?: ID_Input | null
+  updatedById_in?: ID_Output[] | ID_Output | null
+  deletedAt_all?: Boolean | null
+  deletedAt_eq?: DateTime | null
+  deletedAt_lt?: DateTime | null
+  deletedAt_lte?: DateTime | null
+  deletedAt_gt?: DateTime | null
+  deletedAt_gte?: DateTime | null
+  deletedById_eq?: ID_Input | null
+  deletedById_in?: ID_Output[] | ID_Output | null
+  version_eq?: Int | null
+  version_gt?: Int | null
+  version_gte?: Int | null
+  version_lt?: Int | null
+  version_lte?: Int | null
+  version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
+}
+
+export interface ProfileWhereUniqueInput {
+  id: ID_Output
+}
+
 export interface UserCreateInput {
   firstName: String
   lastName?: String | null
@@ -86,6 +139,7 @@ export interface UserCreateInput {
   isRequired: Boolean
   stringEnumField: StringEnum
   rating: Float
+  profileId: String
 }
 
 export interface UserUpdateInput {
@@ -96,6 +150,7 @@ export interface UserUpdateInput {
   isRequired?: Boolean | null
   stringEnumField?: StringEnum | null
   rating?: Float | null
+  profileId?: String | null
 }
 
 export interface UserWhereInput {
@@ -130,6 +185,8 @@ export interface UserWhereInput {
   rating_lt?: Float | null
   rating_lte?: Float | null
   rating_in?: Float[] | Float | null
+  profileId_eq?: String | null
+  profileId_in?: String[] | String | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -179,6 +236,20 @@ export interface PageInfo {
   endCursor?: String | null
 }
 
+export interface Profile {
+  id: ID_Output
+  createdAt: DateTime
+  createdById: ID_Output
+  updatedAt?: DateTime | null
+  updatedById?: ID_Output | null
+  deletedAt?: DateTime | null
+  deletedById?: ID_Output | null
+  version: Int
+  ownerId: ID_Output
+  body: String
+  user: User
+}
+
 export interface StandardDeleteResponse {
   id: ID_Output
 }
@@ -200,6 +271,8 @@ export interface User {
   isRequired: Boolean
   stringEnumField: StringEnum
   rating: Float
+  profile: Profile
+  profileId: String
 }
 
 /*

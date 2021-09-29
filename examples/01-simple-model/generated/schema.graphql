@@ -20,6 +20,71 @@ type PageInfo {
   endCursor: String
 }
 
+type Profile {
+  id: ID!
+  createdAt: DateTime!
+  createdById: ID!
+  updatedAt: DateTime
+  updatedById: ID
+  deletedAt: DateTime
+  deletedById: ID
+  version: Int!
+  ownerId: ID!
+  body: String!
+  user: User!
+}
+
+input ProfileCreateInput {
+  body: String!
+}
+
+input ProfileUpdateInput {
+  body: String
+}
+
+input ProfileWhereInput {
+  body_eq: String
+  body_contains: String
+  body_startsWith: String
+  body_endsWith: String
+  body_in: [String!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  version_eq: Int
+  version_gt: Int
+  version_gte: Int
+  version_lt: Int
+  version_lte: Int
+  version_in: [Int!]
+  ownerId_eq: ID
+  ownerId_in: [ID!]
+  id_in: [ID!]
+}
+
+input ProfileWhereUniqueInput {
+  id: ID!
+}
+
 type Query {
   users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
   user(where: UserWhereUniqueInput!): User!
@@ -51,6 +116,8 @@ type User {
   isRequired: Boolean!
   stringEnumField: StringEnum!
   rating: Float!
+  profile: Profile!
+  profileId: String!
 }
 
 input UserCreateInput {
@@ -61,6 +128,7 @@ input UserCreateInput {
   isRequired: Boolean!
   stringEnumField: StringEnum!
   rating: Float!
+  profileId: String!
 }
 
 enum UserOrderByInput {
@@ -78,6 +146,8 @@ enum UserOrderByInput {
   stringEnumField_DESC
   rating_ASC
   rating_DESC
+  profileId_ASC
+  profileId_DESC
   createdAt_ASC
   createdAt_DESC
   createdById_ASC
@@ -106,6 +176,7 @@ input UserUpdateInput {
   isRequired: Boolean
   stringEnumField: StringEnum
   rating: Float
+  profileId: String
 }
 
 input UserWhereInput {
@@ -140,6 +211,8 @@ input UserWhereInput {
   rating_lt: Float
   rating_lte: Float
   rating_in: [Float!]
+  profileId_eq: String
+  profileId_in: [String!]
   createdAt_eq: DateTime
   createdAt_lt: DateTime
   createdAt_lte: DateTime
