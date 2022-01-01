@@ -146,14 +146,20 @@ export class BaseService<E extends Node> {
     orderBy?: string,
     limit?: number,
     offset?: number,
-    fields?: string[]
+    fields?: string[],
+    userId?: string,
+    options?: BaseOptionsExtended
   ): Promise<E[]> {
+    const manager = this.extractManager(options);
+
     const DEFAULT_LIMIT = 50;
     return this.buildFindQuery(
       where as WhereExpression,
       orderBy,
       { limit: limit || DEFAULT_LIMIT, offset },
-      fields
+      fields,
+      userId,
+      { manager }
     ).getMany();
   }
 
@@ -162,8 +168,12 @@ export class BaseService<E extends Node> {
     whereUserInput: any = {}, // V3: WhereExpression = {},
     orderBy?: string | string[],
     _pageOptions: RelayPageOptionsInput = {},
-    fields?: ConnectionInputFields
+    fields?: ConnectionInputFields,
+    userId?: string, // Allow this param so that when we overload we can pass the userId for filtering data to user's "world"
+    options?: BaseOptionsExtended
   ): Promise<ConnectionResult<E>> {
+    const manager = this.extractManager(options);
+
     // TODO: if the orderby items aren't included in `fields`, should we automatically include?
     // TODO: FEATURE - make the default limit configurable
     const DEFAULT_LIMIT = 50;
@@ -202,7 +212,9 @@ export class BaseService<E extends Node> {
       whereCombined,
       this.relayService.effectiveOrderStrings(sorts, relayPageOptions),
       { limit: limit + 1 }, // We ask for 1 too many so that we know if there is an additional page
-      requestedFields.selectFields
+      requestedFields.selectFields,
+      userId,
+      { manager }
     );
 
     let rawData;
@@ -235,10 +247,14 @@ export class BaseService<E extends Node> {
     where: any = {}, // W | WhereExpression
     orderBy?: string | string[],
     pageOptions?: LimitOffset,
-    fields?: string[]
+    fields?: string[],
+    userId?: string, // Allow this param so that when we overload we can pass the userId for filtering data to user's "world"
+    options?: BaseOptionsExtended
   ): SelectQueryBuilder<E> {
+    const manager = this.extractManager(options);
+
     const DEFAULT_LIMIT = 50;
-    let qb = this.manager.createQueryBuilder<E>(this.entityClass, this.klass);
+    let qb = manager.createQueryBuilder<E>(this.entityClass, this.klass);
     if (!pageOptions) {
       pageOptions = {
         limit: DEFAULT_LIMIT
@@ -393,8 +409,16 @@ export class BaseService<E extends Node> {
     return qb;
   }
 
-  async findOne<W>(where: W): Promise<E> {
-    const items = await this.find(where as any);
+  async findOne<W>(where: W, userId?: string, options?: BaseOptionsExtended): Promise<E> {
+    const items = await this.find(
+      where as any,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      userId,
+      options
+    );
     if (!items.length) {
       throw new Error(`Unable to find ${this.entityClass.name} where ${JSON.stringify(where)}`);
     } else if (items.length > 1) {

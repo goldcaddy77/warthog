@@ -450,7 +450,7 @@ export interface KitchenSink {
   jsonField?: JSONObject | null
   idField?: ID_Output | null
   stringEnumField?: StringEnum | null
-  dishes?: Array<Dish> | null
+  dishes: Array<Dish>
   numericField?: Float | null
   numericFieldCustomPrecisionScale?: Float | null
   noFilterField?: String | null

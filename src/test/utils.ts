@@ -1,3 +1,4 @@
+import { stringify } from 'flatted';
 import { GraphQLError } from 'graphql';
 import { getBindingError } from '../';
 
@@ -78,9 +79,9 @@ function toErrorString(obj: unknown, msg: string): string {
   if (typeof obj === 'string') {
     error = `${msg}: ${obj}`;
   } else {
-    error = `${msg}: ${JSON.stringify(obj)}`;
+    error = `${msg}: ${stringify(obj)}`;
   }
 
-  console.dir(obj);
+  console.error();
   return error;
 }

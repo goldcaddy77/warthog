@@ -144,7 +144,7 @@ type KitchenSink {
   jsonField: JSONObject
   idField: ID
   stringEnumField: StringEnum
-  dishes: [Dish!]
+  dishes: [Dish!]!
   numericField: Float
   numericFieldCustomPrecisionScale: Float
   noFilterField: String

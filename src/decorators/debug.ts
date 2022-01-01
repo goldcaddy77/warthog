@@ -1,4 +1,5 @@
 import * as Debug from 'debug';
+import { stringify } from 'flatted';
 import { performance } from 'perf_hooks';
 import * as util from 'util';
 
@@ -12,7 +13,7 @@ export function debug(key: string): MethodDecorator {
 
     if (util.types.isAsyncFunction(originalMethod)) {
       descriptor.value = async function(...args: unknown[]): Promise<any> {
-        logger(`Entering ${propertyKey} with args: ${JSON.stringify(args)}`);
+        logger(`Entering ${propertyKey} with args: ${stringify(args)}`);
         const start = performance.now();
         const result = await originalMethod.apply(this, args);
         const end = performance.now();
@@ -21,7 +22,7 @@ export function debug(key: string): MethodDecorator {
       };
     } else {
       descriptor.value = function(...args: unknown[]) {
-        logger(`Entering ${propertyKey} with args: ${JSON.stringify(args)}`);
+        logger(`Entering ${propertyKey} with args: ${stringify(args)}`);
         const start = performance.now();
         const result = originalMethod.apply(this, args);
         const end = performance.now();
