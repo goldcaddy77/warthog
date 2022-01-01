@@ -516,7 +516,7 @@ export class BaseService<E extends Node> {
     options?: BaseOptionsExtended
   ): Promise<E> {
     const manager = this.extractManager(options);
-    const found = await this.findOne(where);
+    const found = await this.findOne(where, userId, options);
     const updatedByIdObject: WarthogSpecialModel = this.hasColumn('updatedById')
       ? { updatedById: userId }
       : {};
