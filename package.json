@@ -87,6 +87,7 @@
     "debug": "^4.1.1",
     "execa": "^4.0.3",
     "express": "^4.17.1",
+    "flatted": "^3.2.4",
     "gluegun": "^4.1.0",
     "graphql": "^14.5.8",
     "graphql-binding": "^2.5.2",
