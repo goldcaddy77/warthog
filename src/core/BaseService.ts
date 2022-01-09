@@ -406,6 +406,10 @@ export class BaseService<E extends Node> {
       processWhereInput(qb, where);
     }
 
+    // Put this here to make TS happy.  I need userId as an input here so that we can overload
+    // the find methods, passing in the userId to do filtering by user
+    userId;
+
     return qb;
   }
 

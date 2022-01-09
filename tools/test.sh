@@ -9,8 +9,8 @@ NODE_ENV=test ./src/test/codegen-test-files.sh
 
 if [ -z "$SKIP_DB_CREATION" ]
 then
-  NODE_ENV=test PGUSER=postgres WARTHOG_DB_PASSWORD=postgres ./bin/warthog db:drop
-  NODE_ENV=test PGUSER=postgres WARTHOG_DB_PASSWORD=postgres ./bin/warthog db:create
+  NODE_ENV=test PGUSER=postgres PGPASSWORD=postgres ./bin/warthog db:drop
+  NODE_ENV=test PGUSER=postgres PGPASSWORD=postgres ./bin/warthog db:create
 fi
 
 # Forward command line args to the jest command

@@ -1,0 +1,65 @@
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+interface DeleteResponse {
+  id: ID!
+}
+
+"""File input AWS url"""
+scalar File
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  users(offset: Int, limit: Int = 50, where: UserWhereInput, orderBy: UserOrderByInput): [User!]!
+}
+
+type StandardDeleteResponse {
+  id: ID!
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  createdById: ID!
+  updatedAt: DateTime
+  updatedById: ID
+  deletedAt: DateTime
+  deletedById: ID
+  version: Int!
+  ownerId: ID!
+  file: File!
+}
+
+input UserCreateInput {
+  file: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+input UserUpdateInput {
+  file: String
+}
+
+input UserWhereInput {
+  deletedAt_all: Boolean
+  id_in: [ID!]
+}
+
+input UserWhereUniqueInput {
+  id: ID!
+}
