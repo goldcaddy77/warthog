@@ -1,7 +1,7 @@
 import { Field } from 'type-graphql';
 import { Column } from 'typeorm';
 import { BaseModel, Model, WarthogField } from '../../../src';
-import FileScalar from './file.scalar';
+import File from './file.scalar';
 
 export enum Status {
   ACTIVE = 'ACTIVE',
@@ -11,7 +11,7 @@ export enum Status {
 @Model()
 export class User extends BaseModel {
   @WarthogField('string')
-  @Field(() => FileScalar)
+  @Field(() => File)
   @Column()
   file: string;
 }

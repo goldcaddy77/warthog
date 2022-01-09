@@ -8,7 +8,7 @@ interface DeleteResponse {
 }
 
 """File input AWS url"""
-scalar FileScalar
+scalar File
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
@@ -39,7 +39,7 @@ type User {
   deletedById: ID
   version: Int!
   ownerId: ID!
-  file: FileScalar!
+  file: File!
 }
 
 input UserCreateInput {

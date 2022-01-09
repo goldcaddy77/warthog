@@ -159,7 +159,7 @@ export class BaseService<E extends Node> {
       { limit: limit || DEFAULT_LIMIT, offset },
       fields,
       userId,
-      options
+      { manager }
     ).getMany();
   }
 
@@ -214,7 +214,7 @@ export class BaseService<E extends Node> {
       { limit: limit + 1 }, // We ask for 1 too many so that we know if there is an additional page
       requestedFields.selectFields,
       userId,
-      options
+      { manager }
     );
 
     let rawData;

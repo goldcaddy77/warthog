@@ -1,7 +1,3 @@
-// const folderGlob = `${this.config.get('ROOT_FOLDER')}/${this.config.get('SCALARS_PATH')}`;
-// console.log('folderGlob :>> ', folderGlob);
-// const files = glob.sync(folderGlob);
-
 import { GraphQLID, GraphQLScalarType, GraphQLSchema } from 'graphql';
 import { PubSubEngine, PubSubOptions } from 'graphql-subscriptions';
 // import { DateResolver } from 'graphql-scalars';

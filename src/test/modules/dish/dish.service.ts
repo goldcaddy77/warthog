@@ -1,7 +1,6 @@
 import { Service } from 'typedi';
-import { DeepPartial, Repository, Transaction, TransactionManager, EntityManager } from 'typeorm';
+import { DeepPartial, EntityManager, Repository, Transaction, TransactionManager } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-
 import { BaseService } from '../../../';
 import { Dish } from './dish.model';
 
