@@ -159,7 +159,7 @@ export class BaseService<E extends Node> {
       { limit: limit || DEFAULT_LIMIT, offset },
       fields,
       userId,
-      { manager }
+      options
     ).getMany();
   }
 
@@ -214,7 +214,7 @@ export class BaseService<E extends Node> {
       { limit: limit + 1 }, // We ask for 1 too many so that we know if there is an additional page
       requestedFields.selectFields,
       userId,
-      { manager }
+      options
     );
 
     let rawData;
@@ -405,6 +405,10 @@ export class BaseService<E extends Node> {
     if (Object.keys(where).length) {
       processWhereInput(qb, where);
     }
+
+    // Put this here to make TS happy.  I need userId as an input here so that we can overload
+    // the find methods, passing in the userId to do filtering by user
+    userId;
 
     return qb;
   }

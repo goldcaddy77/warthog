@@ -88,6 +88,7 @@ export class Config {
       WARTHOG_GENERATED_FOLDER: path.join(this.PROJECT_ROOT, 'generated'),
       WARTHOG_RESOLVERS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.resolver.ts')],
       WARTHOG_SERVICES_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.service.ts')],
+      WARTHOG_SCALARS_PATH: [path.join(this.PROJECT_ROOT, 'src/**/*.scalar.ts')],
       WARTHOG_SUBSCRIPTIONS: 'false',
       WARTHOG_VALIDATE_RESOLVERS: 'false',
       // Prevent 502s from happening in AWS and GCP (and probably other Production ENVs)
