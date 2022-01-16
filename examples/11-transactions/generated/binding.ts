@@ -44,8 +44,6 @@ export type UserOrderByInput =   'firstName_ASC' |
   'firstName_DESC' |
   'lastName_ASC' |
   'lastName_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'createdById_ASC' |
@@ -59,7 +57,11 @@ export type UserOrderByInput =   'firstName_ASC' |
   'deletedById_ASC' |
   'deletedById_DESC' |
   'version_ASC' |
-  'version_DESC'
+  'version_DESC' |
+  'ownerId_ASC' |
+  'ownerId_DESC' |
+  'id_ASC' |
+  'id_DESC'
 
 export interface UserCreateInput {
   firstName: String
@@ -82,8 +84,6 @@ export interface UserWhereInput {
   lastName_startsWith?: String | null
   lastName_endsWith?: String | null
   lastName_in?: String[] | String | null
-  id_eq?: ID_Input | null
-  id_in?: ID_Output[] | ID_Output | null
   createdAt_eq?: DateTime | null
   createdAt_lt?: DateTime | null
   createdAt_lte?: DateTime | null
@@ -112,6 +112,9 @@ export interface UserWhereInput {
   version_lt?: Int | null
   version_lte?: Int | null
   version_in?: Int[] | Int | null
+  ownerId_eq?: ID_Input | null
+  ownerId_in?: ID_Output[] | ID_Output | null
+  id_in?: ID_Output[] | ID_Output | null
 }
 
 export interface UserWhereUniqueInput {
@@ -136,12 +139,13 @@ export interface StandardDeleteResponse {
 export interface User {
   id: ID_Output
   createdAt: DateTime
-  createdById: String
+  createdById: ID_Output
   updatedAt?: DateTime | null
-  updatedById?: String | null
+  updatedById?: ID_Output | null
   deletedAt?: DateTime | null
-  deletedById?: String | null
+  deletedById?: ID_Output | null
   version: Int
+  ownerId: ID_Output
   firstName: String
   lastName: String
 }

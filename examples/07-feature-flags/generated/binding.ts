@@ -914,10 +914,10 @@ export interface Environment {
   projKey: String
   project?: Project | null
   projectId?: ID_Output | null
-  segments?: Array<Segment> | null
-  featureFlagUsers?: Array<FeatureFlagUser> | null
-  featureFlagSegments?: Array<FeatureFlagSegment> | null
-  userSegments?: Array<UserSegment> | null
+  segments: Array<Segment>
+  featureFlagUsers: Array<FeatureFlagUser>
+  featureFlagSegments: Array<FeatureFlagSegment>
+  userSegments: Array<UserSegment>
 }
 
 export interface FeatureFlag {
@@ -935,8 +935,8 @@ export interface FeatureFlag {
   projKey: String
   project?: Project | null
   projectId?: ID_Output | null
-  featureFlagUsers?: Array<FeatureFlagUser> | null
-  featureFlagSegments?: Array<FeatureFlagSegment> | null
+  featureFlagUsers: Array<FeatureFlagUser>
+  featureFlagSegments: Array<FeatureFlagSegment>
 }
 
 export interface FeatureFlagSegment {
@@ -1006,12 +1006,12 @@ export interface Project {
   ownerId: ID_Output
   name: String
   key: String
-  environments?: Array<Environment> | null
-  segments?: Array<Segment> | null
-  featureFlags?: Array<FeatureFlag> | null
-  featureFlagUsers?: Array<FeatureFlagUser> | null
-  featureFlagSegments?: Array<FeatureFlagSegment> | null
-  userSegments?: Array<UserSegment> | null
+  environments: Array<Environment>
+  segments: Array<Segment>
+  featureFlags: Array<FeatureFlag>
+  featureFlagUsers: Array<FeatureFlagUser>
+  featureFlagSegments: Array<FeatureFlagSegment>
+  userSegments: Array<UserSegment>
 }
 
 export interface Segment {
@@ -1033,8 +1033,8 @@ export interface Segment {
   envKey: String
   environment?: Environment | null
   environmentId?: ID_Output | null
-  featureFlagSegments?: Array<FeatureFlagSegment> | null
-  userSegments?: Array<UserSegment> | null
+  featureFlagSegments: Array<FeatureFlagSegment>
+  userSegments: Array<UserSegment>
 }
 
 export interface StandardDeleteResponse {
@@ -1052,8 +1052,8 @@ export interface User {
   version: Int
   ownerId: ID_Output
   key: String
-  featureFlagUsers?: Array<FeatureFlagUser> | null
-  userSegments?: Array<UserSegment> | null
+  featureFlagUsers: Array<FeatureFlagUser>
+  userSegments: Array<UserSegment>
 }
 
 export interface UserSegment {

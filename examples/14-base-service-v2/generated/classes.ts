@@ -30,37 +30,7 @@ import { User } from "../src/user.model";
 
 export enum UserOrderByEnum {
   firstName_ASC = "firstName_ASC",
-  firstName_DESC = "firstName_DESC",
-
-  lastName_ASC = "lastName_ASC",
-  lastName_DESC = "lastName_DESC",
-
-  status_ASC = "status_ASC",
-  status_DESC = "status_DESC",
-
-  id_ASC = "id_ASC",
-  id_DESC = "id_DESC",
-
-  createdAt_ASC = "createdAt_ASC",
-  createdAt_DESC = "createdAt_DESC",
-
-  createdById_ASC = "createdById_ASC",
-  createdById_DESC = "createdById_DESC",
-
-  updatedAt_ASC = "updatedAt_ASC",
-  updatedAt_DESC = "updatedAt_DESC",
-
-  updatedById_ASC = "updatedById_ASC",
-  updatedById_DESC = "updatedById_DESC",
-
-  deletedAt_ASC = "deletedAt_ASC",
-  deletedAt_DESC = "deletedAt_DESC",
-
-  deletedById_ASC = "deletedById_ASC",
-  deletedById_DESC = "deletedById_DESC",
-
-  version_ASC = "version_ASC",
-  version_DESC = "version_DESC"
+  firstName_DESC = "firstName_DESC"
 }
 
 registerEnumType(UserOrderByEnum, {
@@ -76,115 +46,10 @@ export class UserWhereInput {
   firstName_contains?: string;
 
   @TypeGraphQLField({ nullable: true })
-  lastName_eq?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_contains?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_startsWith?: string;
-
-  @TypeGraphQLField({ nullable: true })
-  lastName_endsWith?: string;
-
-  @TypeGraphQLField(() => [String], { nullable: true })
-  lastName_in?: string[];
-
-  @TypeGraphQLField(() => Status, { nullable: true })
-  status_eq?: Status;
-
-  @TypeGraphQLField(() => [Status], { nullable: true })
-  status_in?: Status[];
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  id_eq?: string;
+  deletedAt_all?: Boolean;
 
   @TypeGraphQLField(() => [ID], { nullable: true })
   id_in?: string[];
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_eq?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_lt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_lte?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_gt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  createdAt_gte?: DateTimeString;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  createdById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  createdById_in?: string[];
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_eq?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_lt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_lte?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_gt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  updatedAt_gte?: DateTimeString;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  updatedById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  updatedById_in?: string[];
-
-  @TypeGraphQLField({ nullable: true })
-  deletedAt_all?: Boolean;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_eq?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_lt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_lte?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_gt?: DateTimeString;
-
-  @TypeGraphQLField(() => DateTime, { nullable: true })
-  deletedAt_gte?: DateTimeString;
-
-  @TypeGraphQLField(() => ID, { nullable: true })
-  deletedById_eq?: string;
-
-  @TypeGraphQLField(() => [ID], { nullable: true })
-  deletedById_in?: string[];
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_eq?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_gt?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_gte?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_lt?: number;
-
-  @TypeGraphQLField(() => Int, { nullable: true })
-  version_lte?: number;
-
-  @TypeGraphQLField(() => [Int], { nullable: true })
-  version_in?: number[];
 }
 
 @TypeGraphQLInputType()

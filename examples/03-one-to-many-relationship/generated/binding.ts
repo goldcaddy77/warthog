@@ -238,7 +238,7 @@ export interface User {
   version: Int
   ownerId: ID_Output
   firstName: String
-  posts?: Array<Post> | null
+  posts: Array<Post>
 }
 
 /*
