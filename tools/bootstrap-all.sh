@@ -7,7 +7,7 @@ do
     # yarn upgrade && npx syncyarnlock -s -k && yarn
     # rm -rf generated
     # yarn db:drop
-    yarn bootstrap
-    # yarn codegen
+    # yarn bootstrap
+    yarn codegen
     cd -
 done

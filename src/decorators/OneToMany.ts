@@ -4,7 +4,7 @@ import { composeMethodDecorators, MethodDecoratorFactory } from '../utils';
 
 export function OneToMany(parentType: any, joinFunc: any, options: any = {}): any {
   const factories = [
-    Field(parentType, { ...options }) as MethodDecoratorFactory,
+    Field(parentType, { nullable: false, ...options }) as MethodDecoratorFactory,
     TypeORMOneToMany(parentType, joinFunc) as MethodDecoratorFactory
   ];
 

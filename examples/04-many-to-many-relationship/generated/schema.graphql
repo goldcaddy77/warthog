@@ -9,7 +9,7 @@ type Author {
   version: Int!
   ownerId: ID!
   firstName: String!
-  posts: [Post!]
+  posts: [Post!]!
 }
 
 input AuthorCreateInput {
@@ -122,7 +122,7 @@ type Post {
   version: Int!
   ownerId: ID!
   name: String!
-  authors: [Author!]
+  authors: [Author!]!
   posts: [Post!]!
 }
 
@@ -218,7 +218,7 @@ type Role {
   version: Int!
   ownerId: ID!
   name: String!
-  userRoles: [UserRole!]
+  userRoles: [UserRole!]!
 }
 
 input RoleCreateInput {
@@ -287,7 +287,7 @@ type User {
   version: Int!
   ownerId: ID!
   firstName: String!
-  userRoles: [UserRole!]
+  userRoles: [UserRole!]!
 }
 
 input UserCreateInput {
@@ -327,9 +327,9 @@ type UserRole {
   deletedById: ID
   version: Int!
   ownerId: ID!
-  user: User
+  user: User!
   userId: ID!
-  role: Role
+  role: Role!
   roleId: ID!
   otherMetadata: String
 }

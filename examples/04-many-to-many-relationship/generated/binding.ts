@@ -413,7 +413,7 @@ export interface Author {
   version: Int
   ownerId: ID_Output
   firstName: String
-  posts?: Array<Post> | null
+  posts: Array<Post>
 }
 
 export interface PageInfo {
@@ -434,7 +434,7 @@ export interface Post {
   version: Int
   ownerId: ID_Output
   name: String
-  authors?: Array<Author> | null
+  authors: Array<Author>
   posts: Array<Post>
 }
 
@@ -449,7 +449,7 @@ export interface Role {
   version: Int
   ownerId: ID_Output
   name: String
-  userRoles?: Array<UserRole> | null
+  userRoles: Array<UserRole>
 }
 
 export interface StandardDeleteResponse {
@@ -467,7 +467,7 @@ export interface User {
   version: Int
   ownerId: ID_Output
   firstName: String
-  userRoles?: Array<UserRole> | null
+  userRoles: Array<UserRole>
 }
 
 export interface UserRole {
@@ -480,9 +480,9 @@ export interface UserRole {
   deletedById?: ID_Output | null
   version: Int
   ownerId: ID_Output
-  user?: User | null
+  user: User
   userId: ID_Output
-  role?: Role | null
+  role: Role
   roleId: ID_Output
   otherMetadata?: String | null
 }

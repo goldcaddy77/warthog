@@ -22,10 +22,10 @@ type Environment {
   projKey: String!
   project: Project
   projectId: ID
-  segments: [Segment!]
-  featureFlagUsers: [FeatureFlagUser!]
-  featureFlagSegments: [FeatureFlagSegment!]
-  userSegments: [UserSegment!]
+  segments: [Segment!]!
+  featureFlagUsers: [FeatureFlagUser!]!
+  featureFlagSegments: [FeatureFlagSegment!]!
+  userSegments: [UserSegment!]!
 }
 
 input EnvironmentCreateInput {
@@ -141,8 +141,8 @@ type FeatureFlag {
   projKey: String!
   project: Project
   projectId: ID
-  featureFlagUsers: [FeatureFlagUser!]
-  featureFlagSegments: [FeatureFlagSegment!]
+  featureFlagUsers: [FeatureFlagUser!]!
+  featureFlagSegments: [FeatureFlagSegment!]!
 }
 
 input FeatureFlagCreateInput {
@@ -590,12 +590,12 @@ type Project {
   ownerId: ID!
   name: String!
   key: String!
-  environments: [Environment!]
-  segments: [Segment!]
-  featureFlags: [FeatureFlag!]
-  featureFlagUsers: [FeatureFlagUser!]
-  featureFlagSegments: [FeatureFlagSegment!]
-  userSegments: [UserSegment!]
+  environments: [Environment!]!
+  segments: [Segment!]!
+  featureFlags: [FeatureFlag!]!
+  featureFlagUsers: [FeatureFlagUser!]!
+  featureFlagSegments: [FeatureFlagSegment!]!
+  userSegments: [UserSegment!]!
 }
 
 input ProjectCreateInput {
@@ -720,8 +720,8 @@ type Segment {
   envKey: String!
   environment: Environment
   environmentId: ID
-  featureFlagSegments: [FeatureFlagSegment!]
-  userSegments: [UserSegment!]
+  featureFlagSegments: [FeatureFlagSegment!]!
+  userSegments: [UserSegment!]!
 }
 
 input SegmentCreateInput {
@@ -861,8 +861,8 @@ type User {
   version: Int!
   ownerId: ID!
   key: String!
-  featureFlagUsers: [FeatureFlagUser!]
-  userSegments: [UserSegment!]
+  featureFlagUsers: [FeatureFlagUser!]!
+  userSegments: [UserSegment!]!
 }
 
 input UserCreateInput {
